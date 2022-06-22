@@ -11,9 +11,14 @@ export default {
 const options = [
   {title: 'Delivery', value: 'delivery'},
   {title: 'Pickup', value: 'pickup'},
-  {title: 'Taxi', value: 'taxi'},
 ];
+const onpress = () => console.log(options[0]);
 
 export const Basic: ComponentStory<typeof HLTabsWrapper> = () => (
-  <HLTabsWrapper options={options} />
+  <HLTabsWrapper
+    options={options}
+    title={'Shopping mode'}
+    value={'delivery'}
+    onSelect={onpress}
+  />
 );
