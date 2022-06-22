@@ -4,7 +4,7 @@ import {ComponentMeta, ComponentStory} from '@storybook/react';
 import HLTabsWrapper from './index';
 
 export default {
-  title: 'components/MyButton',
+  title: 'packages/HLTabsWrapper',
   component: HLTabsWrapper,
 } as ComponentMeta<typeof HLTabsWrapper>;
 
@@ -12,7 +12,7 @@ const options = [
   {title: 'Delivery', value: 'delivery'},
   {title: 'Pickup', value: 'pickup'},
 ];
-const onpress = () => console.log(options[0]);
+const onpress = () => console.log(options[1].value);
 
 export const Basic: ComponentStory<typeof HLTabsWrapper> = () => (
   <HLTabsWrapper
