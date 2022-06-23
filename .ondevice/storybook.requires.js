@@ -29,7 +29,7 @@ argsEnhancers.forEach((enhancer) => addArgsEnhancer(enhancer));
 const getStories = () => {
   return [
     require("../components/Button/Button.stories.tsx"), 
-    require("../components/ListItem/ListItem.stories.js"),
+    //require("../components/ListItem/ListItem.stories.js"),
     require("../components/TextWrapper/TextWrapper.stories.tsx")
   ];
 };

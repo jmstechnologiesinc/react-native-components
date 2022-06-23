@@ -1,4 +1,3 @@
-import { TextWrapper, TextProps } from './TextWrapper';
+import { TextWrapper } from './TextWrapper';
 
 export { TextWrapper };
-export type { TextProps };
