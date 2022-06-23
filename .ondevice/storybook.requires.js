@@ -33,6 +33,7 @@ const getStories = () => {
   return [
     require('../packages/Buttons/src/AppButton.stories'),
     require('../packages/HLTabsWrapper/src/index.stories.tsx'),
+    require('../packages/ReactNativeTypographyWrapper/src/ReactNativeTypographyWrapper.stories.tsx')
   ];
 };
 
