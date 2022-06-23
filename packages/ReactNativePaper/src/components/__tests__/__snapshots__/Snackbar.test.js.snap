@@ -1,0 +1,415 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders not visible snackbar with content wrapper but no actual content 1`] = `null`;
+
+exports[`renders snackbar with Text as a child 1`] = `
+<RCTSafeAreaView
+  emulateUnlessSupported={true}
+  pointerEvents="box-none"
+  style={
+    Array [
+      Object {
+        "bottom": 0,
+        "position": "absolute",
+        "width": "100%",
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    style={
+      Object {
+        "shadowColor": "#000",
+        "shadowOffset": Object {
+          "height": 2,
+          "width": 0,
+        },
+        "shadowOpacity": 0.15,
+        "shadowRadius": 6,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.3,
+          "shadowRadius": 2,
+        }
+      }
+    >
+      <View
+        accessibilityLiveRegion="polite"
+        pointerEvents="box-none"
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "rgba(28, 27, 31, 1)",
+            "borderRadius": 4,
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "margin": 8,
+            "opacity": 1,
+            "transform": Array [
+              Object {
+                "scale": 1,
+              },
+            ],
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "rgba(28, 27, 31, 1)",
+              },
+              Object {
+                "textAlign": "left",
+              },
+              Array [
+                Object {
+                  "flex": 1,
+                  "flexWrap": "wrap",
+                  "marginLeft": 16,
+                  "marginVertical": 14,
+                },
+                Object {
+                  "color": "rgba(255, 251, 254, 1)",
+                  "marginRight": 16,
+                },
+              ],
+            ]
+          }
+        >
+          <Text>
+            Snackbar content
+          </Text>
+        </Text>
+      </View>
+    </View>
+  </View>
+</RCTSafeAreaView>
+`;
+
+exports[`renders snackbar with action button 1`] = `
+<RCTSafeAreaView
+  emulateUnlessSupported={true}
+  pointerEvents="box-none"
+  style={
+    Array [
+      Object {
+        "bottom": 0,
+        "position": "absolute",
+        "width": "100%",
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    style={
+      Object {
+        "shadowColor": "#000",
+        "shadowOffset": Object {
+          "height": 2,
+          "width": 0,
+        },
+        "shadowOpacity": 0.15,
+        "shadowRadius": 6,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.3,
+          "shadowRadius": 2,
+        }
+      }
+    >
+      <View
+        accessibilityLiveRegion="polite"
+        pointerEvents="box-none"
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "rgba(28, 27, 31, 1)",
+            "borderRadius": 4,
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "margin": 8,
+            "opacity": 1,
+            "transform": Array [
+              Object {
+                "scale": 1,
+              },
+            ],
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "rgba(28, 27, 31, 1)",
+              },
+              Object {
+                "textAlign": "left",
+              },
+              Array [
+                Object {
+                  "flex": 1,
+                  "flexWrap": "wrap",
+                  "marginLeft": 16,
+                  "marginVertical": 14,
+                },
+                Object {
+                  "color": "rgba(255, 251, 254, 1)",
+                  "marginRight": 0,
+                },
+              ],
+            ]
+          }
+        >
+          Snackbar content
+        </Text>
+        <View
+          style={
+            Object {
+              "shadowColor": "#000",
+              "shadowOffset": Object {
+                "height": 0,
+                "width": 0,
+              },
+              "shadowOpacity": 0,
+              "shadowRadius": 0,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "shadowColor": "#000",
+                "shadowOffset": Object {
+                  "height": 0,
+                  "width": 0,
+                },
+                "shadowOpacity": 0,
+                "shadowRadius": 0,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "backgroundColor": "transparent",
+                  "borderColor": "transparent",
+                  "borderRadius": 20,
+                  "borderStyle": "solid",
+                  "borderWidth": 0,
+                  "marginHorizontal": 8,
+                  "marginVertical": 6,
+                  "minWidth": "auto",
+                }
+              }
+            >
+              <View
+                accessibilityRole="button"
+                accessibilityState={
+                  Object {
+                    "disabled": undefined,
+                  }
+                }
+                accessible={true}
+                focusable={true}
+                onClick={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
+                style={
+                  Array [
+                    Object {
+                      "overflow": "hidden",
+                    },
+                    Object {
+                      "borderRadius": 20,
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "justifyContent": "center",
+                      },
+                      undefined,
+                    ]
+                  }
+                >
+                  <Text
+                    numberOfLines={1}
+                    selectable={false}
+                    style={
+                      Array [
+                        Object {
+                          "color": "rgba(28, 27, 31, 1)",
+                          "fontSize": 14,
+                          "fontWeight": "500",
+                          "letterSpacing": 0.1,
+                          "lineHeight": 20,
+                        },
+                        Object {
+                          "textAlign": "left",
+                        },
+                        Object {
+                          "writingDirection": "ltr",
+                        },
+                        Array [
+                          Object {
+                            "marginHorizontal": 16,
+                            "marginVertical": 9,
+                            "textAlign": "center",
+                          },
+                          false,
+                          Object {
+                            "marginHorizontal": 12,
+                          },
+                          Object {
+                            "marginHorizontal": 8,
+                          },
+                          false,
+                          Object {
+                            "color": "rgba(208, 188, 255, 1)",
+                            "fontFamily": "System",
+                            "fontSize": 14,
+                            "fontWeight": "500",
+                            "letterSpacing": 0.1,
+                            "lineHeight": 20,
+                          },
+                          undefined,
+                        ],
+                      ]
+                    }
+                  >
+                    Undo
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</RCTSafeAreaView>
+`;
+
+exports[`renders snackbar with content 1`] = `
+<RCTSafeAreaView
+  emulateUnlessSupported={true}
+  pointerEvents="box-none"
+  style={
+    Array [
+      Object {
+        "bottom": 0,
+        "position": "absolute",
+        "width": "100%",
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    style={
+      Object {
+        "shadowColor": "#000",
+        "shadowOffset": Object {
+          "height": 2,
+          "width": 0,
+        },
+        "shadowOpacity": 0.15,
+        "shadowRadius": 6,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.3,
+          "shadowRadius": 2,
+        }
+      }
+    >
+      <View
+        accessibilityLiveRegion="polite"
+        pointerEvents="box-none"
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "rgba(28, 27, 31, 1)",
+            "borderRadius": 4,
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "margin": 8,
+            "opacity": 1,
+            "transform": Array [
+              Object {
+                "scale": 1,
+              },
+            ],
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "rgba(28, 27, 31, 1)",
+              },
+              Object {
+                "textAlign": "left",
+              },
+              Array [
+                Object {
+                  "flex": 1,
+                  "flexWrap": "wrap",
+                  "marginLeft": 16,
+                  "marginVertical": 14,
+                },
+                Object {
+                  "color": "rgba(255, 251, 254, 1)",
+                  "marginRight": 16,
+                },
+              ],
+            ]
+          }
+        >
+          Snackbar content
+        </Text>
+      </View>
+    </View>
+  </View>
+</RCTSafeAreaView>
+`;

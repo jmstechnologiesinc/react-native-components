@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders disabled switch 1`] = `
+<RCTSwitch
+  accessibilityRole="switch"
+  disabled={true}
+  onChange={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  onTintColor="rgba(103, 80, 164, 1)"
+  style={
+    Object {
+      "height": 31,
+      "width": 51,
+    }
+  }
+  tintColor="rgba(103, 80, 164, 1)"
+  value={true}
+/>
+`;
+
+exports[`renders off switch 1`] = `
+<RCTSwitch
+  accessibilityRole="switch"
+  onChange={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  onTintColor="rgba(103, 80, 164, 1)"
+  style={
+    Object {
+      "height": 31,
+      "width": 51,
+    }
+  }
+  tintColor="rgba(103, 80, 164, 1)"
+  value={false}
+/>
+`;
+
+exports[`renders on switch 1`] = `
+<RCTSwitch
+  accessibilityRole="switch"
+  onChange={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  onTintColor="rgba(103, 80, 164, 1)"
+  style={
+    Object {
+      "height": 31,
+      "width": 51,
+    }
+  }
+  tintColor="rgba(103, 80, 164, 1)"
+  value={true}
+/>
+`;
+
+exports[`renders switch with color 1`] = `
+<RCTSwitch
+  accessibilityRole="switch"
+  onChange={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  onTintColor="#e91e63"
+  style={
+    Object {
+      "height": 31,
+      "width": 51,
+    }
+  }
+  tintColor="#e91e63"
+  value={true}
+/>
+`;
