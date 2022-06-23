@@ -19,3 +19,5 @@ export { default as systemTallWeights } from "./helpers/systemTallWeights";
 export { default as sanFranciscoSpacing } from "./helpers/sanFranciscoSpacing";
 export { default as iOSColors } from "./helpers/iOSColors";
 export { default as materialColors } from "./helpers/materialColors";
+
+export {default as Typography} from "./Typography"

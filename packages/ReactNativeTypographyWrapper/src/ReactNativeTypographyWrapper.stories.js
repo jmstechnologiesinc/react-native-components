@@ -1,14 +1,11 @@
 import React from 'react';
-import {ComponentMeta, ComponentStory} from '@storybook/react';
 import { ScrollView, Text, View } from 'react-native';
-import {material, human, materialColors} from './';
-
-const AppButton = () => <Text style={material.display1}>Hellow world</Text>
+import {material, human, materialColors, Typography} from '.';
 
 export default {
   title: 'packages/Typography',
-  component: AppButton,
-} as ComponentMeta<typeof AppButton>;
+  component: Text,
+};
 
 const lightSectionGuides= {}
 
@@ -128,44 +125,122 @@ const humanBlackStyles2014 = [
   }
 ]
 
-export const MaterialDesign2014: ComponentStory<typeof AppButton> = () => (
+const TextStyles = [
+  {
+    variant: 'h1',
+    text: "Headline 1",
+    name: "h1"
+  },
+  {
+    variant: 'h2',
+    text: "Headline 2",
+    name: "h2"
+  },
+  {
+    variant: 'h3',
+    text: "Headline 3",
+    name: "h3"
+  },
+  {
+    variant: 'h4',
+    text: "Headline 4",
+    name: "h4"
+  },
+  {
+    variant: 'h5',
+    text: "Headline 5",
+    name: "h5"
+  },
+  {
+    variant: 'h6',
+    text: "Headline 6",
+    name: "h6"
+  },
+  {
+    variant: 'subtitle1',
+    text: "Subtitle 1",
+    name: "subtitle1"
+  },
+  {
+    variant: 'subtitle2',
+    text: "Subtitle 2",
+    name: "subtitle2"
+  },
+  {
+    variant: 'body1',
+    text: "Body 1",
+    name: "body1"
+  },
+  {
+    variant: 'body2',
+    text: "Body 2",
+    name: "body2"
+  },
+  {
+    variant: 'button',
+    text: "Button",
+    name: "button"
+  },
+  {
+    variant: 'caption',
+    text: "Caption",
+    name: "caption"
+  },
+  {
+    variant: 'overline',
+    text: "Overline",
+    name: "overline"
+  }
+];
+
+
+const typeItem = (s) => (
+  <View key={s.name}>
+    <Text numberOfLines={1} style={[s.style, lightSectionGuides]}>
+      {s.text}
+    </Text>
+    <Text
+      numberOfLines={1}
+      style={{
+        ...human.caption2Object,
+        color: materialColors.blackSecondary,
+        marginBottom: 4
+      }}>
+      {s.name}
+    </Text>
+  </View>
+)
+
+export const MaterialDesign2014 = () => (
   <ScrollView style={{}}>
-    {materialBlackStyles2014.map(s => (
-      <View key={s.name}>
-        <Text numberOfLines={1} style={[s.style, lightSectionGuides]}>
-          {s.text}
-        </Text>
-        <Text
-          numberOfLines={1}
-          style={{
-            ...human.caption2Object,
-            color: materialColors.blackSecondary,
-            marginBottom: 4
-          }}>
-          {s.name}
-        </Text>
+    {materialBlackStyles2014.map(typeItem)}
+  </ScrollView>
+);
+
+export const HumanDesign2014 = () => (
+  <ScrollView style={{}}>
+    {humanBlackStyles2014.map(typeItem)}
+  </ScrollView>
+);
+
+export const Typograph = () => (
+  <ScrollView style={{}}>
+    {TextStyles.map((s) => (
+        <View key={s.name}>
+          <Typography numberOfLines={1} variant={s.variant}>
+            {s.text}
+          </Typography>
+          <Text
+            numberOfLines={1}
+            style={{
+              ...human.caption2Object,
+              color: materialColors.blackSecondary,
+              marginBottom: 4
+            }}>
+            {s.name}
+          </Text>
       </View>
     ))}
   </ScrollView>
 );
 
-export const HumanDesign2014: ComponentStory<typeof AppButton> = () => (
-  <ScrollView style={{}}>
-    {humanBlackStyles2014.map(s => (
-      <View key={s.name}>
-        <Text numberOfLines={1} style={[s.style, lightSectionGuides]}>
-          {s.text}
-        </Text>
-        <Text
-          numberOfLines={1}
-          style={{
-            ...human.caption2Object,
-            color: materialColors.blackSecondary,
-            marginBottom: 4
-          }}>
-          {s.name}
-        </Text>
-      </View>
-    ))}
-  </ScrollView>
-);
