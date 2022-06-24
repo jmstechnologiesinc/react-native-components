@@ -6,9 +6,11 @@ import {
   ViewStyle,
   StyleSheet,
 } from 'react-native';
-import type { Theme } from '../../types';
-import { white, black } from '../../styles/themes/v2/colors';
+
+import {white, black} from '../../styles/themes/v2/colors';
 import getContrastingColor from '../../utils/getContrastingColor';
+
+import theme from '../../styles/themes/v3/LightTheme';
 
 type GetCombinedStylesProps = {
   isAnimatedFromRight: boolean;
@@ -27,7 +29,6 @@ type Variant = 'primary' | 'secondary' | 'tertiary' | 'surface';
 
 type BaseProps = {
   isVariant: (variant: Variant) => boolean;
-  theme: Theme;
   disabled?: boolean;
 };
 
@@ -37,9 +38,9 @@ export const getCombinedStyles = ({
   distance,
   animFAB,
 }: GetCombinedStylesProps): CombinedStyles => {
-  const { isRTL } = I18nManager;
+  const {isRTL} = I18nManager;
 
-  const defaultPositionStyles = { left: -distance, right: undefined };
+  const defaultPositionStyles = {left: -distance, right: undefined};
 
   const combinedStyles: CombinedStyles = {
     innerWrapper: {
@@ -162,12 +163,11 @@ export const getCombinedStyles = ({
 };
 
 const getBackgroundColor = ({
-  theme,
   isVariant,
   disabled,
   style,
-}: BaseProps & { style?: StyleProp<ViewStyle> }) => {
-  const { backgroundColor } = StyleSheet.flatten(style) || {};
+}: BaseProps & {style?: StyleProp<ViewStyle>}) => {
+  const {backgroundColor} = StyleSheet.flatten(style) || {};
   if (backgroundColor && !disabled) {
     return backgroundColor;
   }
@@ -206,12 +206,11 @@ const getBackgroundColor = ({
 };
 
 const getForegroundColor = ({
-  theme,
   isVariant,
   disabled,
   backgroundColor,
   customColor,
-}: BaseProps & { backgroundColor: string; customColor?: string }) => {
+}: BaseProps & {backgroundColor: string; customColor?: string}) => {
   if (typeof customColor !== 'undefined' && !disabled) {
     return customColor;
   }
@@ -249,7 +248,7 @@ const getForegroundColor = ({
     return getContrastingColor(
       backgroundColor || white,
       white,
-      'rgba(0, 0, 0, .54)'
+      'rgba(0, 0, 0, .54)',
     );
   }
 
@@ -257,13 +256,11 @@ const getForegroundColor = ({
 };
 
 export const getFABColors = ({
-  theme,
   variant,
   disabled,
   customColor,
   style,
 }: {
-  theme: Theme;
   variant: string;
   disabled?: boolean;
   customColor?: string;
@@ -273,7 +270,7 @@ export const getFABColors = ({
     return variant === variantToCompare;
   };
 
-  const baseFABColorProps = { theme, isVariant, disabled };
+  const baseFABColorProps = {theme, isVariant, disabled};
 
   const backgroundColor = getBackgroundColor({
     ...baseFABColorProps,
@@ -293,7 +290,7 @@ export const getFABColors = ({
   };
 };
 
-const getLabelColor = ({ theme }: { theme: Theme }) => {
+const getLabelColor = () => {
   if (theme.isV3) {
     return theme.colors.onSurface;
   }
@@ -305,25 +302,25 @@ const getLabelColor = ({ theme }: { theme: Theme }) => {
   return color(theme.colors.text).fade(0.54).rgb().string();
 };
 
-const getBackdropColor = ({ theme }: { theme: Theme }) => {
+const getBackdropColor = () => {
   if (theme.isV3) {
     return color(theme.colors.background).alpha(0.95).rgb().string();
   }
   return theme.colors?.backdrop;
 };
 
-const getStackedFABBackgroundColor = ({ theme }: { theme: Theme }) => {
+const getStackedFABBackgroundColor = () => {
   if (theme.isV3) {
     return theme.colors.elevation.level3;
   }
   return theme.colors.surface;
 };
 
-export const getFABGroupColors = ({ theme }: { theme: Theme }) => {
+export const getFABGroupColors = () => {
   return {
-    labelColor: getLabelColor({ theme }),
-    backdropColor: getBackdropColor({ theme }),
-    stackedFABBackgroundColor: getStackedFABBackgroundColor({ theme }),
+    labelColor: getLabelColor(),
+    backdropColor: getBackdropColor(),
+    stackedFABBackgroundColor: getStackedFABBackgroundColor(),
   };
 };
 
@@ -350,22 +347,16 @@ const v3LargeSize = {
   width: 96,
 };
 
-export const getFabStyle = ({
-  size,
-  theme,
-}: {
-  size: 'small' | 'medium' | 'large';
-  theme: Theme;
-}) => {
-  const { isV3, roundness } = theme;
+export const getFabStyle = ({size}: {size: 'small' | 'medium' | 'large'}) => {
+  const {isV3, roundness} = theme;
   if (isV3) {
     switch (size) {
       case 'small':
-        return { ...v3SmallSize, borderRadius: 3 * roundness };
+        return {...v3SmallSize, borderRadius: 3 * roundness};
       case 'medium':
-        return { ...v3MediumSize, borderRadius: 4 * roundness };
+        return {...v3MediumSize, borderRadius: 4 * roundness};
       case 'large':
-        return { ...v3LargeSize, borderRadius: 7 * roundness };
+        return {...v3LargeSize, borderRadius: 7 * roundness};
     }
   }
 
