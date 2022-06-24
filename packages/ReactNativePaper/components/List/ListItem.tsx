@@ -10,9 +10,8 @@ import {
 
 import TouchableRipple from '../TouchableRipple/TouchableRipple';
 import Text from '../Typography/Text';
-import { withTheme } from '../../core/theming';
 import type { $RemoveChildren, EllipsizeProp } from '../../types';
-import type { Theme } from '../../types';
+import theme from '../../styles/themes/v3/LightTheme';
 
 type Title =
   | React.ReactNode
@@ -69,7 +68,6 @@ type Props = $RemoveChildren<typeof TouchableRipple> & {
   /**
    * @optional
    */
-  theme: Theme;
   /**
    * Style that is passed to the wrapping TouchableRipple element.
    */
@@ -139,7 +137,6 @@ const ListItem = ({
   title,
   description,
   onPress,
-  theme,
   style,
   titleStyle,
   titleNumberOfLines = 1,
@@ -273,4 +270,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withTheme(ListItem);
+export default ListItem;
