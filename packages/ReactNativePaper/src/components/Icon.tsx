@@ -7,8 +7,6 @@ import {
 } from 'react-native';
 import { Consumer as SettingsConsumer } from '../core/settings';
 import { accessibilityProps } from './MaterialCommunityIcon';
-import { withTheme } from '../core/theming';
-import type { Theme } from '../types';
 
 type IconSourceBase = string | ImageSourcePropType;
 
@@ -28,7 +26,6 @@ type Props = IconProps & {
   /**
    * @optional
    */
-  theme: Theme;
 };
 
 const isImageSource = (source: any) =>
@@ -122,4 +119,4 @@ const Icon = ({ source, color, size, theme, ...rest }: Props) => {
   return null;
 };
 
-export default withTheme(Icon);
+export default Icon;

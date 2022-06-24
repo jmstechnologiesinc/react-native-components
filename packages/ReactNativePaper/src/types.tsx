@@ -1,4 +1,3 @@
-import type { $DeepPartial } from '@callstack/react-theme-provider';
 import type * as React from 'react';
 
 export type Font = {
@@ -75,7 +74,7 @@ export type MD3Colors = {
 
 export type MD3Palette = {};
 
-export type ThemeProp = $DeepPartial<Theme>;
+export type ThemeProp = {};
 
 export type ThemeBase = {
   dark: boolean;

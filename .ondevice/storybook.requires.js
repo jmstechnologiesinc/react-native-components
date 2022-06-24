@@ -5,19 +5,19 @@ import {
   addDecorator,
   addParameters,
   addArgsEnhancer,
-} from '@storybook/react-native';
+} from "@storybook/react-native";
 
-import '@storybook/addon-ondevice-notes/register';
-import '@storybook/addon-ondevice-controls/register';
-import '@storybook/addon-ondevice-backgrounds/register';
-import '@storybook/addon-ondevice-actions/register';
+import "@storybook/addon-ondevice-notes/register";
+import "@storybook/addon-ondevice-controls/register";
+import "@storybook/addon-ondevice-backgrounds/register";
+import "@storybook/addon-ondevice-actions/register";
 
-import {argsEnhancers} from '@storybook/addon-actions/dist/modern/preset/addArgs';
+import { argsEnhancers } from "@storybook/addon-actions/dist/modern/preset/addArgs";
 
-import {decorators, parameters} from './preview';
+import { decorators, parameters } from "./preview";
 
 if (decorators) {
-  decorators.forEach(decorator => addDecorator(decorator));
+  decorators.forEach((decorator) => addDecorator(decorator));
 }
 
 if (parameters) {
@@ -26,14 +26,15 @@ if (parameters) {
 
 // temporary fix for https://github.com/storybookjs/react-native/issues/327 whilst the issue is investigated
 try {
-  argsEnhancers.forEach(enhancer => addArgsEnhancer(enhancer));
+  argsEnhancers.forEach((enhancer) => addArgsEnhancer(enhancer));
 } catch {}
 
 const getStories = () => {
   return [
-    require('../packages/Buttons/src/AppButton.stories'),
-    require('../packages/HLTabsWrapper/src/index.stories.tsx'),
-    require('../packages/ReactNativeTypographyWrapper/src/ReactNativeTypographyWrapper.stories.js')
+    require("../components/Button/Button.stories.tsx"),
+    require("../components/ListItem/ListItem.stories.js"),
+    require("../components/TextWrapper/TextWrapper.stories.tsx"),
+    require("../packages/ReactNativePaper/src/index.stories.js"),
   ];
 };
 

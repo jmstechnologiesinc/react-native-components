@@ -8,9 +8,9 @@ import {
   GestureResponderEvent,
   Platform,
 } from 'react-native';
-import { withTheme } from '../../core/theming';
-import type { Theme } from '../../types';
+
 import { getTouchableRippleColors } from './utils';
+import theme from '../../styles/themes/v3/LightTheme';
 
 type Props = React.ComponentPropsWithRef<typeof TouchableWithoutFeedback> & {
   /**
@@ -54,7 +54,6 @@ type Props = React.ComponentPropsWithRef<typeof TouchableWithoutFeedback> & {
   /**
    * @optional
    */
-  theme: Theme;
 };
 
 /**
@@ -96,7 +95,6 @@ const TouchableRipple = ({
   rippleColor,
   underlayColor: _underlayColor,
   children,
-  theme,
   ...rest
 }: Props) => {
   const handlePressIn = (e: any) => {
@@ -258,4 +256,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withTheme(TouchableRipple);
+export default TouchableRipple;
