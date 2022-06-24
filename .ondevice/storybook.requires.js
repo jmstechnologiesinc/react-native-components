@@ -33,6 +33,7 @@ const getStories = () => {
   return [
     require("../packages/Button/src/Button.stories.js"),
     require("../packages/HLTabsWrapper/src/index.stories.tsx"),
+    require("../packages/Text/src/Text.stories.js"),
   ];
 };
 

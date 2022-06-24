@@ -1,7 +1,7 @@
 import React from 'react';
 import { View,StyleSheet,ScrollView } from 'react-native';
 
-import Button from '../../ReactNativePaper/components/Button/Button';
+import Button from './Button';
 import theme from '../../ReactNativePaper/styles/themes/v2/LightTheme';
 
 const {colors} = theme;
