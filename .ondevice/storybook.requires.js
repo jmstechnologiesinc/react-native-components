@@ -31,13 +31,8 @@ try {
 
 const getStories = () => {
   return [
-    require("../components/Button/Button.stories.tsx"),
-    require("../components/ListItem/ListItem.stories.js"),
-    require("../components/TextWrapper/TextWrapper.stories.tsx"),
     require("../packages/Button/src/Button.stories.js"),
-    require("../packages/Buttons/src/AppButton.stories.tsx"),
     require("../packages/HLTabsWrapper/src/index.stories.tsx"),
-    require("../packages/ReactNativeTypographyWrapper/src/ReactNativeTypographyWrapper.stories.js"),
   ];
 };
 
