@@ -31,6 +31,9 @@ try {
 
 const getStories = () => {
   return [
+    require('../components/Button/Button.stories.tsx'),
+    require('../components/ListItem/ListItem.stories.js'),
+    require('../components/TextWrapper/TextWrapper.stories.tsx'),
     require('../packages/Buttons/src/AppButton.stories'),
     require('../packages/HLTabsWrapper/src/index.stories.tsx'),
   ];

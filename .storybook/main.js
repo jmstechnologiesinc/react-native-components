@@ -1,9 +1,12 @@
 module.exports = {
-  stories: ["../components/**/*.stories.?(ts|tsx|js|jsx)"],
-  addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-react-native-web",
+  stories: [
+    '../components/**/*.stories.?(ts|tsx|js|jsx)',
+    '../packages/**/*.stories.?(ts|tsx|js|jsx)',
   ],
-  framework: "@storybook/react",
+  addons: [
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    '@storybook/addon-react-native-web',
+  ],
+  framework: '@storybook/react',
 };
