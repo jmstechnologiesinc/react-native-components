@@ -1567,6 +1567,20 @@
     "@types/yargs" "^16.0.0"
     "chalk" "^4.0.0"
 
+"@jmsstudiosinc/commons@^8.0.0":
+  "integrity" "sha512-ageX5dk0cNBKkk2Kk3Z9HAkp+CseNCHcH0QFix4P7jz5KyVHqop2akExxYfkYCTMns7rBUBy5rNng4Fv9M39Ew=="
+  "resolved" "https://npm.pkg.github.com/download/@jmsstudiosinc/commons/8.0.0/de3b42a98a135f3386c7e4556fa6c2832dbda3886d8af39d87703af6b102b208"
+  "version" "8.0.0"
+  dependencies:
+    "@jmsstudiosinc/vendor" "^7.0.0"
+
+"@jmsstudiosinc/vendor@^7.0.0":
+  "integrity" "sha512-5Pk4LCCGQe+GBXoGZHamAiHoolr51dU4EA88L6/pcCurUgJb6fEQGIG8LpcatVdy1w3Oql5jlk7JQWSksPgj5A=="
+  "resolved" "https://npm.pkg.github.com/download/@jmsstudiosinc/vendor/7.0.0/3529eb0fe47925d8e018f79bd6da977e0e27bad10ebb0e3ad6e90b55e9e290a9"
+  "version" "7.0.0"
+  dependencies:
+    "@jmsstudiosinc/commons" "^8.0.0"
+
 "@jridgewell/gen-mapping@^0.1.0":
   "integrity" "sha512-sQXCasFk+U8lWYEe66WxRDOE9PjVz4vSM51fTu3Hw+ClTpUSQb718772vH3pyS5pShp6lvQM7SxgIDXXXmOX7w=="
   "resolved" "https://registry.npmjs.org/@jridgewell/gen-mapping/-/gen-mapping-0.1.1.tgz"
