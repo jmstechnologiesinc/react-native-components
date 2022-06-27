@@ -1,16 +1,10 @@
 import * as React from 'react';
-import {
-  View,
-  ViewStyle,
-  StyleSheet,
-  StyleProp,
-  TextStyle,
-} from 'react-native';
+import {View, ViewStyle, StyleSheet, StyleProp, TextStyle} from 'react-native';
 import Text from '../Typography/Text';
-import { withTheme } from '../../core/theming';
-import { white } from '../../styles/themes/v2/colors';
+
+import {white} from '../../styles/themes/v2/colors';
 import getContrastingColor from '../../utils/getContrastingColor';
-import type { Theme } from '../../types';
+import theme from '../../styles/themes/v3/LightTheme';
 
 const defaultSize = 64;
 
@@ -38,7 +32,6 @@ type Props = React.ComponentPropsWithRef<typeof View> & {
   /**
    * @optional
    */
-  theme: Theme;
 };
 
 /**
@@ -64,12 +57,12 @@ const AvatarText = ({
   label,
   size = defaultSize,
   style,
-  theme,
+
   labelStyle,
   color: customColor,
   ...rest
 }: Props) => {
-  const { backgroundColor = theme.colors?.primary, ...restStyle } =
+  const {backgroundColor = theme.colors?.primary, ...restStyle} =
     StyleSheet.flatten(style) || {};
   const textColor =
     customColor ??
@@ -120,4 +113,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withTheme(AvatarText);
+export default AvatarText;

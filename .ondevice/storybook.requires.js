@@ -31,6 +31,7 @@ try {
 
 const getStories = () => {
   return [
+    require("../packages/Avatar/src/Avatar.stories.js"),
     require("../packages/Button/src/Button.stories.js"),
     require("../packages/Card/src/Card.stories.js"),
     require("../packages/FAB/src/Fab.stories.js"),
