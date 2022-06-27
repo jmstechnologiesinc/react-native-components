@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { StyleSheet, StyleProp, View, ViewStyle } from 'react-native';
-import { useTheme } from '../../core/theming';
+import {StyleSheet, StyleProp, View, ViewStyle} from 'react-native';
+
+import theme from '../../styles/themes/v3/LightTheme';
 
 type Props = React.ComponentPropsWithRef<typeof View> & {
   /**
@@ -37,14 +38,11 @@ type Props = React.ComponentPropsWithRef<typeof View> & {
  * ```
  */
 const CardActions = (props: Props) => {
-  const { isV3 } = useTheme();
+  const isV3 = theme.isV3;
   const justifyContent = isV3 ? 'flex-end' : 'flex-start';
 
   return (
-    <View
-      {...props}
-      style={[styles.container, props.style, { justifyContent }]}
-    >
+    <View {...props} style={[styles.container, props.style, {justifyContent}]}>
       {React.Children.map(props.children, (child, i) => {
         return React.isValidElement(child)
           ? React.cloneElement(child, {

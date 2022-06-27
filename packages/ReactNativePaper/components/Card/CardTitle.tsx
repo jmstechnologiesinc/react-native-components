@@ -1,14 +1,9 @@
 import * as React from 'react';
-import {
-  StyleProp,
-  StyleSheet,
-  TextStyle,
-  View,
-  ViewStyle,
-} from 'react-native';
+import {StyleProp, StyleSheet, TextStyle, View, ViewStyle} from 'react-native';
 
-import { withTheme } from '../../core/theming';
-import type { MD3TypescaleKey, Theme } from '../../types';
+import type {MD3TypescaleKey} from '../../types';
+import theme from '../../styles/themes/v3/LightTheme';
+
 import Caption from '../Typography/v2/Caption';
 import Title from '../Typography/v2/Title';
 import Text from '../Typography/Text';
@@ -75,7 +70,7 @@ type Props = React.ComponentPropsWithRef<typeof View> & {
   /**
    * Callback which returns a React element to display on the left side.
    */
-  left?: (props: { size: number }) => React.ReactNode;
+  left?: (props: {size: number}) => React.ReactNode;
   /**
    * Style for the left element wrapper.
    */
@@ -83,7 +78,7 @@ type Props = React.ComponentPropsWithRef<typeof View> & {
   /**
    * Callback which returns a React element to display on the right side.
    */
-  right?: (props: { size: number }) => React.ReactNode;
+  right?: (props: {size: number}) => React.ReactNode;
   /**
    * Style for the right element wrapper.
    */
@@ -100,7 +95,6 @@ type Props = React.ComponentPropsWithRef<typeof View> & {
   /**
    * @optional
    */
-  theme: Theme;
 };
 
 const LEFT_SIZE = 40;
@@ -143,7 +137,6 @@ const CardTitle = ({
   right,
   rightStyle,
   style,
-  theme,
 }: Props) => {
   const titleComponent = (props: any) =>
     theme.isV3 ? <Text {...props} /> : <Title {...props} />;
@@ -151,14 +144,14 @@ const CardTitle = ({
   const subtitleComponent = (props: any) =>
     theme.isV3 ? <Text {...props} /> : <Caption {...props} />;
 
-  const TextComponent = React.memo(({ component, ...rest }: any) =>
-    React.createElement(component, rest)
+  const TextComponent = React.memo(({component, ...rest}: any) =>
+    React.createElement(component, rest),
   );
   return (
     <View
       style={[
         styles.container,
-        { minHeight: subtitle || left || right ? 72 : 50 },
+        {minHeight: subtitle || left || right ? 72 : 50},
         style,
       ]}
     >
@@ -174,11 +167,7 @@ const CardTitle = ({
         {title && (
           <TextComponent
             component={titleComponent}
-            style={[
-              styles.title,
-              { marginBottom: subtitle ? 0 : 2 },
-              titleStyle,
-            ]}
+            style={[styles.title, {marginBottom: subtitle ? 0 : 2}, titleStyle]}
             numberOfLines={titleNumberOfLines}
             variant={titleVariant}
           >
@@ -196,7 +185,7 @@ const CardTitle = ({
           </TextComponent>
         )}
       </View>
-      <View style={rightStyle}>{right ? right({ size: 24 }) : null}</View>
+      <View style={rightStyle}>{right ? right({size: 24}) : null}</View>
     </View>
   );
 };
@@ -236,7 +225,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withTheme(CardTitle);
+export default CardTitle;
 
 // @component-docs ignore-next-line
-export { CardTitle };
+export {CardTitle};

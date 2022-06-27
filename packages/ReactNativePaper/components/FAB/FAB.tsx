@@ -16,9 +16,7 @@ import TouchableRipple from '../TouchableRipple/TouchableRipple';
 import {getFABColors, getFabStyle} from './utils';
 import type {$RemoveChildren} from '../../types';
 
-// import { theme } from '@jmsstudiosinc/designtokens';
 import theme from '../../styles/themes/v3/LightTheme';
-
 type FABSize = 'small' | 'medium' | 'large';
 
 type FABMode = 'flat' | 'elevated';
