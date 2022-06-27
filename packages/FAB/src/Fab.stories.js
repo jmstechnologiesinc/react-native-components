@@ -4,6 +4,18 @@ import Portal from '../../ReactNativePaper/components/Portal/PortalHost';
 import FAB from './Fab';
 import useState from 'storybook-addon-state';
 
+import {
+  faEyeDropper,
+  faEye,
+  faCheck,
+  faUserPlus,
+  faCalendar,
+  faPlus,
+  faHourglassStart,
+  faVoicemail,
+  faHeart,
+} from '@fortawesome/pro-regular-svg-icons';
+
 export default {
   title: 'packages/FAB',
   component: FAB,
@@ -18,7 +30,7 @@ export const Fabs = () => {
       <View style={styles.row}>
         <FAB
           small
-          icon={visible ? 'eye-off' : 'eye'}
+          icon={visible ? faEye : faEyeDropper}
           style={styles.fab}
           onPress={() => setVisible(!visible)}
         />
@@ -26,20 +38,20 @@ export const Fabs = () => {
 
       <View style={styles.row}>
         <FAB
-          icon="heart"
+          icon={faHeart}
           style={styles.fab}
           onPress={() => {}}
           visible={visible}
         />
         <FAB
-          icon="check"
+          icon={faCheck}
           label="Extended FAB"
           style={styles.fab}
           onPress={() => {}}
           visible={visible}
         />
         <FAB
-          icon="cancel"
+          icon={faUserPlus}
           label="Disabled FAB"
           style={styles.fab}
           onPress={() => {}}
@@ -49,7 +61,7 @@ export const Fabs = () => {
 
         <Portal>
           <FAB
-            icon="cancel"
+            icon={faUserPlus}
             label="Loading FAB"
             style={styles.fab}
             onPress={() => setVisible(!visible)}
@@ -61,12 +73,12 @@ export const Fabs = () => {
 
       <FAB.Group
         open={open}
-        icon={open ? 'calendar-today' : 'plus'}
+        icon={open ? faCalendar : faPlus}
         actions={[
-          {icon: 'plus', onPress: () => {}},
-          {icon: 'star', label: 'Star', onPress: () => {}},
-          {icon: 'email', label: 'Email', onPress: () => {}},
-          {icon: 'bell', label: 'Remind', onPress: () => {}},
+          {icon: faPlus, onPress: () => {}},
+          {icon: faHourglassStart, label: 'Star', onPress: () => {}},
+          {icon: faVoicemail, label: 'Email', onPress: () => {}},
+          {icon: faVoicemail, label: 'Remind', onPress: () => {}},
         ]}
         onStateChange={({open}) => setOpen(open)}
         onPress={() => {
