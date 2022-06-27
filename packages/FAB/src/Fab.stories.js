@@ -57,26 +57,25 @@ export const Fabs = () => {
             loading
           />
         </Portal>
-        {/* <Portal>
-          <FAB.Group
-            open={open}
-            icon={open ? 'calendar-today' : 'plus'}
-            actions={[
-              {icon: 'plus', onPress: () => {}},
-              {icon: 'star', label: 'Star', onPress: () => {}},
-              {icon: 'email', label: 'Email', onPress: () => {}},
-              {icon: 'bell', label: 'Remind', onPress: () => {}},
-            ]}
-            onStateChange={({open}) => setOpen(open)}
-            onPress={() => {
-              if (open) {
-                // do something if the speed dial is open
-              }
-            }}
-            visible={visible}
-          />
-        </Portal> */}
       </View>
+
+      <FAB.Group
+        open={open}
+        icon={open ? 'calendar-today' : 'plus'}
+        actions={[
+          {icon: 'plus', onPress: () => {}},
+          {icon: 'star', label: 'Star', onPress: () => {}},
+          {icon: 'email', label: 'Email', onPress: () => {}},
+          {icon: 'bell', label: 'Remind', onPress: () => {}},
+        ]}
+        onStateChange={({open}) => setOpen(open)}
+        onPress={() => {
+          if (open) {
+            // do something if the speed dial is open
+          }
+        }}
+        visible={visible}
+      />
     </View>
   );
 };
@@ -91,6 +90,7 @@ const styles = StyleSheet.create({
   row: {
     justifyContent: 'center',
     alignItems: 'center',
+    // backgroundColor: '#000',
   },
 
   fab: {
