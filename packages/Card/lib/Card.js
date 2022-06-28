@@ -1,7 +1,3 @@
-'use strict';
+import Card from '../../ReactNativePaper/components/Card/Card';
 
-module.exports = cart;
-
-function cart() {
-    // TODO
-}
+export default Card;

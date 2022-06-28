@@ -1,7 +1,3 @@
-'use strict';
+import * as List from '../../ReactNativePaper/components/List/List';
 
-module.exports = listitem;
-
-function listitem() {
-    // TODO
-}
+export default List;

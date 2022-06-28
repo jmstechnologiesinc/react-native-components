@@ -1,7 +1,3 @@
-'use strict';
+import FAB from '../../ReactNativePaper/components/FAB';
 
-module.exports = fab;
-
-function fab() {
-    // TODO
-}
+export default FAB;
