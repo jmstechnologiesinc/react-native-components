@@ -1,7 +1,4 @@
-'use strict';
+import AvatarImage from '../../ReactNativePaper/components/Avatar/AvatarImage';
+import AvatarText from '../../ReactNativePaper/components/Avatar/AvatarText';
 
-module.exports = avatar;
-
-function avatar() {
-    // TODO
-}
+export {AvatarImage, AvatarText};
