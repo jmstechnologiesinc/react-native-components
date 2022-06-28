@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { Animated, StyleSheet, View } from 'react-native';
-import Icon, { isValidIcon, IconSource, isEqualIcon } from './Icon';
+import {Animated, StyleSheet, View} from 'react-native';
+import Icon, {isValidIcon, IconSource, isEqualIcon} from './Icon';
 
-import { withTheme } from '../core/theming';
-import type { Theme } from '../types';
+import theme from '../styles/themes/v3/LightTheme';
 
 type Props = {
   /**
@@ -21,19 +20,18 @@ type Props = {
   /**
    * @optional
    */
-  theme: Theme;
 };
 
-const CrossFadeIcon = ({ color, size, source, theme }: Props) => {
+const CrossFadeIcon = ({color, size, source}: Props) => {
   const [currentIcon, setCurrentIcon] = React.useState<IconSource>(
-    () => source
+    () => source,
   );
   const [previousIcon, setPreviousIcon] = React.useState<IconSource | null>(
-    null
+    null,
   );
-  const { current: fade } = React.useRef<Animated.Value>(new Animated.Value(1));
+  const {current: fade} = React.useRef<Animated.Value>(new Animated.Value(1));
 
-  const { scale } = theme.animation;
+  const {scale} = theme.animation;
 
   if (currentIcon !== source) {
     setPreviousIcon(() => currentIcon);
@@ -88,7 +86,7 @@ const CrossFadeIcon = ({ color, size, source, theme }: Props) => {
             styles.icon,
             {
               opacity: opacityPrev,
-              transform: [{ rotate: rotatePrev }],
+              transform: [{rotate: rotatePrev}],
             },
           ]}
         >
@@ -100,7 +98,7 @@ const CrossFadeIcon = ({ color, size, source, theme }: Props) => {
           styles.icon,
           {
             opacity: opacityNext,
-            transform: [{ rotate: rotateNext }],
+            transform: [{rotate: rotateNext}],
           },
         ]}
       >
@@ -110,7 +108,7 @@ const CrossFadeIcon = ({ color, size, source, theme }: Props) => {
   );
 };
 
-export default withTheme(CrossFadeIcon);
+export default CrossFadeIcon;
 
 const styles = StyleSheet.create({
   content: {

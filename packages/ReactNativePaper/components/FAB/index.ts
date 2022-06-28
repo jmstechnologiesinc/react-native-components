@@ -7,7 +7,7 @@ const FAB = Object.assign(
   {
     // @component ./FABGroup.tsx
     Group: FABGroup,
-  }
+  },
 );
 
 export default FAB;
