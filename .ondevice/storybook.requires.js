@@ -31,7 +31,9 @@ try {
 
 const getStories = () => {
   return [
+    require("../packages/AttributeGroup/src/AttributeGroup.stories.js"),
     require("../packages/Button/src/Button.stories.js"),
+    require("../packages/CartItem/src/CartItem.stories.js"),
     require("../packages/HLTabsWrapper/src/index.stories.tsx"),
     require("../packages/ListItem/src/ListItem.stories.js"),
     require("../packages/ProductItem/src/ProductItem.stories.js"),
