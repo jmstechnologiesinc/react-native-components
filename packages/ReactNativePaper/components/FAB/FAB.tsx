@@ -16,6 +16,9 @@ import TouchableRipple from '../TouchableRipple/TouchableRipple';
 import {getFABColors, getFabStyle} from './utils';
 import type {$RemoveChildren} from '../../types';
 
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faCheck} from '@fortawesome/pro-regular-svg-icons';
+
 import theme from '../../styles/themes/v3/LightTheme';
 type FABSize = 'small' | 'medium' | 'large';
 
@@ -25,7 +28,7 @@ type Props = $RemoveChildren<typeof Surface> & {
   /**
    * Icon to display for the `FAB`.
    */
-  icon?: IconSource;
+  icon?: any;
   /**
    * Optional label for extended `FAB`.
    */
@@ -184,7 +187,7 @@ const FAB = ({
     }
   }, [visible, scale, visibility]);
 
-  const IconComponent = animated ? CrossFadeIcon : Icon;
+  // const IconComponent = animated ? CrossFadeIcon : '';
 
   const {backgroundColor, foregroundColor, rippleColor} = getFABColors({
     variant,
@@ -252,11 +255,19 @@ const FAB = ({
           pointerEvents="none"
         >
           {icon && loading !== true ? (
-            <IconComponent
-              source={icon}
-              size={iconSize}
-              color={foregroundColor}
-            />
+            <>
+              {/* <IconComponent
+                source={icon}
+                size={iconSize}
+                color={foregroundColor}
+              /> */}
+
+              <FontAwesomeIcon
+                icon={icon}
+                size={iconSize}
+                color={foregroundColor}
+              />
+            </>
           ) : null}
           {loading ? (
             <ActivityIndicator
