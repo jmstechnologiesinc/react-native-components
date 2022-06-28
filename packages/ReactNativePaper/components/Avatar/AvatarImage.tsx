@@ -8,14 +8,14 @@ import {
   ViewStyle,
   StyleProp,
 } from 'react-native';
-import { withTheme } from '../../core/theming';
-import type { Theme } from '../../types';
+
+import theme from '../../styles/themes/v3/LightTheme';
 
 const defaultSize = 64;
 
 export type AvatarImageSource =
   | ImageSourcePropType
-  | ((props: { size: number }) => React.ReactNode);
+  | ((props: {size: number}) => React.ReactNode);
 
 type Props = React.ComponentPropsWithRef<typeof View> & {
   /**
@@ -56,7 +56,6 @@ type Props = React.ComponentPropsWithRef<typeof View> & {
   /**
    * @optional
    */
-  theme: Theme;
 };
 
 /**
@@ -89,12 +88,12 @@ const AvatarImage = ({
   onLoadEnd,
   onLoadStart,
   onProgress,
-  theme,
+
   ...rest
 }: Props) => {
-  const { colors } = theme;
+  const {colors} = theme;
 
-  const { backgroundColor = colors?.primary } = StyleSheet.flatten(style) || {};
+  const {backgroundColor = colors?.primary} = StyleSheet.flatten(style) || {};
 
   return (
     <View
@@ -109,11 +108,11 @@ const AvatarImage = ({
       ]}
       {...rest}
     >
-      {typeof source === 'function' && source({ size })}
+      {typeof source === 'function' && source({size})}
       {typeof source !== 'function' && (
         <Image
           source={source}
-          style={{ width: size, height: size, borderRadius: size / 2 }}
+          style={{width: size, height: size, borderRadius: size / 2}}
           onError={onError}
           onLayout={onLayout}
           onLoad={onLoad}
@@ -128,4 +127,4 @@ const AvatarImage = ({
 
 AvatarImage.displayName = 'Avatar.Image';
 
-export default withTheme(AvatarImage);
+export default AvatarImage;
