@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { StyleSheet, View, ViewStyle, Image, StyleProp } from 'react-native';
-import { withTheme } from '../../core/theming';
-import { grey200 } from '../../styles/themes/v2/colors';
-import type { Theme } from '../../types';
-import { getCardCoverStyle } from './helpers';
+import {StyleSheet, View, ViewStyle, Image, StyleProp} from 'react-native';
+
+import {grey200} from '../../styles/themes/v2/colors';
+import theme from '../../styles/themes/v3/LightTheme';
+
+import {getCardCoverStyle} from './helpers';
 
 type Props = React.ComponentPropsWithRef<typeof Image> & {
   /**
@@ -18,7 +19,6 @@ type Props = React.ComponentPropsWithRef<typeof Image> & {
   /**
    * @optional
    */
-  theme: Theme;
 };
 
 /**
@@ -46,8 +46,8 @@ type Props = React.ComponentPropsWithRef<typeof Image> & {
  *
  * @extends Image props https://reactnative.dev/docs/image#props
  */
-const CardCover = ({ index, total, style, theme, ...rest }: Props) => {
-  const coverStyle = getCardCoverStyle({ theme, index, total });
+const CardCover = ({index, total, style, ...rest}: Props) => {
+  const coverStyle = getCardCoverStyle({index, total});
 
   return (
     <View style={[styles.container, coverStyle, style]}>
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withTheme(CardCover);
+export default CardCover;
 
 // @component-docs ignore-next-line
-export { CardCover };
+export {CardCover};

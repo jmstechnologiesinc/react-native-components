@@ -11,10 +11,9 @@ import {
 import FAB from './FAB';
 import Text from '../Typography/Text';
 import Card from '../Card/Card';
-import { withTheme } from '../../core/theming';
-import type { IconSource } from '../Icon';
-import type { Theme } from '../../types';
-import { getFABGroupColors } from './utils';
+import type {IconSource} from '../Icon';
+import {getFABGroupColors} from './utils';
+import theme from '../../styles/themes/v3/LightTheme';
 
 type Props = {
   /**
@@ -31,7 +30,7 @@ type Props = {
    * - `onPress`: callback that is called when `FAB` is pressed (required)
    */
   actions: Array<{
-    icon: IconSource;
+    icon?: IconSource;
     label?: string;
     color?: string;
     labelTextColor?: string;
@@ -46,7 +45,7 @@ type Props = {
    * Icon to display for the `FAB`.
    * You can toggle it based on whether the speed dial is open to display a different icon.
    */
-  icon: IconSource;
+  icon?: IconSource;
   /**
    * Accessibility label for the FAB. This is read by the screen reader when the user taps the FAB.
    */
@@ -67,7 +66,7 @@ type Props = {
    * Callback which is called on opening and closing the speed dial.
    * The open state needs to be updated when it's called, otherwise the change is dropped.
    */
-  onStateChange: (state: { open: boolean }) => void;
+  onStateChange: (state: {open: boolean}) => void;
   /**
    * Whether `FAB` is currently visible.
    */
@@ -90,7 +89,7 @@ type Props = {
   /**
    * @optional
    */
-  theme: Theme;
+
   /**
    * Pass down testID from Group props to FAB.
    */
@@ -162,7 +161,6 @@ const FABGroup = ({
   open,
   onPress,
   accessibilityLabel,
-  theme,
   style,
   fabStyle,
   visible,
@@ -171,11 +169,11 @@ const FABGroup = ({
   color: colorProp,
   variant = 'primary',
 }: Props) => {
-  const { current: backdrop } = React.useRef<Animated.Value>(
-    new Animated.Value(0)
+  const {current: backdrop} = React.useRef<Animated.Value>(
+    new Animated.Value(0),
   );
   const animations = React.useRef<Animated.Value[]>(
-    actions.map(() => new Animated.Value(open ? 1 : 0))
+    actions.map(() => new Animated.Value(open ? 1 : 0)),
   );
 
   const [prevActions, setPrevActions] = React.useState<
@@ -191,8 +189,8 @@ const FABGroup = ({
     | null
   >(null);
 
-  const { scale } = theme.animation;
-  const { isV3 } = theme;
+  const {scale} = theme.animation;
+  const {isV3} = theme;
 
   React.useEffect(() => {
     if (open) {
@@ -205,14 +203,14 @@ const FABGroup = ({
         Animated.stagger(
           isV3 ? 15 : 50 * scale,
           animations.current
-            .map((animation) =>
+            .map(animation =>
               Animated.timing(animation, {
                 toValue: 1,
                 duration: 150 * scale,
                 useNativeDriver: true,
-              })
+              }),
             )
-            .reverse()
+            .reverse(),
         ),
       ]).start();
     } else {
@@ -222,23 +220,26 @@ const FABGroup = ({
           duration: 200 * scale,
           useNativeDriver: true,
         }),
-        ...animations.current.map((animation) =>
+        ...animations.current.map(animation =>
           Animated.timing(animation, {
             toValue: 0,
             duration: 150 * scale,
             useNativeDriver: true,
-          })
+          }),
         ),
       ]).start();
     }
   }, [open, actions, backdrop, scale, isV3]);
 
-  const close = () => onStateChange({ open: false });
+  const close = () => onStateChange({open: false});
 
-  const toggle = () => onStateChange({ open: !open });
+  const toggle = () => onStateChange({open: !open});
 
-  const { labelColor, backdropColor, stackedFABBackgroundColor } =
-    getFABGroupColors({ theme });
+  const {
+    labelColor,
+    backdropColor,
+    stackedFABBackgroundColor,
+  } = getFABGroupColors();
 
   const backdropOpacity = open
     ? backdrop.interpolate({
@@ -248,35 +249,35 @@ const FABGroup = ({
     : backdrop;
 
   const opacities = animations.current;
-  const scales = opacities.map((opacity) =>
+  const scales = opacities.map(opacity =>
     open
       ? opacity.interpolate({
           inputRange: [0, 1],
           outputRange: [0.5, 1],
         })
-      : 1
+      : 1,
   );
 
-  const translations = opacities.map((opacity) =>
+  const translations = opacities.map(opacity =>
     open
       ? opacity.interpolate({
           inputRange: [0, 1],
           outputRange: [24, -8],
         })
-      : -8
+      : -8,
   );
-  const labelTranslations = opacities.map((opacity) =>
+  const labelTranslations = opacities.map(opacity =>
     open
       ? opacity.interpolate({
           inputRange: [0, 1],
           outputRange: [8, -8],
         })
-      : -8
+      : -8,
   );
 
   if (actions.length !== prevActions?.length) {
     animations.current = actions.map(
-      (_, i) => animations.current[i] || new Animated.Value(open ? 1 : 0)
+      (_, i) => animations.current[i] || new Animated.Value(open ? 1 : 0),
     );
     setPrevActions(actions);
   }
@@ -320,8 +321,8 @@ const FABGroup = ({
                         {
                           transform: [
                             isV3
-                              ? { translateY: labelTranslations[i] }
-                              : { scale: scales[i] },
+                              ? {translateY: labelTranslations[i]}
+                              : {scale: scales[i]},
                           ],
                           opacity: opacities[i],
                         },
@@ -339,11 +340,11 @@ const FABGroup = ({
                         : it.label
                     }
                     accessibilityRole="button"
-                    {...(isV3 && { elevation: 0 })}
+                    {...(isV3 && {elevation: 0})}
                   >
                     <Text
                       variant="titleMedium"
-                      style={{ color: it.labelTextColor ?? labelColor }}
+                      style={{color: it.labelTextColor ?? labelColor}}
                     >
                       {it.label}
                     </Text>
@@ -357,11 +358,11 @@ const FABGroup = ({
                 style={
                   [
                     {
-                      transform: [{ scale: scales[i] }],
+                      transform: [{scale: scales[i]}],
                       opacity: opacities[i],
                       backgroundColor: stackedFABBackgroundColor,
                     },
-                    isV3 && { transform: [{ translateY: translations[i] }] },
+                    isV3 && {transform: [{translateY: translations[i]}]},
                     it.style,
                   ] as StyleProp<ViewStyle>
                 }
@@ -390,7 +391,7 @@ const FABGroup = ({
           color={colorProp}
           accessibilityLabel={accessibilityLabel}
           accessibilityRole="button"
-          accessibilityState={{ expanded: open }}
+          accessibilityState={{expanded: open}}
           style={[styles.fab, fabStyle]}
           visible={visible}
           testID={testID}
@@ -403,12 +404,7 @@ const FABGroup = ({
 
 FABGroup.displayName = 'FAB.Group';
 
-export default withTheme(FABGroup);
-
-// @component-docs ignore-next-line
-const FABGroupWithTheme = withTheme(FABGroup);
-// @component-docs ignore-next-line
-export { FABGroupWithTheme as FABGroup };
+export default FABGroup;
 
 const styles = StyleSheet.create({
   safeArea: {

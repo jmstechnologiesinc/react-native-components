@@ -10,13 +10,16 @@ import {
 import ActivityIndicator from '../ActivityIndicator';
 import Surface from '../Surface';
 import CrossFadeIcon from '../CrossFadeIcon';
-import Icon, { IconSource } from '../Icon';
+import Icon, {IconSource} from '../Icon';
 import Text from '../Typography/Text';
 import TouchableRipple from '../TouchableRipple/TouchableRipple';
-import { withTheme } from '../../core/theming';
-import { getFABColors, getFabStyle } from './utils';
-import type { $RemoveChildren, Theme } from '../../types';
+import {getFABColors, getFabStyle} from './utils';
+import type {$RemoveChildren} from '../../types';
 
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faCheck} from '@fortawesome/pro-regular-svg-icons';
+
+import theme from '../../styles/themes/v3/LightTheme';
 type FABSize = 'small' | 'medium' | 'large';
 
 type FABMode = 'flat' | 'elevated';
@@ -25,7 +28,7 @@ type Props = $RemoveChildren<typeof Surface> & {
   /**
    * Icon to display for the `FAB`.
    */
-  icon: IconSource;
+  icon?: any;
   /**
    * Optional label for extended `FAB`.
    */
@@ -104,7 +107,6 @@ type Props = $RemoveChildren<typeof Surface> & {
   /**
    * @optional
    */
-  theme: Theme;
   testID?: string;
 };
 
@@ -153,7 +155,6 @@ const FAB = ({
   disabled,
   onPress,
   onLongPress,
-  theme,
   style,
   visible = true,
   uppercase = !theme.isV3,
@@ -164,11 +165,11 @@ const FAB = ({
   variant = 'primary',
   ...rest
 }: Props) => {
-  const { current: visibility } = React.useRef<Animated.Value>(
-    new Animated.Value(visible ? 1 : 0)
+  const {current: visibility} = React.useRef<Animated.Value>(
+    new Animated.Value(visible ? 1 : 0),
   );
-  const { isV3, animation } = theme;
-  const { scale } = animation;
+  const {isV3, animation} = theme;
+  const {scale} = animation;
 
   React.useEffect(() => {
     if (visible) {
@@ -186,10 +187,9 @@ const FAB = ({
     }
   }, [visible, scale, visibility]);
 
-  const IconComponent = animated ? CrossFadeIcon : Icon;
+  // const IconComponent = animated ? CrossFadeIcon : '';
 
-  const { backgroundColor, foregroundColor, rippleColor } = getFABColors({
-    theme,
+  const {backgroundColor, foregroundColor, rippleColor} = getFABColors({
     variant,
     disabled,
     customColor,
@@ -201,9 +201,9 @@ const FAB = ({
   const iconSize = isLargeSize ? 36 : 24;
   const loadingIndicatorSize = isLargeSize ? 24 : 18;
 
-  const fabStyle = getFabStyle({ size, theme });
+  const fabStyle = getFabStyle({size});
 
-  const shapeStyle = { borderRadius: fabStyle.borderRadius };
+  const shapeStyle = {borderRadius: fabStyle.borderRadius};
   const textStyle = {
     color: foregroundColor,
     ...(isV3 ? theme.typescale.labelLarge : theme.fonts.medium),
@@ -236,7 +236,7 @@ const FAB = ({
         ] as StyleProp<ViewStyle>
       }
       pointerEvents={visible ? 'auto' : 'none'}
-      {...(isV3 && { elevation: md3Elevation })}
+      {...(isV3 && {elevation: md3Elevation})}
     >
       <TouchableRipple
         borderless
@@ -246,7 +246,7 @@ const FAB = ({
         disabled={disabled}
         accessibilityLabel={accessibilityLabel}
         accessibilityRole="button"
-        accessibilityState={{ ...accessibilityState, disabled }}
+        accessibilityState={{...accessibilityState, disabled}}
         style={shapeStyle}
         testID={testID}
       >
@@ -255,11 +255,19 @@ const FAB = ({
           pointerEvents="none"
         >
           {icon && loading !== true ? (
-            <IconComponent
-              source={icon}
-              size={iconSize}
-              color={foregroundColor}
-            />
+            <>
+              {/* <IconComponent
+                source={icon}
+                size={iconSize}
+                color={foregroundColor}
+              /> */}
+
+              <FontAwesomeIcon
+                icon={icon}
+                size={iconSize}
+                color={foregroundColor}
+              />
+            </>
           ) : null}
           {loading ? (
             <ActivityIndicator
@@ -315,9 +323,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withTheme(FAB);
-
-// @component-docs ignore-next-line
-const FABWithTheme = withTheme(FAB);
-// @component-docs ignore-next-line
-export { FABWithTheme as FAB };
+export default FAB;
+export {FAB};

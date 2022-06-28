@@ -10,11 +10,11 @@ import {
 import color from 'color';
 
 import ActivityIndicator from '../ActivityIndicator';
-import Icon, { IconSource } from '../Icon';
+import Icon, {IconSource} from '../Icon';
 import Surface from '../Surface';
 import Text from '../Typography/Text';
 import TouchableRipple from '../TouchableRipple/TouchableRipple';
-import { ButtonMode, getButtonColors } from './utils';
+import {ButtonMode, getButtonColors} from './utils';
 
 import theme from '../../styles/themes/v3/LightTheme';
 
@@ -174,17 +174,17 @@ const Button = ({
     (modeToCompare: ButtonMode) => {
       return mode === modeToCompare;
     },
-    [mode]
+    [mode],
   );
-  const { roundness, isV3, animation } = theme;
+  const {roundness, isV3, animation} = theme;
 
   const isElevationEntitled =
     !disabled && (isV3 ? isMode('elevated') : isMode('contained'));
   const initialElevation = isV3 ? 1 : 2;
   const activeElevation = isV3 ? 2 : 8;
 
-  const { current: elevation } = React.useRef<Animated.Value>(
-    new Animated.Value(isElevationEntitled ? initialElevation : 0)
+  const {current: elevation} = React.useRef<Animated.Value>(
+    new Animated.Value(isElevationEntitled ? initialElevation : 0),
   );
 
   React.useEffect(() => {
@@ -193,7 +193,7 @@ const Button = ({
 
   const handlePressIn = () => {
     if (isMode('contained')) {
-      const { scale } = animation;
+      const {scale} = animation;
       Animated.timing(elevation, {
         toValue: activeElevation,
         duration: 200 * scale,
@@ -204,7 +204,7 @@ const Button = ({
 
   const handlePressOut = () => {
     if (isMode('contained')) {
-      const { scale } = animation;
+      const {scale} = animation;
       Animated.timing(elevation, {
         toValue: initialElevation,
         duration: 150 * scale,
@@ -216,15 +216,19 @@ const Button = ({
   const borderRadius = (isV3 ? 5 : 1) * roundness;
   const iconSize = isV3 ? 18 : 16;
 
-  const { backgroundColor, borderColor, textColor, borderWidth } =
-    getButtonColors({
-      customButtonColor,
-      customTextColor,
-      theme,
-      mode,
-      disabled,
-      dark,
-    });
+  const {
+    backgroundColor,
+    borderColor,
+    textColor,
+    borderWidth,
+  } = getButtonColors({
+    customButtonColor,
+    customTextColor,
+    theme,
+    mode,
+    disabled,
+    dark,
+  });
 
   const rippleColor = color(textColor).alpha(0.12).rgb().string();
 
@@ -241,7 +245,7 @@ const Button = ({
       : borderRadius,
   };
 
-  const { color: customLabelColor, fontSize: customLabelSize } =
+  const {color: customLabelColor, fontSize: customLabelSize} =
     StyleSheet.flatten(labelStyle) || {};
 
   const textStyle = {
@@ -270,10 +274,10 @@ const Button = ({
           compact && styles.compact,
           buttonStyle,
           style,
-          !isV3 && { elevation },
+          !isV3 && {elevation},
         ] as ViewStyle
       }
-      {...(isV3 && { elevation: elevation })}
+      {...(isV3 && {elevation: elevation})}
     >
       <TouchableRipple
         borderless
@@ -285,7 +289,7 @@ const Button = ({
         accessibilityLabel={accessibilityLabel}
         accessibilityHint={accessibilityHint}
         accessibilityRole="button"
-        accessibilityState={{ disabled }}
+        accessibilityState={{disabled}}
         accessible={accessible}
         disabled={disabled}
         rippleColor={rippleColor}

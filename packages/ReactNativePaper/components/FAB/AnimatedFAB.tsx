@@ -15,16 +15,18 @@ import {
 import Surface from '../Surface';
 import Icon from '../Icon';
 import TouchableRipple from '../TouchableRipple/TouchableRipple';
-import type { $RemoveChildren, Theme } from '../../types';
-import type { IconSource } from '../Icon';
-import { withTheme } from '../../core/theming';
+import type {$RemoveChildren} from '../../types';
+import type {IconSource} from '../Icon';
+
 import type {
   AccessibilityState,
   NativeSyntheticEvent,
   TextLayoutEventData,
 } from 'react-native';
 import AnimatedText from '../Typography/AnimatedText';
-import { getCombinedStyles, getFABColors } from './utils';
+import {getCombinedStyles, getFABColors} from './utils';
+
+import theme from '../../styles/themes/v3/LightTheme';
 
 export type AnimatedFABIconMode = 'static' | 'dynamic';
 export type AnimatedFABAnimateFrom = 'left' | 'right';
@@ -33,7 +35,7 @@ type Props = $RemoveChildren<typeof Surface> & {
   /**
    * Icon to display for the `FAB`.
    */
-  icon: IconSource;
+  icon?: IconSource;
   /**
    * Label for extended `FAB`.
    */
@@ -93,7 +95,7 @@ type Props = $RemoveChildren<typeof Surface> & {
   /**
    * @optional
    */
-  theme: Theme;
+
   testID?: string;
 };
 
@@ -189,7 +191,6 @@ const AnimatedFAB = ({
   disabled,
   onPress,
   onLongPress,
-  theme,
   style,
   visible = true,
   uppercase = !theme.isV3,
@@ -203,15 +204,15 @@ const AnimatedFAB = ({
   const isIOS = Platform.OS === 'ios';
   const isAnimatedFromRight = animateFrom === 'right';
   const isIconStatic = iconMode === 'static';
-  const { isRTL } = I18nManager;
-  const { current: visibility } = React.useRef<Animated.Value>(
-    new Animated.Value(visible ? 1 : 0)
+  const {isRTL} = I18nManager;
+  const {current: visibility} = React.useRef<Animated.Value>(
+    new Animated.Value(visible ? 1 : 0),
   );
-  const { current: animFAB } = React.useRef<Animated.Value>(
-    new Animated.Value(0)
+  const {current: animFAB} = React.useRef<Animated.Value>(
+    new Animated.Value(0),
   );
-  const { isV3, animation } = theme;
-  const { scale } = animation;
+  const {isV3, animation} = theme;
+  const {scale} = animation;
 
   const [textWidth, setTextWidth] = React.useState<number>(0);
   const [textHeight, setTextHeight] = React.useState<number>(0);
@@ -234,8 +235,7 @@ const AnimatedFAB = ({
     }
   }, [visible, scale, visibility]);
 
-  const { backgroundColor, foregroundColor } = getFABColors({
-    theme,
+  const {backgroundColor, foregroundColor} = getFABColors({
     variant,
     disabled,
     customColor,
@@ -320,7 +320,7 @@ const AnimatedFAB = ({
           style,
         ] as StyleProp<ViewStyle>
       }
-      {...(isV3 && { elevation: md3Elevation })}
+      {...(isV3 && {elevation: md3Elevation})}
     >
       <Animated.View
         style={[
@@ -335,7 +335,7 @@ const AnimatedFAB = ({
             ],
           },
           styles.standard,
-          { borderRadius },
+          {borderRadius},
         ]}
       >
         <View style={[StyleSheet.absoluteFill, styles.shadowWrapper]}>
@@ -379,7 +379,7 @@ const AnimatedFAB = ({
         </View>
         <Animated.View
           pointerEvents="box-none"
-          style={[styles.innerWrapper, { borderRadius }]}
+          style={[styles.innerWrapper, {borderRadius}]}
         >
           <Animated.View
             style={[
@@ -400,9 +400,9 @@ const AnimatedFAB = ({
               disabled={disabled}
               accessibilityLabel={accessibilityLabel}
               accessibilityRole="button"
-              accessibilityState={{ ...accessibilityState, disabled }}
+              accessibilityState={{...accessibilityState, disabled}}
               testID={testID}
-              style={{ borderRadius }}
+              style={{borderRadius}}
             >
               <View
                 style={[
@@ -515,4 +515,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withTheme(AnimatedFAB);
+export default AnimatedFAB;
