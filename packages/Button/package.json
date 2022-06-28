@@ -1,6 +1,6 @@
 {
   "name": "@jmsstudiosinc/button",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "> TODO: description",
   "author": "Joel Maria <joelmsanto@gmail.com>",
   "homepage": "https://github.com/JmsStudiosInc/ReactNativeComponents#readme",
@@ -18,7 +18,7 @@
     "url": "git+https://github.com/JmsStudiosInc/ReactNativeComponents.git"
   },
   "scripts": {
-    "build": "npm run clean && tsc  ",
+    "build": "npm run clean && tsc ",
     "clean": "rimraf lib/"
   },
   "bugs": {
