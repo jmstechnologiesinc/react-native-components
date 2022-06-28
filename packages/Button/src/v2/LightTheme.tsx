@@ -1,7 +1,7 @@
 import color from 'color';
-import { black, white, pinkA400 } from './colors';
-import configureFonts from '../../fonts';
-import type { ThemeBase } from '../../../types';
+import {black, white, pinkA400} from './colors';
+import configureFonts from '../fonts';
+import type {ThemeBase} from '../types';
 
 const LightTheme: ThemeBase = {
   dark: false,

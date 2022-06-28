@@ -9,8 +9,8 @@ import {
   Platform,
 } from 'react-native';
 
-import { getTouchableRippleColors } from './utils';
-import theme from '../../styles/themes/v3/LightTheme';
+import {getTouchableRippleColors} from './utils';
+import theme from '../LightTheme';
 
 type Props = React.ComponentPropsWithRef<typeof TouchableWithoutFeedback> & {
   /**
@@ -98,11 +98,11 @@ const TouchableRipple = ({
   ...rest
 }: Props) => {
   const handlePressIn = (e: any) => {
-    const { centered, onPressIn } = rest;
+    const {centered, onPressIn} = rest;
 
     onPressIn?.(e);
 
-    const { calculatedRippleColor } = getTouchableRippleColors({
+    const {calculatedRippleColor} = getTouchableRippleColors({
       theme,
       rippleColor,
     });
@@ -114,7 +114,7 @@ const TouchableRipple = ({
     let touchX;
     let touchY;
 
-    const { changedTouches, touches } = e.nativeEvent;
+    const {changedTouches, touches} = e.nativeEvent;
     const touch = touches?.[0] ?? changedTouches?.[0];
 
     // If centered or it was pressed using keyboard - enter or space
@@ -199,12 +199,12 @@ const TouchableRipple = ({
     rest.onPressOut?.(e);
 
     const containers = e.currentTarget.querySelectorAll(
-      '[data-paper-ripple]'
+      '[data-paper-ripple]',
     ) as HTMLElement[];
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        containers.forEach((container) => {
+        containers.forEach(container => {
           const ripple = container.firstChild as HTMLSpanElement;
 
           Object.assign(ripple.style, {
@@ -214,7 +214,7 @@ const TouchableRipple = ({
 
           // Finally remove the span after the transition
           setTimeout(() => {
-            const { parentNode } = container;
+            const {parentNode} = container;
 
             if (parentNode) {
               parentNode.removeChild(container);
@@ -249,7 +249,7 @@ TouchableRipple.supported = true;
 const styles = StyleSheet.create({
   touchable: {
     position: 'relative',
-    ...(Platform.OS === 'web' && { cursor: 'pointer' }),
+    ...(Platform.OS === 'web' && {cursor: 'pointer'}),
   },
   borderless: {
     overflow: 'hidden',

@@ -18,9 +18,16 @@
     "url": "git+https://github.com/JmsStudiosInc/ReactNativeComponents.git"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "build": "npm run clean && tsc  ",
+    "clean": "rimraf lib/"
   },
   "bugs": {
     "url": "https://github.com/JmsStudiosInc/ReactNativeComponents/issues"
+  },
+  "devDependencies": {
+    "@types/color": "^3.0.3",
+    "@types/react-native": "^0.69.0",
+    "prettier": "^2.5.1",
+    "rimraf": "^3.0.2"
   }
 }
