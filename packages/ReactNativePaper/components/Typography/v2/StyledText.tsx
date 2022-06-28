@@ -1,9 +1,10 @@
 import color from 'color';
 import * as React from 'react';
-import { I18nManager, StyleProp, TextStyle, StyleSheet } from 'react-native';
+import {I18nManager, StyleProp, TextStyle, StyleSheet} from 'react-native';
 
 import Text from './Text';
-import { useTheme } from '../../../core/theming';
+
+import theme from '../../../styles/themes/v3/LightTheme';
 
 type Props = React.ComponentProps<typeof Text> & {
   alpha?: number;
@@ -11,11 +12,9 @@ type Props = React.ComponentProps<typeof Text> & {
   style?: StyleProp<TextStyle>;
 };
 
-const StyledText = ({ alpha = 1, family, style, ...rest }: Props) => {
-  const theme = useTheme();
-
+const StyledText = ({alpha = 1, family, style, ...rest}: Props) => {
   const textColor = color(
-    theme.isV3 ? theme.colors.onSurface : theme.colors?.text
+    theme.isV3 ? theme.colors.onSurface : theme.colors?.text,
   )
     .alpha(alpha)
     .rgb()

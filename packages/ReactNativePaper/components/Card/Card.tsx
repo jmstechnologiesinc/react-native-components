@@ -10,13 +10,14 @@ import {
 import CardContent from './CardContent';
 import CardActions from './CardActions';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import CardCover, { CardCover as _CardCover } from './CardCover';
+import CardCover, {CardCover as _CardCover} from './CardCover';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import CardTitle, { CardTitle as _CardTitle } from './CardTitle';
+import CardTitle, {CardTitle as _CardTitle} from './CardTitle';
 import Surface from '../Surface';
-import { withTheme } from '../../core/theming';
-import type { Theme } from '../../types';
-import { getCardColors } from './helpers';
+
+import theme from '../../styles/themes/v3/LightTheme';
+
+import {getCardColors} from './helpers';
 
 type OutlinedCardProps = {
   mode: 'outlined';
@@ -65,7 +66,7 @@ type Props = React.ComponentProps<typeof Surface> & {
   /**
    * @optional
    */
-  theme: Theme;
+
   /**
    * Pass down testID from card props to touchable
    */
@@ -126,7 +127,7 @@ const Card = ({
   mode: cardMode = 'elevated',
   children,
   style,
-  theme,
+
   testID,
   accessible,
   ...rest
@@ -135,19 +136,19 @@ const Card = ({
     (modeToCompare: Mode) => {
       return cardMode === modeToCompare;
     },
-    [cardMode]
+    [cardMode],
   );
 
   // Default animated value
-  const { current: elevation } = React.useRef<Animated.Value>(
-    new Animated.Value(cardElevation)
+  const {current: elevation} = React.useRef<Animated.Value>(
+    new Animated.Value(cardElevation),
   );
   // Dark adaptive animated value, used in case of toggling the theme,
   // it prevents animating the background with native drivers inside Surface
-  const { current: elevationDarkAdaptive } = React.useRef<Animated.Value>(
-    new Animated.Value(cardElevation)
+  const {current: elevationDarkAdaptive} = React.useRef<Animated.Value>(
+    new Animated.Value(cardElevation),
   );
-  const { animation, dark, mode, roundness, isV3 } = theme;
+  const {animation, dark, mode, roundness, isV3} = theme;
 
   const prevDarkRef = React.useRef<boolean>(dark);
   React.useEffect(() => {
@@ -204,16 +205,15 @@ const Card = ({
   };
 
   const total = React.Children.count(children);
-  const siblings = React.Children.map(children, (child) =>
+  const siblings = React.Children.map(children, child =>
     React.isValidElement(child) && child.type
       ? (child.type as any).displayName
-      : null
+      : null,
   );
   const computedElevation =
     dark && isAdaptiveMode ? elevationDarkAdaptive : elevation;
 
-  const { backgroundColor, borderColor } = getCardColors({
-    theme,
+  const {backgroundColor, borderColor} = getCardColors({
     mode: cardMode,
     isAdaptiveMode,
     elevation,
@@ -224,16 +224,15 @@ const Card = ({
       style={[
         {
           borderRadius: roundness,
-          backgroundColor: backgroundColor as unknown as string,
+          backgroundColor: (backgroundColor as unknown) as string,
         },
         !isV3 && isMode('outlined')
           ? styles.resetElevation
           : {
-              elevation: computedElevation as unknown as number,
+              elevation: (computedElevation as unknown) as number,
             },
         style,
       ]}
-      theme={theme}
       {...(isV3 && {
         elevation: isMode('elevated') ? computedElevation : 0,
       })}
@@ -269,7 +268,7 @@ const Card = ({
                   total,
                   siblings,
                 })
-              : child
+              : child,
           )}
         </View>
       </TouchableWithoutFeedback>
@@ -303,4 +302,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withTheme(Card);
+export default Card;
