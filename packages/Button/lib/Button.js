@@ -1,7 +1,1 @@
-'use strict';
-
-module.exports = button;
-
-function button() {
-    // TODO
-}
+export {default} from '../../ReactNativePaper/components/Button/Button';
