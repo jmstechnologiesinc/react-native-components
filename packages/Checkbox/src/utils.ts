@@ -1,5 +1,5 @@
 import color from 'color';
-import theme from '../../styles/themes/v3/LightTheme';
+import theme from './LightTheme';
 
 const getAndroidCheckedColor = ({customColor}: {customColor?: string}) => {
   if (customColor) {

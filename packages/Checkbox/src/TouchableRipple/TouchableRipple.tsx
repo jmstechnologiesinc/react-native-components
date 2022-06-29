@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import {getTouchableRippleColors} from './utils';
-import theme from '../../styles/themes/v3/LightTheme';
+import theme from '../LightTheme';
 
 type Props = React.ComponentPropsWithRef<typeof TouchableWithoutFeedback> & {
   /**

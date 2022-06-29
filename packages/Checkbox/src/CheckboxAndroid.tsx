@@ -1,10 +1,9 @@
 import * as React from 'react';
 import {Animated, View, StyleSheet} from 'react-native';
-import MaterialCommunityIcon from '../MaterialCommunityIcon';
-import TouchableRipple from '../TouchableRipple/TouchableRipple';
+import TouchableRipple from './TouchableRipple/TouchableRipple';
 
-import type {$RemoveChildren} from '../../types';
-import theme from '../../styles/themes/v3/LightTheme';
+import type {$RemoveChildren} from './types';
+import theme from './LightTheme';
 import {getAndroidSelectionControlColor} from './utils';
 
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';

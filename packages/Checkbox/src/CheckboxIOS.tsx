@@ -1,14 +1,14 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 
-import TouchableRipple from '../TouchableRipple/TouchableRipple';
+import TouchableRipple from './TouchableRipple/TouchableRipple';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCircle, faCheck} from '@fortawesome/pro-regular-svg-icons';
 
-import type {$RemoveChildren} from '../../types';
+import type {$RemoveChildren} from './types';
 import {getSelectionControlIOSColor} from './utils';
 
-import theme from '../../styles/themes/v3/LightTheme';
+import theme from './LightTheme';
 
 type Props = $RemoveChildren<typeof TouchableRipple> & {
   /**

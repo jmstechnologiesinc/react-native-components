@@ -5,11 +5,11 @@ import {StyleProp, StyleSheet, TextStyle, View, ViewStyle} from 'react-native';
 import Checkbox from './Checkbox';
 import CheckboxAndroid from './CheckboxAndroid';
 import CheckboxIOS from './CheckboxIOS';
-import Text from '../Typography/Text';
-import TouchableRipple from '../TouchableRipple/TouchableRipple';
+import Text from './Text';
+import TouchableRipple from './TouchableRipple/TouchableRipple';
 
-import type {MD3TypescaleKey} from '../../types';
-import theme from '../../styles/themes/v3/LightTheme';
+import type {MD3TypescaleKey} from './types';
+import theme from './LightTheme';
 
 type Props = {
   /**

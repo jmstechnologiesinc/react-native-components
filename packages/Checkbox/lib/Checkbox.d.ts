@@ -1,38 +1,32 @@
-import * as React from 'react';
-import {Platform} from 'react-native';
-import CheckboxIOS from './CheckboxIOS';
-import CheckboxAndroid from './CheckboxAndroid';
-
-type Props = {
-  /**
-   * Status of checkbox.
-   */
-  status: 'checked' | 'unchecked' | 'indeterminate';
-  /**
-   * Whether checkbox is disabled.
-   */
-  disabled?: boolean;
-  /**
-   * Function to execute on press.
-   */
-  onPress?: () => void;
-  /**
-   * Custom color for unchecked checkbox.
-   */
-  uncheckedColor?: string;
-  /**
-   * Custom color for checkbox.
-   */
-  color?: string;
-  /**
-   * @optional
-   */
-  /**
-   * testID to be used on tests.
-   */
-  testID?: string;
+declare type Props = {
+    /**
+     * Status of checkbox.
+     */
+    status: 'checked' | 'unchecked' | 'indeterminate';
+    /**
+     * Whether checkbox is disabled.
+     */
+    disabled?: boolean;
+    /**
+     * Function to execute on press.
+     */
+    onPress?: () => void;
+    /**
+     * Custom color for unchecked checkbox.
+     */
+    uncheckedColor?: string;
+    /**
+     * Custom color for checkbox.
+     */
+    color?: string;
+    /**
+     * @optional
+     */
+    /**
+     * testID to be used on tests.
+     */
+    testID?: string;
 };
-
 /**
  * Checkboxes allow the selection of multiple options from a set.
  *
@@ -76,13 +70,6 @@ type Props = {
  * export default MyComponent;
  * ```
  */
-const Checkbox = (props: Props) =>
-  Platform.OS === 'ios' ? (
-    <CheckboxIOS {...props} />
-  ) : (
-    <CheckboxAndroid {...props} />
-  );
-
+declare const Checkbox: (props: Props) => JSX.Element;
 export default Checkbox;
-
-export {Checkbox};
+export { Checkbox };
