@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 
-import Checkbox from './Checkbox';
+import {Checkbox} from '@jmsstudiosinc/react-native-paper';
 import useState from 'storybook-addon-state';
 import TouchableRipple from './TouchableRipple/TouchableRipple';
 import Paragraph from './Text';
@@ -22,8 +22,7 @@ export const Checkboxs = () => {
         {
           backgroundColor: '#fff',
         },
-      ]}
-    >
+      ]}>
       <TouchableRipple onPress={() => setCheckedNormal(!checkedNormal)}>
         <View style={styles.row}>
           <Paragraph>Normal</Paragraph>

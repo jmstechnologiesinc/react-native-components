@@ -1,7 +1,7 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import {ScrollView} from 'react-native';
 
-import Text from './Text';
+import {Text} from '@jmsstudiosinc/react-native-paper';
 
 export default {
   title: 'packages/Text',
@@ -9,9 +9,8 @@ export default {
 };
 
 export const Variant = () => (
-  <ScrollView
->
-  <Text variant="displayLarge">Display Large</Text>
+  <ScrollView>
+    <Text variant="displayLarge">Display Large</Text>
     <Text variant="displayMedium">Display Medium</Text>
     <Text variant="displaySmall">Display small</Text>
 
@@ -32,6 +31,3 @@ export const Variant = () => (
     <Text variant="labelSmall">Label Small</Text>
   </ScrollView>
 );
-
-
-

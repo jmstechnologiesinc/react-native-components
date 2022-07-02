@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, ScrollView, Text} from 'react-native';
 import Portal from '../../ReactNativePaper/components/Portal/PortalHost';
-import FAB from './Fab';
+import {FAB} from '@jmsstudiosinc/react-native-paper';
 import useState from 'storybook-addon-state';
 
 import {

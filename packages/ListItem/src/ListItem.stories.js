@@ -8,7 +8,7 @@ import {
   faEquals,
 } from '@fortawesome/pro-regular-svg-icons';
 
-import List from './ListItem';
+import {List} from '@jmsstudiosinc/react-native-paper';
 
 export default {
   title: 'packages/List.Section',

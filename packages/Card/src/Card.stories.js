@@ -9,11 +9,11 @@ import {Alert, ScrollView, StyleSheet} from 'react-native';
 //   useTheme,
 // } from 'react-native-paper';
 
-import Card from './Card';
+import {Card} from '@jmsstudiosinc/react-native-paper';
 // IconButton
 
 import Paragraph from '../../ReactNativePaper/components/Typography/v2/Paragraph';
-import Button from '../../ReactNativePaper/components/Button/Button';
+import {Button} from '@jmsstudiosinc/react-native-paper';
 // import { IconButton } from '../../ReactNativePaper/components/IconButton';
 
 export default {
