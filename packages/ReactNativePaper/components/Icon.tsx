@@ -1,19 +1,16 @@
 import * as React from 'react';
-import {
-  Image,
-  I18nManager,
-  Platform,
-  ImageSourcePropType,
-} from 'react-native';
-import { Consumer as SettingsConsumer } from '../core/settings';
-import { accessibilityProps } from './MaterialCommunityIcon';
+import {Image, I18nManager, Platform, ImageSourcePropType} from 'react-native';
+import {Consumer as SettingsConsumer} from '../core/settings';
+import {accessibilityProps} from './MaterialCommunityIcon';
+
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 type IconSourceBase = string | ImageSourcePropType;
 
 export type IconSource =
   | IconSourceBase
-  | Readonly<{ source: IconSourceBase; direction: 'rtl' | 'ltr' | 'auto' }>
-  | ((props: IconProps & { color: string }) => React.ReactNode);
+  | Readonly<{source: IconSourceBase; direction: 'rtl' | 'ltr' | 'auto'}>
+  | ((props: IconProps & {color: string}) => React.ReactNode);
 
 type IconProps = {
   size: number;
@@ -63,7 +60,7 @@ export const isValidIcon = (source: any) =>
 export const isEqualIcon = (a: any, b: any) =>
   a === b || getIconId(a) === getIconId(b);
 
-const Icon = ({ source, color, size, theme, ...rest }: Props) => {
+const Icon = ({source, color, size, theme, ...rest}: Props) => {
   const direction =
     typeof source === 'object' && source.direction && source.source
       ? source.direction === 'auto'
@@ -86,7 +83,7 @@ const Icon = ({ source, color, size, theme, ...rest }: Props) => {
         source={s}
         style={[
           {
-            transform: [{ scaleX: direction === 'rtl' ? -1 : 1 }],
+            transform: [{scaleX: direction === 'rtl' ? -1 : 1}],
           },
           // eslint-disable-next-line react-native/no-inline-styles
           {
@@ -100,20 +97,9 @@ const Icon = ({ source, color, size, theme, ...rest }: Props) => {
       />
     );
   } else if (typeof s === 'string') {
-    return (
-      <SettingsConsumer>
-        {({ icon }) => {
-          return icon({
-            name: s,
-            color: iconColor,
-            size,
-            direction,
-          });
-        }}
-      </SettingsConsumer>
-    );
+    return <FontAwesomeIcon icon={s} color={iconColor} />;
   } else if (typeof s === 'function') {
-    return s({ color: iconColor, size, direction });
+    return s({color: iconColor, size, direction});
   }
 
   return null;

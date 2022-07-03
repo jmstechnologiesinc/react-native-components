@@ -2,13 +2,15 @@ import * as React from 'react';
 import {Animated, StyleSheet, View} from 'react-native';
 import Icon, {isValidIcon, IconSource, isEqualIcon} from './Icon';
 
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+
 import theme from '../styles/themes/v3/LightTheme';
 
 type Props = {
   /**
    * Icon to display for the `CrossFadeIcon`.
    */
-  source: IconSource;
+  icon: IconSource;
   /**
    * Color of the icon.
    */
@@ -22,10 +24,8 @@ type Props = {
    */
 };
 
-const CrossFadeIcon = ({color, size, source}: Props) => {
-  const [currentIcon, setCurrentIcon] = React.useState<IconSource>(
-    () => source,
-  );
+const CrossFadeIcon = ({color, size, icon}: Props) => {
+  const [currentIcon, setCurrentIcon] = React.useState<IconSource>(() => icon);
   const [previousIcon, setPreviousIcon] = React.useState<IconSource | null>(
     null,
   );
@@ -33,9 +33,9 @@ const CrossFadeIcon = ({color, size, source}: Props) => {
 
   const {scale} = theme.animation;
 
-  if (currentIcon !== source) {
+  if (currentIcon !== icon) {
     setPreviousIcon(() => currentIcon);
-    setCurrentIcon(() => source);
+    setCurrentIcon(() => icon);
   }
 
   React.useEffect(() => {
@@ -90,7 +90,7 @@ const CrossFadeIcon = ({color, size, source}: Props) => {
             },
           ]}
         >
-          <Icon source={previousIcon} size={size} color={color} />
+          <Icon icon={previousIcon} size={size} color={color} />
         </Animated.View>
       ) : null}
       <Animated.View
@@ -102,7 +102,7 @@ const CrossFadeIcon = ({color, size, source}: Props) => {
           },
         ]}
       >
-        <Icon source={currentIcon} size={size} color={color} />
+        <FontAwesomeIcon icon={currentIcon} size={size} color={color} />
       </Animated.View>
     </View>
   );

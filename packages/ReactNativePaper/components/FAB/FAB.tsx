@@ -187,7 +187,7 @@ const FAB = ({
     }
   }, [visible, scale, visibility]);
 
-  // const IconComponent = animated ? CrossFadeIcon : '';
+  const IconComponent = animated ? CrossFadeIcon : FontAwesomeIcon;
 
   const {backgroundColor, foregroundColor, rippleColor} = getFABColors({
     variant,
@@ -256,17 +256,17 @@ const FAB = ({
         >
           {icon && loading !== true ? (
             <>
-              {/* <IconComponent
-                source={icon}
-                size={iconSize}
-                color={foregroundColor}
-              /> */}
-
-              <FontAwesomeIcon
+              <CrossFadeIcon
                 icon={icon}
                 size={iconSize}
                 color={foregroundColor}
               />
+
+              {/* <FontAwesomeIcon
+                icon={icon}
+                size={iconSize}
+                color={foregroundColor}
+              /> */}
             </>
           ) : null}
           {loading ? (
