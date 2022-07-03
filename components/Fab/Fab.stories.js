@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, ScrollView, Text} from 'react-native';
-import FAB from './Fab';
+import {FAB} from '@jmsstudiosinc/react-native-paper';
 import useState from 'storybook-addon-state';
 
 import {
@@ -16,7 +16,7 @@ import {
 } from '@fortawesome/pro-regular-svg-icons';
 
 export default {
-  title: 'packages/FAB',
+  title: 'Component/FAB',
   component: FAB,
 };
 
