@@ -3,6 +3,7 @@ import { StyleSheet, StyleProp, TextStyle } from 'react-native';
 import color from 'color';
 import Text from '../Typography/Text';
 import theme from '../../styles/themes/v3/LightTheme';
+import HelperText from '../HelperText';
 
 type Props = React.ComponentProps<typeof Text> & {
   /**
@@ -33,19 +34,24 @@ const ListSubheader = ({ style,  ...rest }: Props) => {
     : color(theme.colors.text).alpha(0.54).rgb().string();
 
   return (
-    <Text
-      variant="bodyMedium"
-      numberOfLines={1}
-      {...rest}
-      style={[
-        styles.container,
-        {
-          color: textColor,
-          ...(theme.isV3 ? theme.typescale.bodyMedium : theme.fonts.medium),
-        },
-        style,
-      ]}
-    />
+    <>
+      <Text
+        variant="bodyMedium"
+        numberOfLines={1}
+        {...rest}
+        style={[
+          styles.container,
+          {
+            color: textColor,
+            ...(theme.isV3 ? theme.typescale.bodyMedium : theme.fonts.medium),
+          },
+          style,
+        ]}
+      />
+{/*       <HelperText type="info" visible={true}>
+        Email address is invalid!
+      </HelperText> */}
+    </>
   );
 };
 

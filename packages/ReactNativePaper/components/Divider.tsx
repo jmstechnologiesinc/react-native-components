@@ -4,6 +4,7 @@ import { StyleSheet, View, ViewStyle, StyleProp } from 'react-native';
 import { black, white } from '../styles/themes/v2/colors';
 import type { $RemoveChildren } from '../types';
 import theme from '../styles/themes/v3/LightTheme';
+import { Subheader } from './List/List';
 
 type Props = $RemoveChildren<typeof View> & {
   /**
@@ -59,6 +60,7 @@ const Divider = ({
   horizontalInset = false,
   style,
   bold = false,
+  title,
   ...rest
 }: Props) => {
   const { dark: isDarkTheme, isV3 } = theme;
@@ -71,16 +73,19 @@ const Divider = ({
         .string();
 
   return (
-    <View
-      {...rest}
-      style={[
-        { height: StyleSheet.hairlineWidth, backgroundColor: dividerColor },
-        leftInset && styles.leftInset,
-        isV3 && horizontalInset && styles.horizontalInset,
-        isV3 && bold && styles.bold,
-        style,
-      ]}
-    />
+    <>
+      <View
+        {...rest}
+        style={[
+          { height: StyleSheet.hairlineWidth, backgroundColor: dividerColor },
+          leftInset && styles.leftInset,
+          isV3 && horizontalInset && styles.horizontalInset,
+          isV3 && bold && styles.bold,
+          style,
+        ]}
+      />
+      {title ? <Subheader style={[styles.leftInset, {paddingHorizontal:0}]}>{title}</Subheader> : null}
+    </>
   );
 };
 

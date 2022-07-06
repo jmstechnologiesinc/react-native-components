@@ -10,8 +10,11 @@ export { default as Icon } from './ListIcon';
 // @component ./ListItem.tsx
 export { default as Item } from './ListItem';
 
+export {styles} from './ListItem';
+
 // @component ./ListSection.tsx
 export { default as Section } from './ListSection';
 
 // @component ./ListSubheader.tsx
 export { default as Subheader } from './ListSubheader';
+

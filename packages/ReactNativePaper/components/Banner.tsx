@@ -4,8 +4,8 @@ import Surface from './Surface';
 import Text from './Typography/Text';
 import Button from './Button/Button';
 import Icon, { IconSource } from './Icon';
-import { withTheme } from '../core/theming';
-import type { $RemoveChildren, Theme } from '../types';
+import type { $RemoveChildren } from '../types';
+import theme from '../styles/themes/v3/LightTheme';
 
 const DEFAULT_MAX_WIDTH = 960;
 
@@ -51,7 +51,6 @@ type Props = $RemoveChildren<typeof Surface> & {
   /**
    * @optional
    */
-  theme: Theme;
   /**
    * @optional
    * Optional callback that will be called after the opening animation finished running normally
@@ -131,7 +130,6 @@ const Banner = ({
   contentStyle,
   elevation = 1,
   style,
-  theme,
   onShowAnimationFinished = () => {},
   onHideAnimationFinished = () => {},
   ...rest
@@ -290,4 +288,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withTheme(Banner);
+export default Banner;

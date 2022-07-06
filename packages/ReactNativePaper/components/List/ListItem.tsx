@@ -76,6 +76,7 @@ type Props = $RemoveChildren<typeof TouchableRipple> & {
    * Style that is passed to Title element.
    */
   titleStyle?: StyleProp<TextStyle>;
+  
   /**
    * Style that is passed to Description element.
    */
@@ -139,6 +140,7 @@ const ListItem = ({
   onPress,
   style,
   titleStyle,
+  itemStyle,
   titleNumberOfLines = 1,
   descriptionNumberOfLines = 2,
   titleEllipsizeMode,
@@ -219,7 +221,7 @@ const ListItem = ({
                   },
             })
           : null}
-        <View style={[styles.item, styles.content]}>
+        <View style={[styles.item, styles.content, itemStyle]}>
           {renderTitle()}
 
           {description
@@ -270,4 +272,5 @@ const styles = StyleSheet.create({
   },
 });
 
+export {styles}
 export default ListItem;

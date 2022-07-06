@@ -13,15 +13,17 @@ export default {
 export const CustomDescription = () => (
   <ScrollView>
     {mockData.map(product => <AttributeGroup 
-    id={product.id} 
-    uuid={product.uuid} 
-    photo={product.photos?.[0]} 
-    title={product.title} 
-    description={product.description} 
-    price={product.price} 
-    quantity={product.quantity} 
-    isOutofStock={product.isOutofStock} />
-  )}
+      title={product.title} 
+      data={product.data}
+      id={product.id}
+      uuid={product.uuid}
+      taxonomyType={product.taxonomyType}
+      selection={product.selection}
+      minSelection={product.minSelection}
+      maxSelection={product.maxSelection}
+      isValid={product.isValid}
+      formattedSelection={product.formattedSelection} />
+    )}
   </ScrollView>
 );
 

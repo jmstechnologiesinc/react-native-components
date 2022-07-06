@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { Consumer as SettingsConsumer } from '../core/settings';
 import { accessibilityProps } from './MaterialCommunityIcon';
+import theme from '../styles/themes/v3/LightTheme';
 
 type IconSourceBase = string | ImageSourcePropType;
 
@@ -63,7 +64,7 @@ export const isValidIcon = (source: any) =>
 export const isEqualIcon = (a: any, b: any) =>
   a === b || getIconId(a) === getIconId(b);
 
-const Icon = ({ source, color, size, theme, ...rest }: Props) => {
+const Icon = ({ source, color, size, ...rest }: Props) => {
   const direction =
     typeof source === 'object' && source.direction && source.source
       ? source.direction === 'auto'

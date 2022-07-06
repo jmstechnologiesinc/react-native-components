@@ -1629,6 +1629,14 @@
     "@types/yargs" "^16.0.0"
     "chalk" "^4.0.0"
 
+"@jmsstudiosinc/cart@^10.0.0":
+  "integrity" "sha512-FEHVdl+yh16Vqnrs77E0FjUuS4dF5xvRa2pBP0HQBGPlDqjRcJWw5GasBK4SUtJ7NZdwWtb98hp7DLndXM1rDg=="
+  "resolved" "https://npm.pkg.github.com/download/@jmsstudiosinc/cart/10.0.0/20f05b919938fca907c04ecf442eee401727644794b736130c236a91e2dfb9cd"
+  "version" "10.0.0"
+  dependencies:
+    "@jmsstudiosinc/commons" "^8.0.0"
+    "@jmsstudiosinc/vendor" "^7.0.0"
+
 "@jmsstudiosinc/commons@^8.0.0":
   "integrity" "sha512-ageX5dk0cNBKkk2Kk3Z9HAkp+CseNCHcH0QFix4P7jz5KyVHqop2akExxYfkYCTMns7rBUBy5rNng4Fv9M39Ew=="
   "resolved" "https://npm.pkg.github.com/download/@jmsstudiosinc/commons/8.0.0/de3b42a98a135f3386c7e4556fa6c2832dbda3886d8af39d87703af6b102b208"

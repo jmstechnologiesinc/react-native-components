@@ -6,48 +6,36 @@ import * as List from '../../ReactNativePaper/components/List/List';
 import Chip from '../../ReactNativePaper/components/Chip/Chip';
 import Badge from '../../ReactNativePaper/components/Badge';
 
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+
+import {
+  faCheck,
+  faChevronRight,
+} from '@fortawesome/pro-regular-svg-icons';
+
 const AttributeGroup = ({
-    id,
-    uuid,
-    photo,
-    title,
-    description,
-    subheader,
-    price,
-    quantity,
-    isOutofStock,
-    onPress
+  title,
+  data,
+  id,
+  uuid,
+  taxonomyType,
+  selection,
+  minSelection,
+  maxSelection,
+  isValid,
+  formattedSelection,
 }) => (
-  <List.AccordionGroup
-      expandedId={"1"}
-      onAccordionPress={() => {}}
-    >
-      <List.Section title="Controlled Accordion Group example">
+  <List.Section title={title}>
+      {data?.map(data => (
         <List.Accordion
-          left={props => <List.Icon {...props} icon="folder" />}
-          title="Expandable list item"
-          description="ddd"
-          id="1"
-        >
-          <List.Item title="List item 1" />
-          <List.Item title="List item 2" />
-        </List.Accordion>
-        <List.Accordion
-          left={props => <List.Icon {...props} icon="folder" />}
-          title="Expandable list item 2"
-          id="2"
-        >
-          <List.Item title="List item 1" />
-        </List.Accordion>
-        <List.Accordion
-          left={props => <List.Icon {...props} icon="folder" />}
-          title="Expandable list item 2"
-          id="3"
-        >
-          <List.Item title="Another item" />
-        </List.Accordion>
-      </List.Section>
-    </List.AccordionGroup>
+            left={props => <List.Icon {...props} icon={faCheck} />}
+            right={props => <Text>{data.price}</Text>}
+            title={data.title}
+            expanded={data.value}
+          >
+          </List.Accordion>
+      ))}
+  </List.Section>
 )
 
 const styles = StyleSheet.create({

@@ -14,6 +14,12 @@ import MaterialCommunityIcon from '../MaterialCommunityIcon';
 import Text from '../Typography/Text';
 import { ListAccordionGroupContext } from './ListAccordionGroup';
 import theme from '../../styles/themes/v3/LightTheme';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+
+import {
+  faChevronUp,
+  faChevronDown
+} from '@fortawesome/pro-regular-svg-icons';
 
 type Props = {
   /**
@@ -242,14 +248,20 @@ const ListAccordion = ({
               {right ? (
                 right({
                   isExpanded: isExpanded,
+                  color: theme.isV3 ? descriptionColor : titleColor
                 })
               ) : (
-                <MaterialCommunityIcon
-                  name={isExpanded ? 'chevron-up' : 'chevron-down'}
+                <FontAwesomeIcon                   
+                  size={16}
+                  icon={isExpanded ? faChevronUp : faChevronDown} color={theme.isV3 ? descriptionColor : titleColor}
+                />
+
+              /*   <MaterialCommunityIcon
+                  name={isExpanded ? 'chevron-right' : 'chevron-down'}
                   color={theme.isV3 ? descriptionColor : titleColor}
                   size={24}
                   direction={I18nManager.isRTL ? 'rtl' : 'ltr'}
-                />
+                /> */
               )}
             </View>
           </View>

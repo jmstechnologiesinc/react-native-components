@@ -44,7 +44,7 @@ const ICON_SIZE = 24;
  */
 const ListIcon = ({icon, color: iconColor, style}: Props) => (
   <View style={[styles.item, style]} pointerEvents="box-none">
-    <FontAwesomeIcon icon={icon} color={iconColor} />
+   {typeof icon === "function" ? icon() : <FontAwesomeIcon icon={icon} color={iconColor} />}
   </View>
 );
 
