@@ -1,7 +1,6 @@
 import React from 'react';
 
-import List from '../../ListItem/src/ListItem';
-import Text from '../../ReactNativePaper/components/Typography/Text';
+import {Text, List} from '@jmsstudiosinc/react-native-paper';
 
 const Breakdown = ({fees}) => {
     const results = [];

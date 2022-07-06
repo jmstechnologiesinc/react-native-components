@@ -31,17 +31,10 @@ try {
 
 const getStories = () => {
   return [
-    require("../packages/AttributeGroup/src/AttributeGroup.stories.js"),
-    require("../packages/Avatar/src/Avatar.stories.js"),
+    require("../packages/AttributeGroupList/src/AttributeGroupList.stories.js"),
     require("../packages/Breakdown/src/Breakdown.stories.js"),
-    require("../packages/Button/src/Button.stories.js"),
-    require("../packages/Card/src/Card.stories.js"),
-    require("../packages/Cart/src/Cart.stories.js"),
-    require("../packages/FAB/src/Fab.stories.js"),
-    require("../packages/HLTabsWrapper/src/index.stories.tsx"),
-    require("../packages/ListItem/src/ListItem.stories.js"),
-    require("../packages/Product/src/Product.stories.js"),
-    require("../packages/Text/src/Text.stories.js"),
+    require("../packages/CartList/src/CartList.stories.js"),
+    require("../packages/ProductList/src/ProductList.stories.js"),
   ];
 };
 
