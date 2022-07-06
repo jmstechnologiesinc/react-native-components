@@ -2,9 +2,7 @@ import React from 'react';
 
 import { View,StyleSheet, Image, Text } from 'react-native';
 
-import * as List from '../../ReactNativePaper/components/List/List';
-import Chip from '../../ReactNativePaper/components/Chip/Chip';
-import Badge from '../../ReactNativePaper/components/Badge';
+import {List} from '@jmsstudiosinc/react-native-paper';
 
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 

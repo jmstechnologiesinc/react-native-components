@@ -1,8 +1,6 @@
 import React from 'react';
 import { View,StyleSheet,ScrollView, Image, Text } from 'react-native';
 
-import {getMainPhoto} from "@jmsstudiosinc/commons";
-import Chip from '../../ReactNativePaper/components/Chip/Chip';
 import AttributeGroup from './AttributeGroup';
 import mockData from "./mockData.json";
 
