@@ -20,6 +20,7 @@ const VendorList = () => {
         renderItem={renderVendorItem}
         keyExtractor={item => `${item.id}`}
         stickySectionHeadersEnabled={false}
+        showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       />
     </View>
@@ -29,6 +30,7 @@ const VendorList = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginHorizontal: 5,
   },
   content: {
     padding: 4,

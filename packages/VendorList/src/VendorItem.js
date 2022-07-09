@@ -4,7 +4,7 @@ import {Card} from '@jmsstudiosinc/react-native-paper';
 
 const renderVendorItem = ({item}) => {
   return (
-    <Card style={styles.card}>
+    <Card style={styles.card} mode="elevated">
       <Card.Cover source={{uri: item.photos}} />
       <Card.Title
         title={item.title}
