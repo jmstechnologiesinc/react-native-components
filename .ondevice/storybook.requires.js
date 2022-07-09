@@ -34,7 +34,9 @@ const getStories = () => {
     require("../packages/AttributeGroupList/src/AttributeGroupList.stories.js"),
     require("../packages/Breakdown/src/Breakdown.stories.js"),
     require("../packages/CartList/src/CartList.stories.js"),
+    require("../packages/Checkbox/src/Checkbox.stories.js"),
     require("../packages/ProductList/src/ProductList.stories.js"),
+    require("../packages/VendorList/src/VendorList.stories.js"),
   ];
 };
 
