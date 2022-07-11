@@ -2,17 +2,9 @@ import React from 'react';
 
 import {View, StyleSheet } from 'react-native';
 
-import {Text, List,ListSubheader, Button, Badge, Avatar} from '@jmsstudiosinc/react-native-paper';
-
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-
-import {
-  faCheck,
-  faChevronRight,
-  faWallet,
-  faCalendar,
-} from '@fortawesome/pro-regular-svg-icons';
+import {Text, List, Button, Badge, Avatar} from '@jmsstudiosinc/react-native-paper';
 import { CART_ITEM_TYPE } from '@jmsstudiosinc/cart';
+import {Metadata, Subheader} from "../../List/src";
 
 const vendorPhoto = "https://d1ralsognjng37.cloudfront.net/21abd571-1fa3-4214-ae02-2e828864dea3.jpeg";
 
@@ -68,13 +60,7 @@ const CartList = ({
 
   return (
     <List.Section>
-     <List.Item
-        style={{padding: 0}}
-        itemStyle={{marginVertical: 0, paddingLeft: 0}}
-        title={title ? () => <List.Subheader>{title}</List.Subheader> : null}
-        left={() => <Avatar.Image size={40} style={styles.avatar} source={vendorPhoto}/>}
-        right={false ? () => right : null}
-      />
+      <Subheader title={title} avatar={vendorPhoto} metadata={1234} />
           
       {data?.map(data => {
         const attributeGroup = renderRecursiveAttributeGroup(data.attributeGroup);
@@ -83,7 +69,7 @@ const CartList = ({
           <List.Accordion
               title={data.title}
               left={() => <List.Icon icon={() => <Badge style={{alignSelf: "auto"}}>{data.quantity}</Badge>} />}
-              right={() => data.price ? <Text>{data.price}</Text> : null}
+              right={() => data.price ? <Metadata title={data.price} /> : null}
               expanded={attributeGroup.length > 0}>
                 {attributeGroup.map(item =>  <List.Item title={item.title} />)}
           </List.Accordion>
@@ -115,10 +101,6 @@ const styles = StyleSheet.create({
   },
   button: {
     margin: 16
-  },
-  avatar: {
-    margin: 8,
-    marginRight: 0
   }
 });
 

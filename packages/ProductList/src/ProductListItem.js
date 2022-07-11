@@ -2,7 +2,8 @@ import React from 'react';
 
 import { View,StyleSheet, Image } from 'react-native';
 
-import {List,Chip, Text} from '@jmsstudiosinc/react-native-paper';
+import {List, Chip, Text} from '@jmsstudiosinc/react-native-paper';
+import {Metadata} from "../../List/src";
 
 const ProductListItem = ({
     id,
@@ -19,7 +20,7 @@ const ProductListItem = ({
     <List.Item
       onPress={onPress}
       left={photo ? () => <Image source={{uri: photo}} style={styles.image} /> : null}
-      right={() => <Text variant="bodySmall">{price}</Text>}
+      right={() => <Metadata title={price} />}
       title={title}
       description={({
         ellipsizeMode,

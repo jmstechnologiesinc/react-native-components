@@ -31,7 +31,7 @@ try {
 
 const getStories = () => {
   return [
-    require('../packages/AttributeGroupList/src/AttributeGroupList.stories.js'),
+    require('../packages/AttributeList/src/AttributeList.stories.js'),
     require('../packages/Breakdown/src/Breakdown.stories.js'),
     require('../packages/CartList/src/CartList.stories.js'),
     require('../packages/Checkbox/src/Checkbox.stories.js'),

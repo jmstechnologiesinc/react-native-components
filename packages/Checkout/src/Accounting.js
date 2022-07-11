@@ -1,8 +1,9 @@
 import React from 'react';
 
 import {Text, List} from '@jmsstudiosinc/react-native-paper';
+import { Metadata } from '../../List/src';
 
-const Breakdown = ({fees}) => {
+const Accounting = ({fees}) => {
     const results = [];
 
     const {total, ...rest} = fees;
@@ -13,14 +14,14 @@ const Breakdown = ({fees}) => {
             results.push(rest[index].map(({label, description, formattedValue}) => <List.Item 
                 title={label}   
                 description={description}    
-                right={() => <Text variant="bodySmall">{formattedValue}</Text>} />
+                right={() => <Metadata title={formattedValue} />} />
             ));        
         }
 
         results.push(<List.Item 
             title={label}   
             description={description}     
-            right={() => <Text variant="bodySmall">{formattedValue}</Text>} />
+            right={() => <Metadata title={formattedValue} />} />
         );
     }
 
@@ -28,9 +29,9 @@ const Breakdown = ({fees}) => {
         <List.Item
             title={() => <Text variant="headlineSmall">{total.label}</Text>}
             description={total.description} 
-            right={() => <Text variant="headlineSmall">{total.formattedValue}</Text>}/>
+            right={() => <Metadata title={total.formattedValue} />}/>
         {results}
     </List.Section>
 }
 
-export default Breakdown;
+export default Accounting;

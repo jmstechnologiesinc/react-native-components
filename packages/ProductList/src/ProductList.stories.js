@@ -8,7 +8,6 @@ export default {
   title: 'packages/ProductList',
 };
 
-export const Header = () => <Product.Header title={mockData[0].title} />
 export const SectionList = () => <Product.SectionLists sections={mockData} onPress={() => {}} />
 
 

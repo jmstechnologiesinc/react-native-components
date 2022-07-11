@@ -1,16 +1,16 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView as NativeScrollView } from 'react-native';
 
-import AttributeGroupList from './AttributeGroupList';
+import AttributeList from './AttributeList';
 import mockData from "./mockData.json";
 
 export default {
-  title: 'packages/AttributeGroupList',
+  title: 'packages/AttributeList',
 };
 
-export const Basic = () => (
-  <ScrollView>
-    {mockData.map(product => <AttributeGroupList 
+export const ScrollView = () => (
+  <NativeScrollView>
+    {mockData.map(product => <AttributeList 
       title={product.title} 
       data={product.data}
       id={product.id}
@@ -22,7 +22,7 @@ export const Basic = () => (
       isValid={product.isValid}
       formattedSelection={product.formattedSelection} />
     )}
-  </ScrollView>
+  </NativeScrollView>
 );
 
 

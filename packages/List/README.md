@@ -1,11 +1,11 @@
-# `Checkbox`
+# `List`
 
 > TODO: description
 
 ## Usage
 
 ```
-const checkbox = require('Checkbox');
+const list = require('List');
 
 // TODO: DEMONSTRATE API
 ```
