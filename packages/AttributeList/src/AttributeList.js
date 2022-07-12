@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { List, RadioButton, Checkbox} from '@jmsstudiosinc/react-native-paper';
-import { FIELD_TYPES} from '@jmsstudiosinc/commons';
-import { Metadata, Subheader } from '../../List/src';
+import {List, RadioButton, Checkbox} from '@jmsstudiosinc/react-native-paper';
+import {FIELD_TYPES} from '@jmsstudiosinc/commons';
+import {Metadata, Subheader} from '../../List/src';
 
 const AttributeList = ({
   title,
@@ -17,16 +17,22 @@ const AttributeList = ({
   formattedSelection,
 }) => {
   const renderForm = ({type, isExpanded, isDisabled}) => {
-    if(type === FIELD_TYPES.radio) {
-      return <RadioButton
-        status={isExpanded ? 'checked' : 'unchecked'}
-        disabled={isDisabled} />
+    if (type === FIELD_TYPES.radio) {
+      return (
+        <RadioButton.Android
+          status={isExpanded ? 'checked' : 'unchecked'}
+          disabled={isDisabled}
+        />
+      );
     } else {
-      return <Checkbox
-        status={isExpanded ? 'checked' : 'unchecked'}
-        disabled={isDisabled} />
+      return (
+        <Checkbox
+          status={isExpanded ? 'checked' : 'unchecked'}
+          disabled={isDisabled}
+        />
+      );
     }
-  }
+  };
 
   return (
     <List.Section>
@@ -35,15 +41,18 @@ const AttributeList = ({
       {data?.map(data => (
         <List.Accordion
           title={data.title}
-          left={(props) => renderForm({
-            isExpanded: props.isExpanded, 
-            type: data.type, 
-            isDisabled: data.isDisabled
-          })}
-          right={() => <Metadata title={data.price} />} />
+          left={props =>
+            renderForm({
+              isExpanded: props.isExpanded,
+              type: data.type,
+              isDisabled: data.isDisabled,
+            })
+          }
+          right={() => <Metadata title={data.price} />}
+        />
       ))}
     </List.Section>
   );
-}
+};
 
 export default AttributeList;
