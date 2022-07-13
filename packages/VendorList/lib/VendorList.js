@@ -1,7 +1,3 @@
-'use strict';
+import renderVendorItem from './VendorItem';
 
-module.exports = vendorlist;
-
-function vendorlist() {
-    // TODO
-}
+export {renderVendorItem};

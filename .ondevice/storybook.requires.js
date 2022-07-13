@@ -33,11 +33,11 @@ const getStories = () => {
   return [
     require('../packages/AttributeList/src/AttributeList.stories.js'),
     require('../packages/CartList/src/CartList.stories.js'),
+    require('../packages/Checkout/src/Checkout.stories.js'),
     require('../packages/HLTabsWrapper/src/index.stories.js'),
+    require('../packages/List/src/List.stories.js'),
     require('../packages/ProductList/src/ProductList.stories.js'),
     require('../packages/VendorList/src/VendorList.stories.js'),
-    require('../packages/Checkout/src/Checkout.stories.js'),
-    require('../packages/List/src/List.stories.js'),
   ];
 };
 

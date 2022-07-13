@@ -26,7 +26,7 @@ const AttributeList = ({
       );
     } else {
       return (
-        <Checkbox
+        <Checkbox.Android
           status={isExpanded ? 'checked' : 'unchecked'}
           disabled={isDisabled}
         />

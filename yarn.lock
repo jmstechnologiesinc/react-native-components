@@ -1650,10 +1650,10 @@
   dependencies:
     "@jmsstudiosinc/vendor" "^7.0.0"
 
-"@jmsstudiosinc/react-native-paper@^5.0.0-rc.6":
-  "integrity" "sha512-vTW3lTH70IIzZRCQlDye85V/oYtYJUAJ+BzCkHY3ajR2NrHLhqN0hRkrvWs7trLT4ruYBaAGQtcxShGF0lN8/A=="
-  "resolved" "https://npm.pkg.github.com/download/@jmsstudiosinc/react-native-paper/5.0.0-rc.6/7b2173fe77f324cd8c0fdbc4b81f34d1156638bc7a38b7a4fc50b26a8dd9858c"
-  "version" "5.0.0-rc.6"
+"@jmsstudiosinc/react-native-paper@^5.0.0-rc.7":
+  "integrity" "sha512-FLq1/FtIX2GxGxAhc+0caeuBjtDLxMOWB+SAfOxDPOxUbhsGYyfqsOnZMBgIRnI2144CsvAiXLLZlcTSuaWuXQ=="
+  "resolved" "https://npm.pkg.github.com/download/@jmsstudiosinc/react-native-paper/5.0.0-rc.7/6b40b86194e1339e4cf08c792cd0d67d73ee848ae9c7cc5f65c03fb5be566702"
+  "version" "5.0.0-rc.7"
   dependencies:
     "@callstack/react-theme-provider" "^3.0.7"
     "color" "^3.1.2"

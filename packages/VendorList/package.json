@@ -1,5 +1,5 @@
 {
-  "name": "vendorlist",
+  "name": "@jmsstudiosinc/vendorlist",
   "version": "0.0.1",
   "description": "> TODO: description",
   "author": "yerloveraaa <yerloveraaa@gmail.com>",
@@ -22,5 +22,8 @@
   },
   "bugs": {
     "url": "https://github.com/JmsStudiosInc/ReactNativeComponents/issues"
+  },
+  "peerDependencies": {
+    "@jmsstudiosinc/react-native-paper": "*"
   }
 }
