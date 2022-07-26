@@ -5,19 +5,19 @@ import {
   addDecorator,
   addParameters,
   addArgsEnhancer,
-} from '@storybook/react-native';
+} from "@storybook/react-native";
 
-import '@storybook/addon-ondevice-notes/register';
-import '@storybook/addon-ondevice-controls/register';
-import '@storybook/addon-ondevice-backgrounds/register';
-import '@storybook/addon-ondevice-actions/register';
+import "@storybook/addon-ondevice-notes/register";
+import "@storybook/addon-ondevice-controls/register";
+import "@storybook/addon-ondevice-backgrounds/register";
+import "@storybook/addon-ondevice-actions/register";
 
-import {argsEnhancers} from '@storybook/addon-actions/dist/modern/preset/addArgs';
+import { argsEnhancers } from "@storybook/addon-actions/dist/modern/preset/addArgs";
 
-import {decorators, parameters} from './preview';
+import { decorators, parameters } from "./preview";
 
 if (decorators) {
-  decorators.forEach(decorator => addDecorator(decorator));
+  decorators.forEach((decorator) => addDecorator(decorator));
 }
 
 if (parameters) {
@@ -26,18 +26,18 @@ if (parameters) {
 
 // temporary fix for https://github.com/storybookjs/react-native/issues/327 whilst the issue is investigated
 try {
-  argsEnhancers.forEach(enhancer => addArgsEnhancer(enhancer));
+  argsEnhancers.forEach((enhancer) => addArgsEnhancer(enhancer));
 } catch {}
 
 const getStories = () => {
   return [
-    require('../packages/AttributeList/src/AttributeList.stories.js'),
-    require('../packages/CartList/src/CartList.stories.js'),
-    require('../packages/Checkout/src/Checkout.stories.js'),
-    require('../packages/HLTabsWrapper/src/index.stories.js'),
-    require('../packages/List/src/List.stories.js'),
-    require('../packages/ProductList/src/ProductList.stories.js'),
-    require('../packages/VendorList/src/VendorList.stories.js'),
+    require("../packages/AttributeList/src/AttributeList.stories.js"),
+    require("../packages/CartList/src/CartList.stories.js"),
+    require("../packages/Checkout/src/Checkout.stories.js"),
+    require("../packages/HLTabsWrapper/src/index.stories.js"),
+    require("../packages/List/src/List.stories.js"),
+    require("../packages/ProductList/src/ProductList.stories.js"),
+    require("../packages/VendorList/src/VendorList.stories.js"),
   ];
 };
 

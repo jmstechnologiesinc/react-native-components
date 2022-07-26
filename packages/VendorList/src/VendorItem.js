@@ -1,13 +1,10 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {Card, useTheme} from '@jmsstudiosinc/react-native-paper';
+import {StyleSheet, View} from 'react-native';
+import {Card} from '@jmsstudiosinc/react-native-paper';
 
 const renderVendorItem = ({item}) => {
-  const {colors} = useTheme();
   return (
-    <View
-      style={[styles.container, {backgroundColor: colors?.background}]}
-      contentContainerStyle={styles.content}>
+    <View style={[styles.container]} contentContainerStyle={styles.content}>
       <Card style={styles.card} mode="elevated">
         <Card.Cover source={{uri: item.photos}} />
         <Card.Title
@@ -24,6 +21,7 @@ const renderVendorItem = ({item}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
   },
   content: {
     padding: 4,
