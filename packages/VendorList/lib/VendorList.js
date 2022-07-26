@@ -1,3 +1,3 @@
-import renderVendorItem from './VendorItem';
+import VendorList from './VendorItem';
 
-export {renderVendorItem};
+export {VendorList};

@@ -1,22 +1,29 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {Card, useTheme} from '@jmsstudiosinc/react-native-paper';
+import {StyleSheet, View} from 'react-native';
+import {Card, TouchableRipple} from '@jmsstudiosinc/react-native-paper';
+import {useNavigation} from '@react-navigation/native';
 
 const renderVendorItem = ({item}) => {
-  const {colors} = useTheme();
+  const navigation = useNavigation();
+
   return (
-    <View
-      style={[styles.container, {backgroundColor: colors?.background}]}
-      contentContainerStyle={styles.content}>
-      <Card style={styles.card} mode="elevated">
-        <Card.Cover source={{uri: item.photos}} />
-        <Card.Title
-          title={item.title}
-          subtitle={`${item.formattedPub} - ${item.formattedHitDistance}`}
-          titleVariant="headlineSmall"
-          subtitleVariant="bodyLarge"
-        />
-      </Card>
+    <View style={[styles.container]} contentContainerStyle={styles.content}>
+      <TouchableRipple
+        onPress={() =>
+          navigation.navigate('SingleVendor', {
+            vendor: item,
+          })
+        }>
+        <Card style={styles.card} mode="elevated">
+          <Card.Cover source={{uri: item.photos}} />
+          <Card.Title
+            title={item.title}
+            subtitle={`${item.formattedPub} - ${item.formattedHitDistance}`}
+            titleVariant="headlineSmall"
+            subtitleVariant="bodyLarge"
+          />
+        </Card>
+      </TouchableRipple>
     </View>
   );
 };
@@ -24,12 +31,13 @@ const renderVendorItem = ({item}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
   },
   content: {
     padding: 4,
   },
   card: {
-    margin: 4,
+    marginVertical: 4,
     marginHorizontal: 8,
   },
 });
