@@ -1,17 +1,17 @@
 {
   "name": "@jmsstudiosinc/react-native-components",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "> TODO: description",
   "author": "yerloveraaa <yerloveraaa@gmail.com>",
   "homepage": "https://github.com/jmsstudiosinc/react-native-components#readme",
   "license": "ISC",
-  "main": "lib/components.js",
+  "main": "src/index.js",
   "directories": {
-    "lib": "lib",
+    "lib": "src",
     "test": "__tests__"
   },
   "files": [
-    "lib"
+    "src"
   ],
   "repository": {
     "type": "git",
