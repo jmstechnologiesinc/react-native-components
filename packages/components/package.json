@@ -1,0 +1,26 @@
+{
+  "name": "react-native-components",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "yerloveraaa <yerloveraaa@gmail.com>",
+  "homepage": "https://github.com/jmsstudiosinc/react-native-components#readme",
+  "license": "ISC",
+  "main": "lib/components.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmsstudiosinc/react-native-components.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/jmsstudiosinc/react-native-components/issues"
+  }
+}
