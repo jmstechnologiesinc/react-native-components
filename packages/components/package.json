@@ -5,13 +5,13 @@
   "author": "yerloveraaa <yerloveraaa@gmail.com>",
   "homepage": "https://github.com/jmsstudiosinc/react-native-components#readme",
   "license": "ISC",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "directories": {
-    "lib": "src",
+    "lib": "lib",
     "test": "__tests__"
   },
   "files": [
-    "src"
+    "lib"
   ],
   "repository": {
     "type": "git",
