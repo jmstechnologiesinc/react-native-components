@@ -3,7 +3,7 @@ import React from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 
 import {List, Chip, Text} from '@jmsstudiosinc/react-native-paper';
-import {Metadata} from '@jmsstudiosinc/list';
+import {Metadata} from '../List/List';
 
 const ProductListItem = ({
   id,
