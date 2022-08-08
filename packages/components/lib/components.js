@@ -1,7 +1,3 @@
-'use strict';
+import {VendorList} from './VendorList/VendorList';
 
-module.exports = components;
-
-function components() {
-    // TODO
-}
+export {VendorList};

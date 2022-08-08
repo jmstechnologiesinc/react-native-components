@@ -1,6 +1,6 @@
 {
-  "name": "react-native-components",
-  "version": "0.0.1",
+  "name": "@jmsstudiosinc/react-native-components",
+  "version": "0.0.2",
   "description": "> TODO: description",
   "author": "yerloveraaa <yerloveraaa@gmail.com>",
   "homepage": "https://github.com/jmsstudiosinc/react-native-components#readme",
@@ -22,5 +22,6 @@
   },
   "bugs": {
     "url": "https://github.com/jmsstudiosinc/react-native-components/issues"
-  }
+  },
+  "gitHead": "a15d55356078a7958acfea0fb92e230c5d282bde"
 }
