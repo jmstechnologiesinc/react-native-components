@@ -2,4 +2,5 @@
 lib/*.js
 lib/List/*.js
 *.stories.js
-!lib/**/*.stories.js
+lib/**/*.stories.js
+lib/**/*.stories
