@@ -18,17 +18,17 @@ const SectionList = ({
     <AnimatedSectionList
       {...props}
       sections={sections}
-      ref={ref => (sectionListRef.current = ref)}
-      onMomentumScrollEnd={() => (blockUpdateIndexRef.current = false)}
-      showsVerticalScrollIndicator={true}
-      onViewableItemsChanged={({viewableItems}) => {
-        if (!blockUpdateIndexRef.current && viewableItems[0]) {
-          const {index} = viewableItems[0].section;
-          if (currentIndex !== index) {
-            setCurrentIdex(index);
-          }
-        }
-      }}
+      // ref={ref => (sectionListRef.current = ref)}
+      // onMomentumScrollEnd={() => (blockUpdateIndexRef.current = false)}
+      // showsVerticalScrollIndicator={true}
+      // onViewableItemsChanged={({viewableItems}) => {
+      //   if (!blockUpdateIndexRef.current && viewableItems[0]) {
+      //     const {index} = viewableItems[0].section;
+      //     if (currentIndex !== index) {
+      //       setCurrentIdex(index);
+      //     }
+      //   }
+      // }}
       renderSectionHeader={({section: {title}}) => (
         <ProductListHeader title={title} />
       )}

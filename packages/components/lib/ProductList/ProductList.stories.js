@@ -8,6 +8,6 @@ export default {
   title: 'packages/ProductList',
 };
 
-export const SectionList = () => (
+export const SectionLists = () => (
   <SectionList sections={mockData} onPress={() => {}} />
 );

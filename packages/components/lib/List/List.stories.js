@@ -6,4 +6,4 @@ export default {
   title: 'packages/List',
 };
 
-export const Metadata = () => <Metadata title="$2.99" />;
+export const Metadatas = () => <Metadata title="$2.99" />;
