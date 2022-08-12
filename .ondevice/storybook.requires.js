@@ -31,9 +31,9 @@ try {
 
 const getStories = () => {
   return [
-    require('../packages/components/lib/ProductList/ProductList.stories'),
-    require('../packages/components/lib/List/List.stories'),
-    require('../packages/components/lib/VendorList/VendorList.stories'),
+    require('../packages/components/src/ProductList/ProductList.stories'),
+    require('../packages/components/src/List/List.stories'),
+    require('../packages/components/src/VendorList/VendorList.stories'),
   ];
 };
 
