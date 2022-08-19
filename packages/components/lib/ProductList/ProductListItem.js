@@ -1,65 +1,51 @@
 import React from 'react';
 
-import {View, StyleSheet, Image} from 'react-native';
+import { View } from 'react-native';
 
-import {List, Chip, Text} from '@jmsstudiosinc/react-native-paper';
-import {Metadata} from '../List/List';
+import { List as RNPList, Badge } from '@jmsstudiosinc/react-native-paper';
+import * as JMSList from '../List';
 
 const ProductListItem = ({
-  id,
-  uuid,
-  photo,
-  title,
-  description,
-  price,
-  quantity,
-  isOutofStock,
-  onPress,
+    id,
+    uuid,
+    photo,
+    title,
+    description,
+    price,
+    quantity,
+    cartQuantity,
+    isOutofStock,
+    onPress,
 }) => (
-  <List.Section>
-    <List.Item
-      onPress={onPress}
-      left={
-        photo
-          ? () => <Image source={{uri: photo}} style={styles.image} />
-          : null
-      }
-      right={() => <Metadata title={price} />}
-      title={title}
-      description={({ellipsizeMode, color: descriptionColor, fontSize}) => (
-        <View style={[styles.container, styles.column]}>
-          <Text
-            numberOfLines={2}
-            ellipsizeMode={ellipsizeMode}
-            style={{color: descriptionColor, fontSize}}>
-            {description}
-          </Text>
-          <View style={[styles.container, styles.row, {paddingTop: 8}]}>
-            {isOutofStock ? <Chip disabled>Out of Stock</Chip> : null}
-            {/* {quantity ? <Badge>{quantity}</Badge> : null} */}
-          </View>
-        </View>
-      )}
-    />
-  </List.Section>
+    <RNPList.Section>
+        {photo ? (
+            <JMSList.Image
+                src={require('./wrecked-ship.jpg')}
+                title={title}
+                description={description}
+                right={() => (
+                    <View style={{ justifyContent: 'flex-start', marginLeft: 16 }}>
+                        {price && <JMSList.Metadata title={price} style={{ marginTop: -6 }} />}
+                        {cartQuantity && <Badge>{cartQuantity}</Badge>}
+                    </View>
+                )}
+                onPress={onPress}
+            />
+        ) : (
+            <RNPList.Item
+                title={title}
+                description={description}
+                right={() => (
+                    <View style={{ justifyContent: 'center', marginLeft: 16 }}>
+                        {price && <JMSList.Metadata title={price} />}
+                        {cartQuantity && <Badge>{cartQuantity}</Badge>}
+                    </View>
+                )}
+                onPress={onPress}
+                itemStyle={{ marginVertical: 0, paddingLeft: 0 }}
+            />
+        )}
+    </RNPList.Section>
 );
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  image: {
-    width: 100,
-    height: 56,
-  },
-  row: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    paddingHorizontal: 12,
-  },
-  button: {
-    margin: 4,
-  },
-});
 
 export default ProductListItem;

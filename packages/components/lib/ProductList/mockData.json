@@ -17,6 +17,7 @@
           "title": "Chapi Roll",
           "position": 1,
           "quantity": 1,
+          "cartQuantity": 3,
           "minQuantity": 1,
           "description": "Chicken tempura, cream cheese, maduro, guacamole, and chicharron.",
           "photos": [
@@ -69,6 +70,7 @@
           "title": "Snow Mountain Roll",
           "position": 5,
           "quantity": 1,
+          "cartQuantity": 1,
           "minQuantity": 1,
           "description": "shrimp's tempura, snow crab, avocado and spicy mayo.",
           "price": 1600
@@ -120,6 +122,7 @@
           "title": "Gyoza Chicken",
           "position": 3,
           "quantity": 1,
+          "cartQuantity": 10,
           "minQuantity": 1,
           "description": "Steamed or fried chicken dumplings.",
           "photos": [
@@ -221,6 +224,7 @@
           "title": "Ninja Concocitos",
           "position": 11,
           "quantity": 1,
+          "cartQuantity": 2,
           "minQuantity": 1,
           "description": "Crispy fried rice with your choice of beef, shrimp, and shredded chicken.",
           "price": 1600
