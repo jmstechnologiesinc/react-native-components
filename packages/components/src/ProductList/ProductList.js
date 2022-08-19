@@ -1,5 +1,2 @@
-import ProductListHeader from './ProductListHeader';
-import ProductListItem from './ProductListItem';
-import SectionList from './SectionList';
-
-export {ProductListHeader, ProductListItem, SectionList};
+export {default as Item} from "./ProductListItem"
+export {default as Sticky} from "./ProductListSticky"

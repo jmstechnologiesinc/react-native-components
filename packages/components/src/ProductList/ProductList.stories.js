@@ -1,13 +1,15 @@
 import React from 'react';
 
-import mockData from './mockData.json';
+import mockData from "./mockData.json";
 
-import {SectionList} from './ProductList';
+import * as ProductList from './ProductList';
 
 export default {
   title: 'packages/ProductList',
 };
 
-export const SectionLists = () => (
-  <SectionList sections={mockData} onPress={() => {}} />
-);
+export const Sticky = ({...props}) => <ProductList.Sticky {...props} sections={mockData} onPress={() => {}} />
+
+
+
+
