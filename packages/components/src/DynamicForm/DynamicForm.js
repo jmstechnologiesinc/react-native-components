@@ -5,6 +5,7 @@ import { FlatList } from 'react-native';
 import { formattedSelection, validateSelection } from '@jmsstudiosinc/commons';
 import { List } from '@jmsstudiosinc/react-native-paper';
 import DynamicFormSwitch from './DynamicFormSwitch';
+import styles from './styles';
 
 const nextAttributeGroup = (value, attributeGroup) => {
     return value === true && attributeGroup.length ? attributeGroup : null;
@@ -158,6 +159,7 @@ const DynamicForm = ({
             renderItem={renderItem}
             ListHeaderComponent={ListHeaderComponent}
             ListFooterComponent={listFooterComponentWrapper}
+            styles={styles.container}
         />
     );
 };
