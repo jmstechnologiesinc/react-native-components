@@ -5,16 +5,13 @@ import { Button, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 const TabsItem = ({ 
     title, 
     isSelected,
-    onPress
+    onPress,
+    mode='text'
 }) => <Button 
-    mode={"outlined"}
-    textColor={isSelected ? MD3LightTheme.colors.primary : MD3LightTheme.colors.onSurface}
+    mode={mode}
+    textColor={isSelected ? MD3LightTheme.colors.primary : MD3LightTheme.colors.onSurfaceVariant}
     style={{
-        borderRadius: '0', 
-        borderLeftWidth: "0", 
-        borderRightWidth: "0", 
-        borderTopWidth: "0",
-        ...(!isSelected && {borderBottomColor: "transparent"}),
+        borderRadius: 1,
         ...(isSelected && {
             borderColor: MD3LightTheme.colors.primary, 
             borderBottomWidth: 2

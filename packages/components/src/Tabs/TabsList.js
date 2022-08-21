@@ -4,9 +4,11 @@ import { StyleSheet, View } from 'react-native';
 
 import { List } from '@jmsstudiosinc/react-native-paper';
 
-const TabList = ({ children }) => (
+const TabList = ({title, children}) => (
     <View style={styles.container}>
-        <List.Section>
+        <List.Section 
+            title={title} 
+            style={styles.listSection} >
             <View style={styles.row}>
                 {children}
             </View>
@@ -23,5 +25,7 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: "row",
         flexWrap: "wrap",
+    },
+    listSection:{
     }
 })

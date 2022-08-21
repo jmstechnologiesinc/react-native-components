@@ -1,36 +1,10 @@
 import * as React from 'react';
 
-import { View, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import { View, Dimensions } from 'react-native';
 
 import * as Tabs from '../Tabs/Tabs';
 
-const DynamicAppStyles = {
-    lightColorSet: {
-        mainThemeBackgroundColor: '#ffffff',
-        mainTextColor: '#555555',
-        mainSubtextColor: '#7e7e7e',
-        mainThemeForegroundColor: '#281a62',
-        mainSubBtnTheme: '#7e7e7e',
-        mainBtnTheme: '#281a62',
-        hairlineColor: '#e0e0e0',
-        grey: 'grey',
-        grey0: '#eaeaea',
-        grey3: '#e6e6f2',
-        grey2: '#f2f2f2',
-        grey6: '#d6d6d6',
-        grey9: '#939393',
-        whiteSmoke: '#f5f5f5',
-        grey: '#808080',
-        red: '#FF0000',
-        cream: '#eeeeee',
-        placeholderTextColor: '#aaaaaa',
-        black: '#000',
-        fillColor: '#007aff',
-        unfillColor: 'transparent',
-    },
-};
-
-const WindowWidth = Dimensions.get('window').width - 50;
+const WindowWidth = Dimensions.get('window').width;
 
 export default class StickySectionTabsList extends React.PureComponent {
     private scrollView = React.createRef();
@@ -70,11 +44,11 @@ export default class StickySectionTabsList extends React.PureComponent {
         return newScrollX;
     };
 
-    onTabContainerLayout = (e) => {
+    onTabsContainerLayout = (e) => {
         this._tabContainerMeasurements = e.nativeEvent.layout;
     };
 
-    onTabLayout = (key) => (ev) => {
+    onTabsItemLayout = (key) => (ev) => {
         const { x, width, height } = ev.nativeEvent.layout;
         this._tabsMeasurements[key] = {
             left: x,
@@ -94,23 +68,16 @@ export default class StickySectionTabsList extends React.PureComponent {
         return (
             <View style={{ flexDirection: 'row', backgroundColor: 'white' }}>
                 <View style={[{ width: WindowWidth }]}>
-                    <ScrollView ref={this.scrollView} showsHorizontalScrollIndicator={false} horizontal>
-                        <View onLayout={this.onTabContainerLayout}>
-                            <Tabs.List>
-                                {sections.map((item, index) => (
-                                    <Tabs.Item
-                                        key={'sticky-list-' + item.id}
-                                        title={item.title}
-                                        isSelected={this.props.currentIndex === index}
-                                        onPress={() => onPress(index)}
-                                        onLayout={this.onTabLayout(index)}
-                                    />
-                                ))}
-                            </Tabs.List>
-                        </View>
-                    </ScrollView>
+                    <Tabs.Scrollable
+                        ref={this.scrollView}
+                        data={sections}
+                        selectedIndex={this.props.currentIndex}
+                        onPress={this.props.onPress}
+                        onTabsContainerLayout={this.onTabsContainerLayout}
+                        onTabsItemLayout={this.onTabsItemLayout}
+                    />
                 </View>
-                <TouchableOpacity
+                {/*     <TouchableOpacity
                     onPress={this.props?.onExpand}
                     style={{
                         flex: 1,
@@ -120,7 +87,8 @@ export default class StickySectionTabsList extends React.PureComponent {
                         alignItems: 'center',
                         justifyContent: 'center',
                     }}
-                ></TouchableOpacity>
+                >
+                </TouchableOpacity> */}
             </View>
         );
     }
