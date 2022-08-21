@@ -28,5 +28,14 @@
     "prettier": "^2.5.1",
     "rimraf": "^3.0.2"
   },
+  "dependencies": {
+    "@jmsstudiosinc/react-native-paper": "^5.0.0-rc.7"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-vector-icons": "*",
+    "@jmsstudiosinc/react-native-paper": "*"
+  },
   "gitHead": "a15d55356078a7958acfea0fb92e230c5d282bde"
 }
