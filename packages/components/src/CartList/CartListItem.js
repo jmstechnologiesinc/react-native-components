@@ -2,9 +2,10 @@ import React from 'react';
 
 import { View, StyleSheet } from 'react-native';
 
-import { Text, List, Button, Badge } from '@jmsstudiosinc/react-native-paper';
+import { Text, List, Button, Badge, Divider } from '@jmsstudiosinc/react-native-paper';
 import { CART_ITEM_TYPE } from '@jmsstudiosinc/cart';
 import { Metadata, Subheader } from '../List';
+import SwipeToDelete from '../SwipeToDelete';
 
 const vendorPhoto = 'https://d1ralsognjng37.cloudfront.net/21abd571-1fa3-4214-ae02-2e828864dea3.jpeg';
 
@@ -36,7 +37,9 @@ const renderRecursiveAttributeGroup = (attributeGroup) => {
     return results;
 };
 
-const CartListItem = ({ item: { id, title, type, total, description, data } }) => {
+const CartListItem = ({ item, onDelete, onEdit }) => {
+    const { id, title, type, total, description, data, cartIndustryId } = item;
+
     if (type === CART_ITEM_TYPE.emptyItem) {
         return null;
     } else if (type === CART_ITEM_TYPE.checkout) {
@@ -60,23 +63,25 @@ const CartListItem = ({ item: { id, title, type, total, description, data } }) =
     return (
         <List.Section>
             <Subheader title={title} avatar={vendorPhoto} metadata={1234} />
-
             {data?.map((data) => {
                 const attributeGroup = renderRecursiveAttributeGroup(data.attributeGroup);
-
                 return (
-                    <List.Accordion
-                        title={data.title}
-                        left={() => (
-                            <List.Icon icon={() => <Badge style={{ alignSelf: 'auto' }}>{data.quantity}</Badge>} />
-                        )}
-                        right={() => (data.price ? <Metadata title={data.price} /> : null)}
-                        expanded={attributeGroup.length > 0}
-                    >
-                        {attributeGroup.map((item) => (
-                            <List.Item title={item.title} />
-                        ))}
-                    </List.Accordion>
+                    <SwipeToDelete onDelete={onDelete} id={id} cartId={data.cartId} cartIndustryId={cartIndustryId}>
+                        <List.Accordion
+                            onPress={() => onEdit(item)}
+                            title={data.title}
+                            left={() => (
+                                <List.Icon icon={() => <Badge style={{ alignSelf: 'auto' }}>{data.quantity}</Badge>} />
+                            )}
+                            right={() => (data.price ? <Metadata title={data.price} /> : null)}
+                            expanded={attributeGroup.length > 0}
+                        >
+                            {attributeGroup.map((item) => (
+                                <List.Item title={item.title} />
+                            ))}
+                        </List.Accordion>
+                        <Divider />
+                    </SwipeToDelete>
                 );
             })}
         </List.Section>
