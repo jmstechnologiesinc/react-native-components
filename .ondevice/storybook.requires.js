@@ -34,7 +34,7 @@ const getStories = () => {
     require('../packages/components/src/CartList/CartList.stories.js'),
     require('../packages/components/src/Checkout/Checkout.stories.js'),
     require('../packages/components/src/DynamicForm/DynamicForm.stories.js'),
-    require('../packages/components/src/HLTabsWrapper/index.stories.js'),
+    require('../packages/components/src/ChipList/index.stories.js'),
     require('../packages/components/src/List/List.stories.js'),
     require('../packages/components/src/PhotoGallery/PhotoGallery.stories.js'),
     require('../packages/components/src/ProductList/ProductList.stories.js'),
