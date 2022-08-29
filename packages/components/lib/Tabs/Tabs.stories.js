@@ -12,6 +12,7 @@ const mockData = [
 
 import TabsItem from './TabsItem';
 import TabList from './TabsList';
+import TabsScrollable from './TabsScrollable';
 
 export default {
   title: 'packages/Tabs',
@@ -28,3 +29,27 @@ export const List = ({onPress}) => (
     }
   </TabList>
 );
+
+export const ListTitle = ({onPress}) => (
+  <TabList title="Dinner Menu">
+    {mockData.map((item, index) => <TabsItem 
+      title={item.title} 
+      isSelected={item.isSelected}
+      onPress={() => onPress(index)} />)
+    }
+  </TabList>
+);
+
+export const Scrollable = () => <TabsScrollable 
+  data={mockData}
+  onTabsItemLayout={() => {}}
+  onTabsItemLayout={() => {}}
+  onPress={() => {}} />
+
+export const ScrollableTitle = () => <TabsScrollable 
+  title="Main Menu"
+  data={mockData}
+  onTabsItemLayout={() => {}}
+  onTabsItemLayout={() => {}}
+  onPress={() => {}}    />
+

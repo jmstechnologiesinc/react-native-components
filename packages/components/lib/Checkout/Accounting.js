@@ -8,6 +8,7 @@ const Accounting = ({ fees }) => {
     const results = [];
 
     const { total, ...rest } = fees;
+    
     for (index in rest) {
         const { label, description, formattedValue } = rest[index];
 

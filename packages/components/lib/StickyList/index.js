@@ -1,15 +1,11 @@
 import React, { useRef, useState } from 'react';
 
 import { View, Animated, SectionList as NativeSectionList, SafeAreaView } from 'react-native';
-// import useState from 'storybook-addon-state';
-
 const AnimatedSectionList = Animated.createAnimatedComponent(NativeSectionList);
 
 import TabsList from './StickySectionTabsList';
 
 import styles from './styles';
-
-useState;
 
 const StickyList = ({ sections, ListHeaderComponent, onItemPress, ...props }) => {
     const [currentIndex, setCurrentIdex] = useState(0);
@@ -41,7 +37,6 @@ const StickyList = ({ sections, ListHeaderComponent, onItemPress, ...props }) =>
         <TabsList
             sections={sections}
             currentIndex={currentIndex}
-            onItemPress={onItemPress}
             onPress={(index) => {
                 setCurrentIdex(index);
                 blockUpdateIndexRef.current = true;
@@ -62,6 +57,7 @@ const StickyList = ({ sections, ListHeaderComponent, onItemPress, ...props }) =>
         <SafeAreaView style={styles.container}>
             <AnimatedSectionList
                 {...props}
+                ref={(ref) => (sectionListRef.current = ref)}
                 scrollEventThrottle={16}
                 stickySectionHeadersEnabled={false}
                 sections={sections}

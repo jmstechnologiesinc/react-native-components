@@ -20,7 +20,7 @@ const ProductListItem = ({
     <RNPList.Section>
         {photo ? (
             <JMSList.Image
-                src={require('./wrecked-ship.jpg')}
+                src={{uri: photo}}
                 title={title}
                 description={description}
                 right={() => (

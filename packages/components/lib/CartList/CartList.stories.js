@@ -1,19 +1,12 @@
 import React from 'react';
 import { FlatList as NativeFlatList } from 'react-native';
 
-import * as CartList from './CartList';
+import CartList from './CartListItem';
 
-import mockData from "./mockData.json";
+import mockData from './mockData.json';
 
 export default {
-  title: 'packages/CartList',
+    title: 'packages/CartList',
 };
 
-export const FlatList = () => (
-  <NativeFlatList 
-    data={mockData}
-    renderItem={CartList.Item} />
-);
-
-
-
+export const FlatList = () => <NativeFlatList data={mockData} renderItem={CartList} />;
