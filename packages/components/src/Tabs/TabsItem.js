@@ -3,11 +3,10 @@ import React from 'react';
 import { Button, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 import { FontAwesomeIndustryIcon } from './FontAwesomeIndustryIcon';
 
-const TabsItem = ({ item, title, isSelected, onPress, icon, mode = 'text' }) => {
+const TabsItem = ({ item, title, isSelected, onPress, mode = 'text' }) => {
     return (
         <Button
             mode={mode}
-            icon={icon}
             textColor={isSelected ? MD3LightTheme.colors.primary : MD3LightTheme.colors.onSurfaceVariant}
             style={{
                 borderRadius: 1,
