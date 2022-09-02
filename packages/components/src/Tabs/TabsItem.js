@@ -1,31 +1,93 @@
 import React from 'react';
 
 import { Button, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
-import { FontAwesomeIndustryIcon } from './FontAwesomeIndustryIcon';
+import { StyleSheet, Platform } from 'react-native';
 
-const TabsItem = ({ item, title, isSelected, onPress, mode = 'text' }) => {
-    return (
-        <Button
-            mode={mode}
-            textColor={isSelected ? MD3LightTheme.colors.primary : MD3LightTheme.colors.onSurfaceVariant}
-            style={{
-                borderRadius: 1,
-                ...(isSelected && {
-                    borderColor: item ? null : MD3LightTheme.colors.primary,
-                    borderBottomWidth: item ? 0 : 2,
-                }),
-            }}
-            contentStyle={
-                item
-                    ? { flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }
-                    : { flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }
-            }
-            onPress={onPress}
-            FontAwesomeIndustryIcon={() => FontAwesomeIndustryIcon(item, isSelected)}
-        >
-            {title}
-        </Button>
-    );
+const TabsItem = ({ index, title, subTitle, isSelected, onPress, fontAwesomeIcon, variant = 'text' }) => {
+    if (variant === 'text') {
+        return (
+            <Button
+                mode={variant}
+                compact
+                textColor={isSelected ? MD3LightTheme.colors.primary : MD3LightTheme.colors.onSurfaceVariant}
+                style={{
+                    flex: 1,
+
+                    borderRadius: 1,
+                    ...(isSelected && {
+                        borderColor: MD3LightTheme.colors.primary,
+                        borderBottomWidth: 2,
+                    }),
+                }}
+                onPress={onPress}
+            >
+                {title}
+            </Button>
+        );
+    } else if (variant === 'toggle') {
+        return (
+            <Button
+                {...(!isSelected && { textColor: MD3LightTheme.colors.onSurfaceVariant })}
+                subTitle={subTitle}
+                compact
+                mode={isSelected ? 'contained' : 'outlined'}
+                style={[
+                    styles.button,
+                    index === 0 ? styles.first : index === 2 - 1 ? styles.last : styles.middle,
+                    { borderRadius: '0' },
+                    isSelected
+                        ? {
+                              borderColor: MD3LightTheme.colors.primary,
+                              borderWidth: StyleSheet.hairlineWidth,
+                          }
+                        : {},
+                ]}
+                onPress={onPress}
+            >
+                {title}
+            </Button>
+        );
+    } else if (variant === 'iconTop') {
+        return (
+            <Button
+                {...(!isSelected && { textColor: MD3LightTheme.colors.onSurfaceVariant })}
+                onPress={onPress}
+                style={styles.iconButtonTop}
+                contentStyle={{ flexDirection: 'column' }}
+                fontAwesomeIcon={fontAwesomeIcon}
+            >
+                {title}
+            </Button>
+        );
+    }
 };
+
+const styles = StyleSheet.create({
+    row: {
+        flexDirection: 'row',
+    },
+    button: {
+        flex: 1,
+        borderWidth: StyleSheet.hairlineWidth,
+    },
+    iconButtonTop: {
+        flex: Platform.OS === 'web' ? 1 : null,
+    },
+
+    first: {
+        borderTopRightRadius: 0,
+        borderBottomRightRadius: 0,
+    },
+
+    middle: {
+        borderRadius: 0,
+        borderLeftWidth: 0,
+    },
+    last: {
+        borderLeftWidth: 0,
+        borderTopLeftRadius: 0,
+        borderBottomLeftRadius: 0,
+    },
+});
 
 export default TabsItem;

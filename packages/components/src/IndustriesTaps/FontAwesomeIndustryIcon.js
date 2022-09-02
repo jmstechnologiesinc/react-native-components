@@ -50,15 +50,10 @@ library.add(
     faChevronCircleLeft
 );
 
-export const FontAwesomeIndustryIcon = (item, isSelected) => {
-    if (!item) {
-        return null;
-    }
-    return (
-        <FontAwesomeIcon
-            icon={['fad', VENDOR_INDUSTRIES_MAPPING[item].icon]}
-            size={24}
-            color={isSelected ? MD3LightTheme.colors.primary : MD3LightTheme.colors.onSurfaceVariant}
-        />
-    );
-};
+export const fontAwesomeIndustryIcon = (icon, isSelected) => (
+    <FontAwesomeIcon
+        icon={['fad', VENDOR_INDUSTRIES_MAPPING[icon].icon]}
+        size={30}
+        color={isSelected ? MD3LightTheme.colors.primary : MD3LightTheme.colors.onSurfaceVariant}
+    />
+);
