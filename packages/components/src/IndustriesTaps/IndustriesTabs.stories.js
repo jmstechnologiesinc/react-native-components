@@ -13,6 +13,6 @@ export const Industries = ({ onPress }) => (
         title="Industries"
         data={mockData.map((item) => ({ title: item.title }))}
         onPress={() => {}}
-        selectedIndex={1}
+        selectedIndex={2}
     />
 );

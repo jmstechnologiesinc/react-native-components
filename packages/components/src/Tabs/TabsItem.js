@@ -54,7 +54,7 @@ const TabsItem = ({ index, title, subTitle, isSelected, onPress, fontAwesomeIcon
                 onPress={onPress}
                 style={styles.iconButtonTop}
                 contentStyle={{ flexDirection: 'column' }}
-                fontAwesomeIcon={fontAwesomeIcon}
+                icon={fontAwesomeIcon}
             >
                 {title}
             </Button>
