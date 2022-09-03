@@ -1,11 +1,11 @@
 import React from 'react';
 
-import IndustriesTaps from './IndustriesTabs';
+import IndustriesTaps from './IndustryTabs';
 
 import mockData from './mockData';
 
 export default {
-    title: 'packages/Industrie',
+    title: 'packages/IndustriesTap',
 };
 
 export const Industries = ({ onPress }) => (

@@ -11,8 +11,6 @@ const TabsItem = ({ index, title, subTitle, isSelected, onPress, fontAwesomeIcon
                 compact
                 textColor={isSelected ? MD3LightTheme.colors.primary : MD3LightTheme.colors.onSurfaceVariant}
                 style={{
-                    flex: 1,
-
                     borderRadius: 1,
                     ...(isSelected && {
                         borderColor: MD3LightTheme.colors.primary,
@@ -35,12 +33,7 @@ const TabsItem = ({ index, title, subTitle, isSelected, onPress, fontAwesomeIcon
                     styles.button,
                     index === 0 ? styles.first : index === 2 - 1 ? styles.last : styles.middle,
                     { borderRadius: '0' },
-                    isSelected
-                        ? {
-                              borderColor: MD3LightTheme.colors.primary,
-                              borderWidth: StyleSheet.hairlineWidth,
-                          }
-                        : {},
+                    isSelected ? styles.border : {},
                 ]}
                 onPress={onPress}
             >
@@ -87,6 +80,10 @@ const styles = StyleSheet.create({
         borderLeftWidth: 0,
         borderTopLeftRadius: 0,
         borderBottomLeftRadius: 0,
+    },
+    border: {
+        borderColor: MD3LightTheme.colors.primary,
+        borderWidth: StyleSheet.hairlineWidth,
     },
 });
 

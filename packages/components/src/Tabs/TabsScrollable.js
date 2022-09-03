@@ -19,7 +19,7 @@ const TabsScrollable = React.forwardRef(
                                     title={item.title}
                                     variant={item.variant}
                                     isSelected={selectedIndex === index || item.isSelected}
-                                    onPress={() => console.log(item.title)}
+                                    onPress={onPress}
                                     fontAwesomeIcon={item.fontAwesomeIcon}
                                 />
                             </View>
