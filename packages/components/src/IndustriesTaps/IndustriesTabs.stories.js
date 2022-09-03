@@ -9,10 +9,5 @@ export default {
 };
 
 export const Industries = ({ onPress }) => (
-    <IndustriesTaps
-        title="Industries"
-        data={mockData.map((item) => ({ title: item.title }))}
-        onPress={() => {}}
-        selectedIndex={2}
-    />
+    <IndustriesTaps title="Industries" data={mockData} onPress={() => {}} selectedIndex={2} />
 );

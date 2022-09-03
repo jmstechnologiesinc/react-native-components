@@ -1,27 +1,22 @@
 import React from 'react';
 
-import { List } from '@jmsstudiosinc/react-native-paper';
 import { VENDOR_INDUSTRIES_MAPPING } from '@jmsstudiosinc/vendor';
 
-import * as Tabs from '../Tabs/Tabs';
-
 import { fontAwesomeIndustryIcon } from './FontAwesomeIndustryIcon';
+import TabsScrollable from '../Tabs/TabsScrollable';
 
-const IndustriesTabs = ({ data, title, onPress, selectedIndex }) => (
-    <List.Section title={title}>
-        <Tabs.List>
-            {data.map((item, index) => (
-                <Tabs.Item
-                    index={index}
-                    variant="iconTop"
-                    title={VENDOR_INDUSTRIES_MAPPING[item.title].title}
-                    isSelected={selectedIndex === index}
-                    onPress={() => onPress(index)}
-                    fontAwesomeIcon={() => fontAwesomeIndustryIcon(item.title, selectedIndex === index)}
-                />
-            ))}
-        </Tabs.List>
-    </List.Section>
+const IndustryTabs = ({ data, title, onPress, selectedIndex }) => (
+    <TabsScrollable
+        title={title}
+        data={data.map((item, index) => ({
+            title: VENDOR_INDUSTRIES_MAPPING[item.title].title,
+            variant: 'iconTop',
+            isSelected: selectedIndex === index,
+            fontAwesomeIcon: () => fontAwesomeIndustryIcon(item.title, selectedIndex === index),
+        }))}
+        onTabsItemLayout={() => {}}
+        onPress={() => {}}
+    />
 );
 
-export default IndustriesTabs;
+export default IndustryTabs;

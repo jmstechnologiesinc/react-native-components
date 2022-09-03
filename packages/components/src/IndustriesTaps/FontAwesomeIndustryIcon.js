@@ -55,7 +55,7 @@ import styles from './styles';
 export const fontAwesomeIndustryIcon = (icon, isSelected) => (
     <FontAwesomeIcon
         icon={['fad', VENDOR_INDUSTRIES_MAPPING[icon].icon]}
-        size={30}
+        size={24}
         color={isSelected ? MD3LightTheme.colors.primary : MD3LightTheme.colors.onSurfaceVariant}
         style={styles.icon}
     />
