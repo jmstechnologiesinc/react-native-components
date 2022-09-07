@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Button, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet, Platform, View } from 'react-native';
 
 const TabsItem = ({ index, title, subTitle, isSelected, onPress, fontAwesomeIcon, variant = 'text' }) => {
     if (variant === 'text') {
@@ -24,6 +24,7 @@ const TabsItem = ({ index, title, subTitle, isSelected, onPress, fontAwesomeIcon
         );
     } else if (variant === 'toggle') {
         return (
+            <View style={styles.toggle}>
             <Button
                 {...(!isSelected && { textColor: MD3LightTheme.colors.onSurfaceVariant })}
                 subTitle={subTitle}
@@ -32,13 +33,15 @@ const TabsItem = ({ index, title, subTitle, isSelected, onPress, fontAwesomeIcon
                 style={[
                     styles.button,
                     index === 0 ? styles.first : index === 2 - 1 ? styles.last : styles.middle,
-                    { borderRadius: '0' },
+                    { borderRadius: 0 },
                     isSelected ? styles.border : {},
                 ]}
-                onPress={onPress}
+                    onPress={onPress}
+                    touchableStyles={() => {}}
             >
                 {title}
-            </Button>
+                </Button>
+                </View>
         );
     } else if (variant === 'iconTop') {
         return (
@@ -71,7 +74,9 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 0,
         borderBottomRightRadius: 0,
     },
-
+    toggle: {
+        flex: 1
+    },
     middle: {
         borderRadius: 0,
         borderLeftWidth: 0,

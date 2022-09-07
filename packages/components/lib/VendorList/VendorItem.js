@@ -1,30 +1,21 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Card } from '@jmsstudiosinc/react-native-paper';
-// import {useNavigation} from '@react-navigation/native';
+import { Card, TouchableRipple } from '@jmsstudiosinc/react-native-paper';
 
 const renderVendorItem = ({ item }) => {
-    // const navigation = useNavigation();
-
     return (
         <View style={[styles.container]} contentContainerStyle={styles.content}>
-            <Card
-                style={styles.card}
-                mode="elevated"
-                onPress={() =>
-                    navigation.navigate('SingleVendor', {
-                        vendor: item,
-                    })
-                }
-            >
-                <Card.Cover source={{ uri: item.photos }} />
-                <Card.Title
-                    title={item.title}
-                    subtitle={`${item.formattedPub} - ${item.formattedHitDistance}`}
-                    titleVariant="headlineSmall"
-                    subtitleVariant="bodyLarge"
-                />
-            </Card>
+            <TouchableRipple>
+                <Card style={styles.card} mode="elevated">
+                    <Card.Cover source={{ uri: item.photos }} />
+                    <Card.Title
+                        title={item.title}
+                        subtitle={`${item.formattedPub} - ${item.formattedHitDistance}`}
+                        titleVariant="headlineSmall"
+                        subtitleVariant="bodyLarge"
+                    />
+                </Card>
+            </TouchableRipple>
         </View>
     );
 };
