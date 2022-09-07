@@ -1,18 +1,10 @@
 import React from 'react';
 
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Platform } from 'react-native';
 
-import { List } from '@jmsstudiosinc/react-native-paper';
-
-const TabList = ({title, children}) => (
+const TabList = ({ children }) => (
     <View style={styles.container}>
-        <List.Section 
-            title={title} 
-            style={styles.listSection} >
-            <View style={styles.row}>
-                {children}
-            </View>
-        </List.Section>
+        <View style={styles.row}>{children}</View>
     </View>
 );
 
@@ -20,12 +12,9 @@ export default TabList;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: Platform.OS === 'web' ? 1 : null,
     },
     row: {
-        flexDirection: "row",
-        flexWrap: "wrap",
+        flexDirection: 'row',
     },
-    listSection:{
-    }
-})
+});
