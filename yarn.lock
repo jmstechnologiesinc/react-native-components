@@ -1657,6 +1657,27 @@
   dependencies:
     "@jmsstudiosinc/vendor" "^7.0.0"
 
+"@jmsstudiosinc/driver@^7.0.0":
+  "integrity" "sha512-ImCCj73BuP+VhJE0Thw/Xsq/hm08BoPnXxrU3iRW5KuVxGBp/tiCIok6+CMQvOOLYRMhvfqHfo2REUtIGB0avA=="
+  "resolved" "https://npm.pkg.github.com/download/@jmsstudiosinc/driver/7.0.0/0ed3d8e7ef43b93a3210cbc518a6569bf9e80bf3"
+  "version" "7.0.0"
+  dependencies:
+    "@jmsstudiosinc/commons" "^8.0.0"
+    "@jmsstudiosinc/vendor" "^7.0.0"
+
+"@jmsstudiosinc/material-tokens@^0.0.1":
+  "integrity" "sha512-vXIXwRnTFlXRdtBQCDWOpP6vbDuWD52WVPilewXP2zfswFNKtixD/OEF+gQ8091Hv/VSGhAvYIMdx/AK52jegw=="
+  "resolved" "https://npm.pkg.github.com/download/@jmsstudiosinc/material-tokens/0.0.1/d6e4b84e617797adb34d6a68f064ab64b338baa7"
+  "version" "0.0.1"
+
+"@jmsstudiosinc/order@^8.0.0":
+  "integrity" "sha512-31FuAtb9fpXZEVdnE8c92r8WIy7uRw/8eRmO6cqP2m104PdvPwww8i7iuldABxWmbz9SV4R+YWMz+eyvlWiVoQ=="
+  "resolved" "https://npm.pkg.github.com/download/@jmsstudiosinc/order/8.0.0/303155e257ee2e71bcc8a63f04cd9222a93403cc"
+  "version" "8.0.0"
+  dependencies:
+    "@jmsstudiosinc/commons" "^8.0.0"
+    "@jmsstudiosinc/vendor" "^7.0.0"
+
 "@jmsstudiosinc/react-native-paper@^5.0.0-rc.7":
   "integrity" "sha512-FLq1/FtIX2GxGxAhc+0caeuBjtDLxMOWB+SAfOxDPOxUbhsGYyfqsOnZMBgIRnI2144CsvAiXLLZlcTSuaWuXQ=="
   "resolved" "https://npm.pkg.github.com/download/@jmsstudiosinc/react-native-paper/5.0.0-rc.7/6b40b86194e1339e4cf08c792cd0d67d73ee848ae9c7cc5f65c03fb5be566702"

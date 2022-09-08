@@ -25,6 +25,9 @@
     "@jmsstudiosinc/cart": "^10.0.0",
     "@jmsstudiosinc/checkbox": "^0.0.2",
     "@jmsstudiosinc/commons": "^8.0.0",
+    "@jmsstudiosinc/driver": "^7.0.0",
+    "@jmsstudiosinc/material-tokens": "^0.0.1",
+    "@jmsstudiosinc/order": "^8.0.0",
     "@jmsstudiosinc/react-native-paper": "^5.0.0-rc.7",
     "@react-native-async-storage/async-storage": "^1.17.3",
     "@react-native-community/datetimepicker": "^6.1.2",
@@ -34,12 +37,12 @@
     "react": "17.0.2",
     "react-dom": "^17.0.0",
     "react-native": "0.68.1",
+    "react-native-gesture-handler": "^2.1.0",
     "react-native-size-matters": "^0.4.0",
     "react-native-svg": "^12.3.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "^0.17.7",
-    "storybook-addon-state": "^1.0.3",
-    "react-native-gesture-handler": "^2.1.0"
+    "storybook-addon-state": "^1.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
