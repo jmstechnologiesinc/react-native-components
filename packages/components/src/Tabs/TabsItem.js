@@ -1,4 +1,5 @@
 import React from 'react';
+import { View } from 'react-native';
 
 import { Button, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 import { StyleSheet, Platform } from 'react-native';
@@ -24,21 +25,23 @@ const TabsItem = ({ index, title, subTitle, isSelected, onPress, fontAwesomeIcon
         );
     } else if (variant === 'toggle') {
         return (
-            <Button
-                {...(!isSelected && { textColor: MD3LightTheme.colors.onSurfaceVariant })}
-                subTitle={subTitle}
-                compact
-                mode={isSelected ? 'contained' : 'outlined'}
-                style={[
-                    styles.button,
-                    index === 0 ? styles.first : index === 2 - 1 ? styles.last : styles.middle,
-                    { borderRadius: '0' },
-                    isSelected ? styles.border : {},
-                ]}
-                onPress={onPress}
-            >
-                {title}
-            </Button>
+            <View style={styles.toggle}>
+                <Button
+                    {...(!isSelected && { textColor: MD3LightTheme.colors.onSurfaceVariant })}
+                    subTitle={subTitle}
+                    compact
+                    mode={isSelected ? 'contained' : 'outlined'}
+                    style={[
+                        styles.button,
+                        index === 0 ? styles.first : index === 2 - 1 ? styles.last : styles.middle,
+                        { borderRadius: 0 },
+                        isSelected ? styles.border : {},
+                    ]}
+                    onPress={onPress}
+                >
+                    {title}
+                </Button>
+            </View>
         );
     } else if (variant === 'iconTop') {
         return (
@@ -63,6 +66,10 @@ const styles = StyleSheet.create({
         flex: 1,
         borderWidth: StyleSheet.hairlineWidth,
     },
+    toggle: {
+        flex: 1,
+    },
+
     iconButtonTop: {
         flex: Platform.OS === 'web' ? 1 : null,
     },
