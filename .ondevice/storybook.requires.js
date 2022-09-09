@@ -31,21 +31,23 @@ try {
 
 const getStories = () => {
   return [
+    require('../packages/components/lib/List/List.stories.js'),
+    require('../packages/components/src/CartList/CartList.stories.js'),
+    require('../packages/components/src/Checkout/Checkout.stories.js'),
+    require('../packages/components/src/ChipList/index.stories.js'),
+    require('../packages/components/src/DynamicForm/DynamicForm.stories.js'),
+    require('../packages/components/src/IndustriesTaps/IndustriesTabs.stories.js'),
     require('../packages/components/src/List/List.stories.js'),
-    require('../packages/components/src/Tabs/Tabs.stories'),
-    require('../packages/components/src/StickyList/StickyList.stories'),
-    require('../packages/components/src/ToggleButton/ToggleButton.stories'),
-    require('../packages/components/src/VendorList/VendorList.stories'),
-    require('../packages/components/src/ProductList/ProductList.stories'),
-    require('../packages/components/src/VendorView/VendorView.stories'),
-    require('../packages/components/src/DynamicForm/DynamicForm.stories'),
-    require('../packages/components/src/CartList/CartList.stories'),
-    require('../packages/components/src/Checkout/Checkout.stories'),
-    require('../packages/components/src/ProductView/ProductView.stories'),
-    require('../packages/components/src/OrderList/OrderList.stories'),
-    require('../packages/components/src/OrderView/OrderView.stories'),
-    require('../packages/components/src/IndustriesTaps/IndustriesTabs.stories'),
-    require('../packages/components/src/ChipList/index.stories'),
+    require('../packages/components/src/OrderList/OrderList.stories.js'),
+    require('../packages/components/src/OrderView/OrderView.stories.js'),
+    require('../packages/components/src/PhotoGallery/PhotoGallery.stories.js'),
+    require('../packages/components/src/ProductList/ProductList.stories.js'),
+    require('../packages/components/src/ProductView/ProductView.stories.js'),
+    require('../packages/components/src/StickyList/StickyList.stories.js'),
+    require('../packages/components/src/Tabs/Tabs.stories.js'),
+    require('../packages/components/src/ToggleButton/ToggleButton.stories.js'),
+    require('../packages/components/src/VendorList/VendorList.stories.js'),
+    require('../packages/components/src/VendorView/VendorView.stories.js'),
   ];
 };
 
