@@ -5,19 +5,19 @@ import {
   addDecorator,
   addParameters,
   addArgsEnhancer,
-} from "@storybook/react-native";
+} from '@storybook/react-native';
 
-import "@storybook/addon-ondevice-notes/register";
-import "@storybook/addon-ondevice-controls/register";
-import "@storybook/addon-ondevice-backgrounds/register";
-import "@storybook/addon-ondevice-actions/register";
+import '@storybook/addon-ondevice-notes/register';
+import '@storybook/addon-ondevice-controls/register';
+import '@storybook/addon-ondevice-backgrounds/register';
+import '@storybook/addon-ondevice-actions/register';
 
-import { argsEnhancers } from "@storybook/addon-actions/dist/modern/preset/addArgs";
+import {argsEnhancers} from '@storybook/addon-actions/dist/modern/preset/addArgs';
 
-import { decorators, parameters } from "./preview";
+import {decorators, parameters} from './preview';
 
 if (decorators) {
-  decorators.forEach((decorator) => addDecorator(decorator));
+  decorators.forEach(decorator => addDecorator(decorator));
 }
 
 if (parameters) {
@@ -26,25 +26,26 @@ if (parameters) {
 
 // temporary fix for https://github.com/storybookjs/react-native/issues/327 whilst the issue is investigated
 try {
-  argsEnhancers.forEach((enhancer) => addArgsEnhancer(enhancer));
+  argsEnhancers.forEach(enhancer => addArgsEnhancer(enhancer));
 } catch {}
 
 const getStories = () => {
   return [
-    require("../packages/CartList/src/CartList.stories.js"),
-    require("../packages/Checkout/src/Checkout.stories.js"),
-    require("../packages/DynamicForm/src/DynamicForm.stories.js"),
-    require("../packages/List/src/List.stories.js"),
-    require("../packages/OrderList/src/OrderList.stories.js"),
-    require("../packages/OrderView/src/OrderView.stories.js"),
-    require("../packages/PhotoGallery/src/PhotoGallery.stories.js"),
-    require("../packages/ProductList/src/ProductList.stories.js"),
-    require("../packages/ProductView/src/ProductView.stories.js"),
-    require("../packages/StickyList/src/StickyList.stories.js"),
-    require("../packages/Tabs/src/Tabs.stories.js"),
-    require("../packages/ToggleButton/src/ToggleButton.stories.js"),
-    require("../packages/VendorList/src/VendorList.stories.js"),
-    require("../packages/VendorView/src/VendorView.stories.js"),
+    require('../packages/components/src/List/List.stories.js'),
+    require('../packages/components/src/Tabs/Tabs.stories'),
+    require('../packages/components/src/StickyList/StickyList.stories'),
+    require('../packages/components/src/ToggleButton/ToggleButton.stories'),
+    require('../packages/components/src/VendorList/VendorList.stories'),
+    require('../packages/components/src/ProductList/ProductList.stories'),
+    require('../packages/components/src/VendorView/VendorView.stories'),
+    require('../packages/components/src/DynamicForm/DynamicForm.stories'),
+    require('../packages/components/src/CartList/CartList.stories'),
+    require('../packages/components/src/Checkout/Checkout.stories'),
+    require('../packages/components/src/ProductView/ProductView.stories'),
+    require('../packages/components/src/OrderList/OrderList.stories'),
+    require('../packages/components/src/OrderView/OrderView.stories'),
+    require('../packages/components/src/IndustriesTaps/IndustriesTabs.stories'),
+    require('../packages/components/src/ChipList/index.stories'),
   ];
 };
 
