@@ -12,16 +12,16 @@ const OrderListfulfillmentStatus = ({ overline, header, subHeader, avatar, chips
             overline={overline}
             title={header}
             left={
-                avatar ? () => <Avatar.Image size={40} style={{ margin: 8, marginRight: 0 }} source={avatar} /> : null
+                avatar ? () => <Avatar.Image size={40} style={{ margin: 8, marginRight: 0 }} source={{uri: avatar}} /> : null
             }
             right={eta ? () => <Chip>{eta}</Chip> : null}
             description={({ ellipsizeMode, color: descriptionColor, fontSize }) => (
-                <View style={[styles.container, styles.column]}>
+                <View style={[ styles.column]}>
                     <Text numberOfLines={2} ellipsizeMode={ellipsizeMode} style={{ color: descriptionColor, fontSize }}>
-                        {subHeader}
+                        {subHeader} 
                     </Text>
                     {chips?.length > 0 && (
-                        <View style={[styles.container, styles.row, styles.additionalPadding]}>
+                        <View style={[ styles.row, styles.additionalPadding]}>
                             {chips.map((chip) => (
                                 <Chip mode="outlined">{chip}</Chip>
                             ))}
@@ -34,9 +34,7 @@ const OrderListfulfillmentStatus = ({ overline, header, subHeader, avatar, chips
 );
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
+   
     row: {
         flexDirection: 'row',
     },

@@ -1,11 +1,10 @@
 import React from 'react';
 
-import { Card, Title, Paragraph, Button, MD3LightTheme, Text } from '@jmsstudiosinc/react-native-paper';
+import { Card,  Button,  Text } from '@jmsstudiosinc/react-native-paper';
 
 import OrderListfulfillmentStatus from './OrderListfulfillmentStatus';
 import { Image, StyleSheet, View } from 'react-native';
 
-import { ORDER_STATUS_CANCELLED } from '@jmsstudiosinc/order';
 
 export const ORDER_ACTIONS = {
     print: 'print',
@@ -46,7 +45,7 @@ const OrderListVendor = ({
                 subtitle={`${formattedOrderId} ${description}`}
                 left={renderImage}
                 right={() => (
-                    <Text variant="headlineSmall" style={{ marginRight: 16 }}>
+                    <Text  style={{ marginRight: 16 }}>
                         {status}
                     </Text>
                 )}

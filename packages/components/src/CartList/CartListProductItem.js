@@ -34,9 +34,6 @@ const renderRecursiveAttributeGroup = (attributeGroup) => {
 
 const CartListProductItem = ({ data }) => {
     const attributeGroup = renderRecursiveAttributeGroup(data.attributeGroup);
-
-    console.log(JSON.stringify(data, null, 4))
-
     return (
         <SwipeToDelete>
         <List.Accordion
