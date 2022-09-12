@@ -1,12 +1,11 @@
 import React from 'react';
 
-import { Card, Title, Paragraph, Button, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
+import { Card, Title, Paragraph, Button, MD3LightTheme, Text } from '@jmsstudiosinc/react-native-paper';
 
 import OrderListfulfillmentStatus from './OrderListfulfillmentStatus';
 import { Image, StyleSheet, View } from 'react-native';
 
 import { ORDER_STATUS_CANCELLED } from '@jmsstudiosinc/order';
-import { Text } from '@jmsstudiosinc/react-native-paper';
 
 export const ORDER_ACTIONS = {
     print: 'print',
@@ -58,7 +57,7 @@ const OrderListVendor = ({
             />
 
             {fulfilmentStatus.cooking && (
-                <Card.Content style={{ marginTop: 8 }}>{fulfilmentStatus.cooking}</Card.Content>
+                <Card.Content style={{ marginTop: 8 }}><Text>{fulfilmentStatus.cooking}</Text></Card.Content>
             )}
 
             {(fulfilmentStatus.overline ||
