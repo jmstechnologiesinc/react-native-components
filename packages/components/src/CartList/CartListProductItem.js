@@ -2,6 +2,7 @@ import React from 'react';
 
 import { List } from '@jmsstudiosinc/react-native-paper';
 import { MetaBadged } from '../List';
+import SwipeToDelete from '../SwipeToDelete';
 
 const recursiveAttributeGroup = ({ parentId, attributeGroup }) => {
     const results = [];
@@ -34,17 +35,23 @@ const renderRecursiveAttributeGroup = (attributeGroup) => {
 const CartListProductItem = ({ data }) => {
     const attributeGroup = renderRecursiveAttributeGroup(data.attributeGroup);
 
+    console.log(JSON.stringify(data, null, 4))
+
     return (
+        <SwipeToDelete>
         <List.Accordion
             isDisabled
             title={data.title}
             right={() => <MetaBadged title={data.price} quantity={data.quantity} />}
             expanded={attributeGroup.length > 0}
         >
+       
             {attributeGroup.map((item) => (
                 <List.Item title={item.title} />
             ))}
+      
         </List.Accordion>
+        </SwipeToDelete>
     );
 };
 
