@@ -31,13 +31,18 @@ try {
 
 const getStories = () => {
   return [
-    require('../packages/AttributeList/src/AttributeList.stories.js'),
-    require('../packages/CartList/src/CartList.stories.js'),
-    require('../packages/HLTabsWrapper/src/index.stories.js'),
-    require('../packages/ProductList/src/ProductList.stories.js'),
-    require('../packages/VendorList/src/VendorList.stories.js'),
-    require('../packages/Checkout/src/Checkout.stories.js'),
-    require('../packages/List/src/List.stories.js'),
+    require('../packages/components/src/CartList/CartList.stories.js'),
+    require('../packages/components/src/Checkout/Checkout.stories.js'),
+    require('../packages/components/src/DynamicForm/DynamicForm.stories.js'),
+    require('../packages/components/src/HLTabsWrapper/index.stories.js'),
+    require('../packages/components/src/List/List.stories.js'),
+    require('../packages/components/src/PhotoGallery/PhotoGallery.stories.js'),
+    require('../packages/components/src/ProductList/ProductList.stories.js'),
+    require('../packages/components/src/ProductView/ProductView.stories.js'),
+    require('../packages/components/src/StickyList/StickyList.stories.js'),
+    require('../packages/components/src/Tabs/Tabs.stories.js'),
+    require('../packages/components/src/VendorList/VendorList.stories.js'),
+    require('../packages/components/src/VendorView/VendorView.stories.js'),
   ];
 };
 
