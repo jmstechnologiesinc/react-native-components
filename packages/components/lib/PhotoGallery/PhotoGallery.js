@@ -27,7 +27,7 @@ const PhotoGallery = ({ photos }) => {
             <Image
                 style={styles.photo}
                 placeholderColor={'red'}
-                source={require('./wrecked-ship.jpg')}
+                source={{uri: photos}}
             />
         </TouchableOpacity>
     );
