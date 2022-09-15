@@ -1,6 +1,6 @@
 {
   "name": "@jmsstudiosinc/react-native-components",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "> TODO: description",
   "author": "yerloveraaa <yerloveraaa@gmail.com>",
   "homepage": "https://github.com/jmsstudiosinc/react-native-components#readme",
@@ -32,10 +32,10 @@
     "@jmsstudiosinc/react-native-paper": "^5.0.0-rc.7"
   },
   "peerDependencies": {
+    "@jmsstudiosinc/react-native-paper": "*",
     "react": "*",
     "react-native": "*",
-    "react-native-vector-icons": "*",
-    "@jmsstudiosinc/react-native-paper": "*"
+    "react-native-vector-icons": "*"
   },
   "gitHead": "a15d55356078a7958acfea0fb92e230c5d282bde"
 }

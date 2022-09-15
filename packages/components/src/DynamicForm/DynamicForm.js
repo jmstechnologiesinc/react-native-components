@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';
 
 import { FlatList } from 'react-native';
 
 import { formattedSelection, validateSelection } from '@jmsstudiosinc/commons';
-import { List } from '@jmsstudiosinc/react-native-paper';
+import {List} from '@jmsstudiosinc/react-native-paper';
 import DynamicFormSwitch from './DynamicFormSwitch';
-import styles from './styles';
 
 const nextAttributeGroup = (value, attributeGroup) => {
     return value === true && attributeGroup.length ? attributeGroup : null;
@@ -107,39 +107,34 @@ const DynamicForm = ({
         if (!value && maxSelection > 1 && selection >= maxSelection) {
             return true;
         }
-
+    
         return false;
     };
 
-    const renderItem = ({ item }) => {
-        return (
-            <List.Section>
-                <List.Accordion
-                    title={item.title}
-                    description={initialValues[item.id]?.formattedSelection || item.formattedSelection}
-                >
-                    {item.data?.map((attr) => {
-                        const value = Boolean(getValue(attr));
-                        const isMaxSelection = validateMaxSelection(value, item, item.maxSelection);
-                        const isDisabled = attr.isDisabled || isOutofStock || isMaxSelection;
-                        const form = {
-                            ...attr,
-                            value,
-                            isDisabled,
-                        };
+    const renderItem = ({item}) => {
+        return <List.Section>
+            <List.Accordion 
+                title={item.title} 
+                description={initialValues[item.id]?.formattedSelection || item.formattedSelection}>
+                {item.data?.map(attr => {
+                    const value = Boolean(getValue(attr));
+                    const isMaxSelection = validateMaxSelection(value, item, item.maxSelection);
+                    const isDisabled = attr.isDisabled || isOutofStock || isMaxSelection;
+                    const form = {
+                        ...attr,
+                        value,
+                        isDisabled
+                    }
 
-                        return (
-                            <DynamicFormSwitch
-                                form={form}
-                                onChange={(value) => onCheckboxRadioChange(attr, item, value)}
-                            />
-                        );
-                    })}
-                </List.Accordion>
-            </List.Section>
-        );
+                    return <DynamicFormSwitch
+                        form={form}
+                        onChange={(value) => onCheckboxRadioChange(attr, item, value)} />
+                })}
+            </List.Accordion>
+        </List.Section>
     };
 
+  
     const listFooterComponentWrapper = () => {
         let isValid = initialValues[parentId]?.isValid;
 
@@ -159,7 +154,6 @@ const DynamicForm = ({
             renderItem={renderItem}
             ListHeaderComponent={ListHeaderComponent}
             ListFooterComponent={listFooterComponentWrapper}
-            styles={styles.container}
         />
     );
 };

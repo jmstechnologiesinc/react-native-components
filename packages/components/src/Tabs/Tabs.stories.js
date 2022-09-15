@@ -18,20 +18,10 @@ export default {
   title: 'packages/Tabs',
 };
 
-export const Item = () => <TabsItem title="Default" />
-export const Selected = () => <TabsItem title="Selected" isSelected />
+export const NoSelectedItem = () => <TabsItem title="Default" />
+export const SelectedItem = () => <TabsItem title="Selected" isSelected />
 export const List = ({onPress}) => (
   <TabList>
-    {mockData.map((item, index) => <TabsItem 
-      title={item.title} 
-      isSelected={item.isSelected}
-      onPress={() => onPress(index)} />)
-    }
-  </TabList>
-);
-
-export const ListTitle = ({onPress}) => (
-  <TabList title="Dinner Menu">
     {mockData.map((item, index) => <TabsItem 
       title={item.title} 
       isSelected={item.isSelected}

@@ -1,29 +1,17 @@
-import * as VendorList from './VendorList/VendorList';
 import * as List from './List/index';
 import * as ProductList from './ProductList/ProductList';
-import * as CartList from './CartList/CartList';
-import * as Checkout from './Checkout/Accounting';
-import * as DynamicForm from './DynamicForm/DynamicForm';
-import * as Fast2ImageKit from './Fast2ImageKit/Fast2ImageKit';
-import * as HLTabsWrapper from './HLTabsWrapper/index';
-import * as PhotoGallery from './PhotoGallery/PhotoGallery';
-import * as ProductView from './ProductView/ProductView';
-import * as StickyList from './StickyList/index';
 import * as Tabs from './Tabs/Tabs';
-import * as VendorView from './VendorView/VendorView';
 
-export {
-    VendorList,
-    List,
-    ProductList,
-    CartList,
-    Checkout,
-    DynamicForm,
-    Fast2ImageKit,
-    HLTabsWrapper,
-    PhotoGallery,
-    ProductView,
-    StickyList,
-    Tabs,
-    VendorView,
-};
+export { default as VendorList } from './VendorList/VendorItem';
+export { default as VendorView } from './VendorView/VendorView';
+export { default as CartLists } from './CartList/CartList';
+export { default as DynamicForm } from './DynamicForm/DynamicForm';
+export { default as ProductView } from './ProductView/ProductView';
+export { default as StickyList } from './StickyList/index';
+export { default as PhotoGallery } from './PhotoGallery/PhotoGallery';
+export { default as Checkout } from './Checkout/Accounting';
+export { default as Fast2ImageKit } from './Fast2ImageKit/Fast2ImageKit';
+export { default as HLTabsWrapper } from './HLTabsWrapper/index';
+export {default as ChipList } from './ChipList/chipList'
+
+export { List, ProductList, Tabs };

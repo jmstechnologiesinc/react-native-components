@@ -2,44 +2,14 @@ import React from 'react';
 
 import { View, StyleSheet } from 'react-native';
 
-import { Text, List, Button, Badge, Divider } from '@jmsstudiosinc/react-native-paper';
+import { Text, List, Button } from '@jmsstudiosinc/react-native-paper';
 import { CART_ITEM_TYPE } from '@jmsstudiosinc/cart';
-import { Metadata, Subheader } from '../List';
-import SwipeToDelete from '../SwipeToDelete';
+import { Subheader } from '../List';
+import CartListProductItem from './CartListProductItem';
 
 const vendorPhoto = 'https://d1ralsognjng37.cloudfront.net/21abd571-1fa3-4214-ae02-2e828864dea3.jpeg';
 
-const recursiveAttributeGroup = ({ parentId, attributeGroup }) => {
-    const results = [];
-
-    if (!parentId) return null;
-
-    for (selection in attributeGroup) {
-        if (attributeGroup[selection].parentId === parentId) {
-            results.push({
-                ...attributeGroup[selection],
-                ...recursiveAttributeGroup({ parentId: selection, attributeGroup }),
-            });
-        }
-    }
-
-    return results;
-};
-
-const renderRecursiveAttributeGroup = (attributeGroup) => {
-    const results = [];
-    for (index in attributeGroup) {
-        if (attributeGroup[index].parentId === null) {
-            results.push(...recursiveAttributeGroup({ parentId: attributeGroup[index].id, attributeGroup }));
-        }
-    }
-
-    return results;
-};
-
-const CartListItem = ({ item, onDelete, onEdit }) => {
-    const { id, title, type, total, description, data, cartIndustryId } = item;
-
+const CartListItem = ({ item: { id, title, type, total, description, data } }) => {
     if (type === CART_ITEM_TYPE.emptyItem) {
         return null;
     } else if (type === CART_ITEM_TYPE.checkout) {
@@ -62,52 +32,16 @@ const CartListItem = ({ item, onDelete, onEdit }) => {
 
     return (
         <List.Section>
-            <Subheader title={title} avatar={vendorPhoto} metadata={1234} />
-            {data?.map((data) => {
-                const attributeGroup = renderRecursiveAttributeGroup(data.attributeGroup);
-                return (
-                    <SwipeToDelete onDelete={onDelete} id={id} cartId={data.cartId} cartIndustryId={cartIndustryId}>
-                        <List.Accordion
-                            onPress={() => onEdit(item)}
-                            title={data.title}
-                            left={() => (
-                                <List.Icon icon={() => <Badge style={{ alignSelf: 'auto' }}>{data.quantity}</Badge>} />
-                            )}
-                            right={() => (data.price ? <Metadata title={data.price} /> : null)}
-                            expanded={attributeGroup.length > 0}
-                        >
-                            {attributeGroup.map((item) => (
-                                <List.Item title={item.title} />
-                            ))}
-                        </List.Accordion>
-                        <Divider />
-                    </SwipeToDelete>
-                );
-            })}
+            <Subheader title={title} avatar={vendorPhoto} />
+
+            {data?.map((data) => (
+                <CartListProductItem data={data} />
+            ))}
         </List.Section>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    image: {
-        height: 40,
-        width: 40,
-        margin: 8,
-    },
-    image1: {
-        width: 100,
-        height: 56,
-        padding: 0,
-    },
-    row: {
-        flexDirection: 'row',
-    },
-    column: {
-        flexDirection: 'column',
-    },
     button: {
         margin: 16,
     },

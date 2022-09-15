@@ -1,35 +1,34 @@
-import React from "react";
+import React from 'react';
 
-import {View, ScrollView } from "react-native";
+import { View, ScrollView } from 'react-native';
 
-import TabsItem from "./TabsItem";
-import TabList from "./TabsList";
+import { List } from '@jmsstudiosinc/react-native-paper';
 
-const TabsScrollable = React.forwardRef(({
-    data, 
-    selectedIndex,
-    onPress, 
-    onTabsContainerLayout,
-    onTabsItemLayout
-}, ref) => (
-    <ScrollView
-        ref={ref}
-        showsHorizontalScrollIndicator={false}
-        horizontal>
-        <View onLayout={onTabsContainerLayout}>
-            <TabList>
-                {data.map((item, index) => (
-                    <View onLayout={onTabsItemLayout(index)} >
-                        <TabsItem
-                            title={item.title} 
-                            isSelected={selectedIndex === index}
-                            onPress={() => onPress(index)} />
-                    </View>
-                ))}
-            </TabList>
-        </View>
-    </ScrollView>
-))
+import TabsItem from './TabsItem';
+import TabList from './TabsList';
 
-export default TabsScrollable
-  
+const TabsScrollable = React.forwardRef(
+    ({ title, data, selectedIndex, onPress, onTabsContainerLayout, onTabsItemLayout }, ref) => (
+        <List.Section title={title}>
+            <ScrollView ref={ref} showsHorizontalScrollIndicator={false} horizontal>
+                <View onLayout={onTabsContainerLayout}>
+                    <TabList>
+                        {data.map((item, index) => (
+                            <View onLayout={onTabsItemLayout(index)}>
+                                <TabsItem
+                                    title={item.title}
+                                    isSelected={selectedIndex === index}
+                                    onPress={() => onPress(index)}
+                                    variant={item.variant}
+                                    fontAwesomeIcon={item.fontAwesomeIcon}
+                                />
+                            </View>
+                        ))}
+                    </TabList>
+                </View>
+            </ScrollView>
+        </List.Section>
+    )
+);
+
+export default TabsScrollable;

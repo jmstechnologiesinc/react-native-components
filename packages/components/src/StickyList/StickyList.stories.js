@@ -2,10 +2,9 @@ import React from 'react';
 
 import { List } from '@jmsstudiosinc/react-native-paper';
 
-import { SectionHeader } from '../List';
-import StickyList from '.';
+import mockData from './mockData.json';
 
-import mockData from '../ProductList/mockData.json';
+import StickyList from '.';
 
 export default {
     title: 'packages/StickyList',
@@ -14,7 +13,7 @@ export default {
 export const SectionList = () => (
     <StickyList
         sections={mockData}
-        renderSectionHeader={({ section: { title } }) => <SectionHeader title={title} />}
+        renderSectionHeader={({ section: { title } }) => <List.Subheader>{title}</List.Subheader>}
         renderItem={({ item }) => <List.Item title={item.title} description={item.description} />}
     />
 );

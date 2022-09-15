@@ -66,17 +66,21 @@ export default class StickySectionTabsList extends React.PureComponent {
         }
 
         return (
-            <View style={{ flexDirection: 'row', backgroundColor: 'white' }}>
-                <View style={[{ width: WindowWidth }]}>
-                    <Tabs.Scrollable
-                        ref={this.scrollView}
-                        data={sections}
-                        selectedIndex={this.props.currentIndex}
-                        onPress={this.props.onPress}
-                        onTabsContainerLayout={this.onTabsContainerLayout}
-                        onTabsItemLayout={this.onTabsItemLayout}
-                    />
-                </View>
+            <View
+                style={{
+                    width: WindowWidth,
+                    flexDirection: 'row',
+                }}
+            >
+                <Tabs.Scrollable
+                    title={this.props.title}
+                    data={sections}
+                    ref={this.scrollView}
+                    selectedIndex={this.props.currentIndex}
+                    onPress={this.props.onPress}
+                    onTabsContainerLayout={this.onTabsContainerLayout}
+                    onTabsItemLayout={this.onTabsItemLayout}
+                />
                 {/*     <TouchableOpacity
                     onPress={this.props?.onExpand}
                     style={{

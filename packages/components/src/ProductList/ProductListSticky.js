@@ -1,20 +1,19 @@
 import React from 'react';
 
-import { Divider } from '@jmsstudiosinc/react-native-paper';
+import { Divider, List } from '@jmsstudiosinc/react-native-paper';
 
-import { SectionHeader } from '../List';
 import StickyList from '../StickyList';
 
-import * as ProductList from './ProductList';
+import ProductListItem from './ProductListItem';
 
 const ProductListSticky = ({ sections, onPress, ...props }) => (
     <StickyList
         {...props}
         sections={sections}
-        renderSectionHeader={({ section: { title } }) => <SectionHeader title={title} />}
+        renderSectionHeader={({ section: { title } }) => <List.Subheader>{title}</List.Subheader>}
         ItemSeparatorComponent={Divider}
         renderItem={({ item }) => (
-            <ProductList.Item
+            <ProductListItem
                 id={item.id}
                 uuid={item.uuid}
                 photo={item.photos?.[0]}

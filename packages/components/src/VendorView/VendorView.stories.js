@@ -3,6 +3,7 @@ import React from 'react';
 import VendorView from './VendorView';
 
 import mockData from '../VendorList/mockData.json';
+import ToggleButtonMockData from '../ToggleButton/mockData.json';
 import { Sticky } from '../ProductList/ProductList.stories';
 
 export default {
@@ -36,7 +37,9 @@ export const Banner = () => (
         formattedPud={`${mockData[0].formattedPub} - ${mockData[0].formattedHitDistance}`}
         formattedAddress={mockData[1].location.formattedAddress}
         photos={photos}
-        banner={'3'}
+        banner={
+            'Use your Uber account to order delivery from Terra Luna Cafe in Lawrence. Browse the menu, view popular items, and track your order.'
+        }
         description={mockData[1].description}
     />
 );
@@ -52,6 +55,8 @@ export const StickyProductList = () => (
                     photos={photos}
                     coverTranslateY={coverTranslateY}
                     coverScale={coverScale}
+                    pud={ToggleButtonMockData}
+                    selectedPud={1}
                     tabBarOpacity={tabBarOpacity}
                 />
             );

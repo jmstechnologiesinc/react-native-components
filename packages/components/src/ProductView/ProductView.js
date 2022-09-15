@@ -1,32 +1,20 @@
 import React from 'react';
 
-import { View } from 'react-native';
+import { Text, List, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 
-import { Text, List, MD3LightTheme, Paragraph } from '@jmsstudiosinc/react-native-paper';
+import * as JMSList from '../List';
 import PhotoGallery from '../PhotoGallery/PhotoGallery';
 
 const ProductView = ({ title, photos, description, inStock, price }) => {
-    const renderTitle = ({ selectable, titleEllipsizeMode, color }) => (
-        <Text
-            selectable={selectable}
-            ellipsizeMode={titleEllipsizeMode}
-            numberOfLines={1}
-            variant={'headlineSmall'}
-            style={{ color }}
-        >
-            {title}
-        </Text>
-    );
-
     return (
         <>
             <PhotoGallery photos={photos} />
             <List.Section>
-                <List.Item
-                    /*    style={{padding: 0}}
-                    itemStyle={{padding: 0}} */
-                    title={renderTitle}
-                    description={'in stock'}
+                <JMSList.Item
+                    overline={'in stock'}
+                    title={title}
+                    description={description}
+                    titleVariant={'headlineSmall'}
                     right={() => (
                         <Text
                             variant="headlineSmall"
@@ -41,11 +29,6 @@ const ProductView = ({ title, photos, description, inStock, price }) => {
                     )}
                 />
             </List.Section>
-            {description && (
-                <View style={{ marginHorizontal: 16, marginBottom: 32 }}>
-                    <Paragraph>{description}</Paragraph>
-                </View>
-            )}
         </>
     );
 };
