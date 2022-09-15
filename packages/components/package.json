@@ -29,7 +29,7 @@
     "rimraf": "^3.0.2"
   },
   "dependencies": {
-    "@jmsstudiosinc/react-native-paper": "^5.0.0-rc.7"
+    "@jmsstudiosinc/react-native-paper": "^5.0.0-rc.8"
   },
   "peerDependencies": {
     "@jmsstudiosinc/react-native-paper": "*",
