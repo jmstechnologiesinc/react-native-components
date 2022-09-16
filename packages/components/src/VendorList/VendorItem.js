@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Card } from '@jmsstudiosinc/react-native-paper';
-// import {useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 const renderVendorItem = ({ item }) => {
-    // const navigation = useNavigation();
+     const navigation = useNavigation();
 
     return (
         <View style={[styles.container]} contentContainerStyle={styles.content}>
