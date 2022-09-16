@@ -22,7 +22,7 @@ const ListSubheader = ({
         itemStyle={{marginVertical: 0, paddingLeft: 0}}
         title={renderTitle}
         description={description ? () => <Text  style={{paddingHorizontal: 16}} variant="labelSmall">{description}</Text> : null}
-        left={avatar ? () => <Avatar.Image size={40} style={{margin: 8, marginRight: 0}} source={avatar}/> : null} />
+        left={avatar ? () => <Avatar.Image size={40} style={{margin: 8, marginRight: 0}} source={{uri: avatar}}/> : null} />
 }
 
 export default ListSubheader;

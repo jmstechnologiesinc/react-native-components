@@ -1,41 +1,72 @@
 import React from 'react';
 
-import { List } from '@jmsstudiosinc/react-native-paper';
-import * as JMSList from '../List';
-
-const feeItem = ({ label, description, formattedValue }) => (
-    <JMSList.Item
-        style={{ paddingVertical: 0 }}
-        title={label}
-        description={description}
-        metaTitle={formattedValue}
-    />
-);
+import { Text, List } from '@jmsstudiosinc/react-native-paper';
+import { Metadata } from '../List';
+import { MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 
 const Accounting = ({ fees }) => {
     const results = [];
 
     const { total, ...rest } = fees;
+    for (index in rest) {
+        const { label, description, formattedValue } = rest[index];
 
-    for (const index in rest) {
         if (Array.isArray(rest[index])) {
-            results.push(rest[index].map(feeItem));
+            results.push(
+                rest[index].map(({ label, description, formattedValue }) => (
+                    <List.Item
+                        style={{ paddingVertical: 0 }}
+                        title={label}
+                        description={description}
+                        right={() => (
+                            <Metadata title={formattedValue} style={{ color: MD3LightTheme.colors.onSurfaceVariant }} />
+                        )}
+                    />
+                ))
+            );
         }
 
-        results.push(feeItem(rest[index]));
+        results.push(
+            <List.Item
+                style={{ paddingVertical: 0 }}
+                title={label}
+                description={description}
+                right={() => (
+                    <Metadata title={formattedValue} style={{ color: MD3LightTheme.colors.onSurfaceVariant }} />
+                )}
+            />
+        );
     }
+
+    const renderTitle = ({ selectable, titleEllipsizeMode, color }) => (
+        <Text
+            selectable={selectable}
+            ellipsizeMode={titleEllipsizeMode}
+            numberOfLines={1}
+            variant={'headlineSmall'}
+            style={{ color }}
+        >
+            {total.label}
+        </Text>
+    );
 
     return (
         <List.Section>
-            {total && (
-                <JMSList.Item
-                    title={total.label}
-                    description={total.description}
-                    metaTitle={total.formattedValue}
-                    titleVariant="headlineSmall"
-                    metaTitleVariant="headlineSmall" />
-            )}
-
+            <List.Item
+                title={renderTitle}
+                description={total.description}
+                right={() => (
+                    <Text
+                        variant="headlineSmall"
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                        }}
+                    >
+                        {total.formattedValue}
+                    </Text>
+                )}
+            />
             {results}
         </List.Section>
     );

@@ -17,8 +17,8 @@ const TabsScrollable = React.forwardRef(
                             <View onLayout={onTabsItemLayout(index)}>
                                 <TabsItem
                                     title={item.title}
-                                    isSelected={selectedIndex === index}
-                                    onPress={() => onPress(index)}
+                                     isSelected={item.isSelected ? item.isSelected : selectedIndex === index}
+                                    onPress={item.onPress ? item.onPress : () => onPress(index)}
                                     variant={item.variant}
                                     fontAwesomeIcon={item.fontAwesomeIcon}
                                 />

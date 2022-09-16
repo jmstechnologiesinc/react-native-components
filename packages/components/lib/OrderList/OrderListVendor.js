@@ -25,11 +25,13 @@ const OrderListVendor = ({
     eta,
     onPress,
     onButtonPress,
+    orderID,
+    
 }) => {
     const renderImage = photo
         ? () => (
               <Image
-                  source={require('./wrecked-ship.jpg')}
+                  source={{uri: photo}}
                   style={{
                       width: 100,
                       height: 56,
@@ -86,7 +88,7 @@ const OrderListVendor = ({
                                     : 'outlined'
                             }
                             style={styles.button}
-                            onPress={() => onButtonPress?.(button.value)}
+                        onPress={() => onButtonPress(button, orderID)}
                             {...(button.value === ORDER_ACTIONS.print && { icon: 'printer' })}
                         >
                             {button.label}

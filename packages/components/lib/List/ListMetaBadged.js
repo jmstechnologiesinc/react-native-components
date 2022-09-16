@@ -8,12 +8,11 @@ import { Metadata } from '.';
 const ListMetaBadged = ({
     title, 
     quantity,
-    titleVariant,
     style,
     titleStyle
 }) => (
     <View style={[{justifyContent: "center", marginLeft: 16}, style]}>
-        {title && <Metadata title={title} variant={titleVariant} style={titleStyle} />}
+        {title && <Metadata title={title} style={titleStyle} />}
         {quantity && <Badge>{quantity}</Badge>}
     </View>
 )

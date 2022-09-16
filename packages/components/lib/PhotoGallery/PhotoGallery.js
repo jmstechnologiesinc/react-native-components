@@ -27,15 +27,15 @@ const PhotoGallery = ({ photos }) => {
             <Image
                 style={styles.photo}
                 placeholderColor={'red'}
-                source={require('./wrecked-ship.jpg')}
+                source={{uri: photos}}
             />
         </TouchableOpacity>
     );
 
     return (
         <>
-            {uri && <Image source={require('./wrecked-ship.jpg')} style={styles.mainPhoto} />}
-            {photos.length > 1 && (
+            {uri && <Image source={{uri: photos}} style={styles.mainPhoto} />}
+            {/* {photos.length > 2 && (
                 <FlatList
                     style={styles.itemContainer}
                     data={photos}
@@ -45,7 +45,7 @@ const PhotoGallery = ({ photos }) => {
                     showsHorizontalScrollIndicator={false}
                     keyExtractor={(item) => `${item}`}
                 />
-            )}
+            )} */}
         </>
     );
 };

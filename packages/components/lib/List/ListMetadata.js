@@ -8,7 +8,7 @@ const ListMetadata = ({
     style
 }) => (
     <Text 
-        variant={variant}
+        variant="bodyMedium" 
         style={[{
             display: "flex", 
             alignItems: "center", 

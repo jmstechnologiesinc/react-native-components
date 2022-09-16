@@ -32,13 +32,14 @@ const renderRecursiveAttributeGroup = (attributeGroup) => {
     return results;
 };
 
-const CartListProductItem = ({ data }) => {
+const CartListProductItem = ({ data, onDelete, onEdit, isRemoveable = true}) => {
     const attributeGroup = renderRecursiveAttributeGroup(data.attributeGroup);
     return (
-        <SwipeToDelete>
+        <SwipeToDelete onDelete={onDelete} isRemoveable={isRemoveable}>
         <List.Accordion
             isDisabled
             title={data.title}
+            onPress={onEdit}
             right={() => <MetaBadged title={data.price} quantity={data.quantity} />}
             expanded={attributeGroup.length > 0}
         >

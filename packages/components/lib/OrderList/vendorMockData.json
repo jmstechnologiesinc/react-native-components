@@ -143,6 +143,10 @@
         "label": "Delivery Fee",
         "formattedValue": "$1.66",
         "value": 1.6594396231592021
+      },
+      "distance": {
+        "formattedValue": "0.003 mi",
+        "value": 0.0027195651652422302
       }
     },
     "products": [
@@ -314,6 +318,10 @@
         "label": "Delivery Fee",
         "formattedValue": "$1.66",
         "value": 1.6594396231592021
+      },
+      "distance": {
+        "formattedValue": "0.003 mi",
+        "value": 0.0027195651652422302
       }
     },
     "products": [
@@ -457,6 +465,10 @@
         "label": "Delivery Fee",
         "formattedValue": "$2.20",
         "value": 2.197772956492536
+      },
+      "distance": {
+        "formattedValue": "0.003 mi",
+        "value": 0.0027195651652422302
       }
     },
     "products": [
@@ -800,6 +812,10 @@
         "label": "Delivery Fee",
         "formattedValue": "$1.66",
         "value": 1.6594396231592021
+      },
+      "distance": {
+        "formattedValue": "0.003 mi",
+        "value": 0.0027195651652422302
       }
     },
     "products": [
@@ -955,6 +971,10 @@
         "label": "Delivery Fee",
         "formattedValue": "$1.66",
         "value": 1.6594396231592021
+      },
+      "distance": {
+        "formattedValue": "0.003 mi",
+        "value": 0.0027195651652422302
       }
     },
     "products": [
