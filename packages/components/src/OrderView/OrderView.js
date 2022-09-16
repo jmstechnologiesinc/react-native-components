@@ -74,7 +74,7 @@ const OrderView = ({ order, role }) => {
                 <>
                     <List.Section title="Products">
                         {order.products.map((data) => (
-                            <CartListProductItem data={data} />
+                            <CartListProductItem data={data} isRemoveable={false}/>
                         ))}
                     </List.Section>
                 </>
