@@ -2,9 +2,13 @@ import React from 'react';
 
 import {Text, MD3LightTheme} from '@jmsstudiosinc/react-native-paper';
 
-const ListMetadata = ({title, style}) => (
+const ListMetadata = ({
+    title, 
+    variant="bodyMedium", 
+    style
+}) => (
     <Text 
-        variant="bodyMedium" 
+        variant={variant}
         style={[{
             display: "flex", 
             alignItems: "center", 
