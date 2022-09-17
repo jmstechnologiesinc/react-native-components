@@ -10,8 +10,9 @@ import PhotoGallery from '../PhotoGallery/PhotoGallery';
 import OrderListItem from '../OrderList/OrderListItem';
 import Accounting from '../Checkout/Accounting';
 import CartListProductItem from '../CartList/CartListProductItem';
+import { Subheader } from '../List';
 
-const OrderView = ({ order, role }) => {
+const OrderView = ({ order, role,  onButtonPress }) => {
     const fulfilmentDetails = [];
 
     if (order.note === true) {
@@ -67,13 +68,13 @@ const OrderView = ({ order, role }) => {
     return (
         <>
             <PhotoGallery photos={[]} />
-            <OrderListItem role={role} order={order} />
+            <OrderListItem role={role} order={order}   onButtonPress={onButtonPress}/>
 
             {(role === USER_ROLES.vendor || role === USER_ROLES.customer) && (
                 <>
                     <List.Section title="Products">
                         {order.products.map((data) => (
-                            <CartListProductItem data={data} isRemoveable={false}/>
+                            <CartListProductItem data={data} isRemoveable={false} />
                         ))}
                     </List.Section>
                 </>
@@ -93,7 +94,7 @@ const OrderView = ({ order, role }) => {
                 </List.Section>
             )}
 
-            {!(role === USER_ROLES.driver && order.deliveryMethod === DELIVERY_METHODS.restaurantOwnStaff) && (
+            {/*     {!(role === USER_ROLES.driver && order.deliveryMethod === DELIVERY_METHODS.restaurantOwnStaff) && (
                 <Accounting 
                     fees={(role === USER_ROLES.customer
                         ? order.customerFees
@@ -106,7 +107,7 @@ const OrderView = ({ order, role }) => {
                         ? order.driverFees
                         : null
                     )} />
-            )}
+            )} */}
         </>
     );
 };

@@ -31,7 +31,6 @@ try {
 
 const getStories = () => {
   return [
-    require("../packages/components/lib/List/List.stories.js"),
     require("../packages/components/src/CartList/CartList.stories.js"),
     require("../packages/components/src/Checkout/Checkout.stories.js"),
     require("../packages/components/src/ChipList/index.stories.js"),

@@ -21,7 +21,7 @@ const SwipeToDelete = ({ children, onDelete, isRemoveable }) => {
 
     return (
         <Swipeable
-           renderRightActions={isRemoveable ? renderRightActions : null}
+            renderRightActions={isRemoveable ? renderRightActions : null}
             overshootRight={false}
             friction={2}
             leftThreshold={30}

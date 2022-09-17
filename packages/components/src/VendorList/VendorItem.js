@@ -1,21 +1,14 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Card } from '@jmsstudiosinc/react-native-paper';
-import {useNavigation} from '@react-navigation/native';
 
-const renderVendorItem = ({ item }) => {
-     const navigation = useNavigation();
-
+const RenderVendorItem = ({ item, onPress },) => {
     return (
         <View style={[styles.container]} contentContainerStyle={styles.content}>
             <Card
                 style={styles.card}
                 mode="elevated"
-                onPress={() =>
-                    navigation.navigate('SingleVendor', {
-                        vendor: item,
-                    })
-                }
+                onPress={() => onPress(item)}
             >
                 <Card.Cover source={{ uri: item.photos }} />
                 <Card.Title
@@ -43,4 +36,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default renderVendorItem;
+export default RenderVendorItem;
