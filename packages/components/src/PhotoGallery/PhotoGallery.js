@@ -20,7 +20,7 @@ const renderSeparator = () => (
 );
 
 const PhotoGallery = ({ photos }) => { 
-    const [uri, setUri] = useState(photos[0]);
+    const [uri, setUri] = useState( typeof photos === 'string' ? photos : photos[0]);
     const renderItem = ({ item }) => (
         <TouchableOpacity onPress={() => setUri(item)}>
             <Image
@@ -34,7 +34,8 @@ const PhotoGallery = ({ photos }) => {
     return (
         <>
             {uri && <Image source={{uri: uri}} style={styles.mainPhoto} />}
-            {photos.length > 1 && (
+            
+            {Array.isArray(photos)  && (
                 <FlatList
                     style={styles.itemContainer}
                     data={photos}
@@ -49,13 +50,7 @@ const PhotoGallery = ({ photos }) => {
     );
 };
 
-PhotoGallery.defaultProps = {
-    photos: [],
-};
 
-PhotoGallery.propTypes = {
-    photos: PropTypes.arrayOf(PropTypes.string),
-};
 
 const styles = StyleSheet.create({
     itemContainer: {
