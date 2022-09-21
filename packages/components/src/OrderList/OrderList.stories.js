@@ -14,15 +14,15 @@ export default {
 };
 
 export const VendorList = () => (
-  <OrderList data={vendorMockData} role="vendor" />
+  <OrderList data={vendorMockData} role="vendor"  onPress={() => {}}/>
 );
 export const DriverList = () => (
-  <OrderList data={driverMockData} role="driver" />
+  <OrderList data={driverMockData} role="driver"  onPress={() => {}}/>
 );
 //export const Customer = () => <OrderList data={vendorMockData} role="customer" />
 
 const renderOrderListItem = (vendorMockData, eta, role = 'vendor') => {
-  return <OrderListItem isCard role={role} order={vendorMockData} eta={eta} />;
+  return <OrderListItem isCard role={role} order={vendorMockData} eta={eta} onPress={() => {}} />;
 };
 
 export const VendorNew = () =>

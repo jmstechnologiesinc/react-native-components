@@ -8,12 +8,15 @@ export default {
   title: 'packages/ToggleButton',
 };
 
+const dataLine = [ {"title": "Pickup", "value": "pickup"}]
+
 export const OneLine = ({onPress}) => (
   <ToggleButtonList 
     title="Available Shipping Mode"
-    data={mockData.map(item => ({title: item.title}))} 
+    data={dataLine} 
     onPress={() => {}}
-    selectedIndex={1} />
+    value={'pickup'}
+    />
 );
 
 export const TwoLines = ({onPress}) => (
@@ -21,5 +24,5 @@ export const TwoLines = ({onPress}) => (
     title="Available Shipping Mode"
     data={mockData} 
     onPress={() => {}}
-    selectedIndex={1} />
+    value={'delivery'} />
 );
