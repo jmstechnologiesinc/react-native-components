@@ -8,11 +8,13 @@ const Catalog = ({ data, catalogFilter, onPress, selectedIndex, title = 'Menu' }
     return (
         <Scrollable
             title={title}
-            data={data.map((item, index) => ({
-                title: item.title,
-                isSelected: selectedIndex === index,
-                onPress: () => onPress(item, index),
-            }))}
+            data={data
+                .filter((item) => item.title !== null)
+                .map((item, index) => ({
+                    title: item.title,
+                    isSelected: selectedIndex === index,
+                    onPress: () => onPress(item, index),
+                }))}
             onTabsItemLayout={() => {}}
         />
     );
