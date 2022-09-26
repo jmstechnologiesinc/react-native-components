@@ -7,6 +7,7 @@ import { List, Paragraph, Banner } from '@jmsstudiosinc/react-native-paper';
 import * as JMSList from '../List';
 import PhotoGallery from '../PhotoGallery/PhotoGallery';
 import ToggleButtonList from '../ToggleButton/ToggleButtonList';
+import { IndustryTabs, Catalog } from '../index';
 
 const VendorView = ({
     title,
@@ -20,6 +21,14 @@ const VendorView = ({
     coverTranslateY,
     coverScale,
     onPressPudFilter,
+    industryList,
+    onPressIndustryFilter,
+    currentIndex,
+    catalog,
+    setCatalogFilter,
+    catalogFilter,
+    isMultiProducts,
+    openVendorOverview,
 }) => {
     const [isBannerVisible, setIsBannerVisible] = useState(!!banner);
 
@@ -73,6 +82,7 @@ const VendorView = ({
                     title={title}
                     description={formattedAddress}
                     titleVariant={'headlineSmall'}
+                    onPress={() => openVendorOverview()}
                 />
             </List.Section>
 
@@ -86,9 +96,21 @@ const VendorView = ({
                 <ToggleButtonList
                     title="Available Shopping Mode"
                     data={pud}
-                    value={'delivery'}
+                    value={selectedPud}
                     onPress={onPressPudFilter}
                 />
+            )}
+
+            {industryList && (
+                <IndustryTabs
+                    title="Industries"
+                    data={industryList}
+                    onPress={onPressIndustryFilter}
+                    selectedIndex={currentIndex}
+                />
+            )}
+            {isMultiProducts === true && (
+                <Catalog data={catalog} selectedIndex={catalogFilter} setCatalogFilter={setCatalogFilter} />
             )}
         </>
     );
