@@ -86,7 +86,7 @@ const VendorView = ({
                 <ToggleButtonList
                     title="Available Shopping Mode"
                     data={pud}
-                    selectedIndex={selectedPud}
+                    value={'delivery'}
                     onPress={onPressPudFilter}
                 />
             )}

@@ -9,10 +9,15 @@ import {firestoreTimestampToDate} from "@jmsstudiosinc/commons";
 import OrderListCard from './OrderListCard';
 
 const OrderListItem = ({
-    role,
-    order,
-    isCard
+  role,
+  order,
+  isCard,
+  onButtonPress,
+  onPress
 }) => {
+
+
+
   const fulfilmentStatus = whatIsTheOrderStatus({
     role,
     status: order.status,
@@ -26,6 +31,7 @@ const OrderListItem = ({
 
   const renderOrderListCard = <OrderListCard 
     role={role}
+    orderID={order.id}
     status={order.status}
     title={role === "vendor" ? order.author.formattedName : order.restaurant.title}
     photo={(role === "customer" || role === "driver") && order.restaurant.photo}

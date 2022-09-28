@@ -11,7 +11,7 @@ import Accounting from '../Checkout/Accounting';
 import CartListProductItem from '../CartList/CartListProductItem';
 import { FlatList } from 'react-native-gesture-handler';
 
-const OrderView = ({ order, role }) => {
+const OrderView = ({ order, role,  onButtonPress }) => {
     const fulfilmentDetails = [];
 
     if (order.note === true) {

@@ -6,7 +6,7 @@ import StickyList from '../StickyList';
 
 import ProductListItem from './ProductListItem';
 
-const ProductListSticky = ({ sections, onPress, ...props }) => (
+const ProductListSticky = ({ sections, onViewProductItem, ...props }) => (
     <StickyList
         {...props}
         sections={sections}
@@ -23,7 +23,8 @@ const ProductListSticky = ({ sections, onPress, ...props }) => (
                 cartQuantity={item.cartQuantity}
                 quantity={item.quantity}
                 isOutofStock={item.isOutofStock}
-                onPress={onPress}
+                onPress={() =>onViewProductItem(item)}
+
             />
         )}
     />

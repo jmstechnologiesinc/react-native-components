@@ -2,14 +2,14 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Card } from '@jmsstudiosinc/react-native-paper';
 
-const renderVendorItem = ({ item, onPress }) => {
-
+const RenderVendorItem = ({ item, onPress },) => {
     return (
         <View style={[styles.container]} contentContainerStyle={styles.content}>
             <Card
                 style={styles.card}
                 mode="elevated"
-                onPress={onPress}>
+                onPress={() => onPress(item)}
+            >
                 <Card.Cover source={{ uri: item.photos }} />
                 <Card.Title
                     title={item.title}
@@ -36,4 +36,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default renderVendorItem;
+export default RenderVendorItem;

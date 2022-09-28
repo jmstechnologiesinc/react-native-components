@@ -8,9 +8,9 @@ import { Metadata } from '.';
 const ListMetaBadged = ({
     title, 
     quantity,
-    titleVariant,
     style,
     titleStyle,
+    titleVariant,
     quantityStyle
 }) => (
     <View style={[{justifyContent: "center", marginLeft: 16}, style]}>

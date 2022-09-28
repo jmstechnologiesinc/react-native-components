@@ -4,7 +4,7 @@ import { List } from '@jmsstudiosinc/react-native-paper';
 
 import * as Tabs from '../Tabs/Tabs';
 
-const ToggleButtonList = ({ data, title, onPress, selectedIndex }) => (
+const ToggleButtonList = ({ data, title, onPress, value }) => (
     <List.Section title={title}>
         <Tabs.List>
             {data.map((item, index) => (
@@ -13,12 +13,13 @@ const ToggleButtonList = ({ data, title, onPress, selectedIndex }) => (
                     variant="toggle"
                     title={item.title}
                     subTitle={item.subTitle}
-                    isSelected={selectedIndex === index}
-                    onPress={() => onPress(index)}
+                    isSelected={item.value === value}
+                    onPress={() => onPress(item.value)}
                 />
             ))}
         </Tabs.List>
     </List.Section>
-);
+)
+
 
 export default ToggleButtonList;

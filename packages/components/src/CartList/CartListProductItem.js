@@ -32,10 +32,12 @@ const renderRecursiveAttributeGroup = (attributeGroup) => {
     return results;
 };
 
-const CartListProductItem = ({ data, isRemoveable = true}) => {
+const CartListProductItem = ({ data, onDelete, onEdit, isRemoveable = true}) => {
     const renderItem = <List.Accordion
+        isDisabled
         title={data.title}
         expanded={true}
+        onPress={onEdit}
         right={() => <JMSList.MetaBadged title={data.price} quantity={data.quantity} />}>
         {renderRecursiveAttributeGroup(data.attributeGroup).map((item) => (
             <JMSList.Item 

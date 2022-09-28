@@ -41,7 +41,7 @@ const ListItem = ({
         null
       }
       {...props}
-      src={require('./wrecked-ship.jpg')}
+      src={{uri: photo}}
       title={title}
       onPress={onPress} />
   ) : (
