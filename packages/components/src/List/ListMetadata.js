@@ -13,7 +13,7 @@ const ListMetadata = ({
             display: "flex", 
             alignItems: "center", 
             lineHeight: 24,
-            color: MD3LightTheme.colors.onSurface
+            color: MD3LightTheme.colors.primary
         }, style]}>
         {title}
     </Text>

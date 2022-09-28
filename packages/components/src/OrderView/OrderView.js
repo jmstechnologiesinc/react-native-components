@@ -1,15 +1,15 @@
 import React from 'react';
 
-import { List } from '@jmsstudiosinc/react-native-paper';
+import {  Divider, List } from '@jmsstudiosinc/react-native-paper';
 
 import { USER_ROLES } from '@jmsstudiosinc/user';
 import { DELIVERY_METHODS, PUB } from '@jmsstudiosinc/vendor';
-import { ORDER_STATUS_CANCELLED, ORDER_STATUS } from '@jmsstudiosinc/order';
+import { ORDER_STATUS_CANCELLED, ORDER_STATUS, formatedOrderStatusTime } from '@jmsstudiosinc/order';
 
-import PhotoGallery from '../PhotoGallery/PhotoGallery';
 import OrderListItem from '../OrderList/OrderListItem';
 import Accounting from '../Checkout/Accounting';
 import CartListProductItem from '../CartList/CartListProductItem';
+import { FlatList } from 'react-native-gesture-handler';
 
 const OrderView = ({ order, role }) => {
     const fulfilmentDetails = [];
@@ -20,34 +20,53 @@ const OrderView = ({ order, role }) => {
             description: 'Note',
         });
     }
+  
+    if ((order.status === ORDER_STATUS.completed || ORDER_STATUS_CANCELLED(order.status) === true)) {
+        fulfilmentDetails.push({
+            title: formatedOrderStatusTime(order),
+            description: 'Date',
+        });
 
-    if (
-        (order.status === ORDER_STATUS.completed || ORDER_STATUS_CANCELLED(order.status) === true) &&
-        (role === USER_ROLES.vendor || role === USER_ROLES.customer)
-    ) {
-        if (order.deliveryOption === PUB.delivery && order.driver) {
-            fulfilmentDetails.push({
-                title: order.driver.deliveryMethod,
-                description: 'Fulfillment Method',
-            });
-
-            fulfilmentDetails.push({
-                title: order.driver?.name,
-                description: 'Driver',
-            });
-        } else if (order.deliveryOption === PUB.pickup) {
-            fulfilmentDetails.push({
-                title: order.deliveryMethod,
-                description: 'Fulfillment Method',
-            });
+        if(role === USER_ROLES.vendor || role === USER_ROLES.customer) {
+            if (order.deliveryOption === PUB.delivery && order.driver) {
+                fulfilmentDetails.push({
+                    title: order.driver.deliveryMethod,
+                    description: 'Fulfillment Method',
+                });
+    
+                fulfilmentDetails.push({
+                    title: order.driver?.formattedName,
+                    description: 'Driver Name',
+                });
+            } else if (order.deliveryOption === PUB.pickup) {
+               
+                fulfilmentDetails.push({
+                    title: order.deliveryMethod,
+                    description: 'Fulfillment Method',
+                });
+            }
         }
     }
 
-    if ((role === USER_ROLES.vendor || role === USER_ROLES.driver) && order.deliveryOption === PUB.delivery) {
+    if (role === USER_ROLES.vendor || role === USER_ROLES.driver) {
         fulfilmentDetails.push({
-            title: order.shippingAddress.formattedAddress,
-            description: 'Shipping Address',
+            title: `${order.author.firstName} ${order.author.lastName}`,
+            description: 'Full Name',
         });
+
+        if(order.deliveryOption === PUB.delivery) {
+            fulfilmentDetails.push({
+                title: order.shippingAddress.formattedAddress,
+                description: 'Shipping Address',
+            });
+        }
+
+        if(order.author.phone) {
+            fulfilmentDetails.push({
+                title: order.author.phone,
+                description: 'Phone Number',
+            });
+        } 
     }
 
     if (role === USER_ROLES.customer && order.deliveryOption === PUB.pickup) {
@@ -57,36 +76,24 @@ const OrderView = ({ order, role }) => {
         });
     }
 
-    if ((role === USER_ROLES.vendor || role === USER_ROLES.driver) && order.author.phone) {
-        fulfilmentDetails.push({
-            title: order.author.phone,
-            description: 'Customer Phone Number',
-        });
-    }
-
     return (
         <>
-            <PhotoGallery photos={[]} />
             <OrderListItem role={role} order={order} />
 
             {(role === USER_ROLES.vendor || role === USER_ROLES.customer) && (
-                <>
-                    <List.Section title="Products">
-                        {order.products.map((data) => (
-                            <CartListProductItem data={data} isRemoveable={false}/>
-                        ))}
-                    </List.Section>
-                </>
+               <List.Section 
+                    title={`${order.products.length} - Products`} 
+                    description={``} 
+                    titleStyle={{paddingBottom: 0}}>
+                    <FlatList 
+                        data={order.products} 
+                        ItemSeparatorComponent={Divider}
+                        renderItem={({item}) => <CartListProductItem data={item} isRemoveable={false}/>}  />
+                </List.Section>
             )}
 
             {fulfilmentDetails.length > 0 && (
                 <List.Section title={order.deliveryOption === PUB.delivery ? 'Delivery Details' : 'Pickup Details'}>
-                    {/*   {(order.status === ORDER_STATUS.completed || ORDER_STATUS_CANCELLED(order.status) === true) && (
-                    <List.Item 
-                        title={formatedOrderStatusTime(order)} 
-                        description={"Date"} />
-                )} */}
-
                     {fulfilmentDetails.map((item) => (
                         <List.Item title={item.title} description={item.description} />
                     ))}

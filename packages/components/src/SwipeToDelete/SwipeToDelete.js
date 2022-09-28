@@ -8,7 +8,7 @@ import { Button } from '@jmsstudiosinc/react-native-paper';
 
 import styles from './styles';
 
-const SwipeToDelete = ({ children, onDelete, isRemoveable }) => {
+const SwipeToDelete = ({ children, onDelete }) => {
     const renderRightActions = () => {
         return (
             <Button onPress={onDelete}>
@@ -19,17 +19,14 @@ const SwipeToDelete = ({ children, onDelete, isRemoveable }) => {
         );
     };
 
-    return (
-        <Swipeable
-           renderRightActions={isRemoveable ? renderRightActions : null}
-            overshootRight={false}
-            friction={2}
-            leftThreshold={30}
-            rightThreshold={40}
-        >
-            {children}
-        </Swipeable>
-    );
+    return <Swipeable
+        renderRightActions={renderRightActions}
+        overshootRight={false}
+        friction={2}
+        leftThreshold={30}
+        rightThreshold={40}>
+        {children}
+    </Swipeable>
 };
 
 export default SwipeToDelete;

@@ -13,6 +13,7 @@ const ListItem = ({
     onPress,
     titleVariant="bodyLarge",
     metaTitleVariant,
+    metaTitleStyle,
     ...props
 }) => {
   const renderTitle = ({selectable, titleEllipsizeMode, color}) => (
@@ -31,11 +32,13 @@ const ListItem = ({
 
   return photo ? (
     <JMSList.Image 
-      right={() => <JMSList.MetaBadged 
-        title={metaTitle} 
-        quantity={metaQuantity} 
-        titleStyle={{marginTop: -6}}
-        titleVariant={metaTitleVariant} />
+      right={metaTitle || metaQuantity ? 
+        () => <JMSList.MetaBadged 
+          title={metaTitle} 
+          quantity={metaQuantity} 
+          titleStyle={[{marginTop: -6}, metaTitleStyle]}
+          titleVariant={metaTitleVariant} /> : 
+        null
       }
       {...props}
       src={require('./wrecked-ship.jpg')}
@@ -43,10 +46,13 @@ const ListItem = ({
       onPress={onPress} />
   ) : (
     <List.Item
-      right={() => <JMSList.MetaBadged 
-        title={metaTitle} 
-        quantity={metaQuantity}
-        titleVariant={metaTitleVariant} />
+      right={metaTitle || metaQuantity ? 
+        () => <JMSList.MetaBadged 
+          title={metaTitle} 
+          quantity={metaQuantity}
+          titleVariant={metaTitleVariant}
+          titleStyle={metaTitleStyle} /> : 
+        null
       }
       {...props}
       title={renderTitle}

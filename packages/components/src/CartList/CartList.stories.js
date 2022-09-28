@@ -9,4 +9,6 @@ export default {
     title: 'packages/CartList',
 };
 
-export const cartList = () => <NativeFlatList data={mockData} renderItem={CartList} />
+export const cartList = () => (
+    <NativeFlatList data={mockData} renderItem={CartList} />
+)

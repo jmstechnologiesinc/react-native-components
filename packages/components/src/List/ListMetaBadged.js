@@ -2,7 +2,7 @@ import React from 'react';
 
 import { View } from 'react-native';
 
-import {Badge} from '@jmsstudiosinc/react-native-paper';
+import {Badge, MD3LightTheme} from '@jmsstudiosinc/react-native-paper';
 import { Metadata } from '.';
 
 const ListMetaBadged = ({
@@ -10,11 +10,12 @@ const ListMetaBadged = ({
     quantity,
     titleVariant,
     style,
-    titleStyle
+    titleStyle,
+    quantityStyle
 }) => (
     <View style={[{justifyContent: "center", marginLeft: 16}, style]}>
         {title && <Metadata title={title} variant={titleVariant} style={titleStyle} />}
-        {quantity && <Badge>{quantity}</Badge>}
+        {quantity && <Badge style={[{backgroundColor: MD3LightTheme.colors.primary}, quantityStyle]}>{quantity}</Badge>}
     </View>
 )
 

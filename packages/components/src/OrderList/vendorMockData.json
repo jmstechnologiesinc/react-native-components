@@ -1,5 +1,9 @@
 [
   {
+    "restaurantAcceptedTime": {
+      "seconds": 1641092980,
+      "nanoseconds": 186000000
+    },
     "id": "ktkwJUidjhnCLOjEf1Me",
     "customerCancelledTime": {
       "seconds": 1643432410,
@@ -9,6 +13,7 @@
     "author": {
       "lastName": "Last Name",
       "firstName": "First Name",
+      "formattedName": "First L.",
       "id": "9pvCuvusV2MN2wG13NaFyhqXOAg2"
     },
     "restaurant": {
@@ -79,7 +84,9 @@
       }
     },
     "driver": {
-      "status": null
+      "status": null,
+      "deliveryMethod": "Marketplace",
+      "formattedName": "MP .Driver"
     },
     "placedTime": {
       "seconds": 1643432402,
@@ -114,6 +121,7 @@
     "author": {
       "lastName": "Last Name",
       "firstName": "First Name",
+      "formattedName": "First L.",
       "id": "9pvCuvusV2MN2wG13NaFyhqXOAg2"
     },
     "restaurant": {
@@ -237,8 +245,8 @@
       "carName": "223444",
       "carNumber": "223444",
       "firstName": "The Taller - Driver 1",
+      "formattedName": "The Taller 1",
       "phone": "978 771 2261",
-      
       "id": "AsBOsF8MOPhmAxrMLwIVIUHdIhb2",
       "deliveryMethod": "Restaurant Own Staff",
       "carPictureURL": "https://cdn.vox-cdn.com/thumbor/xKfkrDpqhGF-HYtUsGuubgyoR58=/1400x1050/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/8695515/dbush_170530_1759_0098.jpg",
@@ -281,6 +289,7 @@
     "author": {
       "lastName": "Last Name",
       "firstName": "First Name",
+      "formattedName": "First L.",
       "id": "9pvCuvusV2MN2wG13NaFyhqXOAg2"
     },
     "completedTime": {
@@ -395,7 +404,7 @@
       "name": "The Taller 1",
       "phone": "978 771 2261",
       "deliveryMethod": "Restaurant Own Staff",
-
+      "formattedName": "The Taller 1",
       "id": "AsBOsF8MOPhmAxrMLwIVIUHdIhb2",
       "carPictureURL": "https://cdn.vox-cdn.com/thumbor/xKfkrDpqhGF-HYtUsGuubgyoR58=/1400x1050/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/8695515/dbush_170530_1759_0098.jpg",
       "status": null
@@ -428,11 +437,16 @@
     "status": "Completed"
   },
   {
+    "restaurantAcceptedTime": {
+      "seconds": 1641092980,
+      "nanoseconds": 186000000
+    },
     "id": "KN8OBskrduruPfgsvFjy",
     "deliveryMethod": "Marketplace",
     "author": {
       "lastName": "Last Name",
       "firstName": "First Name",
+      "formattedName": "First L.",
       "id": "9pvCuvusV2MN2wG13NaFyhqXOAg2"
     },
     "restaurant": {
@@ -453,27 +467,180 @@
       "id": "13kd3okVeq5fO68QfNrjdg"
     },
     "customerFees": {
-      "fees": {
-        "label": "Delivery Fee",
-        "formattedValue": "$2.20",
-        "value": 2.197772956492536
+      "total": {
+        "label": "Total",
+        "formattedValue": "$40,327.17",
+        "value": 40327.1710051739
+      },
+      "subTotal": {
+        "label": "Subtotal",
+        "formattedValue": "$33,000.00",
+        "value": 33000
+      },
+      "tips": {
+        "label": "Tips",
+        "formattedValue": "$5,260.07",
+        "value": 5260.065783283552
+      },
+      "dynamicFees": [
+        {
+          "id": "platformFee",
+          "label": "Platform Fee",
+          "formattedValue": "$4.00",
+          "value": 4
+        },
+        {
+          "id": "deliveryFee",
+          "label": "Delivery Fee",
+          "formattedValue": "$0.33",
+          "value": 0.33432648503488394
+        }
+      ],
+      "taxes": {
+        "label": "Taxes",
+        "formattedValue": "$2,062.77",
+        "value": 2062.7708954053146
       }
     },
     "products": [
       {
-        "quantity": 2,
-        "cartId": "wXLcz7DbR52WtBLSK8s+Qw/1",
-        "photo": "https://firebasestorage.googleapis.com/v0/b/jms-eats-70330.appspot.com/o/d848c1ea-cb92-4b60-88df-1394ed4b5f89.JPEG?alt=media&token=9483a5dd-8620-44b2-84d0-9ebdd0219ba0",
-        "description": "Dicta corrupti esse saepe.\nQui soluta quo atque et dolore.",
-        "restaurantID": "1AcokVeq5dfdfO68QfNrje33o",
+        "id": "9c233999-08dc-4468-9fa6-ce091accaa5f",
+        "catalogCategoryJoinId": "b2a64599-a13b-40b7-9d50-d5cf77dd287f",
+        "title": "Chapi Roll",
+        "position": 1,
+        "quantity": 3,
+        "minQuantity": 1,
+        "description": "Chicken tempura, cream cheese, maduro, guacamole, and chicharron.",
         "photos": [
-          "https://firebasestorage.googleapis.com/v0/b/jms-eats-70330.appspot.com/o/d848c1ea-cb92-4b60-88df-1394ed4b5f89.JPEG?alt=media&token=9483a5dd-8620-44b2-84d0-9ebdd0219ba0"
+          "https://d1ralsognjng37.cloudfront.net/9d1e795c-5329-4d96-bdb1-bbf95db0433c.jpeg"
         ],
-        "minQuantity": 2,
-        "price": "499.00",
-        "title": "Ergonomic Wooden Towels",
-        "id": "3c00dc1a-d499-4add-b374-0fcdc44dc3e2",
-        "status": "added"
+        "price": 1600,
+        "cartId": "kHQzt1HbSpSvU1fTPbYh3Q/0",
+        "status": "added",
+        "total": 4800,
+        "attributeGroup": {
+          "8e56d219-2237-50b6-a359-6c9381c7a6e3": {
+            "taxonomyType": "attributeGroup",
+            "id": "8e56d219-2237-50b6-a359-6c9381c7a6e3",
+            "title": "Select Option",
+            "parentId": null,
+            "selection": 1,
+            "formattedSelection": "Required",
+            "isValid": true
+          },
+          "9fe4fb48-2081-5bf0-ae95-4ef5076f524c": {
+            "parentId": "8e56d219-2237-50b6-a359-6c9381c7a6e3",
+            "title": "Spicy Crispy Chicken Sandwich Meal",
+            "value": true
+          },
+          "root": {
+            "isValid": true
+          },
+          "8ee273ae-23ea-499a-a440-7220c2a8a0e6": {
+            "taxonomyType": "attributeGroup",
+            "id": "8ee273ae-23ea-499a-a440-7220c2a8a0e6",
+            "title": "Select Drink",
+            "parentId": null,
+            "selection": 1,
+            "formattedSelection": "Required",
+            "isValid": true
+          },
+          "2514af14-5875-46d2-9160-8c7cbf6b620c": {
+            "parentId": "8ee273ae-23ea-499a-a440-7220c2a8a0e6",
+            "title": "Medium Fanta Orange",
+            "value": true
+          },
+          "83ce0eec-7a1e-41b5-b2fa-948c91aafb4f": {
+            "taxonomyType": "attributeGroup",
+            "id": "83ce0eec-7a1e-41b5-b2fa-948c91aafb4f",
+            "title": "Sandwich Additions",
+            "parentId": null,
+            "selection": 3,
+            "formattedSelection": "3 selected. Choose up to 4",
+            "isValid": true
+          },
+          "677fb44c-f235-4312-a568-2ed1db9b37eb": {
+            "parentId": "83ce0eec-7a1e-41b5-b2fa-948c91aafb4f",
+            "title": "Ketchup",
+            "value": true
+          },
+          "88315bc6-c5ea-4946-88ea-1988c5bfc559": {
+            "parentId": "83ce0eec-7a1e-41b5-b2fa-948c91aafb4f",
+            "title": "American Cheese",
+            "price": 275,
+            "value": true
+          },
+          "f4a148f8-62ac-49dc-b29e-193892772abf": {
+            "parentId": "83ce0eec-7a1e-41b5-b2fa-948c91aafb4f",
+            "title": "Pickle",
+            "value": true
+          }
+        }
+      },
+      {
+        "id": "c941b940-ee93-4ba4-8cf5-c72f79f522b5",
+        "catalogCategoryJoinId": "987f6072-7ce2-4343-b857-9429716dddbb",
+        "title": "Beef Satay",
+        "position": 4,
+        "quantity": 3,
+        "minQuantity": 1,
+        "description": "Beef skewers in Asian fusion teriyaki sauce.",
+        "photos": [
+          "https://d1ralsognjng37.cloudfront.net/83b01367-7a13-4310-bef8-efcec637942e.jpeg"
+        ],
+        "price": 1400,
+        "cartId": "kHQzt1HbSpSvU1fTPbYh3Q/2",
+        "status": "added",
+        "total": 4200,
+        "attributeGroup": {
+          "8e56d219-2237-50b6-a359-6c9381c7a6e3": {
+            "taxonomyType": "attributeGroup",
+            "id": "8e56d219-2237-50b6-a359-6c9381c7a6e3",
+            "title": "Select Option",
+            "parentId": null,
+            "selection": 1,
+            "formattedSelection": "Required",
+            "isValid": true
+          },
+          "9fe4fb48-2081-5bf0-ae95-4ef5076f524c": {
+            "parentId": "8e56d219-2237-50b6-a359-6c9381c7a6e3",
+            "title": "Spicy Crispy Chicken Sandwich Meal",
+            "value": true
+          },
+          "root": {
+            "isValid": true
+          },
+          "8ee273ae-23ea-499a-a440-7220c2a8a0e6": {
+            "taxonomyType": "attributeGroup",
+            "id": "8ee273ae-23ea-499a-a440-7220c2a8a0e6",
+            "title": "Select Drink",
+            "parentId": null,
+            "selection": 1,
+            "formattedSelection": "Required",
+            "isValid": true
+          },
+          "2514af14-5875-46d2-9160-8c7cbf6b620c": {
+            "parentId": "8ee273ae-23ea-499a-a440-7220c2a8a0e6",
+            "title": "Medium Fanta Orange",
+            "value": true
+          }
+        }
+      },
+      {
+        "id": "3545af96-6d40-4991-9362-3bdcaaeeb19a",
+        "catalogCategoryJoinId": "0cea3042-a5f9-4d41-9dfa-4378fad358c7",
+        "title": "Ninja Platter",
+        "position": 9,
+        "quantity": 2,
+        "minQuantity": 1,
+        "description": "Chef selection sushi and appetizer for 4 people",
+        "photos": [
+          "https://d1ralsognjng37.cloudfront.net/fd87204e-ea57-4980-b449-986d735a2ec5.jpeg"
+        ],
+        "price": 12000,
+        "cartId": "kHQzt1HbSpSvU1fTPbYh3Q/3",
+        "status": "added",
+        "total": 24000
       }
     ],
     "driverFees": {
@@ -549,11 +716,16 @@
     "status": "In Transit"
   },
   {
+    "restaurantAcceptedTime": {
+      "seconds": 1641092980,
+      "nanoseconds": 186000000
+    },
     "id": "XajZmvjjxPFZ0CcG51VO",
     "deliveryMethod": "Marketplace",
     "author": {
       "lastName": "Last Name",
       "firstName": "First Name",
+      "formattedName": "First L.",
       "id": "9pvCuvusV2MN2wG13NaFyhqXOAg2"
     },
     "restaurant": {
@@ -624,7 +796,9 @@
     },
     "deliveryOption": "delivery",
     "driver": {
-      "status": null
+      "status": null,
+      "formattedName": "MP .D2",
+      "deliveryMethod": "Marketplace"
     },
     "status": "Customer Cancelled",
     "customerCancelledTime": {
@@ -654,6 +828,10 @@
     }
   },
   {
+    "restaurantAcceptedTime": {
+      "seconds": 1641092980,
+      "nanoseconds": 186000000
+    },
     "id": "LcI3pCUOAcz6VXUGMqTk",
     "customerCancelledTime": {
       "seconds": 1641092157,
@@ -663,6 +841,7 @@
     "author": {
       "lastName": "Last Name",
       "firstName": "First Name",
+      "formattedName": "First L.",
       "id": "9pvCuvusV2MN2wG13NaFyhqXOAg2"
     },
     "restaurant": {
@@ -685,25 +864,87 @@
     "customerFees": {
       "total": {
         "label": "Total",
-        "formattedValue": "$0.00",
-        "value": 0
+        "formattedValue": "$40,327.17",
+        "value": 40327.1710051739
+      },
+      "subTotal": {
+        "label": "Subtotal",
+        "formattedValue": "$33,000.00",
+        "value": 33000
+      },
+      "tips": {
+        "label": "Tips",
+        "formattedValue": "$5,260.07",
+        "value": 5260.065783283552
+      },
+      "dynamicFees": [
+        {
+          "id": "platformFee",
+          "label": "Platform Fee",
+          "formattedValue": "$4.00",
+          "value": 4
+        },
+        {
+          "id": "deliveryFee",
+          "label": "Delivery Fee",
+          "formattedValue": "$0.33",
+          "value": 0.33432648503488394
+        }
+      ],
+      "taxes": {
+        "label": "Taxes",
+        "formattedValue": "$2,062.77",
+        "value": 2062.7708954053146
       }
     },
     "products": [
       {
-        "quantity": 2,
-        "cartId": "L0QJzt05RrqSw1asxT60vQ/1",
-        "photo": "https://firebasestorage.googleapis.com/v0/b/jms-eats-70330.appspot.com/o/d848c1ea-cb92-4b60-88df-1394ed4b5f89.JPEG?alt=media&token=9483a5dd-8620-44b2-84d0-9ebdd0219ba0",
-        "description": "Earum quidem iste.\nDolor unde voluptatem tempora sit non possimus et.",
-        "restaurantID": "1AcokVeq5dfdfO68QfNrje33o",
+        "id": "9c233999-08dc-4468-9fa6-ce091accaa5f",
+        "catalogCategoryJoinId": "b2a64599-a13b-40b7-9d50-d5cf77dd287f",
+        "title": "Chapi Roll",
+        "position": 1,
+        "quantity": 3,
+        "minQuantity": 1,
+        "description": "Chicken tempura, cream cheese, maduro, guacamole, and chicharron.",
         "photos": [
-          "https://firebasestorage.googleapis.com/v0/b/jms-eats-70330.appspot.com/o/d848c1ea-cb92-4b60-88df-1394ed4b5f89.JPEG?alt=media&token=9483a5dd-8620-44b2-84d0-9ebdd0219ba0"
+          "https://d1ralsognjng37.cloudfront.net/9d1e795c-5329-4d96-bdb1-bbf95db0433c.jpeg"
         ],
-        "minQuantity": 2,
-        "price": "967.00",
-        "title": "Practical Concrete Shoes",
-        "id": "86688dcd-f41f-4c84-b1a6-33a8e3ae1aec",
-        "status": "added"
+        "price": 1600,
+        "cartId": "kHQzt1HbSpSvU1fTPbYh3Q/0",
+        "status": "added",
+        "total": 4800
+      },
+      {
+        "id": "c941b940-ee93-4ba4-8cf5-c72f79f522b5",
+        "catalogCategoryJoinId": "987f6072-7ce2-4343-b857-9429716dddbb",
+        "title": "Beef Satay",
+        "position": 4,
+        "quantity": 3,
+        "minQuantity": 1,
+        "description": "Beef skewers in Asian fusion teriyaki sauce.",
+        "photos": [
+          "https://d1ralsognjng37.cloudfront.net/83b01367-7a13-4310-bef8-efcec637942e.jpeg"
+        ],
+        "price": 1400,
+        "cartId": "kHQzt1HbSpSvU1fTPbYh3Q/2",
+        "status": "added",
+        "total": 4200
+      },
+      {
+        "id": "3545af96-6d40-4991-9362-3bdcaaeeb19a",
+        "catalogCategoryJoinId": "0cea3042-a5f9-4d41-9dfa-4378fad358c7",
+        "title": "Ninja Platter",
+        "position": 9,
+        "quantity": 2,
+        "minQuantity": 1,
+        "description": "Chef selection sushi and appetizer for 4 people",
+        "photos": [
+          "https://d1ralsognjng37.cloudfront.net/fd87204e-ea57-4980-b449-986d735a2ec5.jpeg"
+        ],
+        "price": 12000,
+        "cartId": "kHQzt1HbSpSvU1fTPbYh3Q/3",
+        "status": "added",
+        "total": 24000
       }
     ],
     "driverFees": {
@@ -732,7 +973,9 @@
       }
     },
     "driver": {
-      "status": null
+      "status": null,
+      "formattedName": "MP .D3",
+      "deliveryMethod": "Marketplace"
     },
     "placedTime": {
       "seconds": 1641083873,
@@ -767,6 +1010,7 @@
     "author": {
       "lastName": "Last Name",
       "firstName": "First Name",
+      "formattedName": "First L.",
       "id": "9pvCuvusV2MN2wG13NaFyhqXOAg2"
     },
     "completedTime": {
@@ -879,6 +1123,7 @@
       "carNumber": "223444",
       "name": "The Taller 1",
       "firstName": "The Taller - Driver 1",
+      "formattedName": "The Taller 1",
       "phone": "978 771 2261",
       "deliveryMethod": "Restaurant Own Staff",
       "id": "AsBOsF8MOPhmAxrMLwIVIUHdIhb2",
@@ -922,6 +1167,7 @@
     "author": {
       "lastName": "Last Name",
       "firstName": "First Name",
+      "formattedName": "First L.",
       "id": "9pvCuvusV2MN2wG13NaFyhqXOAg2"
     },
     "completedTime": {
@@ -1035,7 +1281,7 @@
       "firstName": "The Taller - Driver 1",
       "name": "The Taller 1",
       "deliveryMethod": "Restaurant Own Staff",
-
+      "formattedName": "The Taller 1",
       "phone": "978 771 2261",
       "id": "AsBOsF8MOPhmAxrMLwIVIUHdIhb2",
       "carPictureURL": "https://cdn.vox-cdn.com/thumbor/xKfkrDpqhGF-HYtUsGuubgyoR58=/1400x1050/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/8695515/dbush_170530_1759_0098.jpg",
@@ -1069,4 +1315,3 @@
     "status": "Completed"
   }
 ]
-

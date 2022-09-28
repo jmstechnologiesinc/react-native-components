@@ -1,44 +1,36 @@
 import React from 'react';
 
-import { List } from '@jmsstudiosinc/react-native-paper';
+import { List, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 import * as JMSList from '../List';
 
-const feeItem = ({ label, description, formattedValue }) => (
-    <JMSList.Item
-        style={{ paddingVertical: 0 }}
-        title={label}
-        description={description}
-        metaTitle={formattedValue}
-    />
-);
-
-const Accounting = ({ fees }) => {
+const feesListItem = (fees) => {
     const results = [];
 
-    const { total, ...rest } = fees;
-
-    for (const index in rest) {
-        if (Array.isArray(rest[index])) {
-            results.push(rest[index].map(feeItem));
+    for (const index in fees) {
+        if (Array.isArray(fees[index])) {
+            results.push(feesListItem(fees[index]));
+        } else {
+            results.push(
+                <JMSList.Item
+                    title={fees[index].label}
+                    description={fees[index].description}
+                    metaTitle={fees[index].formattedValue}
+                    metaTitleStyle={{color: MD3LightTheme.colors.onSurface}}
+                    {...(index === "total" ? 
+                        {titleVariant: "headlineSmall", metaTitleVariant: "headlineSmall"} : 
+                        {style: {paddingVertical: 0}}
+                    )} />
+            )
         }
-
-        results.push(feeItem(rest[index]));
     }
 
-    return (
-        <List.Section>
-            {total && (
-                <JMSList.Item
-                    title={total.label}
-                    description={total.description}
-                    metaTitle={total.formattedValue}
-                    titleVariant="headlineSmall"
-                    metaTitleVariant="headlineSmall" />
-            )}
-
-            {results}
-        </List.Section>
-    );
+    return results;
 };
+
+const Accounting = ({ fees }) => (
+    <List.Section>
+        {feesListItem(fees)}
+    </List.Section>
+)
 
 export default Accounting;

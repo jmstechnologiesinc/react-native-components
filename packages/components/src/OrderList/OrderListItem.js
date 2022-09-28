@@ -3,9 +3,10 @@ import React from 'react';
 import { Card } from '@jmsstudiosinc/react-native-paper';
 
 import { USER_ROLES } from '@jmsstudiosinc/user';
-import {whatIsTheOrderStatus, formatOrderID, ORDER_STATUS} from "@jmsstudiosinc/order";
+import {ORDER_STATUS, whatIsTheOrderStatus, formatOrderID, isOrderAssignedToDriver, orderStatusTime} from "@jmsstudiosinc/order";
+import {firestoreTimestampToDate} from "@jmsstudiosinc/commons";
 
-import OrderListVendor from './OrderListVendor';
+import OrderListCard from './OrderListCard';
 
 const OrderListItem = ({
     role,
@@ -23,28 +24,30 @@ const OrderListItem = ({
     car: `${order.driver?.carName} - ${order.driver?.carNumber}`
   });
 
-  let renderOrderListVendor;
-
-  renderOrderListVendor = <OrderListVendor 
+  const renderOrderListCard = <OrderListCard 
     role={role}
     status={order.status}
-    title={role === "vendor" ? order.author.firstName : order.restaurant.title}
-    photo={(role === "customer") && order.restaurant.photo}
-    description={role !== "driver" ? ` . ${order.products.length} items` : ''}
+    title={role === "vendor" ? order.author.formattedName : order.restaurant.title}
+    photo={(role === "customer" || role === "driver") && order.restaurant.photo}
+    description={''}
     pudMethod={order.deliveryMethod}
+    orderID={order.id}
     formattedOrderId={formatOrderID(order.id)}
-    eta={order.eta.formatted}
     fulfilmentStatus={fulfilmentStatus}
-    avatar={role !== USER_ROLES.driver && order?.driver && 
-      (order.status === ORDER_STATUS.shipped || order.status === ORDER_STATUS.inTransit) &&
-      (order.driver.profilePictureURL || order.driver.carPictureURL)
-    }  />
+    driverAvatar={role !== USER_ROLES.driver && 
+        isOrderAssignedToDriver(order.status) &&
+        order?.driver &&
+        (order.driver.profilePictureURL || order.driver.carPictureURL)
+    }
+    durationValue={order.eta.duration.value}
+    deliveryTime={order.eta.deliveryTime.value}
+    restaurantAcceptedTime={firestoreTimestampToDate(order[orderStatusTime(ORDER_STATUS.restaurantAccepted)])} />
 
   if(isCard) {
-    return <Card mode="elevated" style={{margin: 8}}>{renderOrderListVendor}</Card>
+    return <Card mode="elevated" style={{margin: 8}}>{renderOrderListCard}</Card>
   }
   
-  return renderOrderListVendor
+  return renderOrderListCard
 }
 
 export default OrderListItem;

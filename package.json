@@ -43,7 +43,8 @@
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "^0.17.7",
     "react-scripts": "^5.0.1",
-    "storybook-addon-state": "^1.0.3"
+    "storybook-addon-state": "^1.0.3",
+    "pubnub": "^4.36.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

@@ -1,23 +1,18 @@
 {
-  "subTotal": {
-    "label": "Subtotal",
-    "formattedValue": "$5,000.00",
-    "value": 5000
+  "total": {
+    "label": "Total",
+    "formattedValue": "$5,317.12",
+    "value": 5317.119388557016
   },
   "tips": {
     "label": "Tips",
     "formattedValue": "$0.00",
     "value": 0
   },
-  "taxes": {
-    "label": "Taxes",
-    "formattedValue": "$312.77",
-    "value": 312.771728738648
-  },
-  "total": {
-    "label": "Total",
-    "formattedValue": "$5,317.12",
-    "value": 5317.119388557016
+  "subTotal": {
+    "label": "Subtotal",
+    "formattedValue": "$5,000.00",
+    "value": 5000
   },
   "dynamicFees": [
     {
@@ -32,5 +27,10 @@
       "formattedValue": "$0.35",
       "value": 0.3476598183682173
     }
-  ]
+  ],
+  "taxes": {
+    "label": "Taxes",
+    "formattedValue": "$312.77",
+    "value": 312.771728738648
+  }
 }

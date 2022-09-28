@@ -1,5 +1,5 @@
 import React from 'react';
-import ChipList from './chipList';
+import ChipList from './ChipList';
 
 export default {
     title: 'packages/ChipList',

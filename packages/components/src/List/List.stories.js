@@ -1,4 +1,5 @@
 import React from 'react';
+import { View } from 'react-native';
 
 import * as List from '.';
 
@@ -8,8 +9,10 @@ export default {
 
 import * as JMSList from "./";
 
-export const Metadata = () => <List.Metadata title="$2.99" />
-
+export const MetadataTitle = () => <List.Metadata title="$2.99" />
+export const MetaBadged = () => <View style={{flexDirection: "row"}}>
+  <List.MetaBadged title="$2.99" quantity={9} />
+</View>
 export const OneLineImage = () =>  <JMSList.Image 
   src={require('./wrecked-ship.jpg')}
   title="NinjaFongo Churrasco (skirt steak)"

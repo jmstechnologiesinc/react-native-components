@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { List } from '@jmsstudiosinc/react-native-paper';
-import { MetaBadged } from '../List';
-import SwipeToDelete from '../SwipeToDelete';
+import * as JMSList from '../List';
+import SwipeToDelete from '../SwipeToDelete/SwipeToDelete';
 
 const recursiveAttributeGroup = ({ parentId, attributeGroup }) => {
     const results = [];
@@ -33,23 +33,24 @@ const renderRecursiveAttributeGroup = (attributeGroup) => {
 };
 
 const CartListProductItem = ({ data, isRemoveable = true}) => {
-    const attributeGroup = renderRecursiveAttributeGroup(data.attributeGroup);
-    return (
+    const renderItem = <List.Accordion
+        title={data.title}
+        expanded={true}
+        right={() => <JMSList.MetaBadged title={data.price} quantity={data.quantity} />}>
+        {renderRecursiveAttributeGroup(data.attributeGroup).map((item) => (
+            <JMSList.Item 
+                title={item.title} 
+                metaTitle={item.price}
+                metaQuantity={item.selection || 1} 
+                style={{marginRight: 8}} />
+        ))}
+    </List.Accordion>
+
+    return isRemoveable ? (
         <SwipeToDelete isRemoveable={isRemoveable}>
-        <List.Accordion
-            isDisabled
-            title={data.title}
-            right={() => <MetaBadged title={data.price} quantity={data.quantity} />}
-            expanded={attributeGroup.length > 0}
-        >
-       
-            {attributeGroup.map((item) => (
-                <List.Item title={item.title} />
-            ))}
-      
-        </List.Accordion>
+          {renderItem}
         </SwipeToDelete>
-    );
+    ) : renderItem;
 };
 
 export default CartListProductItem;
