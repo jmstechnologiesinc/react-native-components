@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {List, Checkbox} from '@jmsstudiosinc/react-native-paper';
-import {Metadata} from '.';
+import {Metadata} from './List';
 
 const ListCheckbox = ({
     title,

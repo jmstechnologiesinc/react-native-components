@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 
-import { View, FlatList, TouchableOpacity, StyleSheet, Image} from 'react-native';
-//import FastImage from 'react-native-fast-image';
+import { View, FlatList, StyleSheet, Image} from 'react-native';
 
-//import { getMainPhoto } from '@jmsstudiosinc/commons';
-//import Fast2ImageKit from '../Fast2ImageKit';
-
-//import DynamicAppStyles from '../../DynamicAppStyles';
-//import styles from '../../ShoppingApp/screens/SingleProduct/styles';
+import { Card, List ,TouchableRipple} from '@jmsstudiosinc/react-native-paper';
 
 const renderSeparator = () => (
     <View
@@ -19,32 +13,38 @@ const renderSeparator = () => (
     />
 );
 
-const PhotoGallery = ({ photos }) => { 
-    const [uri, setUri] = useState( typeof photos === 'string' ? photos : photos[0]);
+const PhotoGallery = ({ photos, hideMenu=false }) => { 
+    const [uri, setUri] = useState(photos?.[0]);
+
+    if(!Array.isArray(photos)) {
+        return null;
+    }
+
     const renderItem = ({ item }) => (
-        <TouchableOpacity onPress={() => setUri(item)}>
+        <TouchableRipple onPress={() => setUri(item)}>
             <Image
                 style={styles.photo}
                 placeholderColor={'red'}
                 source={{uri: item}}
             />
-        </TouchableOpacity>
+        </TouchableRipple>
     );
 
     return (
         <>
-            {uri && <Image source={{uri: uri}} style={styles.mainPhoto} />}
+            {uri && <Card.Cover source={{ uri: uri }} />}
             
-            {Array.isArray(photos)  && (
-                <FlatList
-                    style={styles.itemContainer}
-                    data={photos}
-                    horizontal
-                    ItemSeparatorComponent={renderSeparator}
-                    renderItem={renderItem}
-                    showsHorizontalScrollIndicator={false}
-                    keyExtractor={(item) => `${item}`}
-                />
+            {photos.length > 1 && (
+                <List.Section>
+                    <FlatList
+                        style={styles.itemContainer}
+                        data={photos}
+                        horizontal
+                        ItemSeparatorComponent={renderSeparator}
+                        renderItem={renderItem}
+                        showsHorizontalScrollIndicator={false}
+                        keyExtractor={(item) => `${item}`}/>
+                </List.Section>
             )}
         </>
     );
@@ -54,16 +54,11 @@ const PhotoGallery = ({ photos }) => {
 
 const styles = StyleSheet.create({
     itemContainer: {
-        marginTop: 16,
-        marginHorizontal: 16
+        marginHorizontal: 16,
     },
     photo: {
         height: 65,
         width: 65,
-    },
-    mainPhoto: {
-        width: '100%',
-        height: 200,
     }
 });
 

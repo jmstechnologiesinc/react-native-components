@@ -1,0 +1,4 @@
+{
+    "twoButtons": [{"label": "Delivery", "value": "delivery"}, {"label": "Pickup", "value": "pickup"}],
+    "singleButtons": [{"label": "Delivery", "value": "delivery"}]
+}

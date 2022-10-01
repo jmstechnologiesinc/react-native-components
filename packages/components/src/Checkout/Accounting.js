@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { List, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
-import * as JMSList from '../List';
+import * as JMSList from '../List/List';
 
 const feesListItem = (fees) => {
     const results = [];

@@ -7,16 +7,12 @@ import OrderListItem from './OrderListItem';
 const OrderList = ({ data, role, onButtonPress, onPress }) => (
   <FlatList
     data={data}
-    renderItem={({ item}) => (
+    renderItem={({ item }) => (
       <OrderListItem
-        isCard
-        showAvatar
         role={role}
         order={item}
-        onButtonPress={onButtonPress}
         onPress={onPress}
-
-      />
+        onButtonPress={onButtonPress} />
     )}
   />
 );

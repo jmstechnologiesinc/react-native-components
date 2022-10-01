@@ -3,7 +3,7 @@ import React from 'react';
 import VendorView from './VendorView';
 
 import mockData from '../VendorList/mockData.json';
-import ToggleButtonMockData from '../ToggleButton/mockData.json';
+import ToggleButtonMockData from '../SegmentedButtonGroup/mockData.json';
 import { Sticky } from '../ProductList/ProductList.stories';
 
 export default {
@@ -57,7 +57,7 @@ export const StickyProductList = () => (
                     photos={photos}
                     coverTranslateY={coverTranslateY}
                     coverScale={coverScale}
-                    pud={ToggleButtonMockData}
+                    pudOptions={ToggleButtonMockData.twoButtons}
                     selectedPud={1}
                     tabBarOpacity={tabBarOpacity}
                 />

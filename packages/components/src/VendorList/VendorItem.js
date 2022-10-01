@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Card } from '@jmsstudiosinc/react-native-paper';
 
-const RenderVendorItem = ({ item, onPress },) => {
+const RenderVendorItem = ({ item, onPress }) => {
     return (
         <View style={[styles.container]} contentContainerStyle={styles.content}>
             <Card

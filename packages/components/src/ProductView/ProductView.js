@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Text, List, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 
-import * as JMSList from '../List';
+import * as JMSList from '../List/List';
 import PhotoGallery from '../PhotoGallery/PhotoGallery';
 
 const ProductView = ({ title, photos, description, inStock, price }) => {

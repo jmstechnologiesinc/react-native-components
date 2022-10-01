@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {List, Text} from '@jmsstudiosinc/react-native-paper';
-import * as JMSList from ".";
+import * as JMSList from "./List";
 
 const ListItem = ({
     uuid,
@@ -22,7 +22,7 @@ const ListItem = ({
       {title && <Text
           selectable={selectable}
           ellipsizeMode={titleEllipsizeMode}
-          numberOfLines={1}
+          numberOfLines={2}
           variant={titleVariant}
           style={{ color }}>
           {title}

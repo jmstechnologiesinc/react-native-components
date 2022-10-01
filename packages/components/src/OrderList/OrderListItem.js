@@ -1,59 +1,56 @@
 import React from 'react';
 
-import { Card } from '@jmsstudiosinc/react-native-paper';
+import { Card, List } from '@jmsstudiosinc/react-native-paper';
 
 import { USER_ROLES } from '@jmsstudiosinc/user';
-import {ORDER_STATUS, whatIsTheOrderStatus, formatOrderID, isOrderAssignedToDriver, orderStatusTime} from "@jmsstudiosinc/order";
-import {firestoreTimestampToDate} from "@jmsstudiosinc/commons";
 
-import OrderListCard from './OrderListCard';
+import { formatOrder } from './utils';
+import OrderStatus from './OrderStatus';
+import OrderActionButtons from './OrderActionButtons';
+import * as JMSList from "../List/List";
 
 const OrderListItem = ({
   role,
   order,
-  isCard,
+  onPress,
   onButtonPress,
-  onPress
 }) => {
+  const formattedOrder = formatOrder(order, role);
 
-
-
-  const fulfilmentStatus = whatIsTheOrderStatus({
-    role,
-    status: order.status,
-    deliveryMethod: order.deliveryMethod,
-    restaurantAddress: order.restaurant.location.formattedAddress,
-    driverFirstName: order?.driver?.firstName,
-    driverDeliveryMethod: order.deliveryMethod,
-    driverStatus: order?.driver?.status,
-    car: `${order.driver?.carName} - ${order.driver?.carNumber}`
-  });
-
-  const renderOrderListCard = <OrderListCard 
-    role={role}
-    orderID={order.id}
-    status={order.status}
-    title={role === "vendor" ? order.author.formattedName : order.restaurant.title}
-    photo={(role === "customer" || role === "driver") && order.restaurant.photo}
-    description={''}
-    pudMethod={order.deliveryMethod}
-    orderID={order.id}
-    formattedOrderId={formatOrderID(order.id)}
-    fulfilmentStatus={fulfilmentStatus}
-    driverAvatar={role !== USER_ROLES.driver && 
-        isOrderAssignedToDriver(order.status) &&
-        order?.driver &&
-        (order.driver.profilePictureURL || order.driver.carPictureURL)
-    }
-    durationValue={order.eta.duration.value}
-    deliveryTime={order.eta.deliveryTime.value}
-    restaurantAcceptedTime={firestoreTimestampToDate(order[orderStatusTime(ORDER_STATUS.restaurantAccepted)])} />
-
-  if(isCard) {
-    return <Card mode="elevated" style={{margin: 8}}>{renderOrderListCard}</Card>
+  const overlines = [formattedOrder.formattedOrderId];
+  overlines.push(formattedOrder.fees?.total?.formattedValue);
+  if(role !== USER_ROLES.driver) {
+    overlines.push(`${order.products.length} Items`);
   }
-  
-  return renderOrderListCard
+  overlines.push(formattedOrder.formattedStatusTime);
+
+  return <Card 
+    mode="outlined" 
+    onPress={() => onPress(order, role)}
+    style={{margin: 8}}>
+       <List.Section>
+          <JMSList.ItemExtended
+              overline={overlines.join(" · ") || null}
+              header={formattedOrder.title}
+              subHeader={order.status}
+              titleVariant={'headlineSmall'}
+          />
+          <OrderStatus
+            role={role}
+            status={formattedOrder.status}
+            deliveryMethod={formattedOrder.deliveryMethod}
+            driverAvatar={formattedOrder.driverAvatar}
+            durationValue={formattedOrder.durationValue}
+            deliveryTime={formattedOrder.deliveryTime}
+            restaurantAcceptedTime={formattedOrder.restaurantAcceptedTime}
+            orderID={formattedOrder.orderID}
+            fulfilmentStatus={formattedOrder.fulfilmentStatus}/>
+        </List.Section>   
+      {onButtonPress && <OrderActionButtons 
+        orderID={formattedOrder.orderID}
+        buttons={formattedOrder.fulfilmentStatus.driver.buttons}
+        onPress={onButtonPress} />}
+  </Card>  
 }
 
 export default OrderListItem;

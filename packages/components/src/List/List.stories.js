@@ -1,13 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import * as List from '.';
+import * as List from './List';
 
 export default {
   title: 'packages/List',
 };
 
-import * as JMSList from "./";
+import * as JMSList from "./List";
 
 const photos = "https://ik.imagekit.io/sog7th7xvupr/o/vendors%2FAHwW%2Bi2vQAKFUcuRPJUq0Q%3A0.jpeg?alt=media&token=ce6576d6-5aec-4a3f-91e4-ef7032f6e5eb"
 

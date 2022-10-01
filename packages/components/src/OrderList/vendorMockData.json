@@ -696,6 +696,11 @@
       "seconds": 1641092975,
       "nanoseconds": 60000000
     },
+    "inTransitTime": {
+      "seconds": 1641092975,
+      "nanoseconds": 60000000
+    },
+    "formattedStatusTime": "May 05",
     "paymentMethod": "Apple Pay",
     "shippingAddress": {
       "country": "United States",

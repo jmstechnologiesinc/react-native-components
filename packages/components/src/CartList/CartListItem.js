@@ -4,7 +4,7 @@ import { View, StyleSheet } from 'react-native';
 
 import { Text, List, Button } from '@jmsstudiosinc/react-native-paper';
 import { CART_ITEM_TYPE } from '@jmsstudiosinc/cart';
-import { Subheader } from '../List';
+import { Subheader } from '../List/List';
 import CartListProductItem from './CartListProductItem';
 
 const vendorPhoto = 'https://d1ralsognjng37.cloudfront.net/21abd571-1fa3-4214-ae02-2e828864dea3.jpeg';

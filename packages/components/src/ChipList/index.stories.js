@@ -15,4 +15,4 @@ const tips = [
 
 const onTips = () => console.log(tips[2].value);
 
-export const ChipLists = () => <ChipList options={tips} title={'Tips'} value={'10'} onSelect={onTips} />;
+export const ChipList = () => <ChipList options={tips} title={'Tips'} value={'10'} onSelect={onTips} />;

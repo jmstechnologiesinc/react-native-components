@@ -3,15 +3,19 @@ import React from 'react';
 import {  Divider, List } from '@jmsstudiosinc/react-native-paper';
 
 import { USER_ROLES } from '@jmsstudiosinc/user';
-import { DELIVERY_METHODS, PUB } from '@jmsstudiosinc/vendor';
+import {  PUB } from '@jmsstudiosinc/vendor';
 import { ORDER_STATUS_CANCELLED, ORDER_STATUS, formatedOrderStatusTime } from '@jmsstudiosinc/order';
 
-import OrderListItem from '../OrderList/OrderListItem';
 import Accounting from '../Checkout/Accounting';
 import CartListProductItem from '../CartList/CartListProductItem';
 import { FlatList } from 'react-native-gesture-handler';
+import { formatOrder } from '../OrderList/utils';
+import OrderStatus from '../OrderList/OrderStatus';
+import OrderActionButtons from '../OrderList/OrderActionButtons';
+import PhotoGallery from '../PhotoGallery/PhotoGallery';
+import * as JMSList from "../List/List";
 
-const OrderView = ({ order, role,  onButtonPress }) => {
+const OrderView = ({ order, role, onButtonPress }) => {
     const fulfilmentDetails = [];
 
     if (order.note === true) {
@@ -76,14 +80,40 @@ const OrderView = ({ order, role,  onButtonPress }) => {
         });
     }
 
+    const formattedOrder = formatOrder(order, role);
+
     return (
         <>
-            <OrderListItem role={role} order={order} />
+            {(role === USER_ROLES.customer || role === USER_ROLES.driver) ? (
+                <PhotoGallery photos={[formattedOrder.photo]} />
+            ) : null}
+
+            <List.Section>
+                <JMSList.ItemExtended
+                    overline={[formattedOrder.formattedStatusTime].join(" · ") || null}
+                    header={formattedOrder.title}
+                    subHeader={order.status}
+                    titleVariant={'headlineSmall'} />
+                <OrderStatus
+                    role={role}
+                    status={formattedOrder.status}
+                    deliveryMethod={formattedOrder.deliveryMethod}
+                    driverAvatar={formattedOrder.driverAvatar}
+                    durationValue={formattedOrder.durationValue}
+                    deliveryTime={formattedOrder.deliveryTime}
+                    restaurantAcceptedTime={formattedOrder.restaurantAcceptedTime}
+                    orderID={formattedOrder.orderID}
+                    fulfilmentStatus={formattedOrder.fulfilmentStatus}/>
+            </List.Section>   
+          
+            <OrderActionButtons 
+                orderID={formattedOrder.orderID}
+                buttons={formattedOrder.fulfilmentStatus.driver.buttons}
+                onPress={onButtonPress} />
 
             {(role === USER_ROLES.vendor || role === USER_ROLES.customer) && (
                <List.Section 
-                    title={`${order.products.length} - Products`} 
-                    description={``} 
+                    title={`Products · ${order.products.length} Items`} 
                     titleStyle={{paddingBottom: 0}}>
                     <FlatList 
                         data={order.products} 
@@ -100,20 +130,7 @@ const OrderView = ({ order, role,  onButtonPress }) => {
                 </List.Section>
             )}
 
-            {!(role === USER_ROLES.driver && order.deliveryMethod === DELIVERY_METHODS.restaurantOwnStaff) && (
-                <Accounting 
-                    fees={(role === USER_ROLES.customer
-                        ? order.customerFees
-                        : role === USER_ROLES.vendor
-                        ? order.restaurantFees
-                        : !(
-                            role.role === USER_ROLES.driver &&
-                            order.deliveryMethod === DELIVERY_METHODS.restaurantOwnStaff
-                        )
-                        ? order.driverFees
-                        : null
-                    )} />
-            )}
+            <Accounting fees={formattedOrder.fees} />
         </>
     );
 };

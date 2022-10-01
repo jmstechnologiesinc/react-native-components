@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { List } from '@jmsstudiosinc/react-native-paper';
-import * as JMSList from '../List';
+import * as JMSList from '../List/List';
 import SwipeToDelete from '../SwipeToDelete/SwipeToDelete';
 
 const recursiveAttributeGroup = ({ parentId, attributeGroup }) => {

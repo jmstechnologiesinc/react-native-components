@@ -4,9 +4,9 @@ import { View, Animated } from 'react-native';
 
 import { List, Paragraph, Banner } from '@jmsstudiosinc/react-native-paper';
 
-import * as JMSList from '../List';
+import * as JMSList from '../List/List';
 import PhotoGallery from '../PhotoGallery/PhotoGallery';
-import ToggleButtonList from '../ToggleButton/ToggleButtonList';
+import SegmentedButtonGroup from '../SegmentedButtonGroup/SegmentedButtonGroup';
 
 const VendorView = ({
     title,
@@ -14,12 +14,12 @@ const VendorView = ({
     description,
     formattedAddress,
     formattedPud,
-    pud,
+    pudOptions,
     selectedPud,
+    onPressPudFilter,
     banner = null,
     coverTranslateY,
     coverScale,
-    onPressPudFilter,
 }) => {
     const [isBannerVisible, setIsBannerVisible] = useState(!!banner);
 
@@ -82,11 +82,11 @@ const VendorView = ({
                 </View>
             )}
 
-            {pud && (
-                <ToggleButtonList
+            {pudOptions && (
+                <SegmentedButtonGroup
                     title="Available Shopping Mode"
-                    data={pud}
-                    value={'delivery'}
+                    data={pudOptions}
+                    value={selectedPud}
                     onPress={onPressPudFilter}
                 />
             )}

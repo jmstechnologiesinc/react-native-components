@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { Chip, Avatar, Text } from '@jmsstudiosinc/react-native-paper';
 
-import * as JMSList from '.';
+import * as JMSList from './List';
 
 import { Linking, Platform } from 'react-native';
 export const makeLinkingCall = (phone) => {
@@ -22,14 +22,13 @@ const ListItemExtended = ({
     subHeader, 
     avatar, 
     chips, 
-    right
+    right,
+    ...rest
  }) => (
     <JMSList.Item
         overline={overline}
         title={header}
-        left={
-            avatar ? () => <Avatar.Image size={40} style={{ margin: 8, marginRight: 0 }} source={{uri: avatar}} /> : null
-        }
+        left={avatar ? () => <Avatar.Image size={40} style={{ margin: 8, marginRight: 0 }} source={{uri: avatar}} /> : null}
         right={right ? () => right : null}
         description={({ ellipsizeMode, color: descriptionColor, fontSize }) => (
             <View style={[styles.column, styles.column]}>
@@ -42,7 +41,7 @@ const ListItemExtended = ({
                 {chips?.length > 0 && (
                     <View style={[ styles.container, styles.row, styles.additionalPadding]}>
                         {chips.map((chip) => (
-                            <Chip mode="outlined" style={styles.chip}>
+                            <Chip mode="outlined" style={[styles.chip]}>
                                 {chip}
                             </Chip>
                         ))}
@@ -50,6 +49,7 @@ const ListItemExtended = ({
                 )}
             </View>
         )}
+        {...rest}
     />
 );
 

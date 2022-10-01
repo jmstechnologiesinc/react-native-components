@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { List, RadioButton } from '@jmsstudiosinc/react-native-paper';
-import { Metadata } from '.';
+import { Metadata } from './List';
 
 const ListRadio = ({ title, description, metadata, isDisabled, isChecked, onPress, ...props }) => (
     <List.Item
