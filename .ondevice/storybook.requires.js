@@ -43,6 +43,7 @@ const getStories = () => {
     require("../packages/components/src/PhotoGallery/PhotoGallery.stories.js"),
     require("../packages/components/src/ProductList/ProductList.stories.js"),
     require("../packages/components/src/ProductView/ProductView.stories.js"),
+    require("../packages/components/src/SegmentedButtons/SegmentedButtons.stories.js"),
     require("../packages/components/src/StickyList/StickyList.stories.js"),
     require("../packages/components/src/Tabs/Tabs.stories.js"),
     require("../packages/components/src/ToggleButton/ToggleButton.stories.js"),
