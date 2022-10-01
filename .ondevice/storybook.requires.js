@@ -32,6 +32,7 @@ try {
 const getStories = () => {
   return [
     require("../packages/components/src/CartList/CartList.stories.js"),
+    require("../packages/components/src/Catalog/Catalog.stories.js"),
     require("../packages/components/src/Checkout/Checkout.stories.js"),
     require("../packages/components/src/ChipList/index.stories.js"),
     require("../packages/components/src/DynamicForm/DynamicForm.stories.js"),
@@ -42,8 +43,7 @@ const getStories = () => {
     require("../packages/components/src/PhotoGallery/PhotoGallery.stories.js"),
     require("../packages/components/src/ProductList/ProductList.stories.js"),
     require("../packages/components/src/ProductView/ProductView.stories.js"),
-    require("../packages/components/src/PubNubETA/PubNubETA.stories.js"),
-    require("../packages/components/src/SegmentedButtonGroup/SegmentedButtonGroup.stories.js"),
+    require("../packages/components/src/SegmentedButtons/SegmentedButtons.stories.js"),
     require("../packages/components/src/StickyList/StickyList.stories.js"),
     require("../packages/components/src/Tabs/Tabs.stories.js"),
     require("../packages/components/src/VendorList/VendorList.stories.js"),

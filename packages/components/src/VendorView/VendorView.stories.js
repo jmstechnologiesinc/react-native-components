@@ -3,16 +3,32 @@ import React from 'react';
 import VendorView from './VendorView';
 
 import mockData from '../VendorList/mockData.json';
+<<<<<<< HEAD
 import ToggleButtonMockData from '../SegmentedButtonGroup/mockData.json';
+=======
+import ToggleButtonMockData from '../ToggleButton/mockData.json';
+import MockDataMenu from '../Catalog/mockData.json';
+
+>>>>>>> 48e48e2c7b0ca6b2631152be1dbbe99a58460639
 import { Sticky } from '../ProductList/ProductList.stories';
 
 export default {
     title: 'packages/VendorView',
 };
 
-const photos = ["https://ik.imagekit.io/sog7th7xvupr/o/vendors%2FAHwW%2Bi2vQAKFUcuRPJUq0Q%3A0.jpeg?alt=media&token=ce6576d6-5aec-4a3f-91e4-ef7032f6e5eb",
- ]
+const photos =
+    'https://ik.imagekit.io/sog7th7xvupr/o/vendors%2FAHwW%2Bi2vQAKFUcuRPJUq0Q%3A0.jpeg?alt=media&token=ce6576d6-5aec-4a3f-91e4-ef7032f6e5eb';
 
+const Industries = [
+    'Restaurant',
+    'Clothing',
+    'GroceryGourmet',
+    'Liquor',
+    'Books',
+    'CellPhones',
+    'Computers',
+    'VideoGames',
+];
 
 export const Basic = () => (
     <VendorView
@@ -58,8 +74,15 @@ export const StickyProductList = () => (
                     coverTranslateY={coverTranslateY}
                     coverScale={coverScale}
                     pudOptions={ToggleButtonMockData.twoButtons}
-                    selectedPud={1}
+
+                    pud={ToggleButtonMockData}
                     tabBarOpacity={tabBarOpacity}
+                    industryList={Industries}
+                    isMultiProducts={true}
+                    catalog={MockDataMenu}
+                    currentIndex={1}
+                    catalogFilter={0}
+                    selectedPud="pickup"
                 />
             );
         }}

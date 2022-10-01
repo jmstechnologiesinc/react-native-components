@@ -19,3 +19,4 @@ export { default as ChipList } from './ChipList/ChipList';
 export {default as OrderList} from './OrderList/OrderList';
 export {default as OrderView } from './OrderView/OrderView';
 export {default as IndustryList } from './IndustryList/IndustryList';
+export { default as Catalog } from './Catalog/Catalog';
