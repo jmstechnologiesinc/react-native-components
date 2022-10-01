@@ -32,6 +32,7 @@ try {
 const getStories = () => {
   return [
     require("../packages/components/src/CartList/CartList.stories.js"),
+    require("../packages/components/src/Catalog/Catalog.stories.js"),
     require("../packages/components/src/Checkout/Checkout.stories.js"),
     require("../packages/components/src/ChipList/index.stories.js"),
     require("../packages/components/src/DynamicForm/DynamicForm.stories.js"),

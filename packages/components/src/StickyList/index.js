@@ -1,19 +1,13 @@
 import React, { useRef, useState } from 'react';
 
-import {View, Animated, SectionList as NativeSectionList, SafeAreaView } from 'react-native';
+import { View, Animated, SectionList as NativeSectionList, SafeAreaView } from 'react-native';
 const AnimatedSectionList = Animated.createAnimatedComponent(NativeSectionList);
 
 import TabsList from './StickySectionTabsList';
 
 import styles from './styles';
 
-const StickyList = ({
-    title,
-    sections,
-    ListHeaderComponent,
-    onItemPress,
-    ...props
-}) => {
+const StickyList = ({ title, sections, ListHeaderComponent, onItemPress, ...props }) => {
     const [currentIndex, setCurrentIdex] = useState(0);
     const scrollY = useRef(new Animated.Value(0)).current;
     const blockUpdateIndexRef = useRef(false);
@@ -87,13 +81,12 @@ const StickyList = ({
                 }}
                 ListHeaderComponent={
                     <>
-                        {typeof ListHeaderComponent === "function" ? 
-                            ListHeaderComponent(coverTranslateY, coverScale, tabBarOpacity) : 
-                            null
-                        }
+                        {typeof ListHeaderComponent === 'function'
+                            ? ListHeaderComponent(coverTranslateY, coverScale, tabBarOpacity)
+                            : null}
                         <View onLayout={(ev) => setLayoutHeight(ev.nativeEvent.layout.y)}>{renderTab()}</View>
                     </>
-                } 
+                }
             />
             <View style={styles.containerAnaimeted}>
                 <Animated.View
