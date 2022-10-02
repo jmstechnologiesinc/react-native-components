@@ -3,21 +3,16 @@ import React from 'react';
 import VendorView from './VendorView';
 
 import mockData from '../VendorList/mockData.json';
-<<<<<<< HEAD
 import ToggleButtonMockData from '../SegmentedButtonGroup/mockData.json';
-=======
-import ToggleButtonMockData from '../ToggleButton/mockData.json';
 import MockDataMenu from '../Catalog/mockData.json';
-
->>>>>>> 48e48e2c7b0ca6b2631152be1dbbe99a58460639
-import { Sticky } from '../ProductList/ProductList.stories';
+import { StickyHeader } from '../ProductList/ProductLis.stories';
 
 export default {
     title: 'packages/VendorView',
 };
 
 const photos =
-    'https://ik.imagekit.io/sog7th7xvupr/o/vendors%2FAHwW%2Bi2vQAKFUcuRPJUq0Q%3A0.jpeg?alt=media&token=ce6576d6-5aec-4a3f-91e4-ef7032f6e5eb';
+    ['https://ik.imagekit.io/sog7th7xvupr/o/vendors%2FAHwW%2Bi2vQAKFUcuRPJUq0Q%3A0.jpeg?alt=media&token=ce6576d6-5aec-4a3f-91e4-ef7032f6e5eb'];
 
 const Industries = [
     'Restaurant',
@@ -30,53 +25,53 @@ const Industries = [
     'VideoGames',
 ];
 
-export const Basic = () => (
-    <VendorView
-        title={mockData[0].title}
-        formattedAddress={mockData[0].location.formattedAddress}
-        formattedPud={`${mockData[0].formattedPub} - ${mockData[0].formattedHitDistance}`}
-        photos={photos}
-        description={mockData[0].description}
-    />
-);
-
-export const Info = () => (
-    <VendorView
-        title={mockData[1].title}
-        formattedPud={`${mockData[0].formattedPub} - ${mockData[0].formattedHitDistance}`}
-        formattedAddress={mockData[1].location.formattedAddress}
-        photos={photos}
-    />
+export const Description = () => (
+    <StickyHeader
+        ListHeaderComponent={(coverTranslateY, coverScale, tabBarOpacity) => {
+            return <VendorView
+                coverTranslateY={coverTranslateY}
+                coverScale={coverScale}
+                tabBarOpacity={tabBarOpacity}
+                title={mockData[1].title}
+                formattedPud={`${mockData[0].formattedPub} - ${mockData[0].formattedHitDistance}`}
+                formattedAddress={mockData[1].location.formattedAddress}
+                photos={photos}
+                description={mockData[1].description}
+                />
+        }}/>
 );
 
 export const Banner = () => (
-    <VendorView
-        title={mockData[1].title}
-        formattedPud={`${mockData[0].formattedPub} - ${mockData[0].formattedHitDistance}`}
-        formattedAddress={mockData[1].location.formattedAddress}
-        photos={photos}
-        banner={
-            'Use your Uber account to order delivery from Terra Luna Cafe in Lawrence. Browse the menu, view popular items, and track your order.'
-        }
-        description={mockData[1].description}
-    />
+    <StickyHeader
+        ListHeaderComponent={(coverTranslateY, coverScale, tabBarOpacity) => {
+            return <VendorView
+                coverTranslateY={coverTranslateY}
+                coverScale={coverScale}
+                tabBarOpacity={tabBarOpacity}
+                title={mockData[1].title}
+                formattedPud={`${mockData[0].formattedPub} - ${mockData[0].formattedHitDistance}`}
+                formattedAddress={mockData[1].location.formattedAddress}
+                photos={photos}
+                banner={
+                    'Use your Uber account to order delivery from Terra Luna Cafe in Lawrence. Browse the menu, view popular items, and track your order.'
+                }/>
+        }}/>
 );
 
 export const StickyProductList = () => (
-    <Sticky
+    <StickyHeader
         ListHeaderComponent={(coverTranslateY, coverScale, tabBarOpacity) => {
             return (
                 <VendorView
+                    coverTranslateY={coverTranslateY}
+                    coverScale={coverScale}
+                    tabBarOpacity={tabBarOpacity}
                     title={mockData[1].title}
                     formattedPud={`${mockData[0].formattedPub} - ${mockData[0].formattedHitDistance}`}
                     formattedAddress={mockData[1].location.formattedAddress}
                     photos={photos}
-                    coverTranslateY={coverTranslateY}
-                    coverScale={coverScale}
+                   
                     pudOptions={ToggleButtonMockData.twoButtons}
-
-                    pud={ToggleButtonMockData}
-                    tabBarOpacity={tabBarOpacity}
                     industryList={Industries}
                     isMultiProducts={true}
                     catalog={MockDataMenu}

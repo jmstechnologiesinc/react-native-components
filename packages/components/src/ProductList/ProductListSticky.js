@@ -2,12 +2,12 @@ import React from 'react';
 
 import { Divider, List } from '@jmsstudiosinc/react-native-paper';
 
-import StickyList from '../StickyList';
+import StickySectionList from '../StickySectionList/StickySectionList';
 
 import ProductListItem from './ProductListItem';
 
 const ProductListSticky = ({ sections, onViewProductItem, ...props }) => (
-    <StickyList
+    <StickySectionList
         {...props}
         sections={sections}
         renderSectionHeader={({ section: { title } }) => <List.Subheader>{title}</List.Subheader>}
@@ -23,7 +23,7 @@ const ProductListSticky = ({ sections, onViewProductItem, ...props }) => (
                 cartQuantity={item.cartQuantity}
                 quantity={item.quantity}
                 isOutofStock={item.isOutofStock}
-                onPress={() =>onViewProductItem(item)}
+                onPress={() => onViewProductItem(item)}
 
             />
         )}

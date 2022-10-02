@@ -1,40 +1,31 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-import { Chip, List } from '@jmsstudiosinc/react-native-paper';
+import { Chip } from '@jmsstudiosinc/react-native-paper';
+import * as Tabs from '../Tabs/Tabs';
 
-const ChipList = ({ options, value, onSelect, title }) => {
-    const chipListItem = (option) => {
-        const onPress = () => onSelect?.(option.value);
-        const isSelected = option.value === value;
-
-        return (
-            <Chip 
-                selected={isSelected}  
-                showSelectedOverlay 
-                onPress={onPress}
-                style={styles.chip}>
-                {option.title}
-            </Chip>
-        );
-    };
-
-    return (
-        <List.Section title={title}>
-            <ScrollView showsHorizontalScrollIndicator={false} horizontal>
-                <View style={styles.row}>{options.map(chipListItem)}</View>
-            </ScrollView>
-        </List.Section>
-    );
-};
+const ChipList = ({ 
+    title, 
+    options, 
+    currentIndex, 
+    onPress 
+}) =>  <Tabs.Scrollable title={title} currentIndex={currentIndex}>
+    {options.map((item, index) => (
+        <Chip
+            mode={"outlined"}
+            selected={currentIndex === index}  
+            showSelectedOverlay 
+            onPress={() => onPress(index)}
+            style={index !== 0 && styles.chip}>
+            {item}
+        </Chip>
+)   )}
+</Tabs.Scrollable>
 
 const styles = StyleSheet.create({
     chip: {
-        marginHorizontal: 4,
-    },
-    row: {
-        flexDirection: 'row',
-    },
+        marginLeft: 4,
+    }
 });
 
 

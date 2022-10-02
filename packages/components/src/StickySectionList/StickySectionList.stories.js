@@ -4,7 +4,7 @@ import { List } from '@jmsstudiosinc/react-native-paper';
 
 import mockData from './mockData.json';
 
-import StickyList from '.';
+import StickyList from './StickySectionList';
 
 export default {
     title: 'packages/StickyList',

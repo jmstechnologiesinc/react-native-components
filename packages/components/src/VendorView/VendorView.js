@@ -7,7 +7,8 @@ import { List, Paragraph, Banner } from '@jmsstudiosinc/react-native-paper';
 import * as JMSList from '../List/List';
 import PhotoGallery from '../PhotoGallery/PhotoGallery';
 import SegmentedButtonGroup from '../SegmentedButtonGroup/SegmentedButtonGroup';
-import { IndustryTabs, Catalog } from '../index';
+import Catalog from '../Catalog/Catalog';
+import IndustryList from '../IndustryList/IndustryList';
 
 const VendorView = ({
     title,
@@ -21,7 +22,6 @@ const VendorView = ({
     banner = null,
     coverTranslateY,
     coverScale,
-    onPressPudFilter,
     industryList,
     onPressIndustryFilter,
     currentIndex,
@@ -93,6 +93,15 @@ const VendorView = ({
                 </View>
             )}
 
+            {industryList && (
+                <IndustryList
+                    title="Industries"
+                    data={industryList}
+                    onPress={onPressIndustryFilter}
+                    selectedIndex={currentIndex}
+                />
+            )}
+
             {pudOptions && (
                 <SegmentedButtonGroup
                     title="Available Shopping Mode"
@@ -102,17 +111,9 @@ const VendorView = ({
                 />
             )}
 
-            {industryList && (
-                <IndustryTabs
-                    title="Industries"
-                    data={industryList}
-                    onPress={onPressIndustryFilter}
-                    selectedIndex={currentIndex}
-                />
-            )}
-            {isMultiProducts === true && (
+          {/*   {isMultiProducts === true && (
                 <Catalog data={catalog} selectedIndex={catalogFilter} setCatalogFilter={setCatalogFilter} />
-            )}
+            )} */}
         </>
     );
 };

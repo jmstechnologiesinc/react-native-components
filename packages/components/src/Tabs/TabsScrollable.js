@@ -1,34 +1,84 @@
-import React from 'react';
+import * as React from 'react';
 
-import { View, ScrollView } from 'react-native';
-
+import { View, Dimensions, ScrollView } from 'react-native';
 import { List } from '@jmsstudiosinc/react-native-paper';
 
-import TabsItem from './TabsItem';
-import TabList from './TabsList';
+import * as Tabs from './Tabs';
 
-const TabsScrollable = React.forwardRef(
-    ({ title, data, selectedIndex, onPress, onTabsContainerLayout, onTabsItemLayout }, ref) => (
-        <List.Section title={title}>
-            <ScrollView ref={ref} showsHorizontalScrollIndicator={false} horizontal>
-                <View onLayout={onTabsContainerLayout}>
-                    <TabList>
-                        {data.map((item, index) => (
-                            <View onLayout={onTabsItemLayout(index)}>
-                                <TabsItem
-                                    title={item.title}
-                                     isSelected={item.isSelected ? item.isSelected : selectedIndex === index}
-                                    onPress={item.onPress ? item.onPress : () => onPress(index)}
-                                    variant={item.variant}
-                                    fontAwesomeIcon={item.fontAwesomeIcon}
-                                />
-                            </View>
-                        ))}
-                    </TabList>
-                </View>
-            </ScrollView>
-        </List.Section>
-    )
-);
+const WindowWidth = Dimensions.get('window').width;
+export default class TabsScrollable extends React.PureComponent {
 
-export default TabsScrollable;
+    constructor(props) {
+        super(props);
+        this.scrollViewRef = React.createRef();
+        this._tabContainerMeasurements;
+        this._tabsMeasurements = {};
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.currentIndex !== prevProps.currentIndex) {
+            if (this.scrollViewRef.current) {
+                this.scrollViewRef.current.scrollTo({
+                    x: this.getScrollAmount(),
+                    animated: true,
+                });
+            }
+        }
+    }
+
+    getScrollAmount = () => {
+        const { currentIndex } = this.props;
+        const position = currentIndex;
+        const pageOffset = 0;
+
+        const containerWidth = WindowWidth;
+        const tabWidth = this._tabsMeasurements[position].width;
+        const nextTabMeasurements = this._tabsMeasurements[position + 1];
+        const nextTabWidth = (nextTabMeasurements && nextTabMeasurements.width) || 0;
+        const tabOffset = this._tabsMeasurements[position].left;
+        const absolutePageOffset = pageOffset * tabWidth;
+        let newScrollX = tabOffset + absolutePageOffset;
+
+        newScrollX -= (containerWidth - (1 - pageOffset) * tabWidth - pageOffset * nextTabWidth) / 2;
+        newScrollX = newScrollX >= 0 ? newScrollX : 0;
+
+        const rightBoundScroll = Math.max(this._tabContainerMeasurements.width - containerWidth, 0);
+
+        newScrollX = newScrollX > rightBoundScroll ? rightBoundScroll : newScrollX;
+        return newScrollX;
+    };
+
+    onTabsContainerLayout = (e) => {
+        this._tabContainerMeasurements = e.nativeEvent.layout;
+    };
+
+    onTabsItemLayout = (key) => (ev) => {
+        const { x, width, height } = ev.nativeEvent.layout;
+        this._tabsMeasurements[key] = {
+            left: x,
+            right: x + width,
+            width,
+            height,
+        };
+    };
+
+    render() {
+        return (
+            <View style={{width: WindowWidth, flexDirection: 'row'}}>
+                <List.Section title={this.props.title}>
+                    <ScrollView ref={this.scrollViewRef} showsHorizontalScrollIndicator={false} horizontal>
+                        <View onLayout={this.onTabsContainerLayout}>
+                            <Tabs.List>
+                                {React.Children.toArray(this.props.children).map((child, index) =>
+                                    <View onLayout={this.onTabsItemLayout(index)}>
+                                        {child}
+                                    </View>  
+                                )}
+                            </Tabs.List>
+                        </View>
+                    </ScrollView>
+                </List.Section>
+            </View>
+        );
+    }
+}

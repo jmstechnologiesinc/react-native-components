@@ -1,7 +1,7 @@
 import React from 'react';
 import { SectionList } from 'react-native';
 
-import RenderVendorItem from './VendorItem';
+import VendorItem from './VendorItem';
 
 const VendorList = ({ 
     sections, 
@@ -11,7 +11,7 @@ const VendorList = ({
     {...props}
     sections={sections}
     renderItem={({item}) => (
-        <RenderVendorItem item={item} onPress={onPress}/>
+        <VendorItem item={item} onPress={onPress}/>
     )} 
     keyExtractor={(item) => `${item.id}`}
     stickySectionHeadersEnabled={false}

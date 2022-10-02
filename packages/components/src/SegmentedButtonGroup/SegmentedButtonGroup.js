@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 
 import { List, SegmentedButtons } from '@jmsstudiosinc/react-native-paper';
 
-const SegmentedButtonGroup = ({ data, title, onPress, value }) => (
+const SegmentedButtonGroup = ({ data, title, onPress, value, ...rest }) => (
     <List.Section title={title}>
         <SegmentedButtons
             value={value}
@@ -13,8 +13,8 @@ const SegmentedButtonGroup = ({ data, title, onPress, value }) => (
                 ...item,
                 style: styles.button
             }))} 
-            style={styles.group} />
-    
+            style={styles.group} 
+            {...rest} />
     </List.Section>
 )
 
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         borderWidth: 1
     },
-    group: { paddingHorizontal: 20, justifyContent: 'center' },
+    group: { justifyContent: 'center' },
 });
   
 

@@ -8,8 +8,5 @@ export default {
   title: 'packages/ProductList',
 };
 
-export const Sticky = ({...props}) => <ProductList.Sticky {...props} sections={mockData} onPress={() => {}} />
-
-
-
+export const StickyHeader = ({...props}) => <ProductList.Sticky {...props} sections={mockData} onPress={() => {}} />
 

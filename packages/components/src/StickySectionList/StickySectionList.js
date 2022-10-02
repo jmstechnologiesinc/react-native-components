@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react';
 import { View, Animated, SectionList as NativeSectionList, SafeAreaView } from 'react-native';
 const AnimatedSectionList = Animated.createAnimatedComponent(NativeSectionList);
 
-import TabsList from './StickySectionTabsList';
+import * as Tabs from '../Tabs/Tabs';
 
 import styles from './styles';
 
@@ -34,24 +34,26 @@ const StickyList = ({ title, sections, ListHeaderComponent, onItemPress, ...prop
     });
 
     const renderTab = () => (
-        <TabsList
-            title={title}
-            sections={sections}
-            currentIndex={currentIndex}
-            onPress={(index) => {
-                setCurrentIdex(index);
-                blockUpdateIndexRef.current = true;
-                const sectionList = sectionListRef.current;
-                if (sectionList && sectionList.scrollToLocation) {
-                    sectionList.scrollToLocation({
-                        animated: true,
-                        itemIndex: 0,
-                        viewOffset: 0,
-                        sectionIndex: index,
-                    });
-                }
-            }}
-        />
+        <Tabs.Scrollable title={title} currentIndex={currentIndex}>
+             {sections.map((item, index) => (
+                <Tabs.Item
+                    title={item.title}
+                    isSelected={currentIndex === index}
+                    onPress={() => {
+                        setCurrentIdex(index);
+                        blockUpdateIndexRef.current = true;
+                        const sectionList = sectionListRef.current;
+                        if (sectionList && sectionList.scrollToLocation) {
+                            sectionList.scrollToLocation({
+                                animated: true,
+                                itemIndex: 0,
+                                viewOffset: 0,
+                                sectionIndex: index,
+                            });
+                        }
+                    }} />
+            ))}
+        </Tabs.Scrollable>
     );
 
     return (

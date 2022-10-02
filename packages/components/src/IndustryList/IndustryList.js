@@ -10,12 +10,9 @@ const IndustryList = ({
     value,
     onPress
 }) => <ChipList 
-    options={data.map((item) => ({
-        title: VENDOR_INDUSTRIES_MAPPING[item].title,
-        value: item,
-    }))}
     title={title} 
-    value={value} 
-    onSelect={onPress} />
+    options={data.map((item) => VENDOR_INDUSTRIES_MAPPING[item].title)}
+    currentIndex={data.indexOf(value)} 
+    onPress={(index) => onPress(data[index])} />
 
 export default IndustryList;
