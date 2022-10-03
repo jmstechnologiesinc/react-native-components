@@ -16,7 +16,7 @@ const TabsItem = ({
             borderBottomWidth: 2,
         }),
     }}
-    onPress={onPress} >
+    onPress={onPress}>
         {title}
 </Button>;
 

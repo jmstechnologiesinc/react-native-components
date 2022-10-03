@@ -8,7 +8,6 @@ import { ORDER_STATUS_CANCELLED, ORDER_STATUS, formatedOrderStatusTime } from '@
 
 import Accounting from '../Checkout/Accounting';
 import CartListProductItem from '../CartList/CartListProductItem';
-import { FlatList } from 'react-native-gesture-handler';
 import { formatOrder } from '../OrderList/utils';
 import OrderStatus from '../OrderList/OrderStatus';
 import OrderActionButtons from '../OrderList/OrderActionButtons';
@@ -87,7 +86,7 @@ const OrderView = ({ order, role, onButtonPress }) => {
             {(role === USER_ROLES.customer || role === USER_ROLES.driver) ? (
                 <PhotoGallery photos={[formattedOrder.photo]} />
             ) : null}
-
+            
             <List.Section>
                 <JMSList.ItemExtended
                     overline={[formattedOrder.formattedStatusTime].join(" · ") || null}
@@ -115,10 +114,12 @@ const OrderView = ({ order, role, onButtonPress }) => {
                <List.Section 
                     title={`Products · ${order.products.length} Items`} 
                     titleStyle={{paddingBottom: 0}}>
-                    <FlatList 
-                        data={order.products} 
-                        ItemSeparatorComponent={Divider}
-                        renderItem={({item}) => <CartListProductItem data={item} isRemoveable={false}/>}  />
+                    {order.products.map(item => (
+                        <>
+                            <CartListProductItem data={item} isRemoveable={false}/>
+                            <Divider />
+                        </>
+                    ))}
                 </List.Section>
             )}
 

@@ -73,9 +73,9 @@ export const StickyProductList = () => (
                    
                     pudOptions={ToggleButtonMockData.twoButtons}
                     industryList={Industries}
+                    industryFilter={"Liquor"}
                     isMultiProducts={true}
                     catalog={MockDataMenu}
-                    currentIndex={1}
                     catalogFilter={0}
                     selectedPud="pickup"
                 />

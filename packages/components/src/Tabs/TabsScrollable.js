@@ -1,7 +1,8 @@
 import * as React from 'react';
 
 import { View, Dimensions, ScrollView } from 'react-native';
-import { List } from '@jmsstudiosinc/react-native-paper';
+
+import { List, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 
 import * as Tabs from './Tabs';
 
@@ -64,8 +65,8 @@ export default class TabsScrollable extends React.PureComponent {
 
     render() {
         return (
-            <View style={{width: WindowWidth, flexDirection: 'row'}}>
-                <List.Section title={this.props.title}>
+            <View style={{width: WindowWidth, flexDirection: 'row', backgroundColor: MD3LightTheme.colors?.surface}}>
+                <List.Section title={this.props.title} style={{marginBottom: 0}}>
                     <ScrollView ref={this.scrollViewRef} showsHorizontalScrollIndicator={false} horizontal>
                         <View onLayout={this.onTabsContainerLayout}>
                             <Tabs.List>

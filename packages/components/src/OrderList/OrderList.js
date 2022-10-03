@@ -14,6 +14,8 @@ const OrderList = ({ data, role, onButtonPress, onPress }) => (
         onPress={onPress}
         onButtonPress={onButtonPress} />
     )}
+    showsVerticalScrollIndicator={false}
+    showsHorizontalScrollIndicator={false}
   />
 );
 

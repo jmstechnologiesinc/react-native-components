@@ -35,7 +35,7 @@ const StickyList = ({ title, sections, ListHeaderComponent, onItemPress, ...prop
 
     const renderTab = () => (
         <Tabs.Scrollable title={title} currentIndex={currentIndex}>
-             {sections.map((item, index) => (
+            {sections.map((item, index) => (
                 <Tabs.Item
                     title={item.title}
                     isSelected={currentIndex === index}

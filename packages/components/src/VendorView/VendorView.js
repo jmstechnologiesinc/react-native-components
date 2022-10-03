@@ -23,8 +23,8 @@ const VendorView = ({
     coverTranslateY,
     coverScale,
     industryList,
+    industryFilter,
     onPressIndustryFilter,
-    currentIndex,
     catalog,
     setCatalogFilter,
     catalogFilter,
@@ -76,29 +76,27 @@ const VendorView = ({
             ) : (
                 <PhotoGallery photos={photos} />
             )}
-
-            <List.Section>
-                <JMSList.Item
-                    overline={formattedPud}
-                    title={title}
-                    description={formattedAddress}
-                    titleVariant={'headlineSmall'}
-                    onPress={() => openVendorOverview()}
-                />
-            </List.Section>
-
-            {description && (
-                <View style={{ marginHorizontal: 16, marginBottom: 32 }}>
-                    <Paragraph>{description}</Paragraph>
-                </View>
-            )}
+            
+            <View style={{marginHorizontal: 8}}>
+                <List.Section>
+                    <JMSList.Item
+                        overline={formattedPud}
+                        title={title}
+                        description={formattedAddress}
+                        titleVariant={'headlineSmall'}
+                        onPress={() => openVendorOverview()}
+                    />
+                    {description && (
+                        <List.Item title="description" />
+                    )}                
+                </List.Section>
 
             {industryList && (
                 <IndustryList
                     title="Industries"
                     data={industryList}
                     onPress={onPressIndustryFilter}
-                    selectedIndex={currentIndex}
+                    value={industryFilter}
                 />
             )}
 
@@ -110,6 +108,7 @@ const VendorView = ({
                     onPress={onPressPudFilter}
                 />
             )}
+            </View>
 
           {/*   {isMultiProducts === true && (
                 <Catalog data={catalog} selectedIndex={catalogFilter} setCatalogFilter={setCatalogFilter} />

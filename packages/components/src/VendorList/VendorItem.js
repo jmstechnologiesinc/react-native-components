@@ -3,13 +3,18 @@ import { StyleSheet } from 'react-native';
 
 import { Card } from '@jmsstudiosinc/react-native-paper';
 
+import { VENDOR_INDUSTRIES_MAPPING } from '@jmsstudiosinc/vendor';
+
+import * as JMSList from "../List/List";
+
 const VendorItem = ({ item, onPress }) => <Card
     style={styles.card}
     onPress={() => onPress(item)}>
     <Card.Cover source={{ uri: item.photos?.[0] }} />
-    <Card.Title
+    <JMSList.Item
+        overline={item.industries.map(item => VENDOR_INDUSTRIES_MAPPING[item].title).join(" . ")}
         title={item.title}
-        subtitle={[item.formattedPub, item.formattedHitDistance].join(" · ")} />
+        description={[item.formattedPub, item.formattedHitDistance].join(" · ")}/>
 </Card>
 
 const styles = StyleSheet.create({

@@ -25,16 +25,15 @@ const OrderListItem = ({
   overlines.push(formattedOrder.formattedStatusTime);
 
   return <Card 
-    mode="outlined" 
+    mode="outlined"
     onPress={() => onPress(order, role)}
-    style={{margin: 8}}>
+    style={{marginVertical: 4}}>
        <List.Section>
           <JMSList.ItemExtended
               overline={overlines.join(" · ") || null}
               header={formattedOrder.title}
               subHeader={order.status}
-              titleVariant={'headlineSmall'}
-          />
+              titleVariant={'headlineSmall'} />
           <OrderStatus
             role={role}
             status={formattedOrder.status}
@@ -44,7 +43,7 @@ const OrderListItem = ({
             deliveryTime={formattedOrder.deliveryTime}
             restaurantAcceptedTime={formattedOrder.restaurantAcceptedTime}
             orderID={formattedOrder.orderID}
-            fulfilmentStatus={formattedOrder.fulfilmentStatus}/>
+            fulfilmentStatus={formattedOrder.fulfilmentStatus} />
         </List.Section>   
       {onButtonPress && <OrderActionButtons 
         orderID={formattedOrder.orderID}
