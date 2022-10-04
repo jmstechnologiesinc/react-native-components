@@ -7,7 +7,7 @@ import { List, Paragraph, Banner } from '@jmsstudiosinc/react-native-paper';
 import * as JMSList from '../List/List';
 import PhotoGallery from '../PhotoGallery/PhotoGallery';
 import SegmentedButtonGroup from '../SegmentedButtonGroup/SegmentedButtonGroup';
-import Catalog from '../Catalog/Catalog';
+
 import IndustryList from '../IndustryList/IndustryList';
 
 const VendorView = ({
@@ -25,10 +25,7 @@ const VendorView = ({
     industryList,
     industryFilter,
     onPressIndustryFilter,
-    catalog,
-    setCatalogFilter,
-    catalogFilter,
-    isMultiProducts,
+
     openVendorOverview,
 }) => {
     const [isBannerVisible, setIsBannerVisible] = useState(!!banner);
@@ -76,8 +73,8 @@ const VendorView = ({
             ) : (
                 <PhotoGallery photos={photos} />
             )}
-            
-            <View style={{marginHorizontal: 8}}>
+
+            <View style={{ marginHorizontal: 8 }}>
                 <List.Section>
                     <JMSList.Item
                         overline={formattedPud}
@@ -86,33 +83,27 @@ const VendorView = ({
                         titleVariant={'headlineSmall'}
                         onPress={() => openVendorOverview()}
                     />
-                    {description && (
-                        <List.Item title="description" />
-                    )}                
+                    {description && <List.Item title="description" />}
                 </List.Section>
 
-            {industryList && (
-                <IndustryList
-                    title="Industries"
-                    data={industryList}
-                    onPress={onPressIndustryFilter}
-                    value={industryFilter}
-                />
-            )}
+                {industryList && (
+                    <IndustryList
+                        title="Industries"
+                        data={industryList}
+                        onPress={onPressIndustryFilter}
+                        value={industryFilter}
+                    />
+                )}
 
-            {pudOptions && (
-                <SegmentedButtonGroup
-                    title="Available Shopping Mode"
-                    data={pudOptions}
-                    value={selectedPud}
-                    onPress={onPressPudFilter}
-                />
-            )}
+                {pudOptions && (
+                    <SegmentedButtonGroup
+                        title="Available Shopping Mode"
+                        data={pudOptions}
+                        value={selectedPud}
+                        onPress={onPressPudFilter}
+                    />
+                )}
             </View>
-
-          {/*   {isMultiProducts === true && (
-                <Catalog data={catalog} selectedIndex={catalogFilter} setCatalogFilter={setCatalogFilter} />
-            )} */}
         </>
     );
 };
