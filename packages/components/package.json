@@ -1,6 +1,6 @@
 {
   "name": "@jmsstudiosinc/react-native-components",
-  "version": "0.1.13",
+  "version": "0.1.19",
   "description": "> TODO: description",
   "author": "yerloveraaa <yerloveraaa@gmail.com>",
   "homepage": "https://github.com/jmsstudiosinc/react-native-components#readme",
@@ -18,8 +18,8 @@
     "url": "git+https://github.com/jmsstudiosinc/react-native-components.git"
   },
   "scripts": {
-    "build": "npm run clean && cp -r src/* lib",
-    "clean": "rimraf lib/*"
+    "build": "npm run clean && mkdir lib && cp -r src/* lib",
+    "clean": "rimraf lib"
   },
   "bugs": {
     "url": "https://github.com/jmsstudiosinc/react-native-components/issues"
