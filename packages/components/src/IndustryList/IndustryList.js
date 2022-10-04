@@ -2,7 +2,7 @@ import React from 'react';
 
 import { VENDOR_INDUSTRIES_MAPPING } from '@jmsstudiosinc/vendor';
 
-import ChipList from '../ChipList/chipList';
+import ChipList from '../ChipList/ChipList';
 
 const IndustryList = ({ data, title, value, onPress }) => (
     <ChipList

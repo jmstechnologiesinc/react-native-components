@@ -2,7 +2,7 @@ import React from 'react';
 
 import useState from 'storybook-addon-state';
 
-import ChipList from './chipList';
+import ChipList from './ChipList';
 
 export default {
     title: 'packages/ChipList',
