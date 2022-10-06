@@ -68,11 +68,9 @@ export const Banner = () => (
 
 export const StickyProductList = () => (
     <StickyHeader
-        ListHeaderComponent={(coverTranslateY, coverScale, tabBarOpacity) => {
+        ListHeaderComponent={(tabBarOpacity) => {
             return (
                 <VendorView
-                    coverTranslateY={coverTranslateY}
-                    coverScale={coverScale}
                     tabBarOpacity={tabBarOpacity}
                     title={mockData[1].title}
                     formattedPud={`${mockData[0].formattedPub} - ${mockData[0].formattedHitDistance}`}
