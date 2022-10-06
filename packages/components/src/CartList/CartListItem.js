@@ -18,9 +18,11 @@ const CartListItem = ({  item, onDelete, onEdit, onCheckout, onTips  }) => {
         return null;
     } else if (type === CART_ITEM_TYPE.checkout) {
         return (
-            <Button mode="contained" onPress={() => onCheckout(item.vendorIds)} style={styles.button}>
-                CHECKOUT
-            </Button>
+            <List.Section>
+                <Button mode="contained" onPress={() => onCheckout(item.vendorIds)} style={styles.button}>
+                    CHECKOUT
+                </Button>
+            </List.Section>
         );
     } else if (type === 'industryWarning') {
         return (
@@ -42,9 +44,7 @@ const CartListItem = ({  item, onDelete, onEdit, onCheckout, onTips  }) => {
                 <CartListProductItem data={data}  onDelete={() => onDelete(id, data.cartId, cartIndustryId)}   onEdit={() => onEdit({data, item})} />
             ))}
 
-            {onTips &&  onTips(item)}
-
-           
+            {onTips &&  onTips(item)}           
         </List.Section>
     );
 };

@@ -27,8 +27,8 @@ const feesListItem = (fees) => {
     return results;
 };
 
-const Accounting = ({ fees }) => (
-    <List.Section>
+const Accounting = ({title, fees}) => (
+    <List.Section title={title}>
         {feesListItem(fees)}
     </List.Section>
 )

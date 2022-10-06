@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 
 import { FlatList } from 'react-native';
 
-import { formattedSelection, validateSelection } from '@jmsstudiosinc/commons';
 import {List} from '@jmsstudiosinc/react-native-paper';
+
+import { formattedSelection, validateSelection } from '@jmsstudiosinc/commons';
 import DynamicFormSwitch from './DynamicFormSwitch';
 
 const nextAttributeGroup = (value, attributeGroup) => {
@@ -33,7 +33,7 @@ const DynamicForm = ({
     initialValues = {},
     isOutofStock,
     sections,
-    ListHeaderComponent,
+    listHeaderComponent,
     listFooterComponent,
     onFormChange,
 }) => {
@@ -148,13 +148,14 @@ const DynamicForm = ({
     const keyExtractor = useCallback((item) => item.uuid.toString(), []);
 
     return (
-        <FlatList
-            data={sections}
-            keyExtractor={keyExtractor}
-            renderItem={renderItem}
-            ListHeaderComponent={ListHeaderComponent}
-            ListFooterComponent={listFooterComponentWrapper}
-        />
+        <>
+            <FlatList
+                data={sections}
+                keyExtractor={keyExtractor}
+                renderItem={renderItem}
+                ListHeaderComponent={listHeaderComponent} />
+            {listFooterComponentWrapper()}
+        </>
     );
 };
 

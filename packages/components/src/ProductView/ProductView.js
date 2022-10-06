@@ -1,32 +1,47 @@
 import React from 'react';
 
-import { Text, List, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
+import {  List, Banner } from '@jmsstudiosinc/react-native-paper';
 
 import * as JMSList from '../List/List';
 import PhotoGallery from '../PhotoGallery/PhotoGallery';
 
-const ProductView = ({ title, photos, description, inStock, price }) => {
+const ProductView = ({ 
+    title, 
+    photos, 
+    description, 
+    price,
+    isOutofStock,
+    pudErrorMessage
+}) => {
+    const message = [];
+
+    if(isOutofStock) {
+        message.push("This item is out of stock")
+    }
+
+    if(pudErrorMessage) {
+        message.push(pudErrorMessage)
+    }
+
     return (
         <>
+            {message.length > 0 && (
+                <Banner
+                    visible={true}
+                    actions={[]}
+                    icon="alert-circle"
+                    style={{marginBottom: 8}}>
+                    {message.join(" · ")}. Please try again later!
+                </Banner>
+            )}
             <PhotoGallery photos={photos} />
             <List.Section>
                 <JMSList.Item
-                    overline={'in stock'}
                     title={title}
                     description={description}
+                    metaTitle={price}
                     titleVariant={'headlineSmall'}
-                    right={() => (
-                        <Text
-                            variant="headlineSmall"
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                color: MD3LightTheme.colors.onSurfaceVariant,
-                            }}
-                        >
-                            {price}
-                        </Text>
-                    )}
+                    metaTitleVariant={'headlineSmall'}
                 />
             </List.Section>
         </>
