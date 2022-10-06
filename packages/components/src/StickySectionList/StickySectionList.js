@@ -16,17 +16,6 @@ const StickyList = ({ title, sections, ListHeaderComponent, onItemPress, ...prop
     const [layoutHeight, setLayoutHeight] = useState(0);
     const Max_Height = layoutHeight + 1;
 
-    const coverTranslateY = scrollY.interpolate({
-        inputRange: [-4, 0, 10],
-        outputRange: [-2, 0, 3],
-    });
-
-    const coverScale = scrollY.interpolate({
-        inputRange: [-200, 0],
-        outputRange: [2, 1],
-        extrapolateRight: 'clamp',
-    });
-
     const tabBarOpacity = scrollY.interpolate({
         inputRange: [layoutHeight, Max_Height],
         outputRange: [0, 100],
@@ -51,7 +40,8 @@ const StickyList = ({ title, sections, ListHeaderComponent, onItemPress, ...prop
                                 sectionIndex: index,
                             });
                         }
-                    }} />
+                    }}
+                />
             ))}
         </Tabs.Scrollable>
     );
@@ -83,9 +73,7 @@ const StickyList = ({ title, sections, ListHeaderComponent, onItemPress, ...prop
                 }}
                 ListHeaderComponent={
                     <>
-                        {typeof ListHeaderComponent === 'function'
-                            ? ListHeaderComponent(coverTranslateY, coverScale, tabBarOpacity)
-                            : null}
+                        {typeof ListHeaderComponent === 'function' ? ListHeaderComponent(tabBarOpacity) : null}
                         <View onLayout={(ev) => setLayoutHeight(ev.nativeEvent.layout.y)}>{renderTab()}</View>
                     </>
                 }
