@@ -1,9 +1,17 @@
 import React from 'react';
 
 import { List, RadioButton } from '@jmsstudiosinc/react-native-paper';
-import { Metadata } from './List';
+import { MetaBadged } from './List';
 
-const ListRadio = ({ title, description, metadata, isDisabled, isChecked, onPress, ...props }) => (
+const ListRadio = ({ 
+    title, 
+    description, 
+    metadata, 
+    isDisabled, 
+    isChecked, 
+    onPress, 
+    ...props 
+}) => (
     <List.Item
         {...props}
         title={title}
@@ -16,7 +24,7 @@ const ListRadio = ({ title, description, metadata, isDisabled, isChecked, onPres
                 onPress={() => onPress(!isChecked)}
             />
         )}
-        right={() => <Metadata title={metadata} />}
+        right={() => <MetaBadged title={metadata} />}
     />
 );
 

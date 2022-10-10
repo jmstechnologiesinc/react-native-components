@@ -1,23 +1,21 @@
 import React from 'react';
 
-import { Animated } from 'react-native';
+import { Animated, StyleSheet } from 'react-native';
 
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Button } from '@jmsstudiosinc/react-native-paper';
 
-import styles from './styles';
+import { MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 
 const SwipeToDelete = ({ children, onDelete }) => {
-    const renderRightActions = () => {
-        return (
-            <Button onPress={onDelete}>
-                <Animated.View style={[styles.deleteBox]}>
-                    <MaterialCommunityIcons name="trash-can-outline" color={'white'} size={30} />
-                </Animated.View>
-            </Button>
-        );
-    };
+    const renderRightActions = () => (
+        <Button onPress={onDelete}>
+            <Animated.View style={[styles.deleteBox]}>
+                <MaterialCommunityIcons name="trash-can-outline" color={'white'} size={30} />
+            </Animated.View>
+        </Button>
+    );
 
     return <Swipeable
         renderRightActions={renderRightActions}
@@ -28,5 +26,16 @@ const SwipeToDelete = ({ children, onDelete }) => {
         {children}
     </Swipeable>
 };
+
+const styles = StyleSheet.create({
+    deleteBox: {
+        flex: 1,
+        backgroundColor: MD3LightTheme.colors.error,
+        justifyContent: 'center',
+        width: 90,
+        flexDirection: 'row',
+        alignItems: 'center',
+    }
+});
 
 export default SwipeToDelete;

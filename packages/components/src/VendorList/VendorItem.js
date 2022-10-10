@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Card } from '@jmsstudiosinc/react-native-paper';
+import { Card, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 
 import { VENDOR_INDUSTRIES_MAPPING } from '@jmsstudiosinc/vendor';
 
@@ -19,7 +19,8 @@ const VendorItem = ({ item, onPress }) => <Card
 
 const styles = StyleSheet.create({
     card: {
-        marginVertical: 4,
+        marginVertical: MD3LightTheme.margin / 2,
+        marginHorizontal: MD3LightTheme.margin
     },
 });
 

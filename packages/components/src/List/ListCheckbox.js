@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {List, Checkbox} from '@jmsstudiosinc/react-native-paper';
-import {Metadata} from './List';
+import { MetaBadged } from './List';
 
 const ListCheckbox = ({
     title,
@@ -20,7 +20,7 @@ const ListCheckbox = ({
     status={isChecked ? 'checked' : 'unchecked'}
     disabled={isDisabled}
     onPress={() => onPress(!isChecked)} />}
-  right={() => <Metadata title={metadata} />}/>
+  right={() => <MetaBadged title={metadata} />}/>
 
 
 export default ListCheckbox;

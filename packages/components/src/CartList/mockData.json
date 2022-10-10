@@ -17,7 +17,9 @@
   {
     "id": "e54a3551-1d83-457f-99f2-7cdeec4ff263",
     "title": "McDonald's® (50 BROADWAY)",
+    "fulfillmentFormattedAddress": "Pickup at McDonald's, 50 Broadway, Lawrence, MA 01840",
     "total": 3771,
+    "photo": "https://play-lh.googleusercontent.com/0loj-whL4XSeF4v5W3d213b1pH0RRTQUlmK1VESE-Rsydp06rVyPTq_Hwpwm1avB8URL",
     "description": "Use your Uber account to order delivery from McDonald's® (50 BROADWAY) in Lawrence. Browse the menu, view popular items, and track your order.",
     "cartIndustryId": "Restaurant",
     "data": [
@@ -66,7 +68,9 @@
           "2514af14-5875-46d2-9160-8c7cbf6b620c": {
             "parentId": "8ee273ae-23ea-499a-a440-7220c2a8a0e6",
             "title": "Medium Fanta Orange",
-            "value": true
+            "value": true,
+            "selection": 4,
+            "price": 34
           },
           "83ce0eec-7a1e-41b5-b2fa-948c91aafb4f": {
             "taxonomyType": "attributeGroup",

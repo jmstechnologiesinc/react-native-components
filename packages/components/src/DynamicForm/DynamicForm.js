@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 
-import { FlatList } from 'react-native';
+import { FlatList,View } from 'react-native';
 
 import {List} from '@jmsstudiosinc/react-native-paper';
 
@@ -36,6 +36,7 @@ const DynamicForm = ({
     listHeaderComponent,
     listFooterComponent,
     onFormChange,
+    listFooterComponentStyle
 }) => {
     const onCheckboxRadioChange = (item, section, value) => {
         const alteredForm = { ...initialValues };
@@ -112,26 +113,24 @@ const DynamicForm = ({
     };
 
     const renderItem = ({item}) => {
-        return <List.Section>
-            <List.Accordion 
-                title={item.title} 
-                description={initialValues[item.id]?.formattedSelection || item.formattedSelection}>
-                {item.data?.map(attr => {
-                    const value = Boolean(getValue(attr));
-                    const isMaxSelection = validateMaxSelection(value, item, item.maxSelection);
-                    const isDisabled = attr.isDisabled || isOutofStock || isMaxSelection;
-                    const form = {
-                        ...attr,
-                        value,
-                        isDisabled
-                    }
+        return <List.Accordion 
+            title={item.title} 
+            description={initialValues[item.id]?.formattedSelection || item.formattedSelection}>
+            {item.data?.map(attr => {
+                const value = Boolean(getValue(attr));
+                const isMaxSelection = validateMaxSelection(value, item, item.maxSelection);
+                const isDisabled = attr.isDisabled || isOutofStock || isMaxSelection;
+                const form = {
+                    ...attr,
+                    value,
+                    isDisabled
+                }
 
-                    return <DynamicFormSwitch
-                        form={form}
-                        onChange={(value) => onCheckboxRadioChange(attr, item, value)} />
-                })}
-            </List.Accordion>
-        </List.Section>
+                return <DynamicFormSwitch
+                    form={form}
+                    onChange={(value) => onCheckboxRadioChange(attr, item, value)} />
+            })}
+        </List.Accordion>
     };
 
   
@@ -153,7 +152,10 @@ const DynamicForm = ({
                 data={sections}
                 keyExtractor={keyExtractor}
                 renderItem={renderItem}
-                ListHeaderComponent={listHeaderComponent} />
+                ListHeaderComponent={listHeaderComponent} 
+                ListFooterComponent={<View style={listFooterComponentStyle} />}
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false} />
             {listFooterComponentWrapper()}
         </>
     );

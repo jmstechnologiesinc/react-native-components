@@ -1,19 +1,16 @@
 import React from 'react';
 
-import { List } from '@jmsstudiosinc/react-native-paper';
 import * as JMSList from '../List/List';
 
 const ProductListItem = ({ uuid, title, photo, description, price, cartQuantity, onPress }) => (
-    <List.Section>
-        <JMSList.Item
-            title={title}
-            photo={photo}
-            description={description}
-            metaTitle={price}
-            metaQuantity={cartQuantity}
-            onPress={onPress}
-        />
-    </List.Section>
+    <JMSList.Item
+        title={title}
+        photo={photo}
+        description={description}
+        metaTitle={price}
+        metaQuantity={cartQuantity}
+        onPress={onPress}
+    />
 );
 
 export default ProductListItem;

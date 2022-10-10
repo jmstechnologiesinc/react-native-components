@@ -4,7 +4,6 @@ import {List, Text} from '@jmsstudiosinc/react-native-paper';
 import * as JMSList from "./List";
 
 const ListItem = ({
-    uuid,
     photo,
     overline,
     title,
@@ -13,18 +12,20 @@ const ListItem = ({
     onPress,
     titleVariant="bodyLarge",
     metaTitleVariant,
+    titleStyle,
+    style,
     metaTitleStyle,
     ...props
 }) => {
   const renderTitle = ({selectable, titleEllipsizeMode, color}) => (
     <>
       {overline && <Text variant="labelSmall">{overline}</Text>}
-      {title && <Text
+      {!!title && <Text
           selectable={selectable}
           ellipsizeMode={titleEllipsizeMode}
           numberOfLines={2}
           variant={titleVariant}
-          style={{ color }}>
+          style={[{ color }, titleStyle]}>
           {title}
         </Text>}
     </>
@@ -36,7 +37,7 @@ const ListItem = ({
         () => <JMSList.MetaBadged 
           title={metaTitle} 
           quantity={metaQuantity} 
-          titleStyle={[{marginTop: -6}, metaTitleStyle]}
+          titleStyle={metaTitleStyle}
           titleVariant={metaTitleVariant} /> : 
         null
       }
@@ -56,7 +57,8 @@ const ListItem = ({
       }
       {...props}
       title={renderTitle}
-      onPress={onPress}/>
+      onPress={onPress}
+      style={style}/>
   )
 } 
 

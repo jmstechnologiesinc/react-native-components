@@ -2,7 +2,7 @@ import React from 'react';
 
 import { StyleSheet } from 'react-native';
 
-import { List, SegmentedButtons } from '@jmsstudiosinc/react-native-paper';
+import { List, MD3LightTheme, SegmentedButtons } from '@jmsstudiosinc/react-native-paper';
 
 const SegmentedButtonGroup = ({ data, title, onPress, value, ...rest }) => (
     <List.Section title={title}>
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         borderWidth: 1
     },
-    group: { justifyContent: 'center' },
+    group: { justifyContent: 'center', marginHorizontal: MD3LightTheme.margin },
 });
   
 

@@ -16,7 +16,6 @@ const DynamicFormSwitch = ({ form, onChange }) => {
                     onPress={onChange}
                 />
             );
-            break;
         case FIELD_TYPES.checkbox:
             return (
                 <JMSList.Checkbox
@@ -28,10 +27,8 @@ const DynamicFormSwitch = ({ form, onChange }) => {
                     onPress={onChange}
                 />
             );
-            break;
         default:
             return `Unsupported field type - ${form.type}`;
-            break;
     }
 };
 

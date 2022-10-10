@@ -33,23 +33,26 @@ const renderRecursiveAttributeGroup = (attributeGroup) => {
 };
 
 const CartListProductItem = ({ data, onDelete, onEdit, isRemoveable = true}) => {
-    const renderItem = <List.Accordion
-        isDisabled
-        title={data.title}
-        expanded={true}
-        onPress={onEdit}
-        right={() => <JMSList.MetaBadged title={data.price} quantity={data.quantity} />}>
-        {renderRecursiveAttributeGroup(data.attributeGroup).map((item) => (
-            <JMSList.Item 
-                title={item.title} 
-                metaTitle={item.price}
-                metaQuantity={item.selection || 1} 
-                style={{marginRight: 8}} />
-        ))}
-    </List.Accordion>
+    const renderItem = (
+        <List.Accordion
+            title={data.title}
+            expanded={true}
+            right={() => <JMSList.MetaBadged title={data.price} quantity={data.quantity} />}
+            onPress={onEdit}
+            style={{...((data.price && data.quantity) && {paddingVertical: 4})}}
+            rightStyle={{marginVertical: 0, marginRight: 0}}>
+            {renderRecursiveAttributeGroup(data.attributeGroup).map((item) => (
+                <JMSList.Item 
+                    title={item.title} 
+                    metaTitle={item.price}
+                    metaQuantity={item.selection} 
+                    /* style={{...((item.price && item.selection > 1) && {paddingVertical: 2})}}  *//>
+            ))}
+        </List.Accordion>
+    );
 
     return isRemoveable ? (
-        <SwipeToDelete isRemoveable={isRemoveable}>
+        <SwipeToDelete isRemoveable={isRemoveable} onDelete={onDelete} >
           {renderItem}
         </SwipeToDelete>
     ) : renderItem;

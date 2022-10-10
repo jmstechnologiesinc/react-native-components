@@ -31,18 +31,19 @@ const ProductView = ({
                     actions={[]}
                     icon="alert-circle"
                     style={{marginBottom: 8}}>
-                    {message.join(" · ")}. Please try again later!
+                    {message.join(", ")}. Please try again!
                 </Banner>
             )}
+
             <PhotoGallery photos={photos} />
+            
             <List.Section>
                 <JMSList.Item
                     title={title}
                     description={description}
                     metaTitle={price}
                     titleVariant={'headlineSmall'}
-                    metaTitleVariant={'headlineSmall'}
-                />
+                    metaTitleVariant={'headlineSmall'} />
             </List.Section>
         </>
     );

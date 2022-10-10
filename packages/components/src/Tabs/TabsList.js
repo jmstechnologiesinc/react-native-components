@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { StyleSheet, View, Platform } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-const TabList = ({ children }) => (
-    <View style={styles.container}>
+const TabList = ({ children, style }) => (
+    <View style={[styles.container, style]}>
         <View style={styles.row}>{children}</View>
     </View>
 );
@@ -12,7 +12,7 @@ export default TabList;
 
 const styles = StyleSheet.create({
     container: {
-        flex: Platform.OS === 'web' ? 1 : null,
+        flex: 1
     },
     row: {
         flexDirection: 'row',

@@ -28,62 +28,45 @@ const Industries = [
 
 export const Description = () => (
     <StickyHeader
-        ListHeaderComponent={(coverTranslateY, coverScale, tabBarOpacity) => {
-            return (
-                <VendorView
-                    coverTranslateY={coverTranslateY}
-                    coverScale={coverScale}
-                    tabBarOpacity={tabBarOpacity}
-                    title={mockData[1].title}
-                    formattedPud={`${mockData[0].formattedPub} - ${mockData[0].formattedHitDistance}`}
-                    formattedAddress={mockData[1].location.formattedAddress}
-                    photos={photos}
-                    description={mockData[1].description}
-                />
-            );
-        }}
+        listHeaderComponent={(
+            <VendorView
+                title={mockData[1].title}
+                formattedPud={`${mockData[0].formattedPub} - ${mockData[0].formattedHitDistance}`}
+                formattedAddress={mockData[1].location.formattedAddress}
+                photos={photos}
+                description={mockData[1].description}
+            />
+        )}
     />
 );
 
 export const Banner = () => (
     <StickyHeader
-        ListHeaderComponent={(coverTranslateY, coverScale, tabBarOpacity) => {
-            return (
-                <VendorView
-                    coverTranslateY={coverTranslateY}
-                    coverScale={coverScale}
-                    tabBarOpacity={tabBarOpacity}
-                    title={mockData[1].title}
-                    formattedPud={`${mockData[0].formattedPub} - ${mockData[0].formattedHitDistance}`}
-                    formattedAddress={mockData[1].location.formattedAddress}
-                    photos={photos}
-                    banner={
-                        'Use your Uber account to order delivery from Terra Luna Cafe in Lawrence. Browse the menu, view popular items, and track your order.'
-                    }
-                />
-            );
-        }}
+        listHeaderComponent={<VendorView
+            title={mockData[1].title}
+            formattedPud={`${mockData[0].formattedPub} - ${mockData[0].formattedHitDistance}`}
+            formattedAddress={mockData[1].location.formattedAddress}
+            photos={photos}
+            bannerMessages={[
+                'Use your Uber account to order delivery from Terra Luna Cafe in Lawrence. Browse the menu, view popular items, and track your order.'
+            ]}
+        />}
     />
 );
 
 export const StickyProductList = () => (
     <StickyHeader
-        ListHeaderComponent={(tabBarOpacity) => {
-            return (
-                <VendorView
-                    tabBarOpacity={tabBarOpacity}
-                    title={mockData[1].title}
-                    formattedPud={`${mockData[0].formattedPub} - ${mockData[0].formattedHitDistance}`}
-                    formattedAddress={mockData[1].location.formattedAddress}
-                    photos={photos}
-                    pudOptions={ToggleButtonMockData.twoButtons}
-                    industryList={Industries}
-                    industryFilter={'Liquor'}
-                    isMultiProducts={true}
-                    catalogFilter={0}
-                    selectedPud="pickup"
-                />
-            );
-        }}
+        listHeaderComponent={<VendorView
+            title={mockData[1].title}
+            formattedPud={`${mockData[0].formattedPub} - ${mockData[0].formattedHitDistance}`}
+            formattedAddress={mockData[1].location.formattedAddress}
+            photos={photos}
+            pudOptions={ToggleButtonMockData.twoButtons}
+            industryList={Industries}
+            industryFilter={'Liquor'}
+            isMultiProducts={true}
+            catalogFilter={0}
+            selectedPud="pickup"
+        />}
     />
 );

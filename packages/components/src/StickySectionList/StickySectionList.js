@@ -1,18 +1,17 @@
 import React, { useRef, useState } from 'react';
 
-import { View, Animated, SectionList as NativeSectionList, SafeAreaView } from 'react-native';
-const AnimatedSectionList = Animated.createAnimatedComponent(NativeSectionList);
+import { View, Animated, SectionList as NativeSectionList } from 'react-native';
 
 import * as Tabs from '../Tabs/Tabs';
 
-import styles from './styles';
+const AnimatedSectionList = Animated.createAnimatedComponent(NativeSectionList);
 
-const StickyList = ({ title, sections, ListHeaderComponent, onItemPress, ...props }) => {
-    const [currentIndex, setCurrentIdex] = useState(0);
+const StickyList = ({ title, sections, listHeaderComponent, onItemPress, ...props }) => {
     const scrollY = useRef(new Animated.Value(0)).current;
     const blockUpdateIndexRef = useRef(false);
     const sectionListRef = useRef();
 
+    const [currentIndex, setCurrentIdex] = useState(0);
     const [layoutHeight, setLayoutHeight] = useState(0);
     const Max_Height = layoutHeight + 1;
 
@@ -22,7 +21,7 @@ const StickyList = ({ title, sections, ListHeaderComponent, onItemPress, ...prop
         extrapolate: 'clamp',
     });
 
-    const renderTab = () => (
+    const renderTab = (
         <Tabs.Scrollable title={title} currentIndex={currentIndex}>
             {sections.map((item, index) => (
                 <Tabs.Item
@@ -47,7 +46,7 @@ const StickyList = ({ title, sections, ListHeaderComponent, onItemPress, ...prop
     );
 
     return (
-        <SafeAreaView style={styles.container}>
+        <>
             <AnimatedSectionList
                 {...props}
                 ref={(ref) => (sectionListRef.current = ref)}
@@ -73,24 +72,20 @@ const StickyList = ({ title, sections, ListHeaderComponent, onItemPress, ...prop
                 }}
                 ListHeaderComponent={
                     <>
-                        {typeof ListHeaderComponent === 'function' ? ListHeaderComponent(tabBarOpacity) : null}
-                        <View onLayout={(ev) => setLayoutHeight(ev.nativeEvent.layout.y)}>{renderTab()}</View>
+                        {listHeaderComponent}
+                        <View onLayout={(ev) => setLayoutHeight(ev.nativeEvent.layout.y)}>{renderTab}</View>
                     </>
                 }
             />
-            <View style={styles.containerAnaimeted}>
-                <Animated.View
-                    style={[
-                        styles.animatedTab,
-                        {
-                            opacity: tabBarOpacity,
-                        },
-                    ]}
-                >
-                    {renderTab()}
-                </Animated.View>
-            </View>
-        </SafeAreaView>
+            <Animated.View style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                opacity: tabBarOpacity}}>
+                    {renderTab}
+            </Animated.View>
+        </>
     );
 };
 

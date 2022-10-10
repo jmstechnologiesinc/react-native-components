@@ -7,10 +7,10 @@ import mockData from './mockData.json';
 import StickyList from './StickySectionList';
 
 export default {
-    title: 'packages/StickyList',
+    title: 'packages/StickySectionList',
 };
 
-export const SectionList = () => (
+export const Basic = () => (
     <StickyList
         sections={mockData}
         renderSectionHeader={({ section: { title } }) => <List.Subheader>{title}</List.Subheader>}

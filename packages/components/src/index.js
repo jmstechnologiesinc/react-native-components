@@ -7,7 +7,7 @@ export { List, Tabs, ProductList };
 export { default as VendorList } from './VendorList/VendorList';
 export { default as SegmentedButtonGroup } from './SegmentedButtonGroup/SegmentedButtonGroup';
 export { default as VendorView } from './VendorView/VendorView';
-export { default as CartLists } from './CartList/CartList';
+export { default as CartList } from './CartList/CartList';
 export { default as DynamicForm } from './DynamicForm/DynamicForm';
 export { default as ProductView } from './ProductView/ProductView';
 export { default as StickySectionList } from './StickySectionList/StickySectionList';

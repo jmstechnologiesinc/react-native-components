@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { StyleSheet, Image, Platform } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
 
-import {List, Text} from '@jmsstudiosinc/react-native-paper';
+import {List, MD3LightTheme, Text} from '@jmsstudiosinc/react-native-paper';
 
 const ListImage = ({
     src,
@@ -18,7 +18,7 @@ const ListImage = ({
       ellipsizeMode={titleEllipsizeMode}
       numberOfLines={1}
       variant={"bodyLarge"}
-      style={{ color, paddingLeft: 12, marginTop: Platform.OS === 'web' ? -6 : -12 }}>
+      style={{ color, paddingLeft: MD3LightTheme.margin / 2,}}>
       {title}
     </Text>
   );
@@ -31,9 +31,8 @@ const ListImage = ({
         left={renderImage}
         right={right}
         style={{paddingLeft: 0}}
-        titleStyle={{paddingLeft: 12}}
-        descriptionStyle={{paddingLeft: 12}}
-        itemStyle={{marginVertical: 0, justifyContent: description ? "flex-start" : "center"}} />
+        descriptionStyle={{paddingLeft: MD3LightTheme.margin / 2}}
+        itemStyle={{marginVertical: 0, justifyContent: true ? "flex-start" : "center"}} />
   )
 }
 

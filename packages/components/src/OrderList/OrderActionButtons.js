@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Card,  Button } from '@jmsstudiosinc/react-native-paper';
+import { Card, Button } from '@jmsstudiosinc/react-native-paper';
 
 export const ORDER_ACTIONS = {
     print: 'print',

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { StyleSheet, View } from 'react-native';
 
-import { Chip, Avatar, Text } from '@jmsstudiosinc/react-native-paper';
+import { Chip, Avatar, Text, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 
 import * as JMSList from './List';
 
@@ -28,7 +28,7 @@ const ListItemExtended = ({
     <JMSList.Item
         overline={overline}
         title={header}
-        left={avatar ? () => <Avatar.Image size={40} style={{ margin: 8, marginRight: 0 }} source={{uri: avatar}} /> : null}
+        left={avatar ? () => <Avatar.Image style={{marginHorizontal: MD3LightTheme.margin / 2}} source={{uri: avatar}} /> : null}
         right={right ? () => right : null}
         description={({ ellipsizeMode, color: descriptionColor, fontSize }) => (
             <View style={[styles.column, styles.column]}>

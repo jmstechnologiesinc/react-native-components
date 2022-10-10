@@ -1,18 +1,20 @@
 import React from 'react';
 
-import {FlatList } from 'react-native';
+import {FlatList, View} from 'react-native';
 
 import CartListItem from './CartListItem';
 
 const CartList = ({
     sections,
+    onAdd,
     onDelete,
     onEdit,
     onCheckout,
-    onTips,
+    renderTips,
     listHeaderComponent,
     listFooterComponent,
     listBottomComponent,
+    listFooterComponentStyle,
     ...props
 }) => {
     return (
@@ -21,10 +23,16 @@ const CartList = ({
                 {...props}
                 data={sections}
                 renderItem={({ item }) => (
-                    <CartListItem item={item} onDelete={onDelete} onEdit={onEdit} onTips={onTips} onCheckout={onCheckout} />
+                    <CartListItem 
+                        item={item} 
+                        renderTips={renderTips} 
+                        onAdd={onAdd}
+                        onDelete={onDelete} 
+                        onEdit={onEdit} 
+                        onCheckout={onCheckout} />
                 )}
                 ListHeaderComponent={listHeaderComponent}
-                ListFooterComponent={listFooterComponent}
+                ListFooterComponent={<View style={listFooterComponentStyle}>{listFooterComponent}</View>}
             />
             {listBottomComponent}
         </>

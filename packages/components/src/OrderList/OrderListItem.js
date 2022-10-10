@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Card, List } from '@jmsstudiosinc/react-native-paper';
+import { Card, List, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 
 import { USER_ROLES } from '@jmsstudiosinc/user';
 
@@ -27,7 +27,7 @@ const OrderListItem = ({
   return <Card 
     mode="outlined"
     onPress={() => onPress(order, role)}
-    style={{marginVertical: 4}}>
+    style={{marginVertical: MD3LightTheme.margin / 2, marginHorizontal: MD3LightTheme.margin}}>
        <List.Section>
           <JMSList.ItemExtended
               overline={overlines.join(" · ") || null}
