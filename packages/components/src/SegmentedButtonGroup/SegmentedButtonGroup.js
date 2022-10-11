@@ -9,26 +9,25 @@ const SegmentedButtonGroup = ({ data, title, onPress, value, ...rest }) => (
         <SegmentedButtons
             value={value}
             onValueChange={onPress}
-            buttons={data?.map(item => ({
+            buttons={data?.map((item) => ({
                 ...item,
-                style: styles.button
-            }))} 
-            style={styles.group} 
-            {...rest} />
+                style: styles.button,
+            }))}
+            style={styles.group}
+            {...rest}
+        />
     </List.Section>
-)
+);
 
 const styles = StyleSheet.create({
     button: {
-      flex: 1,
+        flex: 1,
     },
     rounded: {
         borderRadius: 20,
-        borderWidth: 1
+        borderWidth: 1,
     },
     group: { justifyContent: 'center', marginHorizontal: MD3LightTheme.margin },
 });
-  
-
 
 export default SegmentedButtonGroup;
