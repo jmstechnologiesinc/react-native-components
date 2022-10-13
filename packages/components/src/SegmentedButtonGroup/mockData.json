@@ -1,4 +1,5 @@
 {
     "twoButtons": [{"label": "Delivery", "value": "delivery"}, {"label": "Pickup", "value": "pickup"}],
-    "singleButtons": [{"label": "Delivery", "value": "delivery"}]
+    "singleButtons": [{"label": "Delivery", "value": "delivery"}],
+    "subLabelButtons": [{"label": "Delivery", "value": "delivery", "subLabel": "20-35 min" }, {"label": "Pickup", "value": "pickup","subLabel": "10-20 min" }]
 }
