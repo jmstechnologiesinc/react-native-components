@@ -1,6 +1,5 @@
 import React from 'react';
 import { View } from 'react-native';
-
 import * as JMSList from './List';
 
 export default {
