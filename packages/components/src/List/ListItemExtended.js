@@ -4,6 +4,8 @@ import { StyleSheet, View } from 'react-native';
 
 import { Chip, Avatar, Text, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 
+import { moderateVerticalScale } from 'react-native-size-matters';
+
 import * as JMSList from './List';
 
 import { Linking, Platform } from 'react-native';
@@ -16,30 +18,23 @@ export const makeLinkingCall = (phone) => {
     }
 };
 
-const ListItemExtended = ({ 
-    overline, 
-    header, 
-    subHeader, 
-    avatar, 
-    chips, 
-    right,
-    ...rest
- }) => (
+const ListItemExtended = ({ overline, header, subHeader, avatar, chips, right, ...rest }) => (
     <JMSList.Item
         overline={overline}
         title={header}
-        left={avatar ? () => <Avatar.Image style={{marginHorizontal: MD3LightTheme.margin / 2}} source={{uri: avatar}} /> : null}
+        left={
+            avatar
+                ? () => <Avatar.Image style={{ marginHorizontal: MD3LightTheme.margin / 2 }} source={{ uri: avatar }} />
+                : null
+        }
         right={right ? () => right : null}
         description={({ ellipsizeMode, color: descriptionColor, fontSize }) => (
             <View style={[styles.column, styles.column]}>
-                <Text 
-                    numberOfLines={2} 
-                    ellipsizeMode={ellipsizeMode} 
-                    style={{ color: descriptionColor, fontSize }}>
-                    {subHeader} 
+                <Text numberOfLines={2} ellipsizeMode={ellipsizeMode} style={{ color: descriptionColor, fontSize }}>
+                    {subHeader}
                 </Text>
                 {chips?.length > 0 && (
-                    <View style={[ styles.container, styles.row, styles.additionalPadding]}>
+                    <View style={[styles.container, styles.row, styles.additionalPadding]}>
                         {chips.map((chip) => (
                             <Chip mode="outlined" style={[styles.chip]}>
                                 {chip}
@@ -56,7 +51,7 @@ const ListItemExtended = ({
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-      },
+    },
     row: {
         flexDirection: 'row',
     },
@@ -64,11 +59,11 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
     },
     chip: {
-        marginRight: 8
+        marginRight: moderateVerticalScale(8),
     },
     additionalPadding: {
-        paddingTop: 8,
-      },
+        paddingTop: moderateVerticalScale(8),
+    },
 });
 
 export default ListItemExtended;
