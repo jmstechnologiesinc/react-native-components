@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { Chip, Avatar, Text, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 
-import { moderateVerticalScale } from 'react-native-size-matters';
+import { moderateScale } from 'react-native-size-matters';
 
 import * as JMSList from './List';
 
@@ -59,10 +59,10 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
     },
     chip: {
-        marginRight: moderateVerticalScale(8),
+        marginRight: moderateScale(8),
     },
     additionalPadding: {
-        paddingTop: moderateVerticalScale(8),
+        paddingTop: moderateScale(8),
     },
 });
 
