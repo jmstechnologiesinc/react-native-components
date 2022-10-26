@@ -8,7 +8,7 @@ const feesListItem = (fees) => {
 
     for (const index in fees) {
         if (Array.isArray(fees[index])) {
-            results.push(feesListItem(fees[index]));
+           results.push(...feesListItem(fees[index]));
         } else {
             const styles = index === "total" ? {
                 titleVariant: "headlineSmall", 
@@ -21,13 +21,11 @@ const feesListItem = (fees) => {
                 metaTitleStyle: {color: MD3LightTheme.colors.onSurfaceVariant}
             };
             
-            results.push(
-                <JMSList.Item
-                    title={fees[index].label}
-                    description={fees[index].description}
-                    metaTitle={fees[index].formattedValue}
-                    {...styles} />
-            )
+            results[fees[index].position] = <JMSList.Item
+                title={fees[index].label}
+                description={fees[index].description}
+                metaTitle={fees[index].formattedValue}
+                {...styles} />
         }
     }
 

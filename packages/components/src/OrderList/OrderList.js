@@ -2,20 +2,26 @@ import React from 'react';
 
 import { FlatList } from 'react-native';
 
+import { Divider } from '@jmsstudiosinc/react-native-paper';
+
 import OrderListItem from './OrderListItem';
+import { itemSeparator } from '../utils';
 
 const OrderList = ({ data, role, onButtonPress, onPress }) => (
   <FlatList
     data={data}
-    renderItem={({ item }) => (
-      <OrderListItem
-        role={role}
-        order={item}
-        onPress={onPress}
-        onButtonPress={onButtonPress} />
-    )}
     showsVerticalScrollIndicator={false}
     showsHorizontalScrollIndicator={false}
+    renderItem={({ item, index }) => (
+      <>
+        <OrderListItem
+          role={role}
+          order={item}
+          onButtonPress={onButtonPress}
+          onPress={() => onPress(item, role)} />
+        {itemSeparator(index, data.length) && <Divider />}
+      </>
+    )}
   />
 );
 

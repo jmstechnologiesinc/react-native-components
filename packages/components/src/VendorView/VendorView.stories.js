@@ -58,6 +58,8 @@ export const StickyProductList = () => (
     <StickyHeader
         listHeaderComponent={<VendorView
             title={mockData[1].title}
+            industryTitle="Industries"
+            pudTitle="Filfillment Methods"
             formattedPud={`${mockData[0].formattedPub} - ${mockData[0].formattedHitDistance}`}
             formattedAddress={mockData[1].location.formattedAddress}
             photos={photos}

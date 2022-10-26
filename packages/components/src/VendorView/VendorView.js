@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { View } from 'react-native';
-
 import { List, Banner } from '@jmsstudiosinc/react-native-paper';
 
 import * as JMSList from '../List/List';
@@ -9,6 +7,7 @@ import PhotoGallery from '../PhotoGallery/PhotoGallery';
 import SegmentedButtonGroup from '../SegmentedButtonGroup/SegmentedButtonGroup';
 
 import IndustryList from '../IndustryList/IndustryList';
+import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 
 const VendorView = ({
     title,
@@ -16,6 +15,8 @@ const VendorView = ({
     description,
     formattedAddress,
     formattedPud,
+    pudTitle,
+    industryTitle,
     pudOptions,
     selectedPud,
     onPressPudFilter,
@@ -46,28 +47,35 @@ const VendorView = ({
                 titleVariant={'headlineSmall'}
                 right={() => <List.Icon icon="chevron-right" style={{height: 'auto'}} />}
                 onPress={() => openVendorOverview()}
-                style={{paddingBottom: 0, marginTop: 13}}
+                style={{paddingBottom: 0}}
             />
 
-            {description && <List.Item title="description" />}
+            {description && <List.Item title={description} />}
             
             {industryList && (
-                <IndustryList
-                    title="Industries"
-                    data={industryList}
-                    onPress={onPressIndustryFilter}
-                    value={industryFilter}
-                />
+                <ScreenWrapper.Section 
+                    title={industryTitle}
+                    withPaddingHorizontal>
+                    <IndustryList
+                        data={industryList}
+                        onPress={onPressIndustryFilter}
+                        value={industryFilter}
+                    />
+                </ScreenWrapper.Section>
             )}
 
             {pudOptions && (
-                <SegmentedButtonGroup
-                    title="Available Shopping Mode"
-                    data={pudOptions}
-                    value={selectedPud}
-                    onPress={onPressPudFilter}
-                />
+                <ScreenWrapper.Section 
+                    title={pudTitle}
+                    withPaddingHorizontal>
+                    <SegmentedButtonGroup
+                        data={pudOptions}
+                        value={selectedPud}
+                        onPress={onPressPudFilter}
+                    />
+                </ScreenWrapper.Section>
             )}
+             <ScreenWrapper.Section />
         </>
     );
 };

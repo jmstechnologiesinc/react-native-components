@@ -66,19 +66,15 @@ export default class TabsScrollable extends React.PureComponent {
     render() {
         return (
             <View style={{width: WindowWidth, flexDirection: 'row', backgroundColor: MD3LightTheme.colors?.surface}}>
-                <List.Section title={this.props.title} style={this.props.listSectionStyle}>
-                    <ScrollView ref={this.scrollViewRef} showsHorizontalScrollIndicator={false} horizontal>
-                        <View onLayout={this.onTabsContainerLayout}>
-                            <Tabs.List style={this.props.tabsListStyle}>
-                                {React.Children.toArray(this.props.children).map((child, index) =>
-                                    <View onLayout={this.onTabsItemLayout(index)}>
-                                        {child}
-                                    </View>  
-                                )}
-                            </Tabs.List>
-                        </View>
-                    </ScrollView>
-                </List.Section>
+                <ScrollView ref={this.scrollViewRef} showsHorizontalScrollIndicator={false} horizontal>
+                    <View onLayout={this.onTabsContainerLayout}>
+                        <Tabs.List style={this.props.tabsListStyle}>
+                            {React.Children.toArray(this.props.children).map((child, index) =>
+                                <View onLayout={this.onTabsItemLayout(index)}>{child}</View>  
+                            )}
+                        </Tabs.List>
+                    </View>
+                </ScrollView>
             </View>
         );
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image, Platform } from 'react-native';
 
 import {List, MD3LightTheme, Text} from '@jmsstudiosinc/react-native-paper';
 
@@ -18,7 +18,7 @@ const ListImage = ({
       ellipsizeMode={titleEllipsizeMode}
       numberOfLines={1}
       variant={"bodyLarge"}
-      style={{ color, paddingLeft: MD3LightTheme.margin / 2,}}>
+      style={{ color, paddingLeft: MD3LightTheme.margin / 2, marginTop: -5}}>
       {title}
     </Text>
   );

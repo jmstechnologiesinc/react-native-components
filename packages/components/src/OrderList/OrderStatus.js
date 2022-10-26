@@ -2,21 +2,24 @@ import React from 'react';
 
 import { View } from 'react-native';
 
+import { Chip, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
+
 import ListItemExtended from '../List/ListItemExtended';
-import usePubNubETA from '../PubNubETA/usePubNubETA';
-import ChipCountdown from '../PubNubETA/ChipCountdown';
-import useCountdown from '../PubNubETA/useCountdown';
+import ChipCountdown from './ChipCountdown';
+import usePubNubETA from './usePubNubETA';
+import useCountdown from './useCountdown';
 
 const OrderStatus = ({
     status,
     deliveryMethod,
-    driverAvatar,
     durationValue,
     deliveryTime,
     restaurantAcceptedTime,
     role,
     orderID,
     fulfilmentStatus,
+    showHeaderAvatar,
+    headerTitleVariant,
 }) => {
     const orderMilliseconds = useCountdown({
         orderID,
@@ -35,41 +38,57 @@ const OrderStatus = ({
         role,
     });
 
+    const headerStatus = fulfilmentStatus.header;
     const vendorStatus = fulfilmentStatus.vendor;
     const driverStatus = fulfilmentStatus.driver;
 
-    const renderStatus = [];
+    const renderStatuses = [];
 
-    const renderChipCountdown = (milliseconds) => (
-        <View style={{justifyContent: "center", marginLeft: 8, marginRight: 6}}>
-            <ChipCountdown milliseconds={milliseconds} />
+    const rightWrapper = (child) => (
+        <View style={{justifyContent: "center", marginLeft: MD3LightTheme.margin, marginRight: MD3LightTheme.margin / 2}}>
+            {child}
         </View>
-    );
+    )
 
-    if(vendorStatus.header) {
-        renderStatus.push(
+    if(headerStatus?.title) {
+        renderStatuses.push(
             <ListItemExtended
-                overline={vendorStatus.overline}
-                header={vendorStatus.header}
-                subHeader={vendorStatus.subHeader}
+                overline={headerStatus.overlines.join(" · ") || null}
+                header={headerStatus.title}
+                subHeader={headerStatus.description}
+                avatar={showHeaderAvatar && headerStatus.avatar}
+                right={headerStatus.right && rightWrapper(<Chip>{headerStatus.right}</Chip>)}
+                titleVariant={headerTitleVariant}/>
+        );
+    }
+    
+    if(vendorStatus.title) {
+        renderStatuses.push(
+            <ListItemExtended
+                overline={vendorStatus.overlines.join(" · ") || null}
+                header={vendorStatus.title}
+                subHeader={vendorStatus.description}
                 chips={vendorStatus.chips}
-                right={renderChipCountdown(orderMilliseconds)} />
+                avatar={vendorStatus.avatar}
+                right={rightWrapper(<ChipCountdown milliseconds={orderMilliseconds} />)}
+                style={{paddingTop: 0}} />
         );
     }
 
-    if(driverStatus.overline || driverStatus.header || driverStatus.subHeader || driverStatus.chips.length > 0) {
-        renderStatus.push(
+    if(driverStatus.overline || driverStatus.title || driverStatus.description || driverStatus.chips.length > 0) {
+        renderStatuses.push(
             <ListItemExtended
                 overline={driverStatus.overline}
-                header={driverStatus.header}
-                subHeader={driverStatus.subHeader}
+                header={driverStatus.title}
+                subHeader={driverStatus.description}
                 chips={driverStatus.chips}
-                avatar={driverAvatar}
-                right={renderChipCountdown(pubnubMilliseconds)} />
+                avatar={driverStatus.avatar}
+                right={rightWrapper(<ChipCountdown milliseconds={pubnubMilliseconds} />)}
+                style={{paddingTop: 0}} />
         );
     }
 
-    return renderStatus
+    return renderStatuses
 };
 
 export default OrderStatus;

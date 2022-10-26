@@ -41,6 +41,7 @@ function subtractMinutes(numOfMinutes, date = new Date()) {
 const Template = (args) => {
     return <OrderView 
         role={args.role || USER_ROLES.vendor} 
+        onButtonPress={() => {}}
         order={{
             ...vendorMockData[3], 
             restaurantAcceptedTime: subtractMinutes(args.acceptedTime || 5),

@@ -30,18 +30,16 @@ export default function ScreenWrapper({
   return (
     <>
       {withScrollView ? (
-        <ScrollView
-          {...rest}
-          contentContainerStyle={contentContainerStyle}
-          alwaysBounceVertical={false}
-          showsVerticalScrollIndicator={false}
-          style={[containerStyle, style]}
-        >
-          {children}
-        </ScrollView>
-      ) : (
-        <View style={[containerStyle, style]}>{children}</View>
-      )}
+        <View style={containerStyle}>
+          <ScrollView
+            {...rest}
+            contentContainerStyle={contentContainerStyle}
+            alwaysBounceVertical={false}
+            showsVerticalScrollIndicator={false}>
+            {children}
+          </ScrollView>
+        </View>
+      ) : <View style={[containerStyle, style]}>{children}</View>}
     </>
   );
 }

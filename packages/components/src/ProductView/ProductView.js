@@ -37,14 +37,12 @@ const ProductView = ({
 
             <PhotoGallery photos={photos} />
             
-            <List.Section>
-                <JMSList.Item
-                    title={title}
-                    description={description}
-                    metaTitle={price}
-                    titleVariant={'headlineSmall'}
-                    metaTitleVariant={'headlineSmall'} />
-            </List.Section>
+            <JMSList.Item
+                title={title}
+                description={description}
+                metaTitle={price}
+                titleVariant={'headlineSmall'}
+                metaTitleVariant={'headlineSmall'} />
         </>
     );
 };

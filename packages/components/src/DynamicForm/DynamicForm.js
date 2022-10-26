@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 
-import { FlatList,View } from 'react-native';
+import { FlatList } from 'react-native';
 
 import {List} from '@jmsstudiosinc/react-native-paper';
 
@@ -36,7 +36,6 @@ const DynamicForm = ({
     listHeaderComponent,
     listFooterComponent,
     onFormChange,
-    listFooterComponentStyle
 }) => {
     const onCheckboxRadioChange = (item, section, value) => {
         const alteredForm = { ...initialValues };
@@ -153,7 +152,6 @@ const DynamicForm = ({
                 keyExtractor={keyExtractor}
                 renderItem={renderItem}
                 ListHeaderComponent={listHeaderComponent} 
-                ListFooterComponent={<View style={listFooterComponentStyle} />}
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false} />
             {listFooterComponentWrapper()}

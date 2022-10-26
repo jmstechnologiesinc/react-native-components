@@ -8,4 +8,4 @@ export default {
     title: 'packages/VendorList',
 };
 
-export const VendorLists = () => <VendorList sections={[{ data: fullFilteredVendors }]} onPress={() => {}} />;
+export const Basics = () => <VendorList sections={[{ data: fullFilteredVendors }]} onPress={() => {}} />;

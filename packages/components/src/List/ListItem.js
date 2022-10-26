@@ -12,8 +12,8 @@ const ListItem = ({
     onPress,
     titleVariant="bodyLarge",
     metaTitleVariant,
-    titleStyle,
     style,
+    titleStyle,
     metaTitleStyle,
     ...props
 }) => {
@@ -44,7 +44,8 @@ const ListItem = ({
       {...props}
       src={{uri: photo}}
       title={title}
-      onPress={onPress} />
+      onPress={onPress}
+      style={style} />
   ) : (
     <List.Item
       right={metaTitle || metaQuantity ? 

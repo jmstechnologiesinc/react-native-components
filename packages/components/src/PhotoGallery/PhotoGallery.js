@@ -2,18 +2,19 @@ import React, { useState } from 'react';
 
 import { View, FlatList, StyleSheet, Image} from 'react-native';
 
-import { Card, List ,TouchableRipple} from '@jmsstudiosinc/react-native-paper';
+import { MD3LightTheme, TouchableRipple} from '@jmsstudiosinc/react-native-paper';
+import ScreenWrapperSection from '../ScreenWrapper/ScreenWrapperSection';
 
 const renderSeparator = () => (
     <View
         style={{
-            width: 8,
+            width: MD3LightTheme.margin / 2,
             height: '100%',
         }}
     />
 );
 
-const PhotoGallery = ({ photos, hideMenu=false }) => { 
+const PhotoGallery = ({ photos }) => { 
     const [uri, setUri] = useState(photos?.[0]);
 
     if(!Array.isArray(photos)) {
@@ -24,7 +25,6 @@ const PhotoGallery = ({ photos, hideMenu=false }) => {
         <TouchableRipple onPress={() => setUri(item)}>
             <Image
                 style={styles.photo}
-                placeholderColor={'red'}
                 source={{uri: item}}
             />
         </TouchableRipple>
@@ -32,19 +32,21 @@ const PhotoGallery = ({ photos, hideMenu=false }) => {
 
     return (
         <>
-            {uri && <Card.Cover source={{ uri: uri }} />}
+            {uri &&  <Image
+                style={styles.mainImage}
+                source={{uri: uri}}
+            />}
             
             {photos.length > 1 && (
-                <List.Section>
+                <ScreenWrapperSection>
                     <FlatList
-                        style={styles.itemContainer}
                         data={photos}
                         horizontal
                         ItemSeparatorComponent={renderSeparator}
                         renderItem={renderItem}
                         showsHorizontalScrollIndicator={false}
-                        keyExtractor={(item) => `${item}`}/>
-                </List.Section>
+                        keyExtractor={(item) => `photo-gallery-${item}`}/>
+                </ScreenWrapperSection>
             )}
         </>
     );
@@ -53,8 +55,8 @@ const PhotoGallery = ({ photos, hideMenu=false }) => {
 
 
 const styles = StyleSheet.create({
-    itemContainer: {
-        marginHorizontal: 16,
+    mainImage: {
+        height: 195,
     },
     photo: {
         height: 65,

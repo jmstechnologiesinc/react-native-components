@@ -5,6 +5,8 @@ import {FlatList, View} from 'react-native';
 import CartListItem from './CartListItem';
 
 const CartList = ({
+    checkoutTitle,
+    addTitle,
     sections,
     onAdd,
     onDelete,
@@ -24,6 +26,8 @@ const CartList = ({
                 data={sections}
                 renderItem={({ item }) => (
                     <CartListItem 
+                        checkoutTitle={checkoutTitle}
+                        addTitle={addTitle}
                         item={item} 
                         renderTips={renderTips} 
                         onAdd={onAdd}

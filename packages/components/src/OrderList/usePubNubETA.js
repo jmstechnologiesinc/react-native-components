@@ -39,7 +39,7 @@ const usePubNubETA = ({
                 },
             });
 
-            pubnub.subscribe({ channels: [pubnubEtaChannelName('12345')] });
+            pubnub.subscribe({ channels: [pubnubEtaChannelName(orderID)] });
         } else {
             setEtaValue(undefined);
         }
