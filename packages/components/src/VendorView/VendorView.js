@@ -24,17 +24,13 @@ const VendorView = ({
     industryList,
     industryFilter,
     onPressIndustryFilter,
-    openVendorOverview,
+    onNavigateVendorOverview,
 }) => {
     return (
         <>
             {bannerMessages.length > 0 && (
-                <Banner
-                    visible={true}
-                    actions={[]}
-                    icon="alert-circle"
-                    style={{marginBottom: 8}}>
-                    {bannerMessages.join(", ")}
+                <Banner visible={true} actions={[]} icon="alert-circle" style={{ marginBottom: 8 }}>
+                    {bannerMessages.join(', ')}
                 </Banner>
             )}
 
@@ -46,7 +42,7 @@ const VendorView = ({
                 description={formattedAddress}
                 titleVariant={'headlineSmall'}
                 right={() => <List.Icon icon="chevron-right" style={{height: 'auto'}} />}
-                onPress={() => openVendorOverview()}
+                onPress={onNavigateVendorOverview}
                 style={{paddingBottom: 0}}
             />
 

@@ -18,11 +18,9 @@ const SegmentedButtonGroup = ({ data, title, onPress, value, ...rest }) => (
 
 const styles = StyleSheet.create({
     button: {
-      flex: 1,
+        flex: 1,
     },
     group: { justifyContent: 'center' },
 });
-  
-
 
 export default SegmentedButtonGroup;
