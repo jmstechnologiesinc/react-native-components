@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StyleSheet, Image, Platform } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
 
 import { List, MD3LightTheme, Text } from '@jmsstudiosinc/react-native-paper';
 import { moderateScale } from 'react-native-size-matters';
@@ -36,7 +36,7 @@ const ListImage = ({ src, title, description, right, ...props }) => {
 const styles = StyleSheet.create({
     image: {
         width: moderateScale(100),
-        height: MD3LightTheme.spacing.xxXlarge,
+        height: MD3LightTheme.spacing.xxxLarge,
     },
 });
 
