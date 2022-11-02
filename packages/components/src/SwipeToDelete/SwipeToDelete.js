@@ -16,7 +16,7 @@ const SwipeToDelete = ({ children, onDelete }) => {
                 <MaterialCommunityIcons
                     name="trash-can-outline"
                     color={MD3LightTheme.colors.background}
-                    size={MD3LightTheme.spacing.medium}
+                    size={MD3LightTheme.spacing.x6}
                 />
             </Animated.View>
         </Button>

@@ -13,7 +13,7 @@ const ListImage = ({ src, title, description, right, ...props }) => {
             ellipsizeMode={titleEllipsizeMode}
             numberOfLines={1}
             variant={'bodyLarge'}
-            style={{ color, paddingLeft: MD3LightTheme.spacing.xxxSmall, marginTop: moderateScale(-5) }}
+            style={{ color, paddingLeft: MD3LightTheme.spacing.x2, marginTop: moderateScale(-5) }}
         >
             {title}
         </Text>
@@ -27,7 +27,7 @@ const ListImage = ({ src, title, description, right, ...props }) => {
             left={renderImage}
             right={right}
             style={{ paddingLeft: 0 }}
-            descriptionStyle={{ paddingLeft: MD3LightTheme.spacing.xxxSmall }}
+            descriptionStyle={{ paddingLeft: MD3LightTheme.spacing.x2 }}
             itemStyle={{ marginVertical: 0, justifyContent: true ? 'flex-start' : 'center' }}
         />
     );
@@ -36,7 +36,7 @@ const ListImage = ({ src, title, description, right, ...props }) => {
 const styles = StyleSheet.create({
     image: {
         width: moderateScale(100),
-        height: MD3LightTheme.spacing.xxxLarge,
+        height: MD3LightTheme.spacing.x14,
     },
 });
 

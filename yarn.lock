@@ -2040,10 +2040,10 @@
     "@jmsstudiosinc/commons" "^9.0.4"
     "@jmsstudiosinc/vendor" "^8.0.4"
 
-"@jmsstudiosinc/material-tokens@^0.0.14":
-  "integrity" "sha512-95PIEVd7KRI1Yb4IowbqlWYzO35FNCYURnytbPbT7ajC/hBJhlOhPvXlm3Sdgjbob8KGccDpZQNnp/9D+rxlFg=="
-  "resolved" "https://npm.pkg.github.com/download/@jmsstudiosinc/material-tokens/0.0.14/dcd94715b9ab53aeeac82b8dbfe1166cfa230481"
-  "version" "0.0.14"
+"@jmsstudiosinc/material-tokens@^0.0.16":
+  "integrity" "sha512-00ut9s9sbkUZNqBPV87Skzb9Y5k3ltPd1l0gi5rrnsMQoGooJIQeom0ieVK8cwDZgBMpE2HVtdC5Sj1N5ymBWA=="
+  "resolved" "https://npm.pkg.github.com/download/@jmsstudiosinc/material-tokens/0.0.16/bb5d25f9dca1717f7f74ec3ef9161eaa22dd418e"
+  "version" "0.0.16"
 
 "@jmsstudiosinc/order@10.0.4":
   "integrity" "sha512-4ZDIU1gEYZWrTkVv1dzSSeoiixS83Mpktc6asmjeEvu9SGtFXbciUVLeOfapjGxzttcaK3gNPEQr+NpjUgri3g=="
@@ -2062,13 +2062,13 @@
     "@jmsstudiosinc/commons" "^9.0.4"
     "@jmsstudiosinc/vendor" "^8.0.4"
 
-"@jmsstudiosinc/react-native-paper@^5.0.0-rc.13":
-  "integrity" "sha512-gPVK/ZjniavGYLOts9x0pQEn5ZzFC2UhpdhEYhAc0kl5bYYG09FjmkadntVoNphkMjeNGE/7uXb+tlAGR68UqA=="
-  "resolved" "https://npm.pkg.github.com/download/@jmsstudiosinc/react-native-paper/5.0.0-rc.13/1e7210289123440cd09e45762ba8d5a9114da354"
-  "version" "5.0.0-rc.13"
+"@jmsstudiosinc/react-native-paper@^5.0.0-rc.16":
+  "integrity" "sha512-++HTmK9/9S0BlpPdMnvBkNyqaMDumGYtStF5mJDOkITkSCR8E1orCFTEXhEYJjf0BnJklZQK+47BWRpG7Fj8gw=="
+  "resolved" "https://npm.pkg.github.com/download/@jmsstudiosinc/react-native-paper/5.0.0-rc.16/9088566e8791bd844fde926853dfeabcf9db5d13"
+  "version" "5.0.0-rc.16"
   dependencies:
     "@callstack/react-theme-provider" "^3.0.7"
-    "@jmsstudiosinc/material-tokens" "^0.0.14"
+    "@jmsstudiosinc/material-tokens" "^0.0.16"
     "color" "^3.1.2"
     "react-native-iphone-x-helper" "^1.3.1"
     "react-native-size-matters" "^0.4.0"

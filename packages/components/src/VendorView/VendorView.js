@@ -33,7 +33,7 @@ const VendorView = ({
                     visible={true}
                     actions={[]}
                     icon="alert-circle"
-                    style={{ marginBottom: MD3LightTheme.spacing.xxxSmall }}
+                    style={{ marginBottom: MD3LightTheme.spacing.x2 }}
                 >
                     {bannerMessages.join(', ')}
                 </Banner>

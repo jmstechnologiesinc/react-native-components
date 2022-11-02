@@ -3,10 +3,10 @@ import { View } from 'react-native';
 import { MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 
 const containerPaddings = {
-    top: MD3LightTheme.spacing.xSmall / 2,
-    bottom: MD3LightTheme.spacing.xSmall,
-    left: MD3LightTheme.spacing.xSmall,
-    right: MD3LightTheme.spacing.xSmall,
+    top: MD3LightTheme.spacing.x2,
+    bottom: MD3LightTheme.spacing.x4,
+    left: MD3LightTheme.spacing.x4,
+    right: MD3LightTheme.spacing.x4,
 };
 
 export const ScreenWrapperContainer = ({

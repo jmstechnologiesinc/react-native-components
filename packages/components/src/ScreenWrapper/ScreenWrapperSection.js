@@ -7,7 +7,7 @@ import ScreenWrapperContainer, { containerPaddings } from './ScreenWrapperContai
 
 const sectionPaddings = {
     ...containerPaddings,
-    bottom: MD3LightTheme.spacing.xSmall / 2,
+    bottom: MD3LightTheme.spacing.x2,
 };
 
 export const ScreenWrapperSection = ({ withPaddingHorizontal = false, title, titleStyle, style, children }) => (

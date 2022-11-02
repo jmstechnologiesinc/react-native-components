@@ -9,6 +9,8 @@ import { ItemExtended } from '../List/List';
 import CartListProductItem from './CartListProductItem';
 import ScreenWrapper from '../ScreenWrapper';
 
+console.log(MD3LightTheme.spacing.x4);
+
 const CartListItem = ({ checkoutTitle, addTitle, item, onAdd, onDelete, onEdit, onCheckout, renderTips }) => {
     const {
         id,
@@ -25,7 +27,7 @@ const CartListItem = ({ checkoutTitle, addTitle, item, onAdd, onDelete, onEdit, 
         return null;
     } else if (type === CART_ITEM_TYPE.checkout) {
         return (
-            <ScreenWrapper.Section withPaddingHorizontal style={{ paddingTop: MD3LightTheme.spacing.xSmall * 2 }}>
+            <ScreenWrapper.Section withPaddingHorizontal style={{ paddingTop: MD3LightTheme.spacing.x4 * 2 }}>
                 <Button mode="contained" onPress={() => onCheckout(item.vendorIds)}>
                     {checkoutTitle}
                 </Button>
@@ -33,9 +35,7 @@ const CartListItem = ({ checkoutTitle, addTitle, item, onAdd, onDelete, onEdit, 
         );
     } else if (type === 'industryWarning') {
         return (
-            <View
-                style={{ marginTop: MD3LightTheme.spacing.xSmall * 6, marginBottom: MD3LightTheme.spacing.xSmall * 3 }}
-            >
+            <View style={{ marginTop: MD3LightTheme.spacing.x4 * 6, marginBottom: MD3LightTheme.spacing.x4 * 3 }}>
                 <Text variant={'headlineMedium'}>{title}</Text>
                 <Text variant={'bodyMedium'}>{description}</Text>
             </View>

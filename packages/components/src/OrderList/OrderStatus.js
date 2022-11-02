@@ -48,8 +48,8 @@ const OrderStatus = ({
         <View
             style={{
                 justifyContent: 'center',
-                marginLeft: MD3LightTheme.spacing.xSmall,
-                marginRight: MD3LightTheme.spacing.xSmall / 2,
+                marginLeft: MD3LightTheme.spacing.x4,
+                marginRight: MD3LightTheme.spacing.x2,
             }}
         >
             {child}

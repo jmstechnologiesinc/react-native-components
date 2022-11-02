@@ -9,8 +9,8 @@ const ListMetaBadged = ({ title, quantity, style, titleStyle, titleVariant = 'bo
         style={[
             {
                 justifyContent: 'center',
-                paddingLeft: MD3LightTheme.spacing.xSmall,
-                paddingRight: MD3LightTheme.spacing.xxxSmall,
+                paddingLeft: MD3LightTheme.spacing.x4,
+                paddingRight: MD3LightTheme.spacing.x2,
             },
             style,
         ]}

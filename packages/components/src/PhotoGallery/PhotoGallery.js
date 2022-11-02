@@ -8,7 +8,7 @@ import { ScreenWrapper } from '../index';
 const renderSeparator = () => (
     <View
         style={{
-            width: MD3LightTheme.spacing.xSmall / 2,
+            width: MD3LightTheme.spacing.x4 / 2,
             height: '100%',
         }}
     />

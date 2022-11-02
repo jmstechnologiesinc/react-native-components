@@ -15,8 +15,8 @@ const ListItemExtended = ({ overline, header, subHeader, avatar, chips, right, s
                 ? () => (
                       <Avatar.Image
                           style={{
-                              marginHorizontal: MD3LightTheme.spacing.xxxSmall,
-                              marginTop: MD3LightTheme.spacing.xxxxSmall,
+                              marginHorizontal: MD3LightTheme.spacing.x2,
+                              marginTop: MD3LightTheme.spacing.x1,
                           }}
                           source={{ uri: avatar }}
                       />
@@ -58,10 +58,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     chip: {
-        marginRight: MD3LightTheme.spacing.xxxSmall,
+        marginRight: MD3LightTheme.spacing.x2,
     },
     additionalPadding: {
-        paddingTop: MD3LightTheme.spacing.xxxxSmall,
+        paddingTop: MD3LightTheme.spacing.x1,
     },
 });
 

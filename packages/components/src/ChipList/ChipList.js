@@ -11,7 +11,7 @@ const ChipList = ({ options, mode = 'outlined', currentIndex, onPress, listSecti
                 selected={currentIndex === index}
                 showSelectedOverlay
                 onPress={() => onPress(index)}
-                style={index !== 0 && { marginLeft: MD3LightTheme.spacing.xSmall / 2 }}
+                style={index !== 0 && { marginLeft: MD3LightTheme.spacing.x4 / 2 }}
             >
                 {item}
             </Chip>

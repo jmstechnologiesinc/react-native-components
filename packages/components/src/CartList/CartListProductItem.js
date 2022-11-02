@@ -39,7 +39,7 @@ const CartListProductItem = ({ data, onDelete, onEdit, isRemoveable = true }) =>
             expanded={true}
             right={() => <JMSList.MetaBadged title={data.price} quantity={data.quantity} />}
             onPress={onEdit}
-            style={{ ...(data.price && data.quantity && { paddingVertical: MD3LightTheme.spacing.xxxxSmall }) }}
+            style={{ ...(data.price && data.quantity && { paddingVertical: MD3LightTheme.spacing.x1 }) }}
             rightStyle={{ marginVertical: 0, marginRight: 0 }}
         >
             {renderRecursiveAttributeGroup(data.attributeGroup).map((item) => (

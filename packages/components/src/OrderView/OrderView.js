@@ -153,7 +153,7 @@ const OrderView = ({ order, role, actionGroupButtonVariant, onButtonPress }) => 
                 <ActionGroup.Group
                     style={{
                         position: 'relative',
-                        margin: MD3LightTheme.spacing.xSmall,
+                        margin: MD3LightTheme.spacing.x4,
                         right: 0,
                         bottom: 0,
                     }}
