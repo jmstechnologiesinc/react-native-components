@@ -4,6 +4,7 @@ import { View, FlatList, StyleSheet, Image } from 'react-native';
 
 import { MD3LightTheme, TouchableRipple } from '@jmsstudiosinc/react-native-paper';
 import { ScreenWrapper } from '../index';
+import { moderateScale } from 'react-native-size-matters';
 
 const renderSeparator = () => (
     <View
@@ -49,11 +50,11 @@ const PhotoGallery = ({ photos }) => {
 
 const styles = StyleSheet.create({
     mainImage: {
-        height: 195,
+        height: moderateScale(195),
     },
     photo: {
-        height: 65,
-        width: 65,
+        height: moderateScale(65),
+        width: moderateScale(65),
     },
 });
 
