@@ -2,10 +2,10 @@ import React from 'react';
 
 import { View, ScrollView } from 'react-native';
 
-import {  Divider, List, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
+import { Divider, List, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 
 import { USER_ROLES } from '@jmsstudiosinc/user';
-import {  PUB } from '@jmsstudiosinc/vendor';
+import { PUB } from '@jmsstudiosinc/vendor';
 import { ORDER_STATUS_CANCELLED, ORDER_STATUS, formatedOrderStatusTime } from '@jmsstudiosinc/order';
 
 import Accounting from '../Checkout/Accounting';
@@ -16,15 +16,10 @@ import PhotoGallery from '../PhotoGallery/PhotoGallery';
 import * as ActionGroup from '../ActionGroup/ActionGroup';
 import { itemSeparator } from '..//utils';
 import { plurulize } from '@jmsstudiosinc/commons';
-import ScreenWrapperSection from '../../lib/ScreenWrapper/ScreenWrapperSection';
+import { ScreenWrapper } from '../index';
 
-const OrderView = ({ 
-    order, 
-    role, 
-    actionGroupButtonVariant, 
-    onButtonPress 
-}) => {
-    if(!order?.id || !USER_ROLES[role]) {
+const OrderView = ({ order, role, actionGroupButtonVariant, onButtonPress }) => {
+    if (!order?.id || !USER_ROLES[role]) {
         return null;
     }
 
@@ -36,32 +31,32 @@ const OrderView = ({
             description: 'Note',
         });
     }
-  
-    if ((order.status === ORDER_STATUS.completed || ORDER_STATUS_CANCELLED(order.status) === true)) {
+
+    if (order.status === ORDER_STATUS.completed || ORDER_STATUS_CANCELLED(order.status) === true) {
         fulfilmentDetails.push({
             title: formatedOrderStatusTime(order),
             description: 'Date',
-            icon: "calendar-range"
+            icon: 'calendar-range',
         });
 
-        if(role === USER_ROLES.vendor || role === USER_ROLES.customer) {
+        if (role === USER_ROLES.vendor || role === USER_ROLES.customer) {
             if (order.deliveryOption === PUB.delivery && order.driver) {
                 fulfilmentDetails.push({
                     title: order.driver.deliveryMethod,
                     description: 'Fulfillment Method',
-                    icon: "moped"
+                    icon: 'moped',
                 });
-    
+
                 fulfilmentDetails.push({
                     title: order.driver?.formattedName,
                     description: 'Driver Name',
-                    icon: "account-tie-hat"
+                    icon: 'account-tie-hat',
                 });
             } else if (order.deliveryOption === PUB.pickup) {
                 fulfilmentDetails.push({
                     title: order.deliveryMethod,
                     description: 'Fulfillment Method',
-                    icon: "moped"
+                    icon: 'moped',
                 });
             }
         }
@@ -71,31 +66,31 @@ const OrderView = ({
         fulfilmentDetails.push({
             title: `${order.author.firstName} ${order.author.lastName}`,
             description: 'Full Name',
-            icon: "account"
+            icon: 'account',
         });
 
-        if(order.deliveryOption === PUB.delivery) {
+        if (order.deliveryOption === PUB.delivery) {
             fulfilmentDetails.push({
                 title: order.shippingAddress.formattedAddress,
                 description: 'Shipping Address',
-                icon: "map-marker"
+                icon: 'map-marker',
             });
         }
 
-        if(order.author.phone) {
+        if (order.author.phone) {
             fulfilmentDetails.push({
                 title: order.author.phone,
                 description: 'Phone Number',
-                icon: "phone-classic"
+                icon: 'phone-classic',
             });
-        } 
+        }
     }
 
     if (role === USER_ROLES.customer && order.deliveryOption === PUB.pickup) {
         fulfilmentDetails.push({
             title: order.restaurant.address.formattedAddress,
             description: 'Pickup Address',
-            icon: "map-marker"
+            icon: 'map-marker',
         });
     }
 
@@ -104,27 +99,27 @@ const OrderView = ({
     return (
         <>
             <ScrollView>
-                <View style={{flex: 1}}>
-                    {(role === USER_ROLES.customer || role === USER_ROLES.driver) ? (
+                <View style={{ flex: 1 }}>
+                    {role === USER_ROLES.customer || role === USER_ROLES.driver ? (
                         <PhotoGallery photos={[formattedOrder.photo]} />
                     ) : null}
-                        <OrderStatus
-                            role={role}
-                            status={formattedOrder.status}
-                            deliveryMethod={formattedOrder.deliveryMethod}
-                            durationValue={formattedOrder.durationValue}
-                            deliveryTime={formattedOrder.deliveryTime}
-                            restaurantAcceptedTime={formattedOrder.restaurantAcceptedTime}
-                            orderID={formattedOrder.orderID}
-                            fulfilmentStatus={formattedOrder.fulfilmentStatus}
-                            headerTitleVariant={'headlineSmall'} /> 
-                    
+                    <OrderStatus
+                        role={role}
+                        status={formattedOrder.status}
+                        deliveryMethod={formattedOrder.deliveryMethod}
+                        durationValue={formattedOrder.durationValue}
+                        deliveryTime={formattedOrder.deliveryTime}
+                        restaurantAcceptedTime={formattedOrder.restaurantAcceptedTime}
+                        orderID={formattedOrder.orderID}
+                        fulfilmentStatus={formattedOrder.fulfilmentStatus}
+                        headerTitleVariant={'headlineSmall'}
+                    />
+
                     {(role === USER_ROLES.vendor || role === USER_ROLES.customer) && (
-                        <List.Section 
-                            title={`${order.products.length} ${plurulize("Item", order.products.length)}`}>
+                        <List.Section title={`${order.products.length} ${plurulize('Item', order.products.length)}`}>
                             {order.products.map((item, index) => (
                                 <>
-                                    <CartListProductItem data={item} isRemoveable={false}/>
+                                    <CartListProductItem data={item} isRemoveable={false} />
                                     {itemSeparator(index, order.products.length) && <Divider />}
                                 </>
                             ))}
@@ -132,35 +127,42 @@ const OrderView = ({
                     )}
 
                     {fulfilmentDetails.length > 0 && (
-                        <List.Section title={order.deliveryOption === PUB.delivery ? 'Delivery Details' : 'Pickup Details'}>
+                        <List.Section
+                            title={order.deliveryOption === PUB.delivery ? 'Delivery Details' : 'Pickup Details'}
+                        >
                             {fulfilmentDetails.map((item, index) => (
                                 <>
-                                    <List.Item 
-                                        title={item.title} 
+                                    <List.Item
+                                        title={item.title}
                                         description={item.description}
-                                        left={() => <List.Icon icon={item.icon} />} />
+                                        left={() => <List.Icon icon={item.icon} />}
+                                    />
                                     {itemSeparator(index, fulfilmentDetails.length) && <Divider />}
                                 </>
                             ))}
                         </List.Section>
                     )}
 
-                    <ScreenWrapperSection>
+                    <ScreenWrapper.Section>
                         <Accounting fees={formattedOrder.fees} />
-                    </ScreenWrapperSection>
+                    </ScreenWrapper.Section>
                 </View>
             </ScrollView>
-              
-            {(onButtonPress && formattedOrder.fulfilmentStatus.buttons.length > 0) ? (
-                <ActionGroup.Group style={{
-                    position: 'relative',
-                    margin: MD3LightTheme.margin,
-                    right: 0,
-                    bottom: 0}}>
-                    <ActionGroup.Buttons 
+
+            {onButtonPress && formattedOrder.fulfilmentStatus.buttons.length > 0 ? (
+                <ActionGroup.Group
+                    style={{
+                        position: 'relative',
+                        margin: MD3LightTheme.spacing.x4,
+                        right: 0,
+                        bottom: 0,
+                    }}
+                >
+                    <ActionGroup.Buttons
                         variant={actionGroupButtonVariant}
                         buttons={formattedOrder.fulfilmentStatus.buttons}
-                        onPress={(button) => onButtonPress(button, formattedOrder.orderID)}  />
+                        onPress={(button) => onButtonPress(button, formattedOrder.orderID)}
+                    />
                 </ActionGroup.Group>
             ) : null}
         </>

@@ -6,31 +6,37 @@ import { Chip, Avatar, Text, MD3LightTheme } from '@jmsstudiosinc/react-native-p
 
 import * as JMSList from './List';
 
-const ListItemExtended = ({ 
-    overline, 
-    header, 
-    subHeader, 
-    avatar, 
-    chips, 
-    right,
-    style,
-    ...rest
- }) => (
+const ListItemExtended = ({ overline, header, subHeader, avatar, chips, right, style, ...rest }) => (
     <JMSList.Item
         overline={overline}
         title={header}
-        left={avatar ? () => <Avatar.Image style={{marginHorizontal: MD3LightTheme.margin / 2, marginTop: MD3LightTheme.margin / 4}} source={{uri: avatar}} /> : null}
+        left={
+            avatar
+                ? () => (
+                      <Avatar.Image
+                          style={{
+                              marginHorizontal: MD3LightTheme.spacing.x2,
+                              marginTop: MD3LightTheme.spacing.x1,
+                          }}
+                          source={{ uri: avatar }}
+                      />
+                  )
+                : null
+        }
         right={right ? () => right : null}
         description={({ ellipsizeMode, color: descriptionColor }) => (
             <>
-                {subHeader && <Text 
-                    selectable={false}
-                    numberOfLines={2} 
-                    ellipsizeMode={ellipsizeMode} 
-                    style={{ color: descriptionColor }}
-                    variant={'bodyMedium'}>
-                    {subHeader} 
-                </Text>}
+                {subHeader && (
+                    <Text
+                        selectable={false}
+                        numberOfLines={2}
+                        ellipsizeMode={ellipsizeMode}
+                        style={{ color: descriptionColor }}
+                        variant={'bodyMedium'}
+                    >
+                        {subHeader}
+                    </Text>
+                )}
                 {chips?.length > 0 && (
                     <View style={[styles.row, styles.additionalPadding]}>
                         {chips.map((chip) => (
@@ -52,10 +58,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     chip: {
-        marginRight: 8
+        marginRight: MD3LightTheme.spacing.x2,
     },
     additionalPadding: {
-    paddingTop: MD3LightTheme.margin / 4,
+        paddingTop: MD3LightTheme.spacing.x1,
     },
 });
 
