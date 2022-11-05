@@ -7,17 +7,16 @@ const TabsItem = ({
     isSelected, 
     onPress, 
 }) => <Button
-    compact
     textColor={isSelected ? MD3LightTheme.colors.primary : MD3LightTheme.colors.onSurfaceVariant}
-    style={{
+     style={{
         borderRadius: 1,
         ...(isSelected && {
             borderColor: MD3LightTheme.colors.primary,
             borderBottomWidth: 2,
         }),
-    }}
+    }} 
     onPress={onPress}>
-        {title}
+    {title}
 </Button>;
 
 export default TabsItem;

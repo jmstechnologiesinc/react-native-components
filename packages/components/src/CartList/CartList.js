@@ -4,6 +4,8 @@ import {FlatList, View} from 'react-native';
 
 import CartListItem from './CartListItem';
 
+const keyExtractor = productItem => productItem.key || productItem.id;
+
 const CartList = ({
     checkoutTitle,
     addTitle,
@@ -24,6 +26,7 @@ const CartList = ({
             <FlatList
                 {...props}
                 data={sections}
+                keyExtractor={keyExtractor}
                 renderItem={({ item }) => (
                     <CartListItem 
                         checkoutTitle={checkoutTitle}

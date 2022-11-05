@@ -56,7 +56,7 @@ Delivery.args = {
     role: USER_ROLES.vendor,
     status: ORDER_STATUS.placed,
     deliveryMethod: DELIVERY_METHODS.marketPlace,
-    deliveryOption: PUB.delivery,
+    fulfillmentMethod: PUB.delivery,
     acceptedTime: 5
 };
 
@@ -70,7 +70,7 @@ Delivery.argTypes = {
         control: 'radio',
         options: [DELIVERY_METHODS.restaurantOwnStaff, DELIVERY_METHODS.marketPlace],
     },
-    deliveryOption: {
+    fulfillmentMethod: {
         control: 'radio',
         options: [PUB.delivery],
         disabled: true
@@ -81,7 +81,7 @@ Pickup.args = {
     role: USER_ROLES.vendor,
     status: ORDER_STATUS.placed,
     deliveryMethod: PICKUP_METHODS.customerPickup,
-    deliveryOption: PUB.pickup
+    fulfillmentMethod: PUB.pickup
 };
 
 Pickup.argTypes = {
@@ -96,7 +96,7 @@ Pickup.argTypes = {
             PICKUP_METHODS.customerPickup
         ],
     },
-    deliveryOption: {
+    fulfillmentMethod: {
         control: 'radio',
         options: [PUB.pickup],
         disabled: true

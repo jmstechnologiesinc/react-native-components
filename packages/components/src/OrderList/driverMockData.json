@@ -156,7 +156,7 @@
         },
         "state": "MA"
       },
-      "deliveryOption": "delivery",
+      "fulfillmentMethod": "delivery",
       "status": "In Transit",
       "inTransitTime": {
         "seconds": 1641093611,
@@ -309,7 +309,7 @@
         },
         "state": "MA"
       },
-      "deliveryOption": "delivery",
+      "fulfillmentMethod": "delivery",
       "inTransitTime": {
         "seconds": 1641092987,
         "nanoseconds": 235000000
@@ -462,7 +462,7 @@
         },
         "state": "MA"
       },
-      "deliveryOption": "delivery",
+      "fulfillmentMethod": "delivery",
       "inTransitTime": {
         "seconds": 1641084132,
         "nanoseconds": 589000000
@@ -470,7 +470,7 @@
       "status": "Completed"
     },
     {
-      "id": "3oPXwUM6j6TSc9cNMqib",
+      "id": "3oPXwUM6j6dTSc9cNMqibe",
       "driverAcceptedTime": {
         "seconds": 1641083642,
         "nanoseconds": 642000000
@@ -615,7 +615,7 @@
         },
         "state": "MA"
       },
-      "deliveryOption": "delivery",
+      "fulfillmentMethod": "delivery",
       "inTransitTime": {
         "seconds": 1641083659,
         "nanoseconds": 111000000

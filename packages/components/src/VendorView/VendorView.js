@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { List, Banner } from '@jmsstudiosinc/react-native-paper';
+import { List, Banner, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 
 import * as JMSList from '../List/List';
 import PhotoGallery from '../PhotoGallery/PhotoGallery';
@@ -8,6 +8,7 @@ import SegmentedButtonGroup from '../SegmentedButtonGroup/SegmentedButtonGroup';
 
 import IndustryList from '../IndustryList/IndustryList';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
+import { View } from 'react-native';
 
 const VendorView = ({
     title,
@@ -24,12 +25,16 @@ const VendorView = ({
     industryList,
     industryFilter,
     onPressIndustryFilter,
-    onNavigateVendorOverview,
+    onPressVendorOverview,
 }) => {
     return (
         <>
             {bannerMessages.length > 0 && (
-                <Banner visible={true} actions={[]} icon="alert-circle" style={{ marginBottom: 8 }}>
+                <Banner 
+                    visible={true} 
+                    actions={[]} 
+                    icon="alert-circle" 
+                    style={{ marginBottom: MD3LightTheme.margin }}>
                     {bannerMessages.join(', ')}
                 </Banner>
             )}
@@ -41,10 +46,14 @@ const VendorView = ({
                 title={title}
                 description={formattedAddress}
                 titleVariant={'headlineSmall'}
-                right={() => <List.Icon icon="chevron-right" style={{height: 'auto'}} />}
-                onPress={onNavigateVendorOverview}
-                style={{paddingBottom: 0}}
-            />
+                right={(props) => (
+                    <View style={{"justifyContent": "center"}}>
+                        <List.Icon icon="chevron-right" {...props} style={{alignItems: "flex-end"}} />
+                    </View>
+                )}
+                onPress={onPressVendorOverview}
+                titleNumberOfLines={4}
+                style={{paddingBottom: 0}} />
 
             {description && <List.Item title={description} />}
             
@@ -68,12 +77,14 @@ const VendorView = ({
                         data={pudOptions}
                         value={selectedPud}
                         onPress={onPressPudFilter}
-                    />
+                        density="high" />
                 </ScreenWrapper.Section>
             )}
-             <ScreenWrapper.Section />
+            <ScreenWrapper.Section />
         </>
     );
 };
+
+VendorView.whyDidYouRender = true;
 
 export default VendorView;

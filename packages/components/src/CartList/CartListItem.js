@@ -8,6 +8,8 @@ import { CART_ITEM_TYPE } from '@jmsstudiosinc/cart';
 import {  ItemExtended } from '../List/List';
 import CartListProductItem from './CartListProductItem';
 import ScreenWrapper from '../ScreenWrapper';
+import { itemSeparator } from '../utils';
+import Swipeable from '../SwipeToDelete/SwipeToDelete';
 
 const CartListItem = ({  
     checkoutTitle,
@@ -23,7 +25,7 @@ const CartListItem = ({
         id, 
         title, 
         photo, 
-        fulfillmentFormattedAddress, 
+        formattedFulfillmentAddress, 
         type, 
         description, 
         data: productItems, 
@@ -50,23 +52,24 @@ const CartListItem = ({
     } else if (type === CART_ITEM_TYPE.industryTitle) {
         return null
     }
-
+    
     return (
         <>
             <ItemExtended 
-                overline={fulfillmentFormattedAddress} 
+                overline={formattedFulfillmentAddress} 
                 title={title} 
                 avatar={photo}
                 description={description} />
         
             {productItems?.map((product, index) => (
-                <>
+                <Swipeable 
+                    key={`swipeable-${product.cartId}`}
+                    onSwipeableRightOpen={() => onDelete(id, product.cartId, cartIndustryId)} >
                     <CartListProductItem 
-                        data={product}  
-                        onDelete={() => onDelete(id, product.cartId, cartIndustryId)}   
+                        data={product}    
                         onEdit={() => onEdit(product, item)} />
-                    {((index === 0 && productItems.length > 1) || index < productItems.length - 1) && <Divider />}
-                </>
+                    {itemSeparator(index, productItems.length) && <Divider />}
+                </Swipeable>
             ))}
             
             <ScreenWrapper.Section withPaddingHorizontal style={{flexDirection: "row"}}>
@@ -77,5 +80,4 @@ const CartListItem = ({
         </>
     );
 };
-
 export default CartListItem;

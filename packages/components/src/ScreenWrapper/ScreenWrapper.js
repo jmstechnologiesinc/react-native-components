@@ -10,6 +10,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 export default function ScreenWrapper({
   children,
   withScrollView = true,
+  withBottomInset = true,
   style,
   contentContainerStyle,
   ...rest
@@ -21,7 +22,7 @@ export default function ScreenWrapper({
     styles.container,
     {
       backgroundColor: MD3LightTheme.colors.background,
-      paddingBottom: insets.bottom,
+      paddingBottom: withBottomInset ? insets.bottom : 0,
       paddingLeft: insets.left,
       paddingRight: insets.left,
     },

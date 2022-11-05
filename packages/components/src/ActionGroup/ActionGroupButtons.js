@@ -21,17 +21,21 @@ const ActionGroupButtons = ({
     return (
         <View style={[styles.row, {justifyContent: compact && "flex-end"},  style]}>
             {buttons.map((button, index) => (
-                <View style={{marginLeft: index > 0 && MD3LightTheme.margin, flex: !compact && 1}}>
+                <View 
+                    style={{marginLeft: index > 0 && MD3LightTheme.margin, flex: !compact && 1}} 
+                    key={button.key || index}>
                     {(variant === "fab") ? (
                         <FAB
-                          variant={(button.variant || (isPrimaryButton(buttons.length, index) ? 'primary' : 'secondary'))}
+                          variant={(button.variant ? button.variant : (isPrimaryButton(buttons.length, index) ? 'primary' : 'secondary'))}
                           label={button.title}
-                          onPress={() => onPress?.(button)} />
+                          onPress={() => onPress?.(button)} 
+                          icon={button.icon} />
                     ) : (
                         <Button
                             loading={isLoading}
                             disabled={isLoading}
-                            mode={(button.mode || (isPrimaryButton(buttons.length, index) ? 'contained' : 'outlined'))}
+                            mode={(button.mode ? button.mode : (isPrimaryButton(buttons.length, index) ? 'contained' : 'outlined'))}
+                            icon={button.icon}
                             onPress={() => onPress?.(button)}>
                             {button.title}
                         </Button>

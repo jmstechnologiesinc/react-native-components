@@ -25,6 +25,7 @@ const StickyList = ({ title, sections, listHeaderComponent, onItemPress, ...prop
         <Tabs.Scrollable title={title} currentIndex={currentIndex}>
             {sections.map((item, index) => (
                 <Tabs.Item
+                    key={`sticky-section-${item.id}`}
                     title={item.title}
                     isSelected={currentIndex === index}
                     onPress={() => {

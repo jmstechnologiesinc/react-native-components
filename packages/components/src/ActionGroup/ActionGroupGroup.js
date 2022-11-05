@@ -8,11 +8,7 @@ const ActionGroupGroup = ({children, style}) => (
     <View style={[styles.container, style]}>
         {React.Children.toArray(children).map((child) => {
             if(child.type === ButtonGroup && React.Children.count(children) > 1) {
-              return (
-                <View style={[styles.row, {justifyContent: "flex-end"}]}>
-                    {React.cloneElement(child, {compact: true})}
-                </View>
-              )
+              return React.cloneElement(child, {compact: true})
             } 
 
             return child

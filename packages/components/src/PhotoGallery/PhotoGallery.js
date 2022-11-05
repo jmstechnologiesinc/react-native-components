@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { View, FlatList, StyleSheet, Image} from 'react-native';
 
 import { MD3LightTheme, TouchableRipple} from '@jmsstudiosinc/react-native-paper';
+import {getMainPhoto} from '@jmsstudiosinc/commons';
+
 import ScreenWrapperSection from '../ScreenWrapper/ScreenWrapperSection';
 
 const renderSeparator = () => (
@@ -15,7 +17,7 @@ const renderSeparator = () => (
 );
 
 const PhotoGallery = ({ photos }) => { 
-    const [uri, setUri] = useState(photos?.[0]);
+    const [uri, setUri] = useState(getMainPhoto(photos));
 
     if(!Array.isArray(photos)) {
         return null;
@@ -32,12 +34,12 @@ const PhotoGallery = ({ photos }) => {
 
     return (
         <>
-            {uri &&  <Image
+            {uri ? <Image
                 style={styles.mainImage}
                 source={{uri: uri}}
-            />}
+            /> : null}
             
-            {photos.length > 1 && (
+            {photos.length > 1 ? (
                 <ScreenWrapperSection>
                     <FlatList
                         data={photos}
@@ -45,14 +47,12 @@ const PhotoGallery = ({ photos }) => {
                         ItemSeparatorComponent={renderSeparator}
                         renderItem={renderItem}
                         showsHorizontalScrollIndicator={false}
-                        keyExtractor={(item) => `photo-gallery-${item}`}/>
+                        keyExtractor={(item, index) => `photo-gallery-${index}`}/>
                 </ScreenWrapperSection>
-            )}
+            ) : null}
         </>
     );
 };
-
-
 
 const styles = StyleSheet.create({
     mainImage: {

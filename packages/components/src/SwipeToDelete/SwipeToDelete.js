@@ -1,41 +1,37 @@
 import React from 'react';
 
-import { Animated, StyleSheet } from 'react-native';
+import {View} from 'react-native';
 
-import Swipeable from 'react-native-gesture-handler/Swipeable';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Button } from '@jmsstudiosinc/react-native-paper';
+import RNSwipeable from 'react-native-gesture-handler/Swipeable';
+import { MD3LightTheme, Text} from '@jmsstudiosinc/react-native-paper';
 
-import { MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
-
-const SwipeToDelete = ({ children, onDelete }) => {
-    const renderRightActions = () => (
-        <Button onPress={onDelete}>
-            <Animated.View style={[styles.deleteBox]}>
-                <MaterialCommunityIcons name="trash-can-outline" color={'white'} size={30} />
-            </Animated.View>
-        </Button>
-    );
-
-    return <Swipeable
-        renderRightActions={renderRightActions}
-        overshootRight={false}
-        friction={2}
-        leftThreshold={30}
-        rightThreshold={40}>
-        {children}
-    </Swipeable>
-};
-
-const styles = StyleSheet.create({
-    deleteBox: {
-        flex: 1,
+const rightSwipeActions = () => {
+  return (
+    <View
+      style={{
         backgroundColor: MD3LightTheme.colors.error,
         justifyContent: 'center',
-        width: 90,
-        flexDirection: 'row',
-        alignItems: 'center',
-    }
-});
+        alignItems: 'flex-end',
+      }}>
+      <Text
+        variant="labelLarge"
+        style={{
+          color: MD3LightTheme.colors.onError,
+          paddingHorizontal: 24,
+        }} >
+        Delete
+      </Text>
+    </View>
+  );
+};
 
-export default SwipeToDelete;
+const Swipeable = ({children, onSwipeableRightOpen}) => (
+  <RNSwipeable
+    renderRightActions={rightSwipeActions}
+    onSwipeableRightOpen={onSwipeableRightOpen}>
+    <View style={{backgroundColor: MD3LightTheme.colors.background, flex: 1}}>
+      {children}
+    </View>
+  </RNSwipeable>
+);
+export default Swipeable;

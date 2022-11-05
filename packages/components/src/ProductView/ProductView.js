@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {  List, Banner } from '@jmsstudiosinc/react-native-paper';
+import { Banner } from '@jmsstudiosinc/react-native-paper';
 
 import * as JMSList from '../List/List';
 import PhotoGallery from '../PhotoGallery/PhotoGallery';
@@ -42,7 +42,8 @@ const ProductView = ({
                 description={description}
                 metaTitle={price}
                 titleVariant={'headlineSmall'}
-                metaTitleVariant={'headlineSmall'} />
+                metaTitleVariant={'headlineSmall'}
+                titleNumberOfLines={4} />
         </>
     );
 };

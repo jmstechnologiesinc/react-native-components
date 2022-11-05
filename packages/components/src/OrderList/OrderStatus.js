@@ -53,6 +53,7 @@ const OrderStatus = ({
     if(headerStatus?.title) {
         renderStatuses.push(
             <ListItemExtended
+                key="headerStatus"
                 overline={headerStatus.overlines.join(" · ") || null}
                 header={headerStatus.title}
                 subHeader={headerStatus.description}
@@ -65,6 +66,7 @@ const OrderStatus = ({
     if(vendorStatus.title) {
         renderStatuses.push(
             <ListItemExtended
+                key="vendorStatus"
                 overline={vendorStatus.overlines.join(" · ") || null}
                 header={vendorStatus.title}
                 subHeader={vendorStatus.description}
@@ -78,6 +80,7 @@ const OrderStatus = ({
     if(driverStatus.overline || driverStatus.title || driverStatus.description || driverStatus.chips.length > 0) {
         renderStatuses.push(
             <ListItemExtended
+                key="driverStatus"
                 overline={driverStatus.overline}
                 header={driverStatus.title}
                 subHeader={driverStatus.description}

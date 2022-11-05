@@ -31,6 +31,7 @@ export const subTitleButtons = ({ onPress }) => (
         title="Available Shipping Mode"
         data={mockData.subLabelButtons}
         onPress={() => {}}
+        density="high"
         value={'delivery'}
     />
 );

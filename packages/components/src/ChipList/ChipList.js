@@ -15,6 +15,7 @@ const ChipList = ({
         listSectionStyle={listSectionStyle}>
         {options.map((item, index) => (
             <Chip
+                key={item.toString()}
                 mode={mode}
                 selected={currentIndex === index}  
                 showSelectedOverlay 

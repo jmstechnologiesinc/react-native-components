@@ -63,7 +63,7 @@ export const StickyProductList = () => (
             formattedPud={`${mockData[0].formattedPub} - ${mockData[0].formattedHitDistance}`}
             formattedAddress={mockData[1].location.formattedAddress}
             photos={photos}
-            pudOptions={ToggleButtonMockData.twoButtons}
+            pudOptions={ToggleButtonMockData.subLabelButtons}
             industryList={Industries}
             industryFilter={'Liquor'}
             isMultiProducts={true}

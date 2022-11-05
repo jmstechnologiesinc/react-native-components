@@ -7,8 +7,11 @@ import { Divider } from '@jmsstudiosinc/react-native-paper';
 import OrderListItem from './OrderListItem';
 import { itemSeparator } from '../utils';
 
+const keyExtractor = (order) => `order-list-${order.id}`;
+
 const OrderList = ({ data, role, onButtonPress, onPress }) => (
   <FlatList
+    keyExtractor={keyExtractor}
     data={data}
     showsVerticalScrollIndicator={false}
     showsHorizontalScrollIndicator={false}

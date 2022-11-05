@@ -22,6 +22,7 @@ const feesListItem = (fees) => {
             };
             
             results[fees[index].position] = <JMSList.Item
+                key={index}
                 title={fees[index].label}
                 description={fees[index].description}
                 metaTitle={fees[index].formattedValue}

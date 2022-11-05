@@ -7,28 +7,64 @@ export default {
     title: 'packages/List',
 };
 
-const photos =
+const photo =
     'https://ik.imagekit.io/sog7th7xvupr/o/vendors%2FAHwW%2Bi2vQAKFUcuRPJUq0Q%3A0.jpeg?alt=media&token=ce6576d6-5aec-4a3f-91e4-ef7032f6e5eb';
 
-export const MetadataTitle = () => <JMSList.MetaBadged title="$2.99" />;
-
-export const MetaBadged = () => (
-    <View style={{ flexDirection: 'row' }}>
-        <JMSList.MetaBadged title="$2.99" quantity={9} />
-    </View>
-);
-
 export const OneLineImage = () => (
-    <JMSList.Image
-        src={{ uri: photos }}
+    <JMSList.Item
+        photo={photo}
         title="NinjaFongo Churrasco (skirt steak)"
-        right={() => <JMSList.MetaBadged title={34.45} />}
+        metaTitle={34.45}
+        onPress={() => {}}
     />
 );
+
 export const TwoLinesImage = () => (
-    <JMSList.Image
-        src={{ uri: photos }}
+    <JMSList.Item
+        photo={photo}
         title="NinjaFongo Churrasco (skirt steak)"
         description="Chicken tempura, cream cheese, maduro, guacamole, and chicken teriyaki."
+        metaTitle={34.45}
+        onPress={() => {}}
     />
 );
+
+export const TwoLinesImageQuanity = () => (
+    <JMSList.Item
+        photo={photo}
+        title="NinjaFongo Churrasco (skirt steak)"
+        description="Chicken tempura, cream cheese, maduro, guacamole, and chicken teriyaki."
+        metaTitle={34.45}
+        metaQuantity={3}
+        onPress={() => {}}
+    />
+);
+
+export const OneLineItem = () => (
+    <JMSList.Item
+        title="NinjaFongo Churrasco (skirt steak)"
+        metaTitle={34.45}
+        onPress={() => {}}
+    />
+);
+
+
+export const TwoLinesItem = () => (
+    <JMSList.Item
+        title="NinjaFongo Churrasco (skirt steak)"
+        description="Chicken tempura, cream cheese, maduro, guacamole, and chicken teriyaki."
+        metaTitle={34.45}
+        onPress={() => {}}
+    />
+);
+
+export const TwoLinesItemQuantity = () => (
+    <JMSList.Item
+        title="NinjaFongo Churrasco (skirt steak)"
+        description="Chicken tempura, cream cheese, maduro, guacamole, and chicken teriyaki."
+        metaTitle={34.45}
+        metaQuantity={3}
+        onPress={() => {}}
+    />
+);
+

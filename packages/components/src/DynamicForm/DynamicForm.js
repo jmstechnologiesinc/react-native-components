@@ -115,7 +115,7 @@ const DynamicForm = ({
         return <List.Accordion 
             title={item.title} 
             description={initialValues[item.id]?.formattedSelection || item.formattedSelection}>
-            {item.data?.map(attr => {
+            {item.data?.map((attr, index) => {
                 const value = Boolean(getValue(attr));
                 const isMaxSelection = validateMaxSelection(value, item, item.maxSelection);
                 const isDisabled = attr.isDisabled || isOutofStock || isMaxSelection;
@@ -126,6 +126,7 @@ const DynamicForm = ({
                 }
 
                 return <DynamicFormSwitch
+                    key={`dymamic-form-switch-${attr.id}`}
                     form={form}
                     onChange={(value) => onCheckboxRadioChange(attr, item, value)} />
             })}
@@ -143,7 +144,7 @@ const DynamicForm = ({
         return listFooterComponent(isValid);
     };
 
-    const keyExtractor = useCallback((item) => item.uuid.toString(), []);
+    const keyExtractor = useCallback((item) => item.id, []);
 
     return (
         <>
