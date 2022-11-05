@@ -56,16 +56,10 @@ const VendorView = ({
                 style={{paddingBottom: 0}} />
 
             {description && <List.Item title={description} />}
-            
+
             {industryList && (
-                <ScreenWrapper.Section 
-                    title={industryTitle}
-                    withPaddingHorizontal>
-                    <IndustryList
-                        data={industryList}
-                        onPress={onPressIndustryFilter}
-                        value={industryFilter}
-                    />
+                <ScreenWrapper.Section title={industryTitle} withPaddingHorizontal>
+                    <IndustryList data={industryList} onPress={onPressIndustryFilter} value={industryFilter} />
                 </ScreenWrapper.Section>
             )}
 

@@ -53,7 +53,7 @@ const CartListProductItem = ({ data, onEdit}) => {
                     metaQuantity={item.selection}
                     onPress={onEdit}
                     titleStyle={{color: MD3LightTheme.colors.secondary}}
-                    style={{marginLeft: MD3LightTheme.margin / 2}} />
+                    style={{marginLeft: MD3LightTheme.spacing.x2}} />
             ))}
         </>
     );

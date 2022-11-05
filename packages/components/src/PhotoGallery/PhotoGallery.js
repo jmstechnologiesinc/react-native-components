@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 
-import { View, FlatList, StyleSheet, Image} from 'react-native';
+import { View, FlatList, StyleSheet, Image } from 'react-native';
 
 import { MD3LightTheme, TouchableRipple} from '@jmsstudiosinc/react-native-paper';
 import {getMainPhoto} from '@jmsstudiosinc/commons';
 
 import ScreenWrapperSection from '../ScreenWrapper/ScreenWrapperSection';
+import { moderateScale } from 'react-native-size-matters';
 
 const renderSeparator = () => (
     <View
         style={{
-            width: MD3LightTheme.margin / 2,
+            width: MD3LightTheme.spacing.x2,
             height: '100%',
         }}
     />
@@ -19,16 +20,13 @@ const renderSeparator = () => (
 const PhotoGallery = ({ photos }) => { 
     const [uri, setUri] = useState(getMainPhoto(photos));
 
-    if(!Array.isArray(photos)) {
+    if (!Array.isArray(photos)) {
         return null;
     }
 
     const renderItem = ({ item }) => (
         <TouchableRipple onPress={() => setUri(item)}>
-            <Image
-                style={styles.photo}
-                source={{uri: item}}
-            />
+            <Image style={styles.photo} source={{ uri: item }} />
         </TouchableRipple>
     );
 
@@ -56,12 +54,12 @@ const PhotoGallery = ({ photos }) => {
 
 const styles = StyleSheet.create({
     mainImage: {
-        height: 195,
+        height: moderateScale(195),
     },
     photo: {
-        height: 65,
-        width: 65,
-    }
+        height: moderateScale(65),
+        width: moderateScale(65),
+    },
 });
 
 export default PhotoGallery;

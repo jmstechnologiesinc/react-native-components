@@ -4,6 +4,7 @@ import {View} from 'react-native';
 
 import RNSwipeable from 'react-native-gesture-handler/Swipeable';
 import { MD3LightTheme, Text} from '@jmsstudiosinc/react-native-paper';
+import { moderateScale } from 'react-native-size-matters';
 
 const rightSwipeActions = () => {
   return (
@@ -17,7 +18,7 @@ const rightSwipeActions = () => {
         variant="labelLarge"
         style={{
           color: MD3LightTheme.colors.onError,
-          paddingHorizontal: 24,
+          paddingHorizontal: moderateScale(24),
         }} >
         Delete
       </Text>

@@ -45,12 +45,18 @@ const OrderStatus = ({
     const renderStatuses = [];
 
     const rightWrapper = (child) => (
-        <View style={{justifyContent: "center", marginLeft: MD3LightTheme.margin, marginRight: MD3LightTheme.margin / 2}}>
+        <View
+            style={{
+                justifyContent: 'center',
+                marginLeft: MD3LightTheme.spacing.x4,
+                marginRight: MD3LightTheme.spacing.x2,
+            }}
+        >
             {child}
         </View>
-    )
+    );
 
-    if(headerStatus?.title) {
+    if (headerStatus?.title) {
         renderStatuses.push(
             <ListItemExtended
                 key="headerStatus"
@@ -59,11 +65,12 @@ const OrderStatus = ({
                 subHeader={headerStatus.description}
                 avatar={showHeaderAvatar && headerStatus.avatar}
                 right={headerStatus.right && rightWrapper(<Chip>{headerStatus.right}</Chip>)}
-                titleVariant={headerTitleVariant}/>
+                titleVariant={headerTitleVariant}
+            />
         );
     }
-    
-    if(vendorStatus.title) {
+
+    if (vendorStatus.title) {
         renderStatuses.push(
             <ListItemExtended
                 key="vendorStatus"
@@ -73,11 +80,12 @@ const OrderStatus = ({
                 chips={vendorStatus.chips}
                 avatar={vendorStatus.avatar}
                 right={rightWrapper(<ChipCountdown milliseconds={orderMilliseconds} />)}
-                style={{paddingTop: 0}} />
+                style={{ paddingTop: 0 }}
+            />
         );
     }
 
-    if(driverStatus.overline || driverStatus.title || driverStatus.description || driverStatus.chips.length > 0) {
+    if (driverStatus.overline || driverStatus.title || driverStatus.description || driverStatus.chips.length > 0) {
         renderStatuses.push(
             <ListItemExtended
                 key="driverStatus"
@@ -87,11 +95,12 @@ const OrderStatus = ({
                 chips={driverStatus.chips}
                 avatar={driverStatus.avatar}
                 right={rightWrapper(<ChipCountdown milliseconds={pubnubMilliseconds} />)}
-                style={{paddingTop: 0}} />
+                style={{ paddingTop: 0 }}
+            />
         );
     }
 
-    return renderStatuses
+    return renderStatuses;
 };
 
 export default OrderStatus;

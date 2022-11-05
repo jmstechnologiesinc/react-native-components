@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ScrollView ,View} from 'react-native';
 
-import {  Divider, List, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
+import { Divider, List, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 
 import { USER_ROLES } from '@jmsstudiosinc/user';
 import {  PUB } from '@jmsstudiosinc/vendor';
@@ -43,7 +43,7 @@ const OrderView = ({
             key: "status-date",
             title: formatedOrderStatusTime(order),
             description: 'Date',
-            icon: "calendar-range"
+            icon: 'calendar-range',
         });
     }
 
@@ -103,7 +103,7 @@ const OrderView = ({
                 description: 'Phone',
                 icon: "phone"
             });
-        } 
+        }
     }
 
     if(order.fulfillmentMethod === PUB.delivery) {
@@ -118,7 +118,7 @@ const OrderView = ({
             key: "pickup-address",
             title: order.restaurant.location.formattedAddress,
             description: 'Pickup Address',
-            icon: "map-marker"
+            icon: 'map-marker',
         });
     }
 
@@ -161,7 +161,7 @@ const OrderView = ({
 
 
     const renderOrderActionButtons = ((onButtonPress && buttonsMapping.length > 0) ? (
-        <ActionGroup.Group style={{margin: MD3LightTheme.margin}}>
+        <ActionGroup.Group style={{margin: MD3LightTheme.spacing.x4}}>
             <ActionGroup.Buttons 
                 variant={actionGroupButtonVariant}
                 buttons={buttonsMapping}
@@ -172,24 +172,24 @@ const OrderView = ({
     return (
         <>
             <ScrollView>
-                <View style={{flex: 1}}>
-                    {(role === USER_ROLES.customer || role === USER_ROLES.driver) ? (
+                <View style={{ flex: 1 }}>
+                    {role === USER_ROLES.customer || role === USER_ROLES.driver ? (
                         <PhotoGallery photos={[formattedOrder.photo]} />
                     ) : null}
-                        <OrderStatus
-                            role={role}
-                            status={formattedOrder.status}
-                            deliveryMethod={formattedOrder.deliveryMethod}
-                            durationValue={formattedOrder.durationValue}
-                            deliveryTime={formattedOrder.deliveryTime}
-                            restaurantAcceptedTime={formattedOrder.restaurantAcceptedTime}
-                            orderID={formattedOrder.orderID}
-                            fulfilmentStatus={formattedOrder.fulfilmentStatus}
-                            headerTitleVariant={'headlineSmall'} /> 
-                    
+                    <OrderStatus
+                        role={role}
+                        status={formattedOrder.status}
+                        deliveryMethod={formattedOrder.deliveryMethod}
+                        durationValue={formattedOrder.durationValue}
+                        deliveryTime={formattedOrder.deliveryTime}
+                        restaurantAcceptedTime={formattedOrder.restaurantAcceptedTime}
+                        orderID={formattedOrder.orderID}
+                        fulfilmentStatus={formattedOrder.fulfilmentStatus}
+                        headerTitleVariant={'headlineSmall'}
+                    />
+
                     {(role === USER_ROLES.vendor || role === USER_ROLES.customer) && (
-                        <List.Section 
-                            title={`${order.products.length} ${plurulize("Item", order.products.length)}`}>
+                        <List.Section title={`${order.products.length} ${plurulize('Item', order.products.length)}`}>
                             {order.products.map((item, index) => (
                                 <View key={`product-item-${item.id}`}>
                                     <CartListProductItem data={item} />
