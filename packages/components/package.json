@@ -1,6 +1,6 @@
 {
   "name": "@jmsstudiosinc/react-native-components",
-  "version": "0.1.27",
+  "version": "0.1.28",
   "description": "> TODO: description",
   "author": "yerloveraaa <yerloveraaa@gmail.com>",
   "homepage": "https://github.com/jmsstudiosinc/react-native-components#readme",
@@ -27,9 +27,6 @@
   "devDependencies": {
     "prettier": "^2.5.1",
     "rimraf": "^3.0.2"
-  },
-  "dependencies": {
-    "@jmsstudiosinc/react-native-paper": "^5.0.0-rc.8"
   },
   "peerDependencies": {
     "@jmsstudiosinc/react-native-paper": "*",
