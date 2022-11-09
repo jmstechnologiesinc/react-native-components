@@ -13,18 +13,18 @@ const ListRadio = ({
     ...props 
 }) => (
     <List.Item
-        {...props}
         title={title}
         description={description}
-        onPress={() => onPress(!isChecked)}
+        onPress={() => onPress?.(!isChecked)}
         left={() => (
             <RadioButton.Android
                 status={isChecked ? 'checked' : 'unchecked'}
                 disabled={isDisabled}
-                onPress={() => onPress(!isChecked)}
+                onPress={() => onPress?.(!isChecked)}
             />
         )}
         right={() => <MetaBadged title={metadata} />}
+        {...props}
     />
 );
 

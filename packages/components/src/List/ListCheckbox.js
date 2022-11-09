@@ -15,11 +15,11 @@ const ListCheckbox = ({
   {...props}
   title={title}
   description={description}
-  onPress={() => onPress(!isChecked)}
+  onPress={() => onPress?.(!isChecked)}
   left={() => <Checkbox
     status={isChecked ? 'checked' : 'unchecked'}
     disabled={isDisabled}
-    onPress={() => onPress(!isChecked)} />}
+    onPress={() => onPress?.(!isChecked)} />}
   right={() => <MetaBadged title={metadata} />}/>
 
 

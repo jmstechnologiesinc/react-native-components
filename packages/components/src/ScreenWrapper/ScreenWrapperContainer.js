@@ -22,7 +22,6 @@ export const ScreenWrapperContainer = ({
     <View
         style={[
             {
-                flex: 1,
                 ...(withPaddingVertical && { paddingTop, paddingBottom }),
                 ...(withPaddingHorizontal && { paddingLeft, paddingRight }),
             },
