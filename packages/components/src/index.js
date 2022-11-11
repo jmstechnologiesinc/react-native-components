@@ -2,8 +2,9 @@ import * as List from './List/List';
 import * as ProductList from './ProductList/ProductList';
 import * as Tabs from './Tabs/Tabs';
 import * as ActionGroup from './ActionGroup/ActionGroup';
+import * as AuthForm from './AuthForm/AuthForm';
 
-export { List, Tabs, ProductList, ActionGroup };
+export { List, Tabs, ProductList, ActionGroup, AuthForm };
 
 export { default as VendorList } from './VendorList/VendorList';
 export { default as SegmentedButtonGroup } from './SegmentedButtonGroup/SegmentedButtonGroup';
@@ -16,8 +17,8 @@ export { default as PhotoGallery } from './PhotoGallery/PhotoGallery';
 export { default as Checkout } from './Checkout/Accounting';
 export { default as Fast2ImageKit } from './Fast2ImageKit/Fast2ImageKit';
 export { default as ChipList } from './ChipList/ChipList';
-export { default as OrderStatus } from "./OrderList/OrderStatus";
-export { formatOrder } from "./OrderList/utils";
+export { default as OrderStatus } from './OrderList/OrderStatus';
+export { formatOrder } from './OrderList/utils';
 export { default as OrderList } from './OrderList/OrderList';
 export { default as OrderListItem } from './OrderList/OrderListItem';
 export { default as OrderView } from './OrderView/OrderView';
