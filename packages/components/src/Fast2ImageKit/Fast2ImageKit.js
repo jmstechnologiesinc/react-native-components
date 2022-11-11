@@ -3,10 +3,7 @@ import { ImageBackground } from 'react-native';
 
 import FastImage from 'react-native-fast-image';
 
-//import { TNActivityIndicator } from '../../Core/truly-native';
-//import { iconSet } from '../../DynamicAppStyles';
-
-const Fast2ImageKit = ({ 
+ImageKit = ({ 
     src, 
     showActivityIndicator = false, 
     showImageBackground = false, 

@@ -1,8 +1,9 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 
-import { FlatList } from 'react-native';
+import { FlatList,Animated, } from 'react-native';
 
 import {List} from '@jmsstudiosinc/react-native-paper';
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 import { formattedSelection, validateSelection } from '@jmsstudiosinc/commons';
 import DynamicFormSwitch from './DynamicFormSwitch';
@@ -36,7 +37,12 @@ const DynamicForm = ({
     listHeaderComponent,
     listFooterComponent,
     onFormChange,
+    onContentOffsetYScroll,
+    contentOffsetY
 }) => {
+    const contentOffsetYRangeRef = useRef(false);
+    const scrollY = useRef(new Animated.Value(0)).current;
+
     const onCheckboxRadioChange = (item, section, value) => {
         const alteredForm = { ...initialValues };
 
@@ -148,13 +154,26 @@ const DynamicForm = ({
 
     return (
         <>
-            <FlatList
+            <AnimatedFlatList
                 data={sections}
                 keyExtractor={keyExtractor}
                 renderItem={renderItem}
                 ListHeaderComponent={listHeaderComponent} 
                 showsVerticalScrollIndicator={false}
-                showsHorizontalScrollIndicator={false} />
+                showsHorizontalScrollIndicator={false} 
+                scrollEventThrottle={16}
+                onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
+                    useNativeDriver: true,
+                    listener: onContentOffsetYScroll ? (event) => {
+                        if(event.nativeEvent.contentOffset.y > contentOffsetY && contentOffsetYRangeRef.current === false) {
+                            onContentOffsetYScroll(event.nativeEvent.contentOffset.y)
+                            contentOffsetYRangeRef.current = true;
+                        } else if(event.nativeEvent.contentOffset.y < contentOffsetY && contentOffsetYRangeRef.current === true) {
+                            onContentOffsetYScroll(event.nativeEvent.contentOffset.y)
+                            contentOffsetYRangeRef.current = false;
+                        }
+                    } : null
+                })}/>
             {listFooterComponentWrapper()}
         </>
     );

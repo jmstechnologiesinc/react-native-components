@@ -6,7 +6,15 @@ import { Button, FAB, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 
 const isPrimaryButton = (buttonLength, index) => index === buttonLength - 1;
 
-const ActionGroupButtons = ({ buttons, isLoading, style, onPress, compact, variant = 'button' }) => {
+const ActionGroupButtons = ({ 
+    buttons, 
+    isLoading, 
+    isDisabled,
+    style, 
+    onPress, 
+    compact, 
+    variant = 'button' 
+}) => {
     if (!buttons.length) {
         return null;
     }
@@ -19,6 +27,8 @@ const ActionGroupButtons = ({ buttons, isLoading, style, onPress, compact, varia
                     key={button.key || index}>
                     {(variant === "fab") ? (
                         <FAB
+                         loading={isLoading}
+                         disabled={button.isDisabled}
                           variant={(button.variant ? button.variant : (isPrimaryButton(buttons.length, index) ? 'primary' : 'secondary'))}
                           label={button.title}
                           onPress={() => onPress?.(button)} 
@@ -26,7 +36,7 @@ const ActionGroupButtons = ({ buttons, isLoading, style, onPress, compact, varia
                     ) : (
                         <Button
                             loading={isLoading}
-                            disabled={isLoading}
+                            disabled={isLoading || button.isDisabled}
                             mode={(button.mode ? button.mode : (isPrimaryButton(buttons.length, index) ? 'contained' : 'outlined'))}
                             icon={button.icon}
                             onPress={() => onPress?.(button)}>

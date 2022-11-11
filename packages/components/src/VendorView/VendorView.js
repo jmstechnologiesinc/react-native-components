@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { View } from 'react-native';
+
 import { List, Banner, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 
 import * as JMSList from '../List/List';
@@ -8,10 +10,10 @@ import SegmentedButtonGroup from '../SegmentedButtonGroup/SegmentedButtonGroup';
 
 import IndustryList from '../IndustryList/IndustryList';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
-import { View } from 'react-native';
 
 const VendorView = ({
     title,
+    onLayoutTitleOffsetY,
     photos,
     description,
     formattedAddress,
@@ -41,19 +43,21 @@ const VendorView = ({
 
             <PhotoGallery photos={photos} />
 
-            <JMSList.Item
-                overline={formattedPud}
-                title={title}
-                description={formattedAddress}
-                titleVariant={'headlineSmall'}
-                right={(props) => (
-                    <View style={{"justifyContent": "center"}}>
-                        <List.Icon icon="chevron-right" {...props} style={{alignItems: "flex-end"}} />
-                    </View>
-                )}
-                onPress={onPressVendorOverview}
-                titleNumberOfLines={4}
-                style={{paddingBottom: 0}} />
+            <View onLayout={onLayoutTitleOffsetY ? (event) => onLayoutTitleOffsetY(event.nativeEvent.layout.y) : null}>
+                <JMSList.Item
+                    overline={formattedPud}
+                    title={title}
+                    description={formattedAddress}
+                    titleVariant={'headlineSmall'}
+                    right={(props) => (
+                        <View style={{"justifyContent": "center"}}>
+                            <List.Icon icon="chevron-right" {...props} style={{alignItems: "flex-end"}} />
+                        </View>
+                    )}
+                    onPress={onPressVendorOverview}
+                    titleNumberOfLines={4}
+                    style={{paddingBottom: 0}} />
+            </View>
 
             {description && <List.Item title={description} />}
 

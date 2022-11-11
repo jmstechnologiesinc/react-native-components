@@ -6,17 +6,26 @@ import * as Tabs from '../Tabs/Tabs';
 
 const AnimatedSectionList = Animated.createAnimatedComponent(NativeSectionList);
 
-const StickyList = ({ title, sections, listHeaderComponent, onItemPress, ...props }) => {
+const StickyList = ({ 
+    title, 
+    sections, 
+    listHeaderComponent, 
+    onItemPress, 
+    onContentOffsetYScroll,
+    contentOffsetY,
+    ...props 
+}) => {
     const scrollY = useRef(new Animated.Value(0)).current;
     const blockUpdateIndexRef = useRef(false);
     const sectionListRef = useRef();
+    const contentOffsetYRangeRef = useRef(false);
 
     const [currentIndex, setCurrentIdex] = useState(0);
     const [layoutHeight, setLayoutHeight] = useState(0);
-    const Max_Height = layoutHeight + 1;
+    const maxHeight = layoutHeight + 1;
 
     const tabBarOpacity = scrollY.interpolate({
-        inputRange: [layoutHeight, Max_Height],
+        inputRange: [layoutHeight, maxHeight],
         outputRange: [0, 100],
         extrapolate: 'clamp',
     });
@@ -56,6 +65,15 @@ const StickyList = ({ title, sections, listHeaderComponent, onItemPress, ...prop
                 sections={sections}
                 onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
                     useNativeDriver: true,
+                    listener: onContentOffsetYScroll ? (event) => {
+                        if(event.nativeEvent.contentOffset.y > contentOffsetY && contentOffsetYRangeRef.current === false) {
+                            onContentOffsetYScroll(event.nativeEvent.contentOffset.y)
+                            contentOffsetYRangeRef.current = true;
+                        } else if(event.nativeEvent.contentOffset.y < contentOffsetY && contentOffsetYRangeRef.current === true) {
+                            onContentOffsetYScroll(event.nativeEvent.contentOffset.y)
+                            contentOffsetYRangeRef.current = false;
+                        }
+                    } : null
                 })}
                 onMomentumScrollEnd={() => (blockUpdateIndexRef.current = false)}
                 showsVerticalScrollIndicator={true}

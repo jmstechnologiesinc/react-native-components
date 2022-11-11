@@ -1,17 +1,19 @@
 import React from 'react';
 
 import { Divider, List } from '@jmsstudiosinc/react-native-paper';
-import {getMainPhoto} from '@jmsstudiosinc/commons';
+import { getMainPhoto } from '@jmsstudiosinc/commons';
 
 import StickySectionList from '../StickySectionList/StickySectionList';
 import ProductListItem from './ProductListItem';
 
-const keyExtractor = productItem => productItem.id;
+const keyExtractor = (productItem) => productItem.id;
 
 const ProductListSticky = ({ 
     sections, 
     productItemQuantityMapping,
     onPress, 
+    onContentOffsetYScroll,
+    contentOffsetY,
     ...props }) => (
     <StickySectionList
         {...props}
@@ -19,6 +21,8 @@ const ProductListSticky = ({
         renderSectionHeader={({ section: { title } }) => <List.Subheader>{title}</List.Subheader>}
         ItemSeparatorComponent={Divider}
         keyExtractor={keyExtractor}
+        onContentOffsetYScroll={onContentOffsetYScroll}
+        contentOffsetY={contentOffsetY}
         renderItem={({ item }) => (
             <ProductListItem
                 id={item.id}
@@ -39,10 +43,11 @@ ProductListSticky.whyDidYouRender = true;
 
 function areEqual(prevProps, nextProps) {
     if(prevProps.productItemQuantityMapping !== nextProps.productItemQuantityMapping || 
-        prevProps.listHeaderComponent !== nextProps.listHeaderComponent) {
+        prevProps.listHeaderComponent !== nextProps.listHeaderComponent || 
+        prevProps.contentOffsetY !== nextProps.contentOffsetY) {
         return false;
     }
-
+    
     return true;
 }
 

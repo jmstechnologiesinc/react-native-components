@@ -32,6 +32,10 @@ export default class TabsScrollable extends React.PureComponent {
         const position = currentIndex;
         const pageOffset = 0;
 
+        if(!this._tabsMeasurements[position]?.width) {
+            return pageOffset
+        }
+
         const containerWidth = WindowWidth;
         const tabWidth = this._tabsMeasurements[position].width;
         const nextTabMeasurements = this._tabsMeasurements[position + 1];
