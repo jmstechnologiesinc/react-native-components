@@ -31,6 +31,10 @@ export const AuthFormEmailPassword = () => (
         inputActionHandler={() => {}}
     />
 );
+
+export const AuthFormEmail = () => (
+    <AuthForm.EmailPassword labelEmail="Email" email={state.email} isPassword={false} inputActionHandler={() => {}} />
+);
 export const AuthFormConfirmPassword = () => (
     <AuthForm.EmailPassword
         labelEmail="Email"
