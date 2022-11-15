@@ -13,6 +13,7 @@ const FormDriverInfo = ({
     dateofBirth,
     ssn,
     title,
+    inputActionHandler
 }) => {
     return (
         <>

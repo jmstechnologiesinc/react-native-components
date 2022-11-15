@@ -17,6 +17,9 @@ const state = {
     zipcode: '51000',
     dateofBirth: '12/2/1900',
     ssn: '12/2/1900',
+    industry: 'Restaurant, clothes',
+    storeTitle: 'Vaka Restaurant',
+    storeAddress: 'Hata Mayor #12',
 };
 
 export const AuthFormEmailPassword = () => (
@@ -62,13 +65,20 @@ export const AuthFormPersonInfo = () => (
         labelFirstName="First Name"
         labelLastName="Last Name"
         labelPhone="Phone Number"
+        firstName={state.firstName}
+        lastName={state.lastName}
+        phone={state.phone}
+        inputActionHandler={() => {}}
+    />
+);
+
+export const AuthFormDriverInfo = () => (
+    <AuthForm.DriverInfo
+        title="Before granting new drivers to access the platform, JMS uses Checkr as its third-party provider to run secure background checks. to ensure safety and security of all members of its platform."
         labelDriver="Driver's license numer"
         labelZipCode="Zip code"
         labelDateBirth="Date of Birth"
         labelSsn="Social Security Number"
-        firstName={state.firstName}
-        lastName={state.lastName}
-        phone={state.phone}
         licenseNumer={state.licenseNumer}
         zipcode={state.zipcode}
         dateofBirth={state.dateofBirth}
@@ -77,23 +87,16 @@ export const AuthFormPersonInfo = () => (
     />
 );
 
-export const AuthFormDriverInfo = () => (
-    <AuthForm.DriverInfo
-        title="Before granting new drivers to access the platform, JMS uses Checkr as its third-party provider to run secure background checks. to ensure safety and security of all members of its platform."
-        labelFirstName="First Name"
-        labelLastName="Last Name"
-        labelPhone="Phone Number"
-        labelDriver="Driver's license numer"
-        labelZipCode="Zip code"
-        labelDateBirth="Date of Birth"
-        labelSsn="Social Security Number"
-        firstName={state.firstName}
-        lastName={state.lastName}
-        phone={state.phone}
-        licenseNumer={state.licenseNumer}
-        zipcode={state.zipcode}
-        dateofBirth={state.dateofBirth}
-        ssn={state.ssn}
+export const AuthFormBusinessInfo = () => (
+    <AuthForm.BusinessInfo
+        title="Business Details"
+        labelStoreName="Store Name"
+        labelAddress="Full Store Address"
+        labelIndustry="Industry"
+        storeTitle={state.storeTitle}
+        storeAddress={state.storeAddress}
+        industry={state.industry}
+        placeholder={['Restaurant', 'Pharmacy', 'Grocery']}
         inputActionHandler={() => {}}
     />
 );
