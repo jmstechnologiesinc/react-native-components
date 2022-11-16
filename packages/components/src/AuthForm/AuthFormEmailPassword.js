@@ -29,7 +29,7 @@ const AuthFormEmailPassword = ({
                 />
             </ScreenWrapper.Section>
 
-            {password && (
+            {isPassword && (
                 <ScreenWrapper.Section>
                     <TextInput
                         label={labelPassword}
