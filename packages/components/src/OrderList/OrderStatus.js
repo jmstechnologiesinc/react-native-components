@@ -8,6 +8,7 @@ import ListItemExtended from '../List/ListItemExtended';
 import ChipCountdown from './ChipCountdown';
 import usePubNubETA from './usePubNubETA';
 import useCountdown from './useCountdown';
+import { interpunct } from '@jmsstudiosinc/commons';
 
 const OrderStatus = ({
     status,
@@ -60,7 +61,7 @@ const OrderStatus = ({
         renderStatuses.push(
             <ListItemExtended
                 key="headerStatus"
-                overline={headerStatus.overlines.join(" · ") || null}
+                overline={interpunct(headerStatus.overlines) || null}
                 header={headerStatus.title}
                 subHeader={headerStatus.description}
                 avatar={showHeaderAvatar && headerStatus.avatar}
@@ -74,7 +75,7 @@ const OrderStatus = ({
         renderStatuses.push(
             <ListItemExtended
                 key="vendorStatus"
-                overline={vendorStatus.overlines.join(" · ") || null}
+                overline={interpunct(vendorStatus.overlines) || null}
                 header={vendorStatus.title}
                 subHeader={vendorStatus.description}
                 chips={vendorStatus.chips}

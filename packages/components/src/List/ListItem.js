@@ -13,7 +13,7 @@ const ListItem = ({
     metaQuantity,
     right,
     onPress,
-    titleNumberOfLines = 1,
+    titleNumberOfLines,
     titleVariant="bodyLarge",
     metaTitleVariant,
     style,

@@ -3,7 +3,7 @@ import { ImageBackground } from 'react-native';
 
 import FastImage from 'react-native-fast-image';
 
-ImageKit = ({ 
+const Fast2ImageKit = ({ 
     src, 
     showActivityIndicator = false, 
     showImageBackground = false, 
