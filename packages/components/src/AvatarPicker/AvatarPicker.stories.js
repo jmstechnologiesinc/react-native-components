@@ -7,6 +7,13 @@ export default {
 const defaultPhoto =
     'https://firebasestorage.googleapis.com/v0/b/jms-eats-70330.appspot.com/o/users%2F3mWlE%2BhyRC6LvBx2JDrGBg%3A0.jpeg?alt=media&token=5f96b821-3a3c-4a1c-b22c-73c68707efbe';
 
+const options = [
+    { title: 'Take photo', icon: 'camera' },
+    { title: 'Choose from library', icon: 'folder-image' },
+    { title: 'Remove Profile Photo', icon: 'image-remove' },
+    { title: 'cancel', icon: 'cancel' },
+];
+
 export const AvatarPhoto = () => (
     <AvatarPicker
         firstName="Marcos"
@@ -14,11 +21,7 @@ export const AvatarPhoto = () => (
         photo={defaultPhoto}
         setProfilePictureFile={() => {}}
         removeProfilePicture={() => {}}
-        takePhoto={'Take photo'}
-        chooseLabrary={'Choose from library'}
-        removePhoto={'Remove Profile Photo'}
-        carcel={'Cancel'}
-        titleAction={'Confirm action'}
+        options={options}
     />
 );
 export const AvatarIcon = () => (
@@ -28,10 +31,6 @@ export const AvatarIcon = () => (
         photo={null}
         setProfilePictureFile={() => {}}
         removeProfilePicture={() => {}}
-        takePhoto={'Take photo'}
-        chooseLabrary={'Choose from library'}
-        removePhoto={'Remove Profile Photo'}
-        carcel={'Cancel'}
-        titleAction={'Confirm action'}
+        options={options}
     />
 );

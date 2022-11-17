@@ -2,22 +2,11 @@ import { View, StyleSheet } from 'react-native';
 import React, { useRef } from 'react';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { moderateScale } from 'react-native-size-matters';
-import { Avatar, MD3LightTheme, Text, TouchableRipple } from '@jmsstudiosinc/react-native-paper';
-import ActionSheet from 'react-native-actionsheet';
+import { Avatar, MD3LightTheme, Text, TouchableRipple, List } from '@jmsstudiosinc/react-native-paper';
 import { onPressFromGallery } from '../ImagePicker/ImagePicker';
+import ActionSheet from 'react-native-actions-sheet';
 
-const AvatarPicker = ({
-    photo,
-    firstName,
-    lastName,
-    setProfilePictureFile,
-    removeProfilePicture,
-    takePhoto,
-    chooseLabrary,
-    removePhoto,
-    carcel,
-    titleAction,
-}) => {
+const AvatarPicker = ({ photo, firstName, lastName, setProfilePictureFile, removeProfilePicture, options }) => {
     const actionSheet = useRef(null);
 
     const showActionSheet = () => {
@@ -30,6 +19,9 @@ const AvatarPicker = ({
         }
         if (index == 2) {
             removeProfilePicture();
+        }
+        if (index == 3) {
+            actionSheet.current.hide();
         }
 
         return;
@@ -52,16 +44,30 @@ const AvatarPicker = ({
                     <Text variant="bodyLarge">{`${firstName} ${lastName}`}</Text>
                 </ScreenWrapper.Section>
             </View>
-
-            <ActionSheet
-                ref={actionSheet}
-                title={titleAction}
-                options={[takePhoto, chooseLabrary, removePhoto, carcel]}
-                cancelButtonIndex={3}
-                onPress={(index) => {
-                    onActionDone(index);
-                }}
-            />
+            <ScreenWrapper.Section>
+                <ActionSheet
+                    ref={actionSheet}
+                    statusBarTranslucent={false}
+                    drawUnderStatusBar={false}
+                    gestureEnabled
+                    containerStyle={{
+                        paddingHorizontal: moderateScale(12),
+                    }}
+                    springOffset={50}
+                    defaultOverlayOpacity={0.3}
+                >
+                    <List.Section>
+                        {options.map(({ title, icon }, index) => (
+                            <List.Item
+                                key={index}
+                                title={title}
+                                onPress={() => onActionDone(index)}
+                                left={(props) => <List.Icon {...props} icon={icon} />}
+                            />
+                        ))}
+                    </List.Section>
+                </ActionSheet>
+            </ScreenWrapper.Section>
         </>
     );
 };
