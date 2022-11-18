@@ -14,7 +14,6 @@ const AuthFormEmailPassword = ({
     inputActionHandler,
     labelConfirmPassword,
     passwordConfirm,
-    isPassword = true,
 }) => {
     const [isTextSecureEntry, setIsTextSecureEntry] = useState(true);
 
@@ -29,23 +28,21 @@ const AuthFormEmailPassword = ({
                 />
             </ScreenWrapper.Section>
 
-            {password && (
-                <ScreenWrapper.Section>
-                    <TextInput
-                        label={labelPassword}
-                        value={password}
-                        onChangeText={(password) => inputActionHandler('password', password)}
-                        disabled={isPasswordDisabled}
-                        secureTextEntry={isTextSecureEntry}
-                        right={
-                            <TextInput.Icon
-                                name={isTextSecureEntry ? 'eye' : 'eye-off'}
-                                onPress={() => setIsTextSecureEntry(!isTextSecureEntry)}
-                            />
-                        }
-                    />
-                </ScreenWrapper.Section>
-            )}
+            <ScreenWrapper.Section>
+                <TextInput
+                    label={labelPassword}
+                    value={password}
+                    onChangeText={(password) => inputActionHandler('password', password)}
+                    disabled={isPasswordDisabled}
+                    secureTextEntry={isTextSecureEntry}
+                    right={
+                        <TextInput.Icon
+                            name={isTextSecureEntry ? 'eye' : 'eye-off'}
+                            onPress={() => setIsTextSecureEntry(!isTextSecureEntry)}
+                        />
+                    }
+                />
+            </ScreenWrapper.Section>
 
             {confirmPassword && (
                 <ScreenWrapper.Section>
