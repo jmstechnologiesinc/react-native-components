@@ -22,7 +22,7 @@ const oneTakePhoto = () => {
     );
 };
 
-const chooseFromGallery = (setProfilePictureFile) => {
+const chooseFromGallery = (setProfilePictureFile, actionSheet) => {
     launchImageLibrary(
         {
             mediaType: 'photo',
@@ -38,12 +38,13 @@ const chooseFromGallery = (setProfilePictureFile) => {
                 console.log('User tapped custom button: ', response.customButton);
             } else {
                setProfilePictureFile(response?.assets[0]);
+               actionSheet.current.hide();
             }
         }
     );
 };
 
-const onPressFromGallery = async (setProfilePictureFile) => {
+const onPressFromGallery = async (setProfilePictureFile, actionSheet) => {
     if (Platform.OS === 'android') {
         const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
@@ -69,7 +70,7 @@ const onPressFromGallery = async (setProfilePictureFile) => {
             );
         }
     } else {
-        chooseFromGallery(setProfilePictureFile);
+        chooseFromGallery(setProfilePictureFile, actionSheet);
     }
 };
 

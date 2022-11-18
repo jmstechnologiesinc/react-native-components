@@ -15,15 +15,14 @@ const AvatarPicker = ({ photo, firstName, lastName, setProfilePictureFile, remov
 
     const onActionDone = (index) => {
         if (index == 1) {
-            onPressFromGallery(setProfilePictureFile);
+            onPressFromGallery(setProfilePictureFile, actionSheet);
         }
         if (index == 2) {
-            removeProfilePicture();
+            removeProfilePicture(actionSheet);
         }
         if (index == 3) {
             actionSheet.current.hide();
         }
-
         return;
     };
 
@@ -56,12 +55,15 @@ const AvatarPicker = ({ photo, firstName, lastName, setProfilePictureFile, remov
                     springOffset={50}
                     defaultOverlayOpacity={0.3}
                 >
-                    <List.Section>
+                    <List.Section >
                         {options.map(({ title, icon }, index) => (
                             <List.Item
                                 key={index}
                                 title={title}
-                                onPress={() => onActionDone(index)}
+                                onPress={() => {
+                                    onActionDone(index)
+                                     
+                                }}
                                 left={(props) => <List.Icon {...props} icon={icon} />}
                             />
                         ))}
