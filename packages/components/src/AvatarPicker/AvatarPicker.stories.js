@@ -22,6 +22,12 @@ export const AvatarPhoto = () => (
         setProfilePictureFile={() => {}}
         removeProfilePicture={() => {}}
         options={options}
+        titlePermission={'Camera permission denied'}
+        descriptionPermission={
+            'To have access to the camera you must enable the camera permission in your application settings'
+        }
+        carcelPermission={'Cancel'}
+        settingPermission={'Go to Settings'}
     />
 );
 export const AvatarIcon = () => (
@@ -32,5 +38,11 @@ export const AvatarIcon = () => (
         setProfilePictureFile={() => {}}
         removeProfilePicture={() => {}}
         options={options}
+        titlePermission={'Camera permission denied'}
+        descriptionPermission={
+            'To have access to the camera you must enable the camera permission in your application settings'
+        }
+        carcelPermission={'Cancel'}
+        settingPermission={'Go to Settings'}
     />
 );

@@ -37,32 +37,37 @@ const chooseFromGallery = (setProfilePictureFile, actionSheet) => {
             } else if (response.customButton) {
                 console.log('User tapped custom button: ', response.customButton);
             } else {
-               setProfilePictureFile(response?.assets[0]);
-               actionSheet.current.hide();
+                setProfilePictureFile(response?.assets[0]);
+                actionSheet.current.hide();
             }
         }
     );
 };
 
-const onPressFromGallery = async (setProfilePictureFile, actionSheet) => {
+const onPressFromGallery = async (
+    setProfilePictureFile,
+    actionSheet,
+    titlePermission,
+    descriptionPermission,
+    carcelPermission,
+    settingPermission
+) => {
     if (Platform.OS === 'android') {
         const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
             chooseFromGallery();
         } else {
             Alert.alert(
-                IMLocalized('Camera permission denied'),
-                IMLocalized(
-                    'To have access to the camera you must enable the camera permission in your application settings'
-                ),
+                titlePermission,
+                descriptionPermission,
                 [
                     {
-                        text: IMLocalized('Cancel'),
+                        text: carcelPermission,
                         onPress: () => console.log('Cancel Pressed'),
                         style: 'cancel',
                     },
                     {
-                        text: IMLocalized('Go to Settings'),
+                        text: settingPermission,
                         onPress: () => Linking.openSettings(),
                     },
                 ],
@@ -74,25 +79,23 @@ const onPressFromGallery = async (setProfilePictureFile, actionSheet) => {
     }
 };
 
-const onPressFromCamara = async () => {
+const onPressFromCamara = async (titlePermission, descriptionPermission, carcelPermission, settingPermission) => {
     if (Platform.OS === 'android') {
         const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
             oneTakePhoto();
         } else {
             Alert.alert(
-                IMLocalized('Camera permission denied'),
-                IMLocalized(
-                    'To have access to the camera you must enable the camera permission in your application settings'
-                ),
+                titlePermission,
+                descriptionPermission,
                 [
                     {
-                        text: IMLocalized('Cancel'),
+                        text: carcelPermission,
                         onPress: () => console.log('Cancel Pressed'),
                         style: 'cancel',
                     },
                     {
-                        text: IMLocalized('Go to Settings'),
+                        text: settingPermission,
                         onPress: () => Linking.openSettings(),
                     },
                 ],

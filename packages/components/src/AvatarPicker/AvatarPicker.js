@@ -6,7 +6,18 @@ import { Avatar, MD3LightTheme, Text, TouchableRipple, List } from '@jmsstudiosi
 import { onPressFromGallery } from '../ImagePicker/ImagePicker';
 import ActionSheet from 'react-native-actions-sheet';
 
-const AvatarPicker = ({ photo, firstName, lastName, setProfilePictureFile, removeProfilePicture, options }) => {
+const AvatarPicker = ({
+    photo,
+    firstName,
+    lastName,
+    setProfilePictureFile,
+    removeProfilePicture,
+    options,
+    titlePermission,
+    descriptionPermission,
+    carcelPermission,
+    settingPermission,
+}) => {
     const actionSheet = useRef(null);
 
     const showActionSheet = () => {
@@ -15,7 +26,14 @@ const AvatarPicker = ({ photo, firstName, lastName, setProfilePictureFile, remov
 
     const onActionDone = (index) => {
         if (index == 1) {
-            onPressFromGallery(setProfilePictureFile, actionSheet);
+            onPressFromGallery(
+                setProfilePictureFile,
+                actionSheet,
+                titlePermission,
+                descriptionPermission,
+                carcelPermission,
+                settingPermission
+            );
         }
         if (index == 2) {
             removeProfilePicture(actionSheet);
@@ -29,47 +47,36 @@ const AvatarPicker = ({ photo, firstName, lastName, setProfilePictureFile, remov
     return (
         <>
             <View style={styles.containerAvatar}>
-                <ScreenWrapper.Section>
-                    <TouchableRipple rippleColor={MD3LightTheme.colors.background} onPress={showActionSheet}>
-                        {photo ? (
-                            <Avatar.Image source={{ uri: photo }} size={moderateScale(150)} />
-                        ) : (
-                            <Avatar.Icon icon="account" size={moderateScale(150)} />
-                        )}
-                    </TouchableRipple>
-                </ScreenWrapper.Section>
-
-                <ScreenWrapper.Section>
-                    <Text variant="bodyLarge">{`${firstName} ${lastName}`}</Text>
-                </ScreenWrapper.Section>
+                <TouchableRipple rippleColor={MD3LightTheme.colors.background} onPress={showActionSheet}>
+                    {photo ? (
+                        <Avatar.Image source={{ uri: photo }} size={moderateScale(150)} />
+                    ) : (
+                        <Avatar.Icon icon="account" size={moderateScale(150)} />
+                    )}
+                </TouchableRipple>
             </View>
-            <ScreenWrapper.Section>
-                <ActionSheet
-                    ref={actionSheet}
-                    statusBarTranslucent={false}
-                    drawUnderStatusBar={false}
-                    gestureEnabled
-                    containerStyle={{
-                        paddingHorizontal: moderateScale(12),
-                    }}
-                    springOffset={50}
-                    defaultOverlayOpacity={0.3}
-                >
-                    <List.Section >
-                        {options.map(({ title, icon }, index) => (
-                            <List.Item
-                                key={index}
-                                title={title}
-                                onPress={() => {
-                                    onActionDone(index)
-                                     
-                                }}
-                                left={(props) => <List.Icon {...props} icon={icon} />}
-                            />
-                        ))}
-                    </List.Section>
-                </ActionSheet>
-            </ScreenWrapper.Section>
+
+            <ActionSheet
+                ref={actionSheet}
+                statusBarTranslucent={false}
+                drawUnderStatusBar={false}
+                gestureEnabled
+                springOffset={50}
+                defaultOverlayOpacity={0.3}
+            >
+                <List.Section>
+                    {options.map(({ title, icon }, index) => (
+                        <List.Item
+                            key={index}
+                            title={title}
+                            onPress={() => {
+                                onActionDone(index);
+                            }}
+                            left={(props) => <List.Icon {...props} icon={icon} />}
+                        />
+                    ))}
+                </List.Section>
+            </ActionSheet>
         </>
     );
 };
