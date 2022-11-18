@@ -1,7 +1,7 @@
-import { Linking, PermissionsAndroid } from 'react-native';
+import { Alert, Linking, PermissionsAndroid } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 
-const oneTakePhoto = () => {
+const oneTakePhoto = (setProfilePictureFile, actionSheet) => {
     launchCamera(
         {
             mediaType: 'photo',
@@ -16,7 +16,8 @@ const oneTakePhoto = () => {
             } else if (response.customButton) {
                 console.log('User tapped custom button: ', response.customButton);
             } else {
-                console.log(response);
+                setProfilePictureFile(response?.assets[0]);
+                actionSheet.current.hide();
             }
         }
     );
@@ -79,7 +80,14 @@ const onPressFromGallery = async (
     }
 };
 
-const onPressFromCamara = async (titlePermission, descriptionPermission, carcelPermission, settingPermission) => {
+const onPressFromCamara = async (
+    setProfilePictureFile,
+    actionSheet,
+    titlePermission,
+    descriptionPermission,
+    carcelPermission,
+    settingPermission
+) => {
     if (Platform.OS === 'android') {
         const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
@@ -103,7 +111,7 @@ const onPressFromCamara = async (titlePermission, descriptionPermission, carcelP
             );
         }
     } else {
-        oneTakePhoto();
+        oneTakePhoto(setProfilePictureFile, actionSheet);
     }
 };
 

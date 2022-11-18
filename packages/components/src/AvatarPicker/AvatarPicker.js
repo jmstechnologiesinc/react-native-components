@@ -3,13 +3,11 @@ import React, { useRef } from 'react';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { moderateScale } from 'react-native-size-matters';
 import { Avatar, MD3LightTheme, Text, TouchableRipple, List } from '@jmsstudiosinc/react-native-paper';
-import { onPressFromGallery } from '../ImagePicker/ImagePicker';
+import { onPressFromGallery, onPressFromCamara } from '../ImagePicker/ImagePicker';
 import ActionSheet from 'react-native-actions-sheet';
 
 const AvatarPicker = ({
     photo,
-    firstName,
-    lastName,
     setProfilePictureFile,
     removeProfilePicture,
     options,
@@ -25,6 +23,26 @@ const AvatarPicker = ({
     };
 
     const onActionDone = (index) => {
+        if (index == 0) {
+            onPressFromCamara(
+                setProfilePictureFile,
+                actionSheet,
+                titlePermission,
+                descriptionPermission,
+                carcelPermission,
+                settingPermission
+            );
+        }
+        if (index == 1) {
+            onPressFromGallery(
+                setProfilePictureFile,
+                actionSheet,
+                titlePermission,
+                descriptionPermission,
+                carcelPermission,
+                settingPermission
+            );
+        }
         if (index == 1) {
             onPressFromGallery(
                 setProfilePictureFile,
