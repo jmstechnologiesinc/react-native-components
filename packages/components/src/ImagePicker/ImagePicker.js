@@ -1,118 +1,83 @@
-import { Alert, Linking, PermissionsAndroid } from 'react-native';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { View, StyleSheet } from 'react-native';
+import React, { useRef } from 'react';
+import { moderateScale } from 'react-native-size-matters';
+import { Avatar, MD3LightTheme, TouchableRipple, List } from '@jmsstudiosinc/react-native-paper';
 
-const oneTakePhoto = (setProfilePictureFile, actionSheet) => {
-    launchCamera(
-        {
-            mediaType: 'photo',
-            quality: 0.5,
-        },
-        (response) => {
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.error) {
-                alert(response.error);
-                console.log('ImagePicker Error: ', response.error);
-            } else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
-            } else {
-                setProfilePictureFile(response?.assets[0]);
-                actionSheet.current.hide();
-            }
-        }
-    );
-};
+import ActionSheet from 'react-native-actions-sheet';
+import ImagePickerAPI from './ImagePickerAPI';
 
-const chooseFromGallery = (setProfilePictureFile, actionSheet) => {
-    launchImageLibrary(
-        {
-            mediaType: 'photo',
-            quality: 0.5,
-        },
-        (response) => {
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.error) {
-                alert(response.error);
-                console.log('ImagePicker Error: ', response.error);
-            } else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
-            } else {
-                setProfilePictureFile(response?.assets[0]);
-                actionSheet.current.hide();
-            }
-        }
-    );
-};
-
-const onPressFromGallery = async (
+const ImagePicker = ({
+    photo,
     setProfilePictureFile,
-    actionSheet,
+    removeProfilePicture,
+    options,
     titlePermission,
     descriptionPermission,
     carcelPermission,
-    settingPermission
-) => {
-    if (Platform.OS === 'android') {
-        const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            chooseFromGallery();
-        } else {
-            Alert.alert(
-                titlePermission,
-                descriptionPermission,
-                [
-                    {
-                        text: carcelPermission,
-                        onPress: () => console.log('Cancel Pressed'),
-                        style: 'cancel',
-                    },
-                    {
-                        text: settingPermission,
-                        onPress: () => Linking.openSettings(),
-                    },
-                ],
-                { cancelable: false }
-            );
+    settingPermission,
+}) => {
+    const actionSheet = useRef(null);
+
+    const ImagePickerRef = new ImagePickerAPI(
+        'Camera permission denied',
+        'To have access to the camera you must enable the camera permission in your application settings',
+        'Cancel',
+        'Go to Settings'
+    );
+
+    const showActionSheet = () => {
+        actionSheet.current.show();
+    };
+
+    const onActionDone = (value) => {
+        if (value === 'launchCamera') {
+            ImagePickerRef.oneTakePhoto(setProfilePictureFile);
         }
-    } else {
-        chooseFromGallery(setProfilePictureFile, actionSheet);
-    }
+    };
+
+    return (
+        <>
+            <View style={styles.containerAvatar}>
+                <TouchableRipple rippleColor={MD3LightTheme.colors.background} onPress={showActionSheet}>
+                    {photo ? (
+                        <Avatar.Image source={{ uri: photo }} size={moderateScale(150)} />
+                    ) : (
+                        <Avatar.Icon icon="account" size={moderateScale(150)} />
+                    )}
+                </TouchableRipple>
+            </View>
+
+            <ActionSheet
+                ref={actionSheet}
+                statusBarTranslucent={false}
+                drawUnderStatusBar={false}
+                gestureEnabled
+                springOffset={50}
+                defaultOverlayOpacity={0.3}
+            >
+                <List.Section>
+                    {options.map(({ title, icon, value }, index) => (
+                        <List.Item
+                            key={index}
+                            title={title}
+                            onPress={() => {
+                                onActionDone(value);
+                            }}
+                            left={(props) => <List.Icon {...props} icon={icon} />}
+                        />
+                    ))}
+                </List.Section>
+            </ActionSheet>
+        </>
+    );
 };
 
-const onPressFromCamara = async (
-    setProfilePictureFile,
-    actionSheet,
-    titlePermission,
-    descriptionPermission,
-    carcelPermission,
-    settingPermission
-) => {
-    if (Platform.OS === 'android') {
-        const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            oneTakePhoto();
-        } else {
-            Alert.alert(
-                titlePermission,
-                descriptionPermission,
-                [
-                    {
-                        text: carcelPermission,
-                        onPress: () => console.log('Cancel Pressed'),
-                        style: 'cancel',
-                    },
-                    {
-                        text: settingPermission,
-                        onPress: () => Linking.openSettings(),
-                    },
-                ],
-                { cancelable: false }
-            );
-        }
-    } else {
-        oneTakePhoto(setProfilePictureFile, actionSheet);
-    }
-};
+const styles = StyleSheet.create({
+    containerAvatar: {
+        flex: 1,
+        alignItems: 'center',
+        marginTop: MD3LightTheme.spacing.x4,
+    },
+});
 
-export { onPressFromGallery, onPressFromCamara };
+export default ImagePicker;

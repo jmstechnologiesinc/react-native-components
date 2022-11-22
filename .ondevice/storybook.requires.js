@@ -33,7 +33,6 @@ const getStories = () => {
   return [
     require("../packages/components/src/ActionGroup/ActionGroup.stories.js"),
     require("../packages/components/src/AuthForm/AuthForm.stories.js"),
-    require("../packages/components/src/AvatarPicker/AvatarPicker.stories.js"),
     require("../packages/components/src/CartList/CartList.stories.js"),
     require("../packages/components/src/Checkout/Checkout.stories.js"),
     require("../packages/components/src/ChipList/ChipList.stories.js"),

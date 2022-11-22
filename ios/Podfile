@@ -4,6 +4,14 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 platform :ios, '11.0'
 install! 'cocoapods', :deterministic_uuids => false
 
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-LocationAccuracy', :path => "#{permissions_path}/LocationAccuracy"
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways"
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+  pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary"
+  pod 'Permission-MediaLibrary', :path => "#{permissions_path}/MediaLibrary"
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
+
 target 'ReactNativeComponents' do
   config = use_native_modules!
 
