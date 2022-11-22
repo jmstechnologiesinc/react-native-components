@@ -6,16 +6,7 @@ import { Avatar, MD3LightTheme, TouchableRipple, List } from '@jmsstudiosinc/rea
 import ActionSheet from 'react-native-actions-sheet';
 import ImagePickerAPI from './ImagePickerAPI';
 
-const ImagePicker = ({
-    photo,
-    setProfilePictureFile,
-    removeProfilePicture,
-    options,
-    titlePermission,
-    descriptionPermission,
-    carcelPermission,
-    settingPermission,
-}) => {
+const ImagePicker = ({ photo, setProfilePictureFile, options }) => {
     const actionSheet = useRef(null);
 
     const ImagePickerRef = new ImagePickerAPI(

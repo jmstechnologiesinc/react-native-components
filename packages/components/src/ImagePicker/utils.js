@@ -8,6 +8,7 @@ export const checkAndAskForPermission = () =>
                 permissionStatus = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
                 // permissionStatus = await PermissionsAndroid.request(android.permission.WRITE_EXTERNAL_STORAGE);
             } else {
+                //  Missing permission settings for ios
                 permissionStatus = 'granted';
             }
 
