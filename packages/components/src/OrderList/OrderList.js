@@ -5,11 +5,20 @@ import { FlatList } from 'react-native';
 import { Divider } from '@jmsstudiosinc/react-native-paper';
 
 import OrderListItem from './OrderListItem';
-import { itemSeparator } from '../utils';
+import { itemSeparator as separator } from '../utils';
 
 const keyExtractor = (order) => `order-list-${order.id}`;
 
-const OrderList = ({ data, role, onButtonPress, onPress }) => (
+const OrderList = ({ 
+  data, 
+  role, 
+  currentOrderId,
+  isCard,
+  isExpanded,
+  itemSeparator = true,
+  onButtonPress,
+  onPress 
+}) => (
   <FlatList
     keyExtractor={keyExtractor}
     data={data}
@@ -20,9 +29,12 @@ const OrderList = ({ data, role, onButtonPress, onPress }) => (
         <OrderListItem
           role={role}
           order={item}
+          isCard={isCard}
+          currentOrderId={currentOrderId}
+          isExpanded={isExpanded}
           onButtonPress={onButtonPress}
           onPress={() => onPress(item, role)} />
-        {itemSeparator(index, data.length) && <Divider />}
+        {itemSeparator ? separator(index, data.length) && <Divider /> : null}
       </>
     )}
   />

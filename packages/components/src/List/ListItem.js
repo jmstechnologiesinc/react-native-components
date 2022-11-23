@@ -18,12 +18,14 @@ const ListItem = ({
     metaTitleVariant,
     style,
     titleStyle,
+    descriptionStyle,
+    overlineStyle,
     metaTitleStyle,
     ...rests
 }) => {
   const renderTitle = ({selectable, titleEllipsizeMode, color}) => (
     <View style={{flex: 1}}>
-      {overline && <Text variant="labelSmall">{overline}</Text>}
+      {overline && <Text variant="labelSmall" style={overlineStyle}>{overline}</Text>}
       {!!title && <Text
           selectable={selectable}
           ellipsizeMode={titleEllipsizeMode}

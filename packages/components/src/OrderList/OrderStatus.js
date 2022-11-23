@@ -15,12 +15,14 @@ const OrderStatus = ({
     deliveryMethod,
     durationValue,
     deliveryTime,
+    isExpanded = true,
     restaurantAcceptedTime,
     role,
     orderID,
     fulfilmentStatus,
     showHeaderAvatar,
     headerTitleVariant,
+    contentColor
 }) => {
     const orderMilliseconds = useCountdown({
         orderID,
@@ -67,40 +69,45 @@ const OrderStatus = ({
                 avatar={showHeaderAvatar && headerStatus.avatar}
                 right={headerStatus.right && rightWrapper(<Chip>{headerStatus.right}</Chip>)}
                 titleVariant={headerTitleVariant}
+                contentColor={contentColor}
             />
         );
     }
 
-    if (vendorStatus.title) {
-        renderStatuses.push(
-            <ListItemExtended
-                key="vendorStatus"
-                overline={interpunct(vendorStatus.overlines) || null}
-                header={vendorStatus.title}
-                subHeader={vendorStatus.description}
-                chips={vendorStatus.chips}
-                avatar={vendorStatus.avatar}
-                right={rightWrapper(<ChipCountdown milliseconds={orderMilliseconds} />)}
-                style={{ paddingTop: 0 }}
-            />
-        );
+    if(isExpanded) {
+        if (vendorStatus.title) {
+            renderStatuses.push(
+                <ListItemExtended
+                    key="vendorStatus"
+                    overline={interpunct(vendorStatus.overlines) || null}
+                    header={vendorStatus.title}
+                    subHeader={vendorStatus.description}
+                    chips={vendorStatus.chips}
+                    avatar={vendorStatus.avatar}
+                    right={rightWrapper(<ChipCountdown milliseconds={orderMilliseconds} />)}
+                    contentColor={contentColor}
+                    style={{ paddingTop: 0 }}
+                />
+            );
+        }
+    
+        if (driverStatus.overline || driverStatus.title || driverStatus.description || driverStatus.chips.length > 0) {
+            renderStatuses.push(
+                <ListItemExtended
+                    key="driverStatus"
+                    overline={driverStatus.overline}
+                    header={driverStatus.title}
+                    subHeader={driverStatus.description}
+                    chips={driverStatus.chips}
+                    avatar={driverStatus.avatar}
+                    right={rightWrapper(<ChipCountdown milliseconds={pubnubMilliseconds} />)}
+                    contentColor={contentColor}
+                    style={{ paddingTop: 0 }}
+                />
+            );
+        }
     }
-
-    if (driverStatus.overline || driverStatus.title || driverStatus.description || driverStatus.chips.length > 0) {
-        renderStatuses.push(
-            <ListItemExtended
-                key="driverStatus"
-                overline={driverStatus.overline}
-                header={driverStatus.title}
-                subHeader={driverStatus.description}
-                chips={driverStatus.chips}
-                avatar={driverStatus.avatar}
-                right={rightWrapper(<ChipCountdown milliseconds={pubnubMilliseconds} />)}
-                style={{ paddingTop: 0 }}
-            />
-        );
-    }
-
+   
     return renderStatuses;
 };
 

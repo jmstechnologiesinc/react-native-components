@@ -1,6 +1,15 @@
 import { Alert, Linking, PermissionsAndroid } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 
+export const IMAGE_PICKER_ACTIONS = {
+    launchCamera: 'launchCamera',
+    launchImageLibrary: 'launchImageLibrary',
+    removeImage: 'removeImage',
+    cancel: 'cancel'
+}
+
+// Platform.OS is not imported
+// actionSheet should be called from avatarpicker
 const oneTakePhoto = (setProfilePictureFile, actionSheet) => {
     launchCamera(
         {
@@ -53,7 +62,7 @@ const onPressFromGallery = async (
     carcelPermission,
     settingPermission
 ) => {
-    if (Platform.OS === 'android') {
+    if (Platform.OS === 'android') { 
         const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
             chooseFromGallery();

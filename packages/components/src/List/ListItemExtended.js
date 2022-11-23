@@ -6,7 +6,17 @@ import { Chip, Avatar, Text, MD3LightTheme } from '@jmsstudiosinc/react-native-p
 
 import * as JMSList from './List';
 
-const ListItemExtended = ({ overline, header, subHeader, avatar, chips, right, style, ...rest }) => (
+const ListItemExtended = ({ 
+    overline, 
+    header, 
+    subHeader, 
+    avatar, 
+    chips, 
+    right, 
+    contentColor,
+    style, 
+    ...rest 
+}) => (
     <JMSList.Item
         overline={overline}
         title={header}
@@ -31,7 +41,7 @@ const ListItemExtended = ({ overline, header, subHeader, avatar, chips, right, s
                         selectable={false}
                         numberOfLines={2}
                         ellipsizeMode={ellipsizeMode}
-                        style={{ color: descriptionColor }}
+                        style={[{ color: descriptionColor }]}
                         variant={'bodyMedium'}
                     >
                         {subHeader}
@@ -48,6 +58,8 @@ const ListItemExtended = ({ overline, header, subHeader, avatar, chips, right, s
                 )}
             </>
         )}
+        titleStyle={contentColor}
+        overlineStyle={contentColor}
         style={style}
         {...rest}
     />

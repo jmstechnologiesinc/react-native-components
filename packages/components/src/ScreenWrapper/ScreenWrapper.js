@@ -11,6 +11,7 @@ export default function ScreenWrapper({
   children,
   withScrollView = true,
   withBottomInset = true,
+  withTopInset = false,
   style,
   contentContainerStyle,
   ...rest
@@ -22,6 +23,7 @@ export default function ScreenWrapper({
     styles.container,
     {
       backgroundColor: MD3LightTheme.colors.background,
+      paddingTop: withTopInset ? insets.top : 0,
       paddingBottom: withBottomInset ? insets.bottom : 0,
       paddingLeft: insets.left,
       paddingRight: insets.left,

@@ -171,7 +171,9 @@ const OrderView = ({
 
     return (
         <>
-            <ScrollView>
+            <ScrollView  
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false} >
                 <View style={{ flex: 1 }}>
                     {role === USER_ROLES.customer || role === USER_ROLES.driver ? (
                         <PhotoGallery photos={[formattedOrder.photo]} />

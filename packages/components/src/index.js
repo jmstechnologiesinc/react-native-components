@@ -25,6 +25,6 @@ export { default as OrderView } from './OrderView/OrderView';
 export { default as IndustryList } from './IndustryList/IndustryList';
 export { default as QuantityButton } from './QuantityButton/QuantityButton';
 export { default as ScreenWrapper } from './ScreenWrapper';
-export { default as ToggleableDrawer } from './ToggleableDrawer/ToggleableDrawer';
-export {onPressFromGallery, onPressFromCamara} from './ImagePicker/ImagePicker'
-export {default as AvatarPicker} from './AvatarPicker/AvatarPicker'
+export { default as SideNav } from './SideNav/SideNav';
+//export {onPressFromGallery, onPressFromCamara} from './ImagePicker/ImagePicker'
+//export {default as AvatarPicker} from './AvatarPicker/AvatarPicker'

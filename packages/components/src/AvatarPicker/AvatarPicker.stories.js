@@ -1,4 +1,5 @@
 import React from 'react';
+import { IMAGE_PICKER_ACTIONS } from '../ImagePicker/ImagePicker';
 import AvatarPicker from './AvatarPicker';
 
 export default {
@@ -8,10 +9,10 @@ const defaultPhoto =
     'https://firebasestorage.googleapis.com/v0/b/jms-eats-70330.appspot.com/o/users%2F3mWlE%2BhyRC6LvBx2JDrGBg%3A0.jpeg?alt=media&token=5f96b821-3a3c-4a1c-b22c-73c68707efbe';
 
 const options = [
-    { title: 'Take photo', icon: 'camera' },
-    { title: 'Choose from library', icon: 'folder-image' },
-    { title: 'Remove Profile Photo', icon: 'image-remove' },
-    { title: 'cancel', icon: 'cancel' },
+    { title: 'Take photo', value: IMAGE_PICKER_ACTIONS.launchCamera, icon: 'camera' },
+    { title: 'Choose from library', value: IMAGE_PICKER_ACTIONS.launchImageLibrary, icon: 'folder-image' },
+    { title: 'Remove Profile Photo', value: IMAGE_PICKER_ACTIONS.removeImage, icon: 'image-remove' },
+    { title: 'cancel', value: IMAGE_PICKER_ACTIONS.cancel, icon: 'cancel' },
 ];
 
 export const AvatarPhoto = () => (
@@ -19,8 +20,8 @@ export const AvatarPhoto = () => (
         firstName="Marcos"
         lastName="Maria"
         photo={defaultPhoto}
-        setProfilePictureFile={() => {}}
-        removeProfilePicture={() => {}}
+        setProfilePictureFile={() => {}} //onSelection
+        removeProfilePicture={() => {}} //onRemove
         options={options}
         titlePermission={'Camera permission denied'}
         descriptionPermission={
@@ -32,8 +33,6 @@ export const AvatarPhoto = () => (
 );
 export const AvatarIcon = () => (
     <AvatarPicker
-        firstName="Jose"
-        lastName="Vasquez"
         photo={null}
         setProfilePictureFile={() => {}}
         removeProfilePicture={() => {}}
