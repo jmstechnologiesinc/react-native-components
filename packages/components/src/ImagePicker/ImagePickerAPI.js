@@ -3,33 +3,61 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { checkAndAskForPermissionCamara, checkAndAskForPermissionMediaLibrary } from './utils';
 
 class ImagePickerAPI {
-    constructor(titlePermission, descriptionPermission, carcelPermission, settingPermission) {
-        this.titlePermission = titlePermission;
-        this.descriptionPermission = descriptionPermission;
-        this.carcelPermission = carcelPermission;
+    constructor(
+        titlePermissionCamera,
+        titlePermissionPhotos,
+        descriptionPermissionCamera,
+        descriptionPermissionPhotos,
+        cancelPermission,
+        settingPermission
+    ) {
+        this.titlePermissionCamera = titlePermissionCamera;
+        this.titlePermissionPhotos = titlePermissionPhotos;
+        this.descriptionPermissionCamera = descriptionPermissionCamera;
+        this.descriptionPermissionPhotos = descriptionPermissionPhotos;
+        this.cancelPermission = cancelPermission;
         this.settingPermission = settingPermission;
-
-        this.catchPermissionStatus = function () {
-            Alert.alert(
-                this.titlePermission,
-                descriptionPermission,
-                [
-                    {
-                        text: carcelPermission,
-                        onPress: () => console.log('Cancel Pressed'),
-                        style: 'cancel',
-                    },
-                    {
-                        text: settingPermission,
-                        onPress: () => Linking.openSettings(),
-                    },
-                ],
-                { cancelable: false }
-            );
-        };
     }
 
-    async oneTakePhoto(imagePickerOptions) {
+    catchPermissionStatusCamara() {
+        Alert.alert(
+            this.titlePermissionCamera,
+            this.descriptionPermissionCamera,
+            [
+                {
+                    text: this.cancelPermission,
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+                {
+                    text: this.settingPermission,
+                    onPress: () => Linking.openSettings(),
+                },
+            ],
+            { cancelable: false }
+        );
+    }
+
+    catchPermissionStatusPhotos() {
+        Alert.alert(
+            this.titlePermissionPhotos,
+            this.descriptionPermissionPhotos,
+            [
+                {
+                    text: this.cancelPermission,
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+                {
+                    text: this.settingPermission,
+                    onPress: () => Linking.openSettings(),
+                },
+            ],
+            { cancelable: false }
+        );
+    }
+
+    async takePhoto(imagePickerOptions) {
         await checkAndAskForPermissionCamara()
             .then(() => launchCamera({ mediaType: 'photo', quality: 0.5 }))
             .then((response) => {
@@ -44,7 +72,7 @@ class ImagePickerAPI {
                     imagePickerOptions(response?.assets[0]);
                 }
             })
-            .catch(() => this.catchPermissionStatus());
+            .catch(() => this.catchPermissionStatusCamara());
     }
 
     async chooseFromLibrary(imagePickerOptions) {
@@ -62,7 +90,7 @@ class ImagePickerAPI {
                     imagePickerOptions(response?.assets[0]);
                 }
             })
-            .catch(() => this.catchPermissionStatus());
+            .catch(() => this.catchPermissionStatusPhotos());
     }
 }
 

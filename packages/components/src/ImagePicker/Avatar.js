@@ -1,22 +1,34 @@
 import { View, StyleSheet } from 'react-native';
 import React, { useEffect, useRef } from 'react';
 import { moderateScale } from 'react-native-size-matters';
-import { Avatar as componentAvatar, MD3LightTheme, TouchableRipple, List } from '@jmsstudiosinc/react-native-paper';
+import { Avatar as PaperAvatar, MD3LightTheme, TouchableRipple, List } from '@jmsstudiosinc/react-native-paper';
 
 import ActionSheet from 'react-native-actions-sheet';
 import ImagePickerAPI from './ImagePickerAPI';
 import { IMAGE_PICKER_ACTIONS } from './utils';
 
-const Avatar = ({ photo, imagePickerOptions, options }) => {
+const Avatar = ({
+    photo,
+    imagePickerOptions,
+    options,
+    titlePermissionCamera,
+    titlePermissionPhotos,
+    descriptionPermissionCamera,
+    descriptionPermissionPhotos,
+    cancelPermission,
+    settingPermission,
+}) => {
     const actionSheetRef = useRef(null);
-    const ImagePickerRef = useRef();
+    const imagePickerRef = useRef();
 
     useEffect(() => {
-        ImagePickerRef.current = new ImagePickerAPI(
-            'Camera permission denied',
-            'To have access to the camera you must enable the camera permission in your application settings',
-            'Cancel',
-            'Go to Settings'
+        imagePickerRef.current = new ImagePickerAPI(
+            titlePermissionCamera,
+            titlePermissionPhotos,
+            descriptionPermissionCamera,
+            descriptionPermissionPhotos,
+            cancelPermission,
+            settingPermission
         );
     }, []);
 
@@ -26,10 +38,10 @@ const Avatar = ({ photo, imagePickerOptions, options }) => {
 
     const onActionDone = (value) => {
         if (value === IMAGE_PICKER_ACTIONS.launchCamera) {
-            ImagePickerRef.current.oneTakePhoto(imagePickerOptions);
+            imagePickerRef.current.takePhoto(imagePickerOptions);
         }
         if (value === IMAGE_PICKER_ACTIONS.launchImageLibrary) {
-            ImagePickerRef.current.chooseFromLibrary(imagePickerOptions);
+            imagePickerRef.current.chooseFromLibrary(imagePickerOptions);
         }
         if (value === IMAGE_PICKER_ACTIONS.removeImage) {
             console.log('remove');
@@ -44,9 +56,9 @@ const Avatar = ({ photo, imagePickerOptions, options }) => {
             <View style={styles.containerAvatar}>
                 <TouchableRipple rippleColor={MD3LightTheme.colors.background} onPress={showActionSheet}>
                     {photo ? (
-                        <componentAvatar.Image source={{ uri: photo }} size={moderateScale(150)} />
+                        <PaperAvatar.Image source={{ uri: photo }} size={moderateScale(150)} />
                     ) : (
-                        <componentAvatar.Icon icon="account" size={moderateScale(150)} />
+                        <PaperAvatar.Icon icon="account" size={moderateScale(150)} />
                     )}
                 </TouchableRipple>
             </View>
