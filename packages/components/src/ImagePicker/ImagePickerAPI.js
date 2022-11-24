@@ -1,6 +1,6 @@
 import { Linking, Alert } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import { checkAndAskForPermission } from './utils';
+import { checkAndAskForPermissionCamara, checkAndAskForPermissionMediaLibrary } from './utils';
 
 class ImagePickerAPI {
     constructor(titlePermission, descriptionPermission, carcelPermission, settingPermission) {
@@ -29,10 +29,39 @@ class ImagePickerAPI {
         };
     }
 
-    async oneTakePhoto(setProfilePictureFile) {
-        await checkAndAskForPermission()
+    async oneTakePhoto(imagePickerOptions) {
+        await checkAndAskForPermissionCamara()
             .then(() => launchCamera({ mediaType: 'photo', quality: 0.5 }))
-            .then((response) => setProfilePictureFile(response?.assets[0]))
+            .then((response) => {
+                if (response.didCancel) {
+                    console.log('User cancelled image picker');
+                } else if (response.error) {
+                    Alert(response.error);
+                    console.log('ImagePicker Error: ', response.error);
+                } else if (response.customButton) {
+                    console.log('User tapped custom button: ', response.customButton);
+                } else {
+                    imagePickerOptions(response?.assets[0]);
+                }
+            })
+            .catch(() => this.catchPermissionStatus());
+    }
+
+    async chooseFromLibrary(imagePickerOptions) {
+        await checkAndAskForPermissionMediaLibrary()
+            .then(() => launchImageLibrary({ mediaType: 'photo', quality: 0.5 }))
+            .then((response) => {
+                if (response.didCancel) {
+                    console.log('User cancelled image picker');
+                } else if (response.error) {
+                    Alert(response.error);
+                    console.log('ImagePicker Error: ', response.error);
+                } else if (response.customButton) {
+                    console.log('User tapped custom button: ', response.customButton);
+                } else {
+                    imagePickerOptions(response?.assets[0]);
+                }
+            })
             .catch(() => this.catchPermissionStatus());
     }
 }

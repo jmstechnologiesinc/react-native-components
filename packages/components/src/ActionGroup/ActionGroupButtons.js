@@ -14,7 +14,10 @@ const ActionGroupButtons = ({ buttons, isLoading, style, onPress, compact, varia
     return (
         <View style={[styles.row, { justifyContent: compact && 'flex-end' }, style]}>
             {buttons.map((button, index) => (
-                <View key={button.key || index}>
+                <View
+                    style={{ marginLeft: index > 0 && MD3LightTheme.margin, flex: !compact && 1 }}
+                    key={button.key || index}
+                >
                     {variant === 'fab' ? (
                         <FAB
                             variant={

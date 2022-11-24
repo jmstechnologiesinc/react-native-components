@@ -1,15 +1,33 @@
-import { PermissionsAndroid } from 'react-native';
+import { PERMISSIONS, request } from 'react-native-permissions';
 
-export const checkAndAskForPermission = () =>
+export const checkAndAskForPermissionCamara = () =>
     new Promise(async (resolve, reject) => {
         let permissionStatus;
         try {
             if (Platform.OS === 'android') {
-                permissionStatus = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA);
-                // permissionStatus = await PermissionsAndroid.request(android.permission.WRITE_EXTERNAL_STORAGE);
+                permissionStatus = await request(PERMISSIONS.ANDROID.CAMERA);
             } else {
-                //  Missing permission settings for ios
-                permissionStatus = 'granted';
+                permissionStatus = await request(PERMISSIONS.IOS.CAMERA);
+            }
+
+            if (permissionStatus === 'granted') {
+                resolve(permissionStatus);
+            } else {
+                reject(permissionStatus);
+            }
+        } catch (e) {
+            reject(permissionStatus);
+        }
+    });
+
+export const checkAndAskForPermissionMediaLibrary = () =>
+    new Promise(async (resolve, reject) => {
+        let permissionStatus;
+        try {
+            if (Platform.OS === 'android') {
+                permissionStatus = await request(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE);
+            } else {
+                permissionStatus = await request(PERMISSIONS.IOS.PHOTO_LIBRARY);
             }
 
             if (permissionStatus === 'granted') {

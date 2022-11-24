@@ -41,6 +41,8 @@
 	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>&gt;Need to access your camera to capture photos</string>
+	 <key>NSPhotoLibraryUsageDescription</key>
+  		<string>Please allow access to your photos</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>MaterialCommunityIcons.ttf</string>
