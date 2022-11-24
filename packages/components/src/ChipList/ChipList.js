@@ -3,7 +3,7 @@ import React from 'react';
 import { Chip, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 import * as Tabs from '../Tabs/Tabs';
 
-const ChipList = ({ options, mode = 'outlined', currentIndex, onPress, listSectionStyle }) => (
+const ChipList = ({ options, compact, mode = 'outlined', currentIndex, onPress, listSectionStyle }) => (
     <Tabs.Scrollable currentIndex={currentIndex} listSectionStyle={listSectionStyle}>
         {options.map((item, index) => (
             <Chip
@@ -11,6 +11,7 @@ const ChipList = ({ options, mode = 'outlined', currentIndex, onPress, listSecti
                 mode={mode}
                 selected={currentIndex === index}
                 showSelectedOverlay
+                compact={compact}
                 onPress={() => onPress(index)}
                 style={index !== 0 && { marginLeft: MD3LightTheme.spacing.x4 / 2 }}
             >

@@ -1,11 +1,10 @@
 import React from 'react';
 
-import { FlatList } from 'react-native';
+import { SectionList } from 'react-native';
 
-import { Divider } from '@jmsstudiosinc/react-native-paper';
+import { Divider, List, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 
 import OrderListItem from './OrderListItem';
-import { itemSeparator as separator } from '../utils';
 
 const keyExtractor = (order) => `order-list-${order.id}`;
 
@@ -19,14 +18,15 @@ const OrderList = ({
   onButtonPress,
   onPress 
 }) => (
-  <FlatList
+  <SectionList
     keyExtractor={keyExtractor}
-    data={data}
+    sections={data}
     showsVerticalScrollIndicator={false}
     showsHorizontalScrollIndicator={false}
-    renderItem={({ item, index }) => (
-      <>
-        <OrderListItem
+    renderSectionHeader={({ section: { title } }) => <List.Subheader style={{backgroundColor: MD3LightTheme.colors.background}}>{title}</List.Subheader>}
+    ItemSeparatorComponent={itemSeparator ? Divider : null}
+    renderItem={({ item }) => (
+      <OrderListItem
           role={role}
           order={item}
           isCard={isCard}
@@ -34,8 +34,6 @@ const OrderList = ({
           isExpanded={isExpanded}
           onButtonPress={onButtonPress}
           onPress={() => onPress(item, role)} />
-        {itemSeparator ? separator(index, data.length) && <Divider /> : null}
-      </>
     )}
   />
 );

@@ -18,7 +18,7 @@ export { default as Checkout } from './Checkout/Accounting';
 export { default as Fast2ImageKit } from './Fast2ImageKit/Fast2ImageKit';
 export { default as ChipList } from './ChipList/ChipList';
 export { default as OrderStatus } from './OrderList/OrderStatus';
-export { formatOrder } from './OrderList/utils';
+export { formatOrder, groupOrderList } from './OrderList/utils';
 export { default as OrderList } from './OrderList/OrderList';
 export { default as OrderListItem } from './OrderList/OrderListItem';
 export { default as OrderView } from './OrderView/OrderView';
