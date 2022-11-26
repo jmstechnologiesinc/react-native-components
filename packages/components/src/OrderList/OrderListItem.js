@@ -2,7 +2,7 @@ import React from 'react';
 
 import color from 'color';
 
-import { Card, List, MD3LightTheme, TouchableRipple } from '@jmsstudiosinc/react-native-paper';
+import {  List, MD3LightTheme, TouchableRipple } from '@jmsstudiosinc/react-native-paper';
 
 import { formatOrder } from './utils';
 import OrderStatus from './OrderStatus';
@@ -12,40 +12,50 @@ import { moderateScale } from 'react-native-size-matters';
 const OrderListItem = ({
   role,
   order,
-  isCard = false,
-  isExpanded = false,
+  showDriverStatus,
+  showVendorStatus,
   currentOrderId,
+  showSelectedOverlay = false,
   onButtonPress,
   onPress,
   style
 }) => {
   const formattedOrder = formatOrder(order, role);
     
-  const isSelected =  currentOrderId === order?.id;
-  const borderRadius = moderateScale(7);
-  const backgroundColor = isSelected
-    ? MD3LightTheme.colors.secondaryContainer
-    : 'transparent';
-  const contentColor = MD3LightTheme.colors.onSecondaryContainer;
-  const underlayColor = color(backgroundColor)
-    .mix(color(MD3LightTheme.colors.onSecondaryContainer), 0.16)
-    .rgb()
-    .toString();
+    const isSelected =  currentOrderId === order?.id;
+    let borderRadius;
+    let backgroundColor;
+    let contentColor;
+    let underlayColor;
+
+  if(showSelectedOverlay && isSelected) {
+    borderRadius = moderateScale(7);
+    backgroundColor = isSelected
+      ? MD3LightTheme.colors.secondaryContainer
+      : 'transparent';
+    contentColor = {color: MD3LightTheme.colors.onSecondaryContainer};
+    underlayColor = color(backgroundColor)
+      .mix(color(MD3LightTheme.colors.onSecondaryContainer), 0.16)
+      .rgb()
+      .toString();  
+  }
 
   const renderStatusItem = (
     <>
       <OrderStatus
-          role={role}
-          isExpanded={isExpanded}
-          status={formattedOrder.status}
-          deliveryMethod={formattedOrder.deliveryMethod}
-          durationValue={formattedOrder.durationValue}
-          deliveryTime={formattedOrder.deliveryTime}
-          restaurantAcceptedTime={formattedOrder.restaurantAcceptedTime}
-          orderID={formattedOrder.orderID}
-          fulfilmentStatus={formattedOrder.fulfilmentStatus} 
-          showHeaderAvatar
-          contentColor={isSelected && {color: contentColor}} />
+        role={role}
+        status={formattedOrder.status}
+        deliveryMethod={formattedOrder.deliveryMethod}
+        durationValue={formattedOrder.durationValue}
+        deliveryTime={formattedOrder.deliveryTime}
+        restaurantAcceptedTime={formattedOrder.restaurantAcceptedTime}
+        orderID={formattedOrder.orderID}
+        fulfilmentStatus={formattedOrder.fulfilmentStatus} 
+        showDriverStatus={showDriverStatus}
+        showVendorStatus={showVendorStatus}
+        showHeaderAvatar
+        titleStyle={contentColor}
+        overlineStyle={contentColor}/>
         {onButtonPress && <List.Section>
             <ActionGroup.Group>
                 <ActionGroup.Buttons 
@@ -56,18 +66,11 @@ const OrderListItem = ({
     </>
   );
 
-  return isCard ? (
-    <Card 
-      onPress={onPress} 
-      mode={isSelected ? "contained" : ""}
-      style={{ marginBottom: MD3LightTheme.spacing.x2 }}>
-      {renderStatusItem}
-    </Card>
-  ) : (
+  return (
     <TouchableRipple
       borderless
       delayPressIn={0}
-      style={[isSelected && {backgroundColor}, {borderRadius}, style]}
+      style={[{backgroundColor, borderRadius},  style]}
       underlayColor={underlayColor}
       onPress={onPress}>
         {renderStatusItem}

@@ -17,6 +17,7 @@ const ActionGroupIcons = ({
             <IconButton
                 key={icon.key || index}
                 mode={icon.mode || "contained"}
+                size={icon.size}
                 icon={icon.icon}
                 iconColor={icon.iconColor}
                 disabled={icon.isDisabled}

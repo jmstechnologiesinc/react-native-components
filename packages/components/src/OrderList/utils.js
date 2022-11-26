@@ -50,7 +50,7 @@ export const formatOrder = (order, role) => {
       return {
         orderID: order.id,
         status: order.status,
-        photo: (role === "customer" || role === "driver") && order.restaurant.photo,
+        photo: (role === USER_ROLES.customer || role === USER_ROLES.driver) && order.restaurant.photo,
         deliveryMethod: order.deliveryMethod,
         formattedOrderId,
         fulfilmentStatus: fulfilmentStatus,
@@ -69,7 +69,7 @@ const ORDER_LIST_STATUS = {
 }
 
 const ORDER_LIST_STATUS_MAPPING = {
-    [ORDER_LIST_STATUS.completed]: 'Fulfilled',
+    [ORDER_LIST_STATUS.completed]: 'History',
     [ORDER_LIST_STATUS.placed]: 'New Request',
     [ORDER_LIST_STATUS.inTransit]: 'In-Transit',
     [ORDER_LIST_STATUS.readyforPickup]: 'Ready for Pick up',
@@ -77,45 +77,56 @@ const ORDER_LIST_STATUS_MAPPING = {
     [ORDER_LIST_STATUS.preparing]: 'Preparing',
 }
 
-const ORDER_LIST_STATUS_SORT = [
-    ORDER_LIST_STATUS.placed,
-    ORDER_LIST_STATUS.preparing,
-    ORDER_LIST_STATUS.inTransit,
-    ORDER_LIST_STATUS.readyforPickup,
-    ORDER_LIST_STATUS.completed,
-    ORDER_LIST_STATUS.cancelled,
-];
+const ROLE_ORDER_LIST_STATUS_MAPPING = {
+    [USER_ROLES.vendor]: ORDER_LIST_STATUS_MAPPING,
+    [USER_ROLES.customer]: {
+        ...ORDER_LIST_STATUS_MAPPING,
+        [ORDER_LIST_STATUS.placed]: 'Placed',
+    },
+}
 
-const orderListStatus = (status, role) => {
-    if(role === USER_ROLES.vendor) {
-        if (ORDER_STATUS_CANCELLED(status) === true) {
-            return 'cancelled';
-        } else if (ORDER_STATUS_PREPARING(status) || status === ORDER_LIST_STATUS.shipped) {
-            return 'preparing';
-        } 
+const ROLE_ORDER_LIST_STATUS_SORT = {
+    [USER_ROLES.vendor]: [
+        ORDER_LIST_STATUS.placed,
+        ORDER_LIST_STATUS.preparing,
+        ORDER_LIST_STATUS.inTransit,
+        ORDER_LIST_STATUS.readyforPickup,
+        ORDER_LIST_STATUS.completed,
+        ORDER_LIST_STATUS.cancelled,
+    ],
+    [USER_ROLES.customer]: [    
+        ORDER_LIST_STATUS.placed,    
+        ORDER_LIST_STATUS.inTransit,
+        ORDER_LIST_STATUS.readyforPickup,
+        ORDER_LIST_STATUS.preparing,
+        ORDER_LIST_STATUS.completed,
+        ORDER_LIST_STATUS.cancelled,
+    ],
+}
 
-        return status;
-    } else if(role === USER_ROLES.customer) {
-        if (ORDER_STATUS_PREPARING(status) || status === ORDER_LIST_STATUS.shipped) {
-            return 'preparing';
-        } else if (status === ORDER_LIST_STATUS.inTransit) {
-            return ORDER_LIST_STATUS.inTransit;
-        } else if (status === ORDER_LIST_STATUS.readyforPickup) {
-            return ORDER_LIST_STATUS.readyforPickup
-        }
+const orderListStatus = (status) => {
+    if (ORDER_STATUS_PREPARING(status) || status === ORDER_LIST_STATUS.shipped) {
+        return ORDER_LIST_STATUS.preparing;
+    } else if (ORDER_STATUS_CANCELLED(status) || status === ORDER_LIST_STATUS.completed) {
+        return ORDER_LIST_STATUS.completed
     }
+
+    return status;
 }
 
 export const groupOrderList = (orderList, role) => {
-    const groupedOrderList = groupBy(orderList, ({status}) => orderListStatus(status, role))
+    const groupedOrderList = groupBy(orderList, ({status}) => orderListStatus(status))
 
     let i = 0;
     const results = [];
-    for(; i < ORDER_LIST_STATUS_SORT.length; i++) {
-        if(groupedOrderList.hasOwnProperty(ORDER_LIST_STATUS_SORT[i])) {
+    const orderListStatusSort = ROLE_ORDER_LIST_STATUS_SORT[role];
+    const orderListStatusMapping = ROLE_ORDER_LIST_STATUS_MAPPING[role];
+
+    for(; i < orderListStatusSort.length; i++) {
+        if(groupedOrderList.hasOwnProperty(orderListStatusSort[i])) {
             results.push({
-              title: ORDER_LIST_STATUS_MAPPING[ORDER_LIST_STATUS_SORT[i]],
-              data: groupedOrderList[ORDER_LIST_STATUS_SORT[i]]
+              title: orderListStatusMapping[orderListStatusSort[i]],
+              data: groupedOrderList[orderListStatusSort[i]]
             })
         } 
     }

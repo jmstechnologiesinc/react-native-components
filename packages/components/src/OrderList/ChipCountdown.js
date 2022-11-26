@@ -14,7 +14,7 @@ const ChipCountdown = ({milliseconds}) => {
    
     return (
         (hrs || mins) ? (
-            <Chip>{formattedETATime(hrs, mins)}</Chip>
+            <Chip mode="outlined">{formattedETATime(hrs, mins)}</Chip>
         ) : (
             <ActivityIndicator animating={true} />
         )

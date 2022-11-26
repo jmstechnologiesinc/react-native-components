@@ -13,7 +13,8 @@ const ListItemExtended = ({
     avatar, 
     chips, 
     right, 
-    contentColor,
+    titleStyle,
+    overlineStyle,
     style, 
     ...rest 
 }) => (
@@ -58,8 +59,8 @@ const ListItemExtended = ({
                 )}
             </>
         )}
-        titleStyle={contentColor}
-        overlineStyle={contentColor}
+        titleStyle={titleStyle}
+        overlineStyle={overlineStyle}
         style={style}
         {...rest}
     />
