@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { USER_ROLES } from '@jmsstudiosinc/user';
 import { ORDER_STATUS, ORDER_STATUS_PREPARING} from '@jmsstudiosinc/order';
 
 const ETA_INTERVAL = 1000;
 
-const useCountdown = ({
+const usePreparingTimeCoutdown = ({
     orderID,
     deliveryMethod,
     status,
@@ -29,9 +29,7 @@ const useCountdown = ({
                 const transcurredTime = new Date().getTime() - restaurantAcceptedTime.getTime();
                 const deliveryTimeCountdown = durationValue - transcurredTime;
     
-                let isDelayed = false;
                 if (deliveryTimeCountdown <= deliveryTime) {
-                    isDelayed = true;
                     clearEtaInterval();
                     setEtaValue(deliveryTime);
                 } else {
@@ -51,4 +49,4 @@ const useCountdown = ({
     return etaValue;
 };
 
-export default useCountdown;
+export default usePreparingTimeCoutdown;

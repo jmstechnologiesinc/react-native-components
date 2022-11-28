@@ -4,7 +4,7 @@ import {Chip, ActivityIndicator} from '@jmsstudiosinc/react-native-paper';
 
 import { milliseconsExtractor, formattedETATime } from '@jmsstudiosinc/commons';
 
-const ChipCountdown = ({milliseconds}) => {
+const TimeCountdown = ({milliseconds}) => {
 
     if(milliseconds === undefined) {
         return null
@@ -21,4 +21,4 @@ const ChipCountdown = ({milliseconds}) => {
     )
 }
 
-export default ChipCountdown;
+export default TimeCountdown;

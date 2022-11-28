@@ -10,8 +10,8 @@ import { ORDER_STATUS_CANCELLED, ORDER_STATUS, formatedOrderStatusTime, ORDER_AC
 
 import Accounting from '../Checkout/Accounting';
 import CartListProductItem from '../CartList/CartListProductItem';
-import { formatOrder } from '../OrderList/utils';
-import OrderStatus from '../OrderList/OrderStatus';
+import { formatOrder } from '../Order/utils';
+import OrderStatus from '../Order/OrderStatus';
 import PhotoGallery from '../PhotoGallery/PhotoGallery';
 import * as ActionGroup from '../ActionGroup/ActionGroup';
 import { itemSeparator } from '../utils';
@@ -178,16 +178,16 @@ const OrderView = ({
                     {role === USER_ROLES.customer || role === USER_ROLES.driver ? (
                         <PhotoGallery photos={[formattedOrder.photo]} />
                     ) : null}
+                    
                     <OrderStatus
                         role={role}
-                        status={formattedOrder.status}
-                        deliveryMethod={formattedOrder.deliveryMethod}
-                        durationValue={formattedOrder.durationValue}
-                        deliveryTime={formattedOrder.deliveryTime}
-                        restaurantAcceptedTime={formattedOrder.restaurantAcceptedTime}
-                        orderID={formattedOrder.orderID}
-                        fulfilmentStatus={formattedOrder.fulfilmentStatus}
+                        formattedOrder={formattedOrder} 
                         headerTitleVariant={'headlineSmall'}
+                        showHeaderItems={false}
+                        showHeaderTotal={false}
+                        showHeaderTime={false}
+                        showHeaderAvatar={false}
+                        showVendorOverline={false}
                     />
 
                     {(role === USER_ROLES.vendor || role === USER_ROLES.customer) && (

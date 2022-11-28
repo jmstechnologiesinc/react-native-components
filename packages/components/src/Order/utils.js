@@ -1,6 +1,6 @@
 
 import { USER_ROLES } from '@jmsstudiosinc/user';
-import {firestoreTimestampToDate, groupBy} from "@jmsstudiosinc/commons";
+import {firestoreTimestampToDate} from "@jmsstudiosinc/commons";
 import {
     ORDER_STATUS, 
     ORDER_STATUS_CANCELLED,
@@ -62,7 +62,7 @@ export const formatOrder = (order, role) => {
     }
 }
 
-const ORDER_LIST_STATUS = {
+export const ORDER_LIST_STATUS = {
     ...ORDER_STATUS,
     'cancelled': 'Cancelled',
     'preparing': 'Preparing',
@@ -70,7 +70,7 @@ const ORDER_LIST_STATUS = {
 
 const ORDER_LIST_STATUS_MAPPING = {
     [ORDER_LIST_STATUS.completed]: 'History',
-    [ORDER_LIST_STATUS.placed]: 'New Request',
+    [ORDER_LIST_STATUS.placed]: 'New Requests',
     [ORDER_LIST_STATUS.inTransit]: 'In-Transit',
     [ORDER_LIST_STATUS.readyforPickup]: 'Ready for Pick up',
     [ORDER_LIST_STATUS.cancelled]: 'Cancelled',
@@ -82,6 +82,12 @@ const ROLE_ORDER_LIST_STATUS_MAPPING = {
     [USER_ROLES.customer]: {
         ...ORDER_LIST_STATUS_MAPPING,
         [ORDER_LIST_STATUS.placed]: 'Placed',
+    },
+    [USER_ROLES.driver]: {
+        ...ORDER_LIST_STATUS_MAPPING,
+        [ORDER_STATUS.driverPending]: 'New Requests',  
+        [ORDER_STATUS.driverAccepted]: 'Pending',
+        [ORDER_STATUS.shipped]: 'Picking up from vendor',
     },
 }
 
@@ -102,20 +108,35 @@ const ROLE_ORDER_LIST_STATUS_SORT = {
         ORDER_LIST_STATUS.completed,
         ORDER_LIST_STATUS.cancelled,
     ],
+    [USER_ROLES.driver]: [  
+        ORDER_STATUS.driverPending,  
+        ORDER_LIST_STATUS.inTransit,
+        ORDER_STATUS.driverAccepted,
+        ORDER_STATUS.shipped,
+        ORDER_LIST_STATUS.completed,
+    ],
 }
 
-const orderListStatus = (status) => {
-    if (ORDER_STATUS_PREPARING(status) || status === ORDER_LIST_STATUS.shipped) {
-        return ORDER_LIST_STATUS.preparing;
-    } else if (ORDER_STATUS_CANCELLED(status) || status === ORDER_LIST_STATUS.completed) {
-        return ORDER_LIST_STATUS.completed
+export const orderListStatus = (status, role) => {
+    if(role === USER_ROLES.driver) {
+        if (ORDER_STATUS_CANCELLED(status) || status === ORDER_LIST_STATUS.completed) {
+            return ORDER_LIST_STATUS.completed
+        }
+    } else {
+        if (ORDER_STATUS_PREPARING(status) || status === ORDER_LIST_STATUS.shipped) {
+            return ORDER_LIST_STATUS.preparing;
+        } else if (ORDER_STATUS_CANCELLED(status) || status === ORDER_LIST_STATUS.completed) {
+            return ORDER_LIST_STATUS.completed
+        }
     }
 
     return status;
 }
 
-export const groupOrderList = (orderList, role) => {
-    const groupedOrderList = groupBy(orderList, ({status}) => orderListStatus(status))
+export const groupedOrderListToSectionList = (groupedOrderList, role) => {
+    if(!role) {
+        return [];
+    }
 
     let i = 0;
     const results = [];
@@ -128,8 +149,8 @@ export const groupOrderList = (orderList, role) => {
               title: orderListStatusMapping[orderListStatusSort[i]],
               data: groupedOrderList[orderListStatusSort[i]]
             })
-        } 
+        }
     }
   
     return results
-  }
+}

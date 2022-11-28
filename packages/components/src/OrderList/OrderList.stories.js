@@ -1,9 +1,9 @@
 import React from 'react';
 
 import OrderList from './OrderList';
-import { groupOrderList } from './utils';
+import { groupOrderList } from '../Order/utils';
 
-import vendorMockData from './vendorMockData.json';
+import vendorMockData from '../Order/vendorMockData.json';
 
 export default {
   title: 'packages/OrderList',

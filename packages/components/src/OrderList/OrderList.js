@@ -13,13 +13,14 @@ const OrderList = ({
   data, 
   role, 
   currentOrderId,
-  showDriverStatus,
-  showVendorStatus,
   itemSeparator = true,
   listHeaderComponent,
-  onButtonPress,
+  listEmptyComponent,
   layoutMode = LAYOUT_MODE.portrait,
   showSelectedOverlay,
+  showDriverStatus,
+  showVendorStatus,
+  onButtonPress,
   onPress 
 }) => (
   <SectionList
@@ -28,6 +29,7 @@ const OrderList = ({
     showsVerticalScrollIndicator={false}
     showsHorizontalScrollIndicator={false}
     ListHeaderComponent={listHeaderComponent}
+    ListEmptyComponent={listEmptyComponent}
     renderSectionHeader={({ section: { title } }) => title !== null ? (
       <List.Subheader style={{
         ...(layoutMode === LAYOUT_MODE.landscape && {paddingHorizontal: 0}),

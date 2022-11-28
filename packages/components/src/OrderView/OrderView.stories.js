@@ -4,8 +4,7 @@ import { ORDER_STATUS, NONFULFILLMENT_ORDER_STATUS, PICKUP_ORDER_STATUS, DELIVER
 import { DELIVERY_METHODS, PICKUP_METHODS, PUB } from '@jmsstudiosinc/vendor';
 import { USER_ROLES } from '@jmsstudiosinc/user';
 
-import vendorMockData from '../OrderList/vendorMockData.json';
-import driverMockData from '../OrderList/driverMockData.json';
+import vendorMockData from '../Order/vendorMockData.json';
 
 import OrderView from './OrderView';
 

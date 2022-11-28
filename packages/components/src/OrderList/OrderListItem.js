@@ -1,56 +1,40 @@
 import React from 'react';
 
-import color from 'color';
-
 import {  List, MD3LightTheme, TouchableRipple } from '@jmsstudiosinc/react-native-paper';
 
-import { formatOrder } from './utils';
-import OrderStatus from './OrderStatus';
+import { ORDER_STATUS, ORDER_STATUS_CANCELLED, ORDER_STATUS_PREPARING } from '@jmsstudiosinc/order';
+import { formatOrder } from '../Order/utils';
+import OrderStatus from '../Order/OrderStatus';
 import * as ActionGroup from '../ActionGroup/ActionGroup';
-import { moderateScale } from 'react-native-size-matters';
+import TouchableRippleWrapper from '../TouchableRippleWrapper/TouchableRippleWrapper';
 
 const OrderListItem = ({
   role,
   order,
-  showDriverStatus,
-  showVendorStatus,
   currentOrderId,
   showSelectedOverlay = false,
+  showDriverStatus,
+  showVendorStatus,
   onButtonPress,
   onPress,
-  style
 }) => {
   const formattedOrder = formatOrder(order, role);
-    
-    const isSelected =  currentOrderId === order?.id;
-    let borderRadius;
-    let backgroundColor;
-    let contentColor;
-    let underlayColor;
 
-  if(showSelectedOverlay && isSelected) {
-    borderRadius = moderateScale(7);
-    backgroundColor = isSelected
-      ? MD3LightTheme.colors.secondaryContainer
-      : 'transparent';
-    contentColor = {color: MD3LightTheme.colors.onSecondaryContainer};
-    underlayColor = color(backgroundColor)
-      .mix(color(MD3LightTheme.colors.onSecondaryContainer), 0.16)
-      .rgb()
-      .toString();  
-  }
+  const showHeaderDescription = (ORDER_STATUS_PREPARING(formattedOrder.status) || formattedOrder.status === ORDER_STATUS.shipped) || 
+    ORDER_STATUS_CANCELLED(formattedOrder.status) || 
+    formattedOrder.status === ORDER_STATUS.completed;
 
-  const renderStatusItem = (
+  const isSelected = (currentOrderId === order?.id && showSelectedOverlay);
+  const contentColor = isSelected ? {color: MD3LightTheme.colors.onSecondaryContainer} : null;
+  
+  const renderStatus = (
     <>
       <OrderStatus
         role={role}
-        status={formattedOrder.status}
-        deliveryMethod={formattedOrder.deliveryMethod}
-        durationValue={formattedOrder.durationValue}
-        deliveryTime={formattedOrder.deliveryTime}
-        restaurantAcceptedTime={formattedOrder.restaurantAcceptedTime}
-        orderID={formattedOrder.orderID}
-        fulfilmentStatus={formattedOrder.fulfilmentStatus} 
+        formattedOrder={formattedOrder} 
+    
+        showHeaderDescription={showHeaderDescription}
+        showVendorOverline={false}
         showDriverStatus={showDriverStatus}
         showVendorStatus={showVendorStatus}
         showHeaderAvatar
@@ -66,16 +50,16 @@ const OrderListItem = ({
     </>
   );
 
-  return (
-    <TouchableRipple
-      borderless
-      delayPressIn={0}
-      style={[{backgroundColor, borderRadius},  style]}
-      underlayColor={underlayColor}
+  return showSelectedOverlay ? (
+    <TouchableRippleWrapper
+      isSelected={isSelected}
       onPress={onPress}>
-        {renderStatusItem}
-    </TouchableRipple>  
-  )
+        {renderStatus}
+    </TouchableRippleWrapper>  
+  ) : <TouchableRipple
+    onPress={onPress}>
+      {renderStatus}
+  </TouchableRipple>  
 }
 
 export default OrderListItem;
