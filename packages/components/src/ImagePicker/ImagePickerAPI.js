@@ -76,8 +76,8 @@ class ImagePickerAPI {
     }
 
     async chooseFromLibrary(imagePickerOptions) {
-        await checkAndAskForPermissionMediaLibrary()
-            .then(() => launchImageLibrary({ mediaType: 'photo', quality: 0.5 }))
+        await checkAndAskForPermissionMediaLibrary();
+        launchImageLibrary({ mediaType: 'photo', quality: 0.5 })
             .then((response) => {
                 if (response.didCancel) {
                     console.log('User cancelled image picker');
