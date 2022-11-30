@@ -5048,7 +5048,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/color-convert@*", "@types/color-convert@^2.0.0":
+"@types/color-convert@^2.0.0":
   "integrity" "sha512-m7GG7IKKGuJUXvkZ1qqG3ChccdIM/qBBo913z+Xft0nKCX4hAU/IxKwZBU4cpRZ7GS5kV4vOblUkILtSShCPXQ=="
   "resolved" "https://registry.npmjs.org/@types/color-convert/-/color-convert-2.0.0.tgz"
   "version" "2.0.0"
@@ -5059,13 +5059,6 @@
   "integrity" "sha512-rr+OQyAjxze7GgWrSaJwydHStIhHq2lvY3BOC2Mj7KnzI7XK0Uw1TOOdI9lDoajEbSWLiYgoo4f1R51erQfhPQ=="
   "resolved" "https://registry.npmjs.org/@types/color-name/-/color-name-1.1.1.tgz"
   "version" "1.1.1"
-
-"@types/color@^3.0.3":
-  "integrity" "sha512-X//qzJ3d3Zj82J9sC/C18ZY5f43utPbAJ6PhYt/M7uG6etcF6MRpKdN880KBy43B0BMzSfeT96MzrsNjFI3GbA=="
-  "resolved" "https://registry.npmjs.org/@types/color/-/color-3.0.3.tgz"
-  "version" "3.0.3"
-  dependencies:
-    "@types/color-convert" "*"
 
 "@types/connect-history-api-fallback@^1.3.5":
   "integrity" "sha512-h8QJa8xSb1WD4fpKBDcATDNGXghFj6/3GRWG6dhmRcu0RX1Ubasur2Uvx5aeEwlf0MwblEC2bMzzMQntxnw/Cw=="

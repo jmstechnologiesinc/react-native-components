@@ -11,7 +11,7 @@ const SideNav = ({
   selectedIndex,
   onPress,
 }) => (
-    <View style={{paddingTop: MD3LightTheme.spacing.x4}}>
+    <View style={{paddingTop: MD3LightTheme.spacing.x8}}>
         {isExpanded ? (
             <Drawer.Section title={title}>
                 {menuItems.map((item, index) => (

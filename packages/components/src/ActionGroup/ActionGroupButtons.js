@@ -36,6 +36,7 @@ const ActionGroupButtons = ({
                           icon={button.icon} />
                     ) : (
                         <Button
+                            compact={button.compact}
                             loading={isLoading}
                             disabled={isLoading || button.isDisabled}
                             mode={(button.mode ? button.mode : (isPrimaryButton(buttons.length, index) ? 'contained' : 'outlined'))}

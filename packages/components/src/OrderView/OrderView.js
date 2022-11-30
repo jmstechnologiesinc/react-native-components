@@ -17,6 +17,7 @@ import * as ActionGroup from '../ActionGroup/ActionGroup';
 import { itemSeparator } from '../utils';
 import { plurulize } from '@jmsstudiosinc/commons';
 import ScreenWrapperSection from '../ScreenWrapper/ScreenWrapperSection';
+import { MATERIAL_ICONS } from '@jmsstudiosinc/commons/lib/consts';
 
 const OrderView = ({ 
     order, 
@@ -42,8 +43,7 @@ const OrderView = ({
         fulfilmentDetails.push({
             key: "status-date",
             title: formatedOrderStatusTime(order),
-            description: 'Date',
-            icon: 'calendar-range',
+            icon: MATERIAL_ICONS.calendar,
         });
     }
 
@@ -53,37 +53,27 @@ const OrderView = ({
                 driverDetails.push({
                     key: "delivery-method",
                     title: order.driver.deliveryMethod,
-                    description: 'Delivery Method',
-                    icon: "car"
+                    description: 'Driver Type'
                 });    
                 driverDetails.push({
                     key: "driver-name",
                     title: order.driver?.formattedName,
-                    description: 'Name',
-                    icon: "card-account-details"
+                    icon: MATERIAL_ICONS.account
                 });
                 if(order.driver.phone) {
                     driverDetails.push({
                         key: "driver-phone",
                         title: order.driver.phone,
-                        description: 'Phone',
-                        icon: "phone"
+                        icon: MATERIAL_ICONS.call
                     });
                 }
-            } else {
-                driverDetails.push({
-                    key: "driver-delivery-method",
-                    title: order.deliveryMethod,
-                    description: 'Delivery Method',
-                    icon: "car"
-                }); 
             }
         } else if (order.fulfillmentMethod === PUB.pickup) {
             fulfilmentDetails.push({
                 key: "delivery-method",
                 title: order.deliveryMethod,
                 description: 'Fulfillment Method',
-                icon: "account"
+                icon: MATERIAL_ICONS.fulfillmentMethod
             });
         }
     }
@@ -92,16 +82,14 @@ const OrderView = ({
         fulfilmentDetails.push({
             key: "author-name",
             title: order.author.formattedName,
-            description: 'Name',
-            icon: "card-account-details"
+            icon: MATERIAL_ICONS.account
         });
 
         if(order.author.phone) {
             fulfilmentDetails.push({
                 key: "author-phone",
                 title: order.author.phone,
-                description: 'Phone',
-                icon: "phone"
+                icon: MATERIAL_ICONS.call
             });
         }
     }
@@ -110,15 +98,13 @@ const OrderView = ({
         fulfilmentDetails.push({
             key: "shipping-address",
             title: order.shippingAddress.formattedAddress,
-            description: 'Shipping Address',
-            icon: "map-marker"
+            icon: MATERIAL_ICONS.location
         });
     } else if(role === USER_ROLES.customer && order.fulfillmentMethod === PUB.pickup) {
         fulfilmentDetails.push({
             key: "pickup-address",
             title: order.restaurant.location.formattedAddress,
-            description: 'Pickup Address',
-            icon: 'map-marker',
+            icon: MATERIAL_ICONS.location
         });
     }
 
@@ -126,34 +112,24 @@ const OrderView = ({
         fulfilmentDetails.push({
             key: "vendor-phone",
             title: order.restaurant.phone,
-            description: 'Vendor Phone',
-            icon: "phone"
+            icon: MATERIAL_ICONS.call,
+            description: 'Vendor Phone'
         });
     }
 
     const formattedOrder = formatOrder(order, role);
 
-    const actionGroupButtonVariant = role === USER_ROLES.customer ? "button" : "fab";
     const buttonsMapping = formattedOrder.fulfilmentStatus.buttons.map(button => {
-        if(button.value === ORDER_ACTIONS.print || ORDER_STATUS_CANCELLED(button.value)) {
-            if(actionGroupButtonVariant === "button") {
-                return {
-                    ...button,
-                    mode: "outlined"
-                }
-            } 
-
-            if(button.value === ORDER_ACTIONS.print) {
-                return {
-                    ...button,
-                    variant: "secondary"
-                }
-            } else {
-                return {
-                    ...button,
-                    variant: "tertiary"
-                }
-            }   
+        if(button.value === ORDER_ACTIONS.print) {
+            return {
+                ...button,
+                icon: MATERIAL_ICONS.printer
+            }
+        } else if(ORDER_STATUS_CANCELLED(button.value)) {
+            return {
+                ...button,
+                mode: 'text'
+            }
         }
 
         return button;
@@ -163,7 +139,6 @@ const OrderView = ({
     const renderOrderActionButtons = ((onButtonPress && buttonsMapping.length > 0) ? (
         <ActionGroup.Group style={{margin: MD3LightTheme.spacing.x4}}>
             <ActionGroup.Buttons 
-                variant={actionGroupButtonVariant}
                 buttons={buttonsMapping}
                 onPress={(button) => onButtonPress(button, formattedOrder.orderID)}  />
         </ActionGroup.Group>
@@ -207,7 +182,7 @@ const OrderView = ({
                                 <View key={item.key}>
                                     <List.Item 
                                         title={item.title} 
-                                        description={item.description}
+                                        description={item.description} 
                                         left={(props) => <List.Icon {...props} icon={item.icon} />} />
                                     {itemSeparator(index, fulfilmentDetails.length) && <Divider />}
                                 </View>
@@ -221,8 +196,8 @@ const OrderView = ({
                                 <View key={item.key}>
                                     <List.Item 
                                         title={item.title} 
-                                        description={item.description}
-                                        left={(props) => <List.Icon {...props} icon={item.icon} />} />
+                                        description={item.description} 
+                                        {...(item.icon ? {left: (props) => <List.Icon {...props} icon={item.icon} />} : null)} />
                                     {itemSeparator(index, driverDetails.length) && <Divider />}
                                 </View>
                             ))}
@@ -232,7 +207,7 @@ const OrderView = ({
                     <ScreenWrapperSection>
                         <Accounting fees={formattedOrder.fees} />
                     </ScreenWrapperSection>
-                {role === USER_ROLES.customer && renderOrderActionButtons}
+                    {role === USER_ROLES.customer && renderOrderActionButtons}
                 </View>
             </ScrollView>
       
