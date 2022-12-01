@@ -6,19 +6,22 @@ import { Avatar as PaperAvatar, MD3LightTheme, TouchableRipple, List } from '@jm
 import ActionSheet from 'react-native-actions-sheet';
 import ImagePickerAPI from './ImagePickerAPI';
 import { IMAGE_PICKER_ACTIONS } from './utils';
+import { options } from './utils';
+
 
 const Avatar = ({
     photo,
     imagePickerOptions,
-    options,
     titlePermissionCamera,
     titlePermissionPhotos,
     descriptionPermissionCamera,
     descriptionPermissionPhotos,
     cancelPermission,
     settingPermission,
+    removeProfilePicture,
+    actionSheetRef
 }) => {
-    const actionSheetRef = useRef(null);
+  
     const imagePickerRef = useRef();
 
     useEffect(() => {
@@ -37,18 +40,20 @@ const Avatar = ({
     };
 
     const onActionDone = (value) => {
+
         if (value === IMAGE_PICKER_ACTIONS.launchCamera) {
-            imagePickerRef.current.takePhoto(imagePickerOptions);
+            imagePickerRef.current.takePhoto(imagePickerOptions)
         }
         if (value === IMAGE_PICKER_ACTIONS.launchImageLibrary) {
             imagePickerRef.current.chooseFromLibrary(imagePickerOptions);
         }
         if (value === IMAGE_PICKER_ACTIONS.removeImage) {
-            console.log('remove');
+            removeProfilePicture()
         }
         if (value === IMAGE_PICKER_ACTIONS.cancel) {
             actionSheetRef.current.hide();
         }
+        return;
     };
 
     return (
