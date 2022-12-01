@@ -1,11 +1,12 @@
 import React from 'react';
 
+import {View} from "react-native"
+
 import { isNumeric } from '@jmsstudiosinc/commons';
 
-import SegmentedButtonGroup from '../SegmentedButtonGroup/SegmentedButtonGroup';
+import { IconButton,  Text } from '@jmsstudiosinc/react-native-paper';
 
 const QuantityButton = ({
-    title,
     value, 
     minQuantity, 
     maxQuantity, 
@@ -31,24 +32,13 @@ const QuantityButton = ({
         onPress(results);
     };
 
-    const handleOnPress = qt => {
-        if(qt === "+") {
-            onIncrease()
-        } else if(qt === "-") {
-            onDecrease()
-        }
-    }
-
-    return <SegmentedButtonGroup
-        title={title}
-        density="small"
-        data={[
-            {label: " ", "value": "-", "icon": "minus-circle"}, 
-            {"label": count, "value": undefined},  
-            {label: " ", "value": "+", "icon": "plus-circle"}
-        ]} 
-        value={null}
-        onPress={handleOnPress} />
+    return (
+        <View style={{flex: 1,flexDirection: "row", justifyContent: "space-evenly", alignItems: 'center'}}>
+            <IconButton mode="contained" icon="minus" onPress={onDecrease} />
+            <Text variant="bodyLarge">{count}</Text>
+            <IconButton mode="contained" icon="plus" onPress={onIncrease} />
+        </View>
+    )
 }
 
 

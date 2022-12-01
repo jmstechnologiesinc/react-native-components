@@ -14,6 +14,7 @@ const ListItem = ({
     right,
     onPress,
     titleNumberOfLines,
+    descriptionNumberOfLines,
     titleVariant="bodyLarge",
     metaTitleVariant,
     style,
@@ -50,6 +51,7 @@ const ListItem = ({
       title={title}
       right={renderRight}
       titleNumberOfLines={titleNumberOfLines}
+      descriptionNumberOfLines={descriptionNumberOfLines}
       description={description}
       metaTitle={metaTitle}
       metaQuantity={metaQuantity}
@@ -61,6 +63,8 @@ const ListItem = ({
     <List.Item
       right={renderRight}
       title={renderTitle}
+      titleNumberOfLines={titleNumberOfLines}
+      descriptionNumberOfLines={descriptionNumberOfLines}
       description={description}
       onPress={onPress}
       style={style}

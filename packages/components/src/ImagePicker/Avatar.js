@@ -48,7 +48,7 @@ const Avatar = ({
             imagePickerRef.current.chooseFromLibrary(imagePickerOptions);
         }
         if (value === IMAGE_PICKER_ACTIONS.removeImage) {
-            removeProfilePicture()
+            removeProfilePicture?.()
         }
         if (value === IMAGE_PICKER_ACTIONS.cancel) {
             actionSheetRef.current.hide();

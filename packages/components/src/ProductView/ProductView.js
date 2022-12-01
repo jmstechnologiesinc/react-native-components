@@ -48,7 +48,8 @@ const ProductView = ({
                     metaTitle={price}
                     titleVariant={'headlineSmall'}
                     metaTitleVariant={'headlineSmall'}
-                    titleNumberOfLines={4} />
+                    titleNumberOfLines={10} 
+                    descriptionNumberOfLines={10}/>
             </View>
         </>
     );
