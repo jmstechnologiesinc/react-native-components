@@ -38,6 +38,8 @@ const CartList = ({
                         onEdit={onEdit} 
                         onCheckout={onCheckout} />
                 )}
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
                 ListHeaderComponent={listHeaderComponent}
                 ListFooterComponent={<View style={listFooterComponentStyle}>{listFooterComponent}</View>}
             />

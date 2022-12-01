@@ -74,7 +74,7 @@ const CartListItem = ({
             ))}
 
             <ScreenWrapper.Section withPaddingHorizontal style={{ flexDirection: 'row' }}>
-                <Chip mode="outlined" onPress={() => onAdd(item)}>
+                <Chip mode="flat" onPress={() => onAdd(item)}>
                     {addTitle}
                 </Chip>
             </ScreenWrapper.Section>

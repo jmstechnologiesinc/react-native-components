@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { ScrollView ,View} from 'react-native';
+import { ScrollView, View} from 'react-native';
 
-import { Divider, List, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
+import { Divider, List } from '@jmsstudiosinc/react-native-paper';
 
 import { USER_ROLES } from '@jmsstudiosinc/user';
 import {  PUB } from '@jmsstudiosinc/vendor';
@@ -18,6 +18,7 @@ import { itemSeparator } from '../utils';
 import { plurulize } from '@jmsstudiosinc/commons';
 import ScreenWrapperSection from '../ScreenWrapper/ScreenWrapperSection';
 import { MATERIAL_ICONS } from '@jmsstudiosinc/commons/lib/consts';
+import styles from '../styles';
 
 const OrderView = ({ 
     order, 
@@ -123,21 +124,26 @@ const OrderView = ({
         if(button.value === ORDER_ACTIONS.print) {
             return {
                 ...button,
-                icon: MATERIAL_ICONS.printer
+                icon: MATERIAL_ICONS.printer,
+                mode: "outlined",
+                contentStyle: {flexGrow: 2}
             }
         } else if(ORDER_STATUS_CANCELLED(button.value)) {
             return {
                 ...button,
-                mode: 'text'
+                mode: 'text',
+                contentStyle: {flexGrow: 2}
             }
         }
 
-        return button;
+        return {
+            ...button,
+            contentStyle: {flexGrow: 3}
+        };
     });
 
-
-    const renderOrderActionButtons = ((onButtonPress && buttonsMapping.length > 0) ? (
-        <ActionGroup.Group style={{margin: MD3LightTheme.spacing.x4}}>
+    const renderActionButtons = ((onButtonPress && buttonsMapping.length > 0) ? (
+        <ActionGroup.Group style={styles.fba}>
             <ActionGroup.Buttons 
                 buttons={buttonsMapping}
                 onPress={(button) => onButtonPress(button, formattedOrder.orderID)}  />
@@ -207,11 +213,11 @@ const OrderView = ({
                     <ScreenWrapperSection>
                         <Accounting fees={formattedOrder.fees} />
                     </ScreenWrapperSection>
-                    {role === USER_ROLES.customer && renderOrderActionButtons}
+                    {role === USER_ROLES.customer && renderActionButtons}
                 </View>
             </ScrollView>
       
-            {role === USER_ROLES.vendor && renderOrderActionButtons}
+            {role === USER_ROLES.vendor && renderActionButtons}
         </>
     );
 };

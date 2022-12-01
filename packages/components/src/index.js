@@ -5,6 +5,8 @@ import * as ActionGroup from './ActionGroup/ActionGroup';
 import * as AuthForm from './AuthForm/AuthForm';
 import * as ImagePicker from './ImagePicker/ImagePicker';
 
+export {default as styles} from "./styles";
+
 export { List, ImagePicker, Tabs, ProductList, ActionGroup, AuthForm };
 
 export { default as VendorList } from './VendorList/VendorList';
