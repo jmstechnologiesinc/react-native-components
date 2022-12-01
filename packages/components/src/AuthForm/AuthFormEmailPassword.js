@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { TextInput } from '@jmsstudiosinc/react-native-paper';
+import { TextInput, Button } from '@jmsstudiosinc/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 
 const AuthFormEmailPassword = ({
@@ -14,12 +14,16 @@ const AuthFormEmailPassword = ({
     inputActionHandler,
     labelConfirmPassword,
     passwordConfirm,
+    title,
+    resetPassword = false,
+    buttonTitle,
+    onPasswordReset,
 }) => {
     const [isTextSecureEntry, setIsTextSecureEntry] = useState(true);
 
     return (
         <>
-            <ScreenWrapper.Section>
+            <ScreenWrapper.Section title={title}>
                 <TextInput
                     label={labelEmail}
                     value={email}
@@ -59,6 +63,14 @@ const AuthFormEmailPassword = ({
                             />
                         }
                     />
+                </ScreenWrapper.Section>
+            )}
+
+            {resetPassword && (
+                <ScreenWrapper.Section>
+                    <Button mode="text" onPress={onPasswordReset}>
+                        {buttonTitle}
+                    </Button>
                 </ScreenWrapper.Section>
             )}
         </>

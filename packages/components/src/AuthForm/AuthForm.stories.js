@@ -45,6 +45,21 @@ export const AuthFormConfirmPassword = () => (
     />
 );
 
+export const AuthFormResetPassword = () => (
+    <AuthForm.EmailPassword
+        title="Contact Details"
+        labelEmail="Email"
+        labelPassword="Password"
+        email={state.email}
+        password={state.password}
+        passwordConfirm={state.passwordConfirm}
+        inputActionHandler={() => {}}
+        resetPassword={true}
+        buttonTitle={'Reset password'}
+        onPasswordReset={() => {}}
+    />
+);
+
 export const AuthFormEmailPasswordDisabled = () => (
     <AuthForm.EmailPassword
         labelEmail="Email"
