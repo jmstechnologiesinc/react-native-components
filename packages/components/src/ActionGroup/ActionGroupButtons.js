@@ -23,9 +23,8 @@ const ActionGroupButtons = ({
         <View style={[styles.row, { justifyContent: compact && 'flex-end' }, style]}>
             {buttons.map((button, index) => (
                 <View
-                    style={{ marginLeft: index > 0 && MD3LightTheme.margin, flex: !compact && 1 }}
-                    key={button.key || index}
-                >
+                    style={[{alignItems: 'stretch',  marginLeft: index > 0 && MD3LightTheme.margin, flex: !compact && 1 }, button.contentStyle]}
+                    key={button.key || index} >
                     {variant === 'fab' ? (
                         <FAB
                          loading={isLoading}
@@ -38,11 +37,11 @@ const ActionGroupButtons = ({
                         <Button
                             compact={button.compact}
                             loading={isLoading}
+                            textColor={button.textColor}
                             disabled={isLoading || button.isDisabled}
                             mode={(button.mode ? button.mode : (isPrimaryButton(buttons.length, index) ? 'contained' : 'outlined'))}
                             icon={button.icon}
-                            onPress={() => onPress?.(button)}
-                        >
+                            onPress={() => onPress?.(button)}>
                             {button.title}
                         </Button>
                     )}

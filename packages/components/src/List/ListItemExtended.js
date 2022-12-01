@@ -51,7 +51,7 @@ const ListItemExtended = ({
                 {chips?.length > 0 && (
                     <View style={[styles.row, styles.additionalPadding]}>
                         {chips.map((chip) => (
-                            <Chip mode="outlined" style={[styles.chip]}>
+                            <Chip mode="outlined" compact style={[styles.chip]}>
                                 {chip}
                             </Chip>
                         ))}

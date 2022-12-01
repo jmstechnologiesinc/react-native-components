@@ -3,8 +3,8 @@ import { View } from 'react-native';
 import { MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 
 const containerPaddings = {
-    top: MD3LightTheme.spacing.x2,
-    bottom: MD3LightTheme.spacing.x4,
+    top: 0,
+    bottom: 0,
     left: MD3LightTheme.spacing.x4,
     right: MD3LightTheme.spacing.x4,
 };

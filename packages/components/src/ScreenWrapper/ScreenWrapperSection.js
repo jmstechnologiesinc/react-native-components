@@ -7,12 +7,13 @@ import ScreenWrapperContainer, { containerPaddings } from './ScreenWrapperContai
 
 const sectionPaddings = {
     ...containerPaddings,
+    top: MD3LightTheme.spacing.x2,
     bottom: MD3LightTheme.spacing.x2,
 };
 
 export const ScreenWrapperSection = ({ withPaddingHorizontal = false, title, titleStyle, style, children }) => (
     <ScreenWrapperContainer
-        paddingTop={sectionPaddings.top}
+        paddingTop={title ? 0 : sectionPaddings.top}
         paddingBottom={sectionPaddings.bottom}
         withPaddingHorizontal={withPaddingHorizontal}
         style={[{flex: null}, style]}

@@ -10,34 +10,64 @@ export default {
 };
 
 export const Container = () => (
-  <ScreenWrapper style={{backgroundColor: MD3LightTheme.colors.primaryContainer}}>
-      <ScreenWrapperContainer>
-        <View style={{backgroundColor: MD3LightTheme.colors.onPrimaryContainer, flex: 1}}>Container</View>
+  <ScreenWrapper >
+      <ScreenWrapperContainer style={{backgroundColor: MD3LightTheme.colors.primaryContainer}}>
+        <View style={{backgroundColor: 'red', flex: 1, color: 'yellow'}}>Container</View>
+      </ScreenWrapperContainer>
+  </ScreenWrapper>
+)
+
+export const ContainerSection = () => (
+  <ScreenWrapper >
+      <ScreenWrapperContainer style={{backgroundColor: MD3LightTheme.colors.primaryContainer}}>
+        <ScreenWrapperSection style={{backgroundColor: MD3LightTheme.colors.onPrimaryContainer}}>
+            <View style={{backgroundColor: 'red', flex: 1, color: 'yellow'}}>Section</View>
+         </ScreenWrapperSection>
+         <ScreenWrapperSection style={{backgroundColor: MD3LightTheme.colors.onPrimaryContainer}}>
+            <View style={{backgroundColor: 'red', flex: 1, color: 'yellow'}}>Section</View>
+         </ScreenWrapperSection>
+      </ScreenWrapperContainer>
+  </ScreenWrapper>
+)
+
+export const SectionTitle = () => (
+  <ScreenWrapper>
+      <ScreenWrapperContainer style={{backgroundColor: MD3LightTheme.colors.primaryContainer}}>
+        <ScreenWrapperSection title="The Title" style={{backgroundColor: MD3LightTheme.colors.onPrimaryContainer}}>
+          <View style={{backgroundColor: 'red', flex: 1, color: 'yellow'}}>Section</View>
+        </ScreenWrapperSection>
+      </ScreenWrapperContainer>
+
+      <ScreenWrapperContainer style={{backgroundColor: MD3LightTheme.colors.primaryContainer}}>
+        <ScreenWrapperSection title="The Title" style={{backgroundColor: MD3LightTheme.colors.onPrimaryContainer}}>
+          <View style={{backgroundColor: 'red', flex: 1, color: 'yellow'}}>Section</View>
+        </ScreenWrapperSection>
+        <ScreenWrapperSection title="The Title" style={{backgroundColor: MD3LightTheme.colors.onPrimaryContainer}}>
+          <View style={{backgroundColor: 'red', flex: 1, color: 'yellow'}}>Section</View>
+        </ScreenWrapperSection>
+        <ScreenWrapperSection title="The Title" style={{backgroundColor: MD3LightTheme.colors.onPrimaryContainer}}>
+          <View style={{backgroundColor: 'red', flex: 1, color: 'yellow'}}>Section</View>
+        </ScreenWrapperSection>
       </ScreenWrapperContainer>
   </ScreenWrapper>
 )
 
 export const Section = () => (
-  <ScreenWrapper style={{backgroundColor: MD3LightTheme.colors.primaryContainer}}>
-      <ScreenWrapperSection>
-        <View style={{backgroundColor: MD3LightTheme.colors.onPrimaryContainer, flex: 1}}>Container</View>
-      </ScreenWrapperSection>
-  </ScreenWrapper>
-)
-
-export const SectionTitle = () => (
-  <ScreenWrapper style={{backgroundColor: MD3LightTheme.colors.primaryContainer}}>
-      <ScreenWrapperSection withPaddingHorizontal title="The Title">
-        <View style={{backgroundColor: MD3LightTheme.colors.onPrimaryContainer, flex: 1}}>Container</View>
+  <ScreenWrapper >
+      <ScreenWrapperSection style={{backgroundColor: MD3LightTheme.colors.onPrimaryContainer}}>
+        <View style={{backgroundColor: 'red', flex: 1, color: 'yellow'}}>Section</View>
       </ScreenWrapperSection>
   </ScreenWrapper>
 )
 
 export const SectionHorizontal = () => (
-  <ScreenWrapper style={{backgroundColor: MD3LightTheme.colors.primaryContainer}}>
-      <ScreenWrapperSection withPaddingHorizontal>
-        <View style={{backgroundColor: MD3LightTheme.colors.onPrimaryContainer, flex: 1}}>Container</View>
+  <ScreenWrapper>
+          <ScreenWrapperContainer style={{backgroundColor: MD3LightTheme.colors.primaryContainer}}>
+
+      <ScreenWrapperSection withPaddingHorizontal style={{backgroundColor: MD3LightTheme.colors.onPrimaryContainer}}>
+        <View style={{backgroundColor: 'red', flex: 1, color: 'yellow'}}>Container</View>
       </ScreenWrapperSection>
+      </ScreenWrapperContainer>
   </ScreenWrapper>
 )
 

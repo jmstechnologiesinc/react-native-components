@@ -1,9 +1,12 @@
 import React from 'react';
-import { SectionList } from 'react-native';
+import { SectionList, View } from 'react-native';
 
-import VendorItem from './VendorItem';
+import { MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
+
+import VendorListItem from './VendorListItem';
 
 const keyExtractor = item => `vendor-list-${item.id}`;
+const ItemSeparatorComponent = () => <View style={{marginBottom: MD3LightTheme.spacing.x4}} />
 
 const VendorList = ({ 
     sections, 
@@ -13,8 +16,9 @@ const VendorList = ({
     {...props}
     sections={sections}
     keyExtractor={keyExtractor}
+    ItemSeparatorComponent={ItemSeparatorComponent}
     renderItem={({item}) => (
-        <VendorItem 
+        <VendorListItem 
             item={item} 
             onPress={onPress} />
     )} 
