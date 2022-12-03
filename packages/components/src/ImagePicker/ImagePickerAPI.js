@@ -57,7 +57,7 @@ class ImagePickerAPI {
         );
     }
 
-    async takePhoto(imagePickerOptions) {
+    async takePhoto(onChange) {
         await checkAndAskForPermissionCamara()
             .then(() => launchCamera({ mediaType: 'photo', quality: 0.5 }))
             .then((response) => {
@@ -69,13 +69,13 @@ class ImagePickerAPI {
                 } else if (response.customButton) {
                     console.log('User tapped custom button: ', response.customButton);
                 } else {
-                    imagePickerOptions(response?.assets[0]);
+                    onChange(response?.assets[0]);
                 }
             })
             .catch(() => this.catchPermissionStatusCamara());
     }
 
-    async chooseFromLibrary(imagePickerOptions) {
+    async chooseFromLibrary(onChange) {
         await checkAndAskForPermissionMediaLibrary();
         launchImageLibrary({ mediaType: 'photo', quality: 0.5 })
             .then((response) => {
@@ -87,7 +87,7 @@ class ImagePickerAPI {
                 } else if (response.customButton) {
                     console.log('User tapped custom button: ', response.customButton);
                 } else {
-                    imagePickerOptions(response?.assets[0]);
+                    onChange(response?.assets[0]);
                 }
             })
             .catch(() => this.catchPermissionStatusPhotos());

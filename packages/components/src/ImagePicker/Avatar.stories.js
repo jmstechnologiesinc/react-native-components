@@ -8,7 +8,7 @@ export default {
 const defaultPhoto =
     'https://firebasestorage.googleapis.com/v0/b/jms-eats-70330.appspot.com/o/users%2F3mWlE%2BhyRC6LvBx2JDrGBg%3A0.jpeg?alt=media&token=5f96b821-3a3c-4a1c-b22c-73c68707efbe';
 
-const actionSheetRef = {};
+const actionSheetRef = useRef(null);
 
 const imagePickerOptions = (url) => {
     console.log(url);

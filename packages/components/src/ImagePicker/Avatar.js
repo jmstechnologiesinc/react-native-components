@@ -11,18 +11,18 @@ import { options } from './utils';
 
 const Avatar = ({
     photo,
-    imagePickerOptions,
+    onChange,
+    onRemove,
     titlePermissionCamera,
     titlePermissionPhotos,
     descriptionPermissionCamera,
     descriptionPermissionPhotos,
     cancelPermission,
     settingPermission,
-    removeProfilePicture,
-    actionSheetRef
 }) => {
   
     const imagePickerRef = useRef();
+    const actionSheetRef =  useRef()
 
     useEffect(() => {
         imagePickerRef.current = new ImagePickerAPI(
@@ -42,13 +42,17 @@ const Avatar = ({
     const onActionDone = (value) => {
 
         if (value === IMAGE_PICKER_ACTIONS.launchCamera) {
-            imagePickerRef.current.takePhoto(imagePickerOptions)
+            imagePickerRef.current.takePhoto(onChange)
+             actionSheetRef.current.hide();
+            
         }
         if (value === IMAGE_PICKER_ACTIONS.launchImageLibrary) {
-            imagePickerRef.current.chooseFromLibrary(imagePickerOptions);
+            imagePickerRef.current.chooseFromLibrary(onChange(actionSheetRef));
+             actionSheetRef.current.hide();
         }
         if (value === IMAGE_PICKER_ACTIONS.removeImage) {
-            removeProfilePicture?.()
+            onRemove()
+             actionSheetRef.current.hide();
         }
         if (value === IMAGE_PICKER_ACTIONS.cancel) {
             actionSheetRef.current.hide();
