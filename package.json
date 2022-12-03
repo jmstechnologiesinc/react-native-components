@@ -43,7 +43,12 @@
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "^0.17.7",
     "react-scripts": "^5.0.1",
-    "storybook-addon-state": "^1.0.3"
+    "storybook-addon-state": "^1.0.3",
+    "lodash": "^4.17.21",
+    "lodash.memoize": "^4.1.2",
+    "i18n-js": "^3.8.0",
+    "react-native-localize": "^2.1.7"
+
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
