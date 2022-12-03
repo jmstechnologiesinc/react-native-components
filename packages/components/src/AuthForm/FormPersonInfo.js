@@ -36,6 +36,7 @@ const FormPersonInfo = ({
                     mode="outlined"
                     label={labelPhone}
                     value={phone}
+                    keyboardType='numeric'
                     onChangeText={(text) => inputActionHandler('phone', text)}
                 />
             </ScreenWrapper.Section>

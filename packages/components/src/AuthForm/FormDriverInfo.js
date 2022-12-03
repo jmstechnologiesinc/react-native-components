@@ -34,6 +34,7 @@ const FormDriverInfo = ({
                     mode="outlined"
                     label={labelZipCode}
                     value={zipcode}
+                    keyboardType='numeric'
                     onChangeText={(text) => inputActionHandler('zipcode', text)}
                 />
             </ScreenWrapper.Section>
@@ -43,6 +44,7 @@ const FormDriverInfo = ({
                     label={labelDateBirth}
                     placeholder="MM/DD/YY"
                     value={dateofBirth}
+                    keyboardType='numeric'
                     onChangeText={(text) => inputActionHandler('dateofBirth', text)}
                 />
             </ScreenWrapper.Section>
