@@ -39,12 +39,10 @@ const Avatar = ({
 
     const onActionDone = (value) => {
         if (value === IMAGE_PICKER_ACTIONS.launchCamera) {
-            imagePickerRef.current.takePhoto(onChange);
-            actionSheetRef.current.hide();
+            imagePickerRef.current.takePhoto(onChange, actionSheetRef);
         }
         if (value === IMAGE_PICKER_ACTIONS.launchImageLibrary) {
-            imagePickerRef.current.chooseFromLibrary(onChange(actionSheetRef));
-            actionSheetRef.current.hide();
+            imagePickerRef.current.chooseFromLibrary(onChange, actionSheetRef);
         }
         if (value === IMAGE_PICKER_ACTIONS.removeImage) {
             onRemove();
