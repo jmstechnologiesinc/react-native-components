@@ -8,7 +8,6 @@ import ImagePickerAPI from './ImagePickerAPI';
 import { IMAGE_PICKER_ACTIONS } from './utils';
 import { options } from './utils';
 
-
 const Avatar = ({
     photo,
     onChange,
@@ -20,9 +19,8 @@ const Avatar = ({
     cancelPermission,
     settingPermission,
 }) => {
-  
     const imagePickerRef = useRef();
-    const actionSheetRef =  useRef()
+    const actionSheetRef = useRef();
 
     useEffect(() => {
         imagePickerRef.current = new ImagePickerAPI(
@@ -40,19 +38,17 @@ const Avatar = ({
     };
 
     const onActionDone = (value) => {
-
         if (value === IMAGE_PICKER_ACTIONS.launchCamera) {
-            imagePickerRef.current.takePhoto(onChange)
-             actionSheetRef.current.hide();
-            
+            imagePickerRef.current.takePhoto(onChange);
+            actionSheetRef.current.hide();
         }
         if (value === IMAGE_PICKER_ACTIONS.launchImageLibrary) {
             imagePickerRef.current.chooseFromLibrary(onChange(actionSheetRef));
-             actionSheetRef.current.hide();
+            actionSheetRef.current.hide();
         }
         if (value === IMAGE_PICKER_ACTIONS.removeImage) {
-            onRemove()
-             actionSheetRef.current.hide();
+            onRemove();
+            actionSheetRef.current.hide();
         }
         if (value === IMAGE_PICKER_ACTIONS.cancel) {
             actionSheetRef.current.hide();
@@ -71,7 +67,6 @@ const Avatar = ({
                     )}
                 </TouchableRipple>
             </View>
-
             <ActionSheet
                 ref={actionSheetRef}
                 statusBarTranslucent={false}
