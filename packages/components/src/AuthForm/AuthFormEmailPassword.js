@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import { TextInput, Button } from '@jmsstudiosinc/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
+import { localized } from '../Localization/Localization';
 
 const AuthFormEmailPassword = ({
     email,
@@ -9,23 +10,18 @@ const AuthFormEmailPassword = ({
     isEmailDisabled = false,
     isPasswordDisabled = false,
     confirmPassword = false,
-    labelEmail,
-    labelPassword,
     inputActionHandler,
-    labelConfirmPassword,
     passwordConfirm,
-    title,
     resetPassword = false,
-    buttonTitle,
     onPasswordReset,
 }) => {
     const [isTextSecureEntry, setIsTextSecureEntry] = useState(true);
 
     return (
         <>
-            <ScreenWrapper.Section title={title}>
+            <ScreenWrapper.Section title={localized('Contact Details')}>
                 <TextInput
-                    label={labelEmail}
+                    label={localized('Email')}
                     value={email}
                     onChangeText={(email) => inputActionHandler('email', email)}
                     disabled={isEmailDisabled}
@@ -34,30 +30,36 @@ const AuthFormEmailPassword = ({
 
             <ScreenWrapper.Section>
                 <TextInput
-                    label={labelPassword}
+                    label={localized('Password')}
                     value={password}
                     onChangeText={(password) => inputActionHandler('password', password)}
                     disabled={isPasswordDisabled}
                     secureTextEntry={isTextSecureEntry}
-                  right={!isPasswordDisabled && <TextInput.Icon
-                            name={isTextSecureEntry ? 'eye' : 'eye-off'}
-                            onPress={() => setIsTextSecureEntry(!isTextSecureEntry)}
-                        />}
+                    right={
+                        !isPasswordDisabled && (
+                            <TextInput.Icon
+                                name={isTextSecureEntry ? 'eye' : 'eye-off'}
+                                onPress={() => setIsTextSecureEntry(!isTextSecureEntry)}
+                            />
+                        )
+                    }
                 />
             </ScreenWrapper.Section>
 
             {confirmPassword && (
                 <ScreenWrapper.Section>
                     <TextInput
-                        label={labelConfirmPassword}
+                        label={localized('Confirm Password')}
                         value={passwordConfirm}
                         onChangeText={(passwordConfirm) => inputActionHandler('passwordConfirm', passwordConfirm)}
                         disabled={isPasswordDisabled}
                         secureTextEntry={isTextSecureEntry}
-                        right={ <TextInput.Icon
-                            name={isTextSecureEntry ? 'eye' : 'eye-off'}
-                            onPress={() => setIsTextSecureEntry(!isTextSecureEntry)}
-                        />}
+                        right={
+                            <TextInput.Icon
+                                name={isTextSecureEntry ? 'eye' : 'eye-off'}
+                                onPress={() => setIsTextSecureEntry(!isTextSecureEntry)}
+                            />
+                        }
                     />
                 </ScreenWrapper.Section>
             )}
@@ -65,7 +67,7 @@ const AuthFormEmailPassword = ({
             {resetPassword && (
                 <ScreenWrapper.Section>
                     <Button mode="text" onPress={onPasswordReset}>
-                        {buttonTitle}
+                        {localized('Reset password')}
                     </Button>
                 </ScreenWrapper.Section>
             )}

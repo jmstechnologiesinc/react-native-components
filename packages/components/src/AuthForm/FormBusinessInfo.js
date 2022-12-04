@@ -2,26 +2,15 @@ import React from 'react';
 
 import { TextInput } from '@jmsstudiosinc/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
+import { localized } from '../Localization/Localization';
 
-const FormBusinessInfo = ({
-title,
-labelStoreName,
-labelAddress,
-labelIndustry,
-storeTitle,
-storeAddress,
-industry,
-placeholder,
-inputActionHandler,
-
- 
-}) => {
+const FormBusinessInfo = ({ storeTitle, storeAddress, industry, placeholder, inputActionHandler }) => {
     return (
         <>
-            <ScreenWrapper.Section title={title}>
+            <ScreenWrapper.Section title={localized('Business Details')}>
                 <TextInput
                     mode="outlined"
-                    label={labelStoreName}
+                    label={localized('Store Name')}
                     value={storeTitle}
                     onChangeText={(text) => inputActionHandler('storeTitle', text)}
                 />
@@ -29,7 +18,7 @@ inputActionHandler,
             <ScreenWrapper.Section>
                 <TextInput
                     mode="outlined"
-                    label={labelAddress}
+                    label={localized('Full Store Address')}
                     value={storeAddress}
                     placeholder={placeholder}
                     onChangeText={(text) => inputActionHandler('storeAddress', text)}
@@ -38,7 +27,7 @@ inputActionHandler,
             <ScreenWrapper.Section>
                 <TextInput
                     mode="outlined"
-                    label={labelIndustry}
+                    label={localized('Industry')}
                     value={industry}
                     onChangeText={(text) => inputActionHandler('industry', text)}
                 />
