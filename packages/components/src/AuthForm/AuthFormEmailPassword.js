@@ -14,12 +14,13 @@ const AuthFormEmailPassword = ({
     passwordConfirm,
     resetPassword = false,
     onPasswordReset,
+    titleCredentials = false
 }) => {
     const [isTextSecureEntry, setIsTextSecureEntry] = useState(true);
 
     return (
         <>
-            <ScreenWrapper.Section title={localized('Contact Details')}>
+            <ScreenWrapper.Section title={titleCredentials ? localized('Credentials'): null}>
                 <TextInput
                     label={localized('Email')}
                     value={email}
