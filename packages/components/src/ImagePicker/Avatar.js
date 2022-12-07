@@ -7,48 +7,47 @@ import ActionSheet from 'react-native-actions-sheet';
 import ImagePickerAPI from './ImagePickerAPI';
 import { IMAGE_PICKER_ACTIONS } from './utils';
 import { options } from './utils';
-
+import { localized } from '../Localization/Localization';
 
 const Avatar = ({
     photo,
-    imagePickerOptions,
-    titlePermissionCamera,
-    titlePermissionPhotos,
-    descriptionPermissionCamera,
-    descriptionPermissionPhotos,
-    cancelPermission,
-    settingPermission,
-    removeProfilePicture,
-    actionSheetRef
+    onChange,
+    onRemove,
 }) => {
-  
     const imagePickerRef = useRef();
+    const actionSheetRef = useRef();
 
     useEffect(() => {
         imagePickerRef.current = new ImagePickerAPI(
-            titlePermissionCamera,
-            titlePermissionPhotos,
-            descriptionPermissionCamera,
-            descriptionPermissionPhotos,
-            cancelPermission,
-            settingPermission
+            titlePermissionCamera = localized('Camera permission denied'),
+            titlePermissionPhotos = localized('Please allow access to your photos'),
+            descriptionPermissionCamera = localized(
+                'To have access to the camera you must enable the camera permission in your application settings'
+            ),
+            descriptionPermissionPhotos = localized(
+                'To have access to the photos you must enable the photos permission in your application settings'
+            ),
+            cancelPermission = localized('Cancel'),
+            settingPermission = localized('Go to Settings')
         );
     }, []);
+
+
 
     const showActionSheet = () => {
         actionSheetRef.current.show();
     };
 
     const onActionDone = (value) => {
-
         if (value === IMAGE_PICKER_ACTIONS.launchCamera) {
-            imagePickerRef.current.takePhoto(imagePickerOptions)
+            imagePickerRef.current.takePhoto(onChange, actionSheetRef);
         }
         if (value === IMAGE_PICKER_ACTIONS.launchImageLibrary) {
-            imagePickerRef.current.chooseFromLibrary(imagePickerOptions);
+            imagePickerRef.current.chooseFromLibrary(onChange, actionSheetRef);
         }
         if (value === IMAGE_PICKER_ACTIONS.removeImage) {
-            removeProfilePicture?.()
+            onRemove();
+            actionSheetRef.current.hide();
         }
         if (value === IMAGE_PICKER_ACTIONS.cancel) {
             actionSheetRef.current.hide();
@@ -67,7 +66,6 @@ const Avatar = ({
                     )}
                 </TouchableRipple>
             </View>
-
             <ActionSheet
                 ref={actionSheetRef}
                 statusBarTranslucent={false}

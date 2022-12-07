@@ -3,10 +3,11 @@ import React from 'react';
 import { VENDOR_INDUSTRIES_MAPPING } from '@jmsstudiosinc/vendor';
 
 import ChipList from '../ChipList/ChipList';
+import { localized } from '../Localization/Localization';
 
-const IndustryList = ({ data, title, value, onPress }) => (
+const IndustryList = ({ data, value, onPress }) => (
     <ChipList
-        title={title}
+        title={localized('Industries')}
         options={data.map((item) => VENDOR_INDUSTRIES_MAPPING[item].title)}
         currentIndex={data.indexOf(value)}
         onPress={(index) => onPress(data[index])}

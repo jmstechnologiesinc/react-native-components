@@ -1,4 +1,5 @@
 import { PERMISSIONS, request } from 'react-native-permissions';
+import { localized } from '../Localization/Localization';
 
 export const checkAndAskForPermissionCamara = () =>
     new Promise(async (resolve, reject) => {
@@ -48,8 +49,8 @@ export const IMAGE_PICKER_ACTIONS = {
 };
 
 export const options = [
-    { title: 'Take photo', value: IMAGE_PICKER_ACTIONS.launchCamera, icon: 'camera' },
-    { title: 'Choose from library', value: IMAGE_PICKER_ACTIONS.launchImageLibrary, icon: 'folder-image' },
-    { title: 'Remove Profile Photo', value: IMAGE_PICKER_ACTIONS.removeImage, icon: 'image-remove' },
-    { title: 'cancel', value: IMAGE_PICKER_ACTIONS.cancel, icon: 'cancel' },
+    { title: localized('Take Photo'), value: IMAGE_PICKER_ACTIONS.launchCamera, icon: 'camera' },
+    { title: localized('Choose from library'), value: IMAGE_PICKER_ACTIONS.launchImageLibrary, icon: 'folder-image' },
+    { title: localized('Remove Profile Photo'), value: IMAGE_PICKER_ACTIONS.removeImage, icon: 'image-remove' },
+    { title: localized('cancel'), value: IMAGE_PICKER_ACTIONS.cancel, icon: 'cancel' },
 ];
