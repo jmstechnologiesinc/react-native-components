@@ -8,6 +8,7 @@ import ImagePickerAPI from './ImagePickerAPI';
 import { IMAGE_PICKER_ACTIONS } from './utils';
 import { options } from './utils';
 import { localized } from '../Localization/Localization';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 const Avatar = ({
     photo,
@@ -37,13 +38,24 @@ const Avatar = ({
     const showActionSheet = () => {
         actionSheetRef.current.show();
     };
+      
 
-    const onActionDone = (value) => {
+    const onActionDone =   async (value) => {
         if (value === IMAGE_PICKER_ACTIONS.launchCamera) {
-            imagePickerRef.current.takePhoto(onChange, actionSheetRef);
+            imagePickerRef.current.takePhoto()
+                .then((rep) => {
+                    onChange(rep);
+                    actionSheetRef.current.hide();
+                })
         }
         if (value === IMAGE_PICKER_ACTIONS.launchImageLibrary) {
-            imagePickerRef.current.chooseFromLibrary(onChange, actionSheetRef);
+               imagePickerRef.current.chooseFromLibrary()
+                .then((rep) => {
+                    onChange(rep);
+                    actionSheetRef.current.hide();
+                })
+
+
         }
         if (value === IMAGE_PICKER_ACTIONS.removeImage) {
             onRemove();
