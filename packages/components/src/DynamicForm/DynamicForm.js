@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useRef } from 'react';
 
 import { FlatList, Animated } from 'react-native';
 
@@ -46,8 +46,8 @@ const DynamicForm = ({
     const contentOffsetYRangeRef = useRef(false);
     const scrollY = useRef(new Animated.Value(0)).current;
 
-    const onCheckboxRadioChange = (item, section, value) => {
-        let alteredForm = initialValues;
+    const onCheckRadioChange = (item, section, value) => {
+        let alteredForm = {...initialValues};
 
         if (!alteredForm[section.id]) {
             alteredForm = {
@@ -115,21 +115,17 @@ const DynamicForm = ({
         }
 
         if (!alteredForm[parentId]) {
-            alteredForm[parentId] = {};
+            alteredForm = {
+                ...alteredForm,
+                [parentId]: {}
+            } 
         }
 
         alteredForm = {
             ...alteredForm,
             [section.id]: {
                 ...alteredForm[section.id],
-                isValid: validateSelection(alteredForm[section.id].selection, section.minSelection)
-            }
-        }   
-
-        alteredForm = {
-            ...alteredForm,
-            [section.id]: {
-                ...alteredForm[section.id],
+                isValid: validateSelection(alteredForm[section.id].selection, section.minSelection),
                 formattedSelection: formattedSelection(
                     alteredForm[section.id].selection,
                     section.minSelection,
@@ -169,7 +165,7 @@ const DynamicForm = ({
         <List.Accordion 
             title={item.title} 
             description={initialValues[item.id]?.formattedSelection || item.formattedSelection}
-            descriptionStyle={{...((initialValues[item.id])?.isValid ? null : {color: MD3Colors.error50})}}>
+            descriptionStyle={{...((initialValues[item.id] || item)?.isValid ? null : {color: MD3Colors.error50})}}>
             {item.data?.map((attr) => {
                 const value = Boolean(getValue(attr));
                 const isMaxSelection = validateMaxSelection(value, item, item.maxSelection);
@@ -180,10 +176,12 @@ const DynamicForm = ({
                     isDisabled
                 }
 
-                return <DynamicFormSwitch
-                    key={`dymamic-form-switch-${attr.id}`}
-                    form={form}
-                    onChange={(value) => onCheckboxRadioChange(attr, item, value)} />
+                return (
+                    <DynamicFormSwitch
+                        key={`dymamic-form-switch-${attr.id}`}
+                        form={form}
+                        onChange={(value) => onCheckRadioChange(attr, item, value)} />
+                )
             })}
         </List.Accordion>
     );
