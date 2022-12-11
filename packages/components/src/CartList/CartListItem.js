@@ -45,7 +45,7 @@ const CartListItem = ({
         );
     } else if (type === 'industryWarning') {
         return (
-            <View style={{ marginTop: MD3LightTheme.spacing.x4 * 6, marginBottom: MD3LightTheme.spacing.x4 * 3 }}>
+            <View style={{ marginTop: MD3LightTheme.spacing.x8, marginBottom: MD3LightTheme.spacing.x8 }}>
                 <Text variant={'headlineMedium'}>{title}</Text>
                 <Text variant={'bodyMedium'}>{description}</Text>
             </View>
@@ -76,7 +76,7 @@ const CartListItem = ({
             ))}
 
             <ScreenWrapper.Section withPaddingHorizontal style={{ flexDirection: 'row' }}>
-                <Button icon={MATERIAL_ICONS.increment}  onPress={() => onAdd(item)}>
+                <Button icon={MATERIAL_ICONS.increment} onPress={() => onAdd(item)}>
                     {addTitle}
                 </Button>
             </ScreenWrapper.Section>
