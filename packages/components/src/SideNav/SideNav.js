@@ -25,7 +25,7 @@ const SideNav = ({
                 <View style={index === 0 ? styles.destinationItemHeight : null}>
                     <Drawer.CollapsedItem    
                         label={item.title}
-                        icon={item.icon}
+                        focusedIcon={item.icon}
                         badge={item.badge}
                         active={selectedIndex === index}
                         onPress={() => onPress(item)}
