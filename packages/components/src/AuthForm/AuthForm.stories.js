@@ -23,20 +23,11 @@ const state = {
 };
 
 export const AuthFormEmailPassword = () => (
-    <AuthForm.EmailPassword
-        labelEmail="Email"
-        labelPassword="Password"
-        email={state.email}
-        password={state.password}
-        inputActionHandler={() => {}}
-    />
+    <AuthForm.EmailPassword email={state.email} password={state.password} inputActionHandler={() => {}} />
 );
 
 export const AuthFormConfirmPassword = () => (
     <AuthForm.EmailPassword
-        labelEmail="Email"
-        labelPassword="Password"
-        labelConfirmPassword="Confirm Password"
         email={state.email}
         password={state.password}
         passwordConfirm={state.passwordConfirm}
@@ -47,24 +38,17 @@ export const AuthFormConfirmPassword = () => (
 
 export const AuthFormResetPassword = () => (
     <AuthForm.EmailPassword
-        title="Contact Details"
-        labelEmail="Email"
-        labelPassword="Password"
         email={state.email}
         password={state.password}
         passwordConfirm={state.passwordConfirm}
         inputActionHandler={() => {}}
         resetPassword={true}
-        buttonTitle={'Reset password'}
         onPasswordReset={() => {}}
     />
 );
 
 export const AuthFormEmailPasswordDisabled = () => (
     <AuthForm.EmailPassword
-        labelEmail="Email"
-        labelPassword="Password"
-        labelConfirmPassword="Confirm Password"
         email={state.email}
         password={state.password}
         passwordConfirm={state.passwordConfirm}
@@ -77,10 +61,6 @@ export const AuthFormEmailPasswordDisabled = () => (
 
 export const AuthFormPersonInfo = () => (
     <AuthForm.PersonInfo
-        title="Contact Details"
-        labelFirstName="First Name"
-        labelLastName="Last Name"
-        labelPhone="Phone Number"
         firstName={state.firstName}
         lastName={state.lastName}
         phone={state.phone}
@@ -90,11 +70,6 @@ export const AuthFormPersonInfo = () => (
 
 export const AuthFormDriverInfo = () => (
     <AuthForm.DriverInfo
-        title="Before granting new drivers to access the platform, JMS uses Checkr as its third-party provider to run secure background checks. to ensure safety and security of all members of its platform."
-        labelDriver="Driver's license numer"
-        labelZipCode="Zip code"
-        labelDateBirth="Date of Birth"
-        labelSsn="Social Security Number"
         licenseNumer={state.licenseNumer}
         zipcode={state.zipcode}
         dateofBirth={state.dateofBirth}
@@ -106,9 +81,6 @@ export const AuthFormDriverInfo = () => (
 export const AuthFormBusinessInfo = () => (
     <AuthForm.BusinessInfo
         title="Business Details"
-        labelStoreName="Store Name"
-        labelAddress="Full Store Address"
-        labelIndustry="Industry"
         storeTitle={state.storeTitle}
         storeAddress={state.storeAddress}
         industry={state.industry}

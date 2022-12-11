@@ -2,23 +2,15 @@ import React from 'react';
 
 import { TextInput } from '@jmsstudiosinc/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
+import { localized } from '../Localization/Localization';
 
-const FormPersonInfo = ({
-    title,
-    labelFirstName,
-    firstName,
-    inputActionHandler,
-    labelLastName,
-    lastName,
-    labelPhone,
-    phone,
-}) => {
+const FormPersonInfo = ({ firstName, inputActionHandler, lastName, phone }) => {
     return (
         <>
-            <ScreenWrapper.Section title={title}>
+            <ScreenWrapper.Section title={localized('Contact Details')}>
                 <TextInput
                     mode="outlined"
-                    label={labelFirstName}
+                    label={localized('First Name')}
                     value={firstName}
                     onChangeText={(text) => inputActionHandler('firstName', text)}
                 />
@@ -26,7 +18,7 @@ const FormPersonInfo = ({
             <ScreenWrapper.Section>
                 <TextInput
                     mode="outlined"
-                    label={labelLastName}
+                    label={localized('Last Name')}
                     value={lastName}
                     onChangeText={(text) => inputActionHandler('lastName', text)}
                 />
@@ -34,8 +26,9 @@ const FormPersonInfo = ({
             <ScreenWrapper.Section>
                 <TextInput
                     mode="outlined"
-                    label={labelPhone}
+                    label={localized('Phone Number')}
                     value={phone}
+                    keyboardType="numeric"
                     onChangeText={(text) => inputActionHandler('phone', text)}
                 />
             </ScreenWrapper.Section>
