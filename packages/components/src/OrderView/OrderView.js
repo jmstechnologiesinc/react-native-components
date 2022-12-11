@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ScrollView, View} from 'react-native';
 
-import { Divider, List } from '@jmsstudiosinc/react-native-paper';
+import { Divider, List, MD3Colors } from '@jmsstudiosinc/react-native-paper';
 
 import { USER_ROLES } from '@jmsstudiosinc/user';
 import {  PUB } from '@jmsstudiosinc/vendor';
@@ -17,13 +17,32 @@ import * as ActionGroup from '../ActionGroup/ActionGroup';
 import { itemSeparator } from '../utils';
 import { plurulize } from '@jmsstudiosinc/commons';
 import ScreenWrapperSection from '../ScreenWrapper/ScreenWrapperSection';
-import { MATERIAL_ICONS } from '@jmsstudiosinc/commons/lib/consts';
+import { MATERIAL_ICONS } from '@jmsstudiosinc/commons';
 import styles from '../styles';
 
 const OrderView = ({ 
     order, 
     role, 
-    onButtonPress 
+    onButtonPress,
+
+    enableDriverStatus,
+    enableHeaderStatus,
+    enableVendorStatus,
+    
+    showHeaderOverline,
+    showHeaderTitle,
+    showHeaderDescription,
+    showHeaderAvatar = false,
+    
+    showVendorOverline = false,
+    showVendorTitle,
+    showVendorDescription,
+    showVendorAvatar = false,
+  
+    showDriverOverline,
+    showDriverTitle,
+    showDriverDescription,
+    showDriverAvatar,
 }) => {
     if(!order?.id || !USER_ROLES[role]) {
         return null;
@@ -118,26 +137,39 @@ const OrderView = ({
         });
     }
 
-    const formattedOrder = formatOrder(order, role);
-
+    let formattedOrder = formatOrder(order, role);
+    formattedOrder = {
+        ...formattedOrder,
+        fulfilmentStatus: {
+            ...formattedOrder.fulfilmentStatus,
+            header: {
+                ...formattedOrder.fulfilmentStatus.header,
+                overlines: [formattedOrder.fulfilmentStatus.header.overlines[0]]
+            }
+        }
+    }
+   
     const buttonsMapping = formattedOrder.fulfilmentStatus.buttons.map(button => {
-        if(button.value === ORDER_ACTIONS.print) {
+         if(ORDER_STATUS_CANCELLED(button.value)) {
+            return {
+                ...button,
+                mode: 'text',
+                compact: true,
+                textColor: MD3Colors.error50,
+                contentStyle: {flexGrow: 2}
+            }
+        } else if(button.value === ORDER_ACTIONS.print) {
             return {
                 ...button,
                 icon: MATERIAL_ICONS.printer,
                 mode: "outlined",
                 contentStyle: {flexGrow: 2}
             }
-        } else if(ORDER_STATUS_CANCELLED(button.value)) {
-            return {
-                ...button,
-                mode: 'text',
-                contentStyle: {flexGrow: 2}
-            }
         }
 
         return {
             ...button,
+            compact: true,
             contentStyle: {flexGrow: 3}
         };
     });
@@ -164,11 +196,25 @@ const OrderView = ({
                         role={role}
                         formattedOrder={formattedOrder} 
                         headerTitleVariant={'headlineSmall'}
-                        showHeaderItems={false}
-                        showHeaderTotal={false}
-                        showHeaderTime={false}
-                        showHeaderAvatar={false}
-                        showVendorOverline={false}
+
+                        enableHeaderStatus={enableHeaderStatus}
+                        enableVendorStatus={enableVendorStatus}
+                        enableDriverStatus={enableDriverStatus}
+
+                        showHeaderOverline={showHeaderOverline}
+                        showHeaderTitle={showHeaderTitle}
+                        showHeaderDescription={showHeaderDescription}
+                        showHeaderAvatar={showHeaderAvatar}
+                        
+                        showVendorOverline={showVendorOverline}
+                        showVendorTitle={showVendorTitle}
+                        showVendorDescription={showVendorDescription}
+                        showVendorAvatar={showVendorAvatar}
+                    
+                        showDriverOverline={showDriverOverline}
+                        showDriverTitle={showDriverTitle}
+                        showDriverDescription={showDriverDescription}
+                        showDriverAvatar={showDriverAvatar}
                     />
 
                     {(role === USER_ROLES.vendor || role === USER_ROLES.customer) && (

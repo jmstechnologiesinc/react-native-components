@@ -13,13 +13,31 @@ const OrderList = ({
   data, 
   role, 
   currentOrderId,
-  itemSeparator = true,
+  showItemSeparator = true,
   listHeaderComponent,
   listEmptyComponent,
   layoutMode = LAYOUT_MODE.portrait,
   showSelectedOverlay,
-  showDriverStatus,
-  showVendorStatus,
+  
+  enableDriverStatus,
+  enableHeaderStatus,
+  enableVendorStatus,
+  
+  showHeaderOverline,
+  showHeaderTitle,
+  showHeaderDescription,
+  showHeaderAvatar,
+  
+  showVendorOverline,
+  showVendorTitle,
+  showVendorDescription,
+  showVendorAvatar,
+
+  showDriverOverline,
+  showDriverTitle,
+  showDriverDescription,
+  showDriverAvatar,
+
   onButtonPress,
   onPress 
 }) => (
@@ -37,15 +55,33 @@ const OrderList = ({
         {title}
       </List.Subheader>
     ) : null}
-    ItemSeparatorComponent={itemSeparator ? Divider : null}
+    ItemSeparatorComponent={showItemSeparator ? Divider : null}
     renderItem={({ item }) => (
       <OrderListItem
           role={role}
           order={item}
           showSelectedOverlay={showSelectedOverlay}
           currentOrderId={currentOrderId}
-          showDriverStatus={showDriverStatus}
-          showVendorStatus={showVendorStatus}
+        
+          enableHeaderStatus={enableHeaderStatus}
+          enableVendorStatus={enableVendorStatus}
+          enableDriverStatus={enableDriverStatus}
+  
+          showHeaderOverline={showHeaderOverline}
+          showHeaderTitle={showHeaderTitle}
+          showHeaderDescription={showHeaderDescription}
+          showHeaderAvatar={showHeaderAvatar}
+          
+          showVendorOverline={showVendorOverline}
+          showVendorTitle={showVendorTitle}
+          showVendorDescription={showVendorDescription}
+          showVendorAvatar={showVendorAvatar}
+      
+          showDriverOverline={showDriverOverline}
+          showDriverTitle={showDriverTitle}
+          showDriverDescription={showDriverDescription}
+          showDriverAvatar={showDriverAvatar}
+
           onButtonPress={onButtonPress}
           onPress={() => onPress(item, role)} />
     )}

@@ -13,16 +13,36 @@ const OrderListItem = ({
   order,
   currentOrderId,
   showSelectedOverlay = false,
-  showDriverStatus,
-  showVendorStatus,
+
+  enableDriverStatus,
+  enableHeaderStatus,
+  enableVendorStatus,
+
+  showHeaderOverline,
+  showHeaderTitle,
+  showHeaderAvatar,
+  
+  showVendorOverline,
+  showVendorTitle,
+  showVendorDescription,
+  showVendorAvatar,
+
+  showDriverOverline,
+  showDriverTitle,
+  showDriverDescription,
+  showDriverAvatar,
+
   onButtonPress,
   onPress,
 }) => {
   const formattedOrder = formatOrder(order, role);
 
-  const showHeaderDescription = (ORDER_STATUS_PREPARING(formattedOrder.status) || formattedOrder.status === ORDER_STATUS.shipped) || 
-    ORDER_STATUS_CANCELLED(formattedOrder.status) || 
-    formattedOrder.status === ORDER_STATUS.completed;
+  const showHeaderDescription = (
+      ORDER_STATUS_PREPARING(formattedOrder.status) || 
+      formattedOrder.status === ORDER_STATUS.shipped || 
+      ORDER_STATUS_CANCELLED(formattedOrder.status) || 
+      formattedOrder.status === ORDER_STATUS.completed
+  )
 
   const isSelected = (currentOrderId === order?.id && showSelectedOverlay);
   const contentColor = isSelected ? {color: MD3LightTheme.colors.onSecondaryContainer} : null;
@@ -33,20 +53,37 @@ const OrderListItem = ({
         role={role}
         formattedOrder={formattedOrder} 
     
+        enableHeaderStatus={enableHeaderStatus}
+        enableVendorStatus={enableVendorStatus}
+        enableDriverStatus={enableDriverStatus}
+
+        showHeaderOverline={showHeaderOverline}
+        showHeaderTitle={showHeaderTitle}
         showHeaderDescription={showHeaderDescription}
-        showVendorOverline={false}
-        showDriverStatus={showDriverStatus}
-        showVendorStatus={showVendorStatus}
-        showHeaderAvatar
+        showHeaderAvatar={showHeaderAvatar}
+        
+        showVendorOverline={showVendorOverline}
+        showVendorTitle={showVendorTitle}
+        showVendorDescription={showVendorDescription}
+        showVendorAvatar={showVendorAvatar}
+    
+        showDriverOverline={showDriverOverline}
+        showDriverTitle={showDriverTitle}
+        showDriverDescription={showDriverDescription}
+        showDriverAvatar={showDriverAvatar}
+
         titleStyle={contentColor}
         overlineStyle={contentColor}/>
-        {onButtonPress && <List.Section>
+
+        {onButtonPress && (
+          <List.Section>
             <ActionGroup.Group>
                 <ActionGroup.Buttons 
                     buttons={formattedOrder.fulfilmentStatus.buttons}
                     onPress={(button) => onButtonPress(button, order.id)}  />
             </ActionGroup.Group>
-        </List.Section>}
+        </List.Section>
+        )}
     </>
   );
 

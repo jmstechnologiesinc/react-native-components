@@ -6,7 +6,7 @@ import { MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 import VendorListItem from './VendorListItem';
 
 const keyExtractor = item => `vendor-list-${item.id}`;
-const ItemSeparatorComponent = () => <View style={{marginBottom: MD3LightTheme.spacing.x4}} />
+const Separator = () => <View style={{marginBottom: MD3LightTheme.spacing.x2}} />
 
 const VendorList = ({ 
     sections, 
@@ -16,7 +16,6 @@ const VendorList = ({
     {...props}
     sections={sections}
     keyExtractor={keyExtractor}
-    ItemSeparatorComponent={ItemSeparatorComponent}
     renderItem={({item}) => (
         <VendorListItem 
             item={item} 
@@ -24,6 +23,8 @@ const VendorList = ({
     )} 
     stickySectionHeadersEnabled={false}
     showsVerticalScrollIndicator={false}
-    showsHorizontalScrollIndicator={false} />
+    showsHorizontalScrollIndicator={false}
+    ItemSeparatorComponent={Separator}
+    ListFooterComponent={Separator} />
 
 export default VendorList;

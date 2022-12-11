@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { View } from 'react-native';
+import {  View } from 'react-native';
 
-import { Banner, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
+import { Banner, Card, MD3LightTheme, Text } from '@jmsstudiosinc/react-native-paper';
 
 import * as JMSList from '../List/List';
 import PhotoGallery from '../PhotoGallery/PhotoGallery';
@@ -32,7 +32,6 @@ const ProductView = ({
                 <Banner
                     visible={true}
                     actions={[]}
-                    icon="alert-circle"
                     style={{ marginBottom: MD3LightTheme.spacing.x2 }}
                 >
                     {message.join(', ')}. Please try again!
@@ -41,15 +40,23 @@ const ProductView = ({
 
             <PhotoGallery photos={photos} />
             
-            <View onLayout={onLayoutTitleOffsetY ? (event) => onLayoutTitleOffsetY(event.nativeEvent.layout.y) : null}>
-                <JMSList.Item
+            <View style={{paddingBottom: MD3LightTheme.spacing.x2}} 
+                onLayout={onLayoutTitleOffsetY ? (event) => onLayoutTitleOffsetY(event.nativeEvent.layout.y) : null}>
+                <Card.Title
                     title={title}
-                    description={description}
-                    metaTitle={price}
-                    titleVariant={'headlineSmall'}
-                    metaTitleVariant={'headlineSmall'}
-                    titleNumberOfLines={10} 
-                    descriptionNumberOfLines={10}/>
+                    titleVariant="headlineMedium"
+                    titleNumberOfLines={5}
+                    right={() => (
+                        <JMSList.MetaBadged 
+                            titleVariant={'headlineMedium'} style={{marginRight: MD3LightTheme.spacing.x4}} 
+                            title={price} />
+                    )}
+                />
+                <Card.Content>
+                    <Text variant="bodyMedium">
+                        {description}
+                    </Text>
+                </Card.Content>
             </View>
         </>
     );

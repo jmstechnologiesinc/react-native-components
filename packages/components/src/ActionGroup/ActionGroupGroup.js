@@ -2,17 +2,9 @@ import * as React from 'react';
 
 import { View, StyleSheet } from 'react-native';
 
-import ButtonGroup from './ActionGroupButtons';
-
 const ActionGroupGroup = ({children, style}) => (
     <View style={[styles.container, style]}>
-        {React.Children.toArray(children).map((child) => {
-            if(child.type === ButtonGroup && React.Children.count(children) > 1) {
-              return React.cloneElement(child, {compact: true})
-            } 
-
-            return child
-        })}
+        {children}
     </View>
 );
 

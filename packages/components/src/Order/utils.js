@@ -1,6 +1,6 @@
 
 import { USER_ROLES } from '@jmsstudiosinc/user';
-import {firestoreTimestampToDate} from "@jmsstudiosinc/commons";
+import {firestoreTimestampToDate, interpunct} from "@jmsstudiosinc/commons";
 import {
     ORDER_STATUS, 
     ORDER_STATUS_CANCELLED,
@@ -36,11 +36,11 @@ export const formatOrder = (order, role) => {
         itemNums: order.products?.length,
         deliveryMethod: order.deliveryMethod,
         driverDeliveryMethod: order?.driver?.deliveryMethod,
-        formattedDriverName: order?.driver?.firstName,
         formattedVendorTitle: order.restaurant.title,
         formattedVendorAddress: order.restaurant.location.formattedAddress,
         driverStatus: order?.driver?.status,
-        car: `${order.driver?.carName} - ${order.driver?.carNumber}`,
+        formattedDriverCar: interpunct([order.driver?.carName, order.driver?.carNumber]),
+        formattedDriverName: order?.driver?.formattedName, 
         formattedCustomerName: order.author.formattedName,
         formattedShippingAddress: order.shippingAddress.formattedAddress,
         vendorAvatar: order.restaurant.photo,
@@ -49,16 +49,16 @@ export const formatOrder = (order, role) => {
 
       return {
         orderID: order.id,
+        fees,
+        fulfilmentStatus,
         status: order.status,
         photo: (role === USER_ROLES.customer || role === USER_ROLES.driver) && order.restaurant.photo,
         deliveryMethod: order.deliveryMethod,
         formattedOrderId,
-        fulfilmentStatus: fulfilmentStatus,
         durationValue: order.eta?.duration?.value,
         deliveryTime: order.eta?.deliveryTime?.value,
         formattedStatusTime: order.formattedStatusTime,
         restaurantAcceptedTime: firestoreTimestampToDate(order[orderStatusTime(ORDER_STATUS.restaurantAccepted)]),
-        fees
     }
 }
 

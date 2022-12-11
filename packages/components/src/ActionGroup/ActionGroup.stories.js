@@ -24,7 +24,7 @@ export const FabssOnly = () => (
   </ActionGroup.Group>
 );
 
-export const IconsAndFabss = () => (
+export const IconsAndFabs = () => (
   <ActionGroup.Group>
       <ActionGroup.Icons icons={[{icon: "chevron-up"}, {icon: "chevron-down"}]}/>
       <ActionGroup.Buttons variant="fab" buttons={[{title: "Print"}, {title: "Cancel"}, {title: "Accept"}]}/>

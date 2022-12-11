@@ -11,7 +11,7 @@ const TouchableRippleWrapper = ({
     ...props
  }) => { 
        
-    const borderRadius = moderateScale(7);
+    const borderRadius = moderateScale(MD3LightTheme.roundness);
     let backgroundColor;
     let underlayColor;
 

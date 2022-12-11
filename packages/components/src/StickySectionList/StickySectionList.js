@@ -1,7 +1,9 @@
 import React, { useRef, useState } from 'react';
-
 import { View, Animated, SectionList as NativeSectionList } from 'react-native';
 
+import { MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
+
+import { itemSeparator } from '../utils';
 import * as Tabs from '../Tabs/Tabs';
 
 const AnimatedSectionList = Animated.createAnimatedComponent(NativeSectionList);
@@ -37,6 +39,7 @@ const StickyList = ({
                     key={`sticky-section-${item.id}`}
                     title={item.title}
                     isSelected={currentIndex === index}
+                    style={{backgroundColor: itemSeparator(index, sections.length) ? MD3LightTheme.spacing.x4 : null}}
                     onPress={() => {
                         setCurrentIdex(index);
                         blockUpdateIndexRef.current = true;
@@ -95,6 +98,8 @@ const StickyList = ({
                         <View onLayout={(ev) => setLayoutHeight(ev.nativeEvent.layout.y)}>{renderTab}</View>
                     </>
                 }
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
             />
             <Animated.View style={{
                 position: 'absolute',

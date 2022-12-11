@@ -1,24 +1,9 @@
 import React from "react";
 
-import { View } from "react-native";
-
-import { MD3LightTheme } from "@jmsstudiosinc/react-native-paper";
+import { milliseconsExtractor, formattedETATime, interpunct } from '@jmsstudiosinc/commons';
 
 import usePreparingTimeCoutdown from "./usePreparingTimeCoutdown";
-import TimeCountdown from "./TimeCountdown";
-import ListItemExtended from "../List/ListItemExtended";
-
-const rightWrapper = (child) => (
-    <View
-        style={{
-            justifyContent: 'center',
-            marginLeft: MD3LightTheme.spacing.x4,
-            marginRight: MD3LightTheme.spacing.x2,
-        }}
-    >
-        {child}
-    </View>
-);
+import OrderStatusWrapper from "./OrderStatusWrapper";
 
 const VendorStatus = ({
     role,
@@ -28,15 +13,22 @@ const VendorStatus = ({
     restaurantAcceptedTime,
     deliveryTime,
     durationValue,
+
     overline,
     header,
     subHeader,
     chips,
     avatar,
+
+    showOverline,
+    showTitle,
+    showDescription,
+    showAvatar,
+
     titleStyle,
     overlineStyle,
 }) => {
-    const orderMilliseconds = usePreparingTimeCoutdown({
+    const milliseconds = usePreparingTimeCoutdown({
         role,
         orderID: orderID,
         deliveryMethod: deliveryMethod,
@@ -46,17 +38,28 @@ const VendorStatus = ({
         durationValue: durationValue,
     });
 
+    const renderChips = [...chips];
+    if(milliseconds !== undefined) {
+        const {hrs, mins} = milliseconsExtractor(milliseconds);
+        //renderChips.push(formattedETATime(hrs, mins));
+    }
+
     return (
-        <ListItemExtended
-            overline={overline}
+        <OrderStatusWrapper
+            overline={interpunct(overline)}
             header={header}
             subHeader={subHeader}
-            chips={chips}
+            chips={renderChips}
             avatar={avatar}
-            right={rightWrapper(<TimeCountdown milliseconds={orderMilliseconds} />)}
+            
+            showOverline={showOverline}
+            showTitle={showTitle}
+            showDescription={showDescription}
+            showAvatar={showAvatar}
+            
+            style={{paddingTop: 0}}
             titleStyle={titleStyle}
             overlineStyle={overlineStyle}
-            style={{ paddingTop: 0 }}
         />
     )
 }

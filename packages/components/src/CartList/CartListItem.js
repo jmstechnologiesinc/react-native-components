@@ -2,14 +2,15 @@ import React from 'react';
 
 import { View } from 'react-native';
 
-import { Text, Button, MD3LightTheme, Chip, Divider } from '@jmsstudiosinc/react-native-paper';
+import { Text, Button, MD3LightTheme, Divider, Avatar } from '@jmsstudiosinc/react-native-paper';
 import { CART_ITEM_TYPE } from '@jmsstudiosinc/cart';
 
-import { ItemExtended } from '../List/List';
 import CartListProductItem from './CartListProductItem';
 import ScreenWrapper from '../ScreenWrapper';
 import { itemSeparator } from '../utils';
 import Swipeable from '../SwipeToDelete/SwipeToDelete';
+import {Item as JMSItem}  from '../List/List';
+import { MATERIAL_ICONS } from '@jmsstudiosinc/commons';
 
 const CartListItem = ({  
     checkoutTitle,
@@ -36,7 +37,7 @@ const CartListItem = ({
         return null;
     } else if (type === CART_ITEM_TYPE.checkout) {
         return (
-            <ScreenWrapper.Section withPaddingHorizontal style={{ paddingTop: MD3LightTheme.spacing.x4 * 2 }}>
+            <ScreenWrapper.Section withPaddingHorizontal style={{ paddingTop: MD3LightTheme.spacing.x8, paddingBottom: MD3LightTheme.spacing.x8 }}>
                 <Button mode="contained" onPress={() => onCheckout(item.vendorIds)}>
                     {checkoutTitle}
                 </Button>
@@ -55,11 +56,12 @@ const CartListItem = ({
     
     return (
         <>
-            <ItemExtended 
-                overline={formattedFulfillmentAddress} 
+            <JMSItem
                 title={title} 
-                avatar={photo}
-                description={description}
+                description={[formattedFulfillmentAddress, description]}
+                left={(props) => (
+                    <Avatar.Image style={props.style} source={{ uri: photo }} />
+                )}
             />
 
             {productItems?.map((product, index) => (
@@ -74,13 +76,14 @@ const CartListItem = ({
             ))}
 
             <ScreenWrapper.Section withPaddingHorizontal style={{ flexDirection: 'row' }}>
-                <Chip mode="flat" onPress={() => onAdd(item)}>
+                <Button icon={MATERIAL_ICONS.increment}  onPress={() => onAdd(item)}>
                     {addTitle}
-                </Chip>
+                </Button>
             </ScreenWrapper.Section>
 
-            {renderTips && renderTips(item)}
+            {renderTips ? renderTips(item) : null}
         </>
     );
 };
+
 export default CartListItem;

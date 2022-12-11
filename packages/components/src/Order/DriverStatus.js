@@ -1,57 +1,57 @@
 import React from "react";
 
-import { View } from "react-native";
+import { formattedETATime, interpunct, milliseconsExtractor } from "@jmsstudiosinc/commons";
 
-import { MD3LightTheme, List } from "@jmsstudiosinc/react-native-paper";
-
-import TimeCountdown from "./TimeCountdown";
-import ListItemExtended from "../List/ListItemExtended";
 import usePubNubETA from "./usePubNubETA";
-
-const rightWrapper = (child) => (
-    <View
-        style={{
-            justifyContent: 'center',
-            marginLeft: MD3LightTheme.spacing.x4,
-            marginRight: MD3LightTheme.spacing.x2,
-        }}
-    >
-        {child}
-    </View>
-);
+import OrderStatusWrapper from "./OrderStatusWrapper";
 
 const DriverStatus = ({
     role,
     orderID,
     status,
     deliveryMethod,
-    overline,
+
     header,
     subHeader,
     chips,
     avatar,
+
+    showOverline,
+    showTitle,
+    showDescription,
+    showAvatar,
+
     titleStyle,
     overlineStyle,
 }) => {
-    const pubnubMilliseconds = usePubNubETA({
+    const milliseconds = usePubNubETA({
         role,
         orderID,
         deliveryMethod,
         status
     });
 
-    const avatarFallback = avatar ? {avatar} : {left: (props) => <List.Icon {...props} icon="car" />}
+    const renderChips = [...chips];
+    if(milliseconds !== undefined) {
+        const {hrs, mins} = milliseconsExtractor(milliseconds);
+        renderChips.push(formattedETATime(hrs, mins));
+    }
+
     return (
-        <ListItemExtended
-            overline={overline}
+        <OrderStatusWrapper
             header={header}
             subHeader={subHeader}
-            chips={chips}
-            right={rightWrapper(<TimeCountdown milliseconds={pubnubMilliseconds} />)}
-            {...avatarFallback}
+            chips={renderChips}
+            avatar={avatar}
+            
+            showOverline={showOverline}
+            showTitle={showTitle}
+            showDescription={showDescription}
+            showAvatar={showAvatar}
+            
+            style={{paddingTop: 0}}
             titleStyle={titleStyle}
             overlineStyle={overlineStyle}
-            style={{ paddingTop: 0 }}
         />
     )
 }

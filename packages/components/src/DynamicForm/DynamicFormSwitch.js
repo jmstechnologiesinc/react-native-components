@@ -7,7 +7,7 @@ const DynamicFormSwitch = ({ form, onChange }) => {
     switch (form.type) {
         case FIELD_TYPES.radio:
             return (
-                <JMSList.Radio
+                <JMSList.CheckRadio
                     title={form.title}
                     description={form.description}
                     isDisabled={form.isDisabled}
@@ -18,13 +18,14 @@ const DynamicFormSwitch = ({ form, onChange }) => {
             );
         case FIELD_TYPES.checkbox:
             return (
-                <JMSList.Checkbox
+                <JMSList.CheckRadio
                     title={form.title}
                     description={form.description}
                     isDisabled={form.isDisabled}
                     metadata={form.price}
                     isChecked={form.value}
                     onPress={onChange}
+                    variant="checkbox"
                 />
             );
         default:

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Divider, List } from '@jmsstudiosinc/react-native-paper';
+import { List } from '@jmsstudiosinc/react-native-paper';
 import { getMainPhoto } from '@jmsstudiosinc/commons';
 
 import StickySectionList from '../StickySectionList/StickySectionList';
@@ -19,7 +19,6 @@ const ProductListSticky = ({
         {...props}
         sections={sections}
         renderSectionHeader={({ section: { title } }) => <List.Subheader>{title}</List.Subheader>}
-        ItemSeparatorComponent={Divider}
         keyExtractor={keyExtractor}
         onContentOffsetYScroll={onContentOffsetYScroll}
         contentOffsetY={contentOffsetY}

@@ -5,7 +5,7 @@
         "deliveryMethod": "Marketplace",
         "pickupMethod": "Customer Pickup",
         "title": "Vaka Restaurant",
-        "photos": "https://ik.imagekit.io/sog7th7xvupr/o/vendors%2FAHwW%2Bi2vQAKFUcuRPJUq0Q%3A0.jpeg?alt=media&token=ce6576d6-5aec-4a3f-91e4-ef7032f6e5eb",
+        "photos": ["https://ik.imagekit.io/sog7th7xvupr/o/vendors%2FAHwW%2Bi2vQAKFUcuRPJUq0Q%3A0.jpeg?alt=media&token=ce6576d6-5aec-4a3f-91e4-ef7032f6e5eb"],
         "phone": 123444,
         "industries": [
             "Restaurant"
@@ -55,7 +55,7 @@
         "deliveryMethod": "Marketplace",
         "description": "Use your Uber account to order delivery from Terra Luna Cafe in Lawrence. Browse the menu, view popular items, and track your order.",
         "title": "Terra Luna Cafe",
-        "photos": "https://bloximages.chicago2.vip.townnews.com/eagletribune.com/content/tncms/assets/v3/editorial/4/32/4321af47-264d-52a4-a43a-edf8ffb5e23c/5b3c151c584a9.image.jpg",
+        "photos": ["https://bloximages.chicago2.vip.townnews.com/eagletribune.com/content/tncms/assets/v3/editorial/4/32/4321af47-264d-52a4-a43a-edf8ffb5e23c/5b3c151c584a9.image.jpg"],
         "industries": [
             "Restaurant"
         ],
@@ -97,7 +97,7 @@
         "description": "Use your Uber account to order delivery from McDonald's® (50 BROADWAY) in Lawrence. Browse the menu, view popular items, and track your order.",
         "pickupMethod": "Customer Pickup",
         "title": "McDonald's® (50 BROADWAY)",
-        "photos": "https://images-na.ssl-images-amazon.com/images/G/01/gc/designs/livepreview/amazon_dkblue_noto_email_v2016_us-main._CB468775337_.png",
+        "photos": ["https://images-na.ssl-images-amazon.com/images/G/01/gc/designs/livepreview/amazon_dkblue_noto_email_v2016_us-main._CB468775337_.png"],
         "content": "This spot is among the 3 most popular Fast Food takeout spots in all of Lawrence. Of the 192 things on the menu at this late night go-to, the McChicken is one of the most ordered and the Big Mac and the Piece McNuggets are two of the items most commonly ordered together.",
         "phone": "+19786854728",
         "industries": [

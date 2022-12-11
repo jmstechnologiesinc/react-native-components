@@ -2,42 +2,75 @@ import React from 'react';
 
 import {List, Text} from '@jmsstudiosinc/react-native-paper';
 import * as JMSList from "./List";
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 const ListItem = ({
     photo,
-    overline,
     title,
     description,
+    chips,
     metaTitle,
     metaQuantity,
+    left,
     right,
     onPress,
     titleNumberOfLines,
     descriptionNumberOfLines,
-    titleVariant="bodyLarge",
+    titleVariant,
     metaTitleVariant,
     style,
     titleStyle,
     descriptionStyle,
-    overlineStyle,
     metaTitleStyle,
     ...rests
 }) => {
-  const renderTitle = ({selectable, titleEllipsizeMode, color}) => (
-    <View style={{flex: 1}}>
-      {overline && <Text variant="labelSmall" style={overlineStyle}>{overline}</Text>}
+  const renderTitle = ({selectable, titleEllipsizeMode, color, fontSize}) => (
+    <View style={[styles.container, styles.row, styles.customTitle]}>
       {!!title && <Text
           selectable={selectable}
           ellipsizeMode={titleEllipsizeMode}
           numberOfLines={titleNumberOfLines}
           variant={titleVariant}
-          style={[{ color }, titleStyle]}>
+          style={[{ color,  ...(!titleVariant && {fontSize}) }, titleStyle]}>
           {title}
         </Text>}
     </View>
   );
 
+  const renderDescription = Array.isArray(description) ? ({
+      ellipsizeMode,
+      color: descriptionColor,
+      fontSize,
+  }) => {
+    
+    return (
+      <View style={[styles.container, styles.column]}>
+        {description.map((item, index) => (
+          <View style={index === 0 ? null : [styles.container, styles.row, styles.additionalPadding]}>
+              <Text
+                numberOfLines={2}
+                ellipsizeMode={ellipsizeMode}
+                style={{ color: descriptionColor, fontSize }}>
+                {item}
+              </Text>
+          </View>
+        ))}
+        {chips ? (
+          <View style={[styles.container, styles.row, styles.additionalPadding]}>
+              {chips}
+          </View>
+        ) : null}
+      </View>
+    )
+} : description;
+
+  const renderLeft = photo ? (props) => (
+    <List.Image
+      style={props.style}
+      source={{uri: photo}}
+    />
+  ): left;
+  
   const renderRight = right ? right : (metaTitle || metaQuantity) ? 
     () => <JMSList.MetaBadged
       title={metaTitle} 
@@ -45,31 +78,38 @@ const ListItem = ({
       titleVariant={metaTitleVariant} /> : 
     null
 
-  return photo ? (
-    <JMSList.Image 
-      src={{uri: photo}}
-      title={title}
-      right={renderRight}
-      titleNumberOfLines={titleNumberOfLines}
-      descriptionNumberOfLines={descriptionNumberOfLines}
-      description={description}
-      metaTitle={metaTitle}
-      metaQuantity={metaQuantity}
-      metaTitleVariant={metaTitleVariant}
-      onPress={onPress}
-      style={style}
-      {...rests}/>
-  ) : (
+  return (
     <List.Item
-      right={renderRight}
       title={renderTitle}
+      description={renderDescription}
+      left={renderLeft}
+      right={renderRight}
       titleNumberOfLines={titleNumberOfLines}
       descriptionNumberOfLines={descriptionNumberOfLines}
-      description={description}
       onPress={onPress}
       style={style}
-      {...rests}/>
+      {...rests} 
+    />
   )
 } 
+
+const styles = StyleSheet.create({
+  container: {
+      flex: 1,
+  },
+  row: {
+      flexDirection: 'row',
+  },
+  column: {
+      flexDirection: 'column',
+  },
+  additionalPadding: {
+      paddingTop: 8,
+  },
+  customTitle: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+});
 
 export default ListItem;

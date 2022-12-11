@@ -3,16 +3,16 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
 import { Button, FAB, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
+import { itemSeparator } from '../utils';
 
 const isPrimaryButton = (buttonLength, index) => index === buttonLength - 1;
 
 const ActionGroupButtons = ({ 
     buttons, 
     isLoading, 
-    isDisabled,
+    isStretched = true,
     style, 
     onPress, 
-    compact, 
     variant = 'button' 
 }) => {
     if (!buttons.length) {
@@ -20,10 +20,14 @@ const ActionGroupButtons = ({
     }
 
     return (
-        <View style={[styles.row, { justifyContent: compact && 'flex-end' }, style]}>
+        <View style={[styles.row, { justifyContent: 'flex-end' }, style]}>
             {buttons.map((button, index) => (
                 <View
-                    style={[{alignItems: 'stretch',  marginLeft: index > 0 && MD3LightTheme.margin, flex: !compact && 1 }, button.contentStyle]}
+                    style={[{
+                        alignItems: 'stretch',  
+                        marginRight: itemSeparator(index, buttons.length) ? MD3LightTheme.spacing.x2 : 0, 
+                        flex: isStretched ? 1 : null 
+                    }, button.contentStyle]}
                     key={button.key || index} >
                     {variant === 'fab' ? (
                         <FAB

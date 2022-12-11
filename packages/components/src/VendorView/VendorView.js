@@ -1,12 +1,10 @@
 import React from 'react';
 
-import { View } from 'react-native';
+import {  Banner, MD3LightTheme, Card, Text, IconButton, TouchableRipple } from '@jmsstudiosinc/react-native-paper';
 
-import { List, Banner, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
-
-import * as JMSList from '../List/List';
 import PhotoGallery from '../PhotoGallery/PhotoGallery';
 import SegmentedButtonGroup from '../SegmentedButtonGroup/SegmentedButtonGroup';
+import { interpunct, MATERIAL_ICONS } from '@jmsstudiosinc/commons';
 
 import IndustryList from '../IndustryList/IndustryList';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
@@ -15,9 +13,9 @@ const VendorView = ({
     title,
     onLayoutTitleOffsetY,
     photos,
-    description,
     formattedAddress,
-    formattedPud,
+    formattedPub,
+    formattedHitDistance,
     pudTitle,
     industryTitle,
     pudOptions,
@@ -36,31 +34,36 @@ const VendorView = ({
                     visible={true} 
                     actions={[]} 
                     icon="alert-circle" 
-                    style={{ marginBottom: MD3LightTheme.margin }}>
+                    style={{ marginBottom: MD3LightTheme.spacing.x4 }}>
                     {bannerMessages.join(', ')}
                 </Banner>
             )}
 
             <PhotoGallery photos={photos} />
 
-            <View onLayout={onLayoutTitleOffsetY ? (event) => onLayoutTitleOffsetY(event.nativeEvent.layout.y) : null}>
-                <JMSList.Item
-                    overline={formattedPud}
-                    title={title}
-                    description={formattedAddress}
-                    titleVariant={'headlineSmall'}
-                    right={(props) => (
-                        <View style={{"justifyContent": "center"}}>
-                            <List.Icon icon="chevron-right" {...props} style={{alignItems: "flex-end"}} />
-                        </View>
-                    )}
-                    onPress={onPressVendorOverview}
-                    titleNumberOfLines={4}
-                    style={{paddingBottom: 0}} />
-            </View>
-
-            {description && <List.Item title={description} />}
-
+            <TouchableRipple 
+                onPress={onPressVendorOverview} 
+                onLayout={onLayoutTitleOffsetY ? (event) => onLayoutTitleOffsetY(event.nativeEvent.layout.y) : null}
+                style={{paddingBottom: MD3LightTheme.spacing.x2}}>
+                <>
+                    <Card.Title
+                        title={title}
+                        subtitle={interpunct([formattedPub, formattedHitDistance])}
+                        titleVariant="headlineMedium"
+                        subtitleVariant="bodyLarge"
+                        titleNumberOfLines={5}
+                        right={(props) => (
+                            <IconButton {...props} icon={MATERIAL_ICONS.chevron} />
+                        )}
+                    />
+                    <Card.Content>
+                        <Text variant="bodyMedium">
+                            {formattedAddress}
+                        </Text>
+                    </Card.Content>
+                </>
+            </TouchableRipple>
+          
             {industryList && (
                 <ScreenWrapper.Section title={industryTitle} withPaddingHorizontal>
                     <IndustryList data={industryList} onPress={onPressIndustryFilter} value={industryFilter} />

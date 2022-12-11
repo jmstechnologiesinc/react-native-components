@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
-import * as JMSList from '../List/List';
+import { List, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
+import { interpunct } from '@jmsstudiosinc/commons';
+import ListMetaBadged from '../List/ListMetaBadged';
 
 const recursiveAttributeGroup = ({ parentId, attributeGroup }) => {
     const results = [];
@@ -34,26 +35,40 @@ const renderRecursiveAttributeGroup = (attributeGroup) => {
     return results;
 };
 
-const CartListProductItem = ({ data, onEdit}) => {
+const CartListProductItem = ({ 
+    data, 
+    onEdit,
+    showAttributeQuantity
+}) => {
     const attributeGroup = renderRecursiveAttributeGroup(data.attributeGroup);
 
     return (
         <>
-            <JMSList.Item 
+            <List.Item 
                 title={data.title}
-                metaTitle={data.price}
-                metaQuantity={data.quantity}
+                //description={interpunct(attributeGroup.map((item) => item.title))}
+                descriptionNumberOfLines={10}
+                left={() => <ListMetaBadged quantity={data.quantity} />}
+                right={() => <ListMetaBadged title={data.price} />}
                 onPress={onEdit}
             />
-            {attributeGroup.map((item) => (
-                <JMSList.Item 
+           {attributeGroup.map((item) => (
+                <List.Item
                     key={`attribute-group-${item.id}`}
                     title={item.title} 
-                    metaTitle={item.price}
-                    metaQuantity={item.selection}
-                    onPress={onEdit}
+                    left={showAttributeQuantity ? () => (
+                        <ListMetaBadged 
+                            title={item.selection} 
+                            quantityStyle={{backgroundColor: MD3LightTheme.colors.onSurfaceVariant}} />
+                    ) : null}
+                    right={() => (
+                        <ListMetaBadged 
+                            title={item.price} 
+                            titleStyle={{color: MD3LightTheme.colors.secondary}} />
+                    )}
                     titleStyle={{color: MD3LightTheme.colors.secondary}}
-                    style={{marginLeft: MD3LightTheme.spacing.x2}} />
+                    style={{paddingLeft: MD3LightTheme.spacing.x9}}
+                    onPress={onEdit} />
             ))}
         </>
     );

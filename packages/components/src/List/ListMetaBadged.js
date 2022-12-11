@@ -11,23 +11,16 @@ const ListMetaBadged = ({
     titleStyle,
     titleVariant="bodyMedium",
     quantityStyle,
-    justifyContent = "center"
 }) => (
-    <View style={[{
-            justifyContent: justifyContent, 
-            paddingLeft: MD3LightTheme.spacing.x4, 
-            paddingRight: MD3LightTheme.spacing.x2
-        }, style]}>
+    <View style={[{alignSelf: "center", marginLeft: MD3LightTheme.spacing.x4}, style]}>
         {title && (
             <Text
                 variant={titleVariant}
-                style={[{
-                    ...(quantity && {marginTop: -MD3LightTheme.spacing.x1})
-                }, titleStyle]}>
+                style={titleStyle}>
                 {title}
             </Text>
         )}
-        {quantity && <Badge style={[{backgroundColor: MD3LightTheme.colors.primary}, quantityStyle]}>{quantity}</Badge>}
+        {quantity && <Badge style={[{backgroundColor: MD3LightTheme.colors.onSurface}, quantityStyle]}>{quantity}</Badge>}
     </View>
 );
 

@@ -1,37 +1,34 @@
 import React from 'react';
 
-import { View } from 'react-native';
-
-import { Chip, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
-
-import ListItemExtended from '../List/ListItemExtended';
 import { interpunct } from '@jmsstudiosinc/commons';
+
 import VendorStatus from './VendorStatus';
 import DriverStatus from './DriverStatus';
-
-const rightWrapper = (child) => (
-    <View
-        style={{
-            justifyContent: 'center',
-            marginLeft: MD3LightTheme.spacing.x4,
-            marginRight: MD3LightTheme.spacing.x2,
-        }}
-    >
-        {child}
-    </View>
-);
+import OrderStatusWrapper from './OrderStatusWrapper';
 
 const OrderStatus = ({
     role,
     formattedOrder,
-    showHeaderItems = true,
-    showHeaderTotal = true,
-    showHeaderTime = true,
-    showHeaderAvatar = true,
-    showHeaderDescription = true,
-    showVendorOverline = true,
-    showDriverStatus = true,
-    showVendorStatus = true,
+   
+    enableDriverStatus = true,
+    enableHeaderStatus = true,
+    enableVendorStatus = true,
+
+    showHeaderOverline,
+    showHeaderTitle,
+    showHeaderDescription,
+    showHeaderAvatar,
+    
+    showVendorOverline = false,
+    showVendorTitle,
+    showVendorDescription,
+    showVendorAvatar = false,
+
+    showDriverOverline,
+    showDriverTitle,
+    showDriverDescription,
+    showDriverAvatar,
+    
     headerTitleVariant,
     titleStyle,
     overlineStyle
@@ -43,34 +40,34 @@ const OrderStatus = ({
    
     const renderStatuses = [];
 
-    let headerOverlines = [headerStatus.overlines[0]];
-    if(showHeaderItems === true) {
-        headerOverlines.push(headerStatus.overlines[1]);
-    }
-    if(showHeaderTotal === true) {
-        headerOverlines.push(headerStatus.overlines[2]);
-    }
-    if(showHeaderTime === true) {
-        headerOverlines.push(headerStatus.overlines[3]);
-    }
-
-    if (headerStatus?.title) {
+    if (enableHeaderStatus && (
+        headerStatus.overlines.length > 0 || 
+        headerStatus.title || 
+        headerStatus.description || 
+        headerStatus.chips.length > 0)) {
         renderStatuses.push(
-            <ListItemExtended
+            <OrderStatusWrapper
                 key="headerStatus"
-                overline={interpunct(headerOverlines) || null}
+                overline={interpunct(headerStatus.overlines)}
                 header={headerStatus.title}
-                subHeader={showHeaderDescription && headerStatus.description}
-                avatar={showHeaderAvatar && headerStatus.avatar}
-                right={headerStatus.right && rightWrapper(<Chip>{headerStatus.right}</Chip>)}
+                subHeader={headerStatus.description}
+                avatar={headerStatus.avatar}
+                
+                showOverline={showHeaderOverline}
+                showTitle={showHeaderTitle}
+                showDescription={showHeaderDescription}
+                showAvatar={showHeaderAvatar && headerStatus.avatar}
+                
                 titleVariant={headerTitleVariant}
                 titleStyle={overlineStyle}
-                overlineStyle={overlineStyle}
             />
         );
     }
 
-    if (showVendorStatus && vendorStatus.title) {
+    if (enableVendorStatus && (vendorStatus.overlines.length > 0 || 
+        vendorStatus.title || 
+        vendorStatus.description || 
+        vendorStatus.chips.length > 0)) {
         renderStatuses.push(
             <VendorStatus 
                 key="vendorStatus"
@@ -82,22 +79,25 @@ const OrderStatus = ({
                 deliveryTime={formattedOrder.deliveryTime}
                 durationValue={formattedOrder.durationValue}
 
-                overline={showVendorOverline && interpunct(vendorStatus.overlines) || null}
+                overline={vendorStatus.overlines}
                 header={vendorStatus.title}
                 subHeader={vendorStatus.description}
                 chips={vendorStatus.chips}
                 avatar={vendorStatus.avatar}
+                
+                showOverline={showVendorOverline}
+                showTitle={showVendorTitle}
+                showDescription={showVendorDescription}
+                showAvatar={showVendorAvatar}
+                
                 titleStyle={titleStyle}
                 overlineStyle={overlineStyle} />
         );
     }
-    
-    if (showDriverStatus === true && (
-        driverStatus.overlines.length > 0 || 
+  
+    if (enableDriverStatus && (driverStatus.description.length > 0 || 
         driverStatus.title || 
-        driverStatus.description || 
-        driverStatus.chips.length > 0
-    )) {
+        driverStatus.chips.length > 0)) {
         renderStatuses.push(
             <DriverStatus
                 key="DriverStatus"
@@ -105,11 +105,18 @@ const OrderStatus = ({
                 orderID={formattedOrder.orderID}
                 deliveryMethod={formattedOrder.deliveryMethod}
                 status={formattedOrder.status}
-                overline={interpunct(driverStatus.overlines)  || null}
+
+                overline={driverStatus.overlines}
                 header={driverStatus.title}
                 subHeader={driverStatus.description}
                 chips={driverStatus.chips}
                 avatar={driverStatus.avatar}
+
+                showOverline={showDriverOverline}
+                showTitle={showDriverTitle}
+                showDescription={showDriverDescription}
+                showAvatar={showDriverAvatar}
+
                 titleStyle={titleStyle}
                 overlineStyle={overlineStyle} />
         );
@@ -117,5 +124,6 @@ const OrderStatus = ({
    
     return renderStatuses;
 };
+
 
 export default OrderStatus;

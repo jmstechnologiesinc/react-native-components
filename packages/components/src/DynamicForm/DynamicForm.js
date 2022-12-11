@@ -1,12 +1,13 @@
 import React, { useCallback, useRef } from 'react';
 
-import { FlatList,Animated, } from 'react-native';
+import { FlatList, Animated } from 'react-native';
 
-import {List} from '@jmsstudiosinc/react-native-paper';
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-
+import { List, MD3Colors} from '@jmsstudiosinc/react-native-paper';
 import { formattedSelection, validateSelection } from '@jmsstudiosinc/commons';
 import DynamicFormSwitch from './DynamicFormSwitch';
+
+
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 const nextAttributeGroup = (value, attributeGroup) => {
     return value === true && attributeGroup.length ? attributeGroup : null;
@@ -29,6 +30,8 @@ const validateAttributeGroup = (sections, initialState = {}) => {
     return valid;
 };
 
+const keyExtractor = (item) => item.id;
+
 const DynamicForm = ({
     parentId,
     initialValues = {},
@@ -44,31 +47,58 @@ const DynamicForm = ({
     const scrollY = useRef(new Animated.Value(0)).current;
 
     const onCheckboxRadioChange = (item, section, value) => {
-        const alteredForm = { ...initialValues };
+        let alteredForm = initialValues;
 
         if (!alteredForm[section.id]) {
-            alteredForm[section.id] = {
-                taxonomyType: section.taxonomyType,
-                id: section.id,
-                title: section.title,
-                parentId: section.parentId,
-                selection: section.selection,
-                formattedSelection: section.formattedSelection,
-            };
+            alteredForm = {
+                ...alteredForm,
+                [section.id]: {
+                    ...alteredForm[section.id],
+                    taxonomyType: section.taxonomyType,
+                    id: section.id,
+                    title: section.title,
+                    parentId: section.parentId,
+                    selection: section.selection,
+                    formattedSelection: section.formattedSelection,
+                }
+            }
         }
 
         const updateAttributeGroup = (item, value) => {
-            alteredForm[item.id] = {
-                parentId: item.parentId,
-                title: item.title,
-                price: item.price,
-                value,
-            };
+            if(value === true) {
+                alteredForm = {
+                    ...alteredForm,
+                    [item.id]: {
+                        ...alteredForm[item.id],
+                        parentId: item.parentId,
+                        title: item.title,
+                        price: item.price,
+                        value,
+                    }
+                }
+            } else {
+                alteredForm = {
+                    ...alteredForm,
+                    [item.id]: {}
+                }
+            }
 
             if (value === true && alteredForm[section.id].selection <= section.maxSelection) {
-                alteredForm[section.id].selection += 1;
+                alteredForm = {
+                    ...alteredForm,
+                    [section.id]: {
+                        ...alteredForm[section.id],
+                        selection: alteredForm[section.id].selection += 1
+                    }
+                }       
             } else if (alteredForm[section.id].selection > 0) {
-                alteredForm[section.id].selection -= 1;
+                alteredForm = {
+                    ...alteredForm,
+                    [section.id]: {
+                        ...alteredForm[section.id],
+                        selection: alteredForm[section.id].selection -= 1
+                    }
+                }   
             }
         };
 
@@ -88,17 +118,35 @@ const DynamicForm = ({
             alteredForm[parentId] = {};
         }
 
-        alteredForm[section.id].isValid = validateSelection(alteredForm[section.id].selection, section.minSelection);
+        alteredForm = {
+            ...alteredForm,
+            [section.id]: {
+                ...alteredForm[section.id],
+                isValid: validateSelection(alteredForm[section.id].selection, section.minSelection)
+            }
+        }   
 
-        alteredForm[section.id].formattedSelection = formattedSelection(
-            alteredForm[section.id].selection,
-            section.minSelection,
-            section.maxSelection
-        );
+        alteredForm = {
+            ...alteredForm,
+            [section.id]: {
+                ...alteredForm[section.id],
+                formattedSelection: formattedSelection(
+                    alteredForm[section.id].selection,
+                    section.minSelection,
+                    section.maxSelection
+                )
+            }
+        }   
 
-        alteredForm[parentId].isValid = validateAttributeGroup(sections, alteredForm);
+        alteredForm = {
+            ...alteredForm,
+            [parentId]: {
+                ...alteredForm[parentId],
+                isValid: validateAttributeGroup(sections, alteredForm)
+            }
+        }  
 
-        onFormChange?.({ ...alteredForm }, nextAttributeGroup(value, item.attributeGroup), item.id);
+        onFormChange?.(alteredForm, nextAttributeGroup(value, item.attributeGroup), item.id);
     };
 
     const getValue = (item) => {
@@ -117,11 +165,12 @@ const DynamicForm = ({
         return false;
     };
 
-    const renderItem = ({item}) => {
-        return <List.Accordion 
+    const renderItem = ({item}) => (
+        <List.Accordion 
             title={item.title} 
-            description={initialValues[item.id]?.formattedSelection || item.formattedSelection}>
-            {item.data?.map((attr, index) => {
+            description={initialValues[item.id]?.formattedSelection || item.formattedSelection}
+            descriptionStyle={{...((initialValues[item.id])?.isValid ? null : {color: MD3Colors.error50})}}>
+            {item.data?.map((attr) => {
                 const value = Boolean(getValue(attr));
                 const isMaxSelection = validateMaxSelection(value, item, item.maxSelection);
                 const isDisabled = attr.isDisabled || isOutofStock || isMaxSelection;
@@ -137,9 +186,8 @@ const DynamicForm = ({
                     onChange={(value) => onCheckboxRadioChange(attr, item, value)} />
             })}
         </List.Accordion>
-    };
+    );
 
-  
     const listFooterComponentWrapper = () => {
         let isValid = initialValues[parentId]?.isValid;
 
@@ -149,8 +197,6 @@ const DynamicForm = ({
 
         return listFooterComponent(isValid);
     };
-
-    const keyExtractor = useCallback((item) => item.id, []);
 
     return (
         <>

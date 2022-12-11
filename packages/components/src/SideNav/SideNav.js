@@ -6,28 +6,24 @@ import { Drawer, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 
 const SideNav = ({
   isExpanded,
-  title, 
-  menuItems=[],
+  menuItems = [],
   selectedIndex,
   onPress,
 }) => (
     <View style={{paddingTop: MD3LightTheme.spacing.x8}}>
         {isExpanded ? (
-            <Drawer.Section title={title}>
-                {menuItems.map((item, index) => (
-                    <Drawer.Item
-                        label={item.title}
-                        icon={item.icon}
-                        active={selectedIndex === index}
-                        onPress={() => onPress(item)}
-                    />
-                ))}
-            </Drawer.Section>
+            menuItems.map((item, index) => (
+                <Drawer.Item
+                    label={item.title}
+                    icon={item.icon}
+                    active={selectedIndex === index}
+                    onPress={() => onPress(item)}
+                />
+            ))
         ) : (
             menuItems.map((item, index) => (
                 <View style={index === 0 ? styles.destinationItemHeight : null}>
-                    <Drawer.CollapsedItem
-                        
+                    <Drawer.CollapsedItem    
                         label={item.title}
                         icon={item.icon}
                         badge={item.badge}
@@ -35,7 +31,6 @@ const SideNav = ({
                         onPress={() => onPress(item)}
                     />
                 </View>
-               
             ))
         )}
     </View>
