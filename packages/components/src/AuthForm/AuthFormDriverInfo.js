@@ -4,7 +4,7 @@ import { Paragraph, TextInput } from '@jmsstudiosinc/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 
-const FormDriverInfo = ({ licenseNumer, zipcode, dateofBirth, ssn, inputActionHandler }) => {
+const AuthFormDriverInfo = ({ licenseNumer, zipcode, dateofBirth, ssn, inputActionHandler }) => {
     return (
         <>
             <ScreenWrapper.Section>
@@ -55,4 +55,4 @@ const FormDriverInfo = ({ licenseNumer, zipcode, dateofBirth, ssn, inputActionHa
     );
 };
 
-export default FormDriverInfo;
+export default AuthFormDriverInfo;

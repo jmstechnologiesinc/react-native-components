@@ -4,7 +4,7 @@ import { TextInput } from '@jmsstudiosinc/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 
-const FormBusinessInfo = ({ storeTitle, storeAddress, industry, placeholder, inputActionHandler }) => {
+const AuthFormBusinessInfo = ({ storeTitle, storeAddress, industry, placeholder, inputActionHandler }) => {
     return (
         <>
             <ScreenWrapper.Section title={localized('Business Details')}>
@@ -36,4 +36,4 @@ const FormBusinessInfo = ({ storeTitle, storeAddress, industry, placeholder, inp
     );
 };
 
-export default FormBusinessInfo;
+export default AuthFormBusinessInfo;
