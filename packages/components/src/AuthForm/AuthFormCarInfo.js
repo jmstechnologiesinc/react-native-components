@@ -7,7 +7,7 @@ import { localized } from '../Localization/Localization';
 const AuthFormPersonInfo = ({ make, model, color, year, inputActionHandler }) => {
     return (
         <>
-            <ScreenWrapper.Section title={localized('Car Info')}>
+            <ScreenWrapper.Section title={localized('Vehicle Details')}>
                 <TextInput
                     mode="outlined"
                     label={localized('Make')}
