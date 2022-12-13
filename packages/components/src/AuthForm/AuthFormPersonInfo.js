@@ -4,7 +4,7 @@ import { TextInput } from '@jmsstudiosinc/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 
-const FormPersonInfo = ({ firstName, inputActionHandler, lastName, phone }) => {
+const AuthFormPersonInfo = ({ firstName, inputActionHandler, lastName, phone }) => {
     return (
         <>
             <ScreenWrapper.Section title={localized('Contact Details')}>
@@ -36,4 +36,4 @@ const FormPersonInfo = ({ firstName, inputActionHandler, lastName, phone }) => {
     );
 };
 
-export default FormPersonInfo;
+export default AuthFormPersonInfo;
