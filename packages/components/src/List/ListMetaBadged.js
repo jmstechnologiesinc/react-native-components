@@ -20,7 +20,12 @@ const ListMetaBadged = ({
                 {title}
             </Text>
         )}
-        {quantity && <Badge style={[{backgroundColor: MD3LightTheme.colors.onSurface}, quantityStyle]}>{quantity}</Badge>}
+        {quantity && (
+            <Badge style={[
+                {backgroundColor: MD3LightTheme.colors.primary},
+                quantityStyle
+            ]}>{quantity}</Badge>
+        )}
     </View>
 );
 

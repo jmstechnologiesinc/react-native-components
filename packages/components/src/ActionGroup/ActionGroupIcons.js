@@ -8,7 +8,7 @@ const ActionGroupIcons = ({
     icons,
     onPress
 }) => {
-    if(!icons) {
+    if(!icons?.length) {
         return null;
     }
 
@@ -17,7 +17,7 @@ const ActionGroupIcons = ({
             {icons.map((icon, index) => (
                 <IconButton
                     key={icon.key || index}
-                    mode={icon.mode || "contained"}
+                    mode={icon.mode}
                     size={icon.size}
                     icon={icon.icon}
                     iconColor={icon.iconColor}

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { formattedETATime, interpunct, milliseconsExtractor } from "@jmsstudiosinc/commons";
+import { formattedETATime, ITEM_TYPE, milliseconsExtractor } from "@jmsstudiosinc/commons";
 
 import usePubNubETA from "./usePubNubETA";
 import OrderStatusWrapper from "./OrderStatusWrapper";
@@ -31,11 +31,16 @@ const DriverStatus = ({
         status
     });
 
-    const renderChips = [...chips];
+    const renderChips = [];
     if(milliseconds !== undefined) {
         const {hrs, mins} = milliseconsExtractor(milliseconds);
-        renderChips.push(formattedETATime(hrs, mins));
+        renderChips.push({
+            formattedValue: formattedETATime(hrs, mins),
+            type: ITEM_TYPE.eta
+        });
     }
+
+    renderChips.push(...chips);
 
     return (
         <OrderStatusWrapper

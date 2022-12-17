@@ -26,7 +26,6 @@ const CartListItem = ({
         id, 
         title, 
         photo, 
-        formattedFulfillmentAddress, 
         type, 
         description, 
         data: productItems, 
@@ -58,7 +57,9 @@ const CartListItem = ({
         <>
             <JMSItem
                 title={title} 
-                description={[formattedFulfillmentAddress, description]}
+                description={description}
+                titleNumberOfLines={0}
+                descriptionNumberOfLines={0}
                 left={(props) => (
                     <Avatar.Image style={props.style} source={{ uri: photo }} />
                 )}
@@ -70,7 +71,8 @@ const CartListItem = ({
                     onSwipeableRightOpen={() => onDelete(id, product.cartId, cartIndustryId)} >
                     <CartListProductItem 
                         data={product}    
-                        onEdit={() => onEdit(product, item)} />
+                        onEdit={() => onEdit(product, item)}
+                        descriptionNumberOfLines={1} />
                     {itemSeparator(index, productItems.length) && <Divider />}
                 </Swipeable>
             ))}

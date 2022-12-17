@@ -141,7 +141,7 @@
         "nanoseconds": 203000000
       },
       "paymentMethod": "Apple Pay",
-      "shippingAddress": {
+      "fulfillmentAddress": {
         "country": "United States",
         "city": "Lawrence",
         "verified": true,
@@ -294,7 +294,7 @@
         "nanoseconds": 238000000
       },
       "paymentMethod": "Apple Pay",
-      "shippingAddress": {
+      "fulfillmentAddress": {
         "country": "United States",
         "city": "Lawrence",
         "verified": true,
@@ -447,7 +447,7 @@
         "nanoseconds": 922000000
       },
       "paymentMethod": "Apple Pay",
-      "shippingAddress": {
+      "fulfillmentAddress": {
         "country": "United States",
         "city": "Lawrence",
         "verified": true,
@@ -600,7 +600,7 @@
         "nanoseconds": 854000000
       },
       "paymentMethod": "Apple Pay",
-      "shippingAddress": {
+      "fulfillmentAddress": {
         "country": "United States",
         "city": "Lawrence",
         "verified": true,

@@ -11,8 +11,8 @@ const ActionGroupGroup = ({children, style}) => (
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row', 
-        alignItems: 'center', 
-        justifyContent: "space-between"
+        alignItems: 'center',
+        justifyContent: "space-between",
     },
     row: {
         flexDirection: "row",

@@ -51,7 +51,7 @@ const VendorView = ({
                         subtitle={interpunct([formattedPub, formattedHitDistance])}
                         titleVariant="headlineMedium"
                         subtitleVariant="bodyLarge"
-                        titleNumberOfLines={5}
+                        titleNumberOfLines={0}
                         right={(props) => (
                             <IconButton {...props} icon={MATERIAL_ICONS.chevron} />
                         )}

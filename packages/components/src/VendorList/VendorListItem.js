@@ -6,12 +6,13 @@ import { VENDOR_INDUSTRIES_MAPPING } from '@jmsstudiosinc/vendor';
 import { interpunct, getMainPhoto } from '@jmsstudiosinc/commons';
 
 const VendorListItem = ({ item, onPress }) => (
-    <Card mode="contained" onPress={() => onPress(item)}>
+    <Card mode="elevated" onPress={() => onPress(item)}>
         <Card.Cover source={{ uri: getMainPhoto(item.photos) }} />
         <Card.Title
             title={item.title}
             subtitle={interpunct([item.formattedPub, item.formattedHitDistance])}
-            titleVariant="headlineMedium"
+            titleNumberOfLines={0}
+            titleVariant="headlineSmall"
             subtitleVariant="bodyLarge"
         />
         <Card.Content>

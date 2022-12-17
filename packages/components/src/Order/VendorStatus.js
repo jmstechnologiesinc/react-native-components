@@ -28,7 +28,7 @@ const VendorStatus = ({
     titleStyle,
     overlineStyle,
 }) => {
-    const milliseconds = usePreparingTimeCoutdown({
+  /*   const milliseconds = usePreparingTimeCoutdown({
         role,
         orderID: orderID,
         deliveryMethod: deliveryMethod,
@@ -36,20 +36,20 @@ const VendorStatus = ({
         restaurantAcceptedTime: restaurantAcceptedTime,
         deliveryTime: deliveryTime,
         durationValue: durationValue,
-    });
+    }); */
 
-    const renderChips = [...chips];
+   /*  const renderChips = [...chips];
     if(milliseconds !== undefined) {
         const {hrs, mins} = milliseconsExtractor(milliseconds);
-        //renderChips.push(formattedETATime(hrs, mins));
-    }
+        renderChips.push(formattedETATime(hrs, mins));
+    } */
 
     return (
         <OrderStatusWrapper
             overline={interpunct(overline)}
             header={header}
             subHeader={subHeader}
-            chips={renderChips}
+            chips={chips}
             avatar={avatar}
             
             showOverline={showOverline}

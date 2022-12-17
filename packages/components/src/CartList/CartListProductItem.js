@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { List, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
+import { MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 import { interpunct } from '@jmsstudiosinc/commons';
-import ListMetaBadged from '../List/ListMetaBadged';
+import * as JMSList from '../List/List';
 
 const recursiveAttributeGroup = ({ parentId, attributeGroup }) => {
     const results = [];
@@ -38,38 +38,58 @@ const renderRecursiveAttributeGroup = (attributeGroup) => {
 const CartListProductItem = ({ 
     data, 
     onEdit,
-    showAttributeQuantity
+    titleNumberOfLines = 0,
+    descriptionNumberOfLines = 0,
+    showAttributeQuantity,
+    interpunctAttributeGroup = true,
+    showProductDescription = true
 }) => {
     const attributeGroup = renderRecursiveAttributeGroup(data.attributeGroup);
+    
+    const productDescription = [];
+    if(showProductDescription && data.description) {
+        productDescription.push(data.description);
+    }
 
-    return (
+    if(interpunctAttributeGroup && attributeGroup.length > 0) {
+        if(!productDescription.length) {
+            productDescription.push(null);
+        }
+
+        productDescription.push(interpunct(attributeGroup.map((item) => item.title)));
+    }
+
+    return (  
         <>
-            <List.Item 
+            <JMSList.Item 
                 title={data.title}
-                //description={interpunct(attributeGroup.map((item) => item.title))}
-                descriptionNumberOfLines={10}
-                left={() => <ListMetaBadged quantity={data.quantity} />}
-                right={() => <ListMetaBadged title={data.price} />}
+                description={productDescription}
+                titleNumberOfLines={titleNumberOfLines}
+                descriptionNumberOfLines={descriptionNumberOfLines}
+                left={() => <JMSList.MetaBadged quantity={data.quantity} />}
+                right={() => <JMSList.MetaBadged title={data.price} />}
                 onPress={onEdit}
             />
-           {attributeGroup.map((item) => (
-                <List.Item
+           {!interpunctAttributeGroup ? attributeGroup.map((item) => (
+                <JMSList.Item
                     key={`attribute-group-${item.id}`}
                     title={item.title} 
+                    titleNumberOfLines={0}
+                    descriptionNumberOfLines={0}                    
                     left={showAttributeQuantity ? () => (
-                        <ListMetaBadged 
+                        <JMSList.MetaBadged 
                             title={item.selection} 
                             quantityStyle={{backgroundColor: MD3LightTheme.colors.onSurfaceVariant}} />
                     ) : null}
                     right={() => (
-                        <ListMetaBadged 
+                        <JMSList.MetaBadged 
                             title={item.price} 
                             titleStyle={{color: MD3LightTheme.colors.secondary}} />
                     )}
                     titleStyle={{color: MD3LightTheme.colors.secondary}}
                     style={{paddingLeft: MD3LightTheme.spacing.x9}}
                     onPress={onEdit} />
-            ))}
+            )) : null}
         </>
     );
 };

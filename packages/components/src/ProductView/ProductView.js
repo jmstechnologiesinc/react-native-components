@@ -42,21 +42,14 @@ const ProductView = ({
             
             <View style={{paddingBottom: MD3LightTheme.spacing.x2}} 
                 onLayout={onLayoutTitleOffsetY ? (event) => onLayoutTitleOffsetY(event.nativeEvent.layout.y) : null}>
-                <Card.Title
+                 <JMSList.Item
                     title={title}
-                    titleVariant="headlineMedium"
-                    titleNumberOfLines={5}
-                    right={() => (
-                        <JMSList.MetaBadged 
-                            titleVariant={'headlineMedium'} style={{marginRight: MD3LightTheme.spacing.x4}} 
-                            title={price} />
-                    )}
-                />
-                <Card.Content>
-                    <Text variant="bodyMedium">
-                        {description}
-                    </Text>
-                </Card.Content>
+                    description={description}
+                    metaTitle={price}
+                    titleNumberOfLines={0}
+                    descriptionNumberOfLines={0}
+                    titleVariant="headlineSmall" 
+                    metaTitleVariant="headlineSmall" />
             </View>
         </>
     );

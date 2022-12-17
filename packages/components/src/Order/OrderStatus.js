@@ -52,7 +52,8 @@ const OrderStatus = ({
                 header={headerStatus.title}
                 subHeader={headerStatus.description}
                 avatar={headerStatus.avatar}
-                
+                chips={headerStatus.chips}
+
                 showOverline={showHeaderOverline}
                 showTitle={showHeaderTitle}
                 showDescription={showHeaderDescription}

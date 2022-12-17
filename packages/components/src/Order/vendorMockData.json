@@ -93,7 +93,7 @@
       "nanoseconds": 409000000
     },
     "paymentMethod": "Apple Pay",
-    "shippingAddress": {
+    "fulfillmentAddress": {
       "country": "United States",
       "city": "Lawrence",
       "postalCode": "01840",
@@ -257,7 +257,7 @@
       "nanoseconds": 203000000
     },
     "paymentMethod": "Apple Pay",
-    "shippingAddress": {
+    "fulfillmentAddress": {
       "country": "United States",
       "city": "Lawrence",
       "verified": true,
@@ -414,7 +414,7 @@
       "nanoseconds": 238000000
     },
     "paymentMethod": "Apple Pay",
-    "shippingAddress": {
+    "fulfillmentAddress": {
       "country": "United States",
       "city": "Lawrence",
       "verified": true,
@@ -710,7 +710,7 @@
     },
     "formattedStatusTime": "May 05",
     "paymentMethod": "Apple Pay",
-    "shippingAddress": {
+    "fulfillmentAddress": {
       "country": "United States",
       "city": "Lawrence",
       "verified": true,
@@ -792,7 +792,7 @@
       "nanoseconds": 444000000
     },
     "paymentMethod": "Apple Pay",
-    "shippingAddress": {
+    "fulfillmentAddress": {
       "country": "United States",
       "city": "Lawrence",
       "verified": true,
@@ -995,7 +995,7 @@
       "nanoseconds": 925000000
     },
     "paymentMethod": "Apple Pay",
-    "shippingAddress": {
+    "fulfillmentAddress": {
       "country": "United States",
       "city": "Lawrence",
       "verified": true,
@@ -1148,7 +1148,7 @@
       "nanoseconds": 922000000
     },
     "paymentMethod": "Apple Pay",
-    "shippingAddress": {
+    "fulfillmentAddress": {
       "country": "United States",
       "city": "Lawrence",
       "verified": true,
@@ -1305,7 +1305,7 @@
       "nanoseconds": 854000000
     },
     "paymentMethod": "Apple Pay",
-    "shippingAddress": {
+    "fulfillmentAddress": {
       "country": "United States",
       "city": "Lawrence",
       "verified": true,

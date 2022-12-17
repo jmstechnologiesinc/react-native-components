@@ -16,7 +16,7 @@ import PhotoGallery from '../PhotoGallery/PhotoGallery';
 import * as ActionGroup from '../ActionGroup/ActionGroup';
 import { itemSeparator } from '../utils';
 import { plurulize } from '@jmsstudiosinc/commons';
-import ScreenWrapperSection from '../ScreenWrapper/ScreenWrapperSection';
+import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { MATERIAL_ICONS } from '@jmsstudiosinc/commons';
 import styles from '../styles';
 
@@ -117,7 +117,7 @@ const OrderView = ({
     if(order.fulfillmentMethod === PUB.delivery) {
         fulfilmentDetails.push({
             key: "shipping-address",
-            title: order.shippingAddress.formattedAddress,
+            title: order.fulfillmentAddress.formattedAddress,
             icon: MATERIAL_ICONS.location
         });
     } else if(role === USER_ROLES.customer && order.fulfillmentMethod === PUB.pickup) {
@@ -162,24 +162,28 @@ const OrderView = ({
             return {
                 ...button,
                 icon: MATERIAL_ICONS.printer,
-                mode: "outlined",
+                mode: "text",
                 contentStyle: {flexGrow: 2}
             }
         }
 
         return {
             ...button,
-            compact: true,
+            compact: false,
             contentStyle: {flexGrow: 3}
         };
     });
 
     const renderActionButtons = ((onButtonPress && buttonsMapping.length > 0) ? (
-        <ActionGroup.Group style={styles.fba}>
-            <ActionGroup.Buttons 
-                buttons={buttonsMapping}
-                onPress={(button) => onButtonPress(button, formattedOrder.orderID)}  />
-        </ActionGroup.Group>
+        <ScreenWrapper.Container>
+            <ScreenWrapper.Section>
+                <ActionGroup.Group >
+                    <ActionGroup.Buttons 
+                        buttons={buttonsMapping}
+                        onPress={(button) => onButtonPress(button, formattedOrder.orderID)}  />
+                </ActionGroup.Group>
+            </ScreenWrapper.Section>
+        </ScreenWrapper.Container>
     ) : null);
 
     return (
@@ -221,7 +225,7 @@ const OrderView = ({
                         <List.Section title={`${order.products.length} ${plurulize('Item', order.products.length)}`}>
                             {order.products.map((item, index) => (
                                 <View key={`product-item-${item.id}`}>
-                                    <CartListProductItem data={item} />
+                                    <CartListProductItem data={item} interpunctAttributeGroup={false} />
                                     {itemSeparator(index, order.products.length) && <Divider />}
                                 </View>
                             ))}
@@ -235,6 +239,8 @@ const OrderView = ({
                                     <List.Item 
                                         title={item.title} 
                                         description={item.description} 
+                                        titleNumberOfLines={0}
+                                        descriptionNumberOfLines={0}
                                         left={(props) => <List.Icon {...props} icon={item.icon} />} />
                                     {itemSeparator(index, fulfilmentDetails.length) && <Divider />}
                                 </View>
@@ -248,7 +254,9 @@ const OrderView = ({
                                 <View key={item.key}>
                                     <List.Item 
                                         title={item.title} 
-                                        description={item.description} 
+                                        description={item.description}
+                                        titleNumberOfLines={0}
+                                        descriptionNumberOfLines={0} 
                                         {...(item.icon ? {left: (props) => <List.Icon {...props} icon={item.icon} />} : null)} />
                                     {itemSeparator(index, driverDetails.length) && <Divider />}
                                 </View>
@@ -256,9 +264,9 @@ const OrderView = ({
                         </List.Section>
                     )}  
 
-                    <ScreenWrapperSection>
+                    <ScreenWrapper.Section>
                         <Accounting fees={formattedOrder.fees} />
-                    </ScreenWrapperSection>
+                    </ScreenWrapper.Section>
                     {role === USER_ROLES.customer && renderActionButtons}
                 </View>
             </ScrollView>

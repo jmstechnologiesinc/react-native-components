@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {List, Text} from '@jmsstudiosinc/react-native-paper';
+import {List, MD3LightTheme, Text} from '@jmsstudiosinc/react-native-paper';
 import * as JMSList from "./List";
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 
 const ListItem = ({
     photo,
@@ -14,8 +14,8 @@ const ListItem = ({
     left,
     right,
     onPress,
-    titleNumberOfLines,
-    descriptionNumberOfLines,
+    titleNumberOfLines = 1,
+    descriptionNumberOfLines = 2,
     titleVariant,
     metaTitleVariant,
     style,
@@ -24,45 +24,48 @@ const ListItem = ({
     metaTitleStyle,
     ...rests
 }) => {
-  const renderTitle = ({selectable, titleEllipsizeMode, color, fontSize}) => (
-    <View style={[styles.container, styles.row, styles.customTitle]}>
-      {!!title && <Text
-          selectable={selectable}
-          ellipsizeMode={titleEllipsizeMode}
-          numberOfLines={titleNumberOfLines}
-          variant={titleVariant}
-          style={[{ color,  ...(!titleVariant && {fontSize}) }, titleStyle]}>
-          {title}
-        </Text>}
-    </View>
-  );
+  const renderTitle = titleVariant ? ({selectable, titleEllipsizeMode, color}) => (
+    <Text
+      selectable={selectable}
+      ellipsizeMode={titleEllipsizeMode}
+      numberOfLines={titleNumberOfLines}
+      variant={titleVariant}
+      style={{ color, titleStyle}}>
+      {title}
+    </Text>
+  ) : title;
 
   const renderDescription = Array.isArray(description) ? ({
+      selectable,
       ellipsizeMode,
       color: descriptionColor,
       fontSize,
-  }) => {
-    
-    return (
-      <View style={[styles.container, styles.column]}>
-        {description.map((item, index) => (
-          <View style={index === 0 ? null : [styles.container, styles.row, styles.additionalPadding]}>
-              <Text
-                numberOfLines={2}
-                ellipsizeMode={ellipsizeMode}
-                style={{ color: descriptionColor, fontSize }}>
-                {item}
-              </Text>
-          </View>
-        ))}
-        {chips ? (
-          <View style={[styles.container, styles.row, styles.additionalPadding]}>
-              {chips}
-          </View>
-        ) : null}
-      </View>
-    )
-} : description;
+  }) => (
+    <>
+      {description.map((item, index) => (
+        <Text
+            selectable={selectable}
+            numberOfLines={index === 0 ? descriptionNumberOfLines : 0}
+            ellipsizeMode={ellipsizeMode}
+            style={{ 
+              color: descriptionColor, 
+              fontSize, 
+              ...(index === 0 ? null : styles.additionalPadding) 
+            }}>
+            {item}
+        </Text>
+      ))}
+      {chips ? (
+        <ScrollView 
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false} 
+        horizontal
+        style={[styles.chips, styles.additionalPadding]}>
+            {chips}
+        </ScrollView>
+      ) : null}
+  </>
+  ) : description;
 
   const renderLeft = photo ? (props) => (
     <List.Image
@@ -72,11 +75,13 @@ const ListItem = ({
   ): left;
   
   const renderRight = right ? right : (metaTitle || metaQuantity) ? 
-    () => <JMSList.MetaBadged
-      title={metaTitle} 
-      quantity={metaQuantity}
-      titleVariant={metaTitleVariant} /> : 
-    null
+    (props) => (
+      <JMSList.MetaBadged
+        title={metaTitle} 
+        quantity={metaQuantity}
+        titleVariant={metaTitleVariant}
+        titleStyle={{color: props.color}} /> 
+    ) : null
 
   return (
     <List.Item
@@ -84,6 +89,7 @@ const ListItem = ({
       description={renderDescription}
       left={renderLeft}
       right={renderRight}
+      titleVariant={titleVariant}
       titleNumberOfLines={titleNumberOfLines}
       descriptionNumberOfLines={descriptionNumberOfLines}
       onPress={onPress}
@@ -104,11 +110,15 @@ const styles = StyleSheet.create({
       flexDirection: 'column',
   },
   additionalPadding: {
-      paddingTop: 8,
+      marginTop: MD3LightTheme.spacing.x2,
+  },
+  chips: {
+      flexDirection: 'row',
+      flexWrap: 'wrap'
   },
   customTitle: {
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: "space-between"
   },
 });
 

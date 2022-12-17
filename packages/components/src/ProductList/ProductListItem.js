@@ -16,7 +16,9 @@ const ProductListItem = ({
         description={description}
         metaTitle={price}
         metaQuantity={cartQuantity}
-        onPress={onPress} />
+        onPress={onPress}
+        titleNumberOfLines={0}
+        descriptionNumberOfLines={5} />
 );
 
 ProductListItem.whyDidYouRender = true;

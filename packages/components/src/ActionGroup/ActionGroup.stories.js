@@ -18,7 +18,13 @@ export const ButtonsOnly = () => (
   </ActionGroup.Group>
 );
 
-export const FabssOnly = () => (
+export const SingleButton = () => (
+  <ActionGroup.Group>
+      <ActionGroup.Buttons isStretched buttons={[{title: "Print"}]}/>
+  </ActionGroup.Group>
+);
+
+export const FabsOnly = () => (
   <ActionGroup.Group>
       <ActionGroup.Buttons variant="fab" buttons={[{title: "Print"}, {title: "Cancel"}, {title: "Accept"}]}/>
   </ActionGroup.Group>
