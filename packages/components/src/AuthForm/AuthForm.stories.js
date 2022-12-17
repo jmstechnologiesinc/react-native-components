@@ -20,6 +20,10 @@ const state = {
     industry: 'Restaurant, clothes',
     storeTitle: 'Vaka Restaurant',
     storeAddress: 'Hata Mayor #12',
+    make: 'Toyota',
+    model: 'Camry',
+    color: 'white',
+    year: 1999,
 };
 
 export const AuthFormEmailPassword = () => (
@@ -85,6 +89,16 @@ export const AuthFormBusinessInfo = () => (
         storeAddress={state.storeAddress}
         industry={state.industry}
         placeholder={['Restaurant', 'Pharmacy', 'Grocery']}
+        inputActionHandler={() => {}}
+    />
+);
+
+export const AuthFormCarInfo = () => (
+    <AuthForm.CarInfo
+        make={state.make}
+        model={state.model}
+        color={state.color}
+        year={state.year}
         inputActionHandler={() => {}}
     />
 );

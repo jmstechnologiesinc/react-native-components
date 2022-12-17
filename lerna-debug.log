@@ -1,7 +1,0 @@
-78 error Error: Command failed with exit code 128: git tag @jmsstudiosinc/hltabswrapper@0.0.2 -m @jmsstudiosinc/hltabswrapper@0.0.2
-78 error fatal: el tag '@jmsstudiosinc/hltabswrapper@0.0.2' ya existe
-78 error     at makeError (/Volumes/datos/JMS/ReactNativeComponents/node_modules/@lerna/child-process/node_modules/execa/lib/error.js:60:11)
-78 error     at handlePromise (/Volumes/datos/JMS/ReactNativeComponents/node_modules/@lerna/child-process/node_modules/execa/index.js:118:26)
-78 error     at processTicksAndRejections (internal/process/task_queues.js:95:5)
-78 error     at async Promise.all (index 4)
-78 error     at async Promise.all (index 0)
