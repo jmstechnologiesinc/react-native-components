@@ -9,7 +9,7 @@ import { IMAGE_PICKER_ACTIONS } from './utils';
 import { options } from './utils';
 import { localized } from '../Localization/Localization';
 
-const Avatar = ({ photo, onChange, onRemove, icon = 'account', size = moderateScale(150) }) => {
+const Avatar = ({ photo, onChange, onRemove, icon = 'account', size = moderateScale(150), isDisabled }) => {
     const imagePickerRef = useRef();
     const actionSheetRef = useRef();
 
@@ -58,7 +58,10 @@ const Avatar = ({ photo, onChange, onRemove, icon = 'account', size = moderateSc
     return (
         <>
             <View style={styles.containerAvatar}>
-                <TouchableRipple rippleColor={MD3LightTheme.colors.background} onPress={showActionSheet}>
+                <TouchableRipple
+                    rippleColor={MD3LightTheme.colors.background}
+                    onPress={isDisabled ? null : showActionSheet}
+                >
                     {photo ? (
                         <PaperAvatar.Image source={{ uri: photo }} size={size} />
                     ) : (

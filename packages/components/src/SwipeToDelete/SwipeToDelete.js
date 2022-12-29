@@ -39,12 +39,12 @@ const closeRow = (index) => {
     prevOpenedRow = row[index];
 };
 
-const Swipeable = ({ children, onSwipeableRightOpen, index }) => (
+const Swipeable = ({ children, onSwipeableRightOpen, index, isRemoveable = true }) => (
     <RNSwipeable
         friction={2}
         leftThreshold={80}
         rightThreshold={41}
-        renderRightActions={() => rightSwipeActions(onSwipeableRightOpen)}
+        renderRightActions={() => (isRemoveable ? rightSwipeActions(onSwipeableRightOpen) : null)}
         onSwipeableOpen={() => closeRow(index)}
         ref={(ref) => (row[index] = ref)}
     >
