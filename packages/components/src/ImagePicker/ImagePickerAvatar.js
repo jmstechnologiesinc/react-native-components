@@ -8,54 +8,42 @@ import ImagePickerAPI from './ImagePickerAPI';
 import { IMAGE_PICKER_ACTIONS } from './utils';
 import { options } from './utils';
 import { localized } from '../Localization/Localization';
-import { launchImageLibrary } from 'react-native-image-picker';
 
-const Avatar = ({
-    photo,
-    onChange,
-    onRemove,
-}) => {
+const Avatar = ({ photo, onChange, onRemove, icon = 'account', size = moderateScale(150), isDisabled }) => {
     const imagePickerRef = useRef();
     const actionSheetRef = useRef();
 
     useEffect(() => {
         imagePickerRef.current = new ImagePickerAPI(
-            titlePermissionCamera = localized('Camera permission denied'),
-            titlePermissionPhotos = localized('Please allow access to your photos'),
-            descriptionPermissionCamera = localized(
+            (titlePermissionCamera = localized('Camera permission denied')),
+            (titlePermissionPhotos = localized('Please allow access to your photos')),
+            (descriptionPermissionCamera = localized(
                 'To have access to the camera you must enable the camera permission in your application settings'
-            ),
-            descriptionPermissionPhotos = localized(
+            )),
+            (descriptionPermissionPhotos = localized(
                 'To have access to the photos you must enable the photos permission in your application settings'
-            ),
-            cancelPermission = localized('Cancel'),
-            settingPermission = localized('Go to Settings')
+            )),
+            (cancelPermission = localized('Cancel')),
+            (settingPermission = localized('Go to Settings'))
         );
     }, []);
-
-
 
     const showActionSheet = () => {
         actionSheetRef.current.show();
     };
-      
 
-    const onActionDone =   async (value) => {
+    const onActionDone = async (value) => {
         if (value === IMAGE_PICKER_ACTIONS.launchCamera) {
-            imagePickerRef.current.takePhoto()
-                .then((rep) => {
-                    onChange(rep);
-                    actionSheetRef.current.hide();
-                })
+            imagePickerRef.current.takePhoto().then((rep) => {
+                onChange(rep);
+                actionSheetRef.current.hide();
+            });
         }
         if (value === IMAGE_PICKER_ACTIONS.launchImageLibrary) {
-               imagePickerRef.current.chooseFromLibrary()
-                .then((rep) => {
-                    onChange(rep);
-                    actionSheetRef.current.hide();
-                })
-
-
+            imagePickerRef.current.chooseFromLibrary().then((rep) => {
+                onChange(rep);
+                actionSheetRef.current.hide();
+            });
         }
         if (value === IMAGE_PICKER_ACTIONS.removeImage) {
             onRemove();
@@ -70,11 +58,14 @@ const Avatar = ({
     return (
         <>
             <View style={styles.containerAvatar}>
-                <TouchableRipple rippleColor={MD3LightTheme.colors.background} onPress={showActionSheet}>
+                <TouchableRipple
+                    rippleColor={MD3LightTheme.colors.background}
+                    onPress={isDisabled ? null : showActionSheet}
+                >
                     {photo ? (
-                        <PaperAvatar.Image source={{ uri: photo }} size={moderateScale(150)} />
+                        <PaperAvatar.Image source={{ uri: photo }} size={size} />
                     ) : (
-                        <PaperAvatar.Icon icon="account" size={moderateScale(150)} />
+                        <PaperAvatar.Icon icon={icon} size={size} />
                     )}
                 </TouchableRipple>
             </View>

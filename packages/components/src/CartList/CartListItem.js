@@ -9,35 +9,29 @@ import CartListProductItem from './CartListProductItem';
 import ScreenWrapper from '../ScreenWrapper';
 import { itemSeparator } from '../utils';
 import Swipeable from '../SwipeToDelete/SwipeToDelete';
-import {Item as JMSItem}  from '../List/List';
+import { Item as JMSItem } from '../List/List';
 import { MATERIAL_ICONS } from '@jmsstudiosinc/commons';
 
-const CartListItem = ({  
-    checkoutTitle,
-    addTitle,
-    item, 
-    onAdd,
-    onDelete, 
-    onEdit, 
-    onCheckout, 
-    renderTips  
-}) => {
-    const { 
-        id, 
-        title, 
-        photo, 
-        formattedFulfillmentAddress, 
-        type, 
-        description, 
-        data: productItems, 
-        cartIndustryId 
+const CartListItem = ({ checkoutTitle, addTitle, item, onAdd, onDelete, onEdit, onCheckout, renderTips }) => {
+    const {
+        id,
+        title,
+        photo,
+        formattedFulfillmentAddress,
+        type,
+        description,
+        data: productItems,
+        cartIndustryId,
     } = item;
 
     if (type === CART_ITEM_TYPE.emptyItem) {
         return null;
     } else if (type === CART_ITEM_TYPE.checkout) {
         return (
-            <ScreenWrapper.Section withPaddingHorizontal style={{ paddingTop: MD3LightTheme.spacing.x8, paddingBottom: MD3LightTheme.spacing.x8 }}>
+            <ScreenWrapper.Section
+                withPaddingHorizontal
+                style={{ paddingTop: MD3LightTheme.spacing.x8, paddingBottom: MD3LightTheme.spacing.x8 }}
+            >
                 <Button mode="contained" onPress={() => onCheckout(item.vendorIds)}>
                     {checkoutTitle}
                 </Button>
@@ -53,24 +47,22 @@ const CartListItem = ({
     } else if (type === CART_ITEM_TYPE.industryTitle) {
         return null;
     }
-    
+
     return (
         <>
             <JMSItem
-                title={title} 
+                title={title}
                 description={[formattedFulfillmentAddress, description]}
-                left={(props) => (
-                    <Avatar.Image style={props.style} source={{ uri: photo }} />
-                )}
+                left={(props) => <Avatar.Image style={props.style} source={{ uri: photo }} />}
             />
 
             {productItems?.map((product, index) => (
-                <Swipeable 
+                <Swipeable
                     key={`swipeable-${product.cartId}`}
-                    onSwipeableRightOpen={() => onDelete(id, product.cartId, cartIndustryId)} >
-                    <CartListProductItem 
-                        data={product}    
-                        onEdit={() => onEdit(product, item)} />
+                    index={index}
+                    onSwipeableRightOpen={() => onDelete(id, product.cartId, cartIndustryId)}
+                >
+                    <CartListProductItem data={product} onEdit={() => onEdit(product, item)} />
                     {itemSeparator(index, productItems.length) && <Divider />}
                 </Swipeable>
             ))}

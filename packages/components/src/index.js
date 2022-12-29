@@ -5,7 +5,7 @@ import * as ActionGroup from './ActionGroup/ActionGroup';
 import * as AuthForm from './AuthForm/AuthForm';
 import * as ImagePicker from './ImagePicker/ImagePicker';
 
-export {default as styles} from "./styles";
+export { default as styles } from './styles';
 
 export { List, ImagePicker, Tabs, ProductList, ActionGroup, AuthForm };
 
@@ -29,5 +29,6 @@ export { default as IndustryList } from './IndustryList/IndustryList';
 export { default as QuantityButton } from './QuantityButton/QuantityButton';
 export { default as ScreenWrapper } from './ScreenWrapper';
 export { default as SideNav } from './SideNav/SideNav';
-export {LAYOUT_MODE} from "./consts";
-export {localized, setI18nConfig } from './Localization/Localization'
+export { default as Swipeable } from './SwipeToDelete/SwipeToDelete';
+export { LAYOUT_MODE } from './consts';
+export { localized, setI18nConfig } from './Localization/Localization';
