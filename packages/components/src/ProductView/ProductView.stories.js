@@ -20,7 +20,7 @@ export const SinglePhoto = () => (
     <>
         <ProductView
             title={product.title}
-            price={product.price}
+            formattedPrice={product.formattedPrice}
             photos={product.photos}
             description={product.description}
         />
@@ -30,14 +30,14 @@ export const SinglePhoto = () => (
 
 export const MultiplePhotos = () => (
     <>
-        <ProductView title={product.title} price={product.price} photos={photos} description={product.description} />
+        <ProductView title={product.title} formattedPrice={product.formattedPrice} photos={photos} description={product.description} />
         <QuantityButton />
     </>
 );
 
 export const NoPhoto = () => (
     <>
-        <ProductView title={product.title} price={product.price} description={product.description} />
+        <ProductView title={product.title} formattedPrice={product.formattedPrice} description={product.description} />
         <QuantityButton />
     </>
 );
@@ -46,7 +46,7 @@ export const ProductAttributeGroup = () => (
     <>
         <ProductView
             title={product.title}
-            price={product.price}
+            formattedPrice={product.formattedPrice}
             photos={product.photos}
             description={product.description}
         />
@@ -58,7 +58,7 @@ export const ProductAttributeGroup = () => (
 
 export const ProductAttributeGroupNoDesc = () => (
     <>
-        <ProductView title={product.title} price={product.price} photos={product.photos} />
+        <ProductView title={product.title} formattedPrice={product.formattedPrice} photos={product.photos} />
 
         <AttributeGroup />
         <QuantityButton />

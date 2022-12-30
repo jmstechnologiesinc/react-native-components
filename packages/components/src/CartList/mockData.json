@@ -44,8 +44,8 @@
             "id": "8e56d219-2237-50b6-a359-6c9381c7a6e3",
             "title": "Select Option",
             "parentId": null,
-            "selection": 1,
-            "formattedSelection": "Required",
+            "quantity": 1,
+            "formattedQuantity": "Required",
             "isValid": true
           },
           "9fe4fb48-2081-5bf0-ae95-4ef5076f524c": {
@@ -61,15 +61,15 @@
             "id": "8ee273ae-23ea-499a-a440-7220c2a8a0e6",
             "title": "Select Drink",
             "parentId": null,
-            "selection": 1,
-            "formattedSelection": "Required",
+            "quantity": 1,
+            "formattedQuantity": "Required",
             "isValid": true
           },
           "2514af14-5875-46d2-9160-8c7cbf6b620c": {
             "parentId": "8ee273ae-23ea-499a-a440-7220c2a8a0e6",
             "title": "Medium Fanta Orange",
             "value": true,
-            "selection": 4,
+            "quantity": 4,
             "price": 34
           },
           "83ce0eec-7a1e-41b5-b2fa-948c91aafb4f": {
@@ -77,8 +77,8 @@
             "id": "83ce0eec-7a1e-41b5-b2fa-948c91aafb4f",
             "title": "Sandwich Additions",
             "parentId": null,
-            "selection": 2,
-            "formattedSelection": "2 selected. Choose up to 4",
+            "quantity": 2,
+            "formattedQuantity": "2 selected. Choose up to 4",
             "isValid": true
           },
           "88315bc6-c5ea-4946-88ea-1988c5bfc559": {

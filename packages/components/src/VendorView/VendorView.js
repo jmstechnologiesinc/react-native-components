@@ -1,10 +1,10 @@
 import React from 'react';
 
-import {  Banner, MD3LightTheme, Card, Text, IconButton, TouchableRipple } from '@jmsstudiosinc/react-native-paper';
+import {  Banner, MD3LightTheme, Card, Text, TouchableRipple } from '@jmsstudiosinc/react-native-paper';
 
 import PhotoGallery from '../PhotoGallery/PhotoGallery';
 import SegmentedButtonGroup from '../SegmentedButtonGroup/SegmentedButtonGroup';
-import { interpunct, MATERIAL_ICONS } from '@jmsstudiosinc/commons';
+import { interpunct } from '@jmsstudiosinc/commons';
 
 import IndustryList from '../IndustryList/IndustryList';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
@@ -16,12 +16,12 @@ const VendorView = ({
     formattedAddress,
     formattedPub,
     formattedHitDistance,
-    pudTitle,
+    fulfillmentMethodTitle,
     industryTitle,
-    pudOptions,
-    selectedPud,
+    fulfillmentMethodOptions,
+    selectedFulfillmentMethod,
     onPressPudFilter,
-    bannerMessages = [],
+    formattedErrors = [],
     industryList,
     industryFilter,
     onPressIndustryFilter,
@@ -29,15 +29,15 @@ const VendorView = ({
 }) => {
     return (
         <>
-            {bannerMessages.length > 0 && (
+            {formattedErrors ? (
                 <Banner 
                     visible={true} 
                     actions={[]} 
-                    icon="alert-circle" 
-                    style={{ marginBottom: MD3LightTheme.spacing.x4 }}>
-                    {bannerMessages.join(', ')}
+                    style={{ marginBottom: MD3LightTheme.spacing.x2 }}
+                    elevation={1}>
+                    {formattedErrors}
                 </Banner>
-            )}
+            ) : null}
 
             <PhotoGallery photos={photos} />
 
@@ -52,9 +52,7 @@ const VendorView = ({
                         titleVariant="headlineMedium"
                         subtitleVariant="bodyLarge"
                         titleNumberOfLines={0}
-                        right={(props) => (
-                            <IconButton {...props} icon={MATERIAL_ICONS.chevron} />
-                        )}
+                       
                     />
                     <Card.Content>
                         <Text variant="bodyMedium">
@@ -70,13 +68,13 @@ const VendorView = ({
                 </ScreenWrapper.Section>
             )}
 
-            {pudOptions && (
+            {fulfillmentMethodOptions?.length > 0 && (
                 <ScreenWrapper.Section 
-                    title={pudTitle}
+                    title={fulfillmentMethodTitle}
                     withPaddingHorizontal>
                     <SegmentedButtonGroup
-                        data={pudOptions}
-                        value={selectedPud}
+                        data={fulfillmentMethodOptions}
+                        value={selectedFulfillmentMethod}
                         onPress={onPressPudFilter}
                         density="high" />
                 </ScreenWrapper.Section>

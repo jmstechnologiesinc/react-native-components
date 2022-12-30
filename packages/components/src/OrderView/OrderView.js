@@ -18,7 +18,35 @@ import { itemSeparator } from '../utils';
 import { plurulize } from '@jmsstudiosinc/commons';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { MATERIAL_ICONS } from '@jmsstudiosinc/commons';
-import styles from '../styles';
+
+const getDriverDetails = (order, role) => {
+    const results = [];
+
+    if(order.driver) {
+        if(role === USER_ROLES.vendor) {
+            results.push({
+                key: "delivery-method",
+                title: order.driver.deliveryMethod,
+                description: 'Driver Type'
+            });
+        }
+        results.push({
+            key: "driver-name",
+            title: order.driver?.formattedName,
+            icon: MATERIAL_ICONS.account
+        });
+
+        if(order.driver.phone) {
+            results.push({
+                key: "driver-phone",
+                title: order.driver.phone,
+                icon: MATERIAL_ICONS.call
+            });
+        }
+    }
+
+    return results;
+}
 
 const OrderView = ({ 
     order, 
@@ -49,7 +77,6 @@ const OrderView = ({
     }
 
     const fulfilmentDetails = [];
-    const driverDetails = [];
 
     if (order.note === true) {
         fulfilmentDetails.push({
@@ -67,38 +94,62 @@ const OrderView = ({
         });
     }
 
-    if(role === USER_ROLES.vendor || role === USER_ROLES.customer) {
+    let driverDetails;
+
+    if(role === USER_ROLES.customer) {
+        fulfilmentDetails.push({
+            key: "fulfillment-address",
+            title: order.fulfillmentAddress.formattedAddress,
+            icon: MATERIAL_ICONS.location,
+            description: order.fulfillmentMethod === PUB.delivery ? 'Shipping Address' : 'Pickup Address'
+        });
+
+        fulfilmentDetails.push({
+            key: "vendor-phone",
+            title: order.restaurant.phone,
+            icon: MATERIAL_ICONS.call,
+            description: 'Vendor Phone'
+        });
+
         if (order.fulfillmentMethod === PUB.delivery) {
-            if(order.driver) {
-                driverDetails.push({
-                    key: "delivery-method",
-                    title: order.driver.deliveryMethod,
-                    description: 'Driver Type'
-                });    
-                driverDetails.push({
-                    key: "driver-name",
-                    title: order.driver?.formattedName,
-                    icon: MATERIAL_ICONS.account
-                });
-                if(order.driver.phone) {
-                    driverDetails.push({
-                        key: "driver-phone",
-                        title: order.driver.phone,
-                        icon: MATERIAL_ICONS.call
-                    });
-                }
-            }
+            driverDetails = getDriverDetails(order);
         } else if (order.fulfillmentMethod === PUB.pickup) {
+       
+        }
+    } else if (role === USER_ROLES.vendor) {
+        fulfilmentDetails.push({
+            key: "author-name",
+            title: order.author.formattedName,
+            icon: MATERIAL_ICONS.account
+        });
+
+        if(order.author.phone) {
             fulfilmentDetails.push({
-                key: "delivery-method",
-                title: order.deliveryMethod,
-                description: 'Fulfillment Method',
-                icon: MATERIAL_ICONS.fulfillmentMethod
+                key: "author-phone",
+                title: order.author.phone,
+                icon: MATERIAL_ICONS.call
             });
         }
-    }
 
-    if (role === USER_ROLES.vendor || role === USER_ROLES.driver) {
+        if (order.fulfillmentMethod === PUB.delivery) {
+            fulfilmentDetails.push({
+                key: "fulfillment-address",
+                title: order.fulfillmentAddress.formattedAddress,
+                icon: MATERIAL_ICONS.location
+            });
+
+            driverDetails = getDriverDetails(order, role);
+        } else if (order.fulfillmentMethod === PUB.pickup) {
+       
+        }
+    } else if (role === USER_ROLES.driver) {
+        fulfilmentDetails.push({
+            key: "vendor-phone",
+            title: order.restaurant.phone,
+            icon: MATERIAL_ICONS.call,
+            description: 'Vendor Phone'
+        });
+
         fulfilmentDetails.push({
             key: "author-name",
             title: order.author.formattedName,
@@ -114,29 +165,6 @@ const OrderView = ({
         }
     }
 
-    if(order.fulfillmentMethod === PUB.delivery) {
-        fulfilmentDetails.push({
-            key: "shipping-address",
-            title: order.fulfillmentAddress.formattedAddress,
-            icon: MATERIAL_ICONS.location
-        });
-    } else if(role === USER_ROLES.customer && order.fulfillmentMethod === PUB.pickup) {
-        fulfilmentDetails.push({
-            key: "pickup-address",
-            title: order.restaurant.location.formattedAddress,
-            icon: MATERIAL_ICONS.location
-        });
-    }
-
-    if (role === USER_ROLES.customer || role === USER_ROLES.driver) {
-        fulfilmentDetails.push({
-            key: "vendor-phone",
-            title: order.restaurant.phone,
-            icon: MATERIAL_ICONS.call,
-            description: 'Vendor Phone'
-        });
-    }
-
     let formattedOrder = formatOrder(order, role);
     formattedOrder = {
         ...formattedOrder,
@@ -148,7 +176,7 @@ const OrderView = ({
             }
         }
     }
-   
+
     const buttonsMapping = formattedOrder.fulfilmentStatus.buttons.map(button => {
          if(ORDER_STATUS_CANCELLED(button.value)) {
             return {
@@ -221,7 +249,7 @@ const OrderView = ({
                         showDriverAvatar={showDriverAvatar}
                     />
 
-                    {(role === USER_ROLES.vendor || role === USER_ROLES.customer) && (
+                    {(role === USER_ROLES.vendor || role === USER_ROLES.customer) ? (
                         <List.Section title={`${order.products.length} ${plurulize('Item', order.products.length)}`}>
                             {order.products.map((item, index) => (
                                 <View key={`product-item-${item.id}`}>
@@ -230,9 +258,9 @@ const OrderView = ({
                                 </View>
                             ))}
                         </List.Section>
-                    )}
+                    ) : null}
 
-                    {fulfilmentDetails.length > 0 && (
+                    {fulfilmentDetails.length > 0 ? (
                         <List.Section title={order.fulfillmentMethod === PUB.delivery ? 'Delivery Details' : 'Pickup Details'}>
                             {fulfilmentDetails.map((item, index) => (
                                 <View key={item.key}>
@@ -246,9 +274,9 @@ const OrderView = ({
                                 </View>
                             ))}
                         </List.Section>
-                    )}
+                    ) : null}
 
-                    {driverDetails.length > 0 && (
+                    {driverDetails?.length > 0 ? (
                         <List.Section title={"Driver Details"}>
                             {driverDetails.map((item, index) => (
                                 <View key={item.key}>
@@ -262,7 +290,7 @@ const OrderView = ({
                                 </View>
                             ))}
                         </List.Section>
-                    )}  
+                    ) : null}
 
                     <ScreenWrapper.Section>
                         <Accounting fees={formattedOrder.fees} />

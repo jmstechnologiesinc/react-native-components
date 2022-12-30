@@ -2,20 +2,21 @@ import React from 'react';
 
 import { View } from 'react-native';
 
-import { Text, Button, MD3LightTheme, Divider, Avatar } from '@jmsstudiosinc/react-native-paper';
+import { Text, Button, MD3LightTheme, Divider, Avatar, MD3Colors } from '@jmsstudiosinc/react-native-paper';
 import { CART_ITEM_TYPE } from '@jmsstudiosinc/cart';
 
 import CartListProductItem from './CartListProductItem';
 import ScreenWrapper from '../ScreenWrapper';
 import { itemSeparator } from '../utils';
-import Swipeable from '../SwipeToDelete/SwipeToDelete';
+import SwipeToDelete from '../SwipeToDelete/SwipeToDelete';
 import {Item as JMSItem}  from '../List/List';
 import { MATERIAL_ICONS } from '@jmsstudiosinc/commons';
 
 const CartListItem = ({  
     checkoutTitle,
     addTitle,
-    item, 
+    showProductDescription,
+    item,
     onAdd,
     onDelete, 
     onEdit, 
@@ -28,6 +29,7 @@ const CartListItem = ({
         photo, 
         type, 
         description, 
+        isValid,
         data: productItems, 
         cartIndustryId 
     } = item;
@@ -58,6 +60,7 @@ const CartListItem = ({
             <JMSItem
                 title={title} 
                 description={description}
+                descriptionStyle={isValid ? null : {color: MD3Colors.error50}}
                 titleNumberOfLines={0}
                 descriptionNumberOfLines={0}
                 left={(props) => (
@@ -66,15 +69,16 @@ const CartListItem = ({
             />
 
             {productItems?.map((product, index) => (
-                <Swipeable 
+                <SwipeToDelete 
                     key={`swipeable-${product.cartId}`}
                     onSwipeableRightOpen={() => onDelete(id, product.cartId, cartIndustryId)} >
                     <CartListProductItem 
                         data={product}    
                         onEdit={() => onEdit(product, item)}
-                        descriptionNumberOfLines={1} />
+                        descriptionNumberOfLines={1}
+                        showProductDescription={showProductDescription} />
                     {itemSeparator(index, productItems.length) && <Divider />}
-                </Swipeable>
+                </SwipeToDelete>
             ))}
 
             <ScreenWrapper.Section withPaddingHorizontal style={{ flexDirection: 'row' }}>

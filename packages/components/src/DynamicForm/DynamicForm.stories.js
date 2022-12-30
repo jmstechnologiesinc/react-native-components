@@ -17,8 +17,8 @@ export const AttributeGroup = () => {
           "id": "8e56d219-2237-50b6-a359-6c9381c7a6e3",
           "title": "Select Option",
           "parentId": null,
-          "selection": 1,
-          "formattedSelection": "Required",
+          "quantity": 1,
+          "formattedQuantity": "Required",
           "isValid": true
         },
         "8eb89ad2-ff06-51a9-84b6-189c899e11a3": {

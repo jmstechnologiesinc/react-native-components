@@ -50,7 +50,7 @@ const ListItem = ({
             style={{ 
               color: descriptionColor, 
               fontSize, 
-              ...(index === 0 ? null : styles.additionalPadding) 
+              ...(index === 0 ? descriptionStyle : styles.additionalPadding) 
             }}>
             {item}
         </Text>

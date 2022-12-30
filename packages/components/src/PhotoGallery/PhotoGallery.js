@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
 import { View, FlatList, StyleSheet, Image } from 'react-native';
+import { moderateScale } from 'react-native-size-matters';
 
 import { MD3LightTheme, TouchableRipple} from '@jmsstudiosinc/react-native-paper';
 import {getMainPhoto} from '@jmsstudiosinc/commons';
 
 import ScreenWrapperSection from '../ScreenWrapper/ScreenWrapperSection';
-import { moderateScale } from 'react-native-size-matters';
 
 const renderSeparator = () => (
     <View
@@ -18,26 +18,22 @@ const renderSeparator = () => (
 );
 
 const PhotoGallery = ({ photos }) => { 
-    const [uri, setUri] = useState(getMainPhoto(photos));
-
-    if (!Array.isArray(photos)) {
-        return null;
-    }
+    const [selectedPhoto, setSelectedPhoto] = useState();
+    const mainPhotoUri = selectedPhoto || getMainPhoto(photos);
 
     const renderItem = ({ item }) => (
-        <TouchableRipple onPress={() => setUri(item)}>
+        <TouchableRipple onPress={() => setSelectedPhoto(item)}>
             <Image style={styles.photo} source={{ uri: item }} />
         </TouchableRipple>
     );
 
     return (
         <>
-            {uri ? <Image
-                style={styles.mainImage}
-                source={{uri: uri}}
-            /> : null}
+            {mainPhotoUri ? (
+                <Image source={{uri: mainPhotoUri}} style={styles.mainImage} />
+            ) : null}
             
-            {photos.length > 1 ? (
+            {photos?.length > 1 ? (
                 <ScreenWrapperSection>
                     <FlatList
                         data={photos}
@@ -45,7 +41,7 @@ const PhotoGallery = ({ photos }) => {
                         ItemSeparatorComponent={renderSeparator}
                         renderItem={renderItem}
                         showsHorizontalScrollIndicator={false}
-                        keyExtractor={(item, index) => `photo-gallery-${index}`}/>
+                        keyExtractor={(_, index) => `photo-gallery-${index}`}/>
                 </ScreenWrapperSection>
             ) : null}
         </>

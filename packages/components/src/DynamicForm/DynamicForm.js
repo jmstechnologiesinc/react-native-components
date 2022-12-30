@@ -3,19 +3,15 @@ import React, { useRef } from 'react';
 import { FlatList, Animated } from 'react-native';
 
 import { List, MD3Colors} from '@jmsstudiosinc/react-native-paper';
-import { formattedSelection, validateSelection } from '@jmsstudiosinc/commons';
+import { dynamicFormInitializeGroup, dynamicFormToggleCheckRadioValue, dynamicFormValidateGroup} from '@jmsstudiosinc/commons';
 import DynamicFormSwitch from './DynamicFormSwitch';
 
-
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+const animatedValue = new Animated.Value(0);
 
-const nextAttributeGroup = (value, attributeGroup) => {
-    return value === true && attributeGroup.length ? attributeGroup : null;
-};
-
-const validateAttributeGroup = (sections, initialState = {}) => {
+const areAllFormValid = (sections, initialState = {}) => {
     let valid = true;
-    for (section of sections) {
+   for (section of sections) {
         let isValid = initialState[section.id]?.isValid;
 
         if (isValid === undefined) {
@@ -34,84 +30,53 @@ const keyExtractor = (item) => item.id;
 
 const DynamicForm = ({
     parentId,
-    initialValues = {},
+    initialState = {},
     isOutofStock,
     sections,
     listHeaderComponent,
     listFooterComponent,
-    onFormChange,
+    onChange,
     onContentOffsetYScroll,
     contentOffsetY
 }) => {
     const contentOffsetYRangeRef = useRef(false);
-    const scrollY = useRef(new Animated.Value(0)).current;
+    const scrollY = useRef(animatedValue).current;
 
-    const onCheckRadioChange = (item, section, value) => {
-        let alteredForm = {...initialValues};
+    const onCheckRadioPress = (data, item, value) => {
+        let alteredForm = dynamicFormInitializeGroup(item, initialState);
 
-        if (!alteredForm[section.id]) {
-            alteredForm = {
-                ...alteredForm,
-                [section.id]: {
-                    ...alteredForm[section.id],
-                    taxonomyType: section.taxonomyType,
-                    id: section.id,
-                    title: section.title,
-                    parentId: section.parentId,
-                    selection: section.selection,
-                    formattedSelection: section.formattedSelection,
-                }
+        const calculateQuantityByValue = (value) => {
+            let quantity = alteredForm[item.id].quantity;
+
+            if (value === true && quantity <= item.maxQuantity) {
+                quantity += 1;
+            } else if (quantity > 0) {
+                quantity -= 1; 
             }
+
+            return {
+                ...alteredForm,
+                [item.id]: {
+                    ...alteredForm[item.id],
+                    quantity
+                }
+            } 
         }
 
-        const updateAttributeGroup = (item, value) => {
-            if(value === true) {
-                alteredForm = {
-                    ...alteredForm,
-                    [item.id]: {
-                        ...alteredForm[item.id],
-                        parentId: item.parentId,
-                        title: item.title,
-                        price: item.price,
-                        value,
-                    }
-                }
-            } else {
-                alteredForm = {
-                    ...alteredForm,
-                    [item.id]: {}
-                }
-            }
-
-            if (value === true && alteredForm[section.id].selection <= section.maxSelection) {
-                alteredForm = {
-                    ...alteredForm,
-                    [section.id]: {
-                        ...alteredForm[section.id],
-                        selection: alteredForm[section.id].selection += 1
-                    }
-                }       
-            } else if (alteredForm[section.id].selection > 0) {
-                alteredForm = {
-                    ...alteredForm,
-                    [section.id]: {
-                        ...alteredForm[section.id],
-                        selection: alteredForm[section.id].selection -= 1
-                    }
-                }   
-            }
-        };
-
-        if (section?.maxSelection === 1) {
-            section.data.forEach((data) => {
-                if (data.id === item.id) {
-                    updateAttributeGroup(data, value);
-                } else if (alteredForm[data.id]?.value === true) {
-                    updateAttributeGroup(data, false);
+        if (item.maxQuantity === 1) {
+            item.data.forEach((thisData) => {
+                if (thisData.id === data.id) {
+                    alteredForm = dynamicFormToggleCheckRadioValue(thisData, value, alteredForm);
+                    alteredForm = calculateQuantityByValue(value);
+                
+                } else if ((alteredForm[thisData.id] || thisData)?.value === true) {
+                    alteredForm = dynamicFormToggleCheckRadioValue(thisData, false, alteredForm);
+                    alteredForm = calculateQuantityByValue(false);
                 }
             });
         } else {
-            updateAttributeGroup(item, value);
+            alteredForm = dynamicFormToggleCheckRadioValue(data, value, alteredForm);
+            alteredForm = calculateQuantityByValue(value); 
         }
 
         if (!alteredForm[parentId]) {
@@ -121,40 +86,29 @@ const DynamicForm = ({
             } 
         }
 
-        alteredForm = {
-            ...alteredForm,
-            [section.id]: {
-                ...alteredForm[section.id],
-                isValid: validateSelection(alteredForm[section.id].selection, section.minSelection),
-                formattedSelection: formattedSelection(
-                    alteredForm[section.id].selection,
-                    section.minSelection,
-                    section.maxSelection
-                )
-            }
-        }   
+        alteredForm = dynamicFormValidateGroup(item, alteredForm) 
 
         alteredForm = {
             ...alteredForm,
             [parentId]: {
                 ...alteredForm[parentId],
-                isValid: validateAttributeGroup(sections, alteredForm)
+                isValid: areAllFormValid(sections, alteredForm)
             }
         }  
 
-        onFormChange?.(alteredForm, nextAttributeGroup(value, item.attributeGroup), item.id);
+        onChange?.(alteredForm);
     };
 
     const getValue = (item) => {
-        if (initialValues?.[item.id]) {
-            return initialValues[item.id].value;
+        if (initialState?.[item.id]) {
+            return initialState[item.id].value;
         }
 
         return item.value;
     };
 
-    const validateMaxSelection = (value, selection, maxSelection) => {
-        if (!value && maxSelection > 1 && selection >= maxSelection) {
+    const validateMaxSelection = (value, quantity, maxQuantity) => {
+        if (!value && maxQuantity > 1 && quantity >= maxQuantity) {
             return true;
         }
     
@@ -164,33 +118,33 @@ const DynamicForm = ({
     const renderItem = ({item}) => (
         <List.Accordion 
             title={item.title} 
-            description={initialValues[item.id]?.formattedSelection || item.formattedSelection}
-            descriptionStyle={{...((initialValues[item.id] || item)?.isValid ? null : {color: MD3Colors.error50})}}>
-            {item.data?.map((attr) => {
-                const value = Boolean(getValue(attr));
-                const isMaxSelection = validateMaxSelection(value, item, item.maxSelection);
-                const isDisabled = attr.isDisabled || isOutofStock || isMaxSelection;
-                const form = {
-                    ...attr,
-                    value,
-                    isDisabled
-                }
-
+            description={initialState[item.id]?.formattedQuantity || item.formattedQuantity}
+            descriptionStyle={{...((initialState[item.id] || item)?.isValid ? null : {color: MD3Colors.error50})}}>
+            {item.data?.map((data) => {
+                const value = Boolean(getValue(data));
+                const isMaxSelection = validateMaxSelection(value, initialState[item.id]?.quantity, item.maxQuantity);
+                const isDisabled = data.isDisabled || isOutofStock || isMaxSelection;
+               
                 return (
                     <DynamicFormSwitch
-                        key={`dymamic-form-switch-${attr.id}`}
-                        form={form}
-                        onChange={(value) => onCheckRadioChange(attr, item, value)} />
+                        key={`dymamic-form-switch-${data.id}`}
+                        type={data.type}
+                        title={data.title}
+                        description={data.description}
+                        metaTitle={data.formattedPrice}
+                        isChecked={value}
+                        isDisabled={isDisabled}
+                        onPress={(value) => onCheckRadioPress(data, item, value)} />
                 )
             })}
         </List.Accordion>
     );
 
     const listFooterComponentWrapper = () => {
-        let isValid = initialValues[parentId]?.isValid;
+        let isValid = initialState[parentId]?.isValid;
 
         if (isValid === undefined) {
-            isValid = validateAttributeGroup(sections);
+            isValid = areAllFormValid(sections);
         }
 
         return listFooterComponent(isValid);

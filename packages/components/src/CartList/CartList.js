@@ -11,6 +11,7 @@ const CartList = ({
     checkoutTitle,
     addTitle,
     sections,
+    showProductDescription,
     onAdd,
     onDelete,
     onEdit,
@@ -32,6 +33,7 @@ const CartList = ({
                     <CartListItem 
                         checkoutTitle={checkoutTitle}
                         addTitle={addTitle}
+                        showProductDescription={showProductDescription}
                         item={item} 
                         renderTips={renderTips} 
                         onAdd={onAdd}

@@ -4,7 +4,7 @@ import {View} from "react-native"
 
 import { isNumeric } from '@jmsstudiosinc/commons';
 
-import { IconButton,  MD3Colors,  MD3LightTheme,  Text } from '@jmsstudiosinc/react-native-paper';
+import { IconButton, MD3LightTheme,  Text } from '@jmsstudiosinc/react-native-paper';
 import { MATERIAL_ICONS } from '@jmsstudiosinc/commons';
 
 const QuantityButton = ({
@@ -15,9 +15,11 @@ const QuantityButton = ({
     onPress
 }) => {
     let count = isNumeric(value) ? value : 0;
+    const isDecreaseButtonDisabled = isDisabled || (count === 0 || (isNumeric(minQuantity) && count <= minQuantity));
+    const isIncreaseButtonDisabled = isDisabled || (maxQuantity === 0 || (isNumeric(maxQuantity) && count >= maxQuantity));
 
     const onDecrease = () => {
-        if (count === 0 || (isNumeric(minQuantity) && count <= minQuantity)) {
+        if (isDecreaseButtonDisabled) {
             return;
         }
 
@@ -26,7 +28,7 @@ const QuantityButton = ({
     };
 
     const onIncrease = () => {
-        if (maxQuantity === 0 || (isNumeric(maxQuantity) && count >= maxQuantity)) {
+        if (isIncreaseButtonDisabled) {
             return;
         }
 
@@ -36,9 +38,9 @@ const QuantityButton = ({
 
     return (
         <View style={{flex: 1,flexDirection: "row", justifyContent: "space-evenly", alignItems: 'center'}}>
-            <IconButton disabled={isDisabled} mode="outlined" icon={MATERIAL_ICONS.decrease} onPress={onDecrease} />
+            <IconButton disabled={isDecreaseButtonDisabled} mode="outlined" icon={MATERIAL_ICONS.decrease} onPress={onDecrease} />
             <Text style={{...(isDisabled ? {color: MD3LightTheme.colors.surfaceDisabled} : null)}} variant="headlineSmall">{count}</Text>
-            <IconButton disabled={isDisabled} mode="outlined" icon={MATERIAL_ICONS.increment} onPress={onIncrease} />
+            <IconButton disabled={isIncreaseButtonDisabled} mode="outlined" icon={MATERIAL_ICONS.increment} onPress={onIncrease} />
         </View>
     )
 }

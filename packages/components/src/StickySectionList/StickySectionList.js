@@ -7,6 +7,7 @@ import { itemSeparator } from '../utils';
 import * as Tabs from '../Tabs/Tabs';
 
 const AnimatedSectionList = Animated.createAnimatedComponent(NativeSectionList);
+const animatedValue = new Animated.Value(0);
 
 const StickyList = ({ 
     title, 
@@ -17,7 +18,7 @@ const StickyList = ({
     contentOffsetY,
     ...props 
 }) => {
-    const scrollY = useRef(new Animated.Value(0)).current;
+    const scrollY = useRef(animatedValue).current;
     const blockUpdateIndexRef = useRef(false);
     const sectionListRef = useRef();
     const contentOffsetYRangeRef = useRef(false);

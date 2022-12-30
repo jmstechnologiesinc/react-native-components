@@ -8,7 +8,9 @@ import { MetaBadged } from '../List/List';
 const CheckRadio = ({ 
     title, 
     description, 
-    metadata, 
+    metaTitle, 
+    titleNumberOfLines = 0,
+    descriptionNumberOfLines = 0,
     isDisabled, 
     isChecked, 
     onPress, 
@@ -18,8 +20,10 @@ const CheckRadio = ({
     <List.Item
         title={title}
         description={description}
-        onPress={() => onPress?.(!isChecked)}
         disabled={isDisabled}
+        titleNumberOfLines={titleNumberOfLines}
+        descriptionNumberOfLines={descriptionNumberOfLines}
+        onPress={() => onPress?.(!isChecked)}
         left={(props) => variant === "radio" ? (
             <View style={props.style}>
                 <RadioButton.Android
@@ -37,7 +41,7 @@ const CheckRadio = ({
                 />
             </View>
         )}
-        right={() => <MetaBadged title={metadata} />}
+        right={() => <MetaBadged title={metaTitle} />}
         {...props}
     />
 );

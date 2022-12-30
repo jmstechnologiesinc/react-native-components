@@ -6,25 +6,49 @@ const ProductListItem = ({
     title, 
     photo, 
     description, 
-    price, 
+    formattedPrice, 
     cartQuantity, 
+    isOutofStock,
+    formattedQuantity,
     onPress 
-}) => (
-    <JMSList.Item
-        title={title}
-        photo={photo}
-        description={description}
-        metaTitle={price}
-        metaQuantity={cartQuantity}
-        onPress={onPress}
-        titleNumberOfLines={0}
-        descriptionNumberOfLines={5} />
-);
+}) => {
+    const descriptionList = [];
+
+    if(isOutofStock) {
+        descriptionList.push("Out of Stock")
+    }
+
+    if(formattedQuantity) {
+        descriptionList.push(formattedQuantity);
+    }
+
+    if(description) {
+        descriptionList.push(description);
+    }
+
+    return (
+        <JMSList.Item
+            title={title}
+            description={descriptionList}
+            photo={photo}
+            metaTitle={formattedPrice}
+            metaQuantity={cartQuantity}
+            onPress={onPress}
+            titleNumberOfLines={0}
+            descriptionNumberOfLines={4} />
+    );
+}
 
 ProductListItem.whyDidYouRender = true;
 
 function areEqual(prevProps, nextProps) {
-    if(prevProps.cartQuantity !== nextProps.cartQuantity) {
+    if(prevProps.title !== nextProps.title || 
+        prevProps.photo !== nextProps.photo ||
+        prevProps.description !== nextProps.description ||
+        prevProps.formattedPrice !== nextProps.formattedPrice ||
+        prevProps.cartQuantity !== nextProps.cartQuantity ||
+        prevProps.isOutofStock !== nextProps.isOutofStock ||
+        prevProps.formattedQuantity !== nextProps.formattedQuantity) {
         return false;
     }
 

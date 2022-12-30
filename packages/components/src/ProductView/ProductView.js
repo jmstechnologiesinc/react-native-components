@@ -2,7 +2,7 @@ import React from 'react';
 
 import {  View } from 'react-native';
 
-import { Banner, Card, MD3LightTheme, Text } from '@jmsstudiosinc/react-native-paper';
+import { Banner, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 
 import * as JMSList from '../List/List';
 import PhotoGallery from '../PhotoGallery/PhotoGallery';
@@ -10,13 +10,14 @@ import PhotoGallery from '../PhotoGallery/PhotoGallery';
 const ProductView = ({ 
     title, 
     photos, 
-    description, 
-    price, 
+    description,
+    formattedPrice, 
     isOutofStock, 
     pudErrorMessage,
     onLayoutTitleOffsetY
 }) => {
     const message = [];
+    const descriptionList = [formattedPrice]
 
     if (isOutofStock) {
         message.push('This item is out of stock');
@@ -26,15 +27,20 @@ const ProductView = ({
         message.push(pudErrorMessage);
     }
 
+    if(description) {
+        descriptionList.push(description)
+    }
+
     return (
         <>
             {message.length > 0 && (
                 <Banner
                     visible={true}
                     actions={[]}
+                    elevation={1}
                     style={{ marginBottom: MD3LightTheme.spacing.x2 }}
                 >
-                    {message.join(', ')}. Please try again!
+                    {message.join(', ')}. Please try again later.
                 </Banner>
             )}
 
@@ -44,12 +50,11 @@ const ProductView = ({
                 onLayout={onLayoutTitleOffsetY ? (event) => onLayoutTitleOffsetY(event.nativeEvent.layout.y) : null}>
                  <JMSList.Item
                     title={title}
-                    description={description}
-                    metaTitle={price}
+                    description={descriptionList}
                     titleNumberOfLines={0}
                     descriptionNumberOfLines={0}
                     titleVariant="headlineSmall" 
-                    metaTitleVariant="headlineSmall" />
+                    descriptionVariant="headlineSmall" />
             </View>
         </>
     );

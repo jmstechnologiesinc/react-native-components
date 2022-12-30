@@ -29,7 +29,7 @@ const ProductListSticky = ({
                 photo={getMainPhoto(item.photos)}
                 title={item.title}
                 description={item.description}
-                price={item.price}
+                formattedPrice={item.formattedPrice}
                 cartQuantity={productItemQuantityMapping?.[item.id]}
                 quantity={item.quantity}
                 isOutofStock={item.isOutofStock}
@@ -50,4 +50,4 @@ function areEqual(prevProps, nextProps) {
     return true;
 }
 
-export default React.memo(ProductListSticky, areEqual);
+export default ProductListSticky;

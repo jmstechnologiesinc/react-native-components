@@ -3,17 +3,18 @@ import React from 'react';
 import { MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 import { interpunct } from '@jmsstudiosinc/commons';
 import * as JMSList from '../List/List';
+import { MD3Colors } from '@jmsstudiosinc/react-native-paper';
 
 const recursiveAttributeGroup = ({ parentId, attributeGroup }) => {
     const results = [];
 
     if (!parentId) return null;
 
-    for (selection in attributeGroup) {
-        if (attributeGroup[selection].parentId === parentId) {
+    for (attributeOption in attributeGroup) {
+        if (attributeGroup[attributeOption].parentId === parentId) {
             results.push({
-                ...attributeGroup[selection],
-                ...recursiveAttributeGroup({ parentId: selection, attributeGroup }),
+                ...attributeGroup[attributeOption],
+                ...recursiveAttributeGroup({ parentId: attributeOption, attributeGroup }),
             });
         }
     }
@@ -44,30 +45,36 @@ const CartListProductItem = ({
     interpunctAttributeGroup = true,
     showProductDescription = true
 }) => {
-    const attributeGroup = renderRecursiveAttributeGroup(data.attributeGroup);
-    
-    const productDescription = [];
-    if(showProductDescription && data.description) {
-        productDescription.push(data.description);
+    const descriptionList = [];
+
+    if(data.isValid === false) {
+        descriptionList.push(data.formattedQuantity);
     }
 
+    if(showProductDescription && data.description) {
+        descriptionList.push(data.description);
+    }
+
+    const attributeGroup = renderRecursiveAttributeGroup(data.attributeGroup);
+
     if(interpunctAttributeGroup && attributeGroup.length > 0) {
-        if(!productDescription.length) {
-            productDescription.push(null);
+        if(!descriptionList.length) {
+            descriptionList.push(null);
         }
 
-        productDescription.push(interpunct(attributeGroup.map((item) => item.title)));
+        descriptionList.push(interpunct(attributeGroup.map((item) => item.title)));
     }
 
     return (  
         <>
             <JMSList.Item 
                 title={data.title}
-                description={productDescription}
+                description={descriptionList}
                 titleNumberOfLines={titleNumberOfLines}
                 descriptionNumberOfLines={descriptionNumberOfLines}
-                left={() => <JMSList.MetaBadged quantity={data.quantity} />}
-                right={() => <JMSList.MetaBadged title={data.price} />}
+                descriptionStyle={data.isValid ? null : {color: MD3Colors.error50}}
+                left={() => <JMSList.MetaBadged quantity={data.cartQuantity} />}
+                right={() => <JMSList.MetaBadged title={data.formattedPrice} />}
                 onPress={onEdit}
             />
            {!interpunctAttributeGroup ? attributeGroup.map((item) => (
@@ -78,12 +85,12 @@ const CartListProductItem = ({
                     descriptionNumberOfLines={0}                    
                     left={showAttributeQuantity ? () => (
                         <JMSList.MetaBadged 
-                            title={item.selection} 
+                            title={item.quantity} 
                             quantityStyle={{backgroundColor: MD3LightTheme.colors.onSurfaceVariant}} />
                     ) : null}
                     right={() => (
                         <JMSList.MetaBadged 
-                            title={item.price} 
+                            title={item.formattedPrice} 
                             titleStyle={{color: MD3LightTheme.colors.secondary}} />
                     )}
                     titleStyle={{color: MD3LightTheme.colors.secondary}}
