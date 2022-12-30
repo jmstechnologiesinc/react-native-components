@@ -4,7 +4,7 @@ import { TextInput } from '@jmsstudiosinc/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 
-const AuthFormPersonInfo = ({ make, model, color, year, inputActionHandler }) => {
+const AuthFormPersonInfo = ({ make, model, color, year, inputActionHandler, isDisabled }) => {
     return (
         <>
             <ScreenWrapper.Section title={localized('Vehicle Details')}>
@@ -12,6 +12,7 @@ const AuthFormPersonInfo = ({ make, model, color, year, inputActionHandler }) =>
                     mode="outlined"
                     label={localized('Make')}
                     value={make}
+                    disabled={isDisabled}
                     onChangeText={(text) => inputActionHandler('make', text)}
                 />
             </ScreenWrapper.Section>
@@ -20,6 +21,7 @@ const AuthFormPersonInfo = ({ make, model, color, year, inputActionHandler }) =>
                     mode="outlined"
                     label={localized('Model')}
                     value={model}
+                    disabled={isDisabled}
                     onChangeText={(text) => inputActionHandler('model', text)}
                 />
             </ScreenWrapper.Section>
@@ -28,6 +30,7 @@ const AuthFormPersonInfo = ({ make, model, color, year, inputActionHandler }) =>
                     mode="outlined"
                     label={localized('Color')}
                     value={color}
+                    disabled={isDisabled}
                     onChangeText={(text) => inputActionHandler('color', text)}
                 />
             </ScreenWrapper.Section>
@@ -37,6 +40,7 @@ const AuthFormPersonInfo = ({ make, model, color, year, inputActionHandler }) =>
                     mode="outlined"
                     label={localized('Year')}
                     value={year}
+                    disabled={isDisabled}
                     keyboardType="numeric"
                     onChangeText={(text) => inputActionHandler('year', text)}
                 />

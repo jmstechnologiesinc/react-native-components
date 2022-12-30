@@ -38,7 +38,10 @@ const CartListItem = ({
         return null;
     } else if (type === CART_ITEM_TYPE.checkout) {
         return (
-            <ScreenWrapper.Section withPaddingHorizontal style={{ paddingTop: MD3LightTheme.spacing.x8, paddingBottom: MD3LightTheme.spacing.x8 }}>
+            <ScreenWrapper.Section
+                withPaddingHorizontal
+                style={{ paddingTop: MD3LightTheme.spacing.x8, paddingBottom: MD3LightTheme.spacing.x8 }}
+            >
                 <Button mode="contained" onPress={() => onCheckout(item.vendorIds)}>
                     {checkoutTitle}
                 </Button>
@@ -54,7 +57,7 @@ const CartListItem = ({
     } else if (type === CART_ITEM_TYPE.industryTitle) {
         return null;
     }
-    
+
     return (
         <>
             <JMSItem
