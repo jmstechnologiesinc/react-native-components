@@ -2,7 +2,7 @@ import React from 'react';
 
 import { View } from 'react-native';
 
-import { Text, Button, MD3LightTheme, Divider, Avatar, MD3Colors } from '@jmsstudiosinc/react-native-paper';
+import {Text, Button, MD3LightTheme, Divider, Avatar, MD3Colors } from '@jmsstudiosinc/react-native-paper';
 import { CART_ITEM_TYPE } from '@jmsstudiosinc/cart';
 
 import CartListProductItem from './CartListProductItem';
@@ -11,7 +11,6 @@ import { itemSeparator } from '../utils';
 import SwipeToDelete from '../SwipeToDelete/SwipeToDelete';
 import {Item as JMSItem}  from '../List/List';
 import { MATERIAL_ICONS } from '@jmsstudiosinc/commons';
-import { List } from '../../lib/Tabs/Tabs.stories';
 
 const CartListItem = ({  
     checkoutTitle,
@@ -26,8 +25,6 @@ const CartListItem = ({
 }) => {
     const { 
         vendor,
-        title,
-        total,
         type, 
         description, 
         isValid,
@@ -56,7 +53,7 @@ const CartListItem = ({
             </View>
         );
     } else if (type === CART_ITEM_TYPE.industryTitle) {
-        return <List.Section>{title}</List.Section>;
+        return null;
     }
 
     return (
