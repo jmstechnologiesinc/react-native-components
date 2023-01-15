@@ -31,7 +31,7 @@ export const Description = () => (
         listHeaderComponent={(
             <VendorView
                 title={mockData[1].title}
-                formattedPud={`${mockData[0].formattedPub} - ${mockData[0].formattedHitDistance}`}
+                formatteFulfillmentMethod={`${mockData[0].formattedFulfillmentMethod} - ${mockData[0].formattedHitDistance}`}
                 formattedAddress={mockData[1].location.formattedAddress}
                 photos={photos}
                 description={mockData[1].description}
@@ -44,7 +44,7 @@ export const Banner = () => (
     <StickyHeader
         listHeaderComponent={<VendorView
             title={mockData[1].title}
-            formattedPud={`${mockData[0].formattedPub} - ${mockData[0].formattedHitDistance}`}
+            formatteFulfillmentMethod={`${mockData[0].formattedFulfillmentMethod} - ${mockData[0].formattedHitDistance}`}
             formattedAddress={mockData[1].location.formattedAddress}
             photos={photos}
             bannerMessages={[
@@ -59,16 +59,16 @@ export const StickyProductList = () => (
         listHeaderComponent={<VendorView
             title={mockData[1].title}
             industryTitle="Industries"
-            pudTitle="Filfillment Methods"
-            formattedPud={`${mockData[0].formattedPub} - ${mockData[0].formattedHitDistance}`}
+            fulfillmentMethodTitle="Filfillment Methods"
+            formatteFulfillmentMethod={`${mockData[0].formattedFulfillmentMethod} - ${mockData[0].formattedHitDistance}`}
             formattedAddress={mockData[1].location.formattedAddress}
             photos={photos}
-            pudOptions={ToggleButtonMockData.subLabelButtons}
+            fulfillmentMethodOptions={ToggleButtonMockData.subLabelButtons}
             industryList={Industries}
             industryFilter={'Liquor'}
             isMultiProducts={true}
             catalogFilter={0}
-            selectedPud="pickup"
+            selectedFulfillmentMethod="pickup"
         />}
     />
 );

@@ -96,7 +96,7 @@ const StickyList = ({
                 ListHeaderComponent={
                     <>
                         {listHeaderComponent}
-                        <View onLayout={(ev) => setLayoutHeight(ev.nativeEvent.layout.y)}>{renderTab}</View>
+                        <View onLayout={(ev) => setLayoutHeight(ev.nativeEvent.layout.y)}></View>
                     </>
                 }
                 showsVerticalScrollIndicator={false}

@@ -10,7 +10,7 @@ const VendorStatus = ({
     orderID,
     deliveryMethod,
     status,
-    restaurantAcceptedTime,
+    vendorAcceptedTime,
     deliveryTime,
     durationValue,
 
@@ -33,7 +33,7 @@ const VendorStatus = ({
         orderID: orderID,
         deliveryMethod: deliveryMethod,
         status: status,
-        restaurantAcceptedTime: restaurantAcceptedTime,
+        vendorAcceptedTime: vendorAcceptedTime,
         deliveryTime: deliveryTime,
         durationValue: durationValue,
     }); */

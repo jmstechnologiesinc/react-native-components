@@ -13,19 +13,19 @@ const ListMetaBadged = ({
     quantityStyle,
 }) => (
     <View style={[{alignSelf: "center", marginLeft: MD3LightTheme.spacing.x4}, style]}>
-        {title && (
+        {title ? (
             <Text
                 variant={titleVariant}
                 style={titleStyle}>
                 {title}
             </Text>
-        )}
-        {quantity && (
+        ) : null}
+        {quantity ? (
             <Badge style={[
-                {backgroundColor: MD3LightTheme.colors.primary},
+                {backgroundColor: MD3LightTheme.colors.onSurfaceVariant},
                 quantityStyle
             ]}>{quantity}</Badge>
-        )}
+        ) : null}
     </View>
 );
 

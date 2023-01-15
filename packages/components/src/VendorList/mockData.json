@@ -1,7 +1,7 @@
 [
     {
         "id": "1AcokVeq5fO68QfNrjdg",
-        "availablePud": "flexible",
+        "availableFulfillmentMethod": "flexible",
         "deliveryMethod": "Marketplace",
         "pickupMethod": "Customer Pickup",
         "title": "Vaka Restaurant",
@@ -21,8 +21,8 @@
             "countryCode": "us",
             "geohash": "drt6uq24v"
         },
-        "pud": "flexible",
-        "formattedPub": "Delivery and Pickup",
+        "fulfillmentMethod": "flexible",
+        "formattedFulfillmentMethod": "Delivery and Pickup",
         "hitMetadata": {
             "distance": 0.1311003123882462,
             "bearing": -62.09373292259195
@@ -51,7 +51,7 @@
     },
     {
         "id": "13kd3okVeq5fO68QfNrjdg",
-        "availablePud": "deliveryOnly",
+        "availableFulfillmentMethod": "deliveryOnly",
         "deliveryMethod": "Marketplace",
         "description": "Use your Uber account to order delivery from Terra Luna Cafe in Lawrence. Browse the menu, view popular items, and track your order.",
         "title": "Terra Luna Cafe",
@@ -70,8 +70,8 @@
             "countryCode": "us",
             "geohash": "drt6uwxru"
         },
-        "pud": "deliveryOnly",
-        "formattedPub": "Delivery Only",
+        "fulfillmentMethod": "deliveryOnly",
+        "formattedFulfillmentMethod": "Delivery Only",
         "hitMetadata": {
             "distance": 0.3377143252399741,
             "bearing": 70.01195036357848
@@ -92,7 +92,7 @@
     },
     {
         "id": "e54a3551-1d83-457f-99f2-7cdeec4ff263",
-        "availablePud": "flexible",
+        "availableFulfillmentMethod": "flexible",
         "deliveryMethod": "Marketplace",
         "description": "Use your Uber account to order delivery from McDonald's® (50 BROADWAY) in Lawrence. Browse the menu, view popular items, and track your order.",
         "pickupMethod": "Customer Pickup",
@@ -114,8 +114,8 @@
             "countryCode": "us",
             "geohash": "drt6uw0wb"
         },
-        "pud": "flexible",
-        "formattedPub": "Delivery and Pickup",
+        "fulfillmentMethod": "flexible",
+        "formattedFulfillmentMethod": "Delivery and Pickup",
         "hitMetadata": {
             "distance": 0.49986840651361375,
             "bearing": -114.94826330055017

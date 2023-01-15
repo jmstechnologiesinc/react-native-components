@@ -14,7 +14,7 @@ export const localized = memoize(
 
 export const setI18nConfig = () => {
     const fallback = { languageTag: 'en' };
-    const { languageTag, isRTL } = RNLocalize.findBestAvailableLanguage(Object.keys(translationGetters)) || fallback;
+    const { languageTag } = RNLocalize.findBestAvailableLanguage(Object.keys(translationGetters)) || fallback;
     localized.cache.clear();
     i18n.translations = { [languageTag]: translationGetters[languageTag]() };
     i18n.locale = languageTag;

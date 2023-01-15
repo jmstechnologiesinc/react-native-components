@@ -1,4 +1,3 @@
-import { Divider, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 import React from 'react';
 
 import {FlatList, View} from 'react-native';

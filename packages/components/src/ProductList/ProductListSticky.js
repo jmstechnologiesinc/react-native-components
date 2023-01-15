@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { List } from '@jmsstudiosinc/react-native-paper';
-import { getMainPhoto } from '@jmsstudiosinc/commons';
 
 import StickySectionList from '../StickySectionList/StickySectionList';
 import ProductListItem from './ProductListItem';
@@ -11,6 +10,7 @@ const keyExtractor = (productItem) => productItem.id;
 const ProductListSticky = ({ 
     sections, 
     productItemQuantityMapping,
+    fulfillmentMethodFilter,
     onPress, 
     onContentOffsetYScroll,
     contentOffsetY,
@@ -26,13 +26,14 @@ const ProductListSticky = ({
             <ProductListItem
                 id={item.id}
                 uuid={item.uuid}
-                photo={getMainPhoto(item.photos)}
+                photo={item.photo}
                 title={item.title}
                 description={item.description}
                 formattedPrice={item.formattedPrice}
                 cartQuantity={productItemQuantityMapping?.[item.id]}
                 quantity={item.quantity}
                 isOutofStock={item.isOutofStock}
+                fulfillmentMethodFilter={fulfillmentMethodFilter}
                 onPress={() => onPress(item)} />
         )}
     />

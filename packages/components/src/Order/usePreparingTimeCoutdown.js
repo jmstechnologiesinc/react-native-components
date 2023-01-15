@@ -10,7 +10,7 @@ const usePreparingTimeCoutdown = ({
     deliveryMethod,
     status,
     role,
-    restaurantAcceptedTime,
+    vendorAcceptedTime,
     deliveryTime,
     durationValue,
 }) => {
@@ -26,7 +26,7 @@ const usePreparingTimeCoutdown = ({
 
         if (role === USER_ROLES.customer && (ORDER_STATUS_PREPARING(status) || status === ORDER_STATUS.shipped)) {
             const etaInterval = () => {
-                const transcurredTime = new Date().getTime() - restaurantAcceptedTime.getTime();
+                const transcurredTime = new Date().getTime() - vendorAcceptedTime.getTime();
                 const deliveryTimeCountdown = durationValue - transcurredTime;
     
                 if (deliveryTimeCountdown <= deliveryTime) {
@@ -44,7 +44,7 @@ const usePreparingTimeCoutdown = ({
         }
 
         return clearEtaInterval;
-    }, [durationValue, restaurantAcceptedTime, deliveryMethod, status, orderID, role]);
+    }, [durationValue, vendorAcceptedTime, deliveryMethod, status, orderID, role]);
     
     return etaValue;
 };

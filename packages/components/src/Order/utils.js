@@ -15,8 +15,8 @@ const getRoleFees = (order, role) => {
     if (role === USER_ROLES.customer) {
         return order.customerFees;
     } else if (role === USER_ROLES.vendor) {
-        return order.restaurantFees;
-    } else if (!(role === USER_ROLES.driver && order.deliveryMethod === DELIVERY_METHODS.restaurantOwnStaff)) {
+        return order.vendorFees;
+    } else if (!(role === USER_ROLES.driver && order.deliveryMethod === DELIVERY_METHODS.ownStaff)) {
         return order.driverFees;
     }
 
@@ -39,16 +39,16 @@ export const formatOrder = (order, role) => {
         deliveryMethod: order.deliveryMethod,
         pickupMethod: order.pickupMethod,
         driverDeliveryMethod: order?.driver?.deliveryMethod,
-        vendorPhone: order.restaurant?.phone,
+        vendorPhone: order.vendor?.phone,
         customerPhone: order.author?.phone,
         driverPhone: order.driver?.phone,
-        formattedVendorTitle: order.restaurant.title,
-        formattedVendorAddress: order.restaurant.location.formattedAddress,
+        formattedVendorTitle: order.vendor.title,
+        formattedVendorAddress: order.vendor.location.formattedAddress,
         formattedDriverCar: interpunct([order.driver?.carName, order.driver?.carNumber]),
         formattedDriverName: order?.driver?.formattedName, 
         formattedCustomerName: order.author.formattedName,
         formattedFulfillmentAddress: order.fulfillmentAddress.formattedAddress,
-        vendorAvatar: order.restaurant.photo,
+        vendorAvatar: order.vendor.photo,
         driverAvatar: order?.driver && (order.driver.profilePictureURL || order.driver.carPictureURL),
       });
 
@@ -57,13 +57,13 @@ export const formatOrder = (order, role) => {
         fees,
         fulfilmentStatus,
         status: order.status,
-        photo: (role === USER_ROLES.customer || role === USER_ROLES.driver) && order.restaurant.photo,
+        photo: (role === USER_ROLES.customer || role === USER_ROLES.driver) && order.vendor.photo,
         deliveryMethod: order.deliveryMethod,
         formattedOrderId,
         durationValue: order.eta?.duration?.value,
         deliveryTime: order.eta?.deliveryTime?.value,
         formattedStatusTime: order.formattedStatusTime,
-        restaurantAcceptedTime: firestoreTimestampToDate(order[orderStatusTime(ORDER_STATUS.restaurantAccepted)]),
+        vendorAcceptedTime: firestoreTimestampToDate(order[orderStatusTime(ORDER_STATUS.vendorAccepted)]),
     }
 }
 

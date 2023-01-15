@@ -13,7 +13,7 @@ const ProductView = ({
     description,
     formattedPrice, 
     isOutofStock, 
-    pudErrorMessage,
+    fulfillmentMethodErrorMessage,
     onLayoutTitleOffsetY
 }) => {
     const message = [];
@@ -23,8 +23,8 @@ const ProductView = ({
         message.push('This item is out of stock');
     }
 
-    if (pudErrorMessage) {
-        message.push(pudErrorMessage);
+    if (fulfillmentMethodErrorMessage) {
+        message.push(fulfillmentMethodErrorMessage);
     }
 
     if(description) {
@@ -54,7 +54,8 @@ const ProductView = ({
                     titleNumberOfLines={0}
                     descriptionNumberOfLines={0}
                     titleVariant="headlineSmall" 
-                    descriptionVariant="headlineSmall" />
+                    descriptionVariant="headlineSmall" 
+                    descriptionStyle={{color: MD3LightTheme.colors.onSurface}}/>
             </View>
         </>
     );

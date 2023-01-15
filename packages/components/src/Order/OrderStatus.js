@@ -76,7 +76,7 @@ const OrderStatus = ({
                 orderID={formattedOrder.orderID}
                 deliveryMethod={formattedOrder.deliveryMethod}
                 status={formattedOrder.status}
-                restaurantAcceptedTime={formattedOrder.restaurantAcceptedTime}
+                vendorAcceptedTime={formattedOrder.vendorAcceptedTime}
                 deliveryTime={formattedOrder.deliveryTime}
                 durationValue={formattedOrder.durationValue}
 

@@ -17,6 +17,7 @@ const ListItem = ({
     titleNumberOfLines = 1,
     descriptionNumberOfLines = 2,
     titleVariant,
+    descriptionVariant,
     metaTitleVariant,
     style,
     titleStyle,
@@ -47,9 +48,10 @@ const ListItem = ({
             selectable={selectable}
             numberOfLines={index === 0 ? descriptionNumberOfLines : 0}
             ellipsizeMode={ellipsizeMode}
+            variant={descriptionVariant && index === 0 && descriptionVariant}
             style={{ 
               color: descriptionColor, 
-              fontSize, 
+              ...(index === 0 && descriptionVariant ? null : {fontSize}),
               ...(index === 0 ? descriptionStyle : styles.additionalPadding) 
             }}>
             {item}

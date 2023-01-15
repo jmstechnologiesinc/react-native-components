@@ -11,6 +11,7 @@ import { itemSeparator } from '../utils';
 import SwipeToDelete from '../SwipeToDelete/SwipeToDelete';
 import {Item as JMSItem}  from '../List/List';
 import { MATERIAL_ICONS } from '@jmsstudiosinc/commons';
+import { List } from '../../lib/Tabs/Tabs.stories';
 
 const CartListItem = ({  
     checkoutTitle,
@@ -24,13 +25,13 @@ const CartListItem = ({
     renderTips  
 }) => {
     const { 
-        id, 
-        title, 
-        photo, 
+        vendor,
+        title,
+        total,
         type, 
         description, 
         isValid,
-        data: productItems, 
+        data: productList, 
         cartIndustryId 
     } = item;
 
@@ -40,7 +41,7 @@ const CartListItem = ({
         return (
             <ScreenWrapper.Section
                 withPaddingHorizontal
-                style={{ paddingTop: MD3LightTheme.spacing.x8, paddingBottom: MD3LightTheme.spacing.x8 }}
+                style={{ paddingTop: MD3LightTheme.spacing.x4, paddingBottom: MD3LightTheme.spacing.x4 }}
             >
                 <Button mode="contained" onPress={() => onCheckout(item.vendorIds)}>
                     {checkoutTitle}
@@ -49,43 +50,43 @@ const CartListItem = ({
         );
     } else if (type === 'industryWarning') {
         return (
-            <View style={{ marginTop: MD3LightTheme.spacing.x8, marginBottom: MD3LightTheme.spacing.x8 }}>
-                <Text variant={'headlineMedium'}>{title}</Text>
+            <View style={{ marginTop: MD3LightTheme.spacing.x4, marginBottom: MD3LightTheme.spacing.x4 }}>
+                <Text variant={'headlineMedium'}>{vendor.title}</Text>
                 <Text variant={'bodyMedium'}>{description}</Text>
             </View>
         );
     } else if (type === CART_ITEM_TYPE.industryTitle) {
-        return null;
+        return <List.Section>{title}</List.Section>;
     }
 
     return (
         <>
             <JMSItem
-                title={title} 
+                title={vendor.title} 
                 description={description}
-                descriptionStyle={isValid ? null : {color: MD3Colors.error50}}
+                descriptionStyle={isValid === false ? {color: MD3Colors.error50} : null}
                 titleNumberOfLines={0}
                 descriptionNumberOfLines={0}
                 left={(props) => (
-                    <Avatar.Image style={props.style} source={{ uri: photo }} />
+                    <Avatar.Image style={props.style} source={{ uri: vendor.photo }} />
                 )}
             />
 
-            {productItems?.map((product, index) => (
+            {productList?.map((product, index) => (
                 <SwipeToDelete 
                     key={`swipeable-${product.cartId}`}
-                    onSwipeableRightOpen={() => onDelete(id, product.cartId, cartIndustryId)} >
+                    onSwipeableRightOpen={() => onDelete(vendor.id, product.cartId, cartIndustryId)} >
                     <CartListProductItem 
                         data={product}    
-                        onEdit={() => onEdit(product, item)}
+                        onEdit={() => onEdit(product, item.vendor, cartIndustryId)}
                         descriptionNumberOfLines={1}
                         showProductDescription={showProductDescription} />
-                    {itemSeparator(index, productItems.length) && <Divider />}
+                    {itemSeparator(index, productList.length) ? <Divider /> : null}
                 </SwipeToDelete>
             ))}
 
             <ScreenWrapper.Section withPaddingHorizontal style={{ flexDirection: 'row' }}>
-                <Button icon={MATERIAL_ICONS.increment} onPress={() => onAdd(item)}>
+                <Button icon={MATERIAL_ICONS.increment} onPress={() => onAdd(item.vendor, cartIndustryId)}>
                     {addTitle}
                 </Button>
             </ScreenWrapper.Section>

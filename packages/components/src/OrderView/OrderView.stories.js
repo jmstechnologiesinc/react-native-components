@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ORDER_STATUS, NONFULFILLMENT_ORDER_STATUS, PICKUP_ORDER_STATUS, DELIVERY_ORDER_STATUS } from '@jmsstudiosinc/order';
-import { DELIVERY_METHODS, PICKUP_METHODS, PUB } from '@jmsstudiosinc/vendor';
+import { DELIVERY_METHODS, PICKUP_METHODS, FULFILLMENT_METHODS } from '@jmsstudiosinc/vendor';
 import { USER_ROLES } from '@jmsstudiosinc/user';
 
 import vendorMockData from '../Order/vendorMockData.json';
@@ -43,7 +43,7 @@ const Template = (args) => {
         onButtonPress={() => {}}
         order={{
             ...vendorMockData[3], 
-            restaurantAcceptedTime: subtractMinutes(args.acceptedTime || 5),
+            vendorAcceptedTime: subtractMinutes(args.acceptedTime || 5),
             ...args
         }} />
 }
@@ -55,7 +55,7 @@ Delivery.args = {
     role: USER_ROLES.vendor,
     status: ORDER_STATUS.placed,
     deliveryMethod: DELIVERY_METHODS.marketPlace,
-    fulfillmentMethod: PUB.delivery,
+    fulfillmentMethod: FULFILLMENT_METHODS.delivery,
     acceptedTime: 5
 };
 
@@ -67,11 +67,11 @@ Delivery.argTypes = {
     deliveryMethod: {
         name: "Fulfillment Method",
         control: 'radio',
-        options: [DELIVERY_METHODS.restaurantOwnStaff, DELIVERY_METHODS.marketPlace],
+        options: [DELIVERY_METHODS.ownStaff, DELIVERY_METHODS.marketPlace],
     },
     fulfillmentMethod: {
         control: 'radio',
-        options: [PUB.delivery],
+        options: [FULFILLMENT_METHODS.delivery],
         disabled: true
     }
 }
@@ -80,7 +80,7 @@ Pickup.args = {
     role: USER_ROLES.vendor,
     status: ORDER_STATUS.placed,
     deliveryMethod: PICKUP_METHODS.customerPickup,
-    fulfillmentMethod: PUB.pickup
+    fulfillmentMethod: FULFILLMENT_METHODS.pickup
 };
 
 Pickup.argTypes = {
@@ -97,7 +97,7 @@ Pickup.argTypes = {
     },
     fulfillmentMethod: {
         control: 'radio',
-        options: [PUB.pickup],
+        options: [FULFILLMENT_METHODS.pickup],
         disabled: true
     },
 }

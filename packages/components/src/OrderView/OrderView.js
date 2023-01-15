@@ -5,7 +5,7 @@ import { ScrollView, View} from 'react-native';
 import { Divider, List, MD3Colors } from '@jmsstudiosinc/react-native-paper';
 
 import { USER_ROLES } from '@jmsstudiosinc/user';
-import {  PUB } from '@jmsstudiosinc/vendor';
+import {  FULFILLMENT_METHODS } from '@jmsstudiosinc/vendor';
 import { ORDER_STATUS_CANCELLED, ORDER_STATUS, formatedOrderStatusTime, ORDER_ACTIONS } from '@jmsstudiosinc/order';
 
 import Accounting from '../Checkout/Accounting';
@@ -101,19 +101,19 @@ const OrderView = ({
             key: "fulfillment-address",
             title: order.fulfillmentAddress.formattedAddress,
             icon: MATERIAL_ICONS.location,
-            description: order.fulfillmentMethod === PUB.delivery ? 'Shipping Address' : 'Pickup Address'
+            description: order.fulfillmentMethod === FULFILLMENT_METHODS.delivery ? 'Shipping Address' : 'Pickup Address'
         });
 
         fulfilmentDetails.push({
             key: "vendor-phone",
-            title: order.restaurant.phone,
+            title: order.vendor.phone,
             icon: MATERIAL_ICONS.call,
             description: 'Vendor Phone'
         });
 
-        if (order.fulfillmentMethod === PUB.delivery) {
+        if (order.fulfillmentMethod === FULFILLMENT_METHODS.delivery) {
             driverDetails = getDriverDetails(order);
-        } else if (order.fulfillmentMethod === PUB.pickup) {
+        } else if (order.fulfillmentMethod === FULFILLMENT_METHODS.pickup) {
        
         }
     } else if (role === USER_ROLES.vendor) {
@@ -131,7 +131,7 @@ const OrderView = ({
             });
         }
 
-        if (order.fulfillmentMethod === PUB.delivery) {
+        if (order.fulfillmentMethod === FULFILLMENT_METHODS.delivery) {
             fulfilmentDetails.push({
                 key: "fulfillment-address",
                 title: order.fulfillmentAddress.formattedAddress,
@@ -139,13 +139,13 @@ const OrderView = ({
             });
 
             driverDetails = getDriverDetails(order, role);
-        } else if (order.fulfillmentMethod === PUB.pickup) {
+        } else if (order.fulfillmentMethod === FULFILLMENT_METHODS.pickup) {
        
         }
     } else if (role === USER_ROLES.driver) {
         fulfilmentDetails.push({
             key: "vendor-phone",
-            title: order.restaurant.phone,
+            title: order.vendor.phone,
             icon: MATERIAL_ICONS.call,
             description: 'Vendor Phone'
         });
@@ -261,7 +261,7 @@ const OrderView = ({
                     ) : null}
 
                     {fulfilmentDetails.length > 0 ? (
-                        <List.Section title={order.fulfillmentMethod === PUB.delivery ? 'Delivery Details' : 'Pickup Details'}>
+                        <List.Section title={order.fulfillmentMethod === FULFILLMENT_METHODS.delivery ? 'Delivery Details' : 'Pickup Details'}>
                             {fulfilmentDetails.map((item, index) => (
                                 <View key={item.key}>
                                     <List.Item 

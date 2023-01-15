@@ -72,7 +72,7 @@ const CartListProductItem = ({
                 description={descriptionList}
                 titleNumberOfLines={titleNumberOfLines}
                 descriptionNumberOfLines={descriptionNumberOfLines}
-                descriptionStyle={data.isValid ? null : {color: MD3Colors.error50}}
+                descriptionStyle={data.isValid === false ? {color: MD3Colors.error50} : null }
                 left={() => <JMSList.MetaBadged quantity={data.cartQuantity} />}
                 right={() => <JMSList.MetaBadged title={data.formattedPrice} />}
                 onPress={onEdit}

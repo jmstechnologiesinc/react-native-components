@@ -48,7 +48,8 @@ function areEqual(prevProps, nextProps) {
         prevProps.formattedPrice !== nextProps.formattedPrice ||
         prevProps.cartQuantity !== nextProps.cartQuantity ||
         prevProps.isOutofStock !== nextProps.isOutofStock ||
-        prevProps.formattedQuantity !== nextProps.formattedQuantity) {
+        prevProps.formattedQuantity !== nextProps.formattedQuantity ||
+        prevProps.fulfillmentMethodFilter !== nextProps.fulfillmentMethodFilter) {
         return false;
     }
 

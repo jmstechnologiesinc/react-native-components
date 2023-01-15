@@ -1,6 +1,6 @@
 [
   {
-    "restaurantAcceptedTime": {
+    "vendorAcceptedTime": {
       "seconds": 1641092980,
       "nanoseconds": 186000000
     },
@@ -16,7 +16,7 @@
       "formattedName": "First L.",
       "id": "9pvCuvusV2MN2wG13NaFyhqXOAg2"
     },
-    "restaurant": {
+    "vendor": {
       "address": {
         "formattedAddress": "337 Essex St, Lawrence, MA 01840"
       },
@@ -47,7 +47,7 @@
         "cartId": "Bec8T1KDS/WpAy+EjwUykw/0",
         "photo": "https://firebasestorage.googleapis.com/v0/b/jms-eats-70330.appspot.com/o/d848c1ea-cb92-4b60-88df-1394ed4b5f89.JPEG?alt=media&token=9483a5dd-8620-44b2-84d0-9ebdd0219ba0",
         "description": "Rerum omnis quaerat ut deleniti modi est odio fuga consequatur.\nNulla qui aliquid.",
-        "restaurantID": "1AcokVeq5dfdfO68QfNrje33o",
+        "vendorID": "1AcokVeq5dfdfO68QfNrje33o",
         "photos": [
           "https://firebasestorage.googleapis.com/v0/b/jms-eats-70330.appspot.com/o/d848c1ea-cb92-4b60-88df-1394ed4b5f89.JPEG?alt=media&token=9483a5dd-8620-44b2-84d0-9ebdd0219ba0"
         ],
@@ -76,7 +76,7 @@
         "value": 1280500
       }
     },
-    "restaurantFees": {
+    "vendorFees": {
       "total": {
         "label": "Total",
         "formattedValue": "$0.00",
@@ -117,14 +117,14 @@
       "seconds": 1641093065,
       "nanoseconds": 503000000
     },
-    "deliveryMethod": "Restaurant Own Staff",
+    "deliveryMethod": "Own Staff",
     "author": {
       "lastName": "Last Name",
       "firstName": "First Name",
       "formattedName": "First L.",
       "id": "9pvCuvusV2MN2wG13NaFyhqXOAg2"
     },
-    "restaurant": {
+    "vendor": {
       "address": {
         "formattedAddress": "123 formatted address"
       },
@@ -159,7 +159,7 @@
         "cartId": "wXLcz7DbR52WtBLSK8s+Qw/0",
         "photo": "https://firebasestorage.googleapis.com/v0/b/jms-eats-70330.appspot.com/o/d848c1ea-cb92-4b60-88df-1394ed4b5f89.JPEG?alt=media&token=9483a5dd-8620-44b2-84d0-9ebdd0219ba0",
         "description": "Dicta corrupti esse saepe.\nQui soluta quo atque et dolore.",
-        "restaurantID": "1AcokVeq5dfdfO68QfNrje33o",
+        "vendorID": "1AcokVeq5dfdfO68QfNrje33o",
         "photos": [
           "https://firebasestorage.googleapis.com/v0/b/jms-eats-70330.appspot.com/o/d848c1ea-cb92-4b60-88df-1394ed4b5f89.JPEG?alt=media&token=9483a5dd-8620-44b2-84d0-9ebdd0219ba0"
         ],
@@ -174,7 +174,7 @@
         "cartId": "wXLcz7DbR52WtBLSK8s+Qw/2",
         "photo": "https://firebasestorage.googleapis.com/v0/b/jms-eats-70330.appspot.com/o/d848c1ea-cb92-4b60-88df-1394ed4b5f89.JPEG?alt=media&token=9483a5dd-8620-44b2-84d0-9ebdd0219ba0",
         "description": "Dicta corrupti esse saepe.\nQui soluta quo atque et dolore.",
-        "restaurantID": "1AcokVeq5dfdfO68QfNrje33o",
+        "vendorID": "1AcokVeq5dfdfO68QfNrje33o",
         "photos": [
           "https://firebasestorage.googleapis.com/v0/b/jms-eats-70330.appspot.com/o/d848c1ea-cb92-4b60-88df-1394ed4b5f89.JPEG?alt=media&token=9483a5dd-8620-44b2-84d0-9ebdd0219ba0"
         ],
@@ -204,7 +204,7 @@
         "value": 0
       }
     },
-    "restaurantFees": {
+    "vendorFees": {
       "dynamicFees": [
         {
           "label": "Platform Fee",
@@ -234,7 +234,7 @@
         "value": 1597900
       }
     },
-    "restaurantAcceptedTime": {
+    "vendorAcceptedTime": {
       "seconds": 1641093063,
       "nanoseconds": 600000000
     },
@@ -248,7 +248,7 @@
       "formattedName": "The Taller 1",
       "phone": "978 771 2261",
       "id": "AsBOsF8MOPhmAxrMLwIVIUHdIhb2",
-      "deliveryMethod": "Restaurant Own Staff",
+      "deliveryMethod": "Own Staff",
       "carPictureURL": "https://cdn.vox-cdn.com/thumbor/xKfkrDpqhGF-HYtUsGuubgyoR58=/1400x1050/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/8695515/dbush_170530_1759_0098.jpg",
       "status": null
     },
@@ -285,7 +285,7 @@
       "seconds": 1641092983,
       "nanoseconds": 987000000
     },
-    "deliveryMethod": "Restaurant Own Staff",
+    "deliveryMethod": "Own Staff",
     "author": {
       "lastName": "Last Name",
       "firstName": "First Name",
@@ -296,7 +296,7 @@
       "seconds": 1641092991,
       "nanoseconds": 453000000
     },
-    "restaurant": {
+    "vendor": {
       "address": {
         "formattedAddress": "123 formatted address"
       },
@@ -331,7 +331,7 @@
         "cartId": "wXLcz7DbR52WtBLSK8s+Qw/0",
         "photo": "https://firebasestorage.googleapis.com/v0/b/jms-eats-70330.appspot.com/o/d848c1ea-cb92-4b60-88df-1394ed4b5f89.JPEG?alt=media&token=9483a5dd-8620-44b2-84d0-9ebdd0219ba0",
         "description": "Dicta corrupti esse saepe.\nQui soluta quo atque et dolore.",
-        "restaurantID": "1AcokVeq5dfdfO68QfNrje33o",
+        "vendorID": "1AcokVeq5dfdfO68QfNrje33o",
         "photos": [
           "https://firebasestorage.googleapis.com/v0/b/jms-eats-70330.appspot.com/o/d848c1ea-cb92-4b60-88df-1394ed4b5f89.JPEG?alt=media&token=9483a5dd-8620-44b2-84d0-9ebdd0219ba0"
         ],
@@ -361,7 +361,7 @@
         "value": 0
       }
     },
-    "restaurantFees": {
+    "vendorFees": {
       "dynamicFees": [
         {
           "label": "Platform Fee",
@@ -391,7 +391,7 @@
         "value": 1597900
       }
     },
-    "restaurantAcceptedTime": {
+    "vendorAcceptedTime": {
       "seconds": 1641092980,
       "nanoseconds": 186000000
     },
@@ -403,7 +403,7 @@
       "firstName": "The Taller - Driver 1",
       "name": "The Taller 1",
       "phone": "978 771 2261",
-      "deliveryMethod": "Restaurant Own Staff",
+      "deliveryMethod": "Own Staff",
       "formattedName": "The Taller 1",
       "id": "AsBOsF8MOPhmAxrMLwIVIUHdIhb2",
       "carPictureURL": "https://cdn.vox-cdn.com/thumbor/xKfkrDpqhGF-HYtUsGuubgyoR58=/1400x1050/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/8695515/dbush_170530_1759_0098.jpg",
@@ -437,7 +437,7 @@
     "status": "Completed"
   },
   {
-    "restaurantAcceptedTime": {
+    "vendorAcceptedTime": {
       "seconds": 1641092980,
       "nanoseconds": 186000000
     },
@@ -456,7 +456,7 @@
       "deliveryMethod": "Marketplace",
       "phone": "347 879 7687"
     },
-    "restaurant": {
+    "vendor": {
       "address": {
         "formattedAddress": "1 Mill St, Lawrence, MA 01840"
       },
@@ -670,7 +670,7 @@
         "value": 0
       }
     },
-    "restaurantFees": {
+    "vendorFees": {
       "dynamicFees": [
         {
           "label": "Platform Fee",
@@ -729,7 +729,7 @@
     "status": "In Transit"
   },
   {
-    "restaurantAcceptedTime": {
+    "vendorAcceptedTime": {
       "seconds": 1641092980,
       "nanoseconds": 186000000
     },
@@ -741,7 +741,7 @@
       "formattedName": "First L.",
       "id": "9pvCuvusV2MN2wG13NaFyhqXOAg2"
     },
-    "restaurant": {
+    "vendor": {
       "address": {
         "formattedAddress": "337 Essex St, Lawrence, MA 01840"
       },
@@ -765,7 +765,7 @@
         "cartId": "WRNRJ02sRHySuH/3K02tWQ/0",
         "photo": "https://firebasestorage.googleapis.com/v0/b/jms-eats-70330.appspot.com/o/d848c1ea-cb92-4b60-88df-1394ed4b5f89.JPEG?alt=media&token=9483a5dd-8620-44b2-84d0-9ebdd0219ba0",
         "description": "Earum quidem iste.\nDolor unde voluptatem tempora sit non possimus et.",
-        "restaurantID": "1AcokVeq5dfdfO68QfNrje33o",
+        "vendorID": "1AcokVeq5dfdfO68QfNrje33o",
         "photos": [
           "https://firebasestorage.googleapis.com/v0/b/jms-eats-70330.appspot.com/o/d848c1ea-cb92-4b60-88df-1394ed4b5f89.JPEG?alt=media&token=9483a5dd-8620-44b2-84d0-9ebdd0219ba0"
         ],
@@ -825,7 +825,7 @@
         "value": 0
       }
     },
-    "restaurantFees": {
+    "vendorFees": {
       "total": {
         "label": "Total",
         "formattedValue": "$0.00",
@@ -841,7 +841,7 @@
     }
   },
   {
-    "restaurantAcceptedTime": {
+    "vendorAcceptedTime": {
       "seconds": 1641092980,
       "nanoseconds": 186000000
     },
@@ -857,7 +857,7 @@
       "formattedName": "First L.",
       "id": "9pvCuvusV2MN2wG13NaFyhqXOAg2"
     },
-    "restaurant": {
+    "vendor": {
       "address": {
         "formattedAddress": "1 Mill St, Lawrence, MA 01840"
       },
@@ -978,7 +978,7 @@
         "value": 1727100
       }
     },
-    "restaurantFees": {
+    "vendorFees": {
       "total": {
         "label": "Total",
         "formattedValue": "$0.00",
@@ -1019,7 +1019,7 @@
       "seconds": 1641083885,
       "nanoseconds": 966000000
     },
-    "deliveryMethod": "Restaurant Own Staff",
+    "deliveryMethod": "Own Staff",
     "author": {
       "lastName": "Last Name",
       "firstName": "First Name",
@@ -1030,7 +1030,7 @@
       "seconds": 1641085936,
       "nanoseconds": 972000000
     },
-    "restaurant": {
+    "vendor": {
       "address": {
         "formattedAddress": "123 formatted address"
       },
@@ -1065,7 +1065,7 @@
         "cartId": "L0QJzt05RrqSw1asxT60vQ/0",
         "photo": "https://firebasestorage.googleapis.com/v0/b/jms-eats-70330.appspot.com/o/d848c1ea-cb92-4b60-88df-1394ed4b5f89.JPEG?alt=media&token=9483a5dd-8620-44b2-84d0-9ebdd0219ba0",
         "description": "Dicta corrupti esse saepe.\nQui soluta quo atque et dolore.",
-        "restaurantID": "1AcokVeq5dfdfO68QfNrje33o",
+        "vendorID": "1AcokVeq5dfdfO68QfNrje33o",
         "photos": [
           "https://firebasestorage.googleapis.com/v0/b/jms-eats-70330.appspot.com/o/d848c1ea-cb92-4b60-88df-1394ed4b5f89.JPEG?alt=media&token=9483a5dd-8620-44b2-84d0-9ebdd0219ba0"
         ],
@@ -1095,7 +1095,7 @@
         "value": 0
       }
     },
-    "restaurantFees": {
+    "vendorFees": {
       "dynamicFees": [
         {
           "label": "Platform Fee",
@@ -1125,7 +1125,7 @@
         "value": 1597900
       }
     },
-    "restaurantAcceptedTime": {
+    "vendorAcceptedTime": {
       "seconds": 1641083880,
       "nanoseconds": 839000000
     },
@@ -1138,7 +1138,7 @@
       "firstName": "The Taller - Driver 1",
       "formattedName": "The Taller 1",
       "phone": "978 771 2261",
-      "deliveryMethod": "Restaurant Own Staff",
+      "deliveryMethod": "Own Staff",
       "id": "AsBOsF8MOPhmAxrMLwIVIUHdIhb2",
       "carPictureURL": "https://cdn.vox-cdn.com/thumbor/xKfkrDpqhGF-HYtUsGuubgyoR58=/1400x1050/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/8695515/dbush_170530_1759_0098.jpg",
       "status": null
@@ -1176,7 +1176,7 @@
       "seconds": 1641083642,
       "nanoseconds": 642000000
     },
-    "deliveryMethod": "Restaurant Own Staff",
+    "deliveryMethod": "Own Staff",
     "author": {
       "lastName": "Last Name",
       "firstName": "First Name",
@@ -1187,7 +1187,7 @@
       "seconds": 1641083662,
       "nanoseconds": 37000000
     },
-    "restaurant": {
+    "vendor": {
       "address": {
         "formattedAddress": "123 formatted address"
       },
@@ -1222,7 +1222,7 @@
         "cartId": "O/9eoYmkTPqUbixHMzA31w/0",
         "photo": "https://firebasestorage.googleapis.com/v0/b/jms-eats-70330.appspot.com/o/d848c1ea-cb92-4b60-88df-1394ed4b5f89.JPEG?alt=media&token=9483a5dd-8620-44b2-84d0-9ebdd0219ba0",
         "description": "Sit debitis sapiente debitis nihil nulla et exercitationem incidunt voluptates.\nQui eius blanditiis quibusdam architecto consequatur voluptas unde.",
-        "restaurantID": "1AcokVeq5dfdfO68QfNrje33o",
+        "vendorID": "1AcokVeq5dfdfO68QfNrje33o",
         "photos": [
           "https://firebasestorage.googleapis.com/v0/b/jms-eats-70330.appspot.com/o/d848c1ea-cb92-4b60-88df-1394ed4b5f89.JPEG?alt=media&token=9483a5dd-8620-44b2-84d0-9ebdd0219ba0"
         ],
@@ -1252,7 +1252,7 @@
         "value": 0
       }
     },
-    "restaurantFees": {
+    "vendorFees": {
       "dynamicFees": [
         {
           "label": "Platform Fee",
@@ -1282,7 +1282,7 @@
         "value": 1597900
       }
     },
-    "restaurantAcceptedTime": {
+    "vendorAcceptedTime": {
       "seconds": 1641083634,
       "nanoseconds": 114000000
     },
@@ -1293,7 +1293,7 @@
       "carNumber": "223444",
       "firstName": "The Taller - Driver 1",
       "name": "The Taller 1",
-      "deliveryMethod": "Restaurant Own Staff",
+      "deliveryMethod": "Own Staff",
       "formattedName": "The Taller 1",
       "phone": "978 771 2261",
       "id": "AsBOsF8MOPhmAxrMLwIVIUHdIhb2",

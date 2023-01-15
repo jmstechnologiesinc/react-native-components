@@ -4,7 +4,6 @@ import {  Banner, MD3LightTheme, Card, Text, TouchableRipple } from '@jmsstudios
 
 import PhotoGallery from '../PhotoGallery/PhotoGallery';
 import SegmentedButtonGroup from '../SegmentedButtonGroup/SegmentedButtonGroup';
-import { interpunct } from '@jmsstudiosinc/commons';
 
 import IndustryList from '../IndustryList/IndustryList';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
@@ -14,13 +13,12 @@ const VendorView = ({
     onLayoutTitleOffsetY,
     photos,
     formattedAddress,
-    formattedPub,
     formattedHitDistance,
     fulfillmentMethodTitle,
     industryTitle,
     fulfillmentMethodOptions,
     selectedFulfillmentMethod,
-    onPressPudFilter,
+    onPressFulfillmentMethodFilter,
     formattedErrors = [],
     industryList,
     industryFilter,
@@ -46,14 +44,16 @@ const VendorView = ({
                 onLayout={onLayoutTitleOffsetY ? (event) => onLayoutTitleOffsetY(event.nativeEvent.layout.y) : null}
                 style={{paddingBottom: MD3LightTheme.spacing.x2}}>
                 <>
-                    <Card.Title
-                        title={title}
-                        subtitle={interpunct([formattedPub, formattedHitDistance])}
-                        titleVariant="headlineMedium"
-                        subtitleVariant="bodyLarge"
-                        titleNumberOfLines={0}
-                       
-                    />
+                    {formattedHitDistance ? (
+                        <Card.Title
+                            title={title}
+                            subtitle={formattedHitDistance}
+                            titleVariant="headlineMedium"
+                            subtitleVariant="bodyLarge"
+                            titleNumberOfLines={0}
+                        
+                        />
+                    ) : null}
                     <Card.Content>
                         <Text variant="bodyMedium">
                             {formattedAddress}
@@ -75,7 +75,7 @@ const VendorView = ({
                     <SegmentedButtonGroup
                         data={fulfillmentMethodOptions}
                         value={selectedFulfillmentMethod}
-                        onPress={onPressPudFilter}
+                        onPress={onPressFulfillmentMethodFilter}
                         density="high" />
                 </ScreenWrapper.Section>
             )}
@@ -84,6 +84,6 @@ const VendorView = ({
     );
 };
 
-VendorView.whyDidYouRender = true;
+VendorView.whyDidYouRender = false;
 
 export default VendorView;
