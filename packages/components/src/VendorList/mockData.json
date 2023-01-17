@@ -51,7 +51,7 @@
     },
     {
         "id": "13kd3okVeq5fO68QfNrjdg",
-        "availableFulfillmentMethod": "deliveryOnly",
+        "availableFulfillmentMethod": "delivery",
         "deliveryMethod": "Marketplace",
         "description": "Use your Uber account to order delivery from Terra Luna Cafe in Lawrence. Browse the menu, view popular items, and track your order.",
         "title": "Terra Luna Cafe",
@@ -70,7 +70,7 @@
             "countryCode": "us",
             "geohash": "drt6uwxru"
         },
-        "fulfillmentMethod": "deliveryOnly",
+        "fulfillmentMethod": "delivery",
         "formattedFulfillmentMethod": "Delivery Only",
         "hitMetadata": {
             "distance": 0.3377143252399741,
