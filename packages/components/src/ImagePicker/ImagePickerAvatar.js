@@ -9,7 +9,15 @@ import { IMAGE_PICKER_ACTIONS } from './utils';
 import { options } from './utils';
 import { localized } from '../Localization/Localization';
 
-const Avatar = ({ photo, onChange, onRemove, icon = 'account', size = moderateScale(150), isDisabled }) => {
+const Avatar = ({
+    show = true,
+    photo,
+    onChange,
+    onRemove,
+    icon = 'account',
+    size = moderateScale(150),
+    isDisabled,
+}) => {
     const imagePickerRef = useRef();
     const actionSheetRef = useRef();
 
@@ -57,39 +65,43 @@ const Avatar = ({ photo, onChange, onRemove, icon = 'account', size = moderateSc
 
     return (
         <>
-            <View style={styles.containerAvatar}>
-                <TouchableRipple
-                    rippleColor={MD3LightTheme.colors.background}
-                    onPress={isDisabled ? null : showActionSheet}
-                >
-                    {photo ? (
-                        <PaperAvatar.Image source={{ uri: photo }} size={size} />
-                    ) : (
-                        <PaperAvatar.Icon icon={icon} size={size} />
-                    )}
-                </TouchableRipple>
-            </View>
-            <ActionSheet
-                ref={actionSheetRef}
-                statusBarTranslucent={false}
-                drawUnderStatusBar={false}
-                gestureEnabled
-                springOffset={50}
-                defaultOverlayOpacity={0.3}
-            >
-                <List.Section>
-                    {options.map(({ title, icon, value }, index) => (
-                        <List.Item
-                            key={index}
-                            title={title}
-                            onPress={() => {
-                                onActionDone(value);
-                            }}
-                            left={(props) => <List.Icon {...props} icon={icon} />}
-                        />
-                    ))}
-                </List.Section>
-            </ActionSheet>
+            {show && (
+                <>
+                    <View style={styles.containerAvatar}>
+                        <TouchableRipple
+                            rippleColor={MD3LightTheme.colors.background}
+                            onPress={isDisabled ? null : showActionSheet}
+                        >
+                            {photo ? (
+                                <PaperAvatar.Image source={{ uri: photo }} size={size} />
+                            ) : (
+                                <PaperAvatar.Icon icon={icon} size={size} />
+                            )}
+                        </TouchableRipple>
+                    </View>
+                    <ActionSheet
+                        ref={actionSheetRef}
+                        statusBarTranslucent={false}
+                        drawUnderStatusBar={false}
+                        gestureEnabled
+                        springOffset={50}
+                        defaultOverlayOpacity={0.3}
+                    >
+                        <List.Section>
+                            {options.map(({ title, icon, value }, index) => (
+                                <List.Item
+                                    key={index}
+                                    title={title}
+                                    onPress={() => {
+                                        onActionDone(value);
+                                    }}
+                                    left={(props) => <List.Icon {...props} icon={icon} />}
+                                />
+                            ))}
+                        </List.Section>
+                    </ActionSheet>
+                </>
+            )}
         </>
     );
 };
