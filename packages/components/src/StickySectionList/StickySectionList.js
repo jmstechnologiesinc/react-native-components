@@ -101,12 +101,12 @@ const StickyList = ({
                     minimumViewTime: 10,
                     itemVisiblePercentThreshold: 10,
                 }}
-                ListHeaderComponent={
-                    <>
-                        {listHeaderComponent}
-                        <View onLayout={(ev) => setLayoutHeight(ev.nativeEvent.layout.y)}></View>
-                    </>
-                }
+                // ListHeaderComponent={
+                //     <>
+                //         {listHeaderComponent}
+                //         <View onLayout={(ev) => setLayoutHeight(ev.nativeEvent.layout.y)}></View>
+                //     </>
+                // }
                 showsHorizontalScrollIndicator={false}
             />
             <Animated.View
