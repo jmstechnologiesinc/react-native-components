@@ -6,6 +6,9 @@ import { MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 import { itemSeparator } from '../utils';
 import * as Tabs from '../Tabs/Tabs';
 
+import sectionListGetItemLayout from './utils';
+import { moderateScale } from 'react-native-size-matters';
+
 const AnimatedSectionList = Animated.createAnimatedComponent(NativeSectionList);
 
 const StickyList = ({
@@ -31,6 +34,13 @@ const StickyList = ({
         inputRange: [layoutHeight, maxHeight],
         outputRange: [0, 100],
         extrapolate: 'clamp',
+    });
+
+    const getItemLayout = sectionListGetItemLayout({
+        getSeparatorHeight: () => 0,
+        getSectionHeaderHeight: () => moderateScale(50),
+        getSectionFooterHeight: () => 0,
+        listHeaderHeight: layoutHeight,
     });
 
     const renderTab = (
@@ -101,13 +111,14 @@ const StickyList = ({
                     minimumViewTime: 10,
                     itemVisiblePercentThreshold: 10,
                 }}
-                // ListHeaderComponent={
-                //     <>
-                //         {listHeaderComponent}
-                //         <View onLayout={(ev) => setLayoutHeight(ev.nativeEvent.layout.y)}></View>
-                //     </>
-                // }
+                ListHeaderComponent={
+                    <>
+                        {listHeaderComponent}
+                        <View onLayout={(ev) => setLayoutHeight(ev.nativeEvent.layout.y)}></View>
+                    </>
+                }
                 showsHorizontalScrollIndicator={false}
+                getItemLayout={getItemLayout}
             />
             <Animated.View
                 style={{

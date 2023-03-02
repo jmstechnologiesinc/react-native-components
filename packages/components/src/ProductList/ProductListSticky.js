@@ -1,12 +1,13 @@
 import React from 'react';
 
 import { List } from '@jmsstudiosinc/react-native-paper';
-import sectionListGetItemLayout from './utils'
+
 
 import { View } from 'react-native'
  
 import StickySectionList from '../StickySectionList/StickySectionList';
 import ProductListItem from './ProductListItem';
+import { moderateScale } from 'react-native-size-matters';
 
 const keyExtractor = (productItem) => productItem.id;
 
@@ -19,26 +20,34 @@ const ProductListSticky = ({
     contentOffsetY,
     ...props }) => {
 
-    const getItemLayout = sectionListGetItemLayout({
-        getItemHeight: () => 90,
-        getSeparatorHeight: () => 0,
-        getSectionHeaderHeight: () => 0,
-        getSectionFooterHeight: () => 0,
-        listHeaderHeight: 0,
-    });
 
 
     return (
         <StickySectionList
             {...props}
             sections={sections}
-            // renderSectionHeader={({ section: { title } }) => <List.Subheader>{title}</List.Subheader>}
+            renderSectionHeader={({ section: { title } }) => 
+            <View style={{ height: moderateScale(50)}}>
+            <List.Subheader>{title}</List.Subheader>
+            </View>
+            }
             keyExtractor={keyExtractor}
             onContentOffsetYScroll={onContentOffsetYScroll}
             contentOffsetY={contentOffsetY}
             getItemLayout={(data, index) => getItemLayout(data, index)}
-            renderItem={({ item }) => (
-                  <View style={{ height: 90 }}>
+            renderItem={({ item }) => {
+
+                const value = item.photo === null && item.hasOwnProperty('description') === false ? 60
+                : item.photo === null && item?.description?.length <= 40 ? 60
+                : item.photo === null && item?.description?.length > 14 ? 110
+                : item.photo !== null && item?.description?.length >= 60 ? 120
+                : item.photo !== null && item.hasOwnProperty('description') === false ? 90
+                : item.photo !== null && item.hasOwnProperty('description') === true ? 100
+                : 100
+
+                
+                return (
+                <View style={{ height: value}}>
                 <ProductListItem
                     id={item.id}
                     uuid={item.uuid}
@@ -52,7 +61,7 @@ const ProductListSticky = ({
                     fulfillmentMethodFilter={fulfillmentMethodFilter}
                     onPress={() => onPress(item)} />
                     </View>
-            )}
+            )}}
         />
     )
 }
