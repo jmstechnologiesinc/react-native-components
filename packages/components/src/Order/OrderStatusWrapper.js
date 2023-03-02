@@ -3,7 +3,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 
 import { Avatar, Chip, MD3LightTheme } from "@jmsstudiosinc/react-native-paper";
-import { ITEM_TYPE, ITEM_TYPE_ICON_MAPPING } from "@jmsstudiosinc/commons";
+import { fastImageUrl, ITEM_TYPE, ITEM_TYPE_ICON_MAPPING } from "@jmsstudiosinc/commons";
 
 import JMSItem from '../List/ListItem';
 import { makeLinkingCall } from "../utils";
@@ -53,7 +53,7 @@ const OrderStatusWrapper = ({
     overlineStyle,
 }) => {
     const renderAvatar = (showAvatar && avatar) ? (props) => (
-        <Avatar.Image style={props.style} source={{ uri: avatar }} />
+        <Avatar.Image style={props.style} source={{ uri: fastImageUrl(avatar) }} />
     ) : null;
 
     const renderChips = (showChips && chips?.length > 0) ? chips.map(renderChipType) : null;

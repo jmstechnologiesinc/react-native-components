@@ -2,57 +2,59 @@ import React from 'react';
 
 import * as JMSList from '../List/List';
 
-const ProductListItem = ({
-    title,
-    photo,
-    description,
-    formattedPrice,
-    cartQuantity,
+import {fastImageUrl} from '@jmsstudiosinc/commons';
+
+
+const ProductListItem = ({ 
+    title, 
+    photo, 
+    description, 
+    formattedPrice, 
+    cartQuantity, 
     isOutofStock,
     formattedQuantity,
-    onPress,
+    onPress 
 }) => {
     const descriptionList = [];
 
-    if (isOutofStock) {
-        descriptionList.push('Out of Stock');
+    if(isOutofStock) {
+        descriptionList.push("Out of Stock")
     }
 
-    if (formattedQuantity) {
+    if(formattedQuantity) {
         descriptionList.push(formattedQuantity);
     }
 
-    if (description) {
+    if(description) {
         descriptionList.push(description);
     }
+
+
 
     return (
         <JMSList.Item
             title={title}
             description={descriptionList}
-            photo={photo !== null && `https://ik.imagekit.io/ynxnydvtum/${photo}`}
+            photo={fastImageUrl(photo)}
             metaTitle={formattedPrice}
             metaQuantity={cartQuantity}
             onPress={onPress}
             titleNumberOfLines={0}
-            descriptionNumberOfLines={4}
-        />
+            descriptionNumberOfLines={4} />
     );
-};
+}
 
 ProductListItem.whyDidYouRender = true;
 
 function areEqual(prevProps, nextProps) {
-    if (
-        prevProps.title !== nextProps.title ||
+    if(prevProps.title !== nextProps.title || 
         prevProps.photo !== nextProps.photo ||
         prevProps.description !== nextProps.description ||
         prevProps.formattedPrice !== nextProps.formattedPrice ||
         prevProps.cartQuantity !== nextProps.cartQuantity ||
         prevProps.isOutofStock !== nextProps.isOutofStock ||
         prevProps.formattedQuantity !== nextProps.formattedQuantity ||
-        prevProps.fulfillmentMethodFilter !== nextProps.fulfillmentMethodFilter
-    ) {
+        prevProps.fulfillmentMethodFilter !== nextProps.fulfillmentMethodFilter) {
         return false;
     }
 

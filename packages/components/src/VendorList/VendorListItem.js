@@ -3,11 +3,11 @@ import React from 'react';
 import { Card, Text } from '@jmsstudiosinc/react-native-paper';
 
 import { VENDOR_INDUSTRIES_MAPPING } from '@jmsstudiosinc/vendor';
-import { interpunct, getMainPhoto } from '@jmsstudiosinc/commons';
+import { interpunct, fastImageUrl  } from '@jmsstudiosinc/commons';
 
 const VendorListItem = ({ item, onPress }) => (
     <Card mode="contained" onPress={() => onPress(item)}>
-        <Card.Cover source={{ uri: getMainPhoto(item.photos) }} />
+        <Card.Cover source={{ uri:  fastImageUrl(item.photos) }} />
         <Card.Title
             title={item.title}
             subtitle={interpunct([item.formattedFulfillmentMethod, item.formattedHitDistance])}

@@ -4,7 +4,7 @@ import { View, FlatList, StyleSheet } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
 import { MD3LightTheme, TouchableRipple} from '@jmsstudiosinc/react-native-paper';
-import {getMainPhoto} from '@jmsstudiosinc/commons';
+import { fastImageUrl} from '@jmsstudiosinc/commons';
 
 import ScreenWrapperSection from '../ScreenWrapper/ScreenWrapperSection';
 
@@ -22,7 +22,7 @@ const renderSeparator = () => (
 
 const PhotoGallery = ({ photos }) => { 
     const [selectedPhoto, setSelectedPhoto] = useState();
-    const mainPhotoUri = selectedPhoto || getMainPhoto(photos);
+    const mainPhotoUri = selectedPhoto || fastImageUrl(photos);
 
     const renderItem = ({ item }) => (
         <TouchableRipple onPress={() => setSelectedPhoto(item)}>
