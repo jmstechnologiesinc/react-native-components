@@ -39,8 +39,8 @@ const ProductListSticky = ({
 
                 const value = item.photo === null && item.hasOwnProperty('description') === false ? 60
                 : item.photo === null && item?.description?.length <= 40 ? 60
-                : item.photo === null && item?.description?.length > 14 ? 110
-                : item.photo !== null && item?.description?.length >= 60 ? 120
+                : item.photo === null && item?.description?.length >= 100 ? 140
+                : item.photo !== null && item?.description?.length >= 60 ? 140
                 : item.photo !== null && item.hasOwnProperty('description') === false ? 90
                 : item.photo !== null && item.hasOwnProperty('description') === true ? 100
                 : 100

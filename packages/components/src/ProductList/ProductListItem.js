@@ -37,7 +37,7 @@ const ProductListItem = ({
             metaQuantity={cartQuantity}
             onPress={onPress}
             titleNumberOfLines={0}
-            descriptionNumberOfLines={3}
+            descriptionNumberOfLines={5}
         />
     );
 };

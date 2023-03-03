@@ -14,6 +14,7 @@ const AnimatedSectionList = Animated.createAnimatedComponent(NativeSectionList);
 const StickyList = ({
     title,
     sections,
+
     listHeaderComponent,
     onItemPress,
     onContentOffsetYScroll,
