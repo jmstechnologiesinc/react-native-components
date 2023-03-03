@@ -6,18 +6,22 @@ import { MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 import { itemSeparator } from '../utils';
 import * as Tabs from '../Tabs/Tabs';
 
-const AnimatedSectionList = Animated.createAnimatedComponent(NativeSectionList);
-const animatedValue = new Animated.Value(0);
+import sectionListGetItemLayout from './utils';
+import { moderateScale } from 'react-native-size-matters';
 
-const StickyList = ({ 
-    title, 
-    sections, 
-    listHeaderComponent, 
-    onItemPress, 
+const AnimatedSectionList = Animated.createAnimatedComponent(NativeSectionList);
+
+const StickyList = ({
+    title,
+    sections,
+
+    listHeaderComponent,
+    onItemPress,
     onContentOffsetYScroll,
     contentOffsetY,
-    ...props 
+    ...props
 }) => {
+    const animatedValue = new Animated.Value(0);
     const scrollY = useRef(animatedValue).current;
     const blockUpdateIndexRef = useRef(false);
     const sectionListRef = useRef();
@@ -33,6 +37,13 @@ const StickyList = ({
         extrapolate: 'clamp',
     });
 
+    const getItemLayout = sectionListGetItemLayout({
+        getSeparatorHeight: () => 0,
+        getSectionHeaderHeight: () => moderateScale(50),
+        getSectionFooterHeight: () => 0,
+        listHeaderHeight: layoutHeight,
+    });
+
     const renderTab = (
         <Tabs.Scrollable title={title} currentIndex={currentIndex}>
             {sections.map((item, index) => (
@@ -40,7 +51,7 @@ const StickyList = ({
                     key={`sticky-section-${item.id}`}
                     title={item.title}
                     isSelected={currentIndex === index}
-                    style={{backgroundColor: itemSeparator(index, sections.length) ? MD3LightTheme.spacing.x4 : null}}
+                    style={{ backgroundColor: itemSeparator(index, sections.length) ? MD3LightTheme.spacing.x4 : null }}
                     onPress={() => {
                         setCurrentIdex(index);
                         blockUpdateIndexRef.current = true;
@@ -69,15 +80,23 @@ const StickyList = ({
                 sections={sections}
                 onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
                     useNativeDriver: true,
-                    listener: onContentOffsetYScroll ? (event) => {
-                        if(event.nativeEvent.contentOffset.y > contentOffsetY && contentOffsetYRangeRef.current === false) {
-                            onContentOffsetYScroll(event.nativeEvent.contentOffset.y)
-                            contentOffsetYRangeRef.current = true;
-                        } else if(event.nativeEvent.contentOffset.y < contentOffsetY && contentOffsetYRangeRef.current === true) {
-                            onContentOffsetYScroll(event.nativeEvent.contentOffset.y)
-                            contentOffsetYRangeRef.current = false;
-                        }
-                    } : null
+                    listener: onContentOffsetYScroll
+                        ? (event) => {
+                              if (
+                                  event.nativeEvent.contentOffset.y > contentOffsetY &&
+                                  contentOffsetYRangeRef.current === false
+                              ) {
+                                  onContentOffsetYScroll(event.nativeEvent.contentOffset.y);
+                                  contentOffsetYRangeRef.current = true;
+                              } else if (
+                                  event.nativeEvent.contentOffset.y < contentOffsetY &&
+                                  contentOffsetYRangeRef.current === true
+                              ) {
+                                  onContentOffsetYScroll(event.nativeEvent.contentOffset.y);
+                                  contentOffsetYRangeRef.current = false;
+                              }
+                          }
+                        : null,
                 })}
                 onMomentumScrollEnd={() => (blockUpdateIndexRef.current = false)}
                 showsVerticalScrollIndicator={true}
@@ -99,16 +118,19 @@ const StickyList = ({
                         <View onLayout={(ev) => setLayoutHeight(ev.nativeEvent.layout.y)}></View>
                     </>
                 }
-                showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
+                getItemLayout={getItemLayout}
             />
-            <Animated.View style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                opacity: tabBarOpacity}}>
-                    {renderTab}
+            <Animated.View
+                style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    opacity: tabBarOpacity,
+                }}
+            >
+                {renderTab}
             </Animated.View>
         </>
     );
