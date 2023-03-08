@@ -48,7 +48,13 @@ export const IMAGE_PICKER_ACTIONS = {
     cancel: 'cancel',
 };
 
-export const options = [
+export const OPTIONS = [
+    { title: localized('Take Photo'), value: IMAGE_PICKER_ACTIONS.launchCamera, icon: 'camera' },
+    { title: localized('Choose from library'), value: IMAGE_PICKER_ACTIONS.launchImageLibrary, icon: 'folder-image' },
+    { title: localized('cancel'), value: IMAGE_PICKER_ACTIONS.cancel, icon: 'cancel' },
+];
+
+export const OPTIONS_Profile = [
     { title: localized('Take Photo'), value: IMAGE_PICKER_ACTIONS.launchCamera, icon: 'camera' },
     { title: localized('Choose from library'), value: IMAGE_PICKER_ACTIONS.launchImageLibrary, icon: 'folder-image' },
     { title: localized('Remove Profile Photo'), value: IMAGE_PICKER_ACTIONS.removeImage, icon: 'image-remove' },

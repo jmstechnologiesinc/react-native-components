@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 
-import { View, FlatList, StyleSheet, Image } from 'react-native';
+import { View, FlatList, StyleSheet } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
 import { MD3LightTheme, TouchableRipple} from '@jmsstudiosinc/react-native-paper';
-import {getMainPhoto} from '@jmsstudiosinc/commons';
+import { fastImageUrl} from '@jmsstudiosinc/commons';
 
 import ScreenWrapperSection from '../ScreenWrapper/ScreenWrapperSection';
+
+import FastImage from 'react-native-fast-image';
+
 
 const renderSeparator = () => (
     <View
@@ -19,18 +22,18 @@ const renderSeparator = () => (
 
 const PhotoGallery = ({ photos }) => { 
     const [selectedPhoto, setSelectedPhoto] = useState();
-    const mainPhotoUri = selectedPhoto || getMainPhoto(photos);
+    const mainPhotoUri = selectedPhoto || fastImageUrl(photos);
 
     const renderItem = ({ item }) => (
         <TouchableRipple onPress={() => setSelectedPhoto(item)}>
-            <Image style={styles.photo} source={{ uri: item }} />
+            <FastImage style={styles.photo} source={{ uri: item }} />
         </TouchableRipple>
     );
 
     return (
         <>
             {mainPhotoUri ? (
-                <Image source={{uri: mainPhotoUri}} style={styles.mainImage} />
+                <FastImage source={{uri: mainPhotoUri}} style={styles.mainImage} />
             ) : null}
             
             {photos?.length > 1 ? (

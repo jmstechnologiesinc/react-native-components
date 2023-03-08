@@ -2,6 +2,7 @@ import React from 'react';
 
 import { List } from '@jmsstudiosinc/react-native-paper';
 
+
 import StickySectionList from '../StickySectionList/StickySectionList';
 import ProductListItem from './ProductListItem';
 

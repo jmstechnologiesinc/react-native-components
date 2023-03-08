@@ -2,35 +2,28 @@ import React from 'react';
 
 import { View } from 'react-native';
 
-import {Text, Button, MD3LightTheme, Divider, Avatar, MD3Colors } from '@jmsstudiosinc/react-native-paper';
+import { Text, Button, MD3LightTheme, Divider, Avatar, MD3Colors } from '@jmsstudiosinc/react-native-paper';
 import { CART_ITEM_TYPE } from '@jmsstudiosinc/cart';
 
 import CartListProductItem from './CartListProductItem';
 import ScreenWrapper from '../ScreenWrapper';
 import { itemSeparator } from '../utils';
 import SwipeToDelete from '../SwipeToDelete/SwipeToDelete';
-import {Item as JMSItem}  from '../List/List';
-import { MATERIAL_ICONS } from '@jmsstudiosinc/commons';
+import { Item as JMSItem } from '../List/List';
+import { fastImageUrl, MATERIAL_ICONS } from '@jmsstudiosinc/commons';
 
-const CartListItem = ({  
+const CartListItem = ({
     checkoutTitle,
     addTitle,
     showProductDescription,
     item,
     onAdd,
-    onDelete, 
-    onEdit, 
-    onCheckout, 
-    renderTips  
+    onDelete,
+    onEdit,
+    onCheckout,
+    renderTips,
 }) => {
-    const { 
-        vendor,
-        type, 
-        description, 
-        isValid,
-        data: productList, 
-        cartIndustryId 
-    } = item;
+    const { vendor, type, description, isValid, data: productList, cartIndustryId } = item;
 
     if (type === CART_ITEM_TYPE.emptyItem) {
         return null;
@@ -59,25 +52,25 @@ const CartListItem = ({
     return (
         <>
             <JMSItem
-                title={vendor.title} 
+                title={vendor.title}
                 description={description}
-                descriptionStyle={isValid === false ? {color: MD3Colors.error50} : null}
+                descriptionStyle={isValid === false ? { color: MD3Colors.error50 } : null}
                 titleNumberOfLines={0}
                 descriptionNumberOfLines={0}
-                left={(props) => (
-                    <Avatar.Image style={props.style} source={{ uri: vendor.photo }} />
-                )}
+                left={(props) => <Avatar.Image style={props.style} source={{ uri: fastImageUrl(vendor.photo) }} />}
             />
 
             {productList?.map((product, index) => (
-                <SwipeToDelete 
+                <SwipeToDelete
                     key={`swipeable-${product.cartId}`}
-                    onSwipeableRightOpen={() => onDelete(vendor.id, product.cartId, cartIndustryId)} >
-                    <CartListProductItem 
-                        data={product}    
+                    onSwipeableRightOpen={() => onDelete(vendor.id, product.cartId, cartIndustryId)}
+                >
+                    <CartListProductItem
+                        data={product}
                         onEdit={() => onEdit(product, item.vendor, cartIndustryId)}
                         descriptionNumberOfLines={1}
-                        showProductDescription={showProductDescription} />
+                        showProductDescription={showProductDescription}
+                    />
                     {itemSeparator(index, productList.length) ? <Divider /> : null}
                 </SwipeToDelete>
             ))}

@@ -2,6 +2,9 @@ import React from 'react';
 
 import * as JMSList from '../List/List';
 
+import {fastImageUrl} from '@jmsstudiosinc/commons';
+
+
 const ProductListItem = ({ 
     title, 
     photo, 
@@ -26,11 +29,13 @@ const ProductListItem = ({
         descriptionList.push(description);
     }
 
+
+
     return (
         <JMSList.Item
             title={title}
             description={descriptionList}
-            photo={photo}
+            photo={fastImageUrl(photo)}
             metaTitle={formattedPrice}
             metaQuantity={cartQuantity}
             onPress={onPress}
