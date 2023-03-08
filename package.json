@@ -23,7 +23,6 @@
     "@jmsstudiosinc/pud": "^0.0.28",
     "@jmsstudiosinc/material-tokens": "^0.0.16",
     "@jmsstudiosinc/react-native-paper": "^5.0.0-rc.19",
-    "@react-native-async-storage/async-storage": "^1.17.3",
     "@react-native-community/datetimepicker": "^6.1.2",
     "@react-native-community/slider": "^4.2.1",
     "@react-navigation/stack": "^6.2.1",
@@ -44,7 +43,6 @@
     "react-native-permissions": "^3.6.1",
     "react-native-size-matters": "^0.4.0",
     "react-native-svg": "^12.3.0",
-    "react-native-vector-icons": "^9.2.0",
     "react-native-web": "^0.17.7",
     "react-scripts": "^5.0.1",
     "storybook-addon-state": "^1.0.3"

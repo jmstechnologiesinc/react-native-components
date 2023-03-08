@@ -31,8 +31,7 @@
   "peerDependencies": {
     "@jmsstudiosinc/react-native-paper": "*",
     "react": "*",
-    "react-native": "*",
-    "react-native-vector-icons": "*"
+    "react-native": "*"
   },
   "gitHead": "a15d55356078a7958acfea0fb92e230c5d282bde"
 }
