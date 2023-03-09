@@ -7,17 +7,17 @@ import { itemSeparator } from '../utils';
 import * as Tabs from '../Tabs/Tabs';
 
 const AnimatedSectionList = Animated.createAnimatedComponent(NativeSectionList);
-const animatedValue = new Animated.Value(0);
 
-const StickyList = ({ 
-    title, 
-    sections, 
-    listHeaderComponent, 
-    onItemPress, 
+const StickyList = ({
+    title,
+    sections,
+    listHeaderComponent,
+    onItemPress,
     onContentOffsetYScroll,
     contentOffsetY,
-    ...props 
+    ...props
 }) => {
+    const animatedValue = new Animated.Value(0);
     const scrollY = useRef(animatedValue).current;
     const blockUpdateIndexRef = useRef(false);
     const sectionListRef = useRef();
@@ -40,7 +40,7 @@ const StickyList = ({
                     key={`sticky-section-${item.id}`}
                     title={item.title}
                     isSelected={currentIndex === index}
-                    style={{backgroundColor: itemSeparator(index, sections.length) ? MD3LightTheme.spacing.x4 : null}}
+                    style={{ backgroundColor: itemSeparator(index, sections.length) ? MD3LightTheme.spacing.x4 : null }}
                     onPress={() => {
                         setCurrentIdex(index);
                         blockUpdateIndexRef.current = true;
@@ -69,15 +69,23 @@ const StickyList = ({
                 sections={sections}
                 onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
                     useNativeDriver: true,
-                    listener: onContentOffsetYScroll ? (event) => {
-                        if(event.nativeEvent.contentOffset.y > contentOffsetY && contentOffsetYRangeRef.current === false) {
-                            onContentOffsetYScroll(event.nativeEvent.contentOffset.y)
-                            contentOffsetYRangeRef.current = true;
-                        } else if(event.nativeEvent.contentOffset.y < contentOffsetY && contentOffsetYRangeRef.current === true) {
-                            onContentOffsetYScroll(event.nativeEvent.contentOffset.y)
-                            contentOffsetYRangeRef.current = false;
-                        }
-                    } : null
+                    listener: onContentOffsetYScroll
+                        ? (event) => {
+                              if (
+                                  event.nativeEvent.contentOffset.y > contentOffsetY &&
+                                  contentOffsetYRangeRef.current === false
+                              ) {
+                                  onContentOffsetYScroll(event.nativeEvent.contentOffset.y);
+                                  contentOffsetYRangeRef.current = true;
+                              } else if (
+                                  event.nativeEvent.contentOffset.y < contentOffsetY &&
+                                  contentOffsetYRangeRef.current === true
+                              ) {
+                                  onContentOffsetYScroll(event.nativeEvent.contentOffset.y);
+                                  contentOffsetYRangeRef.current = false;
+                              }
+                          }
+                        : null,
                 })}
                 onMomentumScrollEnd={() => (blockUpdateIndexRef.current = false)}
                 showsVerticalScrollIndicator={true}
@@ -99,16 +107,18 @@ const StickyList = ({
                         <View onLayout={(ev) => setLayoutHeight(ev.nativeEvent.layout.y)}></View>
                     </>
                 }
-                showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
             />
-            <Animated.View style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                opacity: tabBarOpacity}}>
-                    {renderTab}
+            <Animated.View
+                style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    opacity: tabBarOpacity,
+                }}
+            >
+                {renderTab}
             </Animated.View>
         </>
     );
