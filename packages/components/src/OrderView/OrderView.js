@@ -249,17 +249,6 @@ const OrderView = ({
                         showDriverAvatar={showDriverAvatar}
                     />
 
-                    {(role === USER_ROLES.vendor || role === USER_ROLES.customer) ? (
-                        <List.Section title={`${order.products.length} ${plurulize('Item', order.products.length)}`}>
-                            {order.products.map((item, index) => (
-                                <View key={`product-item-${item.id}`}>
-                                    <CartListProductItem data={item} interpunctAttributeGroup={false} />
-                                    {itemSeparator(index, order.products.length) && <Divider />}
-                                </View>
-                            ))}
-                        </List.Section>
-                    ) : null}
-
                     {fulfilmentDetails.length > 0 ? (
                         <List.Section title={order.fulfillmentMethod === FULFILLMENT_METHODS.delivery ? 'Delivery Details' : 'Pickup Details'}>
                             {fulfilmentDetails.map((item, index) => (
@@ -287,6 +276,17 @@ const OrderView = ({
                                         descriptionNumberOfLines={0} 
                                         {...(item.icon ? {left: (props) => <List.Icon {...props} icon={item.icon} />} : null)} />
                                     {itemSeparator(index, driverDetails.length) && <Divider />}
+                                </View>
+                            ))}
+                        </List.Section>
+                    ) : null}
+
+                    {(role === USER_ROLES.vendor || role === USER_ROLES.customer) ? (
+                        <List.Section title={`${order.products.length} ${plurulize('Item', order.products.length)}`}>
+                            {order.products.map((item, index) => (
+                                <View key={`product-item-${item.id}`}>
+                                    <CartListProductItem data={item} interpunctAttributeGroup={false} />
+                                    {itemSeparator(index, order.products.length) && <Divider />}
                                 </View>
                             ))}
                         </List.Section>
