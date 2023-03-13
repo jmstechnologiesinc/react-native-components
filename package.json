@@ -14,12 +14,12 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-     "@jmsstudiosinc/cart": "^0.0.32",
-    "@jmsstudiosinc/commons": "^0.0.32",
-    "@jmsstudiosinc/driver": "^0.0.32",
-    "@jmsstudiosinc/order": "^0.0.32",
-    "@jmsstudiosinc/user": "^0.0.31",
-    "@jmsstudiosinc/vendor": "^0.0.32",
+     "@jmsstudiosinc/cart": "^0.0.36",
+    "@jmsstudiosinc/commons": "^0.0.36",
+    "@jmsstudiosinc/driver": "^0.0.36",
+    "@jmsstudiosinc/order": "^0.0.36",
+    "@jmsstudiosinc/user": "^0.0.35",
+    "@jmsstudiosinc/vendor": "^0.0.36",
     "@jmsstudiosinc/pud": "^0.0.28",
     "@jmsstudiosinc/material-tokens": "^0.0.16",
     "@jmsstudiosinc/react-native-paper": "^5.0.0-rc.19",
