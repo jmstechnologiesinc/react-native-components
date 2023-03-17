@@ -282,11 +282,11 @@ const OrderView = ({
                     ) : null}
 
                     {(role === USER_ROLES.vendor || role === USER_ROLES.customer) ? (
-                        <List.Section title={`${order.products.length} ${plurulize('Item', order.products.length)}`}>
-                            {order.products.map((item, index) => (
+                        <List.Section title={`${order.cart.products.length} ${plurulize('Item', order.cart.products.length)}`}>
+                            {order.cart.products.map((item, index) => (
                                 <View key={`product-item-${item.id}`}>
                                     <CartListProductItem data={item} interpunctAttributeGroup={false} />
-                                    {itemSeparator(index, order.products.length) && <Divider />}
+                                    {itemSeparator(index, order.cart.products.length) && <Divider />}
                                 </View>
                             ))}
                         </List.Section>

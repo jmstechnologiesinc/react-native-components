@@ -34,7 +34,7 @@ export const formatOrder = (order, role) => {
         driverStatus: order?.driver?.status,
         formattedOrderId,
         formattedStatusTime: order.formattedStatusTime,
-        itemNums: order.products?.length,
+        itemNums: order.cart?.products?.length,
         fulfillmentMethod: order.fulfillmentMethod,
         deliveryMethod: order.deliveryMethod,
         pickupMethod: order.pickupMethod,
