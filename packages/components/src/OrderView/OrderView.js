@@ -293,7 +293,7 @@ const OrderView = ({
                     ) : null}
 
                     <ScreenWrapper.Section>
-                        <Accounting fees={formattedOrder.fees} />
+                        <Accounting feeList={formattedOrder.feeList} />
                     </ScreenWrapper.Section>
                     {role === USER_ROLES.customer && renderActionButtons}
                 </View>

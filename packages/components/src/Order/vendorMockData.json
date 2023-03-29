@@ -38,7 +38,7 @@
       "total": {
         "label": "Total",
         "formattedValue": "$0.00",
-        "value": 0
+        "amount": 0
       }
     },
     "products": [
@@ -62,25 +62,25 @@
       "total": {
         "label": "Total",
         "formattedValue": "$0.00",
-        "value": 0
+        "amount": 0
       }
     },
     "eta": {
       "deliveryTime": {
         "formattedValue": "1 minute",
-        "value": 80500
+        "amount": 80500
       },
       "duration": {
         "label": "Estimate Delivery Time",
         "formattedValue": "21 minutes",
-        "value": 1280500
+        "amount": 1280500
       }
     },
     "vendorFees": {
       "total": {
         "label": "Total",
         "formattedValue": "$0.00",
-        "value": 0
+        "amount": 0
       }
     },
     "driver": {
@@ -150,7 +150,7 @@
       "fees": {
         "label": "Delivery Fee",
         "formattedValue": "$1.66",
-        "value": 1.6594396231592021
+        "amount": 1.6594396231592021
       }
     },
     "products": [
@@ -190,18 +190,18 @@
         {
           "label": "Platform Fee",
           "formattedValue": "$598.80",
-          "value": 598.8
+          "amount": 598.8
         }
       ],
       "subTotal": {
         "label": "Subtotal",
         "formattedValue": "$1,996.00",
-        "value": 1996
+        "amount": 1996
       },
       "total": {
         "label": "Total",
         "formattedValue": "$1,397.20",
-        "value": 0
+        "amount": 0
       }
     },
     "vendorFees": {
@@ -209,29 +209,29 @@
         {
           "label": "Platform Fee",
           "formattedValue": "$598.80",
-          "value": 598.8
+          "amount": 598.8
         }
       ],
       "subTotal": {
         "label": "Subtotal",
         "formattedValue": "$1,996.00",
-        "value": 1996
+        "amount": 1996
       },
       "total": {
         "label": "Total",
         "formattedValue": "$1,397.20",
-        "value": 0
+        "amount": 0
       }
     },
     "eta": {
       "deliveryTime": {
         "formattedValue": "7 minutes",
-        "value": 397900
+        "amount": 397900
       },
       "duration": {
         "label": "Estimate Delivery Time",
         "formattedValue": "27 minutes",
-        "value": 1597900
+        "amount": 1597900
       }
     },
     "vendorAcceptedTime": {
@@ -322,7 +322,7 @@
       "fees": {
         "label": "Delivery Fee",
         "formattedValue": "$1.66",
-        "value": 1.6594396231592021
+        "amount": 1.6594396231592021
       }
     },
     "products": [
@@ -347,18 +347,18 @@
         {
           "label": "Platform Fee",
           "formattedValue": "$299.40",
-          "value": 299.4
+          "amount": 299.4
         }
       ],
       "subTotal": {
         "label": "Subtotal",
         "formattedValue": "$998.00",
-        "value": 998
+        "amount": 998
       },
       "total": {
         "label": "Total",
         "formattedValue": "$698.60",
-        "value": 0
+        "amount": 0
       }
     },
     "vendorFees": {
@@ -366,29 +366,29 @@
         {
           "label": "Platform Fee",
           "formattedValue": "$299.40",
-          "value": 299.4
+          "amount": 299.4
         }
       ],
       "subTotal": {
         "label": "Subtotal",
         "formattedValue": "$998.00",
-        "value": 998
+        "amount": 998
       },
       "total": {
         "label": "Total",
         "formattedValue": "$698.60",
-        "value": 0
+        "amount": 0
       }
     },
     "eta": {
       "deliveryTime": {
         "formattedValue": "7 minutes",
-        "value": 397900
+        "amount": 397900
       },
       "duration": {
         "label": "Estimate Delivery Time",
         "formattedValue": "27 minutes",
-        "value": 1597900
+        "amount": 1597900
       }
     },
     "vendorAcceptedTime": {
@@ -478,36 +478,36 @@
       "total": {
         "label": "Total",
         "formattedValue": "$40,327.17",
-        "value": 40327.1710051739
+        "amount": 40327.1710051739
       },
       "subTotal": {
         "label": "Subtotal",
         "formattedValue": "$33,000.00",
-        "value": 33000
+        "amount": 33000
       },
       "tips": {
         "label": "Tips",
         "formattedValue": "$5,260.07",
-        "value": 5260.065783283552
+        "amount": 5260.065783283552
       },
       "dynamicFees": [
         {
           "id": "platformFee",
           "label": "Platform Fee",
           "formattedValue": "$4.00",
-          "value": 4
+          "amount": 4
         },
         {
           "id": "deliveryFee",
           "label": "Delivery Fee",
           "formattedValue": "$0.33",
-          "value": 0.33432648503488394
+          "amount": 0.33432648503488394
         }
       ],
       "taxes": {
         "label": "Taxes",
         "formattedValue": "$2,062.77",
-        "value": 2062.7708954053146
+        "amount": 2062.7708954053146
       }
     },
     "products": [
@@ -539,7 +539,7 @@
           "9fe4fb48-2081-5bf0-ae95-4ef5076f524c": {
             "parentId": "8e56d219-2237-50b6-a359-6c9381c7a6e3",
             "title": "Spicy Crispy Chicken Sandwich Meal",
-            "value": true
+            "amount": true
           },
           "root": {
             "isValid": true
@@ -556,7 +556,7 @@
           "2514af14-5875-46d2-9160-8c7cbf6b620c": {
             "parentId": "8ee273ae-23ea-499a-a440-7220c2a8a0e6",
             "title": "Medium Fanta Orange",
-            "value": true
+            "amount": true
           },
           "83ce0eec-7a1e-41b5-b2fa-948c91aafb4f": {
             "taxonomyType": "attributeGroup",
@@ -570,18 +570,18 @@
           "677fb44c-f235-4312-a568-2ed1db9b37eb": {
             "parentId": "83ce0eec-7a1e-41b5-b2fa-948c91aafb4f",
             "title": "Ketchup",
-            "value": true
+            "amount": true
           },
           "88315bc6-c5ea-4946-88ea-1988c5bfc559": {
             "parentId": "83ce0eec-7a1e-41b5-b2fa-948c91aafb4f",
             "title": "American Cheese",
             "price": 275,
-            "value": true
+            "amount": true
           },
           "f4a148f8-62ac-49dc-b29e-193892772abf": {
             "parentId": "83ce0eec-7a1e-41b5-b2fa-948c91aafb4f",
             "title": "Pickle",
-            "value": true
+            "amount": true
           }
         }
       },
@@ -613,7 +613,7 @@
           "9fe4fb48-2081-5bf0-ae95-4ef5076f524c": {
             "parentId": "8e56d219-2237-50b6-a359-6c9381c7a6e3",
             "title": "Spicy Crispy Chicken Sandwich Meal",
-            "value": true
+            "amount": true
           },
           "root": {
             "isValid": true
@@ -630,7 +630,7 @@
           "2514af14-5875-46d2-9160-8c7cbf6b620c": {
             "parentId": "8ee273ae-23ea-499a-a440-7220c2a8a0e6",
             "title": "Medium Fanta Orange",
-            "value": true
+            "amount": true
           }
         }
       },
@@ -656,18 +656,18 @@
         {
           "label": "Platform Fee",
           "formattedValue": "$299.40",
-          "value": 299.4
+          "amount": 299.4
         }
       ],
       "subTotal": {
         "label": "Subtotal",
         "formattedValue": "$998.00",
-        "value": 998
+        "amount": 998
       },
       "total": {
         "label": "Total",
         "formattedValue": "$698.60",
-        "value": 0
+        "amount": 0
       }
     },
     "vendorFees": {
@@ -675,29 +675,29 @@
         {
           "label": "Platform Fee",
           "formattedValue": "$299.40",
-          "value": 299.4
+          "amount": 299.4
         }
       ],
       "subTotal": {
         "label": "Subtotal",
         "formattedValue": "$998.00",
-        "value": 998
+        "amount": 998
       },
       "total": {
         "label": "Total",
         "formattedValue": "$698.60",
-        "value": 0
+        "amount": 0
       }
     },
     "eta": {
       "deliveryTime": {
         "formattedValue": "9 minutes",
-        "value": 527100
+        "amount": 527100
       },
       "duration": {
         "label": "Estimate Delivery Time",
         "formattedValue": "29 minutes",
-        "value": 1727100
+        "amount": 1727100
       }
     },
     "placedTime": {
@@ -779,12 +779,12 @@
     "eta": {
       "deliveryTime": {
         "formattedValue": "1 minute",
-        "value": 79000
+        "amount": 79000
       },
       "duration": {
         "label": "Estimate Delivery Time",
         "formattedValue": "21 minutes",
-        "value": 1279000
+        "amount": 1279000
       }
     },
     "placedTime": {
@@ -822,21 +822,21 @@
       "total": {
         "label": "Total",
         "formattedValue": "$0.00",
-        "value": 0
+        "amount": 0
       }
     },
     "vendorFees": {
       "total": {
         "label": "Total",
         "formattedValue": "$0.00",
-        "value": 0
+        "amount": 0
       }
     },
     "customerFees": {
       "total": {
         "label": "Total",
         "formattedValue": "$0.00",
-        "value": 0
+        "amount": 0
       }
     }
   },
@@ -878,36 +878,36 @@
       "total": {
         "label": "Total",
         "formattedValue": "$40,327.17",
-        "value": 40327.1710051739
+        "amount": 40327.1710051739
       },
       "subTotal": {
         "label": "Subtotal",
         "formattedValue": "$33,000.00",
-        "value": 33000
+        "amount": 33000
       },
       "tips": {
         "label": "Tips",
         "formattedValue": "$5,260.07",
-        "value": 5260.065783283552
+        "amount": 5260.065783283552
       },
       "dynamicFees": [
         {
           "id": "platformFee",
           "label": "Platform Fee",
           "formattedValue": "$4.00",
-          "value": 4
+          "amount": 4
         },
         {
           "id": "deliveryFee",
           "label": "Delivery Fee",
           "formattedValue": "$0.33",
-          "value": 0.33432648503488394
+          "amount": 0.33432648503488394
         }
       ],
       "taxes": {
         "label": "Taxes",
         "formattedValue": "$2,062.77",
-        "value": 2062.7708954053146
+        "amount": 2062.7708954053146
       }
     },
     "products": [
@@ -964,25 +964,25 @@
       "total": {
         "label": "Total",
         "formattedValue": "$0.00",
-        "value": 0
+        "amount": 0
       }
     },
     "eta": {
       "deliveryTime": {
         "formattedValue": "9 minutes",
-        "value": 527100
+        "amount": 527100
       },
       "duration": {
         "label": "Estimate Delivery Time",
         "formattedValue": "29 minutes",
-        "value": 1727100
+        "amount": 1727100
       }
     },
     "vendorFees": {
       "total": {
         "label": "Total",
         "formattedValue": "$0.00",
-        "value": 0
+        "amount": 0
       }
     },
     "driver": {
@@ -1056,7 +1056,7 @@
       "fees": {
         "label": "Delivery Fee",
         "formattedValue": "$1.66",
-        "value": 1.6594396231592021
+        "amount": 1.6594396231592021
       }
     },
     "products": [
@@ -1081,18 +1081,18 @@
         {
           "label": "Platform Fee",
           "formattedValue": "$299.40",
-          "value": 299.4
+          "amount": 299.4
         }
       ],
       "subTotal": {
         "label": "Subtotal",
         "formattedValue": "$998.00",
-        "value": 998
+        "amount": 998
       },
       "total": {
         "label": "Total",
         "formattedValue": "$698.60",
-        "value": 0
+        "amount": 0
       }
     },
     "vendorFees": {
@@ -1100,29 +1100,29 @@
         {
           "label": "Platform Fee",
           "formattedValue": "$299.40",
-          "value": 299.4
+          "amount": 299.4
         }
       ],
       "subTotal": {
         "label": "Subtotal",
         "formattedValue": "$998.00",
-        "value": 998
+        "amount": 998
       },
       "total": {
         "label": "Total",
         "formattedValue": "$698.60",
-        "value": 0
+        "amount": 0
       }
     },
     "eta": {
       "deliveryTime": {
         "formattedValue": "7 minutes",
-        "value": 397900
+        "amount": 397900
       },
       "duration": {
         "label": "Estimate Delivery Time",
         "formattedValue": "27 minutes",
-        "value": 1597900
+        "amount": 1597900
       }
     },
     "vendorAcceptedTime": {
@@ -1213,7 +1213,7 @@
       "fees": {
         "label": "Delivery Fee",
         "formattedValue": "$1.66",
-        "value": 1.6594396231592021
+        "amount": 1.6594396231592021
       }
     },
     "products": [
@@ -1238,18 +1238,18 @@
         {
           "label": "Platform Fee",
           "formattedValue": "$460.80",
-          "value": 460.79999999999995
+          "amount": 460.79999999999995
         }
       ],
       "subTotal": {
         "label": "Subtotal",
         "formattedValue": "$1,536.00",
-        "value": 1536
+        "amount": 1536
       },
       "total": {
         "label": "Total",
         "formattedValue": "$1,075.20",
-        "value": 0
+        "amount": 0
       }
     },
     "vendorFees": {
@@ -1257,29 +1257,29 @@
         {
           "label": "Platform Fee",
           "formattedValue": "$460.80",
-          "value": 460.79999999999995
+          "amount": 460.79999999999995
         }
       ],
       "subTotal": {
         "label": "Subtotal",
         "formattedValue": "$1,536.00",
-        "value": 1536
+        "amount": 1536
       },
       "total": {
         "label": "Total",
         "formattedValue": "$1,075.20",
-        "value": 0
+        "amount": 0
       }
     },
     "eta": {
       "deliveryTime": {
         "formattedValue": "7 minutes",
-        "value": 397900
+        "amount": 397900
       },
       "duration": {
         "label": "Estimate Delivery Time",
         "formattedValue": "27 minutes",
-        "value": 1597900
+        "amount": 1597900
       }
     },
     "vendorAcceptedTime": {

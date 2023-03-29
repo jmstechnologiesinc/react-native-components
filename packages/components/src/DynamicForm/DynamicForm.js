@@ -2,6 +2,9 @@ import React, { useRef } from 'react';
 
 import { FlatList, Animated } from 'react-native';
 
+const { dinero, toDecimal } = require('dinero.js');
+import I18n from 'i18n-js';
+
 import { List, MD3Colors} from '@jmsstudiosinc/react-native-paper';
 import { dynamicFormInitializeGroup, dynamicFormToggleCheckRadioValue, dynamicFormValidateGroup} from '@jmsstudiosinc/commons';
 import DynamicFormSwitch from './DynamicFormSwitch';
@@ -131,7 +134,7 @@ const DynamicForm = ({
                         type={data.type}
                         title={data.title}
                         description={data.description}
-                        metaTitle={data.formattedPrice}
+                        metaTitle={I18n.l('currency', toDecimal(dinero(data.price)))}
                         isChecked={value}
                         isDisabled={isDisabled}
                         onPress={(value) => onCheckRadioPress(data, item, value)} />

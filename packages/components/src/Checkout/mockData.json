@@ -2,35 +2,35 @@
   "total": {
     "label": "Total",
     "formattedValue": "$5,317.12",
-    "value": 5317.119388557016
+    "amount": 5317.119388557016
   },
   "tips": {
     "label": "Tips",
     "formattedValue": "$0.00",
-    "value": 0
+    "amount": 0
   },
   "subTotal": {
     "label": "Subtotal",
     "formattedValue": "$5,000.00",
-    "value": 5000
+    "amount": 5000
   },
   "dynamicFees": [
     {
       "id": "platformFee",
       "label": "Platform Fee",
       "formattedValue": "$4.00",
-      "value": 4
+      "amount": 4
     },
     {
       "id": "deliveryFee",
       "label": "Delivery Fee",
       "formattedValue": "$0.35",
-      "value": 0.3476598183682173
+      "amount": 0.3476598183682173
     }
   ],
   "taxes": {
     "label": "Taxes",
     "formattedValue": "$312.77",
-    "value": 312.771728738648
+    "amount": 312.771728738648
   }
 }

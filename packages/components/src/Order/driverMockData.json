@@ -37,7 +37,7 @@
         "fees": {
           "label": "Delivery Fee",
           "formattedValue": "$1.66",
-          "value": 1.6594396231592021
+          "amount": 1.6594396231592021
         }
       },
       "products": [
@@ -77,18 +77,18 @@
           {
             "label": "Platform Fee",
             "formattedValue": "$598.80",
-            "value": 598.8
+            "amount": 598.8
           }
         ],
         "subTotal": {
           "label": "Subtotal",
           "formattedValue": "$1,996.00",
-          "value": 1996
+          "amount": 1996
         },
         "total": {
           "label": "Total",
           "formattedValue": "$1,397.20",
-          "value": 0
+          "amount": 0
         }
       },
       "vendorFees": {
@@ -96,29 +96,29 @@
           {
             "label": "Platform Fee",
             "formattedValue": "$598.80",
-            "value": 598.8
+            "amount": 598.8
           }
         ],
         "subTotal": {
           "label": "Subtotal",
           "formattedValue": "$1,996.00",
-          "value": 1996
+          "amount": 1996
         },
         "total": {
           "label": "Total",
           "formattedValue": "$1,397.20",
-          "value": 0
+          "amount": 0
         }
       },
       "eta": {
         "deliveryTime": {
           "formattedValue": "7 minutes",
-          "value": 397900
+          "amount": 397900
         },
         "duration": {
           "label": "Estimate Delivery Time",
           "formattedValue": "27 minutes",
-          "value": 1597900
+          "amount": 1597900
         }
       },
       "vendorAcceptedTime": {
@@ -205,7 +205,7 @@
         "fees": {
           "label": "Delivery Fee",
           "formattedValue": "$1.66",
-          "value": 1.6594396231592021
+          "amount": 1.6594396231592021
         }
       },
       "products": [
@@ -230,18 +230,18 @@
           {
             "label": "Platform Fee",
             "formattedValue": "$299.40",
-            "value": 299.4
+            "amount": 299.4
           }
         ],
         "subTotal": {
           "label": "Subtotal",
           "formattedValue": "$998.00",
-          "value": 998
+          "amount": 998
         },
         "total": {
           "label": "Total",
           "formattedValue": "$698.60",
-          "value": 0
+          "amount": 0
         }
       },
       "vendorFees": {
@@ -249,29 +249,29 @@
           {
             "label": "Platform Fee",
             "formattedValue": "$299.40",
-            "value": 299.4
+            "amount": 299.4
           }
         ],
         "subTotal": {
           "label": "Subtotal",
           "formattedValue": "$998.00",
-          "value": 998
+          "amount": 998
         },
         "total": {
           "label": "Total",
           "formattedValue": "$698.60",
-          "value": 0
+          "amount": 0
         }
       },
       "eta": {
         "deliveryTime": {
           "formattedValue": "7 minutes",
-          "value": 397900
+          "amount": 397900
         },
         "duration": {
           "label": "Estimate Delivery Time",
           "formattedValue": "27 minutes",
-          "value": 1597900
+          "amount": 1597900
         }
       },
       "vendorAcceptedTime": {
@@ -358,7 +358,7 @@
         "fees": {
           "label": "Delivery Fee",
           "formattedValue": "$1.66",
-          "value": 1.6594396231592021
+          "amount": 1.6594396231592021
         }
       },
       "products": [
@@ -383,18 +383,18 @@
           {
             "label": "Platform Fee",
             "formattedValue": "$299.40",
-            "value": 299.4
+            "amount": 299.4
           }
         ],
         "subTotal": {
           "label": "Subtotal",
           "formattedValue": "$998.00",
-          "value": 998
+          "amount": 998
         },
         "total": {
           "label": "Total",
           "formattedValue": "$698.60",
-          "value": 0
+          "amount": 0
         }
       },
       "vendorFees": {
@@ -402,29 +402,29 @@
           {
             "label": "Platform Fee",
             "formattedValue": "$299.40",
-            "value": 299.4
+            "amount": 299.4
           }
         ],
         "subTotal": {
           "label": "Subtotal",
           "formattedValue": "$998.00",
-          "value": 998
+          "amount": 998
         },
         "total": {
           "label": "Total",
           "formattedValue": "$698.60",
-          "value": 0
+          "amount": 0
         }
       },
       "eta": {
         "deliveryTime": {
           "formattedValue": "7 minutes",
-          "value": 397900
+          "amount": 397900
         },
         "duration": {
           "label": "Estimate Delivery Time",
           "formattedValue": "27 minutes",
-          "value": 1597900
+          "amount": 1597900
         }
       },
       "vendorAcceptedTime": {
@@ -511,7 +511,7 @@
         "fees": {
           "label": "Delivery Fee",
           "formattedValue": "$1.66",
-          "value": 1.6594396231592021
+          "amount": 1.6594396231592021
         }
       },
       "products": [
@@ -536,18 +536,18 @@
           {
             "label": "Platform Fee",
             "formattedValue": "$460.80",
-            "value": 460.79999999999995
+            "amount": 460.79999999999995
           }
         ],
         "subTotal": {
           "label": "Subtotal",
           "formattedValue": "$1,536.00",
-          "value": 1536
+          "amount": 1536
         },
         "total": {
           "label": "Total",
           "formattedValue": "$1,075.20",
-          "value": 0
+          "amount": 0
         }
       },
       "vendorFees": {
@@ -555,29 +555,29 @@
           {
             "label": "Platform Fee",
             "formattedValue": "$460.80",
-            "value": 460.79999999999995
+            "amount": 460.79999999999995
           }
         ],
         "subTotal": {
           "label": "Subtotal",
           "formattedValue": "$1,536.00",
-          "value": 1536
+          "amount": 1536
         },
         "total": {
           "label": "Total",
           "formattedValue": "$1,075.20",
-          "value": 0
+          "amount": 0
         }
       },
       "eta": {
         "deliveryTime": {
           "formattedValue": "7 minutes",
-          "value": 397900
+          "amount": 397900
         },
         "duration": {
           "label": "Estimate Delivery Time",
           "formattedValue": "27 minutes",
-          "value": 1597900
+          "amount": 1597900
         }
       },
       "vendorAcceptedTime": {

@@ -8,4 +8,4 @@ export default {
   title: 'packages/Checkout',
 };
 
-export const Fees = () => <Accounting fees={mockData} />
+export const Fees = () => <Accounting feeList={mockData} />

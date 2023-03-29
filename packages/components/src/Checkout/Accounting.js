@@ -3,36 +3,38 @@ import React from 'react';
 import { MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 import * as JMSList from '../List/List';
 
-const feesListItem = (fees) => {
+const feesListItem = (feeList) => {
+    if(!feeList?.length) {
+        return null;
+    }
+    
     const results = [];
 
-    for (const index in fees) {
-        if (Array.isArray(fees[index])) {
-           results.push(...feesListItem(fees[index]));
-        } else {
-            const styles = index === "total" ? {
-                titleVariant: "headlineSmall", 
-                metaTitleVariant: "headlineSmall", 
-                titleStyle: {color: MD3LightTheme.colors.onSurfaceVariant}, 
-                metaTitleStyle: {color: MD3LightTheme.colors.onSurface}
-            } : {
-                style: {paddingVertical: 0},
-                titleStyle: {color: MD3LightTheme.colors.onSurface}, 
-                metaTitleStyle: {color: MD3LightTheme.colors.onSurfaceVariant}
-            };
-            
-            results[fees[index].position] = <JMSList.Item
-                key={index}
-                title={fees[index].label}
-                description={fees[index].description}
-                metaTitle={fees[index].formattedValue}
+     for (const feeItem of feeList) {
+        const styles = feeItem.id === "total" ? {
+            titleVariant: "headlineSmall", 
+            metaTitleVariant: "headlineSmall", 
+            titleStyle: {color: MD3LightTheme.colors.onSurfaceVariant}, 
+            metaTitleStyle: {color: MD3LightTheme.colors.onSurface}
+        } : {
+            style: {paddingVertical: 0},
+            titleStyle: {color: MD3LightTheme.colors.onSurface}, 
+            metaTitleStyle: {color: MD3LightTheme.colors.onSurfaceVariant}
+        };
+        
+        results.push(
+            <JMSList.Item
+                key={feeItem.id}
+                title={feeItem.label}
+                description={feeItem.description}
+                metaTitle={feeItem.formattedValue}
                 {...styles} />
-        }
+        )
     }
 
     return results;
 };
 
-const Accounting = ({fees}) => feesListItem(fees);
+const Accounting = ({feeList}) => feesListItem(feeList);
 
 export default Accounting;
