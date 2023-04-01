@@ -5,7 +5,7 @@ import { TextInput, Caption } from '@jmsstudiosinc/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 import SelectIndustries from './SelectIndustries'
-import {OPTIONS} from './ultis'
+import {OPTIONS} from './utils'
 
 
 const AuthFormBusinessInfo = ({ title, fullAddress, line2,  website, industryPlaceholder, inputActionHandler }) => {
