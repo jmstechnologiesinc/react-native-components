@@ -74,7 +74,7 @@ const CartListProductItem = ({
                 descriptionNumberOfLines={descriptionNumberOfLines}
                 descriptionStyle={data.isValid === false ? {color: MD3Colors.error50} : null }
                 left={() => <JMSList.MetaBadged quantity={data.cartQuantity} />}
-                right={() => <JMSList.MetaBadged title={data.price.formatted} />}
+                right={() => <JMSList.MetaBadged title={data.price.formattedValue} />}
                 onPress={onEdit}
             />
            {!interpunctAttributeGroup ? attributeGroup.map((item) => (
@@ -90,7 +90,7 @@ const CartListProductItem = ({
                     ) : null}
                     right={() => (
                         <JMSList.MetaBadged 
-                            title={item.price.formatted} 
+                            title={item.price.formattedValue} 
                             titleStyle={{color: MD3LightTheme.colors.secondary}} />
                     )}
                     titleStyle={{color: MD3LightTheme.colors.secondary}}
