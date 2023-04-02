@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Paragraph, TextInput } from '@jmsstudiosinc/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
+import { handleDateOfBirhtChange } from './utils';
 
-const AuthFormDriverInfo = ({ licenseNumer, zipcode, dateofBirth, ssn, inputActionHandler }) => {
+const AuthFormDriverInfo = ({ licenseNumer, zipcode, ssn, inputActionHandler }) => {
+    const [dateOfBirth, setDateOfBirth] = useState('');
     return (
         <>
             <ScreenWrapper.Section>
@@ -37,9 +39,12 @@ const AuthFormDriverInfo = ({ licenseNumer, zipcode, dateofBirth, ssn, inputActi
                     mode="outlined"
                     label={localized('Date of Birth')}
                     placeholder="MM/DD/YY"
-                    value={dateofBirth}
+                    value={dateOfBirth}
                     keyboardType="numeric"
-                    onChangeText={(text) => inputActionHandler('dateofBirth', text)}
+                    maxLength={10}
+                    onChangeText={(text) =>
+                        handleDateOfBirhtChange(text, inputActionHandler, setDateOfBirth, dateOfBirth)
+                    }
                 />
             </ScreenWrapper.Section>
             <ScreenWrapper.Section>
