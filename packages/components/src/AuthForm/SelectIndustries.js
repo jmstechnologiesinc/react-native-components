@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { ScrollView } from 'react-native';
 import { TextInput, RadioButton, List, Button } from '@jmsstudiosinc/react-native-paper';
 
@@ -7,9 +7,13 @@ import ActionSheet, { useScrollHandlers } from 'react-native-actions-sheet';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { styles as JMSStyles, localized } from '@jmsstudiosinc/react-native-components';
+import { OPTIONS, onUpdateValue, resetIndustry } from './utils';
 
-export default function SelectIndustries({ placeholder, OPTIONS, onUpdateValue, inputActionHandler }) {
+export default function SelectIndustries({ placeholder, inputActionHandler }) {
     const actionSheetRef = useRef();
+    const [options, setOptions] = useState(OPTIONS);
+    const insets = useSafeAreaInsets();
+    const scrollHandlers = useScrollHandlers('scrollview-1', actionSheetRef);
 
     const showActionSheet = () => {
         actionSheetRef.current.show();
@@ -18,14 +22,13 @@ export default function SelectIndustries({ placeholder, OPTIONS, onUpdateValue, 
     const hideActionSheet = () => {
         actionSheetRef.current.hide();
     };
+    useEffect(() => {
+        resetIndustry(options, setOptions);
+    }, []);
 
-    const scrollHandlers = useScrollHandlers('scrollview-1', actionSheetRef);
-
-    const selectedItems = OPTIONS.filter((item) => item.selected === true);
+    const selectedItems = options.filter((item) => item.selected === true);
     const isSelect = selectedItems.map((item) => item.item);
     const itemSelected = interpunct(isSelect);
-
-    const insets = useSafeAreaInsets();
 
     return (
         <>
@@ -51,16 +54,16 @@ export default function SelectIndustries({ placeholder, OPTIONS, onUpdateValue, 
             >
                 <ScrollView {...scrollHandlers}>
                     <List.Section>
-                        {OPTIONS.map(({ item, selected }, index) => (
+                        {options.map(({ item, selected }, index) => (
                             <List.Item
                                 key={index}
                                 title={item}
-                                onPress={() => onUpdateValue(index, selected)}
+                                onPress={() => onUpdateValue(options, index, selected, setOptions)}
                                 left={(props) => (
                                     <RadioButton.Android
                                         {...props}
                                         status={selected ? 'checked' : 'unchecked'}
-                                        onPress={() => onUpdateValue(index, selected)}
+                                        onPress={() => onUpdateValue(options, index, selected, setOptions)}
                                     />
                                 )}
                             />
