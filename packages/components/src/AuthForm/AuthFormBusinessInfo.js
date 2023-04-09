@@ -1,23 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { TextInput, Caption } from '@jmsstudiosinc/react-native-paper';
 
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
-import SelectIndustries from './SelectIndustries'
-import {OPTIONS} from './utils'
+import SelectIndustries from './SelectIndustries';
 
-
-const AuthFormBusinessInfo = ({ title, fullAddress, line2,  website, industryPlaceholder, inputActionHandler }) => {
-
-    const [data, setData] = useState(OPTIONS)
-
-    const onUpdateValue = (index, selected) => {
-        data[index].selected = !selected;
-        return setData([...data]);
-    };
-
-
+const AuthFormBusinessInfo = ({ title, fullAddress, line2, website, industryPlaceholder, inputActionHandler }) => {
     return (
         <>
             <ScreenWrapper.Section title={localized('Business Details')}>
@@ -52,16 +41,13 @@ const AuthFormBusinessInfo = ({ title, fullAddress, line2,  website, industryPla
                     onChangeText={(text) => inputActionHandler('website', text)}
                 />
                 <Caption>
-                    {localized('If you don’t have a website, enter a social media page, LinkedIn, or other relevant link.')}
+                    {localized(
+                        'If you don’t have a website, enter a social media page, LinkedIn, or other relevant link.'
+                    )}
                 </Caption>
             </ScreenWrapper.Section>
             <ScreenWrapper.Section>
-                <SelectIndustries
-                placeholder={industryPlaceholder}
-                OPTIONS={OPTIONS} 
-                inputActionHandler={inputActionHandler}
-                onUpdateValue={onUpdateValue}
-                />
+                <SelectIndustries placeholder={industryPlaceholder} inputActionHandler={inputActionHandler} />
             </ScreenWrapper.Section>
         </>
     );
