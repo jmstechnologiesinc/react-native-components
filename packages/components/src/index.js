@@ -3,11 +3,13 @@ import * as ProductList from './ProductList/ProductList';
 import * as Tabs from './Tabs/Tabs';
 import * as ActionGroup from './ActionGroup/ActionGroup';
 import * as AuthForm from './AuthForm/AuthForm';
+import * as StripeForm from './StripeForm/StripeForm';
+
 import * as ImagePicker from './ImagePicker/ImagePicker';
 
 export { default as styles } from './styles';
 
-export { List, ImagePicker, Tabs, ProductList, ActionGroup, AuthForm };
+export { List, ImagePicker, Tabs, ProductList, ActionGroup, AuthForm, StripeForm };
 
 export { default as VendorList } from './VendorList/VendorList';
 export { default as SegmentedButtonGroup } from './SegmentedButtonGroup/SegmentedButtonGroup';
