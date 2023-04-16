@@ -1,38 +1,40 @@
 import React from 'react';
-import { RadioButton, List} from '@jmsstudiosinc/react-native-paper';
+import { List, Checkbox } from '@jmsstudiosinc/react-native-paper';
 import * as JMSList from '../List/List';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
-import { selectPaymentFrequency} from './utils'
+import { selectPaymentFrequency } from './utils';
 
-const StripeFormPaymentFrequency = ({ inputActionHandler, methodsPayments,setMethodsPayments}) => {
+const StripeFormPaymentFrequency = ({ inputActionHandler, methodsPayments, setMethodsPayments }) => {
     return (
-       <ScreenWrapper.Section>
+        <ScreenWrapper.Section>
             <List.Section>
                 {methodsPayments?.map(({ title, selected, description }, index) => (
                     <JMSList.CheckRadio
                         key={index}
                         title={title}
                         description={description}
-                        variant = 'radio'
-                        isDisabledOnPress={true}
-                        disabled={true}
+                        rippleColor="transparent"
                         left={(props) =>
                             selected !== undefined ? (
-                                <RadioButton.Android
+                                <Checkbox.Android
                                     {...props}
                                     status={selected ? 'checked' : 'unchecked'}
-                                    onPress={() =>  selectPaymentFrequency(index, methodsPayments, setMethodsPayments, inputActionHandler)}
+                                    rippleColor="transparent"
+                                    onPress={() =>
+                                        selectPaymentFrequency(
+                                            index,
+                                            methodsPayments,
+                                            setMethodsPayments,
+                                            inputActionHandler
+                                        )
+                                    }
                                 />
                             ) : null
                         }
                     />
-                     
                 ))}
             </List.Section>
-          </ScreenWrapper.Section>
-         
-
-        
+        </ScreenWrapper.Section>
     );
-}
-export default StripeFormPaymentFrequency
+};
+export default StripeFormPaymentFrequency;
