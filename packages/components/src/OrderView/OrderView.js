@@ -6,7 +6,7 @@ import { Divider, List, MD3Colors } from '@jmsstudiosinc/react-native-paper';
 
 import { USER_ROLES } from '@jmsstudiosinc/user';
 import {  FULFILLMENT_METHODS } from '@jmsstudiosinc/vendor';
-import { ORDER_STATUS_CANCELLED, ORDER_STATUS, formatedOrderStatusTime, ORDER_ACTIONS } from '@jmsstudiosinc/order';
+import { ORDER_STATUS_CANCELLED, ORDER_STATUS, formatedOrderStatusTime, ORDER_ACTIONS, orderStatusTime } from '@jmsstudiosinc/order';
 
 import Accounting from '../Checkout/Accounting';
 import CartListProductItem from '../CartList/CartListProductItem';
@@ -15,34 +15,43 @@ import OrderStatus from '../Order/OrderStatus';
 import PhotoGallery from '../PhotoGallery/PhotoGallery';
 import * as ActionGroup from '../ActionGroup/ActionGroup';
 import { itemSeparator } from '../utils';
-import { plurulize } from '@jmsstudiosinc/commons';
+import { firestoreTimestampToDate, interpunct, plurulize } from '@jmsstudiosinc/commons';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { MATERIAL_ICONS } from '@jmsstudiosinc/commons';
 
 const getDriverDetails = (order, role) => {
     const results = [];
 
+    if ((order.status !== ORDER_STATUS.completed && ORDER_STATUS_CANCELLED(order.status) === false)) {
+        return []
+    }
+
     if(order.driver) {
-        if(role === USER_ROLES.vendor) {
+        if(role === USER_ROLES.vendor && order.driver.deliveryMethod) {
             results.push({
                 key: "delivery-method",
                 title: order.driver.deliveryMethod,
                 description: 'Driver Type'
             });
         }
-        results.push({
-            key: "driver-name",
-            title: order.driver?.formattedName,
-            icon: MATERIAL_ICONS.account
-        });
 
-        if(order.driver.phone) {
+        if(order.driver?.formattedName) {
             results.push({
-                key: "driver-phone",
-                title: order.driver.phone,
-                icon: MATERIAL_ICONS.call
+                key: "driver-name",
+                title: order.driver?.formattedName,
+                icon: MATERIAL_ICONS.account
             });
         }
+
+        if(order.driver?.formattedName) {
+            results.push({
+                key: "driver-name",
+                title:  interpunct([order.driver?.carName, order.driver?.carNumber]),
+                icon: MATERIAL_ICONS.driver
+            });
+        }
+
+       
     }
 
     return results;
@@ -77,6 +86,7 @@ const OrderView = ({
     }
 
     const fulfilmentDetails = [];
+    const telemetry = [];
 
     if (order.note === true) {
         fulfilmentDetails.push({
@@ -87,11 +97,21 @@ const OrderView = ({
     }
 
     if ((order.status === ORDER_STATUS.completed || ORDER_STATUS_CANCELLED(order.status) === true)) {
-        fulfilmentDetails.push({
-            key: "status-date",
-            title: formatedOrderStatusTime(order),
-            icon: MATERIAL_ICONS.calendar,
-        });
+        if(role === USER_ROLES.customer || role === USER_ROLES.vendor) {
+            fulfilmentDetails.push({
+                key: "status-date",
+                title: firestoreTimestampToDate(order[orderStatusTime(ORDER_STATUS.placed)])?.toLocaleString(),
+                icon: MATERIAL_ICONS.calendar,
+                description: "Placed Time"
+            });
+        } else if(role === USER_ROLES.driver) {
+            fulfilmentDetails.push({
+                key: "status-date",
+                title: firestoreTimestampToDate(order[orderStatusTime(ORDER_STATUS.driverAccepted)])?.toLocaleString(),
+                icon: MATERIAL_ICONS.calendar,
+                description: "Accepted Time"
+            });
+        }
     }
 
     let driverDetails;
@@ -143,7 +163,23 @@ const OrderView = ({
        
         }
     } else if (role === USER_ROLES.driver) {
-        fulfilmentDetails.push({
+        if(order.driver.telemetry?.estimated) {
+            telemetry.push({
+                key: "telemetry-total-distance",
+                title: order.driver.telemetry?.estimated.formattedTotalDistance,
+                icon: MATERIAL_ICONS.call,
+                description: 'Distance'
+            });
+            telemetry.push({
+                key: "telemetry-total-duration",
+                title: order.driver.telemetry?.estimated.formattedTotalDuration,
+                icon: MATERIAL_ICONS.call,
+                description: 'Duration'
+            });
+        }
+
+        
+      /*   fulfilmentDetails.push({
             key: "vendor-phone",
             title: order.vendor.phone,
             icon: MATERIAL_ICONS.call,
@@ -162,7 +198,7 @@ const OrderView = ({
                 title: order.author.phone,
                 icon: MATERIAL_ICONS.call
             });
-        }
+        } */
     }
 
     let formattedOrder = formatOrder(order, role);
@@ -287,6 +323,21 @@ const OrderView = ({
                                 <View key={`product-item-${item.id}`}>
                                     <CartListProductItem data={item} interpunctAttributeGroup={false} />
                                     {itemSeparator(index, order.cart.products.length) && <Divider />}
+                                </View>
+                            ))}
+                        </List.Section>
+                    ) : null}
+
+                    {telemetry.length > 0 ? (
+                        <List.Section title={'Telemetry'}>
+                            {telemetry.map((item, index) => (
+                                <View key={item.key}>
+                                    <List.Item 
+                                        title={item.title} 
+                                        description={item.description} 
+                                        titleNumberOfLines={0}
+                                        descriptionNumberOfLines={0} />
+                                    {itemSeparator(index, telemetry.length) && <Divider />}
                                 </View>
                             ))}
                         </List.Section>
