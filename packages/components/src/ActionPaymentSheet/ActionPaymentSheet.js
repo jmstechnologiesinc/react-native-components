@@ -5,9 +5,14 @@ import { MATERIAL_ICONS } from '@jmsstudiosinc/commons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '@jmsstudiosinc/react-native-components';
-import { hideActionSheet } from '../utils';
 
-const ActionPaymentSheet = ({ paymentMethods, onChange, actionSheetRef, selectedIndex, onCallPaymentSheet }) => {
+const ActionPaymentSheet = ({
+    paymentMethods,
+    onChange,
+    actionSheetRef,
+    selectedPaymentMethodId,
+    onCallPaymentSheet,
+}) => {
     const insets = useSafeAreaInsets();
     return (
         <>
@@ -32,16 +37,16 @@ const ActionPaymentSheet = ({ paymentMethods, onChange, actionSheetRef, selected
                                 right={(props) => (
                                     <RadioButton.Android
                                         {...props}
-                                        status={selectedIndex === id ? 'checked' : 'unchecked'}
+                                        status={selectedPaymentMethodId === id ? 'checked' : 'unchecked'}
                                         onPress={() => {
                                             onChange(id);
-                                            hideActionSheet(actionSheetRef);
+                                            actionSheetRef.current.hide();
                                         }}
                                     />
                                 )}
                                 onPress={() => {
                                     onChange(id);
-                                    hideActionSheet(actionSheetRef);
+                                    actionSheetRef.current.hide();
                                 }}
                             />
                         );
