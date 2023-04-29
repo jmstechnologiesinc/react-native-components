@@ -11,7 +11,7 @@ const ActionPaymentSheet = ({
     onChange,
     actionSheetRef,
     selectedPaymentMethodId,
-    onCallPaymentSheet,
+    onAddPaymentMethod,
 }) => {
     const insets = useSafeAreaInsets();
     return (
@@ -53,7 +53,7 @@ const ActionPaymentSheet = ({
                     })}
                 </List.Section>
                 <ScreenWrapper.Section withPaddingHorizontal style={{ flexDirection: 'row' }}>
-                    <Button icon={MATERIAL_ICONS.increment} onPress={() => onCallPaymentSheet()}>
+                    <Button icon={MATERIAL_ICONS.increment} onPress={() => onAddPaymentMethod()}>
                         {localized('Add new payment method')}
                     </Button>
                 </ScreenWrapper.Section>
