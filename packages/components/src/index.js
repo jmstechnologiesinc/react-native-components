@@ -19,7 +19,7 @@ export { default as DynamicForm } from './DynamicForm/DynamicForm';
 export { default as ProductView } from './ProductView/ProductView';
 export { default as StickySectionList } from './StickySectionList/StickySectionList';
 export { default as PhotoGallery } from './PhotoGallery/PhotoGallery';
-export { default as Checkout } from './Checkout/Accounting';
+export { default as Accounting } from './Accounting/Accounting';
 export { default as Fast2ImageKit } from './Fast2ImageKit/Fast2ImageKit';
 export { default as ChipList } from './ChipList/ChipList';
 export { default as OrderStatus } from './Order/OrderStatus';
