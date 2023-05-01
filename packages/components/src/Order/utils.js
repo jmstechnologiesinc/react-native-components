@@ -9,14 +9,13 @@ import {
     formatOrderID, 
     orderStatusTime,
 } from "@jmsstudiosinc/order";
-import {DELIVERY_METHODS} from "@jmsstudiosinc/vendor";
 
 const getRoleFees = (order, role) => {
     if (role === USER_ROLES.customer) {
         return order.customerFees;
     } else if (role === USER_ROLES.vendor) {
         return order.vendorFees;
-    } else if (!(role === USER_ROLES.driver && order.deliveryMethod === DELIVERY_METHODS.ownStaff)) {
+    } else if (role === USER_ROLES.driver) {
         return order.driverFees;
     }
 
@@ -77,7 +76,7 @@ const ORDER_LIST_STATUS_MAPPING = {
     [ORDER_LIST_STATUS.completed]: 'History',
     [ORDER_LIST_STATUS.placed]: 'New Requests',
     [ORDER_LIST_STATUS.inTransit]: 'In-Transit',
-    [ORDER_LIST_STATUS.readyforPickup]: 'Ready for Pick up',
+    [ORDER_LIST_STATUS.readyforPickup]: 'Ready for Pickup',
     [ORDER_LIST_STATUS.cancelled]: 'Cancelled',
     [ORDER_LIST_STATUS.preparing]: 'Preparing',
 }

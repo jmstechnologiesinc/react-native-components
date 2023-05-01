@@ -15,7 +15,7 @@ export const renderChipType = (chip) => {
                 <Chip 
                     mode="outlined" 
                     icon={ITEM_TYPE_ICON_MAPPING[chip.type]} 
-                    compact style={styles.chip}
+                     style={styles.chip}
                     onPress={() => makeLinkingCall(chip.value)}>
                     {chip.formattedValue}
                 </Chip>
@@ -24,9 +24,9 @@ export const renderChipType = (chip) => {
         default:
             return (
                 <Chip 
-                    mode="outlined" 
+                    mode={chip.type === ITEM_TYPE.needAttention ? "flat" : "outlined" }
                     icon={ITEM_TYPE_ICON_MAPPING[chip.type]} 
-                    compact style={styles.chip}>
+                    style={styles.chip} >
                     {chip.formattedValue}
                 </Chip>
             );

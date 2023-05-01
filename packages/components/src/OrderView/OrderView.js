@@ -5,7 +5,7 @@ import { ScrollView, View} from 'react-native';
 import { Divider, List, MD3Colors } from '@jmsstudiosinc/react-native-paper';
 
 import { USER_ROLES } from '@jmsstudiosinc/user';
-import {  FULFILLMENT_METHODS } from '@jmsstudiosinc/vendor';
+import {  DELIVERY_METHODS, FULFILLMENT_METHODS } from '@jmsstudiosinc/vendor';
 import { ORDER_STATUS_CANCELLED, ORDER_STATUS, formatedOrderStatusTime, ORDER_ACTIONS, orderStatusTime } from '@jmsstudiosinc/order';
 
 import Accounting from '../Checkout/Accounting';
@@ -27,7 +27,7 @@ const getDriverDetails = (order, role) => {
     }
 
     if(order.driver) {
-        if(role === USER_ROLES.vendor && order.driver.deliveryMethod) {
+        if(role === USER_ROLES.vendor && order.driver?.deliveryMethod) {
             results.push({
                 key: "delivery-method",
                 title: order.driver.deliveryMethod,
@@ -86,7 +86,6 @@ const OrderView = ({
     }
 
     const fulfilmentDetails = [];
-    const telemetry = [];
 
     if (order.note === true) {
         fulfilmentDetails.push({
@@ -96,24 +95,22 @@ const OrderView = ({
         });
     }
 
-    if ((order.status === ORDER_STATUS.completed || ORDER_STATUS_CANCELLED(order.status) === true)) {
-        if(role === USER_ROLES.customer || role === USER_ROLES.vendor) {
-            fulfilmentDetails.push({
-                key: "status-date",
-                title: firestoreTimestampToDate(order[orderStatusTime(ORDER_STATUS.placed)])?.toLocaleString(),
-                icon: MATERIAL_ICONS.calendar,
-                description: "Placed Time"
-            });
-        } else if(role === USER_ROLES.driver) {
-            fulfilmentDetails.push({
-                key: "status-date",
-                title: firestoreTimestampToDate(order[orderStatusTime(ORDER_STATUS.driverAccepted)])?.toLocaleString(),
-                icon: MATERIAL_ICONS.calendar,
-                description: "Accepted Time"
-            });
-        }
+    if(role === USER_ROLES.customer || role === USER_ROLES.vendor) {
+        fulfilmentDetails.push({
+            key: "status-date",
+            title: firestoreTimestampToDate(order[orderStatusTime(ORDER_STATUS.placed)])?.toLocaleString(),
+            icon: MATERIAL_ICONS.calendar,
+            description: "Placed Time"
+        });
+    } else if(role === USER_ROLES.driver) {
+        fulfilmentDetails.push({
+            key: "status-date",
+            title: firestoreTimestampToDate(order[orderStatusTime(ORDER_STATUS.driverAccepted)])?.toLocaleString(),
+            icon: MATERIAL_ICONS.calendar,
+            description: "Accepted Time"
+        });
     }
-
+    
     let driverDetails;
 
     if(role === USER_ROLES.customer) {
@@ -162,43 +159,26 @@ const OrderView = ({
         } else if (order.fulfillmentMethod === FULFILLMENT_METHODS.pickup) {
        
         }
-    } else if (role === USER_ROLES.driver) {
-        if(order.driver.telemetry?.estimated) {
-            telemetry.push({
+    }
+    
+    const telemetryList = [];
+    if (role === USER_ROLES.driver || (role === USER_ROLES.vendor && order.driver?.deliveryMethod === DELIVERY_METHODS.ownStaff)) {
+         const telemetry = ORDER_STATUS_CANCELLED(order.status) ? order.driver.telemetry?.estimatedTravel : order.driver.telemetry?.estimated;
+        
+         if(telemetry) {
+            telemetryList.push({
                 key: "telemetry-total-distance",
-                title: order.driver.telemetry?.estimated.formattedTotalDistance,
+                title: telemetry.formattedTotalDistance,
                 icon: MATERIAL_ICONS.call,
                 description: 'Distance'
             });
-            telemetry.push({
+            telemetryList.push({
                 key: "telemetry-total-duration",
-                title: order.driver.telemetry?.estimated.formattedTotalDuration,
+                title: telemetry.formattedTotalDuration,
                 icon: MATERIAL_ICONS.call,
                 description: 'Duration'
             });
         }
-
-        
-      /*   fulfilmentDetails.push({
-            key: "vendor-phone",
-            title: order.vendor.phone,
-            icon: MATERIAL_ICONS.call,
-            description: 'Vendor Phone'
-        });
-
-        fulfilmentDetails.push({
-            key: "author-name",
-            title: order.author.formattedName,
-            icon: MATERIAL_ICONS.account
-        });
-
-        if(order.author.phone) {
-            fulfilmentDetails.push({
-                key: "author-phone",
-                title: order.author.phone,
-                icon: MATERIAL_ICONS.call
-            });
-        } */
     }
 
     let formattedOrder = formatOrder(order, role);
@@ -317,6 +297,21 @@ const OrderView = ({
                         </List.Section>
                     ) : null}
 
+                    {telemetryList.length > 0 ? (
+                        <List.Section title={'Telemetry'}>
+                            {telemetryList.map((item, index) => (
+                                <View key={item.key}>
+                                    <List.Item 
+                                        title={item.title} 
+                                        description={item.description} 
+                                        titleNumberOfLines={0}
+                                        descriptionNumberOfLines={0} />
+                                    {itemSeparator(index, telemetryList.length) && <Divider />}
+                                </View>
+                            ))}
+                        </List.Section>
+                    ) : null}
+
                     {(role === USER_ROLES.vendor || role === USER_ROLES.customer) ? (
                         <List.Section title={`${order.cart.products.length} ${plurulize('Item', order.cart.products.length)}`}>
                             {order.cart.products.map((item, index) => (
@@ -327,22 +322,7 @@ const OrderView = ({
                             ))}
                         </List.Section>
                     ) : null}
-
-                    {telemetry.length > 0 ? (
-                        <List.Section title={'Telemetry'}>
-                            {telemetry.map((item, index) => (
-                                <View key={item.key}>
-                                    <List.Item 
-                                        title={item.title} 
-                                        description={item.description} 
-                                        titleNumberOfLines={0}
-                                        descriptionNumberOfLines={0} />
-                                    {itemSeparator(index, telemetry.length) && <Divider />}
-                                </View>
-                            ))}
-                        </List.Section>
-                    ) : null}
-
+                  
                     <ScreenWrapper.Section>
                         <Accounting feeList={formattedOrder.fees} />
                     </ScreenWrapper.Section>
