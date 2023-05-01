@@ -8,7 +8,7 @@ import { USER_ROLES } from '@jmsstudiosinc/user';
 import {  DELIVERY_METHODS, FULFILLMENT_METHODS } from '@jmsstudiosinc/vendor';
 import { ORDER_STATUS_CANCELLED, ORDER_STATUS, formatedOrderStatusTime, ORDER_ACTIONS, orderStatusTime } from '@jmsstudiosinc/order';
 
-import Accounting from '../Checkout/Accounting';
+import Accounting from '../Accounting/Accounting';
 import CartListProductItem from '../CartList/CartListProductItem';
 import { formatOrder } from '../Order/utils';
 import OrderStatus from '../Order/OrderStatus';
