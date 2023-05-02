@@ -4,11 +4,11 @@ import * as JMSList from '../List/List';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { selectPaymentFrequency } from './utils';
 
-const StripeFormPaymentFrequency = ({ inputActionHandler, paymentMethods, onChange }) => {
+const StripeFormPaymentFrequency = ({ inputActionHandler, payoutFrequency, onChange }) => {
     return (
         <ScreenWrapper.Section>
             <List.Section>
-                {paymentMethods?.map(({ title, selected, description }, index) => (
+                {payoutFrequency?.map(({ title, selected, description }, index) => (
                     <JMSList.CheckRadio
                         key={index}
                         title={title}
@@ -21,7 +21,7 @@ const StripeFormPaymentFrequency = ({ inputActionHandler, paymentMethods, onChan
                                     status={selected ? 'checked' : 'unchecked'}
                                     rippleColor="transparent"
                                     onPress={() =>
-                                        selectPaymentFrequency(index, paymentMethods, onChange, inputActionHandler)
+                                        selectPaymentFrequency(index, payoutFrequency, onChange, inputActionHandler)
                                     }
                                 />
                             ) : null
