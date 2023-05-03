@@ -2,13 +2,12 @@ import React from 'react';
 import { List, Checkbox } from '@jmsstudiosinc/react-native-paper';
 import * as JMSList from '../List/List';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
-import { selectPaymentFrequency } from './utils';
 
-const StripeFormPaymentFrequency = ({ inputActionHandler, payoutFrequency, onChange }) => {
+const StripeFormPaymentFrequency = ({ inputActionHandler, payoutFrequency, selectedPayoutFrequency, onChange }) => {
     return (
         <ScreenWrapper.Section>
             <List.Section>
-                {payoutFrequency?.map(({ title, selected, description }, index) => (
+                {payoutFrequency?.map(({ title, selected, description, value }, index) => (
                     <JMSList.CheckRadio
                         key={index}
                         title={title}
@@ -18,11 +17,11 @@ const StripeFormPaymentFrequency = ({ inputActionHandler, payoutFrequency, onCha
                             selected !== undefined ? (
                                 <Checkbox.Android
                                     {...props}
-                                    status={selected ? 'checked' : 'unchecked'}
+                                    status={selectedPayoutFrequency === value ? 'checked' : 'unchecked'}
                                     rippleColor="transparent"
-                                    onPress={() =>
-                                        selectPaymentFrequency(index, payoutFrequency, onChange, inputActionHandler)
-                                    }
+                                    onPress={() => {
+                                        onChange(value), inputActionHandler('payoutsSchedule', value);
+                                    }}
                                 />
                             ) : null
                         }
