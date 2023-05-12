@@ -154,5 +154,12 @@
     "Diff Cart": "You cannot add items from different stores",
     "Vendor": "Vendor",
     "There are currently no servings under this vendor": "There are currently no servings under this vendor",
-    "Delivery Screen": "Delivery Screen"
+    "Delivery Screen": "Delivery Screen",
+    "auth/wrong-password": "The password is invalid or the user does not have a password",
+    "auth/user-not-found": "There is no user record corresponding to this identifier. The user may have been deleted.",
+    "auth/invalid-email": "Please enter a valid email address",
+    "auth/user-disabled": "Account Disabled: Unable to Sign In. Please Contact Support for Assistance.",
+    "auth/weak-password": "Please Choose a Stronger Password. Password should be at least 6 characters long and include both letters and numbers",
+    "auth/expired-action-code": "The Password Reset Link has Expired. Please Request a New Link to Reset Your Password.",
+    "auth/invalid-action-code": "The Password Reset Link is Invalid. Please Request a New Link to Reset Your Password."
 }
