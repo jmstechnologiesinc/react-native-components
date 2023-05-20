@@ -128,6 +128,13 @@ const OrderView = ({
             description: 'Vendor Phone'
         });
 
+        fulfilmentDetails.push({
+            key: "payment-method",
+            title: order.payment.formattedPaymentMethod,
+            icon: 'credit-card',
+            description: 'Payment Method'
+        });
+
         if (order.fulfillmentMethod === FULFILLMENT_METHODS.delivery) {
             driverDetails = getDriverDetails(order);
         } else if (order.fulfillmentMethod === FULFILLMENT_METHODS.pickup) {
