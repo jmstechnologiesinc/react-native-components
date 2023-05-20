@@ -32,7 +32,7 @@ const DriverStatus = ({
     });
 
     const renderChips = [];
-    if(milliseconds !== undefined) {
+    if(milliseconds) {
         const {hrs, mins} = milliseconsExtractor(milliseconds);
         renderChips.push({
             formattedValue: formattedETATime(hrs, mins),

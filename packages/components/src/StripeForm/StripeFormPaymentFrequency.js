@@ -2,13 +2,12 @@ import React from 'react';
 import { List, Checkbox } from '@jmsstudiosinc/react-native-paper';
 import * as JMSList from '../List/List';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
-import { selectPaymentFrequency } from './utils';
 
-const StripeFormPaymentFrequency = ({ inputActionHandler, methodsPayments, setMethodsPayments }) => {
+const StripeFormPaymentFrequency = ({ inputActionHandler, payoutFrequency, selectedPayoutFrequency, onChange }) => {
     return (
         <ScreenWrapper.Section>
             <List.Section>
-                {methodsPayments?.map(({ title, selected, description }, index) => (
+                {payoutFrequency?.map(({ title, selected, description, value }, index) => (
                     <JMSList.CheckRadio
                         key={index}
                         title={title}
@@ -18,16 +17,11 @@ const StripeFormPaymentFrequency = ({ inputActionHandler, methodsPayments, setMe
                             selected !== undefined ? (
                                 <Checkbox.Android
                                     {...props}
-                                    status={selected ? 'checked' : 'unchecked'}
+                                    status={selectedPayoutFrequency === value ? 'checked' : 'unchecked'}
                                     rippleColor="transparent"
-                                    onPress={() =>
-                                        selectPaymentFrequency(
-                                            index,
-                                            methodsPayments,
-                                            setMethodsPayments,
-                                            inputActionHandler
-                                        )
-                                    }
+                                    onPress={() => {
+                                        onChange(value), inputActionHandler('payoutsSchedule', value);
+                                    }}
                                 />
                             ) : null
                         }

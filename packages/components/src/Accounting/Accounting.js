@@ -3,6 +3,8 @@ import React from 'react';
 import { MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
 import * as JMSList from '../List/List';
 
+import {calculatableAccoutingList} from "@jmsstudiosinc/cart";
+
 const feesListItem = (feeList) => {
     if(!feeList?.length) {
         return null;
@@ -10,7 +12,7 @@ const feesListItem = (feeList) => {
     
     const results = [];
 
-     for (const feeItem of feeList) {
+     for (const feeItem of calculatableAccoutingList(feeList)) {
         const styles = feeItem.id === "total" ? {
             titleVariant: "headlineSmall", 
             metaTitleVariant: "headlineSmall", 

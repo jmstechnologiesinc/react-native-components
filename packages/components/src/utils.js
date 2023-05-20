@@ -10,7 +10,15 @@ export const makeLinkingCall = (phone) => {
 };
 
 function itemSeparator(index, length) {
-    return ((index === 0 && length > 1) || index < length - 1)
+    return (index === 0 && length > 1) || index < length - 1;
 }
 
-export {itemSeparator}
+const showActionSheet = (actionSheetRef) => {
+    actionSheetRef.current.show();
+};
+
+const hideActionSheet = (actionSheetRef) => {
+    actionSheetRef.current.hide();
+};
+
+export { itemSeparator, showActionSheet, hideActionSheet };
