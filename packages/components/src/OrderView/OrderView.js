@@ -324,12 +324,12 @@ const OrderView = ({
                             {order.cart.products.map((item, index) => (
                                 <View key={`product-item-${item.id}`}>
                                     <CartListProductItem data={item} interpunctAttributeGroup={false} />
-                                    {itemSeparator(index, order.cart.products.length) && <Divider />}
                                 </View>
                             ))}
                         </List.Section>
                     ) : null}
                   
+                    <Divider />
                     <ScreenWrapper.Section>
                         <Accounting feeList={formattedOrder.fees} />
                     </ScreenWrapper.Section>

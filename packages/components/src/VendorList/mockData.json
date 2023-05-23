@@ -71,7 +71,7 @@
             "geohash": "drt6uwxru"
         },
         "fulfillmentMethod": "delivery",
-        "formattedFulfillmentMethod": "Delivery Only",
+        "formattedFulfillmentMethod": "Delivery",
         "hitMetadata": {
             "distance": 0.3377143252399741,
             "bearing": 70.01195036357848
