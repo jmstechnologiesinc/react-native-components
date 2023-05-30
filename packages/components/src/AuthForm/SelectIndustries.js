@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { ScrollView } from 'react-native';
-import { TextInput, RadioButton, List, Button } from '@jmsstudiosinc/react-native-paper';
+import { ScrollView, Pressable, View } from 'react-native';
+import { TextInput,  List, Button, Checkbox } from '@jmsstudiosinc/react-native-paper';
 
 import { interpunct } from '@jmsstudiosinc/commons';
 import ActionSheet, { useScrollHandlers } from 'react-native-actions-sheet';
@@ -31,15 +31,19 @@ export default function SelectIndustries({ placeholder, inputActionHandler }) {
     const itemSelected = interpunct(isSelect);
 
     return (
-        <>
-            <TextInput
-                editable={false}
-                multiline={true}
-                value={itemSelected}
-                placeholder={placeholder}
-                mode="outlined"
-                right={<TextInput.Icon icon={'chevron-down-circle-outline'} onPress={() => showActionSheet()} />}
-            />
+        <Pressable
+            onPress={() => showActionSheet()}
+        >
+            <View pointerEvents="none">
+                <TextInput
+                    editable={false}
+                    multiline={true}
+                    value={itemSelected}
+                    placeholder={placeholder}
+                    mode="outlined"
+                    right={<TextInput.Icon icon={'chevron-down-circle-outline'} onPress={() => showActionSheet()} />}
+                />
+            </View>
 
             <ActionSheet
                 ref={actionSheetRef}
@@ -47,6 +51,7 @@ export default function SelectIndustries({ placeholder, inputActionHandler }) {
                 drawUnderStatusBar={true}
                 springOffset={50}
                 defaultOverlayOpacity={0.3}
+                gestureEnabled
                 containerStyle={{
                     paddingTop: insets.top,
                     paddingBottom: insets.bottom,
@@ -59,9 +64,8 @@ export default function SelectIndustries({ placeholder, inputActionHandler }) {
                                 key={index}
                                 title={item}
                                 onPress={() => onUpdateValue(options, index, selected, setOptions)}
-                                left={(props) => (
-                                    <RadioButton.Android
-                                        {...props}
+                                left={() => (
+                                    <Checkbox.Android
                                         status={selected ? 'checked' : 'unchecked'}
                                         onPress={() => onUpdateValue(options, index, selected, setOptions)}
                                     />
@@ -81,6 +85,6 @@ export default function SelectIndustries({ placeholder, inputActionHandler }) {
                     {localized('SAVE')}
                 </Button>
             </ActionSheet>
-        </>
+        </Pressable>
     );
 }
