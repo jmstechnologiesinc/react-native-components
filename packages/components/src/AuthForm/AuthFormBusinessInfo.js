@@ -4,12 +4,13 @@ import { TextInput, Caption } from '@jmsstudiosinc/react-native-paper';
 
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
-import SelectIndustries from './SelectIndustries';
+import IndustryPicker from './IndustryPicker';
 
-const AuthFormBusinessInfo = ({ title, fullAddress, line2, website, industryPlaceholder, inputActionHandler }) => {
+const AuthFormBusinessInfo = ({ title, fullAddress, line2, website, industryPlaceholder, inputActionHandler, industry }) => {
+    
     return (
         <>
-            <ScreenWrapper.Section title={localized('Business Details')}>
+            <ScreenWrapper.Section  title={localized('Business Details')}>
                 <TextInput
                     mode="outlined"
                     label={localized('Store Name')}
@@ -49,7 +50,7 @@ const AuthFormBusinessInfo = ({ title, fullAddress, line2, website, industryPlac
                 </ScreenWrapper.Section>
             ) : null}
             <ScreenWrapper.Section>
-                <SelectIndustries placeholder={industryPlaceholder} inputActionHandler={inputActionHandler} />
+                <IndustryPicker placeholder={industryPlaceholder} inputActionHandler={inputActionHandler} industry={industry} />
             </ScreenWrapper.Section>
         </>
     );
