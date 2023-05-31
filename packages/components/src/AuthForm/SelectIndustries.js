@@ -1,21 +1,27 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { ScrollView, Pressable, View } from 'react-native';
-import { TextInput,  List, Button, Checkbox } from '@jmsstudiosinc/react-native-paper';
+import { TextInput, List, Button, Checkbox } from '@jmsstudiosinc/react-native-paper';
 
 import { interpunct } from '@jmsstudiosinc/commons';
 import ActionSheet, { useScrollHandlers } from 'react-native-actions-sheet';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { styles as JMSStyles, localized } from '@jmsstudiosinc/react-native-components';
-import { OPTIONS, onUpdateValue, resetIndustry } from './utils';
+import { OPTIONS, resetIndustry } from './utils';
 
-export default function SelectIndustries({ placeholder, inputActionHandler }) {
+export default function SelectIndustries({ placeholder, inputActionHandler, industry }) {
     const actionSheetRef = useRef();
     const [options, setOptions] = useState(OPTIONS);
     const insets = useSafeAreaInsets();
     const scrollHandlers = useScrollHandlers('scrollview-1', actionSheetRef);
 
     const showActionSheet = () => {
+        options.filter((option) => {
+            if (industry?.includes(option.item)) {
+                option.selected = true
+                return setOptions([...options])
+            }
+        })
         actionSheetRef.current.show();
     };
 
@@ -24,11 +30,14 @@ export default function SelectIndustries({ placeholder, inputActionHandler }) {
     };
     useEffect(() => {
         resetIndustry(options, setOptions);
+
     }, []);
+
 
     const selectedItems = options.filter((item) => item.selected === true);
     const isSelect = selectedItems.map((item) => item.item);
-    const itemSelected = interpunct(isSelect);
+    const itemSelected = interpunct(industry  ? industry : isSelect)
+
 
     return (
         <Pressable
@@ -63,11 +72,17 @@ export default function SelectIndustries({ placeholder, inputActionHandler }) {
                             <List.Item
                                 key={index}
                                 title={item}
-                                onPress={() => onUpdateValue(options, index, selected, setOptions)}
+                                onPress={() => {
+                                    options[index].selected = !selected
+                                    setOptions([...options])
+                                }}
                                 left={() => (
                                     <Checkbox.Android
                                         status={selected ? 'checked' : 'unchecked'}
-                                        onPress={() => onUpdateValue(options, index, selected, setOptions)}
+                                        onPress={() => {
+                                            options[index].selected = !selected
+                                            setOptions([...options])
+                                        }}
                                     />
                                 )}
                             />
