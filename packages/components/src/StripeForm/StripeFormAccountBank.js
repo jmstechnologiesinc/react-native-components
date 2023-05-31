@@ -13,7 +13,7 @@ const StripeFormAccountBank = ({
 }) => {
     return (
         <>
-            <ScreenWrapper.Section title={localized('Bank Accounts Details')}>
+            <ScreenWrapper.Section>
                 <TextInput
                     mode="outlined"
                     label={localized('Account Holder')}

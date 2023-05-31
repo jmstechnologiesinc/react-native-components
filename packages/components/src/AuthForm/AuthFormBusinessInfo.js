@@ -33,19 +33,21 @@ const AuthFormBusinessInfo = ({ title, fullAddress, line2, website, industryPlac
                     onChangeText={(text) => inputActionHandler('line2', text)}
                 />
             </ScreenWrapper.Section>
-            <ScreenWrapper.Section>
-                <TextInput
-                    mode="outlined"
-                    label={localized('Website')}
-                    value={website}
-                    onChangeText={(text) => inputActionHandler('website', text)}
-                />
-                <Caption>
-                    {localized(
-                        'If you don’t have a website, enter a social media page, LinkedIn, or other relevant link.'
-                    )}
-                </Caption>
-            </ScreenWrapper.Section>
+            {website ? (
+                <ScreenWrapper.Section>
+                    <TextInput
+                        mode="outlined"
+                        label={localized('Website')}
+                        value={website}
+                        onChangeText={(text) => inputActionHandler('website', text)}
+                    />
+                    <Caption>
+                        {localized(
+                            'If you don’t have a website, enter a social media page, LinkedIn, or other relevant link.'
+                        )}
+                    </Caption>
+                </ScreenWrapper.Section>
+            ) : null}
             <ScreenWrapper.Section>
                 <SelectIndustries placeholder={industryPlaceholder} inputActionHandler={inputActionHandler} />
             </ScreenWrapper.Section>

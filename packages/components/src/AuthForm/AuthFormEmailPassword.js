@@ -32,7 +32,7 @@ const AuthFormEmailPassword = ({
             <ScreenWrapper.Section>
                 <TextInput
                     label={localized('Password')}
-                    value={password}
+                    value={isPasswordDisabled ? '********' : password}
                     onChangeText={(password) => inputActionHandler('password', password)}
                     disabled={isPasswordDisabled}
                     secureTextEntry={isTextSecureEntry}

@@ -5,8 +5,9 @@ import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 import { handleDateOfBirhtChange } from './utils';
 
-const AuthFormDriverInfo = ({ licenseNumer, zipcode, ssn, inputActionHandler }) => {
+const AuthFormDriverInfo = ({ licenseNumer, ssn, inputActionHandler }) => {
     const [dateOfBirth, setDateOfBirth] = useState('');
+
     return (
         <>
             <ScreenWrapper.Section>
@@ -20,18 +21,10 @@ const AuthFormDriverInfo = ({ licenseNumer, zipcode, ssn, inputActionHandler }) 
             <ScreenWrapper.Section>
                 <TextInput
                     mode="outlined"
-                    label={localized('Driver is license numer')}
+                    label={localized('Driver License Number')}
+                    secureTextEntry={true}
                     value={licenseNumer}
                     onChangeText={(text) => inputActionHandler('licenseNumer', text)}
-                />
-            </ScreenWrapper.Section>
-            <ScreenWrapper.Section>
-                <TextInput
-                    mode="outlined"
-                    label={localized('Zip code')}
-                    value={zipcode}
-                    keyboardType="numeric"
-                    onChangeText={(text) => inputActionHandler('zipcode', text)}
                 />
             </ScreenWrapper.Section>
             <ScreenWrapper.Section>
@@ -51,8 +44,8 @@ const AuthFormDriverInfo = ({ licenseNumer, zipcode, ssn, inputActionHandler }) 
                 <TextInput
                     mode="outlined"
                     label={localized('Social Security Number')}
-                    placeholder="MM/DD/YY"
                     value={ssn}
+                    secureTextEntry={true}
                     onChangeText={(text) => inputActionHandler('ssn', text)}
                 />
             </ScreenWrapper.Section>

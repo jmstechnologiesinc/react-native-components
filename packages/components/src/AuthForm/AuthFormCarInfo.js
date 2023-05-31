@@ -4,10 +4,10 @@ import { TextInput } from '@jmsstudiosinc/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 
-const AuthFormPersonInfo = ({ make, model, color, year, inputActionHandler, isDisabled }) => {
+const AuthFormPersonInfo = ({title, make, model, color, year, inputActionHandler, isDisabled }) => {
     return (
         <>
-            <ScreenWrapper.Section title={localized('Vehicle Details')}>
+            <ScreenWrapper.Section title={title}>
                 <TextInput
                     mode="outlined"
                     label={localized('Make')}
