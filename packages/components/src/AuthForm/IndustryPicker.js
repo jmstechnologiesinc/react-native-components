@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState,   useCallback } from 'react';
 import { ScrollView, Pressable, View } from 'react-native';
 import { TextInput, List, Button, Checkbox } from '@jmsstudiosinc/react-native-paper';
 
@@ -7,13 +7,31 @@ import ActionSheet, { useScrollHandlers } from 'react-native-actions-sheet';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { styles as JMSStyles, localized } from '@jmsstudiosinc/react-native-components';
-import { OPTIONS, resetIndustry } from './utils';
+import { OPTIONS } from './utils';
+import { useFocusEffect } from '@react-navigation/native';
 
-export default function SelectIndustries({ placeholder, inputActionHandler, industry }) {
+export default function IndustryPicker({ placeholder, inputActionHandler, industry }) {
+    
     const actionSheetRef = useRef();
     const [options, setOptions] = useState(OPTIONS);
     const insets = useSafeAreaInsets();
     const scrollHandlers = useScrollHandlers('scrollview-1', actionSheetRef);
+
+   
+      useFocusEffect(
+        useCallback(() => {
+            onResetSelected()
+        }, [])
+    );
+
+    const onResetSelected = () => {
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].selected) {
+                options[i].selected = false;
+            }
+          }
+    }
+
 
     const showActionSheet = () => {
         options.filter((option) => {
@@ -28,11 +46,7 @@ export default function SelectIndustries({ placeholder, inputActionHandler, indu
     const hideActionSheet = () => {
         actionSheetRef.current.hide();
     };
-    useEffect(() => {
-        resetIndustry(options, setOptions);
-
-    }, []);
-
+   
 
     const selectedItems = options.filter((item) => item.selected === true);
     const isSelect = selectedItems.map((item) => item.item);

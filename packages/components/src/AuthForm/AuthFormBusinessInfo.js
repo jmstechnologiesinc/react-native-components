@@ -4,7 +4,7 @@ import { TextInput, Caption } from '@jmsstudiosinc/react-native-paper';
 
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
-import SelectIndustries from './SelectIndustries';
+import IndustryPicker from './IndustryPicker';
 
 const AuthFormBusinessInfo = ({ title, fullAddress, line2, website, industryPlaceholder, inputActionHandler, industry }) => {
     
@@ -48,7 +48,7 @@ const AuthFormBusinessInfo = ({ title, fullAddress, line2, website, industryPlac
                 </Caption>
             </ScreenWrapper.Section>
             <ScreenWrapper.Section>
-                <SelectIndustries placeholder={industryPlaceholder} inputActionHandler={inputActionHandler} industry={industry} />
+                <IndustryPicker placeholder={industryPlaceholder} inputActionHandler={inputActionHandler} industry={industry} />
             </ScreenWrapper.Section>
         </>
     );

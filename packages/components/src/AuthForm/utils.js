@@ -73,19 +73,5 @@ export const OPTIONS = [
 
 
 
-export const resetIndustry = (options, callback) => {
-    const updatedOptions = options.map((option) => {
-        if (option.selected === true) {
-            return {
-                ...option,
-                
-            };
-        } else {
-            return option;
-        }
-    });
-    return callback([...updatedOptions]);
-};
-
 
 
