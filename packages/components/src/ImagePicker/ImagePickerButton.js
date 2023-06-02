@@ -59,7 +59,7 @@ const ImagePickerButton = ({ title, onChange, size = moderateScale(150), isLoadi
     return (
         <>
             <ScreenWrapper.Section withPaddingHorizontal style={{ flexDirection: 'row' }}>
-                <Button icon={MATERIAL_ICONS.document} onPress={showActionSheet} mode="outlined">
+                <Button icon={MATERIAL_ICONS.addDocument} onPress={showActionSheet} mode="outlined">
                     {localized(`Add New ${title}`)}
                 </Button>
             </ScreenWrapper.Section>
@@ -83,7 +83,7 @@ const ImagePickerButton = ({ title, onChange, size = moderateScale(150), isLoadi
                         {isSelectedPhoto ? (
                             <PaperAvatar.Image source={{ uri: isSelectedPhoto?.uri }} size={size} />
                         ) : (
-                            <PaperAvatar.Icon icon={MATERIAL_ICONS.document} size={size} />
+                            <PaperAvatar.Icon icon={MATERIAL_ICONS.addDocument} size={size} />
                         )}
                     </ScreenWrapper.Section>
 
