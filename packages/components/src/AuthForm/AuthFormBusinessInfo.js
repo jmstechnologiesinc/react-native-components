@@ -6,15 +6,15 @@ import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 import IndustryPicker from './IndustryPicker';
 
-const AuthFormBusinessInfo = ({ title, fullAddress, line2, website, industryPlaceholder, inputActionHandler, industry }) => {
+const AuthFormBusinessInfo = ({ title=localized('Business Details'), storeTitle, fullAddress, line2, website, industryPlaceholder, inputActionHandler, industry }) => {
     
     return (
         <>
-            <ScreenWrapper.Section  title={localized('Business Details')}>
+            <ScreenWrapper.Section title={title}>
                 <TextInput
                     mode="outlined"
                     label={localized('Store Name')}
-                    value={title}
+                    value={storeTitle}
                     onChangeText={(text) => inputActionHandler('title', text)}
                 />
             </ScreenWrapper.Section>

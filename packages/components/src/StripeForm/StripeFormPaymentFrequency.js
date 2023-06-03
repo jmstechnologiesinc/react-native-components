@@ -7,16 +7,20 @@ const StripeFormPaymentFrequency = ({ inputActionHandler, payoutFrequency, selec
     return (
         <ScreenWrapper.Section>
             <List.Section>
-                {payoutFrequency?.map(({ title, selected, description, value }, index) => (
+                {payoutFrequency?.map(({ title, selected, description, value, disabled }, index) => (
                     <JMSList.CheckRadio
                         key={index}
                         title={title}
                         description={description}
                         rippleColor="transparent"
+                        onPress={() => {
+                            onChange(value), inputActionHandler('payoutsSchedule', value);
+                        }}
                         left={(props) =>
                             selected !== undefined ? (
                                 <Checkbox.Android
                                     {...props}
+                                    disabled={disabled}
                                     status={selectedPayoutFrequency === value ? 'checked' : 'unchecked'}
                                     rippleColor="transparent"
                                     onPress={() => {
