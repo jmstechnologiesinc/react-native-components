@@ -1,6 +1,7 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { moderateScale } from 'react-native-size-matters';
-import { Avatar as PaperAvatar, List, Button } from '@jmsstudiosinc/react-native-paper';
+import {List, Button } from '@jmsstudiosinc/react-native-paper';
 
 import ActionSheet from 'react-native-actions-sheet';
 import ImagePickerAPI from './ImagePickerAPI';
@@ -8,15 +9,16 @@ import { IMAGE_PICKER_ACTIONS } from './utils';
 import { OPTIONS } from './utils';
 import { localized } from '../Localization/Localization';
 import { MATERIAL_ICONS } from '@jmsstudiosinc/commons';
-import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
+import ScreenWrapper from '../ScreenWrapper/ScreenWrapper'
 import styles from '../styles';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const ImagePickerButton = ({ title, onChange, size = moderateScale(150), isLoading }) => {
+
+const ImagePickerButton = ({ title, onChange, size = moderateScale(150),  isLoading }) => {
     const imagePickerRef = useRef();
     const actionSheetRef = useRef();
-    const [isSelectedPhoto, setIsSelectedPhoto] = useState(null);
+    const [isSelectedPhoto, setIsSelectedPhoto] = useState(null)
 
     const insets = useSafeAreaInsets();
     useEffect(() => {
@@ -41,28 +43,37 @@ const ImagePickerButton = ({ title, onChange, size = moderateScale(150), isLoadi
     const onActionDone = async (value) => {
         if (value === IMAGE_PICKER_ACTIONS.launchCamera) {
             imagePickerRef.current.takePhoto().then((rep) => {
-                setIsSelectedPhoto(rep);
+                setIsSelectedPhoto(rep)
             });
         }
         if (value === IMAGE_PICKER_ACTIONS.launchImageLibrary) {
             imagePickerRef.current.chooseFromLibrary().then((rep) => {
-                setIsSelectedPhoto(rep);
+                setIsSelectedPhoto(rep)
+
             });
         }
         if (value === IMAGE_PICKER_ACTIONS.cancel) {
             actionSheetRef.current.hide();
-            setIsSelectedPhoto(null);
+            setIsSelectedPhoto(null)
+
         }
         return;
     };
 
     return (
+
         <>
-            <ScreenWrapper.Section withPaddingHorizontal style={{ flexDirection: 'row' }}>
-                <Button icon={MATERIAL_ICONS.addDocument} onPress={showActionSheet} mode="outlined">
-                    {localized(`Add New ${title}`)}
+
+            <ScreenWrapper.Section withPaddingHorizontal style={{ flexDirection: 'row', }}>
+                <Button
+                    icon={MATERIAL_ICONS.addDocument}
+                    onPress={showActionSheet}
+                    mode="outlined"
+                >
+                    {localized(title)}
                 </Button>
             </ScreenWrapper.Section>
+
 
             <ActionSheet
                 ref={actionSheetRef}
@@ -76,16 +87,6 @@ const ImagePickerButton = ({ title, onChange, size = moderateScale(150), isLoadi
                 }}
             >
                 <List.Section>
-                    <ScreenWrapper.Section
-                        withPaddingHorizontal
-                        style={{ flexDirection: 'row', justifyContent: 'center' }}
-                    >
-                        {isSelectedPhoto ? (
-                            <PaperAvatar.Image source={{ uri: isSelectedPhoto?.uri }} size={size} />
-                        ) : (
-                            <PaperAvatar.Icon icon={MATERIAL_ICONS.addDocument} size={size} />
-                        )}
-                    </ScreenWrapper.Section>
 
                     {OPTIONS.map(({ title, icon, value }, index) => (
                         <List.Item
@@ -97,22 +98,29 @@ const ImagePickerButton = ({ title, onChange, size = moderateScale(150), isLoadi
                             left={(props) => <List.Icon {...props} icon={icon} />}
                         />
                     ))}
+
                 </List.Section>
 
                 <Button
                     mode="contained"
                     style={styles.fba}
                     loading={isLoading}
-                    disabled={isSelectedPhoto === null || isLoading}
+                    disabled={(isSelectedPhoto === null) || isLoading}
                     onPress={() => {
                         onChange(isSelectedPhoto);
+
                     }}
                 >
                     {localized('SAVE')}
                 </Button>
             </ActionSheet>
+
         </>
+
+
     );
 };
+
+
 
 export default ImagePickerButton;
