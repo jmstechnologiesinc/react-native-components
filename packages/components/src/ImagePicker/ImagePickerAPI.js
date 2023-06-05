@@ -3,15 +3,20 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { checkAndAskForPermissionCamara, checkAndAskForPermissionMediaLibrary } from './utils';
 
 class ImagePickerAPI {
-    constructor(
-        permission
-    ) {
-        this.titlePermissionCamera = permission.titlePermissionCamera;
-        this.titlePermissionPhotos = permission.titlePermissionPhotos;
-        this.descriptionPermissionCamera = permission.descriptionPermissionCamera;
-        this.descriptionPermissionPhotos = permission.descriptionPermissionPhotos;
-        this.cancelPermission = permission.cancelPermission;
-        this.settingPermission = permission.settingPermission;
+    constructor({
+        titlePermissionCamera,
+        titlePermissionPhotos,
+        descriptionPermissionCamera,
+        descriptionPermissionPhotos,
+        cancelPermission,
+        settingPermission
+    }) {
+        this.titlePermissionCamera = titlePermissionCamera;
+        this.titlePermissionPhotos = titlePermissionPhotos;
+        this.descriptionPermissionCamera = descriptionPermissionCamera;
+        this.descriptionPermissionPhotos = descriptionPermissionPhotos;
+        this.cancelPermission = cancelPermission;
+        this.settingPermission = settingPermission;
     }
 
     catchPermissionStatusCamara() {

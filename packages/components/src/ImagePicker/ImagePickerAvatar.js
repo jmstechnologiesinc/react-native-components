@@ -10,7 +10,13 @@ import ImagePickerAPI from './ImagePickerAPI';
 import { localized } from '../Localization/Localization';
 
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
-import styles from '../styles';
+
+export const IMAGE_PICKER_ACTIONS = {
+    launchCamera: 'launchCamera',
+    launchImageLibrary: 'launchImageLibrary',
+    removeImage: 'removeImage',
+    cancel: 'cancel',
+};
 
 const Avatar = ({
     photo,
@@ -20,7 +26,7 @@ const Avatar = ({
     variant = 'avatar',
     icon = 'account',
     size = moderateScale(150),
-    isRemoveable = false,
+    options=[],
     isDisabled,
 }) => {
     const imagePickerRef = useRef();
@@ -53,28 +59,17 @@ const Avatar = ({
                 onChange(rep);
                 actionSheetRef.current.hide();
             });
-        }
-        if (value === IMAGE_PICKER_ACTIONS.launchImageLibrary) {
+        } else if (value === IMAGE_PICKER_ACTIONS.launchImageLibrary) {
             imagePickerRef.current.chooseFromLibrary().then((rep) => {
                 onChange(rep);
                 actionSheetRef.current.hide();
             });
-        }
-        if (value === IMAGE_PICKER_ACTIONS.removeImage) {
+        } else if (value === IMAGE_PICKER_ACTIONS.removeImage) {
             onRemove();
             actionSheetRef.current.hide();
-        }
-        if (value === IMAGE_PICKER_ACTIONS.cancel) {
+        } else if (value === IMAGE_PICKER_ACTIONS.cancel) {
             actionSheetRef.current.hide();
         }
-        return;
-    };
-
-    const IMAGE_PICKER_ACTIONS = {
-        launchCamera: 'launchCamera',
-        launchImageLibrary: 'launchImageLibrary',
-        removeImage: 'removeImage',
-        cancel: 'cancel',
     };
 
     const OPTIONS = [
@@ -84,7 +79,7 @@ const Avatar = ({
             value: IMAGE_PICKER_ACTIONS.launchImageLibrary,
             icon: 'folder-image',
         },
-        { title: localized('Remove Profile Photo'), value: IMAGE_PICKER_ACTIONS.removeImage, icon: 'image-remove' },
+        ...options,
         { title: localized('cancel'), value: IMAGE_PICKER_ACTIONS.cancel, icon: 'cancel' },
     ];
 
@@ -105,7 +100,7 @@ const Avatar = ({
                 </ScreenWrapper.Section>
             ) : (
                 <ScreenWrapper.Section withPaddingHorizontal style={{ flexDirection: 'row' }}>
-                    <Button icon={MATERIAL_ICONS.addDocument} onPress={showActionSheet} mode="outlined">
+                    <Button icon={MATERIAL_ICONS.addDocument} onPress={isDisabled ? null : showActionSheet} mode="outlined">
                         {localized(title)}
                     </Button>
                 </ScreenWrapper.Section>
@@ -124,9 +119,6 @@ const Avatar = ({
             >
                 <List.Section>
                     {OPTIONS.map(({ title, icon, value }, index) => {
-                        if (value === IMAGE_PICKER_ACTIONS.removeImage && isRemoveable) {
-                            return null;
-                        }
                         return (
                             <List.Item
                                 key={index}
