@@ -3,10 +3,16 @@ import React from 'react';
 import { TextInput } from '@jmsstudiosinc/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
+import { Switch, List } from '@jmsstudiosinc/react-native-paper';
 
-const AuthFormPersonInfo = ({title, make, model, color, year, inputActionHandler, isDisabled }) => {
+const AuthFormVehicle = ({active, title, make, model, color, year, inputActionHandler, isDisabled }) => {
     return (
         <>
+            <List.Item
+                    title={localized('Active')}
+                    right={() => <Switch value={active} onValueChange={(text) => inputActionHandler('active', text)} />}
+            />
+            <ScreenWrapper.Container>
             <ScreenWrapper.Section title={title}>
                 <TextInput
                     mode="outlined"
@@ -45,8 +51,9 @@ const AuthFormPersonInfo = ({title, make, model, color, year, inputActionHandler
                     onChangeText={(text) => inputActionHandler('year', text)}
                 />
             </ScreenWrapper.Section>
+            </ScreenWrapper.Container>
         </>
     );
 };
 
-export default AuthFormPersonInfo;
+export default AuthFormVehicle;
