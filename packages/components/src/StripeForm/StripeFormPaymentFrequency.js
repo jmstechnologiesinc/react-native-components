@@ -3,31 +3,30 @@ import { List, Checkbox } from '@jmsstudiosinc/react-native-paper';
 import * as JMSList from '../List/List';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 
-const StripeFormPaymentFrequency = ({ inputActionHandler, payoutFrequency, selectedPayoutFrequency, onChange }) => {
+const StripeFormPaymentFrequency = ({ options, inputActionHandler, selectedInterval }) => {
     return (
         <ScreenWrapper.Section>
             <List.Section>
-                {payoutFrequency?.map(({ title, selected, description, value, disabled }, index) => (
+                {options?.map(({ title, interval, description, disabled }, index) => (
                     <JMSList.CheckRadio
                         key={index}
                         title={title}
                         description={description}
                         rippleColor="transparent"
+                        disabled={disabled}
                         onPress={() => {
-                            onChange(value), inputActionHandler('payoutsSchedule', value);
+                            inputActionHandler('interval', interval)
                         }}
                         left={(props) =>
-                            selected !== undefined ? (
-                                <Checkbox.Android
-                                    {...props}
-                                    disabled={disabled}
-                                    status={selectedPayoutFrequency === value ? 'checked' : 'unchecked'}
-                                    rippleColor="transparent"
-                                    onPress={() => {
-                                        onChange(value), inputActionHandler('payoutsSchedule', value);
-                                    }}
-                                />
-                            ) : null
+                            <Checkbox.Android
+                            {...props}
+                            disabled={disabled}
+                            status={selectedInterval === interval ? 'checked' : 'unchecked'}
+                            rippleColor="transparent"
+                            onPress={() => {
+                                inputActionHandler('interval', interval)
+                            }}
+                        />
                         }
                     />
                 ))}

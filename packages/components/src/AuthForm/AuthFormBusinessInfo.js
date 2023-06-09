@@ -6,7 +6,21 @@ import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 import IndustryPicker from './IndustryPicker';
 
-const AuthFormBusinessInfo = ({ title=localized('Business Details'), storeTitle, fullAddress, line2, website, industryPlaceholder, inputActionHandler, industry }) => {
+const AuthFormBusinessInfo = ({ 
+    isDisabled,
+    title=localized('Business Details'), 
+    description,
+    storeTitle, 
+    fullAddress, 
+    line2,
+    showWebsite=true,
+    showPhone=true,
+    website, 
+    phone,
+    industryPlaceholder, 
+    inputActionHandler, 
+    industry
+ }) => {
     
     return (
         <>
@@ -15,7 +29,18 @@ const AuthFormBusinessInfo = ({ title=localized('Business Details'), storeTitle,
                     mode="outlined"
                     label={localized('Store Name')}
                     value={storeTitle}
+                    disabled={isDisabled}
                     onChangeText={(text) => inputActionHandler('title', text)}
+                />
+            </ScreenWrapper.Section>
+            <ScreenWrapper.Section>
+                <TextInput
+                    multiline={true}
+                    mode="outlined"
+                    label={localized('Store Highlights / Description')}
+                    value={description}
+                    disabled={isDisabled}
+                    onChangeText={(text) => inputActionHandler('description', text)}
                 />
             </ScreenWrapper.Section>
             <ScreenWrapper.Section>
@@ -23,6 +48,7 @@ const AuthFormBusinessInfo = ({ title=localized('Business Details'), storeTitle,
                     mode="outlined"
                     label={localized('Store Address')}
                     value={fullAddress}
+                    disabled={isDisabled}
                     onChangeText={(text) => inputActionHandler('fullAddress', text)}
                 />
             </ScreenWrapper.Section>
@@ -31,15 +57,28 @@ const AuthFormBusinessInfo = ({ title=localized('Business Details'), storeTitle,
                     mode="outlined"
                     label={localized('Floor / Suite')}
                     value={line2}
+                    disabled={isDisabled}
                     onChangeText={(text) => inputActionHandler('line2', text)}
                 />
             </ScreenWrapper.Section>
-            {website ? (
+            {showPhone ? (
+                <ScreenWrapper.Section>
+                    <TextInput
+                        mode="outlined"
+                        label={localized('Phone Number')}
+                        value={phone}
+                        disabled={isDisabled}
+                        onChangeText={(text) => inputActionHandler('phone', text)}
+                    />
+                </ScreenWrapper.Section>
+            ) : null}
+            {showWebsite ? (
                 <ScreenWrapper.Section>
                     <TextInput
                         mode="outlined"
                         label={localized('Website')}
                         value={website}
+                        disabled={isDisabled}
                         onChangeText={(text) => inputActionHandler('website', text)}
                     />
                     <Caption>
@@ -50,7 +89,11 @@ const AuthFormBusinessInfo = ({ title=localized('Business Details'), storeTitle,
                 </ScreenWrapper.Section>
             ) : null}
             <ScreenWrapper.Section>
-                <IndustryPicker placeholder={industryPlaceholder} inputActionHandler={inputActionHandler} industry={industry} />
+                <IndustryPicker                     
+                    isDisabled={isDisabled}
+                    placeholder={industryPlaceholder}
+                    inputActionHandler={inputActionHandler} 
+                    industry={industry} />
             </ScreenWrapper.Section>
         </>
     );

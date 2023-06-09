@@ -10,7 +10,7 @@ import { styles as JMSStyles, localized } from '@jmsstudiosinc/react-native-comp
 import { OPTIONS } from './utils';
 import { useFocusEffect } from '@react-navigation/native';
 
-export default function IndustryPicker({ placeholder, inputActionHandler, industry }) {
+export default function IndustryPicker({isDisabled, placeholder, inputActionHandler, industry }) {
     
     const actionSheetRef = useRef();
     const [options, setOptions] = useState(OPTIONS);
@@ -64,6 +64,7 @@ export default function IndustryPicker({ placeholder, inputActionHandler, indust
                     value={itemSelected}
                     placeholder={placeholder}
                     mode="outlined"
+                    disabled={isDisabled}
                     right={<TextInput.Icon icon={'chevron-down-circle-outline'} onPress={() => showActionSheet()} />}
                 />
             </View>
@@ -86,17 +87,18 @@ export default function IndustryPicker({ placeholder, inputActionHandler, indust
                             <List.Item
                                 key={index}
                                 title={item}
-                                onPress={() => {
+                                onPress={!isDisabled ? () => {
                                     options[index].selected = !selected
                                     setOptions([...options])
-                                }}
+                                } : null}
                                 left={() => (
                                     <Checkbox.Android
                                         status={selected ? 'checked' : 'unchecked'}
-                                        onPress={() => {
+                                        disabled={isDisabled}
+                                        onPress={!isDisabled ? () => {
                                             options[index].selected = !selected
                                             setOptions([...options])
-                                        }}
+                                        } : null}
                                     />
                                 )}
                             />
@@ -107,11 +109,11 @@ export default function IndustryPicker({ placeholder, inputActionHandler, indust
                     mode="contained"
                     style={JMSStyles.fba}
                     onPress={() => {
-                        inputActionHandler('industry', isSelect);
+                        !isDisabled ? inputActionHandler('industry', isSelect) : null ;
                         hideActionSheet();
                     }}
                 >
-                    {localized('SAVE')}
+                    {localized(isDisabled ? 'CLOSE' : 'SAVE')}
                 </Button>
             </ActionSheet>
         </Pressable>

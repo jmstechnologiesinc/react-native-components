@@ -5,12 +5,13 @@ import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 import { Switch, List } from '@jmsstudiosinc/react-native-paper';
 
-const AuthFormVehicle = ({active, title, make, model, color, year, inputActionHandler, isDisabled }) => {
+const AuthFormVehicle = ({active, title, make, model, color, year, licensePlateNumber, inputActionHandler, isDisabled }) => {
     return (
         <>
             <List.Item
                     title={localized('Active')}
-                    right={() => <Switch value={active} onValueChange={(text) => inputActionHandler('active', text)} />}
+                    disabled={isDisabled}
+                    right={() => <Switch disabled={isDisabled} value={active} onValueChange={(text) => inputActionHandler('active', text)} />}
             />
             <ScreenWrapper.Container>
             <ScreenWrapper.Section title={title}>
@@ -49,6 +50,16 @@ const AuthFormVehicle = ({active, title, make, model, color, year, inputActionHa
                     disabled={isDisabled}
                     keyboardType="numeric"
                     onChangeText={(text) => inputActionHandler('year', text)}
+                />
+            </ScreenWrapper.Section>
+            <ScreenWrapper.Section>
+                <TextInput
+                    mode="outlined"
+                    label={localized('License Plate Number')}
+                    value={licensePlateNumber}
+                    disabled={isDisabled}
+                    keyboardType="numeric"
+                    onChangeText={(text) => inputActionHandler('licensePlateNumber', text)}
                 />
             </ScreenWrapper.Section>
             </ScreenWrapper.Container>
