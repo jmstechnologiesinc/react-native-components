@@ -31,8 +31,8 @@ const ActionGroupButtons = ({
                         button.contentStyle]}>
                     {variant === 'fab' ? (
                             <FAB
-                             loading={isLoading}
-                             disabled={button.isDisabled}
+                                loading={isLoading}
+                                disabled={button.isDisabled}
                               variant={(button.variant ? button.variant : (isPrimaryButton(buttons.length, index) ? 'primary' : 'secondary'))}
                               label={button.title}
                               onPress={() => onPress?.(button)} 

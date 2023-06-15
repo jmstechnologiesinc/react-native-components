@@ -21,7 +21,7 @@ const Fast2ImageKit = ({
                     setIsLoading(false);
                 }}
             />
-            {showActivityIndicator && isLoading && <TNActivityIndicator />}
+            {showActivityIndicator && isLoading ? <TNActivityIndicator /> : null}
         </>
     );
 

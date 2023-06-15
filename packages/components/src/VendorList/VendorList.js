@@ -11,6 +11,7 @@ const Separator = () => <View style={{marginBottom: MD3LightTheme.spacing.x2}} /
 const VendorList = ({ 
     sections, 
     onPress, 
+    withPaddingHorizontal,
     ...props  
 }) => <SectionList
     {...props}
@@ -19,6 +20,7 @@ const VendorList = ({
     renderItem={({item}) => (
         <VendorListItem 
             item={item} 
+            withPaddingHorizontal={withPaddingHorizontal}
             onPress={onPress} />
     )} 
     stickySectionHeadersEnabled={false}
