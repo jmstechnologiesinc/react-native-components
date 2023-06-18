@@ -35,7 +35,6 @@ const AuthFormBusinessInfo = ({
             </ScreenWrapper.Section>
             <ScreenWrapper.Section>
                 <TextInput
-                    multiline={true}
                     mode="outlined"
                     label={localized('Store Highlights / Description')}
                     value={description}
