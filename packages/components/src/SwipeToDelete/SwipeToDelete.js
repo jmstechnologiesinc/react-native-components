@@ -3,7 +3,7 @@ import React from 'react';
 import { View } from 'react-native';
 
 import RNSwipeable from 'react-native-gesture-handler/Swipeable';
-import { MD3LightTheme, Text, TouchableRipple } from '@jmsstudiosinc/react-native-paper';
+import { MD3LightTheme, Text, TouchableRipple } from '@/react-native-paper';
 import { moderateScale } from 'react-native-size-matters';
 
 let row = [];

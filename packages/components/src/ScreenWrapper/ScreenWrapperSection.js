@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import { MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
-import { List } from '@jmsstudiosinc/react-native-paper';
+import { MD3LightTheme } from '@/react-native-paper';
+import { List } from '@/react-native-paper';
 
 import ScreenWrapperContainer, { containerPaddings } from './ScreenWrapperContainer';
 
@@ -16,7 +16,7 @@ export const ScreenWrapperSection = ({ withPaddingHorizontal = false, title, tit
         paddingTop={title ? 0 : sectionPaddings.top}
         paddingBottom={sectionPaddings.bottom}
         withPaddingHorizontal={withPaddingHorizontal}
-        style={[{flex: null}, style]}
+        style={[{ flex: null }, style]}
     >
         {title ? <List.Subheader style={[{ paddingHorizontal: 0 }, titleStyle]}>{title}</List.Subheader> : null}
         {children}

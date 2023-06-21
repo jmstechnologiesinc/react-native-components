@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Chip, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
+import { Chip, MD3LightTheme } from '@/react-native-paper';
 import * as Tabs from '../Tabs/Tabs';
 
 const ChipList = ({ options, compact, mode = 'outlined', currentIndex, onPress, listSectionStyle }) => (

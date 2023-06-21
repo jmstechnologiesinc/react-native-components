@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
+import { MD3LightTheme } from '@/react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function ScreenWrapper({
@@ -20,7 +20,7 @@ export default function ScreenWrapper({
         {
             backgroundColor: MD3LightTheme.colors.background,
             paddingTop: withTopInset ? insets.top : 0,
-            paddingBottom: withBottomInset ? isInsetsBottom  : 0,
+            paddingBottom: withBottomInset ? isInsetsBottom : 0,
             paddingLeft: insets.left,
             paddingRight: insets.left,
         },

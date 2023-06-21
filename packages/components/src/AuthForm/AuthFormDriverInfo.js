@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Paragraph, TextInput } from '@jmsstudiosinc/react-native-paper';
+import { Paragraph, TextInput } from '@/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 import { handleDateOfBirhtChange } from './utils';

@@ -2,13 +2,10 @@ import React from 'react';
 
 import { View, StyleSheet } from 'react-native';
 
-import { IconButton } from '@jmsstudiosinc/react-native-paper';
+import { IconButton } from '@/react-native-paper';
 
-const ActionGroupIcons = ({ 
-    icons,
-    onPress
-}) => {
-    if(!icons?.length) {
+const ActionGroupIcons = ({ icons, onPress }) => {
+    if (!icons?.length) {
         return null;
     }
 
@@ -23,17 +20,18 @@ const ActionGroupIcons = ({
                     iconColor={icon.iconColor}
                     disabled={icon.isDisabled}
                     onPress={() => onPress?.(icon)}
-                    style={{...(index === 0 && {marginLeft: 0})}} />
+                    style={{ ...(index === 0 && { marginLeft: 0 }) }}
+                />
             ))}
         </View>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     row: {
-        flexDirection: "row",
+        flexDirection: 'row',
         flex: 1,
-    }
-  });
+    },
+});
 
 export default ActionGroupIcons;

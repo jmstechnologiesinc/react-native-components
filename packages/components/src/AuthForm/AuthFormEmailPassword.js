@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { TextInput, Button } from '@jmsstudiosinc/react-native-paper';
+import { TextInput, Button } from '@/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 
@@ -14,13 +14,13 @@ const AuthFormEmailPassword = ({
     passwordConfirm,
     resetPassword = false,
     onPasswordReset,
-    titleCredentials = false
+    titleCredentials = false,
 }) => {
     const [isTextSecureEntry, setIsTextSecureEntry] = useState(true);
 
     return (
         <>
-            <ScreenWrapper.Section title={titleCredentials ? localized('Credentials'): null}>
+            <ScreenWrapper.Section title={titleCredentials ? localized('Credentials') : null}>
                 <TextInput
                     label={localized('Email')}
                     value={email}

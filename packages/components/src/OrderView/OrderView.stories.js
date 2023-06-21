@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { ORDER_STATUS, NONFULFILLMENT_ORDER_STATUS, PICKUP_ORDER_STATUS, DELIVERY_ORDER_STATUS } from '@jmsstudiosinc/order';
-import { DELIVERY_METHODS, PICKUP_METHODS, FULFILLMENT_METHODS } from '@jmsstudiosinc/vendor';
-import { USER_ROLES } from '@jmsstudiosinc/user';
+import { ORDER_STATUS, NONFULFILLMENT_ORDER_STATUS, PICKUP_ORDER_STATUS, DELIVERY_ORDER_STATUS } from '@/order';
+import { DELIVERY_METHODS, PICKUP_METHODS, FULFILLMENT_METHODS } from '@/vendor';
+import { USER_ROLES } from '@/user';
 
 import vendorMockData from '../Order/vendorMockData.json';
 
@@ -18,35 +18,38 @@ export default {
         },
         acceptedTime: {
             control: {
-                type: "select",
+                type: 'select',
                 labels: {
-                    5: "5 Mins",
-                    15: "15 Mins",
-                    30: "30 Mins",
-                    60: "1 Hour"
+                    5: '5 Mins',
+                    15: '15 Mins',
+                    30: '30 Mins',
+                    60: '1 Hour',
                 },
             },
-            options: [5, 15, 30, 60]
+            options: [5, 15, 30, 60],
         },
     },
 };
 
 function subtractMinutes(numOfMinutes, date = new Date()) {
     date.setMinutes(date.getMinutes() - numOfMinutes);
- 
-    return {seconds: date.getTime() / 1000};
+
+    return { seconds: date.getTime() / 1000 };
 }
 
 const Template = (args) => {
-    return <OrderView 
-        role={args.role || USER_ROLES.vendor} 
-        onButtonPress={() => {}}
-        order={{
-            ...vendorMockData[3], 
-            vendorAcceptedTime: subtractMinutes(args.acceptedTime || 5),
-            ...args
-        }} />
-}
+    return (
+        <OrderView
+            role={args.role || USER_ROLES.vendor}
+            onButtonPress={() => {}}
+            order={{
+                ...vendorMockData[3],
+                vendorAcceptedTime: subtractMinutes(args.acceptedTime || 5),
+                ...args,
+            }}
+        />
+    );
+};
 
 export const Delivery = Template.bind({});
 export const Pickup = Template.bind({});
@@ -56,7 +59,7 @@ Delivery.args = {
     status: ORDER_STATUS.placed,
     deliveryMethod: DELIVERY_METHODS.marketPlace,
     fulfillmentMethod: FULFILLMENT_METHODS.delivery,
-    acceptedTime: 5
+    acceptedTime: 5,
 };
 
 Delivery.argTypes = {
@@ -65,22 +68,22 @@ Delivery.argTypes = {
         options: [...NONFULFILLMENT_ORDER_STATUS, ...DELIVERY_ORDER_STATUS],
     },
     deliveryMethod: {
-        name: "Fulfillment Method",
+        name: 'Fulfillment Method',
         control: 'radio',
         options: [DELIVERY_METHODS.ownStaff, DELIVERY_METHODS.marketPlace],
     },
     fulfillmentMethod: {
         control: 'radio',
         options: [FULFILLMENT_METHODS.delivery],
-        disabled: true
-    }
-}
+        disabled: true,
+    },
+};
 
 Pickup.args = {
     role: USER_ROLES.vendor,
     status: ORDER_STATUS.placed,
     deliveryMethod: PICKUP_METHODS.customerPickup,
-    fulfillmentMethod: FULFILLMENT_METHODS.pickup
+    fulfillmentMethod: FULFILLMENT_METHODS.pickup,
 };
 
 Pickup.argTypes = {
@@ -89,15 +92,13 @@ Pickup.argTypes = {
         options: [...NONFULFILLMENT_ORDER_STATUS, ...PICKUP_ORDER_STATUS],
     },
     deliveryMethod: {
-        name: "Fulfillment Method",
+        name: 'Fulfillment Method',
         control: 'radio',
-        options: [
-            PICKUP_METHODS.customerPickup
-        ],
+        options: [PICKUP_METHODS.customerPickup],
     },
     fulfillmentMethod: {
         control: 'radio',
         options: [FULFILLMENT_METHODS.pickup],
-        disabled: true
+        disabled: true,
     },
-}
+};

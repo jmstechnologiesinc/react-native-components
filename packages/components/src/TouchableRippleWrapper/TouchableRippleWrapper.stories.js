@@ -1,21 +1,21 @@
 import React from 'react';
 
-import { List } from '@jmsstudiosinc/react-native-paper';
+import { List } from '@/react-native-paper';
 
 import TouchableRippleWrapper from './TouchableRippleWrapper';
 
 export default {
-  title: 'packages/TouchableRippleWrapper',
+    title: 'packages/TouchableRippleWrapper',
 };
 
 export const IsSelected = () => (
-  <TouchableRippleWrapper isSelected onPress={() => {}} >
-    <List.Item title="Is Selected" />
-  </TouchableRippleWrapper>
-)
+    <TouchableRippleWrapper isSelected onPress={() => {}}>
+        <List.Item title="Is Selected" />
+    </TouchableRippleWrapper>
+);
 
 export const Default = () => (
-  <TouchableRippleWrapper onPress={() => {}}>
-    <List.Item title="Default"  />
-  </TouchableRippleWrapper>
-)
+    <TouchableRippleWrapper onPress={() => {}}>
+        <List.Item title="Default" />
+    </TouchableRippleWrapper>
+);

@@ -1,16 +1,20 @@
 import React from 'react';
 
-import { Card, Text,MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
+import { Card, Text, MD3LightTheme } from '@/react-native-paper';
 
-import { VENDOR_INDUSTRIES_MAPPING } from '@jmsstudiosinc/vendor';
-import { interpunct, fastImageUrl  } from '@jmsstudiosinc/commons';
+import { VENDOR_INDUSTRIES_MAPPING } from '@/vendor';
+import { interpunct, fastImageUrl } from '@/commons';
 import { sectionPaddings } from '../ScreenWrapper/ScreenWrapperSection';
 
 const VendorListItem = ({ item, withPaddingHorizontal, onPress }) => (
     <Card
-        style={{marginVertical: MD3LightTheme.spacing.x1, ...(withPaddingHorizontal ? {marginHorizontal: sectionPaddings.left} : null)}}
-        onPress={() => onPress(item)}>
-        <Card.Cover source={{ uri:  fastImageUrl(item.photos) }} />
+        style={{
+            marginVertical: MD3LightTheme.spacing.x1,
+            ...(withPaddingHorizontal ? { marginHorizontal: sectionPaddings.left } : null),
+        }}
+        onPress={() => onPress(item)}
+    >
+        <Card.Cover source={{ uri: fastImageUrl(item.photos) }} />
         <Card.Title
             title={item.title}
             subtitle={interpunct([item.formattedFulfillmentMethod, item.formattedHitDistance])}

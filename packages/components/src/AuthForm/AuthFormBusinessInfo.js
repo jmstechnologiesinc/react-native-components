@@ -1,27 +1,26 @@
 import React from 'react';
 
-import { TextInput, Caption } from '@jmsstudiosinc/react-native-paper';
+import { TextInput, Caption } from '@/react-native-paper';
 
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 import IndustryPicker from './IndustryPicker';
 
-const AuthFormBusinessInfo = ({ 
+const AuthFormBusinessInfo = ({
     isDisabled,
-    title=localized('Business Details'), 
+    title = localized('Business Details'),
     description,
-    storeTitle, 
-    fullAddress, 
+    storeTitle,
+    fullAddress,
     line2,
-    showWebsite=true,
-    showPhone=true,
-    website, 
+    showWebsite = true,
+    showPhone = true,
+    website,
     phone,
-    industryPlaceholder, 
-    inputActionHandler, 
-    industry
- }) => {
-    
+    industryPlaceholder,
+    inputActionHandler,
+    industry,
+}) => {
     return (
         <>
             <ScreenWrapper.Section title={title}>
@@ -88,11 +87,12 @@ const AuthFormBusinessInfo = ({
                 </ScreenWrapper.Section>
             ) : null}
             <ScreenWrapper.Section>
-                <IndustryPicker                     
+                <IndustryPicker
                     isDisabled={isDisabled}
                     placeholder={industryPlaceholder}
-                    inputActionHandler={inputActionHandler} 
-                    industry={industry} />
+                    inputActionHandler={inputActionHandler}
+                    industry={industry}
+                />
             </ScreenWrapper.Section>
         </>
     );

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { View } from 'react-native';
 
-import { List, RadioButton, Checkbox } from '@jmsstudiosinc/react-native-paper';
+import { List, RadioButton, Checkbox } from '@/react-native-paper';
 import { MetaBadged } from '../List/List';
 
 const CheckRadio = ({

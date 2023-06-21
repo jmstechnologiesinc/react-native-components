@@ -3,13 +3,12 @@ import React, { useState } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
-import { MD3LightTheme, TouchableRipple} from '@jmsstudiosinc/react-native-paper';
-import { fastImageUrl} from '@jmsstudiosinc/commons';
+import { MD3LightTheme, TouchableRipple } from '@/react-native-paper';
+import { fastImageUrl } from '@/commons';
 
 import ScreenWrapperSection from '../ScreenWrapper/ScreenWrapperSection';
 
 import FastImage from 'react-native-fast-image';
-
 
 const renderSeparator = () => (
     <View
@@ -20,7 +19,7 @@ const renderSeparator = () => (
     />
 );
 
-const PhotoGallery = ({ photos }) => { 
+const PhotoGallery = ({ photos }) => {
     const [selectedPhoto, setSelectedPhoto] = useState();
     const mainPhotoUri = selectedPhoto || fastImageUrl(photos);
 
@@ -32,10 +31,8 @@ const PhotoGallery = ({ photos }) => {
 
     return (
         <>
-            {mainPhotoUri ? (
-                <FastImage source={{uri: mainPhotoUri}} style={styles.mainImage} />
-            ) : null}
-            
+            {mainPhotoUri ? <FastImage source={{ uri: mainPhotoUri }} style={styles.mainImage} /> : null}
+
             {photos?.length > 1 ? (
                 <ScreenWrapperSection>
                     <FlatList
@@ -44,7 +41,8 @@ const PhotoGallery = ({ photos }) => {
                         ItemSeparatorComponent={renderSeparator}
                         renderItem={renderItem}
                         showsHorizontalScrollIndicator={false}
-                        keyExtractor={(_, index) => `photo-gallery-${index}`}/>
+                        keyExtractor={(_, index) => `photo-gallery-${index}`}
+                    />
                 </ScreenWrapperSection>
             ) : null}
         </>

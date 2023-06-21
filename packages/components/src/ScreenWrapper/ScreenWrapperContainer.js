@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
+import { MD3LightTheme } from '@/react-native-paper';
 
 const containerPaddings = {
     top: 0,

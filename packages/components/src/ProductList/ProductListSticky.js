@@ -1,21 +1,21 @@
 import React from 'react';
 
-import { List } from '@jmsstudiosinc/react-native-paper';
-
+import { List } from '@/react-native-paper';
 
 import StickySectionList from '../StickySectionList/StickySectionList';
 import ProductListItem from './ProductListItem';
 
 const keyExtractor = (productItem) => productItem.id;
 
-const ProductListSticky = ({ 
-    sections, 
+const ProductListSticky = ({
+    sections,
     productItemQuantityMapping,
     fulfillmentMethodFilter,
-    onPress, 
+    onPress,
     onContentOffsetYScroll,
     contentOffsetY,
-    ...props }) => (
+    ...props
+}) => (
     <StickySectionList
         {...props}
         sections={sections}
@@ -35,7 +35,8 @@ const ProductListSticky = ({
                 quantity={item.quantity}
                 isOutofStock={item.isOutofStock}
                 fulfillmentMethodFilter={fulfillmentMethodFilter}
-                onPress={() => onPress(item)} />
+                onPress={() => onPress(item)}
+            />
         )}
     />
 );
@@ -43,12 +44,14 @@ const ProductListSticky = ({
 ProductListSticky.whyDidYouRender = true;
 
 function areEqual(prevProps, nextProps) {
-    if(prevProps.productItemQuantityMapping !== nextProps.productItemQuantityMapping || 
-        prevProps.listHeaderComponent !== nextProps.listHeaderComponent || 
-        prevProps.contentOffsetY !== nextProps.contentOffsetY) {
+    if (
+        prevProps.productItemQuantityMapping !== nextProps.productItemQuantityMapping ||
+        prevProps.listHeaderComponent !== nextProps.listHeaderComponent ||
+        prevProps.contentOffsetY !== nextProps.contentOffsetY
+    ) {
         return false;
     }
-    
+
     return true;
 }
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import ActionSheet from 'react-native-actions-sheet';
-import { List, RadioButton, Button } from '@jmsstudiosinc/react-native-paper';
-import { MATERIAL_ICONS } from '@jmsstudiosinc/commons';
+import { List, RadioButton, Button } from '@/react-native-paper';
+import { MATERIAL_ICONS } from '@/commons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
-import { localized } from '@jmsstudiosinc/react-native-components';
+import { localized } from '@/react-native-components';
 
 const ActionPaymentSheet = ({
     paymentMethods,
