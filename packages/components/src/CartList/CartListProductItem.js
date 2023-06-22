@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { MD3LightTheme } from '@/react-native-paper';
-import { interpunct } from '@/commons';
+import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
+import { interpunct } from '@jmstechnologiesinc/commons';
 import * as JMSList from '../List/List';
-import { MD3Colors } from '@/react-native-paper';
+import { MD3Colors } from '@jmstechnologiesinc/react-native-paper';
 const { dinero, toDecimal } = require('dinero.js');
 import I18n from 'i18n-js';
 

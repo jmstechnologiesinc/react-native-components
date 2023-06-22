@@ -2,7 +2,7 @@ import React from 'react';
 
 import { View } from 'react-native';
 
-import { Button, FAB, MD3LightTheme } from '@/react-native-paper';
+import { Button, FAB, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import { itemSeparator } from '../utils';
 
 const isPrimaryButton = (buttonLength, index) => index === buttonLength - 1;

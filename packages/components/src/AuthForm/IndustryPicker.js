@@ -1,12 +1,12 @@
 import React, { useRef, useState, useCallback } from 'react';
 import { ScrollView, Pressable, View } from 'react-native';
-import { TextInput, List, Button, Checkbox } from '@/react-native-paper';
+import { TextInput, List, Button, Checkbox } from '@jmstechnologiesinc/react-native-paper';
 
-import { interpunct } from '@/commons';
+import { interpunct } from '@jmstechnologiesinc/commons';
 import ActionSheet, { useScrollHandlers } from 'react-native-actions-sheet';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { styles as JMSStyles, localized } from '@/react-native-components';
+import { styles as JMSStyles, localized } from '@jmstechnologiesinc/react-native-components';
 import { OPTIONS } from './utils';
 import { useFocusEffect } from '@react-navigation/native';
 

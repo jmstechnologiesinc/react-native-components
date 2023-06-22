@@ -1,8 +1,13 @@
 import React from 'react';
 
-import { ORDER_STATUS, NONFULFILLMENT_ORDER_STATUS, PICKUP_ORDER_STATUS, DELIVERY_ORDER_STATUS } from '@/order';
-import { DELIVERY_METHODS, PICKUP_METHODS, FULFILLMENT_METHODS } from '@/vendor';
-import { USER_ROLES } from '@/user';
+import {
+    ORDER_STATUS,
+    NONFULFILLMENT_ORDER_STATUS,
+    PICKUP_ORDER_STATUS,
+    DELIVERY_ORDER_STATUS,
+} from '@jmstechnologiesinc/order';
+import { DELIVERY_METHODS, PICKUP_METHODS, FULFILLMENT_METHODS } from '@jmstechnologiesinc/vendor';
+import { USER_ROLES } from '@jmstechnologiesinc/user';
 
 import vendorMockData from '../Order/vendorMockData.json';
 

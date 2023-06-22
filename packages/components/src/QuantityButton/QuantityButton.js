@@ -2,10 +2,10 @@ import React from 'react';
 
 import { View } from 'react-native';
 
-import { isNumeric } from '@/commons';
+import { isNumeric } from '@jmstechnologiesinc/commons';
 
-import { IconButton, MD3LightTheme, Text } from '@/react-native-paper';
-import { MATERIAL_ICONS } from '@/commons';
+import { IconButton, MD3LightTheme, Text } from '@jmstechnologiesinc/react-native-paper';
+import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 
 const QuantityButton = ({ value, minQuantity, maxQuantity, isDisabled, onPress }) => {
     let count = isNumeric(value) ? value : 0;

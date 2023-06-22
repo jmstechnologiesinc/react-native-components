@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { milliseconsExtractor, formattedETATime, interpunct } from '@/commons';
+import { milliseconsExtractor, formattedETATime, interpunct } from '@jmstechnologiesinc/commons';
 
 import usePreparingTimeCoutdown from './usePreparingTimeCoutdown';
 import OrderStatusWrapper from './OrderStatusWrapper';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { interpunct } from '@/commons';
+import { interpunct } from '@jmstechnologiesinc/commons';
 
 import VendorStatus from './VendorStatus';
 import DriverStatus from './DriverStatus';

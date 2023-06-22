@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { List } from '@/react-native-paper';
+import { List } from '@jmstechnologiesinc/react-native-paper';
 
 import mockData from './mockData.json';
 

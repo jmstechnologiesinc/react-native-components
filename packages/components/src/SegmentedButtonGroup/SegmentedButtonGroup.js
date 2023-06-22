@@ -2,7 +2,7 @@ import React from 'react';
 
 import { StyleSheet } from 'react-native';
 
-import { SegmentedButtons } from '@/react-native-paper';
+import { SegmentedButtons } from '@jmstechnologiesinc/react-native-paper';
 
 const SegmentedButtonGroup = ({ data, title, onPress, value, ...rest }) => (
     <SegmentedButtons

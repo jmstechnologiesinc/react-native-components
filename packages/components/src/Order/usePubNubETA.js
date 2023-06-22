@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 
 import PubNub from 'pubnub';
 
-import { USER_ROLES } from '@/user';
-import { ORDER_STATUS } from '@/order';
-import { pubnubEtaChannelName } from '@/commons';
+import { USER_ROLES } from '@jmstechnologiesinc/user';
+import { ORDER_STATUS } from '@jmstechnologiesinc/order';
+import { pubnubEtaChannelName } from '@jmstechnologiesinc/commons';
 
 const PUBNUB = {
     PUBLISH_KEY: 'pub-c-e618e49b-b38a-4d80-8ee7-0fad9fcda279',

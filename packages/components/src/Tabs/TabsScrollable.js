@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { View, Dimensions, ScrollView } from 'react-native';
 
-import { MD3LightTheme } from '@/react-native-paper';
+import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
 import * as Tabs from './Tabs';
 

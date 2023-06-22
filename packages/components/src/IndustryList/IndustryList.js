@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { VENDOR_INDUSTRIES_MAPPING } from '@/vendor';
+import { VENDOR_INDUSTRIES_MAPPING } from '@jmstechnologiesinc/vendor';
 
 import ChipList from '../ChipList/ChipList';
 import { localized } from '../Localization/Localization';

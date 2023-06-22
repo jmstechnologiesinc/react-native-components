@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import QuantityButton from './QuantityButton';
 
 import useState from 'storybook-addon-state';
-import { IconButton, Text } from '@/react-native-paper';
+import { IconButton, Text } from '@jmstechnologiesinc/react-native-paper';
 
 export default {
     title: 'packages/QuantityButton',

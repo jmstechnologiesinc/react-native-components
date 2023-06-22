@@ -2,8 +2,8 @@ import React from 'react';
 
 import { StyleSheet } from 'react-native';
 
-import { Avatar, Chip, MD3LightTheme } from '@/react-native-paper';
-import { fastImageUrl, ITEM_TYPE, ITEM_TYPE_ICON_MAPPING } from '@/commons';
+import { Avatar, Chip, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
+import { fastImageUrl, ITEM_TYPE, ITEM_TYPE_ICON_MAPPING } from '@jmstechnologiesinc/commons';
 
 import JMSItem from '../List/ListItem';
 import { makeLinkingCall } from '../utils';

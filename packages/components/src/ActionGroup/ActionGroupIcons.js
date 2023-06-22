@@ -2,7 +2,7 @@ import React from 'react';
 
 import { View, StyleSheet } from 'react-native';
 
-import { IconButton } from '@/react-native-paper';
+import { IconButton } from '@jmstechnologiesinc/react-native-paper';
 
 const ActionGroupIcons = ({ icons, onPress }) => {
     if (!icons?.length) {

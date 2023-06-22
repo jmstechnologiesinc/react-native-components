@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Card, Text, MD3LightTheme } from '@/react-native-paper';
+import { Card, Text, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
-import { VENDOR_INDUSTRIES_MAPPING } from '@/vendor';
-import { interpunct, fastImageUrl } from '@/commons';
+import { VENDOR_INDUSTRIES_MAPPING } from '@jmstechnologiesinc/vendor';
+import { interpunct, fastImageUrl } from '@jmstechnologiesinc/commons';
 import { sectionPaddings } from '../ScreenWrapper/ScreenWrapperSection';
 
 const VendorListItem = ({ item, withPaddingHorizontal, onPress }) => (

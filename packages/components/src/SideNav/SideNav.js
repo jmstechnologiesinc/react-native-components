@@ -2,7 +2,7 @@ import React from 'react';
 
 import { View } from 'react-native';
 
-import { Drawer, MD3LightTheme } from '@/react-native-paper';
+import { Drawer, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
 const SideNav = ({ isExpanded, menuItems = [], selectedIndex, onPress }) => (
     <View style={{ paddingTop: MD3LightTheme.spacing.x8 }}>

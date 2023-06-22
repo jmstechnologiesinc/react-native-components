@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { List, MD3LightTheme, TouchableRipple } from '@/react-native-paper';
+import { List, MD3LightTheme, TouchableRipple } from '@jmstechnologiesinc/react-native-paper';
 
-import { ORDER_STATUS, ORDER_STATUS_CANCELLED, ORDER_STATUS_PREPARING } from '@/order';
+import { ORDER_STATUS, ORDER_STATUS_CANCELLED, ORDER_STATUS_PREPARING } from '@jmstechnologiesinc/order';
 import { formatOrder } from '../Order/utils';
 import OrderStatus from '../Order/OrderStatus';
 import * as ActionGroup from '../ActionGroup/ActionGroup';

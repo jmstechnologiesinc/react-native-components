@@ -2,7 +2,7 @@ import React from 'react';
 
 import { View } from 'react-native';
 
-import { Banner, MD3LightTheme } from '@/react-native-paper';
+import { Banner, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
 import * as JMSList from '../List/List';
 import PhotoGallery from '../PhotoGallery/PhotoGallery';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FIELD_TYPES } from '@/commons';
+import { FIELD_TYPES } from '@jmstechnologiesinc/commons';
 import * as JMSList from '../List/List';
 
 const DynamicFormSwitch = ({

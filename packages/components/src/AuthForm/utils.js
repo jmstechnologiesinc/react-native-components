@@ -1,5 +1,5 @@
 import { localized } from '../Localization/Localization';
-import { VENDOR_INDUSTRIES_MAPPING } from '@/vendor';
+import { VENDOR_INDUSTRIES_MAPPING } from '@jmstechnologiesinc/vendor';
 
 export const handleDateOfBirhtChange = (text, inputActionHandler, callback, dateOfBirth) => {
     if ((text.length === 2 && dateOfBirth.length === 3) || (text.length === 5 && dateOfBirth.length === 6)) {

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { View } from 'react-native';
 
-import { Badge, Text, MD3LightTheme } from '@/react-native-paper';
+import { Badge, Text, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
 const ListMetaBadged = ({ title, quantity, style, titleStyle, titleVariant = 'bodyMedium', quantityStyle }) => (
     <View style={[{ alignSelf: 'center', marginLeft: MD3LightTheme.spacing.x4 }, style]}>
