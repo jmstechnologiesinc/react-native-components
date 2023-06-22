@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 
-import { milliseconsExtractor, formattedETATime, interpunct } from '@jmsstudiosinc/commons';
+import { milliseconsExtractor, formattedETATime, interpunct } from '@jmstechnologiesinc/commons';
 
-import usePreparingTimeCoutdown from "./usePreparingTimeCoutdown";
-import OrderStatusWrapper from "./OrderStatusWrapper";
+import usePreparingTimeCoutdown from './usePreparingTimeCoutdown';
+import OrderStatusWrapper from './OrderStatusWrapper';
 
 const VendorStatus = ({
     role,
@@ -28,7 +28,7 @@ const VendorStatus = ({
     titleStyle,
     overlineStyle,
 }) => {
-  /*   const milliseconds = usePreparingTimeCoutdown({
+    /*   const milliseconds = usePreparingTimeCoutdown({
         role,
         orderID: orderID,
         deliveryMethod: deliveryMethod,
@@ -38,7 +38,7 @@ const VendorStatus = ({
         durationValue: durationValue,
     }); */
 
-   /*  const renderChips = [...chips];
+    /*  const renderChips = [...chips];
     if(milliseconds !== undefined) {
         const {hrs, mins} = milliseconsExtractor(milliseconds);
         renderChips.push(formattedETATime(hrs, mins));
@@ -51,17 +51,15 @@ const VendorStatus = ({
             subHeader={subHeader}
             chips={chips}
             avatar={avatar}
-            
             showOverline={showOverline}
             showTitle={showTitle}
             showDescription={showDescription}
             showAvatar={showAvatar}
-            
-            style={{paddingTop: 0}}
+            style={{ paddingTop: 0 }}
             titleStyle={titleStyle}
             overlineStyle={overlineStyle}
         />
-    )
-}
+    );
+};
 
-export default VendorStatus
+export default VendorStatus;

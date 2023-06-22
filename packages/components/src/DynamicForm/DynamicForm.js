@@ -5,8 +5,12 @@ import { FlatList, Animated } from 'react-native';
 const { dinero, toDecimal } = require('dinero.js');
 import I18n from 'i18n-js';
 
-import { List, MD3Colors} from '@jmsstudiosinc/react-native-paper';
-import { dynamicFormInitializeGroup, dynamicFormToggleCheckRadioValue, dynamicFormValidateGroup} from '@jmsstudiosinc/commons';
+import { List, MD3Colors } from '@jmstechnologiesinc/react-native-paper';
+import {
+    dynamicFormInitializeGroup,
+    dynamicFormToggleCheckRadioValue,
+    dynamicFormValidateGroup,
+} from '@jmstechnologiesinc/commons';
 import DynamicFormSwitch from './DynamicFormSwitch';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
@@ -14,7 +18,7 @@ const animatedValue = new Animated.Value(0);
 
 const areAllFormValid = (sections, initialState = {}) => {
     let valid = true;
-   for (section of sections) {
+    for (section of sections) {
         let isValid = initialState[section.id]?.isValid;
 
         if (isValid === undefined) {
@@ -40,7 +44,7 @@ const DynamicForm = ({
     listFooterComponent,
     onChange,
     onContentOffsetYScroll,
-    contentOffsetY
+    contentOffsetY,
 }) => {
     const contentOffsetYRangeRef = useRef(false);
     const scrollY = useRef(animatedValue).current;
@@ -54,24 +58,23 @@ const DynamicForm = ({
             if (value === true && quantity <= item.maxQuantity) {
                 quantity += 1;
             } else if (quantity > 0) {
-                quantity -= 1; 
+                quantity -= 1;
             }
 
             return {
                 ...alteredForm,
                 [item.id]: {
                     ...alteredForm[item.id],
-                    quantity
-                }
-            } 
-        }
+                    quantity,
+                },
+            };
+        };
 
         if (item.maxQuantity === 1) {
             item.data.forEach((thisData) => {
                 if (thisData.id === data.id) {
                     alteredForm = dynamicFormToggleCheckRadioValue(thisData, value, alteredForm);
                     alteredForm = calculateQuantityByValue(value);
-                
                 } else if ((alteredForm[thisData.id] || thisData)?.value === true) {
                     alteredForm = dynamicFormToggleCheckRadioValue(thisData, false, alteredForm);
                     alteredForm = calculateQuantityByValue(false);
@@ -79,25 +82,25 @@ const DynamicForm = ({
             });
         } else {
             alteredForm = dynamicFormToggleCheckRadioValue(data, value, alteredForm);
-            alteredForm = calculateQuantityByValue(value); 
+            alteredForm = calculateQuantityByValue(value);
         }
 
         if (!alteredForm[parentId]) {
             alteredForm = {
                 ...alteredForm,
-                [parentId]: {}
-            } 
+                [parentId]: {},
+            };
         }
 
-        alteredForm = dynamicFormValidateGroup(item, alteredForm) 
+        alteredForm = dynamicFormValidateGroup(item, alteredForm);
 
         alteredForm = {
             ...alteredForm,
             [parentId]: {
                 ...alteredForm[parentId],
-                isValid: areAllFormValid(sections, alteredForm)
-            }
-        }  
+                isValid: areAllFormValid(sections, alteredForm),
+            },
+        };
 
         onChange?.(alteredForm);
     };
@@ -114,20 +117,21 @@ const DynamicForm = ({
         if (!value && maxQuantity > 1 && quantity >= maxQuantity) {
             return true;
         }
-    
+
         return false;
     };
 
-    const renderItem = ({item}) => (
-        <List.Accordion 
-            title={item.title} 
+    const renderItem = ({ item }) => (
+        <List.Accordion
+            title={item.title}
             description={initialState[item.id]?.formattedQuantity || item.formattedQuantity}
-            descriptionStyle={{...((initialState[item.id] || item)?.isValid ? null : {color: MD3Colors.error50})}}>
+            descriptionStyle={{ ...((initialState[item.id] || item)?.isValid ? null : { color: MD3Colors.error50 }) }}
+        >
             {item.data?.map((data) => {
                 const value = Boolean(getValue(data));
                 const isMaxSelection = validateMaxSelection(value, initialState[item.id]?.quantity, item.maxQuantity);
                 const isDisabled = data.isDisabled || isOutofStock || isMaxSelection;
-               
+
                 return (
                     <DynamicFormSwitch
                         key={`dymamic-form-switch-${data.id}`}
@@ -137,8 +141,9 @@ const DynamicForm = ({
                         metaTitle={I18n.l('currency', toDecimal(dinero(data.price)))}
                         isChecked={value}
                         isDisabled={isDisabled}
-                        onPress={(value) => onCheckRadioPress(data, item, value)} />
-                )
+                        onPress={(value) => onCheckRadioPress(data, item, value)}
+                    />
+                );
             })}
         </List.Accordion>
     );
@@ -159,22 +164,31 @@ const DynamicForm = ({
                 data={sections}
                 keyExtractor={keyExtractor}
                 renderItem={renderItem}
-                ListHeaderComponent={listHeaderComponent} 
+                ListHeaderComponent={listHeaderComponent}
                 showsVerticalScrollIndicator={false}
-                showsHorizontalScrollIndicator={false} 
+                showsHorizontalScrollIndicator={false}
                 scrollEventThrottle={16}
                 onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
                     useNativeDriver: true,
-                    listener: onContentOffsetYScroll ? (event) => {
-                        if(event.nativeEvent.contentOffset.y > contentOffsetY && contentOffsetYRangeRef.current === false) {
-                            onContentOffsetYScroll(event.nativeEvent.contentOffset.y)
-                            contentOffsetYRangeRef.current = true;
-                        } else if(event.nativeEvent.contentOffset.y < contentOffsetY && contentOffsetYRangeRef.current === true) {
-                            onContentOffsetYScroll(event.nativeEvent.contentOffset.y)
-                            contentOffsetYRangeRef.current = false;
-                        }
-                    } : null
-                })}/>
+                    listener: onContentOffsetYScroll
+                        ? (event) => {
+                              if (
+                                  event.nativeEvent.contentOffset.y > contentOffsetY &&
+                                  contentOffsetYRangeRef.current === false
+                              ) {
+                                  onContentOffsetYScroll(event.nativeEvent.contentOffset.y);
+                                  contentOffsetYRangeRef.current = true;
+                              } else if (
+                                  event.nativeEvent.contentOffset.y < contentOffsetY &&
+                                  contentOffsetYRangeRef.current === true
+                              ) {
+                                  onContentOffsetYScroll(event.nativeEvent.contentOffset.y);
+                                  contentOffsetYRangeRef.current = false;
+                              }
+                          }
+                        : null,
+                })}
+            />
             {listFooterComponentWrapper()}
         </>
     );

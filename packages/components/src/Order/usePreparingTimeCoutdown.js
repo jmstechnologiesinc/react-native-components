@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { USER_ROLES } from '@jmsstudiosinc/user';
-import { ORDER_STATUS, ORDER_STATUS_PREPARING} from '@jmsstudiosinc/order';
+import { USER_ROLES } from '@jmstechnologiesinc/user';
+import { ORDER_STATUS, ORDER_STATUS_PREPARING } from '@jmstechnologiesinc/order';
 
 const ETA_INTERVAL = 1000;
 
@@ -28,7 +28,7 @@ const usePreparingTimeCoutdown = ({
             const etaInterval = () => {
                 const transcurredTime = new Date().getTime() - vendorAcceptedTime.getTime();
                 const deliveryTimeCountdown = durationValue - transcurredTime;
-    
+
                 if (deliveryTimeCountdown <= deliveryTime) {
                     clearEtaInterval();
                     setEtaValue(deliveryTime);
@@ -45,7 +45,7 @@ const usePreparingTimeCoutdown = ({
 
         return clearEtaInterval;
     }, [durationValue, vendorAcceptedTime, deliveryMethod, status, orderID, role]);
-    
+
     return etaValue;
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Checkbox } from '@jmsstudiosinc/react-native-paper';
+import { List, Checkbox } from '@jmstechnologiesinc/react-native-paper';
 import * as JMSList from '../List/List';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 
@@ -15,19 +15,19 @@ const StripeFormPaymentFrequency = ({ options, inputActionHandler, selectedInter
                         rippleColor="transparent"
                         disabled={disabled}
                         onPress={() => {
-                            inputActionHandler('interval', interval)
+                            inputActionHandler('interval', interval);
                         }}
-                        left={(props) =>
+                        left={(props) => (
                             <Checkbox.Android
-                            {...props}
-                            disabled={disabled}
-                            status={selectedInterval === interval ? 'checked' : 'unchecked'}
-                            rippleColor="transparent"
-                            onPress={() => {
-                                inputActionHandler('interval', interval)
-                            }}
-                        />
-                        }
+                                {...props}
+                                disabled={disabled}
+                                status={selectedInterval === interval ? 'checked' : 'unchecked'}
+                                rippleColor="transparent"
+                                onPress={() => {
+                                    inputActionHandler('interval', interval);
+                                }}
+                            />
+                        )}
                     />
                 ))}
             </List.Section>

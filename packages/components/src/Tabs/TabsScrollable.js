@@ -2,13 +2,12 @@ import * as React from 'react';
 
 import { View, Dimensions, ScrollView } from 'react-native';
 
-import {  MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
+import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
 import * as Tabs from './Tabs';
 
 const WindowWidth = Dimensions.get('window').width;
 export default class TabsScrollable extends React.PureComponent {
-
     constructor(props) {
         super(props);
         this.scrollViewRef = React.createRef();
@@ -69,16 +68,21 @@ export default class TabsScrollable extends React.PureComponent {
 
     render() {
         return (
-            <View style={{
-                width: WindowWidth, 
-                flexDirection: 'row', 
-                backgroundColor: MD3LightTheme.colors.background}}>
+            <View
+                style={{
+                    width: WindowWidth,
+                    flexDirection: 'row',
+                    backgroundColor: MD3LightTheme.colors.background,
+                }}
+            >
                 <ScrollView ref={this.scrollViewRef} showsHorizontalScrollIndicator={false} horizontal>
                     <View onLayout={this.onTabsContainerLayout}>
                         <Tabs.List style={this.props.tabsListStyle}>
-                            {React.Children.toArray(this.props.children).map((child, index) =>
-                                <View key={`scrollable-${child.key}`} onLayout={this.onTabsItemLayout(index)}>{child}</View>  
-                            )}
+                            {React.Children.toArray(this.props.children).map((child, index) => (
+                                <View key={`scrollable-${child.key}`} onLayout={this.onTabsItemLayout(index)}>
+                                    {child}
+                                </View>
+                            ))}
                         </Tabs.List>
                     </View>
                 </ScrollView>
