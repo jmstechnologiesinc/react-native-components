@@ -27,6 +27,7 @@ const VendorStatus = ({
 
     titleStyle,
     overlineStyle,
+  
 }) => {
     /*   const milliseconds = usePreparingTimeCoutdown({
         role,

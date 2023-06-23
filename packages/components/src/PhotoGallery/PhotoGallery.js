@@ -21,7 +21,6 @@ const renderSeparator = () => (
 
 const PhotoGallery = ({ photos }) => {
     const [selectedPhoto, setSelectedPhoto] = useState();
-    const mainPhotoUri = selectedPhoto || fastImageUrl(photos);
 
     const renderItem = ({ item }) => (
         <TouchableRipple onPress={() => setSelectedPhoto(item)}>
@@ -29,12 +28,11 @@ const PhotoGallery = ({ photos }) => {
         </TouchableRipple>
     );
 
+
     return (
         <>
-            {mainPhotoUri ? <FastImage source={{ uri: mainPhotoUri }} style={styles.mainImage} /> : null}
-
-            {photos?.length > 1 ? (
-                <ScreenWrapperSection>
+        
+        {Array.isArray(photos) ? <ScreenWrapperSection>
                     <FlatList
                         data={photos}
                         horizontal
@@ -43,8 +41,8 @@ const PhotoGallery = ({ photos }) => {
                         showsHorizontalScrollIndicator={false}
                         keyExtractor={(_, index) => `photo-gallery-${index}`}
                     />
-                </ScreenWrapperSection>
-            ) : null}
+                </ScreenWrapperSection> : <FastImage source={{ uri: photos }} style={styles.mainImage} />}
+          
         </>
     );
 };
