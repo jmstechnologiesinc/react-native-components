@@ -10,7 +10,7 @@ import ScreenWrapper from '../ScreenWrapper';
 import { itemSeparator } from '../utils';
 import SwipeToDelete from '../SwipeToDelete/SwipeToDelete';
 import { Item as JMSItem } from '../List/List';
-import { fastImageUrl, MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
+import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 
 const CartListItem = ({
     checkoutTitle,
@@ -22,6 +22,7 @@ const CartListItem = ({
     onEdit,
     onCheckout,
     renderTips,
+    fastImageUrlWrapper,
 }) => {
     const { vendor, type, description, isValid, data: productList, cartIndustryId } = item;
 
@@ -57,7 +58,9 @@ const CartListItem = ({
                 descriptionStyle={isValid === false ? { color: MD3Colors.error50 } : null}
                 titleNumberOfLines={0}
                 descriptionNumberOfLines={0}
-                left={(props) => <Avatar.Image style={props.style} source={{ uri: fastImageUrl(vendor.photo) }} />}
+                left={(props) => (
+                    <Avatar.Image style={props.style} source={{ uri: fastImageUrlWrapper(vendor.photo) }} />
+                )}
             />
 
             {productList?.map((product, index) => (

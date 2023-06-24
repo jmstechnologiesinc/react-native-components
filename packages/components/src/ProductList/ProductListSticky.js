@@ -14,6 +14,7 @@ const ProductListSticky = ({
     onPress,
     onContentOffsetYScroll,
     contentOffsetY,
+    fastImageUrlWrapper,
     ...props
 }) => (
     <StickySectionList
@@ -27,7 +28,7 @@ const ProductListSticky = ({
             <ProductListItem
                 id={item.id}
                 uuid={item.uuid}
-                photo={item.photo}
+                photo={fastImageUrlWrapper(item.photo)}
                 title={item.title}
                 description={item.description}
                 formattedPrice={item.price.formattedValue}

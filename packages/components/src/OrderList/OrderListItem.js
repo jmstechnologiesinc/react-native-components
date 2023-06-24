@@ -34,6 +34,7 @@ const OrderListItem = ({
 
     onButtonPress,
     onPress,
+    fastImageUrlWrapper
 }) => {
     const formattedOrder = formatOrder(order, role);
 
@@ -68,6 +69,7 @@ const OrderListItem = ({
                 showDriverAvatar={showDriverAvatar}
                 titleStyle={contentColor}
                 overlineStyle={contentColor}
+                fastImageUrlWrapper={fastImageUrlWrapper}
             />
 
             {onButtonPress && (

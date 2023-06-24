@@ -40,6 +40,7 @@ const OrderList = ({
 
     onButtonPress,
     onPress,
+    fastImageUrlWrapper
 }) => (
     <SectionList
         keyExtractor={keyExtractor}
@@ -84,6 +85,7 @@ const OrderList = ({
                 showDriverAvatar={showDriverAvatar}
                 onButtonPress={onButtonPress}
                 onPress={() => onPress(item, role)}
+                fastImageUrlWrapper={fastImageUrlWrapper}
             />
         )}
     />

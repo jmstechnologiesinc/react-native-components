@@ -32,6 +32,7 @@ const OrderStatus = ({
     headerTitleVariant,
     titleStyle,
     overlineStyle,
+    fastImageUrlWrapper
 }) => {
     const fulfilmentStatus = formattedOrder.fulfilmentStatus;
     const headerStatus = fulfilmentStatus.header;
@@ -61,6 +62,7 @@ const OrderStatus = ({
                 showAvatar={showHeaderAvatar && headerStatus.avatar}
                 titleVariant={headerTitleVariant}
                 titleStyle={overlineStyle}
+                 fastImageUrlWrapper={fastImageUrlWrapper}
             />
         );
     }
