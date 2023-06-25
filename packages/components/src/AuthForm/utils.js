@@ -14,64 +14,45 @@ export const handleDateOfBirhtChange = (text, inputActionHandler, callback, date
 export const OPTIONS = [
     {
         item: localized(VENDOR_INDUSTRIES_MAPPING.Restaurant.title),
-        
     },
     {
         item: localized(VENDOR_INDUSTRIES_MAPPING.GroceryGourmet.title),
-        
     },
     {
         item: localized(VENDOR_INDUSTRIES_MAPPING.Liquor.title),
-        
     },
     {
         item: localized(VENDOR_INDUSTRIES_MAPPING.Pharmacy.title),
-        
     },
     {
         item: localized(VENDOR_INDUSTRIES_MAPPING.VideoGames.title),
-        
     },
     {
         item: localized(VENDOR_INDUSTRIES_MAPPING.LuggageTravelGear.title),
-        
     },
     {
         item: localized(VENDOR_INDUSTRIES_MAPPING.ToysGames.title),
-        
     },
 
     {
         item: localized(VENDOR_INDUSTRIES_MAPPING.GardenOutdoor.title),
-        
     },
     {
         item: localized(VENDOR_INDUSTRIES_MAPPING.Electronics.title),
-        
     },
     {
         item: localized(VENDOR_INDUSTRIES_MAPPING.Computers.title),
-        
     },
     {
         item: localized(VENDOR_INDUSTRIES_MAPPING.CellPhones.title),
-        
     },
     {
         item: localized(VENDOR_INDUSTRIES_MAPPING.Books.title),
-        
     },
     {
         item: localized(VENDOR_INDUSTRIES_MAPPING.BeautyPersonalCare.title),
-        
     },
     {
         item: localized(VENDOR_INDUSTRIES_MAPPING.Baby.title),
-        
     },
 ];
-
-
-
-
-

@@ -1,14 +1,13 @@
-
 import { USER_ROLES } from '@jmstechnologiesinc/user';
-import {firestoreTimestampToDate, interpunct} from "@jmstechnologiesinc/commons";
+import { firestoreTimestampToDate, interpunct } from '@jmstechnologiesinc/commons';
 import {
-    ORDER_STATUS, 
+    ORDER_STATUS,
     ORDER_STATUS_CANCELLED,
     ORDER_STATUS_PREPARING,
-    whatIsTheOrderStatus, 
-    formatOrderID, 
+    whatIsTheOrderStatus,
+    formatOrderID,
     orderStatusTime,
-} from "@jmstechnologiesinc/order";
+} from '@jmstechnologiesinc/order';
 
 const getRoleFees = (order, role) => {
     if (role === USER_ROLES.customer) {
@@ -44,14 +43,14 @@ export const formatOrder = (order, role) => {
         formattedVendorTitle: order.vendor.title,
         formattedVendorAddress: order.vendor.location.formattedAddress,
         formattedDriverCar: interpunct([order.driver?.carName, order.driver?.carNumber]),
-        formattedDriverName: order?.driver?.formattedName, 
+        formattedDriverName: order?.driver?.formattedName,
         formattedCustomerName: order.author.formattedName,
         formattedFulfillmentAddress: order.fulfillmentAddress.formattedAddress,
         vendorAvatar: order.vendor.photo,
         driverAvatar: order?.driver && (order.driver.profilePictureURL || order.driver.carPictureURL),
-      });
+    });
 
-      return {
+    return {
         orderID: order.id,
         fees,
         fulfilmentStatus,
@@ -63,14 +62,14 @@ export const formatOrder = (order, role) => {
         deliveryTime: order.eta?.deliveryTime?.value,
         formattedStatusTime: order.formattedStatusTime,
         vendorAcceptedTime: firestoreTimestampToDate(order[orderStatusTime(ORDER_STATUS.vendorAccepted)]),
-    }
-}
+    };
+};
 
 export const ORDER_LIST_STATUS = {
     ...ORDER_STATUS,
-    'cancelled': 'Cancelled',
-    'preparing': 'Preparing',
-}
+    cancelled: 'Cancelled',
+    preparing: 'Preparing',
+};
 
 const ORDER_LIST_STATUS_MAPPING = {
     [ORDER_LIST_STATUS.completed]: 'History',
@@ -79,7 +78,7 @@ const ORDER_LIST_STATUS_MAPPING = {
     [ORDER_LIST_STATUS.readyforPickup]: 'Ready for Pickup',
     [ORDER_LIST_STATUS.cancelled]: 'Cancelled',
     [ORDER_LIST_STATUS.preparing]: 'Preparing',
-}
+};
 
 const ROLE_ORDER_LIST_STATUS_MAPPING = {
     [USER_ROLES.vendor]: ORDER_LIST_STATUS_MAPPING,
@@ -89,11 +88,11 @@ const ROLE_ORDER_LIST_STATUS_MAPPING = {
     },
     [USER_ROLES.driver]: {
         ...ORDER_LIST_STATUS_MAPPING,
-        [ORDER_STATUS.driverPending]: 'New Requests',  
+        [ORDER_STATUS.driverPending]: 'New Requests',
         [ORDER_STATUS.driverAccepted]: 'Pending',
         [ORDER_STATUS.shipped]: 'Picking up from vendor',
     },
-}
+};
 
 const ROLE_ORDER_LIST_STATUS_SORT = {
     [USER_ROLES.vendor]: [
@@ -104,41 +103,41 @@ const ROLE_ORDER_LIST_STATUS_SORT = {
         ORDER_LIST_STATUS.completed,
         ORDER_LIST_STATUS.cancelled,
     ],
-    [USER_ROLES.customer]: [    
-        ORDER_LIST_STATUS.placed,    
+    [USER_ROLES.customer]: [
+        ORDER_LIST_STATUS.placed,
         ORDER_LIST_STATUS.inTransit,
         ORDER_LIST_STATUS.readyforPickup,
         ORDER_LIST_STATUS.preparing,
         ORDER_LIST_STATUS.completed,
         ORDER_LIST_STATUS.cancelled,
     ],
-    [USER_ROLES.driver]: [  
-        ORDER_STATUS.driverPending,  
+    [USER_ROLES.driver]: [
+        ORDER_STATUS.driverPending,
         ORDER_LIST_STATUS.inTransit,
         ORDER_STATUS.driverAccepted,
         ORDER_STATUS.shipped,
         ORDER_LIST_STATUS.completed,
     ],
-}
+};
 
 export const orderListStatus = (status, role) => {
-    if(role === USER_ROLES.driver) {
+    if (role === USER_ROLES.driver) {
         if (ORDER_STATUS_CANCELLED(status) || status === ORDER_LIST_STATUS.completed) {
-            return ORDER_LIST_STATUS.completed
+            return ORDER_LIST_STATUS.completed;
         }
     } else {
         if (ORDER_STATUS_PREPARING(status) || status === ORDER_LIST_STATUS.shipped) {
             return ORDER_LIST_STATUS.preparing;
         } else if (ORDER_STATUS_CANCELLED(status) || status === ORDER_LIST_STATUS.completed) {
-            return ORDER_LIST_STATUS.completed
+            return ORDER_LIST_STATUS.completed;
         }
     }
 
     return status;
-}
+};
 
 export const groupedOrderListToSectionList = (groupedOrderList, role) => {
-    if(!role) {
+    if (!role) {
         return [];
     }
 
@@ -147,14 +146,14 @@ export const groupedOrderListToSectionList = (groupedOrderList, role) => {
     const orderListStatusSort = ROLE_ORDER_LIST_STATUS_SORT[role];
     const orderListStatusMapping = ROLE_ORDER_LIST_STATUS_MAPPING[role];
 
-    for(; i < orderListStatusSort.length; i++) {
-        if(groupedOrderList.hasOwnProperty(orderListStatusSort[i])) {
+    for (; i < orderListStatusSort.length; i++) {
+        if (groupedOrderList.hasOwnProperty(orderListStatusSort[i])) {
             results.push({
-              title: orderListStatusMapping[orderListStatusSort[i]],
-              data: groupedOrderList[orderListStatusSort[i]]
-            })
+                title: orderListStatusMapping[orderListStatusSort[i]],
+                data: groupedOrderList[orderListStatusSort[i]],
+            });
         }
     }
-  
-    return results
-}
+
+    return results;
+};

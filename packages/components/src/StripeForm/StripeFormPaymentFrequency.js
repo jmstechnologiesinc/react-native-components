@@ -15,19 +15,19 @@ const StripeFormPaymentFrequency = ({ options, inputActionHandler, selectedInter
                         rippleColor="transparent"
                         disabled={disabled}
                         onPress={() => {
-                            inputActionHandler('interval', interval)
+                            inputActionHandler('interval', interval);
                         }}
-                        left={(props) =>
+                        left={(props) => (
                             <Checkbox.Android
-                            {...props}
-                            disabled={disabled}
-                            status={selectedInterval === interval ? 'checked' : 'unchecked'}
-                            rippleColor="transparent"
-                            onPress={() => {
-                                inputActionHandler('interval', interval)
-                            }}
-                        />
-                        }
+                                {...props}
+                                disabled={disabled}
+                                status={selectedInterval === interval ? 'checked' : 'unchecked'}
+                                rippleColor="transparent"
+                                onPress={() => {
+                                    inputActionHandler('interval', interval);
+                                }}
+                            />
+                        )}
                     />
                 ))}
             </List.Section>

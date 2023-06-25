@@ -14,7 +14,7 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-     "@jmstechnologiesinc/cart": "^0.0.36",
+    "@jmstechnologiesinc/cart": "^0.0.36",
     "@jmstechnologiesinc/commons": "^0.0.36",
     "@jmstechnologiesinc/driver": "^0.0.36",
     "@jmstechnologiesinc/order": "^0.0.36",

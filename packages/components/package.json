@@ -1,37 +1,37 @@
 {
-  "name": "@jmstechnologiesinc/react-native-components",
-  "version": "0.1.41",
-  "description": "> TODO: description",
-  "author": "yerloveraaa <yerloveraaa@gmail.com>",
-  "homepage": "https://github.com/jmstechnologiesinc/react-native-components#readme",
-  "license": "ISC",
-  "main": "lib/index.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
-  "files": [
-    "lib"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jmstechnologiesinc/react-native-components.git"
-  },
-  "scripts": {
-    "build": "npm run clean && mkdir lib && cp -r src/* lib",
-    "clean": "rimraf lib"
-  },
-  "bugs": {
-    "url": "https://github.com/jmstechnologiesinc/react-native-components/issues"
-  },
-  "devDependencies": {
-    "prettier": "^2.5.1",
-    "rimraf": "^3.0.2"
-  },
-  "peerDependencies": {
-    "@jmstechnologiesinc/react-native-paper": "*",
-    "react": "*",
-    "react-native": "*"
-  },
-  "gitHead": "a15d55356078a7958acfea0fb92e230c5d282bde"
+    "name": "@jmstechnologiesinc/react-native-components",
+    "version": "0.1.46",
+    "description": "> TODO: description",
+    "author": "yerloveraaa <yerloveraaa@gmail.com>",
+    "homepage": "https://github.com/jmstechnologiesinc/react-native-components#readme",
+    "license": "ISC",
+    "main": "lib/index.js",
+    "directories": {
+        "lib": "lib",
+        "test": "__tests__"
+    },
+    "files": [
+        "lib"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/jmstechnologiesinc/react-native-components.git"
+    },
+    "scripts": {
+        "build": "npm run clean && mkdir lib && cp -r src/* lib",
+        "clean": "rimraf lib"
+    },
+    "bugs": {
+        "url": "https://github.com/jmstechnologiesinc/react-native-components/issues"
+    },
+    "devDependencies": {
+        "prettier": "^2.5.1",
+        "rimraf": "^3.0.2"
+    },
+    "peerDependencies": {
+        "@jmstechnologiesinc/react-native-paper": "*",
+        "react": "*",
+        "react-native": "*"
+    },
+    "gitHead": "0f42e205cee57a6587bed5a3652b1e2762b30f84"
 }

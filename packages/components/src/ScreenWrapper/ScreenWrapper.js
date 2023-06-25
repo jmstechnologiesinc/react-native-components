@@ -20,7 +20,7 @@ export default function ScreenWrapper({
         {
             backgroundColor: MD3LightTheme.colors.background,
             paddingTop: withTopInset ? insets.top : 0,
-            paddingBottom: withBottomInset ? isInsetsBottom  : 0,
+            paddingBottom: withBottomInset ? isInsetsBottom : 0,
             paddingLeft: insets.left,
             paddingRight: insets.left,
         },

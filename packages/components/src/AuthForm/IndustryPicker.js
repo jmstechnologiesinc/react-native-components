@@ -1,4 +1,4 @@
-import React, { useRef, useState,   useCallback } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import { ScrollView, Pressable, View } from 'react-native';
 import { TextInput, List, Button, Checkbox } from '@jmstechnologiesinc/react-native-paper';
 
@@ -10,17 +10,15 @@ import { styles as JMSStyles, localized } from '@jmstechnologiesinc/react-native
 import { OPTIONS } from './utils';
 import { useFocusEffect } from '@react-navigation/native';
 
-export default function IndustryPicker({isDisabled, placeholder, inputActionHandler, industry }) {
-    
+export default function IndustryPicker({ isDisabled, placeholder, inputActionHandler, industry }) {
     const actionSheetRef = useRef();
     const [options, setOptions] = useState(OPTIONS);
     const insets = useSafeAreaInsets();
     const scrollHandlers = useScrollHandlers('scrollview-1', actionSheetRef);
 
-   
-      useFocusEffect(
+    useFocusEffect(
         useCallback(() => {
-            onResetSelected()
+            onResetSelected();
         }, [])
     );
 
@@ -29,34 +27,29 @@ export default function IndustryPicker({isDisabled, placeholder, inputActionHand
             if (options[i].selected) {
                 options[i].selected = false;
             }
-          }
-    }
-
+        }
+    };
 
     const showActionSheet = () => {
         options.filter((option) => {
             if (industry?.includes(option.item)) {
-                option.selected = true
-                return setOptions([...options])
+                option.selected = true;
+                return setOptions([...options]);
             }
-        })
+        });
         actionSheetRef.current.show();
     };
 
     const hideActionSheet = () => {
         actionSheetRef.current.hide();
     };
-   
 
     const selectedItems = options.filter((item) => item.selected === true);
     const isSelect = selectedItems.map((item) => item.item);
-    const itemSelected = interpunct(industry  ? industry : isSelect)
-
+    const itemSelected = interpunct(industry ? industry : isSelect);
 
     return (
-        <Pressable
-            onPress={() => showActionSheet()}
-        >
+        <Pressable onPress={() => showActionSheet()}>
             <View pointerEvents="none">
                 <TextInput
                     editable={false}
@@ -87,18 +80,26 @@ export default function IndustryPicker({isDisabled, placeholder, inputActionHand
                             <List.Item
                                 key={index}
                                 title={item}
-                                onPress={!isDisabled ? () => {
-                                    options[index].selected = !selected
-                                    setOptions([...options])
-                                } : null}
+                                onPress={
+                                    !isDisabled
+                                        ? () => {
+                                              options[index].selected = !selected;
+                                              setOptions([...options]);
+                                          }
+                                        : null
+                                }
                                 left={() => (
                                     <Checkbox.Android
                                         status={selected ? 'checked' : 'unchecked'}
                                         disabled={isDisabled}
-                                        onPress={!isDisabled ? () => {
-                                            options[index].selected = !selected
-                                            setOptions([...options])
-                                        } : null}
+                                        onPress={
+                                            !isDisabled
+                                                ? () => {
+                                                      options[index].selected = !selected;
+                                                      setOptions([...options]);
+                                                  }
+                                                : null
+                                        }
                                     />
                                 )}
                             />
@@ -109,7 +110,7 @@ export default function IndustryPicker({isDisabled, placeholder, inputActionHand
                     mode="contained"
                     style={JMSStyles.fba}
                     onPress={() => {
-                        !isDisabled ? inputActionHandler('industry', isSelect) : null ;
+                        !isDisabled ? inputActionHandler('industry', isSelect) : null;
                         hideActionSheet();
                     }}
                 >

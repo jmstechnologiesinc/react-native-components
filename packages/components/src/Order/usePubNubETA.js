@@ -17,17 +17,12 @@ const pubnub = new PubNub({
     ssl: true,
 });
 
-const usePubNubETA = ({
-    orderID,
-    deliveryMethod,
-    status,
-    role,
-    onPubNub
-}) => {
+const usePubNubETA = ({ orderID, deliveryMethod, status, role, onPubNub }) => {
     const [etaValue, setEtaValue] = useState(null);
 
     useEffect(() => {
-        if ((role === USER_ROLES.vendor && (status === ORDER_STATUS.shipped || status === ORDER_STATUS.inTransit)) ||
+        if (
+            (role === USER_ROLES.vendor && (status === ORDER_STATUS.shipped || status === ORDER_STATUS.inTransit)) ||
             (role === USER_ROLES.customer && status === ORDER_STATUS.inTransit)
         ) {
             setEtaValue(null);
@@ -43,9 +38,8 @@ const usePubNubETA = ({
         } else {
             setEtaValue(undefined);
         }
-
     }, [deliveryMethod, status, orderID, role]);
-    
+
     return etaValue;
 };
 

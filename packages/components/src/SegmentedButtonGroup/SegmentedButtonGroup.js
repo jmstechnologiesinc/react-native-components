@@ -8,13 +8,14 @@ const SegmentedButtonGroup = ({ data, title, onPress, value, ...rest }) => (
     <SegmentedButtons
         value={value}
         onValueChange={onPress}
-        buttons={data?.map(item => ({
+        buttons={data?.map((item) => ({
             ...item,
-            style: styles.button
-        }))} 
-        style={styles.group} 
-        {...rest} />
-)
+            style: styles.button,
+        }))}
+        style={styles.group}
+        {...rest}
+    />
+);
 
 const styles = StyleSheet.create({
     button: {

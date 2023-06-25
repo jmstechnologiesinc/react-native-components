@@ -3,13 +3,11 @@ import React, { useState } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
-import { MD3LightTheme, TouchableRipple} from '@jmstechnologiesinc/react-native-paper';
-import { fastImageUrl} from '@jmstechnologiesinc/commons';
+import { MD3LightTheme, TouchableRipple } from '@jmstechnologiesinc/react-native-paper';
 
 import ScreenWrapperSection from '../ScreenWrapper/ScreenWrapperSection';
 
 import FastImage from 'react-native-fast-image';
-
 
 const renderSeparator = () => (
     <View
@@ -20,9 +18,9 @@ const renderSeparator = () => (
     />
 );
 
-const PhotoGallery = ({ photos }) => { 
+const PhotoGallery = ({ photos }) => {
     const [selectedPhoto, setSelectedPhoto] = useState();
-    const mainPhotoUri = selectedPhoto || fastImageUrl(photos);
+    const mainPhotoUri = selectedPhoto || photos;
 
     const renderItem = ({ item }) => (
         <TouchableRipple onPress={() => setSelectedPhoto(item)}>
@@ -32,11 +30,7 @@ const PhotoGallery = ({ photos }) => {
 
     return (
         <>
-            {mainPhotoUri ? (
-                <FastImage source={{uri: mainPhotoUri}} style={styles.mainImage} />
-            ) : null}
-            
-            {photos?.length > 1 ? (
+            {Array.isArray(photos) ? (
                 <ScreenWrapperSection>
                     <FlatList
                         data={photos}
@@ -44,9 +38,12 @@ const PhotoGallery = ({ photos }) => {
                         ItemSeparatorComponent={renderSeparator}
                         renderItem={renderItem}
                         showsHorizontalScrollIndicator={false}
-                        keyExtractor={(_, index) => `photo-gallery-${index}`}/>
+                        keyExtractor={(_, index) => `photo-gallery-${index}`}
+                    />
                 </ScreenWrapperSection>
-            ) : null}
+            ) : (
+                <FastImage source={{ uri: mainPhotoUri }} style={styles.mainImage} />
+            )}
         </>
     );
 };

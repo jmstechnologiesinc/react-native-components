@@ -1,6 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { moderateScale } from 'react-native-size-matters';
-import { Avatar as PaperAvatar, MD3LightTheme, TouchableRipple, List, Button } from '@jmstechnologiesinc/react-native-paper';
+import {
+    Avatar as PaperAvatar,
+    MD3LightTheme,
+    TouchableRipple,
+    List,
+    Button,
+} from '@jmstechnologiesinc/react-native-paper';
 
 import ActionSheet from 'react-native-actions-sheet';
 import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
@@ -26,7 +32,7 @@ const Avatar = ({
     variant = 'avatar',
     icon = 'account',
     size = moderateScale(150),
-    options=[],
+    options = [],
     isDisabled,
 }) => {
     const imagePickerRef = useRef();
@@ -100,7 +106,11 @@ const Avatar = ({
                 </ScreenWrapper.Section>
             ) : (
                 <ScreenWrapper.Section withPaddingHorizontal style={{ flexDirection: 'row' }}>
-                    <Button icon={MATERIAL_ICONS.addDocument} onPress={isDisabled ? null : showActionSheet} mode="outlined">
+                    <Button
+                        icon={MATERIAL_ICONS.addDocument}
+                        onPress={isDisabled ? null : showActionSheet}
+                        mode="outlined"
+                    >
                         {localized(title)}
                     </Button>
                 </ScreenWrapper.Section>

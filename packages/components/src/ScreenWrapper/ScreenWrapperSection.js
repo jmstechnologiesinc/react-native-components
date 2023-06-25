@@ -16,7 +16,7 @@ export const ScreenWrapperSection = ({ withPaddingHorizontal = false, title, tit
         paddingTop={title ? 0 : sectionPaddings.top}
         paddingBottom={sectionPaddings.bottom}
         withPaddingHorizontal={withPaddingHorizontal}
-        style={[{flex: null}, style]}
+        style={[{ flex: null }, style]}
     >
         {title ? <List.Subheader style={[{ paddingHorizontal: 0 }, titleStyle]}>{title}</List.Subheader> : null}
         {children}
