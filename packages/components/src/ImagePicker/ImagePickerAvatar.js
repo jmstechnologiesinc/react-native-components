@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { moderateScale } from 'react-native-size-matters';
-import { Avatar as PaperAvatar, MD3LightTheme, TouchableRipple, List, Button } from '@jmsstudiosinc/react-native-paper';
+import { Avatar as PaperAvatar, MD3LightTheme, TouchableRipple, List, Button } from '@jmstechnologiesinc/react-native-paper';
 
 import ActionSheet from 'react-native-actions-sheet';
-import { MATERIAL_ICONS } from '@jmsstudiosinc/commons';
+import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import ImagePickerAPI from './ImagePickerAPI';

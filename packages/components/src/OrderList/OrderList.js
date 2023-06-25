@@ -2,7 +2,7 @@ import React from 'react';
 
 import { SectionList } from 'react-native';
 
-import { Divider, List, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
+import { Divider, List, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
 import OrderListItem from './OrderListItem';
 import { LAYOUT_MODE } from '../consts';

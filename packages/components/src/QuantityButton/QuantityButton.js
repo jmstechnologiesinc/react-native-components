@@ -2,10 +2,10 @@ import React from 'react';
 
 import {View} from "react-native"
 
-import { isNumeric } from '@jmsstudiosinc/commons';
+import { isNumeric } from '@jmstechnologiesinc/commons';
 
-import { IconButton, MD3LightTheme,  Text } from '@jmsstudiosinc/react-native-paper';
-import { MATERIAL_ICONS } from '@jmsstudiosinc/commons';
+import { IconButton, MD3LightTheme,  Text } from '@jmstechnologiesinc/react-native-paper';
+import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 
 const QuantityButton = ({
     value, 

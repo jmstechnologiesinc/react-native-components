@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
+import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import * as JMSList from '../List/List';
 
-import {calculatableAccoutingList} from "@jmsstudiosinc/cart";
+import {calculatableAccoutingList} from "@jmstechnologiesinc/cart";
 
 const feesListItem = (feeList) => {
     if(!feeList?.length) {

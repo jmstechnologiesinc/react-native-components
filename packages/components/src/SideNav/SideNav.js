@@ -2,7 +2,7 @@ import React from 'react';
 
 import { View } from 'react-native';
 
-import { Drawer, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
+import { Drawer, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
 const SideNav = ({
   isExpanded,

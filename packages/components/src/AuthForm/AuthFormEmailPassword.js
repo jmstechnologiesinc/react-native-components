@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { TextInput, Button } from '@jmsstudiosinc/react-native-paper';
+import { TextInput, Button } from '@jmstechnologiesinc/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TextInput } from '@jmsstudiosinc/react-native-paper';
+import { TextInput } from '@jmstechnologiesinc/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 

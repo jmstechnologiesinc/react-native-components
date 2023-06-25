@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { USER_ROLES } from '@jmsstudiosinc/user';
-import { ORDER_STATUS, ORDER_STATUS_PREPARING} from '@jmsstudiosinc/order';
+import { USER_ROLES } from '@jmstechnologiesinc/user';
+import { ORDER_STATUS, ORDER_STATUS_PREPARING} from '@jmstechnologiesinc/order';
 
 const ETA_INTERVAL = 1000;
 

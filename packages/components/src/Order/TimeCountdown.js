@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {Chip, ActivityIndicator} from '@jmsstudiosinc/react-native-paper';
+import {Chip, ActivityIndicator} from '@jmstechnologiesinc/react-native-paper';
 
-import { milliseconsExtractor, formattedETATime } from '@jmsstudiosinc/commons';
+import { milliseconsExtractor, formattedETATime } from '@jmstechnologiesinc/commons';
 
 const TimeCountdown = ({milliseconds}) => {
 

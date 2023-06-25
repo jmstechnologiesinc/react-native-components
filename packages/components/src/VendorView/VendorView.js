@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {  Banner, MD3LightTheme, Card, Text, TouchableRipple } from '@jmsstudiosinc/react-native-paper';
+import {  Banner, MD3LightTheme, Card, Text, TouchableRipple } from '@jmstechnologiesinc/react-native-paper';
 
 import PhotoGallery from '../PhotoGallery/PhotoGallery';
 import SegmentedButtonGroup from '../SegmentedButtonGroup/SegmentedButtonGroup';

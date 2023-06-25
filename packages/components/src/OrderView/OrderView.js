@@ -2,11 +2,11 @@ import React from 'react';
 
 import { ScrollView, View} from 'react-native';
 
-import { Divider, List, MD3Colors } from '@jmsstudiosinc/react-native-paper';
+import { Divider, List, MD3Colors } from '@jmstechnologiesinc/react-native-paper';
 
-import { USER_ROLES } from '@jmsstudiosinc/user';
-import {  DELIVERY_METHODS, FULFILLMENT_METHODS } from '@jmsstudiosinc/vendor';
-import { ORDER_STATUS_CANCELLED, ORDER_STATUS, formatedOrderStatusTime, ORDER_ACTIONS, orderStatusTime } from '@jmsstudiosinc/order';
+import { USER_ROLES } from '@jmstechnologiesinc/user';
+import {  DELIVERY_METHODS, FULFILLMENT_METHODS } from '@jmstechnologiesinc/vendor';
+import { ORDER_STATUS_CANCELLED, ORDER_STATUS, formatedOrderStatusTime, ORDER_ACTIONS, orderStatusTime } from '@jmstechnologiesinc/order';
 
 import Accounting from '../Accounting/Accounting';
 import CartListProductItem from '../CartList/CartListProductItem';
@@ -15,9 +15,9 @@ import OrderStatus from '../Order/OrderStatus';
 import PhotoGallery from '../PhotoGallery/PhotoGallery';
 import * as ActionGroup from '../ActionGroup/ActionGroup';
 import { itemSeparator } from '../utils';
-import { firestoreTimestampToDate, interpunct, plurulize } from '@jmsstudiosinc/commons';
+import { firestoreTimestampToDate, interpunct, plurulize } from '@jmstechnologiesinc/commons';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
-import { MATERIAL_ICONS } from '@jmsstudiosinc/commons';
+import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 
 const getDriverDetails = (order, role) => {
     const results = [];

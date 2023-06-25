@@ -2,7 +2,7 @@ import React from 'react';
 
 import * as JMSList from '../List/List';
 
-import {fastImageUrl} from '@jmsstudiosinc/commons';
+import {fastImageUrl} from '@jmstechnologiesinc/commons';
 
 
 const ProductListItem = ({ 

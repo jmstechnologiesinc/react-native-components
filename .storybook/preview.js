@@ -2,7 +2,7 @@ import React from "react";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {
   Provider as PaperProvider,
-} from '@jmsstudiosinc/react-native-paper';
+} from '@jmstechnologiesinc/react-native-paper';
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },

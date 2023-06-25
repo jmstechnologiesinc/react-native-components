@@ -3,7 +3,7 @@ import React from 'react';
 import { moderateScale } from 'react-native-size-matters';
 import color from 'color';
 
-import { MD3LightTheme, TouchableRipple } from '@jmsstudiosinc/react-native-paper';
+import { MD3LightTheme, TouchableRipple } from '@jmstechnologiesinc/react-native-paper';
 
 const TouchableRippleWrapper = ({ 
     isSelected,

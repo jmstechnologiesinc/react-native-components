@@ -1,4 +1,4 @@
-import { List } from '@jmsstudiosinc/react-native-paper';
+import { List } from '@jmstechnologiesinc/react-native-paper';
 import React from 'react';
 import { View } from 'react-native';
 

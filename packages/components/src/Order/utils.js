@@ -1,6 +1,6 @@
 
-import { USER_ROLES } from '@jmsstudiosinc/user';
-import {firestoreTimestampToDate, interpunct} from "@jmsstudiosinc/commons";
+import { USER_ROLES } from '@jmstechnologiesinc/user';
+import {firestoreTimestampToDate, interpunct} from "@jmstechnologiesinc/commons";
 import {
     ORDER_STATUS, 
     ORDER_STATUS_CANCELLED,
@@ -8,7 +8,7 @@ import {
     whatIsTheOrderStatus, 
     formatOrderID, 
     orderStatusTime,
-} from "@jmsstudiosinc/order";
+} from "@jmstechnologiesinc/order";
 
 const getRoleFees = (order, role) => {
     if (role === USER_ROLES.customer) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { SectionList, View } from 'react-native';
 
-import { MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
+import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
 import VendorListItem from './VendorListItem';
 

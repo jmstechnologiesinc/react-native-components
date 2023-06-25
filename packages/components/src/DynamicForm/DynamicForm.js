@@ -5,8 +5,8 @@ import { FlatList, Animated } from 'react-native';
 const { dinero, toDecimal } = require('dinero.js');
 import I18n from 'i18n-js';
 
-import { List, MD3Colors} from '@jmsstudiosinc/react-native-paper';
-import { dynamicFormInitializeGroup, dynamicFormToggleCheckRadioValue, dynamicFormValidateGroup} from '@jmsstudiosinc/commons';
+import { List, MD3Colors} from '@jmstechnologiesinc/react-native-paper';
+import { dynamicFormInitializeGroup, dynamicFormToggleCheckRadioValue, dynamicFormValidateGroup} from '@jmstechnologiesinc/commons';
 import DynamicFormSwitch from './DynamicFormSwitch';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);

@@ -1,9 +1,9 @@
 {
-  "name": "@jmsstudiosinc/react-native-components",
+  "name": "@jmstechnologiesinc/react-native-components",
   "version": "0.1.41",
   "description": "> TODO: description",
   "author": "yerloveraaa <yerloveraaa@gmail.com>",
-  "homepage": "https://github.com/jmsstudiosinc/react-native-components#readme",
+  "homepage": "https://github.com/jmstechnologiesinc/react-native-components#readme",
   "license": "ISC",
   "main": "lib/index.js",
   "directories": {
@@ -15,21 +15,21 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jmsstudiosinc/react-native-components.git"
+    "url": "git+https://github.com/jmstechnologiesinc/react-native-components.git"
   },
   "scripts": {
     "build": "npm run clean && mkdir lib && cp -r src/* lib",
     "clean": "rimraf lib"
   },
   "bugs": {
-    "url": "https://github.com/jmsstudiosinc/react-native-components/issues"
+    "url": "https://github.com/jmstechnologiesinc/react-native-components/issues"
   },
   "devDependencies": {
     "prettier": "^2.5.1",
     "rimraf": "^3.0.2"
   },
   "peerDependencies": {
-    "@jmsstudiosinc/react-native-paper": "*",
+    "@jmstechnologiesinc/react-native-paper": "*",
     "react": "*",
     "react-native": "*"
   },

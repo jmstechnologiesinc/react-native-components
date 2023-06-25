@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
+import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function ScreenWrapper({

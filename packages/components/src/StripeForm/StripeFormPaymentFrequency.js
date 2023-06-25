@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Checkbox } from '@jmsstudiosinc/react-native-paper';
+import { List, Checkbox } from '@jmstechnologiesinc/react-native-paper';
 import * as JMSList from '../List/List';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 

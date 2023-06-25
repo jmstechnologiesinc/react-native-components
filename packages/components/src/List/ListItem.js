@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {List, MD3LightTheme, Text} from '@jmsstudiosinc/react-native-paper';
+import {List, MD3LightTheme, Text} from '@jmstechnologiesinc/react-native-paper';
 import * as JMSList from "./List";
 import { StyleSheet, ScrollView } from 'react-native';
 

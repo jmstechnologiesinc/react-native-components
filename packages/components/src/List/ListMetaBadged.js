@@ -2,7 +2,7 @@ import React from 'react';
 
 import { View } from 'react-native';
 
-import { Badge, Text, MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
+import { Badge, Text, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
 const ListMetaBadged = ({
     title, 

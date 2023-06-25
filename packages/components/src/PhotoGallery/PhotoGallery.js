@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
-import { MD3LightTheme, TouchableRipple} from '@jmsstudiosinc/react-native-paper';
-import { fastImageUrl} from '@jmsstudiosinc/commons';
+import { MD3LightTheme, TouchableRipple} from '@jmstechnologiesinc/react-native-paper';
+import { fastImageUrl} from '@jmstechnologiesinc/commons';
 
 import ScreenWrapperSection from '../ScreenWrapper/ScreenWrapperSection';
 

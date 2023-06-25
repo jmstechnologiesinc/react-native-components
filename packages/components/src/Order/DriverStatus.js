@@ -1,6 +1,6 @@
 import React from "react";
 
-import { formattedETATime, ITEM_TYPE, milliseconsExtractor } from "@jmsstudiosinc/commons";
+import { formattedETATime, ITEM_TYPE, milliseconsExtractor } from "@jmstechnologiesinc/commons";
 
 import usePubNubETA from "./usePubNubETA";
 import OrderStatusWrapper from "./OrderStatusWrapper";

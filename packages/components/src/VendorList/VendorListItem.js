@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Card, Text,MD3LightTheme } from '@jmsstudiosinc/react-native-paper';
+import { Card, Text,MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
-import { VENDOR_INDUSTRIES_MAPPING } from '@jmsstudiosinc/vendor';
-import { interpunct, fastImageUrl  } from '@jmsstudiosinc/commons';
+import { VENDOR_INDUSTRIES_MAPPING } from '@jmstechnologiesinc/vendor';
+import { interpunct, fastImageUrl  } from '@jmstechnologiesinc/commons';
 import { sectionPaddings } from '../ScreenWrapper/ScreenWrapperSection';
 
 const VendorListItem = ({ item, withPaddingHorizontal, onPress }) => (
@@ -17,11 +17,13 @@ const VendorListItem = ({ item, withPaddingHorizontal, onPress }) => (
             titleVariant="headlineSmall"
             subtitleVariant="bodyLarge"
         />
-        <Card.Content>
-            <Text variant="bodyMedium">
-                {interpunct(item.industries.map((industry) => VENDOR_INDUSTRIES_MAPPING[industry].title))}
-            </Text>
-        </Card.Content>
+        {item.industries?.length > 0 ? (
+            <Card.Content>
+                <Text variant="bodyMedium">
+                    {interpunct(item?.industries.map((industry) => VENDOR_INDUSTRIES_MAPPING[industry].title))}
+                </Text>
+            </Card.Content>
+        ) : null}
     </Card>
 );
 

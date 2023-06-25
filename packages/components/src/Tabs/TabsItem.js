@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, MD3LightTheme, Text, TouchableRipple } from '@jmsstudiosinc/react-native-paper';
+import { Button, MD3LightTheme, Text, TouchableRipple } from '@jmstechnologiesinc/react-native-paper';
 import { moderateScale } from 'react-native-size-matters';
 
 const TabsItem = ({  

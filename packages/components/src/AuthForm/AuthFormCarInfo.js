@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { TextInput } from '@jmsstudiosinc/react-native-paper';
+import { TextInput } from '@jmstechnologiesinc/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
-import { Switch, List } from '@jmsstudiosinc/react-native-paper';
+import { Switch, List } from '@jmstechnologiesinc/react-native-paper';
 
 const AuthFormVehicle = ({active, title, make, model, color, year, licensePlateNumber, inputActionHandler, isDisabled }) => {
     return (

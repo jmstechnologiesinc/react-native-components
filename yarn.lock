@@ -1955,88 +1955,88 @@
     "@types/yargs" "^17.0.8"
     "chalk" "^4.0.0"
 
-"@jmsstudiosinc/cart@^0.0.36":
+"@jmstechnologiesinc/cart@^0.0.36":
   "integrity" "sha512-Lx4sPmqrAUcm80Ud5RO2xMPfJofQ83Pr6RlrdaNPlTdp6Um0tHsESQ1gccpF3tov54euDYFf6Lddl9JQe61yyg=="
-  "resolved" "https://npm.pkg.github.com/download/@jmsstudiosinc/cart/0.0.36/2b67d9edbd50e63aa760cc048bc0b9170d2ad4ac"
+  "resolved" "https://npm.pkg.github.com/download/@jmstechnologiesinc/cart/0.0.36/2b67d9edbd50e63aa760cc048bc0b9170d2ad4ac"
   "version" "0.0.36"
   dependencies:
-    "@jmsstudiosinc/commons" "^0.0.36"
-    "@jmsstudiosinc/vendor" "^0.0.36"
+    "@jmstechnologiesinc/commons" "^0.0.36"
+    "@jmstechnologiesinc/vendor" "^0.0.36"
 
-"@jmsstudiosinc/commons@^0.0.30":
+"@jmstechnologiesinc/commons@^0.0.30":
   "integrity" "sha512-lpGdddbEwDo/HpjnrJIV44HWsfaOA/dAo/QJ/OzxY+Y0fL/DiJkdWE3J0c+OE8UUTHqmRxwV9u7hHjZHHlJ5Mw=="
-  "resolved" "https://npm.pkg.github.com/download/@jmsstudiosinc/commons/0.0.30/91b44132f5f227998d4c9455de660c14cbc9126b"
+  "resolved" "https://npm.pkg.github.com/download/@jmstechnologiesinc/commons/0.0.30/91b44132f5f227998d4c9455de660c14cbc9126b"
   "version" "0.0.30"
   dependencies:
-    "@jmsstudiosinc/vendor" "^0.0.30"
+    "@jmstechnologiesinc/vendor" "^0.0.30"
 
-"@jmsstudiosinc/commons@^0.0.36":
+"@jmstechnologiesinc/commons@^0.0.36":
   "integrity" "sha512-bJJ2leNteLkL3BP4nCdDnwqcxaqIwtVj303MEt9G1ZEOxPl5t9Sz5UhtqRM+a2lx8OIJo5AhvEz6gmlyZPT/Hw=="
-  "resolved" "https://npm.pkg.github.com/download/@jmsstudiosinc/commons/0.0.36/aa69091b2db02a2b87bbed014eeda96fd364f1ba"
+  "resolved" "https://npm.pkg.github.com/download/@jmstechnologiesinc/commons/0.0.36/aa69091b2db02a2b87bbed014eeda96fd364f1ba"
   "version" "0.0.36"
   dependencies:
-    "@jmsstudiosinc/vendor" "^0.0.36"
+    "@jmstechnologiesinc/vendor" "^0.0.36"
     "turf-distance" "^3.0.12"
 
-"@jmsstudiosinc/driver@^0.0.36":
+"@jmstechnologiesinc/driver@^0.0.36":
   "integrity" "sha512-hbN5jAldWfV8FadCXnwa+qfhIwMEK/CvByNotz0rRw1q3ultYDMhH4H0WuQM+Krmx59zlZiUPLnDd6A1/7OO0g=="
-  "resolved" "https://npm.pkg.github.com/download/@jmsstudiosinc/driver/0.0.36/bc60446eacf7cf2aa891f854cd89faede6c69eb9"
+  "resolved" "https://npm.pkg.github.com/download/@jmstechnologiesinc/driver/0.0.36/bc60446eacf7cf2aa891f854cd89faede6c69eb9"
   "version" "0.0.36"
   dependencies:
-    "@jmsstudiosinc/commons" "^0.0.36"
-    "@jmsstudiosinc/vendor" "^0.0.36"
+    "@jmstechnologiesinc/commons" "^0.0.36"
+    "@jmstechnologiesinc/vendor" "^0.0.36"
 
-"@jmsstudiosinc/material-tokens@^0.0.16":
+"@jmstechnologiesinc/material-tokens@^0.0.16":
   "integrity" "sha512-00ut9s9sbkUZNqBPV87Skzb9Y5k3ltPd1l0gi5rrnsMQoGooJIQeom0ieVK8cwDZgBMpE2HVtdC5Sj1N5ymBWA=="
-  "resolved" "https://npm.pkg.github.com/download/@jmsstudiosinc/material-tokens/0.0.16/bb5d25f9dca1717f7f74ec3ef9161eaa22dd418e"
+  "resolved" "https://npm.pkg.github.com/download/@jmstechnologiesinc/material-tokens/0.0.16/bb5d25f9dca1717f7f74ec3ef9161eaa22dd418e"
   "version" "0.0.16"
 
-"@jmsstudiosinc/order@^0.0.36":
+"@jmstechnologiesinc/order@^0.0.36":
   "integrity" "sha512-uljBO0XOZdsmj4cHvu4c++l+6TUlqz0IRpQ2XlOOLKadtioITeg4OHKaNdnRRYsZFmXn88SaopfGv8mTZvkihg=="
-  "resolved" "https://npm.pkg.github.com/download/@jmsstudiosinc/order/0.0.36/53ed909b3acf004c9fe546b32ba3f5305543112b"
+  "resolved" "https://npm.pkg.github.com/download/@jmstechnologiesinc/order/0.0.36/53ed909b3acf004c9fe546b32ba3f5305543112b"
   "version" "0.0.36"
   dependencies:
-    "@jmsstudiosinc/commons" "^0.0.36"
-    "@jmsstudiosinc/user" "^0.0.35"
-    "@jmsstudiosinc/vendor" "^0.0.36"
+    "@jmstechnologiesinc/commons" "^0.0.36"
+    "@jmstechnologiesinc/user" "^0.0.35"
+    "@jmstechnologiesinc/vendor" "^0.0.36"
 
-"@jmsstudiosinc/pud@^0.0.28":
+"@jmstechnologiesinc/pud@^0.0.28":
   "integrity" "sha512-hQVCAu84p9Utdg5rRK3GtzgDIpGldCGorhVR7qvM+lU7VQMbHRGIm1eCiUDpr5ldbpXmIsMnnljH+RaA9IjU5Q=="
-  "resolved" "https://npm.pkg.github.com/download/@jmsstudiosinc/pud/0.0.28/8aa876973813d7f15e5be8e150f546e894a15842"
+  "resolved" "https://npm.pkg.github.com/download/@jmstechnologiesinc/pud/0.0.28/8aa876973813d7f15e5be8e150f546e894a15842"
   "version" "0.0.28"
   dependencies:
-    "@jmsstudiosinc/commons" "^0.0.30"
-    "@jmsstudiosinc/vendor" "^0.0.30"
+    "@jmstechnologiesinc/commons" "^0.0.30"
+    "@jmstechnologiesinc/vendor" "^0.0.30"
 
-"@jmsstudiosinc/react-native-paper@^5.0.0-rc.19":
+"@jmstechnologiesinc/react-native-paper@^5.0.0-rc.19":
   "integrity" "sha512-ekxiOdXf7rxEabJUlolYX/kOiBZz6pCee6ts59h91IAqw/XoCHf3YNBS6824AEFZV8TqJvZk2hbXVLuxrUbYoQ=="
-  "resolved" "https://npm.pkg.github.com/download/@jmsstudiosinc/react-native-paper/5.0.0-rc.19/81628fae2414e3db3b4231f4e899f48193b3e4c1"
+  "resolved" "https://npm.pkg.github.com/download/@jmstechnologiesinc/react-native-paper/5.0.0-rc.19/81628fae2414e3db3b4231f4e899f48193b3e4c1"
   "version" "5.0.0-rc.19"
   dependencies:
     "@callstack/react-theme-provider" "^3.0.8"
     "color" "^3.1.2"
 
-"@jmsstudiosinc/user@^0.0.35":
+"@jmstechnologiesinc/user@^0.0.35":
   "integrity" "sha512-htiIcf6XbgBBVV6JW+qUzRMs3G1rk5JN+oWbpdyFQCET2s3l79x49tJuSi57bCRQDFzir+6bXJm/bgE0KuMbaA=="
-  "resolved" "https://npm.pkg.github.com/download/@jmsstudiosinc/user/0.0.35/1588ec66e532a1ded1977d8360d5b3fc5c3ca19f"
+  "resolved" "https://npm.pkg.github.com/download/@jmstechnologiesinc/user/0.0.35/1588ec66e532a1ded1977d8360d5b3fc5c3ca19f"
   "version" "0.0.35"
   dependencies:
-    "@jmsstudiosinc/commons" "^0.0.36"
-    "@jmsstudiosinc/vendor" "^0.0.36"
+    "@jmstechnologiesinc/commons" "^0.0.36"
+    "@jmstechnologiesinc/vendor" "^0.0.36"
 
-"@jmsstudiosinc/vendor@^0.0.30":
+"@jmstechnologiesinc/vendor@^0.0.30":
   "integrity" "sha512-dOMlBxEUkl27zIHQHpDGWU+0Ncka63IYKCe4BZ/C0QFb4HHQjOuugcHMebppc4awH/+eQg9NXC+ItHpRE9l9hA=="
-  "resolved" "https://npm.pkg.github.com/download/@jmsstudiosinc/vendor/0.0.30/97bdc0e24a8cec1981a205037eeb31e3785970ed"
+  "resolved" "https://npm.pkg.github.com/download/@jmstechnologiesinc/vendor/0.0.30/97bdc0e24a8cec1981a205037eeb31e3785970ed"
   "version" "0.0.30"
   dependencies:
-    "@jmsstudiosinc/commons" "^0.0.30"
+    "@jmstechnologiesinc/commons" "^0.0.30"
 
-"@jmsstudiosinc/vendor@^0.0.36":
+"@jmstechnologiesinc/vendor@^0.0.36":
   "integrity" "sha512-pcGJvTjD7AK66VwbDs5J6152VlbDxBlAnscaqX6IbA6P4Xa8WRHaEak4eFi9XaNhFuEO0Fe68R3e0kKV+XZmJg=="
-  "resolved" "https://npm.pkg.github.com/download/@jmsstudiosinc/vendor/0.0.36/c3ea5069e4bebebf55736688a8c20fc41592222a"
+  "resolved" "https://npm.pkg.github.com/download/@jmstechnologiesinc/vendor/0.0.36/c3ea5069e4bebebf55736688a8c20fc41592222a"
   "version" "0.0.36"
   dependencies:
-    "@jmsstudiosinc/commons" "^0.0.36"
+    "@jmstechnologiesinc/commons" "^0.0.36"
 
 "@jridgewell/gen-mapping@^0.1.0":
   "integrity" "sha512-sQXCasFk+U8lWYEe66WxRDOE9PjVz4vSM51fTu3Hw+ClTpUSQb718772vH3pyS5pShp6lvQM7SxgIDXXXmOX7w=="

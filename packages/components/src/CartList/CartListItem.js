@@ -2,15 +2,15 @@ import React from 'react';
 
 import { View } from 'react-native';
 
-import { Text, Button, MD3LightTheme, Divider, Avatar, MD3Colors } from '@jmsstudiosinc/react-native-paper';
-import { CART_ITEM_TYPE } from '@jmsstudiosinc/cart';
+import { Text, Button, MD3LightTheme, Divider, Avatar, MD3Colors } from '@jmstechnologiesinc/react-native-paper';
+import { CART_ITEM_TYPE } from '@jmstechnologiesinc/cart';
 
 import CartListProductItem from './CartListProductItem';
 import ScreenWrapper from '../ScreenWrapper';
 import { itemSeparator } from '../utils';
 import SwipeToDelete from '../SwipeToDelete/SwipeToDelete';
 import { Item as JMSItem } from '../List/List';
-import { fastImageUrl, MATERIAL_ICONS } from '@jmsstudiosinc/commons';
+import { fastImageUrl, MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 
 const CartListItem = ({
     checkoutTitle,

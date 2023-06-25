@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { List } from '@jmsstudiosinc/react-native-paper';
+import { List } from '@jmstechnologiesinc/react-native-paper';
 
 import TouchableRippleWrapper from './TouchableRippleWrapper';
 
