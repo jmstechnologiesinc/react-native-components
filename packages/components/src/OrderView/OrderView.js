@@ -339,7 +339,7 @@ const OrderView = ({
                         <List.Section
                             title={`${order.cart.products.length} ${plurulize('Item', order.cart.products.length)}`}
                         >
-                            {order.cart.products.map((item, index) => (
+                            {order.cart.products.map((item) => (
                                 <View key={`product-item-${item.id}`}>
                                     <CartListProductItem data={item} interpunctAttributeGroup={false} />
                                 </View>

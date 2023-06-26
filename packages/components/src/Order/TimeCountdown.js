@@ -1,10 +1,6 @@
 import React from 'react';
 
-<<<<<<< HEAD
-import {Chip, ActivityIndicator} from '@jmstechnologiesinc/react-native-paper';
-=======
 import { Chip, ActivityIndicator } from '@jmstechnologiesinc/react-native-paper';
->>>>>>> d865414856e4517f93137ed4ff48e05d5247aa32
 
 import { milliseconsExtractor, formattedETATime } from '@jmstechnologiesinc/commons';
 
