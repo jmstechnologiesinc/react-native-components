@@ -8,7 +8,7 @@ import VendorListItem from './VendorListItem';
 const keyExtractor = (item) => `vendor-list-${item.id}`;
 const Separator = () => <View style={{ marginBottom: MD3LightTheme.spacing.x2 }} />;
 
-const VendorList = ({ sections, onPress, withPaddingHorizontal, fastImageUrlWrapper, ...props }) => (
+const VendorList = ({ sections, onPress, withPaddingHorizontal,  ...props }) => (
     <SectionList
         {...props}
         sections={sections}
@@ -18,7 +18,6 @@ const VendorList = ({ sections, onPress, withPaddingHorizontal, fastImageUrlWrap
                 item={item}
                 withPaddingHorizontal={withPaddingHorizontal}
                 onPress={onPress}
-                fastImageUrlWrapper={fastImageUrlWrapper}
             />
         )}
         stickySectionHeadersEnabled={false}

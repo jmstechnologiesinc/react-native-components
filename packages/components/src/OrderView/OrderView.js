@@ -20,7 +20,7 @@ import { formatOrder } from '../Order/utils';
 import OrderStatus from '../Order/OrderStatus';
 import PhotoGallery from '../PhotoGallery/PhotoGallery';
 import * as ActionGroup from '../ActionGroup/ActionGroup';
-import { itemSeparator } from '../utils';
+import { imagekitUrl, itemSeparator } from '../utils';
 import { firestoreTimestampToDate, interpunct, plurulize } from '@jmstechnologiesinc/commons';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
@@ -84,7 +84,7 @@ const OrderView = ({
     showDriverTitle,
     showDriverDescription,
     showDriverAvatar,
-    fastImageUrlWrapper
+    
 }) => {
     if (!order?.id || !USER_ROLES[role]) {
         return null;
@@ -253,7 +253,7 @@ const OrderView = ({
             <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
                 <View style={{ flex: 1 }}>
                     {role === USER_ROLES.customer || role === USER_ROLES.driver ? (
-                        <PhotoGallery photos={fastImageUrlWrapper([formattedOrder.photo])} />
+                        <PhotoGallery photos={imagekitUrl([formattedOrder.photo])} />
                     ) : null}
 
                     <OrderStatus

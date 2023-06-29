@@ -1,4 +1,6 @@
 import { Linking, Platform } from 'react-native';
+import { getMainPhoto } from '@jmstechnologiesinc/commons'
+import Config from 'react-native-config';
 
 export const makeLinkingCall = (phone) => {
     if (Platform.OS === 'android') {
@@ -21,4 +23,20 @@ const hideActionSheet = (actionSheetRef) => {
     actionSheetRef.current.hide();
 };
 
-export { itemSeparator, showActionSheet, hideActionSheet };
+
+const imagekitUrl = (photos) => {
+
+    const urlImageKit = `https://ik.imagekit.io/${Config.IMAGEKIT_URL}`;
+
+    if (photos === null || photos === undefined) {
+        return null;
+    } else if (Array.isArray(photos)) {
+        const path = getMainPhoto(photos);
+        return `${urlImageKit}/${path}`;
+    } else if (photos.includes?.('https://')) {
+        return photos;
+    }
+    return `${urlImageKit}/${photos}`;
+};
+
+export { itemSeparator, showActionSheet, hideActionSheet, imagekitUrl };

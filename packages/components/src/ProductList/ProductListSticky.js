@@ -4,6 +4,7 @@ import { List } from '@jmstechnologiesinc/react-native-paper';
 
 import StickySectionList from '../StickySectionList/StickySectionList';
 import ProductListItem from './ProductListItem';
+import { imagekitUrl } from '../utils';
 
 const keyExtractor = (productItem) => productItem.id;
 
@@ -14,7 +15,6 @@ const ProductListSticky = ({
     onPress,
     onContentOffsetYScroll,
     contentOffsetY,
-    fastImageUrlWrapper,
     ...props
 }) => (
     <StickySectionList
@@ -28,7 +28,7 @@ const ProductListSticky = ({
             <ProductListItem
                 id={item.id}
                 uuid={item.uuid}
-                photo={fastImageUrlWrapper(item.photo)}
+                photo={imagekitUrl(item.photo)}
                 title={item.title}
                 description={item.description}
                 formattedPrice={item.price.formattedValue}
