@@ -6,7 +6,7 @@ import { Avatar, Chip, MD3LightTheme } from '@jmstechnologiesinc/react-native-pa
 import { ITEM_TYPE, ITEM_TYPE_ICON_MAPPING } from '@jmstechnologiesinc/commons';
 
 import JMSItem from '../List/ListItem';
-import { makeLinkingCall } from '../utils';
+import { imagekitUrl, makeLinkingCall } from '../utils';
 
 export const renderChipType = (chip) => {
     switch (chip.type) {
@@ -53,11 +53,11 @@ const OrderStatusWrapper = ({
     style,
     titleStyle,
     overlineStyle,
-    fastImageUrlWrapper,
+  
 }) => {
     const renderAvatar =
         showAvatar && avatar
-            ? (props) => <Avatar.Image style={props.style} source={{ uri: fastImageUrlWrapper(avatar) }} />
+            ? (props) => <Avatar.Image style={props.style} source={{ uri: imagekitUrl(avatar) }} />
             : null;
 
     const renderChips = showChips && chips?.length > 0 ? chips.map(renderChipType) : null;
