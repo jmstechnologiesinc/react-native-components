@@ -5,8 +5,9 @@ import { Card, Text, MD3LightTheme } from '@jmstechnologiesinc/react-native-pape
 import { VENDOR_INDUSTRIES_MAPPING } from '@jmstechnologiesinc/vendor';
 import { interpunct } from '@jmstechnologiesinc/commons';
 import { sectionPaddings } from '../ScreenWrapper/ScreenWrapperSection';
+import { imagekitUrl } from '../utils';
 
-const VendorListItem = ({ item, withPaddingHorizontal, onPress, fastImageUrlWrapper }) => (
+const VendorListItem = ({ item, withPaddingHorizontal, onPress }) => (
     <Card
         style={{
             marginVertical: MD3LightTheme.spacing.x1,
@@ -14,7 +15,7 @@ const VendorListItem = ({ item, withPaddingHorizontal, onPress, fastImageUrlWrap
         }}
         onPress={() => onPress(item)}
     >
-        <Card.Cover source={{ uri: fastImageUrlWrapper(item.photos) }} />
+        <Card.Cover source={{ uri: imagekitUrl(item.photos) }} />
         <Card.Title
             title={item.title}
             subtitle={interpunct([item.formattedFulfillmentMethod, item.formattedHitDistance])}

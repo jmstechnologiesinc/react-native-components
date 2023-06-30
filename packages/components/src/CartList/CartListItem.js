@@ -7,7 +7,7 @@ import { CART_ITEM_TYPE } from '@jmstechnologiesinc/cart';
 
 import CartListProductItem from './CartListProductItem';
 import ScreenWrapper from '../ScreenWrapper';
-import { itemSeparator } from '../utils';
+import { imagekitUrl, itemSeparator } from '../utils';
 import SwipeToDelete from '../SwipeToDelete/SwipeToDelete';
 import { Item as JMSItem } from '../List/List';
 import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
@@ -22,7 +22,7 @@ const CartListItem = ({
     onEdit,
     onCheckout,
     renderTips,
-    fastImageUrlWrapper,
+   
 }) => {
     const { vendor, type, description, isValid, data: productList, cartIndustryId } = item;
 
@@ -59,7 +59,7 @@ const CartListItem = ({
                 titleNumberOfLines={0}
                 descriptionNumberOfLines={0}
                 left={(props) => (
-                    <Avatar.Image style={props.style} source={{ uri: fastImageUrlWrapper(vendor.photo) }} />
+                    <Avatar.Image style={props.style} source={{ uri: imagekitUrl(vendor.photo) }} />
                 )}
             />
 

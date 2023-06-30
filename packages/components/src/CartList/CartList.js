@@ -20,7 +20,7 @@ const CartList = ({
     listFooterComponent,
     listBottomComponent,
     listFooterComponentStyle,
-    fastImageUrlWrapper,
+  
     ...props
 }) => {
     return (
@@ -40,7 +40,6 @@ const CartList = ({
                         onDelete={onDelete} 
                         onEdit={onEdit} 
                         onCheckout={onCheckout} 
-                        fastImageUrlWrapper={fastImageUrlWrapper}
                         />
                 )}
                 showsVerticalScrollIndicator={false}
