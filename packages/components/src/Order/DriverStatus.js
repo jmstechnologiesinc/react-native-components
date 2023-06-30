@@ -23,6 +23,7 @@ const DriverStatus = ({
 
     titleStyle,
     overlineStyle,
+    fastImageUrlWrapper={fastImageUrlWrapper}
 }) => {
     const milliseconds = usePubNubETA({
         role,
@@ -55,6 +56,7 @@ const DriverStatus = ({
             style={{ paddingTop: 0 }}
             titleStyle={titleStyle}
             overlineStyle={overlineStyle}
+            fastImageUrlWrapper={fastImageUrlWrapper}
         />
     );
 };

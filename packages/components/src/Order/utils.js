@@ -42,12 +42,12 @@ export const formatOrder = (order, role) => {
         driverPhone: order.driver?.phone,
         formattedVendorTitle: order.vendor.title,
         formattedVendorAddress: order.vendor.location.formattedAddress,
-        formattedDriverCar: interpunct([order.driver?.carName, order.driver?.carNumber]),
+        formattedDriverCar: order.driver?.vehicle?.formattedValue,
         formattedDriverName: order?.driver?.formattedName,
         formattedCustomerName: order.author.formattedName,
         formattedFulfillmentAddress: order.fulfillmentAddress.formattedAddress,
         vendorAvatar: order.vendor.photo,
-        driverAvatar: order?.driver && (order.driver.profilePictureURL || order.driver.carPictureURL),
+        driverAvatar: order?.driver?.photo,
     });
 
     return {

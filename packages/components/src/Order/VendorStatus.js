@@ -27,7 +27,7 @@ const VendorStatus = ({
 
     titleStyle,
     overlineStyle,
-  
+    fastImageUrlWrapper
 }) => {
     /*   const milliseconds = usePreparingTimeCoutdown({
         role,
@@ -59,6 +59,7 @@ const VendorStatus = ({
             style={{ paddingTop: 0 }}
             titleStyle={titleStyle}
             overlineStyle={overlineStyle}
+            fastImageUrlWrapper={fastImageUrlWrapper}
         />
     );
 };

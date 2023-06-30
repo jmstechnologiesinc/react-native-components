@@ -20,10 +20,10 @@ const AuthFormVehicle = ({
         <>
             <List.Item
                 title={localized('Active')}
-                disabled={isDisabled}
+                disabled={true}
                 right={() => (
                     <Switch
-                        disabled={isDisabled}
+                        disabled={true}
                         value={active}
                         onValueChange={(text) => inputActionHandler('active', text)}
                     />

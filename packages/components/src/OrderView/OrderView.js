@@ -9,7 +9,6 @@ import { DELIVERY_METHODS, FULFILLMENT_METHODS } from '@jmstechnologiesinc/vendo
 import {
     ORDER_STATUS_CANCELLED,
     ORDER_STATUS,
-    formatedOrderStatusTime,
     ORDER_ACTIONS,
     orderStatusTime,
 } from '@jmstechnologiesinc/order';
@@ -21,7 +20,7 @@ import OrderStatus from '../Order/OrderStatus';
 import PhotoGallery from '../PhotoGallery/PhotoGallery';
 import * as ActionGroup from '../ActionGroup/ActionGroup';
 import { itemSeparator } from '../utils';
-import { firestoreTimestampToDate, interpunct, plurulize } from '@jmstechnologiesinc/commons';
+import { firestoreTimestampToDate, plurulize } from '@jmstechnologiesinc/commons';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 
@@ -32,28 +31,26 @@ const getDriverDetails = (order, role) => {
         return [];
     }
 
-    if (order.driver) {
+    if (order.driver?.id) {
         if (role === USER_ROLES.vendor && order.driver?.deliveryMethod) {
             results.push({
-                key: 'delivery-method',
-                title: order.driver.deliveryMethod,
-                description: 'Driver Type',
+                key: 'driver-name',
+                title: order.driver?.formattedName,
+                description: order.driver.deliveryMethod,
+                icon: MATERIAL_ICONS.account,
             });
-        }
-
-        if (order.driver?.formattedName) {
+            if(order.driver?.deliveryMethod === DELIVERY_METHODS.ownStaff) {
+                results.push({
+                    key: 'car-info',
+                    title: order.driver.vehicle.formattedValue,
+                    icon: MATERIAL_ICONS.driver,
+                });
+            }
+        } else {
             results.push({
                 key: 'driver-name',
                 title: order.driver?.formattedName,
                 icon: MATERIAL_ICONS.account,
-            });
-        }
-
-        if (order.driver?.formattedName) {
-            results.push({
-                key: 'driver-name',
-                title: interpunct([order.driver?.carName, order.driver?.carNumber]),
-                icon: MATERIAL_ICONS.driver,
             });
         }
     }
@@ -143,8 +140,7 @@ const OrderView = ({
 
         if (order.fulfillmentMethod === FULFILLMENT_METHODS.delivery) {
             driverDetails = getDriverDetails(order);
-        } else if (order.fulfillmentMethod === FULFILLMENT_METHODS.pickup) {
-        }
+        } 
     } else if (role === USER_ROLES.vendor) {
         fulfilmentDetails.push({
             key: 'author-name',
@@ -168,8 +164,7 @@ const OrderView = ({
             });
 
             driverDetails = getDriverDetails(order, role);
-        } else if (order.fulfillmentMethod === FULFILLMENT_METHODS.pickup) {
-        }
+        } 
     }
 
     const telemetryList = [];
@@ -275,6 +270,7 @@ const OrderView = ({
                         showDriverTitle={showDriverTitle}
                         showDriverDescription={showDriverDescription}
                         showDriverAvatar={showDriverAvatar}
+                        fastImageUrlWrapper={fastImageUrlWrapper}
                     />
 
                     {fulfilmentDetails.length > 0 ? (
