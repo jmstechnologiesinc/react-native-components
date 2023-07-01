@@ -1,5 +1,5 @@
 import { USER_ROLES } from '@jmstechnologiesinc/user';
-import { firestoreTimestampToDate, interpunct } from '@jmstechnologiesinc/commons';
+import { firestoreTimestampToDate, interpunct, getRoleFees } from '@jmstechnologiesinc/commons';
 import {
     ORDER_STATUS,
     ORDER_STATUS_CANCELLED,
@@ -8,18 +8,6 @@ import {
     formatOrderID,
     orderStatusTime,
 } from '@jmstechnologiesinc/order';
-
-const getRoleFees = (order, role) => {
-    if (role === USER_ROLES.customer) {
-        return order.customerFees;
-    } else if (role === USER_ROLES.vendor) {
-        return order.vendorFees;
-    } else if (role === USER_ROLES.driver) {
-        return order.driverFees;
-    }
-
-    return null;
-};
 
 export const formatOrder = (order, role) => {
     const formattedOrderId = formatOrderID(order.id);
