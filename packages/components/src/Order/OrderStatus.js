@@ -94,7 +94,6 @@ const OrderStatus = ({
                 showAvatar={showVendorAvatar}
                 titleStyle={titleStyle}
                 overlineStyle={overlineStyle}
-                fastImageUrlWrapper={fastImageUrlWrapper}
             />
         );
     }
@@ -121,7 +120,6 @@ const OrderStatus = ({
                 showAvatar={showDriverAvatar}
                 titleStyle={titleStyle}
                 overlineStyle={overlineStyle}
-                fastImageUrlWrapper={fastImageUrlWrapper}
             />
         );
     }

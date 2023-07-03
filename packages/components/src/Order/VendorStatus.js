@@ -1,19 +1,10 @@
 import React from 'react';
 
-import { milliseconsExtractor, formattedETATime, interpunct } from '@jmstechnologiesinc/commons';
+import { interpunct } from '@jmstechnologiesinc/commons';
 
-import usePreparingTimeCoutdown from './usePreparingTimeCoutdown';
 import OrderStatusWrapper from './OrderStatusWrapper';
 
 const VendorStatus = ({
-    role,
-    orderID,
-    deliveryMethod,
-    status,
-    vendorAcceptedTime,
-    deliveryTime,
-    durationValue,
-
     overline,
     header,
     subHeader,
@@ -27,7 +18,6 @@ const VendorStatus = ({
 
     titleStyle,
     overlineStyle,
-    fastImageUrlWrapper
 }) => {
     /*   const milliseconds = usePreparingTimeCoutdown({
         role,
@@ -59,7 +49,6 @@ const VendorStatus = ({
             style={{ paddingTop: 0 }}
             titleStyle={titleStyle}
             overlineStyle={overlineStyle}
-            fastImageUrlWrapper={fastImageUrlWrapper}
         />
     );
 };

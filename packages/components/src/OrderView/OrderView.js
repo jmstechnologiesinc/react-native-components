@@ -270,7 +270,6 @@ const OrderView = ({
                         showDriverTitle={showDriverTitle}
                         showDriverDescription={showDriverDescription}
                         showDriverAvatar={showDriverAvatar}
-                        fastImageUrlWrapper={fastImageUrlWrapper}
                     />
 
                     {fulfilmentDetails.length > 0 ? (
