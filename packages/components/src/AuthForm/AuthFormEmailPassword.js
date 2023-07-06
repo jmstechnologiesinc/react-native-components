@@ -50,7 +50,7 @@ const AuthFormEmailPassword = ({
             {confirmPassword && (
                 <ScreenWrapper.Section>
                     <TextInput
-                        label={localized('Confirm Password')}
+                        label={localized('Confirm password')}
                         value={passwordConfirm}
                         onChangeText={(passwordConfirm) => inputActionHandler('passwordConfirm', passwordConfirm)}
                         disabled={isPasswordDisabled}

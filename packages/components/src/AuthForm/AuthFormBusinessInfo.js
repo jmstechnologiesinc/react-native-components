@@ -8,7 +8,7 @@ import IndustryPicker from './IndustryPicker';
 
 const AuthFormBusinessInfo = ({
     isDisabled,
-    title = localized('Business Details'),
+    title = localized('Business details'),
     description,
     storeTitle,
     fullAddress,
@@ -26,7 +26,7 @@ const AuthFormBusinessInfo = ({
             <ScreenWrapper.Section title={title}>
                 <TextInput
                     mode="outlined"
-                    label={localized('Store Name')}
+                    label={localized('Store name')}
                     value={storeTitle}
                     disabled={isDisabled}
                     onChangeText={(text) => inputActionHandler('title', text)}
@@ -35,7 +35,7 @@ const AuthFormBusinessInfo = ({
             <ScreenWrapper.Section>
                 <TextInput
                     mode="outlined"
-                    label={localized('Store Highlights / Description')}
+                    label={localized('Store highlights / description')}
                     value={description}
                     disabled={isDisabled}
                     onChangeText={(text) => inputActionHandler('description', text)}
@@ -44,7 +44,7 @@ const AuthFormBusinessInfo = ({
             <ScreenWrapper.Section>
                 <TextInput
                     mode="outlined"
-                    label={localized('Store Address')}
+                    label={localized('Store address')}
                     value={fullAddress}
                     disabled={isDisabled}
                     onChangeText={(text) => inputActionHandler('fullAddress', text)}
@@ -81,7 +81,7 @@ const AuthFormBusinessInfo = ({
                     />
                     <Caption>
                         {localized(
-                            'If you don’t have a website, enter a social media page, LinkedIn, or other relevant link.'
+                            'do-not-have-a-website'
                         )}
                     </Caption>
                 </ScreenWrapper.Section>
