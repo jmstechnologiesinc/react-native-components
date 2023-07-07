@@ -129,7 +129,7 @@
     "Delivery": "Delivery",
     "Undo": "Undo",
     "Your order": "Your order",
-    "Placing Order...": "Placing Order...",
+    "Placing-order": "Placing Order...",
     "Preparing your order...": "Preparing your order...",
     "Help": "Help",
     "Latest arrival by": "Latest arrival by",
@@ -190,9 +190,25 @@
     "Store highlights / description": "Store highlights / description",
     "Store address": "Store address",
     "Floor / Suite": "Floor / Suite",
-    "do-not-have-a-website":"If you don’t have a website, enter a social media page, LinkedIn, or other relevant link.",
+    "do-not-have-a-website": "If you don’t have a website, enter a social media page, LinkedIn, or other relevant link.",
     "Website": "Website",
-    "Industry": "Industry"
-   
-
+    "Industry": "Industry",
+    "We are working hard to release this feature": "We are working hard to release this feature.",
+    "Add item": "Add item",
+    "CHECKOUT": "CHECKOUT",
+    "Empty Cart": "Empty Cart",
+    "Create new order": "Create new order",
+    "Your Cart Is Empty": "Your Cart Is Empty",
+    "The products you add from your favorite vendors will show up here!": "The products you add from your favorite vendors will show up here!",
+    "Delivery to": "Delivery to",
+    "Pickup at": "Pickup at",
+    "Review": "Review", 
+    "nearby-vendors-found": "No nearby vendors found. we have not establish any partnership with prospect vendors around this area yet. You can change your location to try in a different nearby zone or explore our global marketplace of vendors.",
+    "Pickup": "Pick up",
+    "reviewing-your-request":"We're reviewing your request. It usually takes less than a day for us to complete the process.",
+    "need-edit-this-form":"If you need to to edit this form, please make the changes as needed. It usually takes less than a day for us to complete the process.",
+    "have-not-placed-any-order-yet": "You have not placed any order yet. Orders will be list on this screen as places.",
+    "please-wait-second": "Please, wait a second...",
+    "stay-nearby-associated-vendors":"Stay nearby associated vendors. We will notify you when a new order is ready for delivery."
+  
 }
