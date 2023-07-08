@@ -5,6 +5,7 @@ import { List } from '@jmstechnologiesinc/react-native-paper';
 import StickySectionList from '../StickySectionList/StickySectionList';
 import ProductListItem from './ProductListItem';
 import { imagekitUrl } from '../utils';
+import { moderateScale } from 'react-native-size-matters';
 
 const keyExtractor = (productItem) => productItem.id;
 
@@ -20,7 +21,9 @@ const ProductListSticky = ({
     <StickySectionList
         {...props}
         sections={sections}
-        renderSectionHeader={({ section: { title } }) => <List.Subheader>{title}</List.Subheader>}
+        renderSectionHeader={({ section: { title } }) => (
+            <List.Subheader style={{ height: moderateScale(50) }}>{title}</List.Subheader>
+        )}
         keyExtractor={keyExtractor}
         onContentOffsetYScroll={onContentOffsetYScroll}
         contentOffsetY={contentOffsetY}
