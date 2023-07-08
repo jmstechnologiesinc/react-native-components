@@ -45,8 +45,10 @@ export default function IndustryPicker({ isDisabled, placeholder, inputActionHan
     };
 
     const selectedItems = options.filter((item) => item.selected === true);
-    const isSelect = selectedItems.map((item) => item.item);
+    const isSelect = selectedItems.map((item) => localized(item.item));
     const itemSelected = interpunct(industry ? industry : isSelect);
+
+    console.log(localized(isSelect))
 
     return (
         <Pressable onPress={() => showActionSheet()}>
@@ -79,7 +81,7 @@ export default function IndustryPicker({ isDisabled, placeholder, inputActionHan
                         {options.map(({ item, selected }, index) => (
                             <List.Item
                                 key={index}
-                                title={item}
+                                title={localized(item)}
                                 onPress={
                                     !isDisabled
                                         ? () => {

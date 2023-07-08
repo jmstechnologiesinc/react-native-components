@@ -22,7 +22,7 @@ const AuthFormDriverInfo = ({ licenseNumer, ssn, inputActionHandler }) => {
             <ScreenWrapper.Section>
                 <TextInput
                     mode="outlined"
-                    label={localized('Driver License Number')}
+                    label={localized('Driver license number')}
                     secureTextEntry={true}
                     value={licenseNumer}
                     onChangeText={(text) => inputActionHandler('licenseNumer', text)}
@@ -31,7 +31,7 @@ const AuthFormDriverInfo = ({ licenseNumer, ssn, inputActionHandler }) => {
             <ScreenWrapper.Section>
                 <TextInput
                     mode="outlined"
-                    label={localized('Date of Birth')}
+                    label={localized('Date of birth')}
                     placeholder="MM/DD/YY"
                     value={dateOfBirth}
                     keyboardType="numeric"
@@ -44,7 +44,7 @@ const AuthFormDriverInfo = ({ licenseNumer, ssn, inputActionHandler }) => {
             <ScreenWrapper.Section>
                 <TextInput
                     mode="outlined"
-                    label={localized('Social Security Number')}
+                    label={localized('Social security number')}
                     value={ssn}
                     secureTextEntry={true}
                     onChangeText={(text) => inputActionHandler('ssn', text)}
