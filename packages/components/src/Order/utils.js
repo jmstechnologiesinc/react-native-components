@@ -9,6 +9,8 @@ import {
     orderStatusTime,
 } from '@jmstechnologiesinc/order';
 
+import { localized } from '../Localization/Localization';
+
 export const formatOrder = (order, role) => {
     const formattedOrderId = formatOrderID(order.id);
     const fees = getRoleFees(order, role);
@@ -36,6 +38,7 @@ export const formatOrder = (order, role) => {
         formattedFulfillmentAddress: order.fulfillmentAddress.formattedAddress,
         vendorAvatar: order.vendor.photo,
         driverAvatar: order?.driver?.photo,
+        translate: localized,
     });
 
     return {

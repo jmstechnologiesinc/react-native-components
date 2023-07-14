@@ -1,5 +1,5 @@
 {
-    "Send texts, photos, videos, and audio messages to your close friends.": "Send texts, photos, videos, and audio messages to your close friends.",
+    "Send texts, photos, videos, and audio s to your close friends.": "Send texts, photos, videos, and audio s to your close friends.",
     "Log In": "Log In",
     "Sign Up": "Sign Up",
     "Login With Sms": "Login With Sms",
@@ -190,9 +190,52 @@
     "Store highlights / description": "Store highlights / description",
     "Store address": "Store address",
     "Floor / Suite": "Floor / Suite",
-    "do-not-have-a-website":"If you don’t have a website, enter a social media page, LinkedIn, or other relevant link.",
+    "do-not-have-a-website": "If you don’t have a website, enter a social media page, LinkedIn, or other relevant link.",
     "Website": "Website",
-    "Industry": "Industry"
-   
-
+    "Industry": "Industry",
+    "order": {
+        "shipped": "Shipped",
+        "receipt": "Receipt",
+        "noDriverFound": "No nearby driver found. Please try again later.",
+        "tryAgainLater": "Please try again later.",
+        "processingError": "There was an error processing your order.",
+        "vendorConfirmation": "Waiting for confirmation from the vendor.",
+        "preparation": "Preparing Your Order.",
+        "driverAssignmentWaitingConfirm": "The order was assigned to a driver. Waiting for confirmation.",
+        "deliveringAnotherOrder": "Delivering another order.",
+        "lookingForDriver": "Looking for a nearby driver...",
+        "headingToPickup": "Heading to the pickup location.",
+        "headingToDropOff": "Heading to the drop off location.",
+        "driverAssignmentWaitingConfirmation": "The order was assigned to a driver. Waiting for confirmation from the driver.",
+        "vendorOwnStaffDeliveryContact": "Delivery by a vendor own staff. Contact the vendor for delivery status.",
+        "dropOffLocationArrival": "Arrived to the drop off location.",
+        "noStaffDriverFound": "No staff driver found. Please assign a staff member for delivery.",
+        "needAttention": "Need Attention",
+        "markAsCompleteOnDelivery": "Mark as COMPLETE when delivered.",
+        "meetMeOutside": "Meet me outside.",
+        "meetDriverOutside": "Meet driver outside.",
+        "lookingForAnotherDriver": "Looking for another nearby driver...",
+        "inTransitToDropOff": "In transit to the drop off location.",
+        "readyForPickup": "Ready for Pickup",
+        "orderReadyForPickup": "Customer was informed the order is ready for pickup.",
+        "orderProcessingError": "There was an error processing this order.",
+        "pleaseMeetMeOutside": "Please meet me outside.",
+        "yourOrderReady": "Your order is ready.",
+        "noNearbyDriverFound": "No nearby driver found.",
+        "staffDriverAssignmentWaitingConfirmation": "Order was assigned to a staff driver. Waiting for the driver to confirm it.",
+        "reassigningDelivery": "Re-assigning delivery to another available staff driver.",
+        "lookingForAnotherStaffDriver": "Looking for another staff driver...",
+        "newDeliveryRequest": "New Delivery Request",
+        "waitingForConfirmation": "Waiting for your confirmation.",
+        "inTransit": "In Transit"
+    },
+    "global": {
+        "remove": "Remove",
+        "cancel": "Cancel",
+        "item": "Item",
+        "reject": "Reject",
+        "accept": "Accept",
+        "call": "Call",
+        "complete": "Complete"
+    }
 }
