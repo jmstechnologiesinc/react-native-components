@@ -8,7 +8,7 @@ import IndustryPicker from './IndustryPicker';
 
 const AuthFormBusinessInfo = ({
     isDisabled,
-    title = localized('Business details'),
+    title = localized('authForm.businessDetails'),
     description,
     storeTitle,
     fullAddress,
@@ -26,7 +26,7 @@ const AuthFormBusinessInfo = ({
             <ScreenWrapper.Section title={title}>
                 <TextInput
                     mode="outlined"
-                    label={localized('Store name')}
+                    label={localized('authForm.storeName')}
                     value={storeTitle}
                     disabled={isDisabled}
                     onChangeText={(text) => inputActionHandler('title', text)}
@@ -35,7 +35,7 @@ const AuthFormBusinessInfo = ({
             <ScreenWrapper.Section>
                 <TextInput
                     mode="outlined"
-                    label={localized('Store highlights / description')}
+                    label={localized('authForm.storehighlightsDescription')}
                     value={description}
                     disabled={isDisabled}
                     onChangeText={(text) => inputActionHandler('description', text)}
@@ -44,7 +44,7 @@ const AuthFormBusinessInfo = ({
             <ScreenWrapper.Section>
                 <TextInput
                     mode="outlined"
-                    label={localized('Store address')}
+                    label={localized('authForm.storeAddress')}
                     value={fullAddress}
                     disabled={isDisabled}
                     onChangeText={(text) => inputActionHandler('fullAddress', text)}
@@ -53,7 +53,7 @@ const AuthFormBusinessInfo = ({
             <ScreenWrapper.Section>
                 <TextInput
                     mode="outlined"
-                    label={localized('Floor / Suite')}
+                    label={localized('authForm.floorSuite')}
                     value={line2}
                     disabled={isDisabled}
                     onChangeText={(text) => inputActionHandler('line2', text)}
@@ -63,7 +63,7 @@ const AuthFormBusinessInfo = ({
                 <ScreenWrapper.Section>
                     <TextInput
                         mode="outlined"
-                        label={localized('Phone Number')}
+                        label={localized('authForm.phoneNumber')}
                         value={phone}
                         disabled={isDisabled}
                         onChangeText={(text) => inputActionHandler('phone', text)}
@@ -74,16 +74,12 @@ const AuthFormBusinessInfo = ({
                 <ScreenWrapper.Section>
                     <TextInput
                         mode="outlined"
-                        label={localized('Website')}
+                        label={localized('authForm.website')}
                         value={website}
                         disabled={isDisabled}
                         onChangeText={(text) => inputActionHandler('website', text)}
                     />
-                    <Caption>
-                        {localized(
-                            'do-not-have-a-website'
-                        )}
-                    </Caption>
+                    <Caption>{localized('authForm.noWebsiteInstructions')}</Caption>
                 </ScreenWrapper.Section>
             ) : null}
             <ScreenWrapper.Section>

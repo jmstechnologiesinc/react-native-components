@@ -20,9 +20,9 @@ const AuthFormEmailPassword = ({
 
     return (
         <>
-            <ScreenWrapper.Section title={titleCredentials ? localized('Credentials') : null}>
+            <ScreenWrapper.Section title={titleCredentials ? localized('authForm.credentials') : null}>
                 <TextInput
-                    label={localized('Email')}
+                    label={localized('authForm.email')}
                     value={email}
                     onChangeText={(email) => inputActionHandler('email', email)}
                     disabled={isEmailDisabled}
@@ -31,7 +31,7 @@ const AuthFormEmailPassword = ({
 
             <ScreenWrapper.Section>
                 <TextInput
-                    label={localized('Password')}
+                    label={localized('authForm.password')}
                     value={isPasswordDisabled ? '********' : password}
                     onChangeText={(password) => inputActionHandler('password', password)}
                     disabled={isPasswordDisabled}
@@ -50,7 +50,7 @@ const AuthFormEmailPassword = ({
             {confirmPassword && (
                 <ScreenWrapper.Section>
                     <TextInput
-                        label={localized('Confirm password')}
+                        label={localized('authForm.confirmPassword')}
                         value={passwordConfirm}
                         onChangeText={(passwordConfirm) => inputActionHandler('passwordConfirm', passwordConfirm)}
                         disabled={isPasswordDisabled}
@@ -68,7 +68,7 @@ const AuthFormEmailPassword = ({
             {resetPassword && (
                 <ScreenWrapper.Section>
                     <Button mode="text" onPress={onPasswordReset}>
-                        {localized('Reset password')}
+                        {localized('authForm.resetPassword')}
                     </Button>
                 </ScreenWrapper.Section>
             )}

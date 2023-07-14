@@ -193,6 +193,35 @@
     "do-not-have-a-website": "If you don’t have a website, enter a social media page, LinkedIn, or other relevant link.",
     "Website": "Website",
     "Industry": "Industry",
+    "authForm": {
+        "businessDetails": "Business details",
+        "storeName": "Store name",
+        "storehighlightsDescription": "Store highlights / description",
+        "storeAddress": "Store address",
+        "floorSuite": "Floor / Suite",
+        "phoneNumber": "Phone number",
+        "website": "Website",
+        "noWebsiteInstructions": "If you don’t have a website, enter a social media page, LinkedIn, or other relevant link.",
+        "active": "Active",
+        "make": "Make",
+        "model": "Model",
+        "color": "Color",
+        "year": "Year",
+        "licensePlateNumber": "License plate number",
+        "beforeGrantingDriverAccess": "Before granting new drivers to access the platform,",
+        "usesCheckrForBackgroundChecks": "uses Checkr as its third-party provider to run secure background checks to ensure safety and security of all members of its platform.",
+        "driverLicenseNumber": "Driver license number",
+        "dateOfBirth": "Date of birth",
+        "socialSecurityNumber": "Social security number",
+        "credentials": "Credentials",
+        "email": "Email",
+        "password": "Password",
+        "confirmPassword": "Confirm password",
+        "resetPassword": "Reset password",
+        "contactDetails": "Contact details",
+        "firstName": "First name",
+        "lastName": "Last name"
+    },
     "order": {
         "shipped": "Shipped",
         "receipt": "Receipt",
@@ -236,6 +265,8 @@
         "reject": "Reject",
         "accept": "Accept",
         "call": "Call",
-        "complete": "Complete"
+        "complete": "Complete",
+        "close": "CLOSE",
+        "save": "SAVE"
     }
 }

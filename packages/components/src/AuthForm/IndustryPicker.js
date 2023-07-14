@@ -48,7 +48,7 @@ export default function IndustryPicker({ isDisabled, placeholder, inputActionHan
     const isSelect = selectedItems.map((item) => localized(item.item));
     const itemSelected = interpunct(industry ? industry : isSelect);
 
-    console.log(localized(isSelect))
+    console.log(localized(isSelect));
 
     return (
         <Pressable onPress={() => showActionSheet()}>
@@ -116,7 +116,7 @@ export default function IndustryPicker({ isDisabled, placeholder, inputActionHan
                         hideActionSheet();
                     }}
                 >
-                    {localized(isDisabled ? 'CLOSE' : 'SAVE')}
+                    {localized(isDisabled ? 'global.close' : 'global.save')}
                 </Button>
             </ActionSheet>
         </Pressable>
