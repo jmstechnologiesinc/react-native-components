@@ -190,9 +190,46 @@
     "Store highlights / description": "Store highlights / description",
     "Store address": "Store address",
     "Floor / Suite": "Floor / Suite",
-    "do-not-have-a-website":"If you don’t have a website, enter a social media page, LinkedIn, or other relevant link.",
+    "do-not-have-a-website": "If you don’t have a website, enter a social media page, LinkedIn, or other relevant link.",
     "Website": "Website",
-    "Industry": "Industry"
-   
-
+    "Industry": "Industry",
+    "order": {
+        "receipt": "receipt",
+        "complete": "Complete",
+        "noDriverFound": "No nearby driver found. Plase try again later.",
+        "selfCancelled": "There was an error processing your order. Please try again later.",
+        "placed": "Waiting for confirmation from the vendor.",
+        "preparing": "Preparing Your Order.",
+        "readyforPickup": "Your order is ready.",
+        "vendorReadyforPickup": "Customer was informed the order is ready for pickup.",
+        "customerDriverPending": "Order was assigned to a staff driver. Waiting for the driver to confirm it.",
+        "driverPending": "The order was assigned to a driver. Waiting for the driver to confirm it.",
+        "driverPendingOwnStaff": "The order was assigned to a driver. Waiting for confirmation from the driver.",
+        "driverAccepted": "Delivering another order.",
+        "lookingForDriver": "Looking for a near by driver...",
+        "needAttention": "Need Attention",
+        "headingToPickup": "Heading to the pickup location.",
+        "driverRejected": "Looking for another near by driver...",
+        "arrived": "Arrived to the drop off location.",
+        "customerArrived": "Arrived to the drop off location. Meet me outside.",
+        "meetOutside": "Meet me outside.",
+        "vendorOwnStaffDeliveryContact": "Delivery by a vendor own staff. Contact the vendor for delivery status.",
+        "vendorPlaced": "Waiting for your confirmation.",
+        "headingToDropOff": "Heading to the drop off location.",
+        "noStaffDriverFound": "No staff driver found. Please assign a staff to delivery.",
+        "markAsCompleteOnDelivery": "Mark as COMPLETE when delivered.",
+        "vendorInTransit": "In transit to the drop off location.",
+        "inTransit": "In Transit",
+        "shipped": "Shipped",
+        "reject": "Reject",
+        "accept": "Accept",
+        "vendorDriverRejected": "Re-assigning delivery to another available staff driver.",
+        "verdorStaffDriverRejected": "Looking for the another staff driver..."
+    },
+    "global": {
+        "tryAgainLater": "Please try again later.",
+        "newDeliveryRequest": "New Delivery Request",
+        "cancel": "Cancel",
+        "call": "Call"
+    }
 }

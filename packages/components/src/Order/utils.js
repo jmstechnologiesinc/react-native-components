@@ -1,5 +1,6 @@
 import { USER_ROLES } from '@jmstechnologiesinc/user';
 import { firestoreTimestampToDate, interpunct, getRoleFees } from '@jmstechnologiesinc/commons';
+
 import {
     ORDER_STATUS,
     ORDER_STATUS_CANCELLED,
@@ -8,6 +9,7 @@ import {
     formatOrderID,
     orderStatusTime,
 } from '@jmstechnologiesinc/order';
+import { localized } from '../Localization/Localization';
 
 export const formatOrder = (order, role) => {
     const formattedOrderId = formatOrderID(order.id);
@@ -36,6 +38,7 @@ export const formatOrder = (order, role) => {
         formattedFulfillmentAddress: order.fulfillmentAddress.formattedAddress,
         vendorAvatar: order.vendor.photo,
         driverAvatar: order?.driver?.photo,
+        translation: localized,
     });
 
     return {
