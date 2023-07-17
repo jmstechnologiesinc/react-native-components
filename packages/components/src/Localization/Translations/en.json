@@ -220,16 +220,35 @@
         "markAsCompleteOnDelivery": "Mark as COMPLETE when delivered.",
         "vendorInTransit": "In transit to the drop off location.",
         "inTransit": "In Transit",
-        "shipped": "Shipped",
         "reject": "Reject",
         "accept": "Accept",
         "vendorDriverRejected": "Re-assigning delivery to another available staff driver.",
-        "verdorStaffDriverRejected": "Looking for the another staff driver..."
+        "verdorStaffDriverRejected": "Looking for the another staff driver...",
+        "cancelled": "Cancelled",
+        "history": "History",
+        "newRequests": "New Requests",
+        "pickingUpfromVendor": "Picking up from vendor",
+        "pending": "Pending",
+        "note": "Note",
+        "placedTime": "Placed Time",
+        "acceptedTime": "Accepted Time",
+        "shippingAddress": "Shipping Address",
+        "pickupAddress": "Pickup Address",
+        "vendorPhone": "Vendor Phone",
+        "paymentMethod": "Payment Method",
+        "distance": "Distance",
+        "duration": "Duration",
+        "deliveryDetails": "Delivery Details",
+        "pickupDetails": "Pickup Details",
+        "telemetry": "Telemetry",
+        "driverDetails": "Driver Details",
+        "item": "Item"
     },
     "global": {
         "tryAgainLater": "Please try again later.",
         "newDeliveryRequest": "New Delivery Request",
         "cancel": "Cancel",
-        "call": "Call"
+        "call": "Call",
+        "preparing": "Preparing"
     }
 }

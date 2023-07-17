@@ -23,6 +23,7 @@ import { imagekitUrl, itemSeparator } from '../utils';
 import { firestoreTimestampToDate, plurulize } from '@jmstechnologiesinc/commons';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
+import { localized } from '../Localization/Localization';
 
 const getDriverDetails = (order, role) => {
     const results = [];
@@ -93,7 +94,7 @@ const OrderView = ({
         fulfilmentDetails.push({
             key: 'cancel-note',
             title: order.cancelNote,
-            description: 'Note',
+            description: localized('order.note'),
         });
     }
 
@@ -102,14 +103,14 @@ const OrderView = ({
             key: 'status-date',
             title: firestoreTimestampToDate(order[orderStatusTime(ORDER_STATUS.placed)])?.toLocaleString(),
             icon: MATERIAL_ICONS.calendar,
-            description: 'Placed Time',
+            description: localized('order.placedTime'),
         });
     } else if (role === USER_ROLES.driver) {
         fulfilmentDetails.push({
             key: 'status-date',
             title: firestoreTimestampToDate(order[orderStatusTime(ORDER_STATUS.driverAccepted)])?.toLocaleString(),
             icon: MATERIAL_ICONS.calendar,
-            description: 'Accepted Time',
+            description: localized("order.acceptedTime"),
         });
     }
 
@@ -121,21 +122,21 @@ const OrderView = ({
             title: order.fulfillmentAddress.formattedAddress,
             icon: MATERIAL_ICONS.location,
             description:
-                order.fulfillmentMethod === FULFILLMENT_METHODS.delivery ? 'Shipping Address' : 'Pickup Address',
+                order.fulfillmentMethod === FULFILLMENT_METHODS.delivery ? localized('order.shippingAddress') : localized('order.pickupAddress'),
         });
 
         fulfilmentDetails.push({
             key: 'vendor-phone',
             title: order.vendor.phone,
             icon: MATERIAL_ICONS.call,
-            description: 'Vendor Phone',
+            description: localized('order.vendorPhone'),
         });
 
         fulfilmentDetails.push({
             key: 'payment-method',
             title: order.payment.formattedPaymentMethod,
             icon: 'credit-card',
-            description: 'Payment Method',
+            description: localized('order.paymentMethod'),
         });
 
         if (order.fulfillmentMethod === FULFILLMENT_METHODS.delivery) {
@@ -181,13 +182,13 @@ const OrderView = ({
                 key: 'telemetry-total-distance',
                 title: telemetry.formattedTotalDistance,
                 icon: MATERIAL_ICONS.call,
-                description: 'Distance',
+                description: localized('order.distance'),
             });
             telemetryList.push({
                 key: 'telemetry-total-duration',
                 title: telemetry.formattedTotalDuration,
                 icon: MATERIAL_ICONS.call,
-                description: 'Duration',
+                description: localized('order.duration'),
             });
         }
     }
@@ -276,8 +277,8 @@ const OrderView = ({
                         <List.Section
                             title={
                                 order.fulfillmentMethod === FULFILLMENT_METHODS.delivery
-                                    ? 'Delivery Details'
-                                    : 'Pickup Details'
+                                    ? localized('order.deliveryDetails')
+                                    : localized('order.pickupDetails')
                             }
                         >
                             {fulfilmentDetails.map((item, index) => (
@@ -296,7 +297,7 @@ const OrderView = ({
                     ) : null}
 
                     {driverDetails?.length > 0 ? (
-                        <List.Section title={'Driver Details'}>
+                        <List.Section title={localized('order.driverDetails')}>
                             {driverDetails.map((item, index) => (
                                 <View key={item.key}>
                                     <List.Item
@@ -315,7 +316,7 @@ const OrderView = ({
                     ) : null}
 
                     {telemetryList.length > 0 ? (
-                        <List.Section title={'Telemetry'}>
+                        <List.Section title={localized('order.telemetry')}>
                             {telemetryList.map((item, index) => (
                                 <View key={item.key}>
                                     <List.Item
@@ -332,7 +333,7 @@ const OrderView = ({
 
                     {role === USER_ROLES.vendor || role === USER_ROLES.customer ? (
                         <List.Section
-                            title={`${order.cart.products.length} ${plurulize('Item', order.cart.products.length)}`}
+                            title={`${order.cart.products.length} ${plurulize(localized('order.item'), order.cart.products.length)}`}
                         >
                             {order.cart.products.map((item) => (
                                 <View key={`product-item-${item.id}`}>
