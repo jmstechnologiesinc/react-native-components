@@ -6,6 +6,7 @@ import { VENDOR_INDUSTRIES_MAPPING } from '@jmstechnologiesinc/vendor';
 import { interpunct } from '@jmstechnologiesinc/commons';
 import { sectionPaddings } from '../ScreenWrapper/ScreenWrapperSection';
 import { imagekitUrl } from '../utils';
+import { localized } from '../Localization/Localization';
 
 const VendorListItem = ({ item, withPaddingHorizontal, onPress }) => (
     <Card
@@ -18,18 +19,19 @@ const VendorListItem = ({ item, withPaddingHorizontal, onPress }) => (
         <Card.Cover source={{ uri: imagekitUrl(item.photos) }} />
         <Card.Title
             title={item.title}
-            subtitle={interpunct([item.formattedFulfillmentMethod, item.formattedHitDistance])}
+            subtitle={interpunct([ localized(item.formattedFulfillmentMethod), item.formattedHitDistance])}
             titleVariant="headlineSmall"
             subtitleVariant="bodyLarge"
         />
         {item.industries?.length > 0 ? (
             <Card.Content>
                 <Text variant="bodyMedium">
-                    {interpunct(item?.industries.map((industry) => VENDOR_INDUSTRIES_MAPPING[industry].title))}
+                    {interpunct(item?.industries.map((industry) => localized(VENDOR_INDUSTRIES_MAPPING[industry].title)))}
                 </Text>
             </Card.Content>
         ) : null}
     </Card>
-);
+)
+
 
 export default VendorListItem;
