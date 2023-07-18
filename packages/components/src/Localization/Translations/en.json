@@ -181,7 +181,6 @@
     "There was an error retrieving your account": "There was an error retrieving your account.",
     "Hail professionally-licensed and insured taxi drivers": "Hail professionally-licensed and insured taxi drivers.",
     "Pick up riders and drive them to preferred destinations": "Pick up riders and drive them to preferred destinations.",
- 
     "Drivers, send us your application to get notify when this feature go live": "Drivers, send us your application to get notify when this feature go live.",
     "Submit Application": "Submit Application",
     "Driver Application": "Driver Application",
@@ -190,7 +189,7 @@
     "Store highlights / description": "Store highlights / description",
     "Store address": "Store address",
     "Floor / Suite": "Floor / Suite",
-    "do-not-have-a-website":"If you don’t have a website, enter a social media page, LinkedIn, or other relevant link.",
+    "do-not-have-a-website": "If you don’t have a website, enter a social media page, LinkedIn, or other relevant link.",
     "Website": "Website",
     "Industry": "Industry",
     "settings": "Settings",
@@ -209,13 +208,11 @@
     "businessDetails": "Business Details",
     "businessHours": "Business Hours",
     "fulfillmentMethods": "Fulfillment Methods",
-    "financials":"Financials",
-    "users":"Users",
+    "financials": "Financials",
+    "users": "Users",
     "customerFeebacks": "Customer Feebacks",
     "printerSetup": "Printer Setup",
-    "commingSoon": "Comming Soon"
-
-
-   
-
+    "commingSoon": "Comming Soon",
+    "go": "GO",
+    "history": "History"
 }

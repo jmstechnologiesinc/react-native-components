@@ -437,5 +437,7 @@
     "users": "Usuarios",
     "customerFeebacks": "Opiniones de los clientes",
     "printerSetup": "Configuración de impresora",
-     "commingSoon": "Próximamente"
+    "commingSoon": "Próximamente",
+    "go": "IR",
+    "history": "Historial"
 }
