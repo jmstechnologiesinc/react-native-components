@@ -104,8 +104,6 @@
     "Total": "Total",
     "Do you want to": "Do you want to",
     "Remove Item": "Remove Item",
-    "Your cart is empty": "Your cart is empty",
-    "PLACE ORDER": "PLACE ORDER",
     "Menu": "Menu",
     "Food": "Food",
     "Add to Cart": "Add to Cart",
@@ -192,7 +190,32 @@
     "Floor / Suite": "Floor / Suite",
     "do-not-have-a-website":"If you don’t have a website, enter a social media page, LinkedIn, or other relevant link.",
     "Website": "Website",
-    "Industry": "Industry"
+    "Industry": "Industry",
+    "yourCartIsEmpty": "Your Cart Is Empty",
+    "addProductsVendorsWillShowHere": "The products you add from your favorite vendors will show up here!",
+    "deliveryTo": "Delivery to",
+    "pickupAt": "Pickup at",
+    "item": "Item",
+    "addItem": "Add Item",
+    "addToCart": "Add to cart",
+    "update": "Update",
+    "outOfStock": "Out of Stock",
+    "shoppingModes": "Shopping Modes",
+    "placeOrder": "PLACE ORDER",
+    "carts": "Carts",
+    "review": "Review",
+    "placingOrder": "Placing Order...",
+     "orderProcessingError":"An error occured while proccesing your order.",
+     "paymentMethod": "Payment Method",
+     "pleaseWaitSecond": "Please, wait a second...",
+     "addPaymentMethod": "Add a payment method",
+     "noCard": "No Card"
+   
+
+
+
+
+
    
 
 }

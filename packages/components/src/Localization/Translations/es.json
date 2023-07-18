@@ -104,9 +104,6 @@
     "Total": "Total",
     "Do you want to": "Quieres",
     "Remove Item": "Remover el artículo",
-    "Your cart is empty": "Tu carrito esta vacío",
-    "PLACE ORDER": "REALIZAR PEDIDO",
-    "Place Order": "Realizar Pedido",
     "Menu": "Menu",
     "Food": "Comida",
     "Add to Cart": "Añadir al carrito",
@@ -212,7 +209,6 @@
     "Add Review": "Agregar una opinión",
     "Reviews": "Reseñas",
     "Please write your review here": "Por favor escriba su reseña aquí",
-    "CHECKOUT": "REVISA",
     "AddAddress": "Añadir dirección",
     "SAVE ADDRESS": "GUARDAR DIRECCION",
     "Country": "País",
@@ -228,7 +224,6 @@
     "This card will be removed from payment methods": "Esta tarjeta se eliminará de los métodos de pago",
     "Cards": "Tarjetas",
     "Transaction failed  please select another card": "Error de transacción, seleccione otra tarjeta",
-    "Checkout": "Revisa",
     "Payment": "Pago",
     "Deliver to": "Entregar a",
     "Bill": "Cuenta",
@@ -426,11 +421,26 @@
      "Social security number": "Número de seguro social",
      "Credentials": "Credenciales",
      "Confirm password": "Confirmar contraseña",
-    "Contact details": "Detalles de contacto"
-
-
-
-
-
-
+    "Contact details": "Detalles de contacto",
+    "yourCartIsEmpty": "Tu carrito está vacío",
+    "addProductsVendorsWillShowHere": "¡Los productos que agregues de tus vendedores favoritos aparecerán aquí!",
+    "deliveryTo": "Entrega a",
+    "pickupAt": "Recoger en",
+    "item": "Artículo",
+    "CHECKOUT":"Verificar",
+    "addItem": "Agregar artículo",
+    "addToCart": "Agregar al carrito",
+    "update": "Actualizar",
+    "outOfStock": "Agotado",
+    "shoppingModes": "Modos de compra",
+    "placeOrder": "REALIZAR PEDIDO",
+    "carts": "Carritos",
+    "review": "Revisar",
+    "placingOrder": "Realizando pedido...", 
+    "orderProcessingError": "Se produjo un error al procesar tu pedido.",
+    "paymentMethod": "Método de pago",
+    "pleaseWaitSecond": "Por favor, espera un momento...",
+    "addPaymentMethod": "Agregar un método de pago",
+    "noCard": "Sin tarjeta"
+   
 }
