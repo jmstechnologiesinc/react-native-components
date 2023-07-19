@@ -79,9 +79,9 @@ const Avatar = ({
     };
 
     const OPTIONS = [
-        { title: localized('Take photo'), value: IMAGE_PICKER_ACTIONS.launchCamera, icon: 'camera' },
+        { title: localized('takePhoto'), value: IMAGE_PICKER_ACTIONS.launchCamera, icon: 'camera' },
         {
-            title: localized('Choose from library'),
+            title: localized('chooseFromLibrary'),
             value: IMAGE_PICKER_ACTIONS.launchImageLibrary,
             icon: 'folder-image',
         },

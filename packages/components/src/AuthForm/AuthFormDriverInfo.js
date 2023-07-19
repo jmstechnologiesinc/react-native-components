@@ -13,9 +13,7 @@ const AuthFormDriverInfo = ({ licenseNumer, ssn, inputActionHandler }) => {
         <>
             <ScreenWrapper.Section>
                 <Paragraph>
-                    {localized(
-                        `Before granting new drivers to access the platform, ${Config.LEGAL_ENTITY_NAME} uses Checkr as its third-party provider to run secure background checks to ensure safety and security of all members of its platform.`
-                    )}
+                   {`${localized('grantingNewDriverAccess')} ${Config.LEGAL_ENTITY_NAME} ${localized('checkrBackgroundChecks')}`}
                 </Paragraph>
             </ScreenWrapper.Section>
 

@@ -7,6 +7,7 @@ import SegmentedButtonGroup from '../SegmentedButtonGroup/SegmentedButtonGroup';
 
 import IndustryList from '../IndustryList/IndustryList';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
+import { localized } from '../Localization/Localization';
 
 const VendorView = ({
     title,
@@ -58,7 +59,11 @@ const VendorView = ({
 
             {industryList && (
                 <ScreenWrapper.Section title={industryTitle} withPaddingHorizontal>
-                    <IndustryList data={industryList} onPress={onPressIndustryFilter} value={industryFilter} />
+                    <IndustryList
+                        data={industryList}
+                        onPress={onPressIndustryFilter}
+                        value={industryFilter}
+                    />
                 </ScreenWrapper.Section>
             )}
 
