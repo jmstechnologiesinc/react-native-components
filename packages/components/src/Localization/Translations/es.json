@@ -130,7 +130,6 @@
         "driverDetails": "Detalles del conductor",
         "item": "Artículo",
         "newOrderRequest": "Nueva solicitud de pedido"
-
     },
     "global": {
         "tryAgainLater": "Por favor, inténtalo de nuevo más tarde.",
@@ -279,6 +278,16 @@
     "skip": "Saltar",
     "done": "Listo",
     "deliveryDetails": "Detalles de entrega",
-    "pickupDetails": "Detalles de recogida"
-
+    "pickupDetails": "Detalles de recogida",
+    "manageBankAccountsAndPayouts": "Administra cuentas bancarias y configura el calendario de pagos para recibir fondos automáticamente.",
+    "addBankAccount": "Agregar una cuenta bancaria",
+    "accountHolder": "Titular de la cuenta",
+    "routingNumber": "Número de ruta",
+    "bankAccountNumber": "Número de cuenta bancaria",
+    "re-enterAccountNumber": "Volver a ingresar el número de cuenta",
+    "businessReceiveFunds": "Para que los negocios asociados reciban fondos,",
+    "payoutsToBankAccount": "realiza pagos a la cuenta bancaria.",
+    "Weekly": "Semanalmente",
+	"Instant": "Instantáneo",
+	"Daily": "Diario"
 }

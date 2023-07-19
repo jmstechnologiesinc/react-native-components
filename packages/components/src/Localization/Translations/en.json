@@ -213,7 +213,18 @@
     "skip": "Skip",
     "done": "Done",
     "deliveryDetails": "Delivery Details",
-    "pickupDetails": "Pickup Details"
+    "pickupDetails": "Pickup Details",
+    "manageBankAccountsAndPayouts": "Manage bank accounts and set up payout schedule to receive funds automaticaly.",
+    "addBankAccount": "Add a bank account",
+    "accountHolder": "Account Holder",
+    "routingNumber": "Routing Number",
+    "bankAccountNumber": "Bank Account Number",
+    "re-enterAccountNumber": "Re-enter Account Number",
+    "businessReceiveFunds": "For business associated to receive funds,",
+    "payoutsToBankAccount.": "makes payouts to bank account."
+    
+
+
 
 
 

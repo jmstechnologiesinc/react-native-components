@@ -16,7 +16,7 @@ const StripeFormAccountBank = ({
             <ScreenWrapper.Section>
                 <TextInput
                     mode="outlined"
-                    label={localized('Account Holder')}
+                    label={localized('accountHolder')}
                     value={accountHolder}
                     onChangeText={(text) => inputActionHandler('accountHolder', text)}
                 />
@@ -24,7 +24,7 @@ const StripeFormAccountBank = ({
             <ScreenWrapper.Section>
                 <TextInput
                     mode="outlined"
-                    label={localized('Routing Number')}
+                    label={localized('routingNumber')}
                     value={routingNumber}
                     onChangeText={(text) => inputActionHandler('routingNumber', text)}
                 />
@@ -32,7 +32,7 @@ const StripeFormAccountBank = ({
             <ScreenWrapper.Section>
                 <TextInput
                     mode="outlined"
-                    label={localized('Bank Account Number')}
+                    label={localized('bankAccountNumber')}
                     value={bankAccountNumber}
                     onChangeText={(text) => inputActionHandler('bankAccountNumber', text)}
                 />
@@ -40,7 +40,7 @@ const StripeFormAccountBank = ({
             <ScreenWrapper.Section>
                 <TextInput
                     mode="outlined"
-                    label={localized('Re-enter Account Number')}
+                    label={localized('re-enterAccountNumber')}
                     value={reenterAccountNumber}
                     onChangeText={(text) => inputActionHandler('reenterAccountNumber', text)}
                 />
