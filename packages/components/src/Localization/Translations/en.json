@@ -11,7 +11,7 @@
     "pleaseContactSupport": "Please Contact Support",
     "paymentProcessingError": "There was an error processing your payment method.",
     "auth/wrong-password": "The password is invalid or the user does not have a password",
-    "auth/user-not-found": "There is no user record corresponding to this identifier. The user may have been deleted.",
+    "auth/user-not-found": "The email or username provided is incorrect.",
     "auth/invalid-email": "Please enter a valid email address",
     "auth/user-disabled": "Account Disabled: Unable to Sign In. Please Contact Support for Assistance.",
     "auth/weak-password": "Please Choose a Stronger Password. Password should be at least 6 characters long and include both letters and numbers",

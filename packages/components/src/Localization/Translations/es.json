@@ -10,7 +10,7 @@
     "paymentProcessingError": "Se produjo un error al procesar tu método de pago.",
 
     "auth/wrong-password": "La contraseña es incorrecta o el usuario no tiene una contraseña",
-    "auth/user-not-found": "No se encontró ningún registro de usuario correspondiente a este identificador. Es posible que el usuario haya sido eliminado.",
+    "auth/user-not-found": "El correo electrónico o nombre de usuario proporcionado es incorrecto.",
     "auth/invalid-email": "Por favor, ingrese una dirección de correo electrónico válida",
     "auth/user-disabled": "Cuenta deshabilitada: No se puede iniciar sesión. Por favor, póngase en contacto con el soporte para obtener ayuda.",
     "auth/weak-password": "Por favor, elija una contraseña más segura. La contraseña debe tener al menos 6 caracteres y contener tanto letras como números.",
