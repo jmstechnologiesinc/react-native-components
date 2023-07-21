@@ -19,7 +19,7 @@ const AuthFormVehicle = ({
     return (
         <>
             <List.Item
-                title={localized('Active')}
+                title={localized('active')}
                 disabled={true}
                 right={() => (
                     <Switch
@@ -33,7 +33,7 @@ const AuthFormVehicle = ({
                 <ScreenWrapper.Section title={title}>
                     <TextInput
                         mode="outlined"
-                        label={localized('Make')}
+                        label={localized('make')}
                         value={make}
                         disabled={isDisabled}
                         onChangeText={(text) => inputActionHandler('make', text)}
@@ -42,7 +42,7 @@ const AuthFormVehicle = ({
                 <ScreenWrapper.Section>
                     <TextInput
                         mode="outlined"
-                        label={localized('Model')}
+                        label={localized('model')}
                         value={model}
                         disabled={isDisabled}
                         onChangeText={(text) => inputActionHandler('model', text)}
@@ -51,7 +51,7 @@ const AuthFormVehicle = ({
                 <ScreenWrapper.Section>
                     <TextInput
                         mode="outlined"
-                        label={localized('Color')}
+                        label={localized('color')}
                         value={color}
                         disabled={isDisabled}
                         onChangeText={(text) => inputActionHandler('color', text)}
@@ -61,7 +61,7 @@ const AuthFormVehicle = ({
                 <ScreenWrapper.Section>
                     <TextInput
                         mode="outlined"
-                        label={localized('Year')}
+                        label={localized('year')}
                         value={year}
                         disabled={isDisabled}
                         keyboardType="numeric"
@@ -71,7 +71,7 @@ const AuthFormVehicle = ({
                 <ScreenWrapper.Section>
                     <TextInput
                         mode="outlined"
-                        label={localized('License Plate Number')}
+                        label={localized('licensePlateNumber')}
                         value={licensePlateNumber}
                         disabled={isDisabled}
                         keyboardType="numeric"

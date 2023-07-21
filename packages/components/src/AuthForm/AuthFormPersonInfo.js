@@ -7,10 +7,10 @@ import { localized } from '../Localization/Localization';
 const AuthFormPersonInfo = ({ isDisabled, firstName, inputActionHandler, lastName, phone }) => {
     return (
         <>
-            <ScreenWrapper.Section title={localized('Contact details')}>
+            <ScreenWrapper.Section title={localized('contactDetails')}>
                 <TextInput
                     mode="outlined"
-                    label={localized('First name')}
+                    label={localized('firstName')}
                     value={firstName}
                     disabled={isDisabled}
                     onChangeText={(text) => inputActionHandler('firstName', text)}
@@ -19,7 +19,7 @@ const AuthFormPersonInfo = ({ isDisabled, firstName, inputActionHandler, lastNam
             <ScreenWrapper.Section>
                 <TextInput
                     mode="outlined"
-                    label={localized('Last name')}
+                    label={localized('lastName')}
                     value={lastName}
                     disabled={isDisabled}
                     onChangeText={(text) => inputActionHandler('lastName', text)}
@@ -28,7 +28,7 @@ const AuthFormPersonInfo = ({ isDisabled, firstName, inputActionHandler, lastNam
             <ScreenWrapper.Section>
                 <TextInput
                     mode="outlined"
-                    label={localized('Phone number')}
+                    label={localized('phoneNumber')}
                     value={phone}
                     disabled={isDisabled}
                     keyboardType="numeric"
