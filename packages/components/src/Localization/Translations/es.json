@@ -187,7 +187,7 @@
     "recentLocation": "Ubicación reciente",
     "locationPermissionRequired": "Se requiere permiso de ubicación",
     "locationPermissionMessage": "Esta aplicación necesita tu ubicación para buscar tus vendedores cercanos favoritos. Por favor, habilita el permiso de ubicación para esta aplicación en la configuración de tu teléfono.",
-    "Current Location": "Ubicación actual",
+    "currentLocation": "Ubicación actual",
     "adjustLocation": "Ajustar  ubicación",
     "deviceLocationMismatch": "Se detectó que tu dispositivo está lejos de tu dirección de envío preferida.",
     "goToSettings": "Ir a Configuración",
@@ -294,6 +294,12 @@
 	"Daily": "Diario",
     "rideAndShareApp": "Aplicación de viajes y compartir",
     "getStarted": "Comenzar",
-    "sendLink": "Enviar enlace"
+    "sendLink": "Enviar enlace", 
+    "addressInfo": "Información de dirección",
+"floor#": "Piso #",
+"buildingBusinessName": "Nombre del edificio o negocio",
+"note": "Nota",
+"instructionsDelivery": "Agrega instrucciones para ayudar con la entrega", 
+"shippingAddress": "Dirección de envío"
    
 }

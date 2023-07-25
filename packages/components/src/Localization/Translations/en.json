@@ -237,5 +237,13 @@
     "credentials": "Credentials",
     "phoneNumber": "Phone number",
     "confirmPassword": "Confirm password",
-    "contactDetails": "Contact details"
+    "contactDetails": "Contact details",
+    "addressInfo": "Address Info",
+    "floor#": "Floor #",
+    "buildingBusinessName": "Building or Business Name",
+    "note": "Note",
+    "instructionsDelivery": "Add instructions to help you with delivery",
+    "shippingAddress": "Shipping Address",
+    "currentLocation" : "Current Location"
+
 }
