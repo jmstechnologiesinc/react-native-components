@@ -244,6 +244,22 @@
     "note": "Note",
     "instructionsDelivery": "Add instructions to help you with delivery",
     "shippingAddress": "Shipping Address",
-    "currentLocation" : "Current Location"
+    "currentLocation" : "Current Location", 
+    "noNearbyDriversForDeliveryPickup":"No nearby drivers found for delivery. You can pickup your order or can try again later.",
+    "deliveryNotAvailable": "Delivery is not available at this moment. You can pick up your order or can try again later.",
+    "noNearbyDriversForDelivery": "No nearby drivers found for delivery. Please try again later.",
+    "pickupNotOfferedAndNoDriversFound":"Pickup is not offered by this vendor, and no nearby drivers were found for delivery. Please try again later.",
+    "pickupNotAvailableOnlyDelivery": "Pickup is not available at this moment. Only delivery is offered.",
+    "confirmAction": "Are you sure you want to",
+    "no": "No",
+    "yes": "Yes",
+    "enableLocationPermission": "Enable location permission",
+    "startDeliveryRequestsFromAssociatedVendors": "to start getting delivery requests from associated vendors.",
+    "pendingDeliveryRequest": "pending delivery request",
+    "youHave": "You have",
+    "acceptRequestReject": "to accept or reject",
+    "newDeliveryRequest": "new delivery request"
+
+
 
 }
