@@ -13,16 +13,14 @@ const AuthFormDriverInfo = ({ licenseNumer, ssn, inputActionHandler }) => {
         <>
             <ScreenWrapper.Section>
                 <Paragraph>
-                    {localized(
-                        `Before granting new drivers to access the platform, ${Config.LEGAL_ENTITY_NAME} uses Checkr as its third-party provider to run secure background checks to ensure safety and security of all members of its platform.`
-                    )}
+                   {`${localized('grantingNewDriverAccess')} ${Config.LEGAL_ENTITY_NAME} ${localized('checkrBackgroundChecks')}`}
                 </Paragraph>
             </ScreenWrapper.Section>
 
             <ScreenWrapper.Section>
                 <TextInput
                     mode="outlined"
-                    label={localized('Driver license number')}
+                    label={localized('driverLicenseNumber')}
                     secureTextEntry={true}
                     value={licenseNumer}
                     onChangeText={(text) => inputActionHandler('licenseNumer', text)}
@@ -31,7 +29,7 @@ const AuthFormDriverInfo = ({ licenseNumer, ssn, inputActionHandler }) => {
             <ScreenWrapper.Section>
                 <TextInput
                     mode="outlined"
-                    label={localized('Date of birth')}
+                    label={localized('dateBirth')}
                     placeholder="MM/DD/YY"
                     value={dateOfBirth}
                     keyboardType="numeric"
@@ -44,7 +42,7 @@ const AuthFormDriverInfo = ({ licenseNumer, ssn, inputActionHandler }) => {
             <ScreenWrapper.Section>
                 <TextInput
                     mode="outlined"
-                    label={localized('Social security number')}
+                    label={localized('socialSecurityNumber')}
                     value={ssn}
                     secureTextEntry={true}
                     onChangeText={(text) => inputActionHandler('ssn', text)}

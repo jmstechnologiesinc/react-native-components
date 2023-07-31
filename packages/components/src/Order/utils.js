@@ -1,5 +1,6 @@
 import { USER_ROLES } from '@jmstechnologiesinc/user';
 import { firestoreTimestampToDate, interpunct, getRoleFees } from '@jmstechnologiesinc/commons';
+
 import {
     ORDER_STATUS,
     ORDER_STATUS_CANCELLED,
@@ -8,6 +9,7 @@ import {
     formatOrderID,
     orderStatusTime,
 } from '@jmstechnologiesinc/order';
+import { localized } from '../Localization/Localization';
 
 export const formatOrder = (order, role) => {
     const formattedOrderId = formatOrderID(order.id);
@@ -36,6 +38,7 @@ export const formatOrder = (order, role) => {
         formattedFulfillmentAddress: order.fulfillmentAddress.formattedAddress,
         vendorAvatar: order.vendor.photo,
         driverAvatar: order?.driver?.photo,
+        translation: localized,
     });
 
     return {
@@ -55,30 +58,30 @@ export const formatOrder = (order, role) => {
 
 export const ORDER_LIST_STATUS = {
     ...ORDER_STATUS,
-    cancelled: 'Cancelled',
-    preparing: 'Preparing',
+    cancelled: localized('order.cancelled'),
+    preparing: localized('order.preparing'),
 };
 
 const ORDER_LIST_STATUS_MAPPING = {
-    [ORDER_LIST_STATUS.completed]: 'History',
-    [ORDER_LIST_STATUS.placed]: 'New Requests',
-    [ORDER_LIST_STATUS.inTransit]: 'In-Transit',
-    [ORDER_LIST_STATUS.readyforPickup]: 'Ready for Pickup',
-    [ORDER_LIST_STATUS.cancelled]: 'Cancelled',
-    [ORDER_LIST_STATUS.preparing]: 'Preparing',
+    [ORDER_LIST_STATUS.completed]: localized('order.history'),
+    [ORDER_LIST_STATUS.placed]: localized('order.newRequests'),
+    [ORDER_LIST_STATUS.inTransit]: localized('In Transit'),
+    [ORDER_LIST_STATUS.readyforPickup]: localized('order.readyForPickup'),
+    [ORDER_LIST_STATUS.cancelled]: localized('order.cancelled'),
+    [ORDER_LIST_STATUS.preparing]: localized('order.preparing'),
 };
 
 const ROLE_ORDER_LIST_STATUS_MAPPING = {
     [USER_ROLES.vendor]: ORDER_LIST_STATUS_MAPPING,
     [USER_ROLES.customer]: {
         ...ORDER_LIST_STATUS_MAPPING,
-        [ORDER_LIST_STATUS.placed]: 'Placed',
+        [ORDER_LIST_STATUS.placed]: localized('Placed'),
     },
     [USER_ROLES.driver]: {
         ...ORDER_LIST_STATUS_MAPPING,
-        [ORDER_STATUS.driverPending]: 'New Requests',
-        [ORDER_STATUS.driverAccepted]: 'Pending',
-        [ORDER_STATUS.shipped]: 'Picking up from vendor',
+        [ORDER_STATUS.driverPending]: localized('order.newRequests'),
+        [ORDER_STATUS.driverAccepted]: localized('order.pending'),
+        [ORDER_STATUS.shipped]: localized('order.pickingUpfromVendor'),
     },
 };
 
