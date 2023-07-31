@@ -5,6 +5,7 @@ import { interpunct } from '@jmstechnologiesinc/commons';
 import VendorStatus from './VendorStatus';
 import DriverStatus from './DriverStatus';
 import OrderStatusWrapper from './OrderStatusWrapper';
+import { localized } from '../Localization/Localization';
 
 const OrderStatus = ({
     role,
@@ -41,6 +42,7 @@ const OrderStatus = ({
 
     const renderStatuses = [];
 
+
     if (
         enableHeaderStatus &&
         (headerStatus.overlines.length > 0 ||
@@ -53,7 +55,7 @@ const OrderStatus = ({
                 key="headerStatus"
                 overline={interpunct(headerStatus.overlines)}
                 header={headerStatus.title}
-                subHeader={headerStatus.description}
+                subHeader={localized(headerStatus.description)}
                 avatar={headerStatus.avatar}
                 chips={headerStatus.chips}
                 showOverline={showHeaderOverline}

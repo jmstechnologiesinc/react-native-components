@@ -4,6 +4,7 @@ import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import * as JMSList from '../List/List';
 
 import { calculatableAccoutingList } from '@jmstechnologiesinc/cart';
+import { localized } from '../Localization/Localization';
 
 const feesListItem = (feeList) => {
     if (!feeList?.length) {
@@ -30,7 +31,7 @@ const feesListItem = (feeList) => {
         results.push(
             <JMSList.Item
                 key={feeItem.id}
-                title={feeItem.label}
+                title={localized(feeItem.label)}
                 description={feeItem.description}
                 metaTitle={feeItem.formattedValue}
                 {...styles}
