@@ -2,6 +2,9 @@ import React from 'react';
 
 import * as JMSList from '../List/List';
 
+import { moderateScale } from 'react-native-size-matters';
+
+
 
 const ProductListItem = ({
     title,
@@ -37,6 +40,7 @@ const ProductListItem = ({
             onPress={onPress}
             titleNumberOfLines={0}
             descriptionNumberOfLines={4}
+            style={{ height: moderateScale(100) }}
         />
     );
 };
