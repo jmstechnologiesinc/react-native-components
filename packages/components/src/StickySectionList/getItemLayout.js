@@ -1,5 +1,6 @@
+import { moderateScale } from "react-native-size-matters"
+
 export default ({
-  getItemHeight,
   getSeparatorHeight = () => 0,
   getSectionHeaderHeight = () => 0,
   getSectionFooterHeight = () => 0,
@@ -13,6 +14,7 @@ export default ({
       ? listHeaderHeight()
       : listHeaderHeight
 
+    
   while (i < index) {
     switch (elementPointer.type) {
       case "SECTION_HEADER": {
@@ -34,6 +36,13 @@ export default ({
         const sectionData = data[sectionIndex].data
 
         const rowIndex = elementPointer.index
+
+         const isData = data[sectionIndex].data[rowIndex];
+
+        const setDynamicSize =  isData.description === undefined  && isData.photo === null ?  90 : 100
+
+      const getItemHeight = () => setDynamicSize;
+      
 
         offset += getItemHeight(sectionData[rowIndex], sectionIndex, rowIndex)
         elementPointer.index += 1
@@ -64,6 +73,11 @@ export default ({
       break
     case "ROW":
       const rowIndex = elementPointer.index
+      const isData = data[sectionIndex].data[rowIndex]
+      const setDynamicSize =  isData.description === undefined && isData.photo === null ?  90 : 100;
+      
+      const getItemHeight = () => setDynamicSize;
+
       length = getItemHeight(
         data[sectionIndex].data[rowIndex],
         sectionIndex,

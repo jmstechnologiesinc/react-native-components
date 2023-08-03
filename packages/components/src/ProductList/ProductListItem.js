@@ -2,10 +2,6 @@ import React from 'react';
 
 import * as JMSList from '../List/List';
 
-import { moderateScale } from 'react-native-size-matters';
-
-
-
 const ProductListItem = ({
     title,
     photo,
@@ -30,6 +26,9 @@ const ProductListItem = ({
         descriptionList.push(description);
     }
 
+    const setDynamicSize =  description === undefined  && photo === null ?  80 : 100
+
+
     return (
         <JMSList.Item
             title={title}
@@ -39,8 +38,8 @@ const ProductListItem = ({
             metaQuantity={cartQuantity}
             onPress={onPress}
             titleNumberOfLines={0}
-            descriptionNumberOfLines={4}
-            style={{ height: moderateScale(100) }}
+            descriptionNumberOfLines={2}
+            style={{ height: setDynamicSize }}
         />
     );
 };

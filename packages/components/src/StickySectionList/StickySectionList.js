@@ -64,7 +64,6 @@ const StickyList = ({
     );
 
      const getItemLayout = sectionListGetItemLayout({
-        getItemHeight: () => moderateScale(100),
         getSectionHeaderHeight: () => moderateScale(50),
         getSectionFooterHeight: () => 0,
         listHeaderHeight: layoutHeight,

@@ -7,6 +7,7 @@ import StickySectionList from '../StickySectionList/StickySectionList';
 import ProductListItem from './ProductListItem';
 import { imagekitUrl } from '../utils';
 
+
 const keyExtractor = (productItem) => productItem.id;
 
 const ProductListSticky = ({
@@ -21,7 +22,7 @@ const ProductListSticky = ({
     <StickySectionList
         {...props}
         sections={sections}
-        renderSectionHeader={({ section: { title } }) => (
+           renderSectionHeader={({ section: { title } }) => (
             <List.Subheader style={{ height: moderateScale(50) }}>{title}</List.Subheader>
         )}
         keyExtractor={keyExtractor}
