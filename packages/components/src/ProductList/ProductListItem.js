@@ -1,6 +1,7 @@
 import React from 'react';
 
 import * as JMSList from '../List/List';
+import { localized } from '../Localization/Localization';
 
 const ProductListItem = ({
     title,
@@ -15,7 +16,7 @@ const ProductListItem = ({
     const descriptionList = [];
 
     if (isOutofStock) {
-        descriptionList.push('Out of Stock');
+        descriptionList.push(localized('outOfStock'));
     }
 
     if (formattedQuantity) {
@@ -27,7 +28,6 @@ const ProductListItem = ({
     }
 
     const setDynamicSize =  description === undefined  && photo === null ?  80 : 100
-
 
     return (
         <JMSList.Item

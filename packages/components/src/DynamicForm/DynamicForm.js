@@ -12,6 +12,7 @@ import {
     dynamicFormValidateGroup,
 } from '@jmstechnologiesinc/commons';
 import DynamicFormSwitch from './DynamicFormSwitch';
+import {localized} from '../Localization/Localization'
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const animatedValue = new Animated.Value(0);
@@ -92,7 +93,7 @@ const DynamicForm = ({
             };
         }
 
-        alteredForm = dynamicFormValidateGroup(item, alteredForm);
+        alteredForm = dynamicFormValidateGroup(item, alteredForm, localized);
 
         alteredForm = {
             ...alteredForm,

@@ -316,7 +316,15 @@
     "newDeliveryRequest": "nueva solicitud de entrega",
     "locationPicker": "Selector de ubicación",
     "userDataRetrievalIssue": "Hubo un problema al recuperar los datos del usuario.",
-    "accountRetrievalError": "Se produjo un error al recuperar tu cuenta."
-
+    "accountRetrievalError": "Se produjo un error al recuperar tu cuenta.",
+    "chooseUpTo": "Elegir hasta",
+	"required": "Requerido",
+	"atLeast": "al menos",
+	"requiredLeast": "Requerido al menos",
+	"selected": "seleccionado",
+	"quantityExceedsStock": "La cantidad supera el stock disponible. Solo hay",
+	"available": "disponible",
+    "of": "de",
+    "itemOutOfStock": "Este artículo está agotado."
 
 }
