@@ -28,7 +28,6 @@ const PhotoGallery = ({ photos }) => {
         </TouchableRipple>
     );
 
-
     return (
         <>
             {Array.isArray(photos) ? (
@@ -43,11 +42,12 @@ const PhotoGallery = ({ photos }) => {
                     />
                 </ScreenWrapperSection>
             ) : mainPhotoUri !== null ? (
-                <FastImage source={{ uri: mainPhotoUri }} style={styles.mainImage} />
-            ): null}
-
-            
-
+                <FastImage
+                    source={{ uri: mainPhotoUri }}
+                    style={styles.mainImage}
+                    resizeMode={FastImage.resizeMode.stretch}
+                />
+            ) : null}
         </>
     );
 };
