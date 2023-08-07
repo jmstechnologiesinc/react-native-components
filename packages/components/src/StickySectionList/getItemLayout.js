@@ -39,7 +39,7 @@ export default ({
 
          const isData = data[sectionIndex].data[rowIndex];
 
-        const setDynamicSize =  isData.description === undefined  && isData.photo === null ?  90 : 100
+        const setDynamicSize =  isData.description === undefined  && isData.photo === null ?   moderateScale(90) : moderateScale(100)
 
       const getItemHeight = () => setDynamicSize;
       
@@ -74,7 +74,7 @@ export default ({
     case "ROW":
       const rowIndex = elementPointer.index
       const isData = data[sectionIndex].data[rowIndex]
-      const setDynamicSize =  isData.description === undefined && isData.photo === null ?  90 : 100;
+      const setDynamicSize =  isData.description === undefined && isData.photo === null ?  moderateScale(90) : moderateScale(100);
       
       const getItemHeight = () => setDynamicSize;
 
