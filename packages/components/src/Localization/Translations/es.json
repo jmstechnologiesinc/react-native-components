@@ -318,13 +318,18 @@
     "userDataRetrievalIssue": "Hubo un problema al recuperar los datos del usuario.",
     "accountRetrievalError": "Se produjo un error al recuperar tu cuenta.",
     "chooseUpTo": "Elegir hasta",
-	"required": "Requerido",
-	"atLeast": "al menos",
-	"requiredLeast": "Requerido al menos",
-	"selected": "seleccionado",
-	"quantityExceedsStock": "La cantidad supera el stock disponible. Solo hay",
-	"available": "disponible",
+    "required": "Requerido",
+    "atLeast": "al menos",
+    "requiredLeast": "Requerido al menos",
+    "selected": "seleccionado",
+    "quantityExceedsStock": "La cantidad supera el stock disponible. Solo hay",
+    "available": "disponible",
     "of": "de",
-    "itemOutOfStock": "Este artículo está agotado."
-
+    "itemOutOfStock": "Este artículo está agotado.",
+    "addNewPaymentMethod": "Agregar nuevo método de pago.",
+    "remove": "Eliminar",
+    "cameraPermissionDenied": "Permiso de cámara denegado",
+    "allowAccessToPhotos": "Por favor, permite el acceso a tus fotos",
+    "enableCameraPermission": "Para tener acceso a la cámara, debes habilitar el permiso de cámara en la configuración de tu aplicación",
+    "enablePhotosPermission": "Para tener acceso a las fotos, debes habilitar el permiso de fotos en la configuración de tu aplicación"
 }

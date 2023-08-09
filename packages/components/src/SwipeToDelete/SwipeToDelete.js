@@ -5,6 +5,7 @@ import { View } from 'react-native';
 import RNSwipeable from 'react-native-gesture-handler/Swipeable';
 import { MD3LightTheme, Text, TouchableRipple } from '@jmstechnologiesinc/react-native-paper';
 import { moderateScale } from 'react-native-size-matters';
+import { localized } from '@jmstechnologiesinc/react-native-components';
 
 let row = [];
 let prevOpenedRow;
@@ -26,7 +27,7 @@ const rightSwipeActions = (onClick) => {
                     paddingHorizontal: moderateScale(24),
                 }}
             >
-                Delete
+                {localized('remove')}
             </Text>
         </TouchableRipple>
     );

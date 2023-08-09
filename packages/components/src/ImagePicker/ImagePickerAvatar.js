@@ -42,16 +42,12 @@ const Avatar = ({
 
     useEffect(() => {
         imagePickerRef.current = new ImagePickerAPI({
-            titlePermissionCamera: localized('Camera permission denied'),
-            titlePermissionPhotos: localized('Please allow access to your photos'),
-            descriptionPermissionCamera: localized(
-                'To have access to the camera you must enable the camera permission in your application settings'
-            ),
-            descriptionPermissionPhotos: localized(
-                'To have access to the photos you must enable the photos permission in your application settings'
-            ),
-            cancelPermission: localized('Cancel'),
-            settingPermission: localized('Go to Settings'),
+            titlePermissionCamera: localized('cameraPermissionDenied'),
+            titlePermissionPhotos: localized('allowAccessToPhotos'),
+            descriptionPermissionCamera: localized('enableCameraPermission'),
+            descriptionPermissionPhotos: localized('enablePhotosPermission'),
+            cancelPermission: localized('global.cancel'),
+            settingPermission: localized('goToSettings'),
         });
     }, []);
 
