@@ -1,7 +1,8 @@
 import React from 'react';
 
 import * as JMSList from '../List/List';
-
+import { localized } from '../Localization/Localization';
+import { moderateScale } from 'react-native-size-matters';
 
 const ProductListItem = ({
     title,
@@ -16,7 +17,7 @@ const ProductListItem = ({
     const descriptionList = [];
 
     if (isOutofStock) {
-        descriptionList.push('Out of Stock');
+        descriptionList.push(localized('outOfStock'));
     }
 
     if (formattedQuantity) {
@@ -27,6 +28,8 @@ const ProductListItem = ({
         descriptionList.push(description);
     }
 
+    const setDynamicSize = description === undefined && photo === null ? moderateScale(90) : moderateScale(100);
+
     return (
         <JMSList.Item
             title={title}
@@ -36,7 +39,8 @@ const ProductListItem = ({
             metaQuantity={cartQuantity}
             onPress={onPress}
             titleNumberOfLines={0}
-            descriptionNumberOfLines={4}
+            descriptionNumberOfLines={2}
+            style={{ height: setDynamicSize }}
         />
     );
 };

@@ -54,7 +54,7 @@ const ActionPaymentSheet = ({
                 </List.Section>
                 <ScreenWrapper.Section withPaddingHorizontal style={{ flexDirection: 'row' }}>
                     <Button icon={MATERIAL_ICONS.increment} onPress={() => onAddPaymentMethod()}>
-                        {localized('Add new payment method')}
+                        {localized('addNewPaymentMethod')}
                     </Button>
                 </ScreenWrapper.Section>
             </ActionSheet>

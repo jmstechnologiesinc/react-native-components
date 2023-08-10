@@ -16,7 +16,7 @@ const VendorListItem = ({ item, withPaddingHorizontal, onPress }) => (
         }}
         onPress={() => onPress(item)}
     >
-        <Card.Cover source={{ uri: imagekitUrl(item.photos) }} />
+        <Card.Cover source={{ uri: imagekitUrl(`tr:w-850,h-720/${item.photos}`) }} />
         <Card.Title
             title={item.title}
             subtitle={interpunct([localized(item.formattedFulfillmentMethod), item.formattedHitDistance])}

@@ -6,6 +6,7 @@ import { Banner, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
 import * as JMSList from '../List/List';
 import PhotoGallery from '../PhotoGallery/PhotoGallery';
+import { localized } from '@jmstechnologiesinc/react-native-components';
 
 const ProductView = ({
     title,
@@ -20,7 +21,7 @@ const ProductView = ({
     const descriptionList = [formattedPrice];
 
     if (isOutofStock) {
-        message.push('This item is out of stock');
+        message.push(localized('itemOutOfStock'));
     }
 
     if (fulfillmentMethodErrorMessage) {
@@ -35,7 +36,7 @@ const ProductView = ({
         <>
             {message.length > 0 && (
                 <Banner visible={true} actions={[]} elevation={1} style={{ marginBottom: MD3LightTheme.spacing.x2 }}>
-                    {message.join(', ')}. Please try again later.
+                    {message.join(', ')} {localized('global.tryAgainLater')}
                 </Banner>
             )}
 

@@ -41,9 +41,13 @@ const PhotoGallery = ({ photos }) => {
                         keyExtractor={(_, index) => `photo-gallery-${index}`}
                     />
                 </ScreenWrapperSection>
-            ) : (
-                <FastImage source={{ uri: mainPhotoUri }} style={styles.mainImage} />
-            )}
+            ) : mainPhotoUri !== null ? (
+                <FastImage
+                    source={{ uri: mainPhotoUri }}
+                    style={styles.mainImage}
+                    resizeMode={FastImage.resizeMode.stretch}
+                />
+            ) : null}
         </>
     );
 };
