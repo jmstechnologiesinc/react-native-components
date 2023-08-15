@@ -246,7 +246,7 @@
     "requestReviewCompleteProcess": "Estamos revisando tu solicitud. Por lo general, tardamos menos de un día en completar el proceso.",
     "editFormInstructions": "Si necesitas editar este formulario, realiza los cambios necesarios. Por lo general, tardamos menos de un día en completar el proceso.",
     "processCompletionTime": "Por lo general, toma menos de una semana completar este proceso. Para obtener actualizaciones de estado, inicia sesión en Checkr, nuestro proveedor de verificación de antecedentes.",
-    "requiredContactInfo": "You will be asked for the email address and phone number associated with your",
+    "requiredContactInfo": "Se le pedirá la dirección de correo electrónico y el número de teléfono asociados con",
     "checkStatusOnCheckr": "Verificar estado en Checkr",
     "backgroundCheck": "Verificación de antecedentes",
     "driverRequirements": "Requisitos para conductores",
@@ -332,4 +332,5 @@
     "allowAccessToPhotos": "Por favor, permite el acceso a tus fotos",
     "enableCameraPermission": "Para tener acceso a la cámara, debes habilitar el permiso de cámara en la configuración de tu aplicación",
     "enablePhotosPermission": "Para tener acceso a las fotos, debes habilitar el permiso de fotos en la configuración de tu aplicación"
+   
 }
