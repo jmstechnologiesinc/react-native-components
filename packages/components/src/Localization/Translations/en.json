@@ -51,7 +51,7 @@
         "selfCancelled": "There was an error processing your order. Please try again later.",
         "placed": "Waiting for confirmation from the vendor.",
         "preparing": "Preparing Your Order.",
-        "readyforPickup": "Your order is ready.",
+        "readyForPickup": "Your order is ready.",
         "vendorReadyforPickup": "Customer was informed the order is ready for pickup.",
         "customerDriverPending": "Order was assigned to a staff driver. Waiting for the driver to confirm it.",
         "driverPending": "The order was assigned to a driver. Waiting for the driver to confirm it.",
