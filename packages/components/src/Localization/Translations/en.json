@@ -277,5 +277,10 @@
     "allowAccessToPhotos": "Please allow access to your photos",
     "enableCameraPermission": "To have access to the camera you must enable the camera permission in your application settings",
     "enablePhotosPermission": "To have access to the photos you must enable the photos permission in your application settings",
-    "viewCart": "View Cart"
+    "viewCart": "View Cart",
+    "emptyCart": "Empty Cart?",
+    "differentFulfillmentMethod": "You cart contains items with a different fulfillment method. Adding this item for",
+    "emptyAndCreateOrder": "will empty the cart and create a new order.",
+    "createNewOrder": "Create new order",
+    "enterNewLocation": "Enter a new location"
 }
