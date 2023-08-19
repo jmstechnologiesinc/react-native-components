@@ -331,6 +331,8 @@
     "cameraPermissionDenied": "Permiso de cámara denegado",
     "allowAccessToPhotos": "Por favor, permite el acceso a tus fotos",
     "enableCameraPermission": "Para tener acceso a la cámara, debes habilitar el permiso de cámara en la configuración de tu aplicación",
-    "enablePhotosPermission": "Para tener acceso a las fotos, debes habilitar el permiso de fotos en la configuración de tu aplicación"
+
+    "enablePhotosPermission": "Para tener acceso a las fotos, debes habilitar el permiso de fotos en la configuración de tu aplicación",
+    "viewCart": "Ver Carrito"
    
 }
