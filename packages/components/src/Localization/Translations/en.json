@@ -282,5 +282,11 @@
     "differentFulfillmentMethod": "You cart contains items with a different fulfillment method. Adding this item for",
     "emptyAndCreateOrder": "will empty the cart and create a new order.",
     "createNewOrder": "Create new order",
-    "enterNewLocation": "Enter a new location"
+    "enterNewLocation": "Enter a new location",
+    "orderUpdates": "Order Updates",
+    "newArrivals": "New Arrivals",
+    "promotions": "Promotions",
+    "linkSentSuccessfully": "Link sent successfully",
+    "resetPasswordEmail": "Kindly check your email and follow the link to reset your password",
+    "useGPSLocation": "Use GPS Location"
 }

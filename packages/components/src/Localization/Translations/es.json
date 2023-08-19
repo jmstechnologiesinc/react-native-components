@@ -336,5 +336,11 @@
     "emptyCart": "¿Vaciar carrito?",
     "differentFulfillmentMethod": "Su carrito contiene artículos con un método de cumplimiento diferente. Agregar este artículo para",
     "emptyAndCreateOrder": "vaciará el carrito y creará un nuevo pedido.",
-    "createNewOrder": "Crear nuevo pedido"
+    "createNewOrder": "Crear nuevo pedido",
+    "useGPSLocation": "Utilizar ubicación GPS",
+    "orderUpdates": "Actualizaciones del Pedido",
+    "newArrivals": "Nuevas Llegadas",
+    "promotions": "Promociones",
+    "linkSentSuccessfully": "Enlace enviado exitosamente",
+    "resetPasswordEmail": "Por favor, revise su correo electrónico y siga el enlace para restablecer su contraseña"
 }
