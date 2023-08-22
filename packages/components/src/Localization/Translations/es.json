@@ -15,6 +15,7 @@
     "auth/weak-password": "Por favor, elija una contraseña más segura. La contraseña debe tener al menos 6 caracteres y contener tanto letras como números.",
     "auth/expired-action-code": "El enlace para restablecer la contraseña ha caducado. Por favor, solicite un nuevo enlace para restablecer su contraseña.",
     "auth/invalid-action-code": "El enlace para restablecer la contraseña no es válido. Por favor, solicite un nuevo enlace para restablecer su contraseña.",
+    "auth/network-request-failed": "Problema de Red: No se pudo completar su acción debido a un problema de red. Por favor, intente nuevamente.",
     "createAccount": "Crea una cuenta",
     "rgisterYourBusiness": "Registrar tu negocio",
     "becomeDriver": "Convertirse en conductor",
@@ -342,5 +343,6 @@
     "newArrivals": "Nuevas Llegadas",
     "promotions": "Promociones",
     "linkSentSuccessfully": "Enlace enviado exitosamente",
-    "resetPasswordEmail": "Por favor, revise su correo electrónico y siga el enlace para restablecer su contraseña"
+    "resetPasswordEmail": "Por favor, revise su correo electrónico y siga el enlace para restablecer su contraseña",
+    "pending": "Pendiente"
 }
