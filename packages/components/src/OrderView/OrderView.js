@@ -170,8 +170,9 @@ const OrderView = ({
 
     const telemetryList = [];
     if (
-        role === USER_ROLES.driver ||
-        (role === USER_ROLES.vendor && order.driver?.deliveryMethod === DELIVERY_METHODS.ownStaff)
+        (role === USER_ROLES.driver || 
+        (role === USER_ROLES.vendor && order.driver?.deliveryMethod === DELIVERY_METHODS.ownStaff)) && 
+        order.driver?.telemetry
     ) {
         const telemetry = ORDER_STATUS_CANCELLED(order.status)
             ? order.driver.telemetry?.estimatedTravel
