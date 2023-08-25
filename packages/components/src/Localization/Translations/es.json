@@ -133,7 +133,8 @@
         "telemetry": "Telemetría",
         "driverDetails": "Detalles del conductor",
         "item": "Artículo",
-        "newOrderRequest": "Nueva solicitud de pedido"
+        "newOrderRequest": "Nueva solicitud de pedido",
+        "inTransit": "En tránsito"
     },
     "global": {
         "tryAgainLater": "Por favor, inténtalo de nuevo más tarde.",
@@ -344,5 +345,6 @@
     "promotions": "Promociones",
     "linkSentSuccessfully": "Enlace enviado exitosamente",
     "resetPasswordEmail": "Por favor, revise su correo electrónico y siga el enlace para restablecer su contraseña",
-    "pending": "Pendiente"
+    "pending": "Pendiente",
+    "from": "De"
 }

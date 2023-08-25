@@ -17,7 +17,7 @@
     "auth/weak-password": "Please Choose a Stronger Password. Password should be at least 6 characters long and include both letters and numbers",
     "auth/expired-action-code": "The Password Reset Link has Expired. Please Request a New Link to Reset Your Password.",
     "auth/invalid-action-code": "The Password Reset Link is Invalid. Please Request a New Link to Reset Your Password.",
-     "auth/network-request-failed": "Network Issue: Your action couldn't be completed due to a network problem. Please attempt it again.",
+    "auth/network-request-failed": "Network Issue: Your action couldn't be completed due to a network problem. Please attempt it again.",
     "registerYourBusiness": "Register your business",
     "resetPassword": "Reset password",
     "explorePlatform": "Explore our platform",
@@ -290,7 +290,6 @@
     "linkSentSuccessfully": "Link sent successfully",
     "resetPasswordEmail": "Kindly check your email and follow the link to reset your password",
     "useGPSLocation": "Use GPS Location",
-    "pending": "Pending"
-   
-
+    "pending": "Pending",
+    "from": "From"
 }
