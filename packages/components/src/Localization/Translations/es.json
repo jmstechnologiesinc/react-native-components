@@ -346,5 +346,19 @@
     "linkSentSuccessfully": "Enlace enviado exitosamente",
     "resetPasswordEmail": "Por favor, revise su correo electrónico y siga el enlace para restablecer su contraseña",
     "pending": "Pendiente",
-    "from": "De"
+    "from": "De",
+    "platformCommission": "Comisión de plataforma",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "taxes": "Impuestos",
+    "tips": "Propinas",
+    "platformFee": "Comisión de plataforma",
+    "baseFare": "Tarifa base",
+    "smallOrderFee": "Tarifa de pedido pequeño",
+    "deliveryFee": "Costos de envío",
+    "pickupFee": "Tarifa de recogida",
+    "pretaxTotal": "Total antes de impuestos",
+    "aftertaxTotal": "Total después de impuestos",
+    "netPayout": "Pago neto",
+    "deliveryFare": "Tarifa de entrega"
 }

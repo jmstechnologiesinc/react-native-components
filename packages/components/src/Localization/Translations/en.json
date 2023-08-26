@@ -291,5 +291,19 @@
     "resetPasswordEmail": "Kindly check your email and follow the link to reset your password",
     "useGPSLocation": "Use GPS Location",
     "pending": "Pending",
-    "from": "From"
+    "from": "From",
+    "platformCommission": "Platform Commission",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "taxes": "Taxes",
+    "tips": "Tips",
+    "platformFee": "Platform Fee",
+    "baseFare": "Base Fare",
+    "smallOrderFee": "Small Order Fee",
+    "deliveryFee": "Delivery Fee",
+    "pickupFee": "Pickup Fee",
+    "pretaxTotal": "Pretax Total",
+    "aftertaxTotal": "Aftertax Total",
+    "netPayout": "Net Payout",
+    "deliveryFare": "Delivery Fare"
 }
