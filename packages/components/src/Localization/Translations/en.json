@@ -305,5 +305,8 @@
     "pretaxTotal": "Pretax Total",
     "aftertaxTotal": "Aftertax Total",
     "netPayout": "Net Payout",
-    "deliveryFare": "Delivery Fare"
+    "deliveryFare": "Delivery Fare",
+    "estimateDeliveryTime": "Estimate Delivery Time",
+    "estimatePrepTime": "Estimate Prep Time",
+    "distance": "Distance"
 }

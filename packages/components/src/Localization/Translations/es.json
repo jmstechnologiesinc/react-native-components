@@ -360,5 +360,8 @@
     "pretaxTotal": "Total antes de impuestos",
     "aftertaxTotal": "Total después de impuestos",
     "netPayout": "Pago neto",
-    "deliveryFare": "Tarifa de entrega"
+    "deliveryFare": "Tarifa de entrega",
+    "estimateDeliveryTime": "Tiempo estimado de entrega",
+    "distance": "Distancia",
+    "estimatePrepTime": "Tiempo estimado de preparación."
 }
