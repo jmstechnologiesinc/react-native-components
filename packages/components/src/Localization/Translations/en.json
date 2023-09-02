@@ -292,7 +292,7 @@
     "useGPSLocation": "Use GPS Location",
     "pending": "Pending",
     "from": "From",
-    "platformCommission": "Platform Commission(%{percentage})",
+    "platformCommission": "Platform Commission",
     "total": "Total",
     "subtotal": "Subtotal",
     "taxes": "Taxes",

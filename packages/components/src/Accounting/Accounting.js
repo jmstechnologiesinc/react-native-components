@@ -4,20 +4,6 @@ import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import * as JMSList from '../List/List';
 
 import { calculatableAccoutingList } from '@jmstechnologiesinc/cart';
-import { localized } from '../Localization/Localization';
-
-const isTranslatePlatformCommission = (title) => {
-    const regex = /^platformCommission\((\d+%)\)$/;
-
-    const match = title.match(regex);
-
-    if (match) {
-        const percentage = match[1];
-        return localized('platformCommission', { percentage });
-    } else {
-        return localized(title);
-    }
-};
 
 const feesListItem = (feeList) => {
     if (!feeList?.length) {
@@ -25,6 +11,7 @@ const feesListItem = (feeList) => {
     }
 
     const results = [];
+
 
     for (const feeItem of calculatableAccoutingList(feeList)) {
         const styles =
@@ -44,7 +31,7 @@ const feesListItem = (feeList) => {
         results.push(
             <JMSList.Item
                 key={feeItem.id}
-                title={isTranslatePlatformCommission(feeItem.label)}
+                title={feeItem.label}
                 description={feeItem.description}
                 metaTitle={feeItem.formattedValue}
                 {...styles}

@@ -347,7 +347,7 @@
     "resetPasswordEmail": "Por favor, revise su correo electrónico y siga el enlace para restablecer su contraseña",
     "pending": "Pendiente",
     "from": "De",
-    "platformCommission": "Comisión de plataforma(%{percentage})",
+    "platformCommission": "Comisión de plataforma",
     "total": "Total",
     "subtotal": "Subtotal",
     "taxes": "Impuestos",
