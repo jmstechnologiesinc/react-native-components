@@ -3,7 +3,7 @@ import React from 'react';
 import { Chip, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import * as Tabs from '../Tabs/Tabs';
 
-const ChipList = ({ options, compact, mode = 'outlined', currentIndex, onPress, listSectionStyle }) => (
+const ChipList = ({ options=[], compact, mode = 'outlined', currentIndex, onPress, listSectionStyle }) => (
     <Tabs.Scrollable currentIndex={currentIndex} listSectionStyle={listSectionStyle}>
         {options.map((item, index) => (
             <Chip

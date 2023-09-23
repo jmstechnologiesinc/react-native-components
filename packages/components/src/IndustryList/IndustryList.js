@@ -7,7 +7,6 @@ import { localized } from '../Localization/Localization';
 
 const IndustryList = ({ data, value, onPress }) => (
     <ChipList
-        title={localized('industries')}
         options={data.map((item) => localized(VENDOR_INDUSTRIES_MAPPING[item].title))}
         currentIndex={data.indexOf(value)}
         onPress={(index) => onPress(data[index])}
