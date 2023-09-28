@@ -80,7 +80,7 @@ class ImagePickerAPI {
     chooseFromLibrary() {
         return new Promise((resolve) => {
             checkAndAskForPermissionMediaLibrary()
-                .then(() => launchImageLibrary({ mediaType: 'photo', quality: 0.5, includeBase64: true }))
+                .then(() => launchImageLibrary({ mediaType: 'photo', quality: 0.5, includeBase64: true, allowsMultipleSelection: true }))
                 .then((response) => {
                     if (response.didCancel) {
                         console.log('User cancelled image picker');

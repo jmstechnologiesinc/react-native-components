@@ -31,8 +31,7 @@ const imagekitUrl = (photos) => {
     if (photos === null || photos === undefined) {
         return null;
     } else if (Array.isArray(photos)) {
-        const path = getMainPhoto(photos);
-        return `${urlImageKit}/${path}`;
+       return photos?.map((photo) => `${urlImageKit}/tr:w-850,h-720/${photo}`)
     } else if (photos.includes?.('https://')) {
         return photos;
     }
