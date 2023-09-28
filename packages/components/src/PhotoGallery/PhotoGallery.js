@@ -4,6 +4,8 @@ import { View, FlatList, StyleSheet } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
 import { MD3LightTheme, TouchableRipple } from '@jmstechnologiesinc/react-native-paper';
+import { USER_ROLES } from '@jmstechnologiesinc/user';
+
 
 import ScreenWrapperSection from '../ScreenWrapper/ScreenWrapperSection';
 
@@ -20,7 +22,7 @@ const renderSeparator = () => (
 
 
 
-const PhotoGallery = ({ photos, onRemove, vendor }) => {
+const PhotoGallery = ({ photos, onRemove, role }) => {
 
     const [selectedPhoto, setSelectedPhoto] = useState();
 
@@ -30,7 +32,7 @@ const PhotoGallery = ({ photos, onRemove, vendor }) => {
 
 
     const renderItem = ({ item, index }) => (
-        <TouchableRipple onPress={() => vendor ? onRemove(index) : setSelectedPhoto(item) }>
+        <TouchableRipple onPress={() => role  === USER_ROLES.vendor ? onRemove(index) : setSelectedPhoto(item) }>
             <FastImage source={{ uri: item }} style={styles.photo} resizeMode={FastImage.resizeMode.stretch} />
         </TouchableRipple>
     );
@@ -38,7 +40,7 @@ const PhotoGallery = ({ photos, onRemove, vendor }) => {
     return (
         <>
             {
-                vendor === true ? <ScreenWrapperSection>
+                role === USER_ROLES.vendor ? <ScreenWrapperSection>
                     <FlatList
                         data={photos}
                         horizontal
