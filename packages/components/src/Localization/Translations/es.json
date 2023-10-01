@@ -308,6 +308,7 @@
     "pickupNotOfferedAndNoDriversFound": "Este vendedor no ofrece recogida y no se encontraron conductores cercanos para la entrega. Por favor, inténtalo de nuevo más tarde.",
     "pickupNotAvailableOnlyDelivery": "La recogida no está disponible en este momento. Solo se ofrece entrega.",
     "confirmAction": "¿Estás seguro de que quieres",
+    "confirmActionRemoveImage": "¿Estás seguro de que deseas eliminar esta imagen?",
     "no": "No",
     "yes": "Sí",
     "enableLocationPermission": "Permitir acceso a la ubicación",

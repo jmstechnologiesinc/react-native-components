@@ -31,6 +31,7 @@ const Avatar = ({
     title,
     variant = 'avatar',
     icon = 'account',
+    defaultIcon = MATERIAL_ICONS.addDocument,
     size = moderateScale(150),
     options = [],
     isDisabled,
@@ -103,7 +104,7 @@ const Avatar = ({
             ) : (
                 <ScreenWrapper.Section withPaddingHorizontal style={{ flexDirection: 'row' }}>
                     <Button
-                        icon={MATERIAL_ICONS.addDocument}
+                        icon={defaultIcon}
                         onPress={isDisabled ? null : showActionSheet}
                         mode="outlined"
                     >
