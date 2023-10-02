@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Banner, MD3LightTheme, Card, Text, TouchableRipple } from '@jmstechnologiesinc/react-native-paper';
 
@@ -13,6 +13,12 @@ const VendorView = ({
     formattedErrors = [],
     onPressVendorOverview,
 }) => {
+
+    const [selectedPhoto, setSelectedPhoto] = useState();
+
+    const onPress = (index) => {
+        setSelectedPhoto(index);
+    };
     return (
         <>
             {formattedErrors ? (
@@ -21,7 +27,7 @@ const VendorView = ({
                 </Banner>
             ) : null}
 
-            <PhotoGallery photos={photos} />
+            <PhotoGallery photos={photos}  onPress={onPress} selectedPhoto={selectedPhoto}/>
 
             <TouchableRipple
                 onPress={onPressVendorOverview}

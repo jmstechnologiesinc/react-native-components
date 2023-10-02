@@ -31,7 +31,7 @@ const Avatar = ({
     title,
     variant = 'avatar',
     icon = 'account',
-    defaultIcon = MATERIAL_ICONS.addDocument,
+    withPaddingHorizontal= 'true',
     size = moderateScale(150),
     options = [],
     isDisabled,
@@ -102,14 +102,15 @@ const Avatar = ({
                     </TouchableRipple>
                 </ScreenWrapper.Section>
             ) : (
-                <ScreenWrapper.Section withPaddingHorizontal style={{ flexDirection: 'row' }}>
+                <ScreenWrapper.Section  withPaddingHorizontal={withPaddingHorizontal} style={{ flexDirection: 'row' }}>
                     <Button
-                        icon={defaultIcon}
+                        icon={MATERIAL_ICONS.increment}
                         onPress={isDisabled ? null : showActionSheet}
-                        mode="outlined"
+                        style={{ flexDirection: 'row', paddingTop: 0 }}
                     >
                         {localized(title)}
                     </Button>
+                
                 </ScreenWrapper.Section>
             )}
 
