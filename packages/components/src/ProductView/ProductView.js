@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { View } from 'react-native';
 
@@ -6,7 +6,7 @@ import { Banner, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
 import * as JMSList from '../List/List';
 import PhotoGallery from '../PhotoGallery/PhotoGallery';
-import { localized } from '@jmstechnologiesinc/react-native-components';
+import { localized } from '../Localization/Localization';
 
 const ProductView = ({
     title,
@@ -17,6 +17,7 @@ const ProductView = ({
     fulfillmentMethodErrorMessage,
     onLayoutTitleOffsetY,
 }) => {
+    const [selectedPhoto, setSelectedPhoto] = useState();
     const message = [];
     const descriptionList = [formattedPrice];
 
@@ -32,6 +33,13 @@ const ProductView = ({
         descriptionList.push(description);
     }
 
+
+    const onPress= (index) => {
+        setSelectedPhoto(index);
+    };
+
+ 
+
     return (
         <>
             {message.length > 0 && (
@@ -40,7 +48,7 @@ const ProductView = ({
                 </Banner>
             )}
 
-            <PhotoGallery photos={photos} />
+            <PhotoGallery photos={photos}  onPress={onPress} selectedPhoto={selectedPhoto} />
 
             <View
                 style={{ paddingBottom: MD3LightTheme.spacing.x2 }}
