@@ -17,7 +17,6 @@ const ProductView = ({
     fulfillmentMethodErrorMessage,
     onLayoutTitleOffsetY,
 }) => {
-    const [selectedPhoto, setSelectedPhoto] = useState();
     const message = [];
     const descriptionList = [formattedPrice];
 
@@ -33,11 +32,6 @@ const ProductView = ({
         descriptionList.push(description);
     }
 
-
-    const onPress= (index) => {
-        setSelectedPhoto(index);
-    };
-
  
 
     return (
@@ -48,7 +42,7 @@ const ProductView = ({
                 </Banner>
             )}
 
-            <PhotoGallery photos={photos}  onPress={onPress} selectedPhoto={selectedPhoto} />
+            <PhotoGallery photos={photos} />
 
             <View
                 style={{ paddingBottom: MD3LightTheme.spacing.x2 }}

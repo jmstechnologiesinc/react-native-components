@@ -250,7 +250,7 @@ const OrderView = ({
             <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
                 <View style={{ flex: 1 }}>
                     {role === USER_ROLES.customer || role === USER_ROLES.driver ? (
-                        <PhotoGallery photos={imagekitUrl([formattedOrder.photo])} />
+                        <PhotoGallery photos={imagekitUrl([formattedOrder.photo])}  showNav={false} />
                     ) : null}
 
                     <OrderStatus
