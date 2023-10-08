@@ -14,11 +14,7 @@ const VendorView = ({
     onPressVendorOverview,
 }) => {
 
-    const [selectedPhoto, setSelectedPhoto] = useState();
 
-    const onPress = (index) => {
-        setSelectedPhoto(index);
-    };
     return (
         <>
             {formattedErrors ? (
@@ -27,7 +23,7 @@ const VendorView = ({
                 </Banner>
             ) : null}
 
-            <PhotoGallery photos={photos}  onPress={onPress} selectedPhoto={selectedPhoto}/>
+            <PhotoGallery photos={[photos]} showNav={false} />
 
             <TouchableRipple
                 onPress={onPressVendorOverview}
