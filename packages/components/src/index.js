@@ -22,6 +22,7 @@ export { default as PhotoGallery } from './PhotoGallery/PhotoGallery';
 export { default as Accounting } from './Accounting/Accounting';
 export { default as Fast2ImageKit } from './Fast2ImageKit/Fast2ImageKit';
 export { default as ChipList } from './ChipList/ChipList';
+export { default as OptionPicker } from './OptionPicker/OptionPicker';
 export { default as OrderStatus } from './Order/OrderStatus';
 export { makeLinkingCall, itemSeparator, showActionSheet, hideActionSheet, imagekitUrl } from './utils';
 export { formatOrder, orderListStatus, groupedOrderListToSectionList, ORDER_LIST_STATUS } from './Order/utils';

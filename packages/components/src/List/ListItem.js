@@ -71,7 +71,13 @@ const ListItem = ({
           )
         : description;
 
-    const renderLeft = photo ? (props) => <List.Image style={props.style} source={{ uri: photo }} /> : left;
+        
+    const renderLeft = photo ? (props) => (
+        <>
+            {left?.(props)}
+            <List.Image style={props.style} source={{ uri: photo }} />
+        </>
+    ) : left;
 
     const renderRight = right
         ? right

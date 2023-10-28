@@ -38,8 +38,7 @@ const ProductListSticky = ({
                 description={item.description}
                 formattedPrice={item.price.formattedValue}
                 cartQuantity={productItemQuantityMapping?.[item.id]}
-                quantity={item.quantity}
-                isOutofStock={item.isOutofStock}
+                isOutofStock={item.availability.isOutofStock}
                 fulfillmentMethodFilter={fulfillmentMethodFilter}
                 onPress={() => onPress(item)}
             />

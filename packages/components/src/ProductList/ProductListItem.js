@@ -12,6 +12,7 @@ const ProductListItem = ({
     cartQuantity,
     isOutofStock,
     formattedQuantity,
+    left,
     onPress,
 }) => {
     const descriptionList = [];
@@ -40,7 +41,8 @@ const ProductListItem = ({
             onPress={onPress}
             titleNumberOfLines={0}
             descriptionNumberOfLines={2}
-            style={{ height: setDynamicSize }}
+            left={left}
+            //style={{ height: setDynamicSize }}
         />
     );
 };

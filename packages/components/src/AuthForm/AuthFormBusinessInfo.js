@@ -2,10 +2,83 @@ import React from 'react';
 
 import { TextInput, Caption } from '@jmstechnologiesinc/react-native-paper';
 
+import { VENDOR_INDUSTRIES_MAPPING,VENDOR_INDUSTRIES } from '@jmstechnologiesinc/vendor';
+
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
-import IndustryPicker from './IndustryPicker';
+import OptionPicker from '../OptionPicker/OptionPicker';
 
+export const INDUSTRY_LIST = [
+    {
+        title: localized(VENDOR_INDUSTRIES_MAPPING.Restaurant.title),
+        value:  VENDOR_INDUSTRIES.Restaurant
+    },
+    {
+        title: localized(VENDOR_INDUSTRIES_MAPPING.GroceryGourmet.title),
+        value:  VENDOR_INDUSTRIES.GroceryGourmet
+
+    },
+    {
+        title: localized(VENDOR_INDUSTRIES_MAPPING.Liquor.title),
+        value:  VENDOR_INDUSTRIES.Liquor
+
+    },
+    {
+        title: localized(VENDOR_INDUSTRIES_MAPPING.Pharmacy.title),
+        value:  VENDOR_INDUSTRIES.Pharmacy
+
+    },
+    {
+        title: localized(VENDOR_INDUSTRIES_MAPPING.VideoGames.title),
+        value:  VENDOR_INDUSTRIES.VideoGames
+
+    },
+    {
+        title: localized(VENDOR_INDUSTRIES_MAPPING.LuggageTravelGear.title),
+        value:  VENDOR_INDUSTRIES.LuggageTravelGear
+
+    },
+    {
+        title: localized(VENDOR_INDUSTRIES_MAPPING.ToysGames.title),
+        value:  VENDOR_INDUSTRIES.ToysGames
+
+    },
+
+    {
+        title: localized(VENDOR_INDUSTRIES_MAPPING.GardenOutdoor.title),
+        value:  VENDOR_INDUSTRIES.GardenOutdoor
+
+    },
+    {
+        title: localized(VENDOR_INDUSTRIES_MAPPING.Electronics.title),
+        value:  VENDOR_INDUSTRIES.Electronics
+
+    },
+    {
+        title: localized(VENDOR_INDUSTRIES_MAPPING.Computers.title),
+        value:  VENDOR_INDUSTRIES.Computers
+
+    },
+    {
+        title: localized(VENDOR_INDUSTRIES_MAPPING.CellPhones.title),
+        value:  VENDOR_INDUSTRIES.CellPhones
+
+    },
+    {
+        title: localized(VENDOR_INDUSTRIES_MAPPING.Books.title),
+        value:  VENDOR_INDUSTRIES.Books
+
+    },
+    {
+        title: localized(VENDOR_INDUSTRIES_MAPPING.BeautyPersonalCare.title),
+        value:  VENDOR_INDUSTRIES.BeautyPersonalCare
+
+    },
+    {
+        title: localized(VENDOR_INDUSTRIES_MAPPING.Baby.title),
+        value:  VENDOR_INDUSTRIES.Baby
+    },
+];
 const AuthFormBusinessInfo = ({
     isDisabled,
     title = localized('businessDetails'),
@@ -17,10 +90,10 @@ const AuthFormBusinessInfo = ({
     showPhone = true,
     website,
     phone,
-    industryPlaceholder,
     inputActionHandler,
     industry,
 }) => {
+    console.log(industry)
     return (
         <>
             <ScreenWrapper.Section title={title}>
@@ -86,14 +159,14 @@ const AuthFormBusinessInfo = ({
                     </Caption>
                 </ScreenWrapper.Section>
             ) : null}
-            <ScreenWrapper.Section>
-                <IndustryPicker
-                    isDisabled={isDisabled}
-                    placeholder={industryPlaceholder}
-                    inputActionHandler={inputActionHandler}
-                    industry={industry}
-                />
-            </ScreenWrapper.Section>
+           <OptionPicker
+                isDisabled={isDisabled}
+                chipListTitle={localized('Industries')}
+                addButtonTitle={localized('addIndustry')}
+                preSelectedOptions={industry}
+                options={INDUSTRY_LIST}
+                onPress={(selectedOptions) => inputActionHandler('industry', selectedOptions)}
+            />
         </>
     );
 };

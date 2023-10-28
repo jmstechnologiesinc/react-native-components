@@ -11,9 +11,6 @@ const TabList = ({ children, style }) => (
 export default TabList;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    },
     row: {
         flexDirection: 'row',
     },
