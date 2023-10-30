@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { View, FlatList, StyleSheet } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
-import { MD3LightTheme, TouchableRipple, List  } from '@jmstechnologiesinc/react-native-paper';
-import { getMainPhoto } from '@jmstechnologiesinc/commons';
+import { MD3LightTheme, TouchableRipple } from '@jmstechnologiesinc/react-native-paper';
+
 
 import ScreenWrapperSection from '../ScreenWrapper/ScreenWrapperSection';
 
-
 import FastImage from 'react-native-fast-image';
 
- 
+
+
 const renderSeparator = () => (
     <View
         style={{
@@ -21,35 +21,38 @@ const renderSeparator = () => (
     />
 );
 
-const PhotoGallery = ({ photos, onPress, onLongPress, selectedPhoto }) => {
- 
-
-    useEffect(() => {
-        onPress?.(getMainPhoto(photos))
-    }, [!photos])
+const PhotoGallery = ({ photos, showNav = true, onLongPress }) => {
+    const [selectedIndex, setSelectedIndex] = useState(0);
 
 
     const renderItem = ({ item, index }) => (
-        <TouchableRipple onPress={() => onPress?.(item)} onLongPress={() => onLongPress?.(index)}>
+        <TouchableRipple onPress={() => setSelectedIndex(index)} onLongPress={() => {
+            onLongPress?.()
+        }}>
             <FastImage source={{ uri: item }} style={styles.photo} resizeMode={FastImage.resizeMode.stretch} />
         </TouchableRipple>
     );
 
+
     return (
         <>
-             {selectedPhoto && <FastImage source={{ uri: Array.isArray(photos) ? selectedPhoto : photos }} style={styles.mainImage} resizeMode={FastImage.resizeMode.stretch} />}
-                    {photos?.length > 1 &&  Array.isArray(photos) && (
-                        <ScreenWrapperSection>
-                            <FlatList
-                                data={photos}
-                                horizontal
-                                ItemSeparatorComponent={renderSeparator}
-                                renderItem={renderItem}
-                                showsHorizontalScrollIndicator={false}
-                                keyExtractor={(_, index) => `photo-gallery-${index}`}
-                            />
-                        </ScreenWrapperSection>
-                    )}
+        {
+            photos?.length >= 1 && (<FastImage source={{ uri: photos?.[selectedIndex] }} style={styles.mainImage} resizeMode={FastImage.resizeMode.stretch} />)
+        }
+
+            {showNav  && Array.isArray(photos) && ( <ScreenWrapperSection>
+                    <FlatList
+                        data={photos}
+                        horizontal
+                        ItemSeparatorComponent={renderSeparator}
+                        renderItem={renderItem}
+                        showsHorizontalScrollIndicator={false}
+                        keyExtractor={(_, index) => `photo-gallery-${index}`}
+                    />
+                </ScreenWrapperSection>)}
+
+          
+
         </>
     );
 };
