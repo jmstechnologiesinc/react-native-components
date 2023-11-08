@@ -37,10 +37,10 @@ const PhotoGallery = ({ photos, showNav = true, onLongPress }) => {
     return (
         <>
         {
-            photos?.length >= 1 && (<FastImage source={{ uri: photos?.[selectedIndex] }} style={styles.mainImage} resizeMode={FastImage.resizeMode.stretch} />)
+            photos?.length > 0 && (<FastImage source={{ uri: photos[selectedIndex] }} style={styles.mainImage} resizeMode={FastImage.resizeMode.stretch} />)
         }
 
-            {showNav  && Array.isArray(photos) && ( <ScreenWrapperSection>
+            {showNav  && photos?.length > 0 && ( <ScreenWrapperSection>
                     <FlatList
                         data={photos}
                         horizontal
