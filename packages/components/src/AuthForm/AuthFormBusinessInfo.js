@@ -6,7 +6,7 @@ import { VENDOR_INDUSTRIES_MAPPING,VENDOR_INDUSTRIES } from '@jmstechnologiesinc
 
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
-import OptionPicker from '../OptionPicker/OptionPicker';
+import OptionPicker from '../OptionPicker/NestedOptionPicker';
 
 export const INDUSTRY_LIST = [
     {

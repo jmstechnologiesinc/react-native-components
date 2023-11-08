@@ -79,18 +79,19 @@ const ListItem = ({
         </>
     ) : left;
 
-    const renderRight = right
-        ? right
-        : metaTitle || metaQuantity
+    const renderRight = metaTitle || metaQuantity
         ? (props) => (
-              <JMSList.MetaBadged
-                  title={metaTitle}
-                  quantity={metaQuantity}
-                  titleVariant={metaTitleVariant}
-                  titleStyle={{ color: props.color }}
-              />
+            <>
+                <JMSList.MetaBadged
+                    title={metaTitle}
+                    quantity={metaQuantity}
+                    titleVariant={metaTitleVariant}
+                    titleStyle={{ color: props.color }}
+                />
+                {right?.(props)}
+              </>
           )
-        : null;
+        : right;
 
     return (
         <List.Item
