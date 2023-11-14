@@ -2,23 +2,19 @@
 import React, { useRef } from 'react'
 import ImagePicker from './ImagePickerAvatar';
 import { localized } from '../Localization/Localization';
-import ImageGallery from '../PhotoGallery/PhotoGallery'
+import Gallery from './Gallery'
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper'
-import { imagekitUrl } from '../utils'
+
 
 import ActionSheet from 'react-native-actions-sheet';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { List } from '@jmstechnologiesinc/react-native-paper';
 
 
-const PhotoGallery = ({ onChange, onRemove, photos  }) => {
+const PhotoGallery = ({ onChange, onRemove, photos, inputDispatchPayloadRef  }) => {
 
     const actionSheetRef = useRef();
     const insets = useSafeAreaInsets();
-
-    const onLongPress = () => {
-        actionSheetRef.current.show();
-    };
 
 
     const OPTIONS = [
@@ -41,15 +37,10 @@ const PhotoGallery = ({ onChange, onRemove, photos  }) => {
     return (
         <>
             <ScreenWrapper.Section title={localized('Photos')}>
-                <ImageGallery
-                    onLongPress={onLongPress}
-                    photos={photos?.map((photo) => {
-                        if (photo.uri) {
-                            return photo.uri;
-                        } else {
-                            return imagekitUrl(photo);
-                        }
-                    })}
+                <Gallery
+                    photos={photos}
+                    onRemove={onRemove}
+                    inputDispatchPayloadRef={inputDispatchPayloadRef}
                 />
             </ScreenWrapper.Section>
             <ImagePicker
