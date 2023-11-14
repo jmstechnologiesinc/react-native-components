@@ -11,7 +11,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { List } from '@jmstechnologiesinc/react-native-paper';
 
 
-const PhotoGallery = ({ photos, onRemove, onDragEnd,  onChange  }) => {
+const PhotoGallery = ({ photos,   onChange  }) => {
 
     const actionSheetRef = useRef();
     const insets = useSafeAreaInsets();
@@ -39,15 +39,18 @@ const PhotoGallery = ({ photos, onRemove, onDragEnd,  onChange  }) => {
             <ScreenWrapper.Section title={localized('Photos')}>
                 <Gallery
                     photos={photos}
-                    onRemove={onRemove}
-                    onDragEnd={onDragEnd}
+                    onChange={onChange}
                 />
             </ScreenWrapper.Section>
             <ImagePicker
                 variant="button"
                 title={localized('Add Photo')}
                 withPaddingHorizontal={false}
-                onChange={onChange}
+                onChange={(photo) => {
+                        const newPhotos = photos ? [...photos, photo] : [photo];
+                        onChange('photos', newPhotos);
+                }}
+              
 
             />
 

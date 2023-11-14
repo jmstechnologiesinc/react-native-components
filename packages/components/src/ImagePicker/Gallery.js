@@ -12,7 +12,7 @@ import FastImage from 'react-native-fast-image';
 import { IconButton } from '@jmstechnologiesinc/react-native-paper';
 import { imagekitUrl } from '@jmstechnologiesinc/react-native-components/lib/utils';
 
-const photos = ({ photos,  onRemove, onDragEnd }) => {
+const photos = ({ photos,  onChange }) => {
 
     const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -61,6 +61,21 @@ const photos = ({ photos,  onRemove, onDragEnd }) => {
             }
         })
 
+        const onRemove = (index) => {
+            const lastIndex = photos.length - 1;
+            
+            if(lastIndex === index){
+                setSelectedIndex(0)
+            }
+           
+            let newPhotos = photos.slice();
+            newPhotos.splice(index, 1);
+            return onChange('photos', newPhotos);
+        };
+    
+        const onDragEnd = ({ data: newData }) => {
+            onChange('photos', newData);
+        };
     
     return (
         <>
