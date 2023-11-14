@@ -12,16 +12,10 @@ import FastImage from 'react-native-fast-image';
 import { IconButton } from '@jmstechnologiesinc/react-native-paper';
 import { imagekitUrl } from '@jmstechnologiesinc/react-native-components/lib/utils';
 
-const Gallery = ({ photos, inputDispatchPayloadRef, onRemove }) => {
+const photos = ({ photos,  onRemove, onDragEnd }) => {
 
-    const [gallery, setGallery] = useState(photos);
     const [selectedIndex, setSelectedIndex] = useState(0);
 
-    useEffect(() => {
-        setGallery(photos)
-    }, [photos]);
-
-   
     const renderItem =({ item, drag, isActive, getIndex }) => {
         const isSelected = getIndex() === selectedIndex;
         const photo = item.uri ? item.uri :  imagekitUrl(item)
@@ -59,7 +53,7 @@ const Gallery = ({ photos, inputDispatchPayloadRef, onRemove }) => {
         );
     }
 
-        const photo = gallery?.map((photo) => {
+        const photo = photos?.map((photo) => {
             if (photo.uri) {
                 return photo.uri;
             } else {
@@ -67,22 +61,18 @@ const Gallery = ({ photos, inputDispatchPayloadRef, onRemove }) => {
             }
         })
 
-        const onDragEnd = ({ data: newData }) => {
-            setGallery(newData);
-            inputDispatchPayloadRef('photos', newData)
-          };
-
+    
     return (
         <>
             {
-                gallery?.length > 0 && (<FastImage source={{ uri: photo[selectedIndex] }} style={styles.mainImage}  />)
+                photos?.length > 0 && (<FastImage source={{ uri: photo[selectedIndex] }} style={styles.mainImage}  />)
             }
 
-            { gallery?.length > 0 && (<ScreenWrapperSection>
+            { photos?.length > 0 && (<ScreenWrapperSection>
                 <NestableScrollContainer>
                     <DraggableFlatList
                         horizontal
-                        data={gallery}
+                        data={photos}
                         onDragEnd={onDragEnd}
                         keyExtractor={(item) =>  item.fileName ? item.fileName : item}
                         renderItem={renderItem}
@@ -124,4 +114,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Gallery;
+export default photos;

@@ -11,7 +11,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { List } from '@jmstechnologiesinc/react-native-paper';
 
 
-const PhotoGallery = ({ onChange, onRemove, photos, inputDispatchPayloadRef  }) => {
+const PhotoGallery = ({ photos, onRemove, onDragEnd,  onChange  }) => {
 
     const actionSheetRef = useRef();
     const insets = useSafeAreaInsets();
@@ -40,7 +40,7 @@ const PhotoGallery = ({ onChange, onRemove, photos, inputDispatchPayloadRef  }) 
                 <Gallery
                     photos={photos}
                     onRemove={onRemove}
-                    inputDispatchPayloadRef={inputDispatchPayloadRef}
+                    onDragEnd={onDragEnd}
                 />
             </ScreenWrapper.Section>
             <ImagePicker
