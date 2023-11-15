@@ -48,7 +48,7 @@ const PhotoGallery = ({ photos,   onChange  }) => {
                 withPaddingHorizontal={false}
                 onChange={(photo) => {
                         const newPhotos = photos ? [...photos, photo] : [photo];
-                        onChange('photos', newPhotos);
+                        onChange(newPhotos);
                 }}
               
 

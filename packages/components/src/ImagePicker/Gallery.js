@@ -70,11 +70,11 @@ const photos = ({ photos,  onChange }) => {
            
             let newPhotos = photos.slice();
             newPhotos.splice(index, 1);
-            return onChange('photos', newPhotos);
+            return onChange(newPhotos);
         };
     
         const onDragEnd = ({ data: newData }) => {
-            onChange('photos', newData);
+            onChange(newData);
         };
     
     return (
