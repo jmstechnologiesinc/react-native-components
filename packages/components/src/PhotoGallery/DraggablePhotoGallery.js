@@ -1,18 +1,20 @@
-import React, {  useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { StyleSheet, TouchableOpacity,  } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
-
+import { IconButton } from '@jmstechnologiesinc/react-native-paper';
 import DraggableFlatList, { ScaleDecorator, NestableScrollContainer } from 'react-native-draggable-flatlist';
+import { MD3Colors } from '@jmstechnologiesinc/react-native-paper';
+
 
 import ScreenWrapperSection from '../ScreenWrapper/ScreenWrapperSection';
-
-import FastImage from 'react-native-fast-image';
-
-import { IconButton } from '@jmstechnologiesinc/react-native-paper';
 import { imagekitUrl } from '@jmstechnologiesinc/react-native-components/lib/utils';
+import PhotoGalleryMainImage from './PhotoGalleryMainImage';
+import PhotoGalleryItem from './PhotoGalleryItem'
+import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 
-const photos = ({ photos,  onChange }) => {
+const DraggablePhotoGallery = ({ photos,  onChange }) => {
+    
 
     const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -33,13 +35,13 @@ const photos = ({ photos,  onChange }) => {
                     ]}
                 >
                  
-                    <FastImage source={{ uri: photo }} style={styles.photo} resizeMode={FastImage.resizeMode.stretch} />
+                    <PhotoGalleryItem photo={photo}/>
 
                     {isSelected && (
                         <IconButton
-                            icon="delete"
+                            icon={MATERIAL_ICONS.remove}
+                            iconColor={MD3Colors.error50}
                             mode="contained"
-                            size={moderateScale(24)}
                             onPress={() => onRemove(getIndex())}
                             style={{
                                 position: 'absolute',
@@ -80,7 +82,7 @@ const photos = ({ photos,  onChange }) => {
     return (
         <>
             {
-                photos?.length > 0 && (<FastImage source={{ uri: photo[selectedIndex] }} style={styles.mainImage}  />)
+                photos?.length > 0 &&  <PhotoGalleryMainImage  mainPhoto={photo[selectedIndex]} />
             }
 
             { photos?.length > 0 && (<ScreenWrapperSection>
@@ -102,23 +104,11 @@ const photos = ({ photos,  onChange }) => {
 };
 
 const styles = StyleSheet.create({
-    mainImage: {
-        height: moderateScale(195),
-    },
-    photo: {
-        height: moderateScale(90),
-        width: moderateScale(90),
-    },
     rowItem: {
-        height: moderateScale(100),
-        width:moderateScale(100),
+        height: moderateScale(73),
+        width: moderateScale(73),
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    text: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        textAlign: 'center',
     },
     activeItem: {
         backgroundColor: '#f0f0f0',
@@ -129,4 +119,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default photos;
+export default DraggablePhotoGallery;
