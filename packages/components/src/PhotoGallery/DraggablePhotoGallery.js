@@ -5,13 +5,15 @@ import { moderateScale } from 'react-native-size-matters';
 import { IconButton } from '@jmstechnologiesinc/react-native-paper';
 import DraggableFlatList, { ScaleDecorator, NestableScrollContainer } from 'react-native-draggable-flatlist';
 import { MD3Colors } from '@jmstechnologiesinc/react-native-paper';
-
+import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 
 import ScreenWrapperSection from '../ScreenWrapper/ScreenWrapperSection';
-import { imagekitUrl } from '@jmstechnologiesinc/react-native-components/lib/utils';
+import { imagekitUrl } from '../utils';
 import PhotoGalleryMainImage from './PhotoGalleryMainImage';
 import PhotoGalleryItem from './PhotoGalleryItem'
-import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
+import JMSStyles from '../styles'
+
+function getPhotoUrl(photo) {return photo.uri ? photo.uri : imagekitUrl(photo)}
 
 const DraggablePhotoGallery = ({ photos,  onChange }) => {
     
@@ -19,8 +21,8 @@ const DraggablePhotoGallery = ({ photos,  onChange }) => {
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     const renderItem =({ item, drag, isActive, getIndex }) => {
-        const isSelected = getIndex() === selectedIndex;
-        const photo = item.uri ? item.uri :  imagekitUrl(item)
+        const index =   getIndex()
+        const isSelected = index === selectedIndex;
         return (
             <ScaleDecorator>
                 <TouchableOpacity
@@ -31,23 +33,19 @@ const DraggablePhotoGallery = ({ photos,  onChange }) => {
                     style={[
                         styles.rowItem,
                         { opacity: isActive ? 0.5 : 1 },
-                        isActive ? styles.activeItem : null
+                        isActive ? JMSStyles.activeItem : null
                     ]}
                 >
                  
-                    <PhotoGalleryItem photo={photo}/>
+                    <PhotoGalleryItem photo={getPhotoUrl(item)}/>
 
                     {isSelected && (
                         <IconButton
                             icon={MATERIAL_ICONS.remove}
                             iconColor={MD3Colors.error50}
-                            mode="contained"
+                            mode="outlined"
                             onPress={() => onRemove(getIndex())}
-                            style={{
-                                position: 'absolute',
-                                right: 0,
-                                top: 0,
-                            }}
+                            style={styles.iconPosition}
                         />
                     )}
                 </TouchableOpacity>
@@ -55,24 +53,16 @@ const DraggablePhotoGallery = ({ photos,  onChange }) => {
         );
     }
 
-        const photo = photos?.map((photo) => {
-            if (photo.uri) {
-                return photo.uri;
-            } else {
-                return imagekitUrl(photo);
-            }
-        })
+        const photoUrls = photos?.map((photo) => getPhotoUrl(photo))
 
         const onRemove = (index) => {
             const lastIndex = photos.length - 1;
-            
             if(lastIndex === index){
                 setSelectedIndex(0)
             }
-           
             let newPhotos = photos.slice();
             newPhotos.splice(index, 1);
-            return onChange(newPhotos);
+            onChange(newPhotos);
         };
     
         const onDragEnd = ({ data: newData }) => {
@@ -82,10 +72,10 @@ const DraggablePhotoGallery = ({ photos,  onChange }) => {
     return (
         <>
             {
-                photos?.length > 0 &&  <PhotoGalleryMainImage  mainPhoto={photo[selectedIndex]} />
-            }
-
-            { photos?.length > 0 && (<ScreenWrapperSection>
+                photoUrls?.length > 0 ?  
+                <>
+                <PhotoGalleryMainImage  mainPhoto={photoUrls[selectedIndex]} />
+                <ScreenWrapperSection>
                 <NestableScrollContainer>
                     <DraggableFlatList
                         horizontal
@@ -95,7 +85,10 @@ const DraggablePhotoGallery = ({ photos,  onChange }) => {
                         renderItem={renderItem}
                     />
                 </NestableScrollContainer>
-            </ScreenWrapperSection>)}
+                </ScreenWrapperSection>
+                </> : null
+            }
+
 
 
 
@@ -105,18 +98,17 @@ const DraggablePhotoGallery = ({ photos,  onChange }) => {
 
 const styles = StyleSheet.create({
     rowItem: {
-        height: moderateScale(73),
-        width: moderateScale(73),
+        height: moderateScale(56),
+        width: moderateScale(120),
         alignItems: 'center',
         justifyContent: 'center',
     },
-    activeItem: {
-        backgroundColor: '#f0f0f0',
-        elevation: 5,
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
-        shadowOffset: { height: 2, width: 2 },
-    },
+    iconPosition: {
+        position: 'absolute',
+        right: 0,
+        top: 0,
+    }
+ 
 });
 
 export default DraggablePhotoGallery;

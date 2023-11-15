@@ -10,9 +10,10 @@ const PhotoGalleryItem = ({photo}) => (
 
 const styles = StyleSheet.create({
     photo: {
-        height: moderateScale(65),
-        width: moderateScale(65),
+        height: moderateScale(64),
+        width: moderateScale(114),
     },
 });
+
 
 export default PhotoGalleryItem
