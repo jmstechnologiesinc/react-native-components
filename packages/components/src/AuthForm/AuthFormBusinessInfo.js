@@ -1,84 +1,81 @@
 import React from 'react';
 
-import { TextInput, Caption } from '@jmstechnologiesinc/react-native-paper';
+import { TextInput, HelperText,Divider, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
 import { VENDOR_INDUSTRIES_MAPPING,VENDOR_INDUSTRIES } from '@jmstechnologiesinc/vendor';
 
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
-import OptionPicker from '../OptionPicker/NestedOptionPicker';
+import OptionPickerActionSheet from '../OptionPicker/OptionPickerActionSheet';
 
 export const INDUSTRY_LIST = [
     {
         title: localized(VENDOR_INDUSTRIES_MAPPING.Restaurant.title),
-        value:  VENDOR_INDUSTRIES.Restaurant
+        id:  VENDOR_INDUSTRIES.Restaurant,
+    },
+    {
+        title: localized(VENDOR_INDUSTRIES_MAPPING.DomincanBodega.title),
+        description: localized(VENDOR_INDUSTRIES_MAPPING.DomincanBodega.description),
+        id:  VENDOR_INDUSTRIES.DomincanBodega
+    },
+    {
+        title: localized(VENDOR_INDUSTRIES_MAPPING.StreetFoodCart.title),
+        description: localized(VENDOR_INDUSTRIES_MAPPING.StreetFoodCart.description),
+        id:  VENDOR_INDUSTRIES.StreetFoodCart
     },
     {
         title: localized(VENDOR_INDUSTRIES_MAPPING.GroceryGourmet.title),
-        value:  VENDOR_INDUSTRIES.GroceryGourmet
-
+        description: localized(VENDOR_INDUSTRIES_MAPPING.GroceryGourmet.description),
+        id:  VENDOR_INDUSTRIES.GroceryGourmet
     },
     {
         title: localized(VENDOR_INDUSTRIES_MAPPING.Liquor.title),
-        value:  VENDOR_INDUSTRIES.Liquor
-
+        description: localized(VENDOR_INDUSTRIES_MAPPING.Liquor.description),
+        id:  VENDOR_INDUSTRIES.Liquor
+    },
+    {
+        title: localized(VENDOR_INDUSTRIES_MAPPING.Convinience.title),
+        description: localized(VENDOR_INDUSTRIES_MAPPING.Convinience.description),
+        id:  VENDOR_INDUSTRIES.Convinience
+    },
+    {
+        title: localized(VENDOR_INDUSTRIES_MAPPING.CoffeShop.title),
+        description: localized(VENDOR_INDUSTRIES_MAPPING.CoffeShop.description),
+        id:  VENDOR_INDUSTRIES.CoffeShop
     },
     {
         title: localized(VENDOR_INDUSTRIES_MAPPING.Pharmacy.title),
-        value:  VENDOR_INDUSTRIES.Pharmacy
-
+        id:  VENDOR_INDUSTRIES.Pharmacy
     },
     {
-        title: localized(VENDOR_INDUSTRIES_MAPPING.VideoGames.title),
-        value:  VENDOR_INDUSTRIES.VideoGames
-
+        title: localized(VENDOR_INDUSTRIES_MAPPING.Flower.title),
+        id:  VENDOR_INDUSTRIES.Flower
     },
     {
-        title: localized(VENDOR_INDUSTRIES_MAPPING.LuggageTravelGear.title),
-        value:  VENDOR_INDUSTRIES.LuggageTravelGear
-
-    },
-    {
-        title: localized(VENDOR_INDUSTRIES_MAPPING.ToysGames.title),
-        value:  VENDOR_INDUSTRIES.ToysGames
-
-    },
-
-    {
-        title: localized(VENDOR_INDUSTRIES_MAPPING.GardenOutdoor.title),
-        value:  VENDOR_INDUSTRIES.GardenOutdoor
-
-    },
-    {
-        title: localized(VENDOR_INDUSTRIES_MAPPING.Electronics.title),
-        value:  VENDOR_INDUSTRIES.Electronics
-
-    },
-    {
-        title: localized(VENDOR_INDUSTRIES_MAPPING.Computers.title),
-        value:  VENDOR_INDUSTRIES.Computers
-
-    },
-    {
-        title: localized(VENDOR_INDUSTRIES_MAPPING.CellPhones.title),
-        value:  VENDOR_INDUSTRIES.CellPhones
-
-    },
-    {
-        title: localized(VENDOR_INDUSTRIES_MAPPING.Books.title),
-        value:  VENDOR_INDUSTRIES.Books
-
+        title: localized(VENDOR_INDUSTRIES_MAPPING.PetSupplies.title),
+        id:  VENDOR_INDUSTRIES.PetSupplies
     },
     {
         title: localized(VENDOR_INDUSTRIES_MAPPING.BeautyPersonalCare.title),
-        value:  VENDOR_INDUSTRIES.BeautyPersonalCare
+        id:  VENDOR_INDUSTRIES.BeautyPersonalCare
 
     },
+ 
     {
-        title: localized(VENDOR_INDUSTRIES_MAPPING.Baby.title),
-        value:  VENDOR_INDUSTRIES.Baby
+        title: localized(VENDOR_INDUSTRIES_MAPPING.ToysGames.title),
+        id:  VENDOR_INDUSTRIES.ToysGames
     },
+    {
+        title: localized(VENDOR_INDUSTRIES_MAPPING.Electronics.title),
+        id:  VENDOR_INDUSTRIES.Electronics
+    },
+    {
+        title: localized(VENDOR_INDUSTRIES_MAPPING.CellPhones.title),
+        id:  VENDOR_INDUSTRIES.CellPhones
+    },
+
 ];
+
 const AuthFormBusinessInfo = ({
     isDisabled,
     title = localized('businessDetails'),
@@ -87,15 +84,21 @@ const AuthFormBusinessInfo = ({
     fullAddress,
     line2,
     showWebsite = true,
-    showPhone = true,
+    showPhoneNumber = true,
+    showEmail= true,
+    showTIN = false,
+    tin,
     website,
     phone,
+    email,
     inputActionHandler,
     industry,
 }) => {
-    console.log(industry)
+
     return (
         <>
+        <ScreenWrapper.Container>
+
             <ScreenWrapper.Section title={title}>
                 <TextInput
                     mode="outlined"
@@ -132,16 +135,38 @@ const AuthFormBusinessInfo = ({
                     onChangeText={(text) => inputActionHandler('line2', text)}
                 />
             </ScreenWrapper.Section>
-            {showPhone ? (
-                <ScreenWrapper.Section>
-                    <TextInput
-                        mode="outlined"
-                        label={localized('phoneNumber')}
-                        value={phone}
-                        disabled={isDisabled}
-                        onChangeText={(text) => inputActionHandler('phone', text)}
-                    />
-                </ScreenWrapper.Section>
+            
+             {showPhoneNumber ? (
+                   <ScreenWrapper.Section>
+                   <TextInput
+                       mode="outlined"
+                       label={localized('phoneNumber')}
+                       value={phone}
+                       disabled={isDisabled}
+                       onChangeText={(text) => inputActionHandler('phone', text)}
+                   />
+                    <HelperText>
+                   {localized(
+                           'helpTextStorePhoneNumber'
+                       )}
+                       </HelperText>
+               </ScreenWrapper.Section>
+             ) : null}
+            {showEmail ? (
+                           <ScreenWrapper.Section>
+                           <TextInput
+                               mode="outlined"
+                               label={localized('email')}
+                               value={email}
+                               disabled={isDisabled}
+                               onChangeText={(text) => inputActionHandler('email', text)}
+                           />
+                            <HelperText>
+                           {localized(
+                                   'helpTextStoreEmail'
+                               )}
+                               </HelperText>
+                       </ScreenWrapper.Section>
             ) : null}
             {showWebsite ? (
                 <ScreenWrapper.Section>
@@ -152,21 +177,46 @@ const AuthFormBusinessInfo = ({
                         disabled={isDisabled}
                         onChangeText={(text) => inputActionHandler('website', text)}
                     />
-                    <Caption>
-                        {localized(
+                    <HelperText>
+                    {localized(
                             'noWebsiteEnterSocialMedia'
                         )}
-                    </Caption>
+                    </HelperText>
                 </ScreenWrapper.Section>
             ) : null}
-           <OptionPicker
-                isDisabled={isDisabled}
-                chipListTitle={localized('Industries')}
-                addButtonTitle={localized('addIndustry')}
-                preSelectedOptions={industry}
-                options={INDUSTRY_LIST}
-                onPress={(selectedOptions) => inputActionHandler('industry', selectedOptions)}
+                {showTIN ? (
+                    <ScreenWrapper.Section >
+                        <TextInput
+                            mode="outlined"
+                            label={localized('taxIdentificationNumber')}
+                            value={tin}
+                            disabled={isDisabled}
+                            secureTextEntry
+                            onChangeText={(text) => inputActionHandler('tin', text)}
+                        />
+                          <HelperText>
+                    {localized(
+                            'helpTextTaxIdentificationNumber'
+                        )}
+                    </HelperText>
+                    </ScreenWrapper.Section>
+            ) : null}
+                        </ScreenWrapper.Container>
+
+                        <Divider style={{ marginTop: MD3LightTheme.spacing.x1 }} />
+                        <ScreenWrapper.Container>
+
+                <OptionPickerActionSheet
+                    isDisabled={isDisabled}
+                    chipListTitle={localized('Industries')}
+                    addButtonTitle={localized('pick')}
+                    helpText={localized("helpTextIndustries")}
+                    preSelectedOptions={industry}
+                    options={INDUSTRY_LIST}
+                    onPress={(selectedOptions) => inputActionHandler('industry', selectedOptions)}   
             />
+                        </ScreenWrapper.Container>
+
         </>
     );
 };

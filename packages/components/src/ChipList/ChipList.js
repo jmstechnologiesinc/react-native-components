@@ -3,7 +3,7 @@ import React from 'react';
 import { Chip, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import * as Tabs from '../Tabs/Tabs';
 
-const ChipList = ({ options=[], compact, mode = 'outlined', currentIndex, onPress,onClose,isDisabled, listSectionStyle }) => (
+const ChipList = ({ options=[], compact, mode = 'outlined', currentIndex, onPress,onClose,isDisabled,chipStyle, listSectionStyle }) => (
     <Tabs.Scrollable currentIndex={currentIndex} listSectionStyle={listSectionStyle}>
         {options.map((item, index) => (
             <Chip
@@ -14,7 +14,7 @@ const ChipList = ({ options=[], compact, mode = 'outlined', currentIndex, onPres
                 compact={compact}
                 onPress={onPress? () => onPress(index) : null}
                 onClose={onClose ? () => onClose(index) : null}
-                style={index !== 0 && { marginLeft: MD3LightTheme.spacing.x4 / 2 }}
+                style={[index !== 0 && { marginLeft: MD3LightTheme.spacing.x4 / 2 }, chipStyle]}
                 disabled={isDisabled}
             >
                 {item}

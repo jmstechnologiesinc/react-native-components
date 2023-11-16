@@ -25,7 +25,7 @@
     "deliveryApp": "Delivery",
     "driveToChargeFares": "Conducir para cobrar tarifas de viaje",
     "driverApp": "Drive",
-    "vendorDashboard": "Order",
+    "vendorDashboard": "Vendedor",
     "startSelling": "Comenzar a vender, gestionar pedidos",
     "getBackIntoAccountWithEmail": "Ingresa tu correo electrónico y te enviaremos un enlace para que puedas acceder nuevamente a tu cuenta.",
     "getFromFavoriteVendors": "Obtén alimentos, paquetes y otros productos de tus vendedores favoritos.",
@@ -46,6 +46,7 @@
     "noWebsiteEnterSocialMedia": "Si no tienes un sitio web, ingresa un enlace a una página de redes sociales, LinkedIn u otro enlace relevante.",
     "website": "Sitio web",
     "industry": "Industria",
+    
     "Restaurant": "Restaurante",
     "Grocery & Gourmet": "Tienda de comestibles y gourmet",
     "Pet Supplies": "Suministros para mascotas",

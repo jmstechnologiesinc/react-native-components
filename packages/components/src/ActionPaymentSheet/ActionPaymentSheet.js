@@ -1,10 +1,9 @@
 import React from 'react';
 import ActionSheet from 'react-native-actions-sheet';
-import { List, RadioButton, Button } from '@jmstechnologiesinc/react-native-paper';
-import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
+import { List, RadioButton } from '@jmstechnologiesinc/react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '@jmstechnologiesinc/react-native-components';
+import ButtonWrapper from '../ButtonWrapper/ButtonWrapper';
 
 const ActionPaymentSheet = ({
     paymentMethods,
@@ -52,11 +51,10 @@ const ActionPaymentSheet = ({
                         );
                     })}
                 </List.Section>
-                <ScreenWrapper.Section withPaddingHorizontal style={{ flexDirection: 'row' }}>
-                    <Button icon={MATERIAL_ICONS.increment} onPress={() => onAddPaymentMethod()}>
-                        {localized('addNewPaymentMethod')}
-                    </Button>
-                </ScreenWrapper.Section>
+                <ButtonWrapper 
+                    title={localized('addNewPaymentMethod')}
+                    onPress={onAddPaymentMethod}
+                    />
             </ActionSheet>
         </>
     );

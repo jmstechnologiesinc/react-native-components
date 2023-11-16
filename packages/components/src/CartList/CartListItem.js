@@ -10,7 +10,7 @@ import ScreenWrapper from '../ScreenWrapper';
 import { imagekitUrl, itemSeparator } from '../utils';
 import SwipeToDelete from '../SwipeToDelete/SwipeToDelete';
 import { Item as JMSItem } from '../List/List';
-import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
+import ButtonWrapper from '../ButtonWrapper/ButtonWrapper';
 
 const CartListItem = ({
     checkoutTitle,
@@ -78,11 +78,9 @@ const CartListItem = ({
                 </SwipeToDelete>
             ))}
 
-            <ScreenWrapper.Section withPaddingHorizontal style={{ flexDirection: 'row' }}>
-                <Button icon={MATERIAL_ICONS.increment} onPress={() => onAdd(item.vendor, cartIndustryId)}>
-                    {addTitle}
-                </Button>
-            </ScreenWrapper.Section>
+            <ButtonWrapper
+                title={addTitle}
+                onPress={() => onAdd(item.vendor, cartIndustryId)} />
 
             {renderTips ? renderTips(item) : null}
         </>

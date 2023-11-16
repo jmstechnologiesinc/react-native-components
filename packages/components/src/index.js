@@ -35,6 +35,7 @@ export { default as OptionPicker} from './OptionPicker/OptionPicker';
 export { default as SwipeToDelete } from './SwipeToDelete/SwipeToDelete';
 export { default as SideNav } from './SideNav/SideNav';
 export { default as Swipeable } from './SwipeToDelete/SwipeToDelete';
+export { default as ButtonWrapper} from "./ButtonWrapper/ButtonWrapper";
 export { LAYOUT_MODE } from './consts';
 export { localized, setI18nConfig } from './Localization/Localization';
 

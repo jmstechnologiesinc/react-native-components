@@ -16,6 +16,7 @@ import ImagePickerAPI from './ImagePickerAPI';
 import { localized } from '../Localization/Localization';
 
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
+import ButtonWrapper from '../ButtonWrapper/ButtonWrapper';
 
 export const IMAGE_PICKER_ACTIONS = {
     launchCamera: 'launchCamera',
@@ -31,7 +32,6 @@ const Avatar = ({
     title,
     variant = 'avatar',
     icon = 'account',
-    withPaddingHorizontal= 'true',
     size = moderateScale(150),
     options = [],
     isDisabled,
@@ -102,16 +102,11 @@ const Avatar = ({
                     </TouchableRipple>
                 </ScreenWrapper.Section>
             ) : (
-                <ScreenWrapper.Section  withPaddingHorizontal={withPaddingHorizontal} style={{ flexDirection: 'row' }}>
-                    <Button
-                        icon={MATERIAL_ICONS.increment}
-                        onPress={isDisabled ? null : showActionSheet}
-                        style={{ flexDirection: 'row', paddingTop: 0 }}
-                    >
-                        {localized(title)}
-                    </Button>
-                
-                </ScreenWrapper.Section>
+                <ButtonWrapper
+                    title={title}
+                    disabled={isDisabled}
+                    onPress={isDisabled ? null : showActionSheet}
+                />
             )}
 
             <ActionSheet
