@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 
-import { View, FlatList} from 'react-native';
+import { View, FlatList } from 'react-native';
 import { MD3LightTheme, TouchableRipple } from '@jmstechnologiesinc/react-native-paper';
 
 import ScreenWrapperSection from '../ScreenWrapper/ScreenWrapperSection';
 import PhotoGalleryMainImage from './PhotoGalleryMainImage';
-import PhotoGalleryItem from './PhotoGalleryItem'
-
+import PhotoGalleryItem from './PhotoGalleryItem';
 
 export const renderSeparator = () => (
     <View
@@ -28,27 +27,25 @@ const PhotoGallery = ({ photos, showNav = true }) => {
 
     return (
         <>
-        {
-            photos?.length > 0 &&  <PhotoGalleryMainImage mainPhoto={photos[selectedIndex]} />
-        }
-
-            {showNav  && photos?.length > 0 && (
-                <ScreenWrapperSection>
-                    <FlatList
-                        data={photos}
-                        horizontal
-                        ItemSeparatorComponent={renderSeparator}
-                        renderItem={renderItem}
-                        showsHorizontalScrollIndicator={false}
-                        keyExtractor={(_, index) => `photo-gallery-${index}`}
-                    />
-                </ScreenWrapperSection>)
-                }
-
+            {photos?.length > 0 ? (
+                <>
+                    <PhotoGalleryMainImage mainPhoto={photos[selectedIndex]} />
+                    {showNav && (
+                        <ScreenWrapperSection>
+                            <FlatList
+                                data={photos}
+                                horizontal
+                                ItemSeparatorComponent={renderSeparator}
+                                renderItem={renderItem}
+                                showsHorizontalScrollIndicator={false}
+                                keyExtractor={(_, index) => `photo-gallery-${index}`}
+                            />
+                        </ScreenWrapperSection>
+                    )}
+                </>
+            ) : null}
         </>
     );
 };
-
-
 
 export default PhotoGallery;
