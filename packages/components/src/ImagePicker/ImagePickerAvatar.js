@@ -106,6 +106,7 @@ const Avatar = ({
                     title={title}
                     disabled={isDisabled}
                     onPress={isDisabled ? null : showActionSheet}
+                    style={{ marginLeft: 0 }}
                 />
             )}
 
