@@ -1,12 +1,12 @@
-import {  StyleSheet } from 'react-native'
 import React from 'react'
+
+import {  StyleSheet } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { moderateScale } from 'react-native-size-matters'
 
-const PhotoGalleryItem = ({photo}) => (
-  <FastImage source={{ uri: photo }} style={styles.photo} resizeMode={FastImage.resizeMode.stretch} />
+const PhotoGalleryItem = ({uri, isActive}) => (
+  <FastImage source={{ uri: uri }} style={[styles.photo,{ opacity: isActive ? 1 : 0.5 }]} resizeMode={FastImage.resizeMode.stretch} />
 )
-
 
 const styles = StyleSheet.create({
     photo: {
@@ -15,5 +15,5 @@ const styles = StyleSheet.create({
     },
 });
 
-
+export {styles};
 export default PhotoGalleryItem

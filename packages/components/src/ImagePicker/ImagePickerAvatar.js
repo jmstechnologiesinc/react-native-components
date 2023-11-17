@@ -89,7 +89,7 @@ const Avatar = ({
     return (
         <>
             {variant === 'avatar' ? (
-                <ScreenWrapper.Section withPaddingHorizontal style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                <ScreenWrapper.Section  style={{ flexDirection: 'row', justifyContent: 'center' }}>
                     <TouchableRipple
                         rippleColor={MD3LightTheme.colors.background}
                         onPress={isDisabled ? null : showActionSheet}
@@ -106,6 +106,7 @@ const Avatar = ({
                     title={title}
                     disabled={isDisabled}
                     onPress={isDisabled ? null : showActionSheet}
+                    style={{marginLeft:0}}
                 />
             )}
 
