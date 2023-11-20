@@ -24,9 +24,10 @@
     "getFoodsAndGoods": "Get foods and other goods",
     "deliveryApp": "Delivery",
     "driveToChargeFares": "Drive to charge fares",
-    "driverApp": "Drive",
+    "driverApp": "Driver",
     "vendorDashboard": "Vendor",
     "startSelling": "Start selling, manage orders",
+    "rideShare": "Ride & Share",
     "getBackIntoAccountWithEmail": "Enter your email, and we will send you a link to get back into your account.",
     "getFromFavoriteVendors": "Get food, packages, and other goods from your favorite vendors.",
     "receiveAndManageOrders": "Receive and manage orders, reach new prospects, real time delivery tracking and much more.",
@@ -34,7 +35,6 @@
     "errorRetrievingAccount": "There was an error retrieving your account.",
     "hailLicensedInsuredTaxiDrivers": "Hail professionally-licensed and insured taxi drivers.",
     "pickUpAndDriveToPreferredDestinations": "Pick up riders and drive them to preferred destinations.",
-    "Comming Soon!": "Comming Soon!",
     "driversApplicationNotification": "Drivers, send us your application to get notify when this feature go live.",
     "submitApplication": "Submit Application",
     "driverApplication": "Driver Application",
@@ -148,7 +148,6 @@
     "minCartQuantityHelpText": " The minumum number of units a customer is required to purchase.",
     "maxCartQuantity": "Cart Max Quantity",
     "maxCartQuantityHelpText": "The maximum number of units a customer is limited to purchase.",
-
     "enableStockManagement": "Enable stock management",
     "enableStockManagementHelpText": "Display stock availability on product pages, providing transparency to customers about the availability of items.",
     "shoppingModes": "Shopping Modes",
@@ -376,5 +375,14 @@
     "profile": "Profile",
     "manageCategory": "Manage Category",
     "noCategory": "No Category",
-    "noItem": "No Product Item"
+    "noItem": "No Product Item",
+    "inventoryDefinition": "Inventory is a group of menus that are made of food and beverage items available for sales at specified times of the day and days of the week.",
+    "menuManagementFeature": "Manage menus, drag and drop to sort, edit items.",
+    "individualProducts": "Individual Products such as Caesar salad, Pizza, or Condiments",
+    "splitMenusIntoCategories": "Split menus into categories to organize items.",
+    "categoryOrganizingDetails": "Categories are the primary way to organize menus and to group items with similar features. A category must have at least one item attached to be visible on the storefront's menu. You can also add subcategories if desired.",
+    "employees": "Employees",
+    "catalogs": "Catalogs",
+    "fileRequirements": "File requirements: JPG, PNG formats accepted, up to 10MB in size. Minimum pixel dimensions of 320 for both width and height.",
+    "productCategoryVisibility": "Every product must be assigned to at least one category to be visible in the storefront's menu."
 }
