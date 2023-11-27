@@ -3,10 +3,12 @@ import { Dimensions, Platform, ScrollView } from 'react-native';
 import { Button, HelperText } from '@jmstechnologiesinc/react-native-paper';
 import ActionSheet, { useScrollHandlers } from 'react-native-actions-sheet';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ChipList, styles as JMSStyles, localized, ScreenWrapper } from '@jmstechnologiesinc/react-native-components';
+import { ChipList, styles as JMSStyles,  ScreenWrapper } from '@jmstechnologiesinc/react-native-components';
 import NestedOptionPicker from './NestedOptionPicker';
 import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper/src/styles/themes';
 import ButtonWrapper from '../ButtonWrapper/ButtonWrapper';
+import { localized } from '../Localization/Localization';
+
 
 const windowHight = Dimensions.get('window').height;
 
@@ -32,7 +34,7 @@ function OptionPickerActionSheet({
         onPress(preSelectedOptions.filter((option) => option.id !== optionToRemove.id));
     };
 
-    const selectedTitles = preSelectedOptions.map((option) => option.title);
+    const selectedTitles = preSelectedOptions.map((option) => localized(option.title));
 
     const showActionSheet = () => {
         setSelectedOptions(preSelectedOptions);

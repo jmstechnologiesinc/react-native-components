@@ -3,6 +3,8 @@ import { StyleSheet, View } from 'react-native';
 
 import { List,  Checkbox, RadioButton } from '@jmstechnologiesinc/react-native-paper';
 import { imagekitUrl} from '@jmstechnologiesinc/react-native-components';
+import { localized } from '../Localization/Localization';
+
 
 function NestedOptionPicker({ 
     isDisabled, 
@@ -34,8 +36,8 @@ function NestedOptionPicker({
     const renderOption = (option, margin = 0) => (
         <>
             <List.Item
-                title={option.title}
-                description={option.description}
+                title={localized(option.title)}
+                description={localized(option.description)}
                 descriptionNumberOfLines={0}
                 titleStyle={{ marginLeft: margin }}
                 onPress={() => onCheckboxPress(option)}
