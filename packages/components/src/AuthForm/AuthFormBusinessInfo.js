@@ -81,7 +81,7 @@ const AuthFormBusinessInfo = ({
     title = localized('businessDetails'),
     description,
     storeTitle,
-    fullAddress,
+    location,
     line2,
     showWebsite = true,
     showPhoneNumber = true,
@@ -92,7 +92,7 @@ const AuthFormBusinessInfo = ({
     phone,
     email,
     inputActionHandler,
-    industry,
+    industries,
 }) => {
 
     return (
@@ -121,9 +121,9 @@ const AuthFormBusinessInfo = ({
                 <TextInput
                     mode="outlined"
                     label={localized('storeAddress')}
-                    value={fullAddress}
+                    value={location}
                     disabled={isDisabled}
-                    onChangeText={(text) => inputActionHandler('fullAddress', text)}
+                    onChangeText={(text) => inputActionHandler('location', text)}
                 />
             </ScreenWrapper.Section>
             <ScreenWrapper.Section>
@@ -211,9 +211,9 @@ const AuthFormBusinessInfo = ({
                     chipListTitle={localized('Industries')}
                     addButtonTitle={localized('pick')}
                     helpText={localized("helpTextIndustries")}
-                    preSelectedOptions={industry}
+                    preSelectedOptions={industries}
                     options={INDUSTRY_LIST}
-                    onPress={(selectedOptions) => inputActionHandler('industry', selectedOptions)}   
+                    onPress={(selectedOptions) => inputActionHandler('industries', selectedOptions)}   
             />
                         </ScreenWrapper.Container>
 

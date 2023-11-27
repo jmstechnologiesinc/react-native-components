@@ -17,7 +17,7 @@ const state = {
     zipcode: '51000',
     dateofBirth: '12/2/1900',
     ssn: '12/2/1900',
-    industry: 'Restaurant, clothes',
+    industries: 'Restaurant, clothes',
     storeTitle: 'Vaka Restaurant',
     storeAddress: 'Hata Mayor #12',
     make: 'Toyota',
@@ -87,7 +87,7 @@ export const AuthFormBusinessInfo = () => (
         title="Business Details"
         storeTitle={state.storeTitle}
         storeAddress={state.storeAddress}
-        industry={state.industry}
+        industries={state.industries}
         placeholder={['Restaurant', 'Pharmacy', 'Grocery']}
         inputActionHandler={() => {}}
     />
