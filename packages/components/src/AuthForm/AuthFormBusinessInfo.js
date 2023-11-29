@@ -212,7 +212,15 @@ const AuthFormBusinessInfo = ({
                     addButtonTitle={localized('pick')}
                     helpText={localized("helpTextIndustries")}
                     preSelectedOptions={industries}
-                    options={INDUSTRY_LIST}
+                    options={
+                        INDUSTRY_LIST.map(industry => {
+                            return {
+                                ...industry,
+                                title: localized(industry.title),
+                                description: localized(industry.description),
+                            };
+                        })
+                    }
                     onPress={(selectedOptions) => inputActionHandler('industries', selectedOptions)}   
             />
                         </ScreenWrapper.Container>

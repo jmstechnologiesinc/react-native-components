@@ -36,8 +36,8 @@ function NestedOptionPicker({
     const renderOption = (option, margin = 0) => (
         <>
             <List.Item
-                title={localized(option.title)}
-                description={localized(option.description)}
+                title={option.title}
+                description={option.description}
                 descriptionNumberOfLines={0}
                 titleStyle={{ marginLeft: margin }}
                 onPress={() => onCheckboxPress(option)}

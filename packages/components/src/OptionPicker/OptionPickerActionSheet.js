@@ -10,7 +10,7 @@ import ButtonWrapper from '../ButtonWrapper/ButtonWrapper';
 import { localized } from '../Localization/Localization';
 
 
-const windowHight = Dimensions.get('window').height;
+const WINDOW_HEIGHT = Dimensions.get('window').height;
 
 function OptionPickerActionSheet({
     isDisabled,
@@ -34,7 +34,7 @@ function OptionPickerActionSheet({
         onPress(preSelectedOptions.filter((option) => option.id !== optionToRemove.id));
     };
 
-    const selectedTitles = preSelectedOptions.map((option) => localized(option.title));
+    const selectedTitles = preSelectedOptions.map((option) => option.title);
 
     const showActionSheet = () => {
         setSelectedOptions(preSelectedOptions);
@@ -42,7 +42,7 @@ function OptionPickerActionSheet({
     };
 
     const hideActionSheet = () => actionSheetRef.current.hide();
-    const actionSheetHight = Platform.OS === 'ios' ? windowHight - 120 : null;
+    const actionSheetHeight = Platform.OS === 'ios' ? WINDOW_HEIGHT - 120 : null;
 
     return (
         <>
@@ -72,7 +72,7 @@ function OptionPickerActionSheet({
                 gestureEnabled
                 containerStyle={{
                     paddingBottom: insets.bottom,
-                    height: actionSheetHight,
+                    height: actionSheetHeight,
                 }}
             >
                 <ScrollView {...scrollHandlers}>

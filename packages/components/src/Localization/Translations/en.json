@@ -46,7 +46,6 @@
     "floorSuite": "Floor / Suite",
     "noWebsiteEnterSocialMedia": "If you don’t have a website, enter a social media page, LinkedIn, or other relevant link.",
     "website": "Website",
-    "industry": "Industry",
     "helpTextIndustries": "By clearly industrializing business types - whether it's food, groceries, alcohol, or other goods - adhering to local laws and state regulations is not just a legal necessity but also a cornerstone of our operational integrity. For instance, delivering alcohol or pharmaceuticals requires stringent age verification, whereas restaurant food delivery demands speed and temperature control.",
     "helpTextStorePhoneNumber": "The phone number will be publicly displayed.",
     "helpTextStoreEmail": "The email will be publicly displayed.",
@@ -110,9 +109,9 @@
         "newDeliveryRequest": "New Delivery Request",
         "cancel": "Cancel",
         "call": "Call",
-        "preparing": "Preparing"
+        "preparing": "Preparing",
+        "industry": "Industry"
     },
-
     "noLocation": "No Location",
     "shoppingMode": "Shopping Mode",
     "nearbyVendors": "Nearby Vendors",
@@ -396,6 +395,7 @@
         "productItemUpdated": "Item updated.",
         "productItemCreated": "Item created."
     },
+    "industry": {
     "restaurant": "Restaurant",
     "dominicanBodega": "Dominican Bodega",
     "descriptionDominicanBodega":"Caribbean ingredients such as plantains, yuca, rice and beans, dairy products, meats and seafood.",
@@ -428,4 +428,6 @@
     "luggageAndTravelGear": "Luggage & Travel Gear",
     "videoGames":"Video Games",
     "flowerShop": "Flower Shop"
+    }
+    
 }
