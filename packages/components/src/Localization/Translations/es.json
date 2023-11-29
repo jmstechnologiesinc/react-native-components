@@ -393,7 +393,19 @@
     "categoryCreated": "Categoría creada.",
     "inventoryUpdated": "Inventario actualizado.",
     "productItemUpdated": "Artículo actualizado.",
-    "productItemCreated": "Artículo creado."
+    "productItemCreated": "Artículo creado.",
+    "newDocumentAdded": "Nuevo documento agregado.",
+    "bankAccountAdded": "Cuenta bancaria agregada.",
+    "bankAccountUpdated": "Cuenta bancaria actualizada.",
+    "payoutFrequencyUpdated": "Frecuencia de pagos actualizado.",
+    "storeDetailsUpdated": "Detalles de la tienda actualizado.",
+    "fulfillmentMethodsUpdated": "Métodos de cumplimiento actualizados.",
+    "ordersAutomaticallyApproved": "¡Órdenes aprobadas automáticamente!",
+    "manualOrderConfirmationSelected": "Selección de confirmación de pedido manual.",
+    "newImageAdded": "Nueva imagen agregada.",
+    "imageUpdated": "Imagen actualizada.",
+    "profileUpdated": "¡Perfil actualizado exitosamente!",
+    "preferencesUpdated": "¡Preferencias actualizadas exitosamente!"
 },
 "industry": {
     "restaurant": "Restaurante",

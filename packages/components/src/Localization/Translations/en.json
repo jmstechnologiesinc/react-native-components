@@ -393,7 +393,19 @@
         "categoryCreated": "Category created.",
         "inventoryUpdated": "Inventory updated.",
         "productItemUpdated": "Item updated.",
-        "productItemCreated": "Item created."
+        "productItemCreated": "Item created.",
+        "newDocumentAdded": "New document added.",
+        "bankAccountAdded": "Bank account added.",
+        "bankAccountUpdated": "Bank account updated.",
+        "payoutFrequencyUpdated": "Payout frequency updated.",
+        "storeDetailsUpdated": "Store details updated.",
+        "fulfillmentMethodsUpdated": "Fulfillment Methods updated.",
+        "ordersAutomaticallyApproved": "Orders automatically approved!",
+        "manualOrderConfirmationSelected": "Manual order confirmation selected.",
+        "newImageAdded": "New image added.",
+        "imageUpdated": "Image updated.",
+        "profileUpdated": "Profile updated successfully!",
+        "preferencesUpdated": "Preferences updated successfully!"
     },
     "industry": {
     "restaurant": "Restaurant",
