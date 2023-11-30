@@ -405,7 +405,9 @@
     "newImageAdded": "Nueva imagen agregada.",
     "imageUpdated": "Imagen actualizada.",
     "profileUpdated": "¡Perfil actualizado exitosamente!",
-    "preferencesUpdated": "¡Preferencias actualizadas exitosamente!"
+    "preferencesUpdated": "¡Preferencias actualizadas exitosamente!",
+    "vehicleAdded": "Vehículo añadido",
+    "vehicleUpdated": "Vehículo actualizado"
 },
 "industry": {
     "restaurant": "Restaurante",
