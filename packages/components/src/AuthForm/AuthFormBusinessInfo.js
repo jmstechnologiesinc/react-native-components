@@ -10,68 +10,68 @@ import OptionPickerActionSheet from '../OptionPicker/OptionPickerActionSheet';
 
 export const INDUSTRY_LIST = [
     {
-        title: localized(VENDOR_INDUSTRIES_MAPPING.Restaurant.title),
-        id:  VENDOR_INDUSTRIES.Restaurant,
+        title: VENDOR_INDUSTRIES_MAPPING.Restaurant.title,
+        id: VENDOR_INDUSTRIES.Restaurant,
     },
     {
-        title: localized(VENDOR_INDUSTRIES_MAPPING.DomincanBodega.title),
-        description: localized(VENDOR_INDUSTRIES_MAPPING.DomincanBodega.description),
-        id:  VENDOR_INDUSTRIES.DomincanBodega
+        title: VENDOR_INDUSTRIES_MAPPING.DomincanBodega.title,
+        description: VENDOR_INDUSTRIES_MAPPING.DomincanBodega.description,
+        id: VENDOR_INDUSTRIES.DomincanBodega
     },
     {
-        title: localized(VENDOR_INDUSTRIES_MAPPING.StreetFoodCart.title),
-        description: localized(VENDOR_INDUSTRIES_MAPPING.StreetFoodCart.description),
-        id:  VENDOR_INDUSTRIES.StreetFoodCart
+        title: VENDOR_INDUSTRIES_MAPPING.StreetFoodCart.title,
+        description: VENDOR_INDUSTRIES_MAPPING.StreetFoodCart.description,
+        id: VENDOR_INDUSTRIES.StreetFoodCart
     },
     {
-        title: localized(VENDOR_INDUSTRIES_MAPPING.GroceryGourmet.title),
-        description: localized(VENDOR_INDUSTRIES_MAPPING.GroceryGourmet.description),
-        id:  VENDOR_INDUSTRIES.GroceryGourmet
+        title: VENDOR_INDUSTRIES_MAPPING.GroceryGourmet.title,
+        description: VENDOR_INDUSTRIES_MAPPING.GroceryGourmet.description,
+        id: VENDOR_INDUSTRIES.GroceryGourmet
     },
     {
-        title: localized(VENDOR_INDUSTRIES_MAPPING.Liquor.title),
-        description: localized(VENDOR_INDUSTRIES_MAPPING.Liquor.description),
-        id:  VENDOR_INDUSTRIES.Liquor
+        title: VENDOR_INDUSTRIES_MAPPING.Liquor.title,
+        description: VENDOR_INDUSTRIES_MAPPING.Liquor.description,
+        id: VENDOR_INDUSTRIES.Liquor
     },
     {
-        title: localized(VENDOR_INDUSTRIES_MAPPING.Convinience.title),
-        description: localized(VENDOR_INDUSTRIES_MAPPING.Convinience.description),
-        id:  VENDOR_INDUSTRIES.Convinience
+        title: VENDOR_INDUSTRIES_MAPPING.Convinience.title,
+        description: VENDOR_INDUSTRIES_MAPPING.Convinience.description,
+        id: VENDOR_INDUSTRIES.Convinience
     },
     {
-        title: localized(VENDOR_INDUSTRIES_MAPPING.CoffeShop.title),
-        description: localized(VENDOR_INDUSTRIES_MAPPING.CoffeShop.description),
-        id:  VENDOR_INDUSTRIES.CoffeShop
+        title: VENDOR_INDUSTRIES_MAPPING.CoffeShop.title,
+        description: VENDOR_INDUSTRIES_MAPPING.CoffeShop.description,
+        id: VENDOR_INDUSTRIES.CoffeShop
     },
     {
-        title: localized(VENDOR_INDUSTRIES_MAPPING.Pharmacy.title),
-        id:  VENDOR_INDUSTRIES.Pharmacy
+        title: VENDOR_INDUSTRIES_MAPPING.Pharmacy.title,
+        id: VENDOR_INDUSTRIES.Pharmacy
     },
     {
-        title: localized(VENDOR_INDUSTRIES_MAPPING.Flower.title),
-        id:  VENDOR_INDUSTRIES.Flower
+        title: VENDOR_INDUSTRIES_MAPPING.Flower.title,
+        id: VENDOR_INDUSTRIES.Flower
     },
     {
-        title: localized(VENDOR_INDUSTRIES_MAPPING.PetSupplies.title),
-        id:  VENDOR_INDUSTRIES.PetSupplies
+        title: VENDOR_INDUSTRIES_MAPPING.PetSupplies.title,
+        id: VENDOR_INDUSTRIES.PetSupplies
     },
     {
-        title: localized(VENDOR_INDUSTRIES_MAPPING.BeautyPersonalCare.title),
-        id:  VENDOR_INDUSTRIES.BeautyPersonalCare
+        title: VENDOR_INDUSTRIES_MAPPING.BeautyPersonalCare.title,
+        id: VENDOR_INDUSTRIES.BeautyPersonalCare
 
     },
- 
+
     {
-        title: localized(VENDOR_INDUSTRIES_MAPPING.ToysGames.title),
-        id:  VENDOR_INDUSTRIES.ToysGames
+        title: VENDOR_INDUSTRIES_MAPPING.ToysGames.title,
+        id: VENDOR_INDUSTRIES.ToysGames
     },
     {
-        title: localized(VENDOR_INDUSTRIES_MAPPING.Electronics.title),
-        id:  VENDOR_INDUSTRIES.Electronics
+        title: VENDOR_INDUSTRIES_MAPPING.Electronics.title,
+        id: VENDOR_INDUSTRIES.Electronics
     },
     {
-        title: localized(VENDOR_INDUSTRIES_MAPPING.CellPhones.title),
-        id:  VENDOR_INDUSTRIES.CellPhones
+        title: VENDOR_INDUSTRIES_MAPPING.CellPhones.title,
+        id: VENDOR_INDUSTRIES.CellPhones
     },
 
 ];
@@ -212,7 +212,15 @@ const AuthFormBusinessInfo = ({
                     addButtonTitle={localized('pick')}
                     helpText={localized("helpTextIndustries")}
                     preSelectedOptions={industries}
-                    options={INDUSTRY_LIST}
+                    options={
+                        INDUSTRY_LIST.map(industry => {
+                            return {
+                                ...industry,
+                                title: localized(industry.title),
+                                description: localized(industry.description),
+                            };
+                        })
+                    }
                     onPress={(selectedOptions) => inputActionHandler('industries', selectedOptions)}   
             />
                         </ScreenWrapper.Container>

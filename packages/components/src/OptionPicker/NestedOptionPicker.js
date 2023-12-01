@@ -3,6 +3,8 @@ import { StyleSheet, View } from 'react-native';
 
 import { List,  Checkbox, RadioButton } from '@jmstechnologiesinc/react-native-paper';
 import { imagekitUrl} from '@jmstechnologiesinc/react-native-components';
+import { localized } from '../Localization/Localization';
+
 
 function NestedOptionPicker({ 
     isDisabled, 

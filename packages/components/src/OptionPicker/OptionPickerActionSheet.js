@@ -3,12 +3,14 @@ import { Dimensions, Platform, ScrollView } from 'react-native';
 import { Button, HelperText } from '@jmstechnologiesinc/react-native-paper';
 import ActionSheet, { useScrollHandlers } from 'react-native-actions-sheet';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ChipList, styles as JMSStyles, localized, ScreenWrapper } from '@jmstechnologiesinc/react-native-components';
+import { ChipList, styles as JMSStyles,  ScreenWrapper } from '@jmstechnologiesinc/react-native-components';
 import NestedOptionPicker from './NestedOptionPicker';
 import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper/src/styles/themes';
 import ButtonWrapper from '../ButtonWrapper/ButtonWrapper';
+import { localized } from '../Localization/Localization';
 
-const windowHight = Dimensions.get('window').height;
+
+const WINDOW_HEIGHT = Dimensions.get('window').height;
 
 function OptionPickerActionSheet({
     isDisabled,
@@ -40,7 +42,7 @@ function OptionPickerActionSheet({
     };
 
     const hideActionSheet = () => actionSheetRef.current.hide();
-    const actionSheetHight = Platform.OS === 'ios' ? windowHight - 120 : null;
+    const actionSheetHeight = Platform.OS === 'ios' ? WINDOW_HEIGHT - 120 : null;
 
     return (
         <>
@@ -70,7 +72,7 @@ function OptionPickerActionSheet({
                 gestureEnabled
                 containerStyle={{
                     paddingBottom: insets.bottom,
-                    height: actionSheetHight,
+                    height: actionSheetHeight,
                 }}
             >
                 <ScrollView {...scrollHandlers}>
