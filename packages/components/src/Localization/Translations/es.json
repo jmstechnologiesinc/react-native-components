@@ -51,6 +51,12 @@
     "helpTextStorePhoneNumber": "El número de teléfono se mostrará públicamente.",
     "helpTextStoreEmail": "El correo electrónico se mostrará públicamente.",
     "order": {
+        "vendor": {
+            "selfCancelled": "Hubo un error al procesar el pedido."
+        },
+        "customer": {
+            "selfCancelled": "Hubo un error al procesar tu pedido. Por favor, inténtalo de nuevo más tarde."
+        },
         "orderTitle": "Pedidos",
         "orderAutoConfirm": "Confirmar Automaticamente",
         "vendorAutoConfirm": "Los nuevos pedidos se confirmarán automáticamente. El cliente recibe un reconocimiento inmediato de que su pedido está siendo procesado y un conductor será asignado de inmediato.",
@@ -58,7 +64,6 @@
         "receipt": "Recibo",
         "complete": "Completo",
         "noDriverFound": "No se encontró ningún conductor cercano. Por favor, inténtalo de nuevo más tarde.",
-        "selfCancelled": "Hubo un error al procesar tu pedido. Por favor, inténtalo de nuevo más tarde.",
         "placed": "Esperando confirmación del vendedor.",
         "preparing": "Preparando tu pedido.",
         "readyForPickup": "Tu pedido está listo.",
@@ -361,6 +366,7 @@
 "productItemPicker": "Selector de artículos",
 "items": "Artículos",
 "createItem": "Crear artículo",
+"editItems": "Editar artículos",
 "editItem": "Editar artículo",
 "modifierGroup": "Grupo de modificadores",
 "photos": "Fotos",
@@ -387,6 +393,7 @@
 "productCategoryVisibility": "Cada producto debe ser asignado a al menos una categoría para ser visible en el menú de la tienda virtual.",
 "close": "Cerrar",
 "snackbar": {
+    "sortInventory": "Arrastra y suelta categoría o artículo para reordenar.",
     "menuUpdated": "Menú actualizado.",
     "menuCreated": "Menú creado.",
     "categoryDeleted": "Categoría eliminada",

@@ -51,14 +51,19 @@
     "helpTextStorePhoneNumber": "The phone number will be publicly displayed.",
     "helpTextStoreEmail": "The email will be publicly displayed.",
     "order": {
+        "vendor": {
+            "selfCancelled": "There was an error processing the order."
+        },
+        "customer": {
+            "selfCancelled": "There was an error processing your order. Please try again later.",
+        },
         "orderTitle": "Order",
         "orderAutoConfirm": "Auto Confirm",
         "vendorAutoConfirm": "New orders will automatically be confirmed. The customer receives immediate acknowledgment that their order is being processed and a driver will be assigned immediately.",
         "driverAutoConfirm": "New orders will automatically be confirmed. The customer and vendor receives immediate acknowledgment that their order will be delivered by you.",
         "receipt": "receipt",
         "complete": "Complete",
-        "noDriverFound": "No nearby driver found. Plase try again later.",
-        "selfCancelled": "There was an error processing your order. Please try again later.",
+        "noDriverFound": "No nearby driver found.",
         "placed": "Waiting for confirmation from the vendor.",
         "preparing": "Preparing Your Order.",
         "readyForPickup": "Your order is ready.",
@@ -221,7 +226,6 @@
     "requestReviewMessage": "We're reviewing your request. It usually takes less than a day for us to complete the process.",
     "cancel": "Cancel",
     "welcomeTo": "Welcome to",
-    "applicationReviewWillConctact": "We are reviewing your application. We will contact you shortly if we need any further information.",
     "businessRequirements": "Business Requirements",
     "welcomeToJMS": "Welcome to J.M.S",
     "logInOrderDeliciousFood": "Log in and order delicious food from vendors around you",
@@ -361,6 +365,7 @@
     "productItemPicker": "Item Picker",
     "items": "Items",
     "createItem": "Create Item",
+    "editItems": "Edit Items",
     "editItem": "Edit Item",
     "modifierGroup": "Modifier Group",
     "photos": "Photos",
@@ -387,6 +392,7 @@
     "productCategoryVisibility": "Every product must be assigned to at least one category to be visible in the storefront's menu.",
     "close": "Close",
     "snackbar": {
+        "sortInventory": "Drag and drop category or item to sort.",
         "menuUpdated": "Menu updated.",
         "menuCreated": "Menu created.",
         "categoryDeleted": "Category deleted",
