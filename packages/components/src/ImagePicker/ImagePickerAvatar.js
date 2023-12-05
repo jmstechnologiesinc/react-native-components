@@ -1,15 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { moderateScale } from 'react-native-size-matters';
-import {
-    Avatar as PaperAvatar,
-    MD3LightTheme,
-    TouchableRipple,
-    List,
-    Button,
-} from '@jmstechnologiesinc/react-native-paper';
+import { Avatar as PaperAvatar, MD3LightTheme, TouchableRipple, List } from '@jmstechnologiesinc/react-native-paper';
 
 import ActionSheet from 'react-native-actions-sheet';
-import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import ImagePickerAPI from './ImagePickerAPI';
@@ -89,7 +82,7 @@ const Avatar = ({
     return (
         <>
             {variant === 'avatar' ? (
-                <ScreenWrapper.Section  style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                <ScreenWrapper.Section style={{ flexDirection: 'row', justifyContent: 'center' }}>
                     <TouchableRipple
                         rippleColor={MD3LightTheme.colors.background}
                         onPress={isDisabled ? null : showActionSheet}
@@ -104,9 +97,9 @@ const Avatar = ({
             ) : (
                 <ButtonWrapper
                     title={title}
-                    disabled={isDisabled}
+                    isDisabled={isDisabled}
                     onPress={isDisabled ? null : showActionSheet}
-                    style={{marginLeft:0}}
+                    style={{ marginLeft: 0 }}
                 />
             )}
 

@@ -3,12 +3,11 @@ import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { IconButton } from '@jmstechnologiesinc/react-native-paper';
 import DraggableFlatList, { ScaleDecorator, NestableScrollContainer } from 'react-native-draggable-flatlist';
-import { MD3Colors,MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
-
+import { MD3Colors, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import { imagekitUrl } from '../utils';
 import PhotoGalleryMainImage from './PhotoGalleryMainImage';
 import PhotoGalleryItem from './PhotoGalleryItem';
-import {renderImageSeparator} from './PhotoGallery';
+import { renderImageSeparator } from './PhotoGallery';
 import JMSStyles from '../styles';
 import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 
@@ -16,7 +15,7 @@ function getPhotoUrl(photo) {
     return photo.uri ? photo.uri : imagekitUrl(photo);
 }
 
-const DraggablePhotoGallery = ({ photos, onChange }) => {
+const DraggablePhotoGallery = ({ photos, onChange, isDisabled }) => {
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     const renderItem = ({ item, drag, isActive, getIndex }) => {
@@ -29,12 +28,13 @@ const DraggablePhotoGallery = ({ photos, onChange }) => {
                     onPress={() => setSelectedIndex(index)}
                     onLongPress={drag}
                     disabled={isActive}
-                    style={[isActive ? JMSStyles.activeItem : null, {marginVertical: MD3LightTheme.spacing.x2}]}
+                    style={[isActive ? JMSStyles.activeItem : null, { marginVertical: MD3LightTheme.spacing.x2 }]}
                 >
                     <PhotoGalleryItem isActive={isSelected || isActive} uri={getPhotoUrl(item)} />
                     <IconButton
                         icon={MATERIAL_ICONS.remove}
                         mode="contained"
+                        disabled={isDisabled}
                         iconColor={MD3Colors.error50}
                         onPress={() => onRemove(index)}
                         style={styles.iconPosition}
