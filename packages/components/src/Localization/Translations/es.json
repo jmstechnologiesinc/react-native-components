@@ -115,7 +115,9 @@
         "cancel": "Cancelar",
         "call": "Llamar",
         "preparing": "Preparando",
-        "industry": "Industria"
+        "industry": "Industria",
+        "saving": "GUARDANDO...",
+        "save":"GUARDAR"
     },
     "noLocation": "Sin ubicación",
     "shoppingMode": "Modo de compra",
