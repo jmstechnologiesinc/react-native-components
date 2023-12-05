@@ -110,7 +110,9 @@
         "cancel": "Cancel",
         "call": "Call",
         "preparing": "Preparing",
-        "industry": "Industry"
+        "industry": "Industry",
+        "saving": "SAVING...",
+        "save":"SAVE"
     },
     "noLocation": "No Location",
     "shoppingMode": "Shopping Mode",
