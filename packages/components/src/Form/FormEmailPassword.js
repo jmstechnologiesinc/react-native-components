@@ -4,7 +4,7 @@ import { TextInput, Button } from '@jmstechnologiesinc/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 
-const AuthFormEmailPassword = ({
+const FormEmailPassword = ({
     email,
     password,
     isEmailDisabled = false,
@@ -39,7 +39,7 @@ const AuthFormEmailPassword = ({
                     right={
                         !isPasswordDisabled && (
                             <TextInput.Icon
-                                name={isTextSecureEntry ? 'eye' : 'eye-off'}
+                                icon={isTextSecureEntry ? 'eye' : 'eye-off'}
                                 onPress={() => setIsTextSecureEntry(!isTextSecureEntry)}
                             />
                         )
@@ -57,7 +57,7 @@ const AuthFormEmailPassword = ({
                         secureTextEntry={isTextSecureEntry}
                         right={
                             <TextInput.Icon
-                                name={isTextSecureEntry ? 'eye' : 'eye-off'}
+                                icon={isTextSecureEntry ? 'eye' : 'eye-off'}
                                 onPress={() => setIsTextSecureEntry(!isTextSecureEntry)}
                             />
                         }
@@ -76,4 +76,4 @@ const AuthFormEmailPassword = ({
     );
 };
 
-export default AuthFormEmailPassword;
+export default FormEmailPassword;

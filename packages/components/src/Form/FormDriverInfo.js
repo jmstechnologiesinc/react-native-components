@@ -4,16 +4,20 @@ import { Paragraph, TextInput } from '@jmstechnologiesinc/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 import { handleDateOfBirhtChange } from './utils';
+import SecretInputText from './SecretInputText';
+
 import Config from 'react-native-config';
 
-const AuthFormDriverInfo = ({ licenseNumer, ssn, inputActionHandler }) => {
+const FormDriverInfo = ({ licenseNumer, ssn, inputActionHandler }) => {
     const [dateOfBirth, setDateOfBirth] = useState('');
 
     return (
         <>
             <ScreenWrapper.Section>
                 <Paragraph>
-                   {`${localized('grantingNewDriverAccess')} ${Config.LEGAL_ENTITY_NAME} ${localized('checkrBackgroundChecks')}`}
+                    {`${localized('grantingNewDriverAccess')} ${Config.LEGAL_ENTITY_NAME} ${localized(
+                        'checkrBackgroundChecks'
+                    )}`}
                 </Paragraph>
             </ScreenWrapper.Section>
 
@@ -21,8 +25,8 @@ const AuthFormDriverInfo = ({ licenseNumer, ssn, inputActionHandler }) => {
                 <TextInput
                     mode="outlined"
                     label={localized('driverLicenseNumber')}
-                    secureTextEntry={true}
                     value={licenseNumer}
+                    secureTextEntry
                     onChangeText={(text) => inputActionHandler('licenseNumer', text)}
                 />
             </ScreenWrapper.Section>
@@ -44,7 +48,7 @@ const AuthFormDriverInfo = ({ licenseNumer, ssn, inputActionHandler }) => {
                     mode="outlined"
                     label={localized('socialSecurityNumber')}
                     value={ssn}
-                    secureTextEntry={true}
+                    secureTextEntry
                     onChangeText={(text) => inputActionHandler('ssn', text)}
                 />
             </ScreenWrapper.Section>
@@ -52,4 +56,4 @@ const AuthFormDriverInfo = ({ licenseNumer, ssn, inputActionHandler }) => {
     );
 };
 
-export default AuthFormDriverInfo;
+export default FormDriverInfo;
