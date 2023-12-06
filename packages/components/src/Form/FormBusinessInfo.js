@@ -1,10 +1,14 @@
 import React from 'react';
 
 import { TextInput, HelperText, Divider, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
+
 import { VENDOR_INDUSTRIES_MAPPING, VENDOR_INDUSTRIES } from '@jmstechnologiesinc/vendor';
+
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 import OptionPickerActionSheet from '../OptionPicker/OptionPickerActionSheet';
+
+import SecretInputText from './SecretInputText';
 
 export const INDUSTRY_LIST = [
     {
@@ -168,11 +172,10 @@ const FormBusinessInfo = ({
                 ) : null}
                 {showTIN ? (
                     <ScreenWrapper.Section>
-                        <TextInput
+                        <SecretInputText
                             mode="outlined"
                             label={localized('taxIdentificationNumber')}
                             value={tin}
-                            secureTextEntry
                             disabled={isDisabled}
                             onChangeText={(text) => inputActionHandler('tin', text)}
                         />

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
 import { Paragraph, TextInput } from '@jmstechnologiesinc/react-native-paper';
+import Config from 'react-native-config';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 import { handleDateOfBirhtChange } from './utils';
-
-import Config from 'react-native-config';
+import SecretInputText from './SecretInputText';
 
 const FormDriverInfo = ({ licenseNumer, ssn, inputActionHandler }) => {
     const [dateOfBirth, setDateOfBirth] = useState('');
@@ -21,11 +21,10 @@ const FormDriverInfo = ({ licenseNumer, ssn, inputActionHandler }) => {
             </ScreenWrapper.Section>
 
             <ScreenWrapper.Section>
-                <TextInput
+                <SecretInputText
                     mode="outlined"
                     label={localized('driverLicenseNumber')}
                     value={licenseNumer}
-                    secureTextEntry
                     onChangeText={(text) => inputActionHandler('licenseNumer', text)}
                 />
             </ScreenWrapper.Section>
@@ -43,11 +42,10 @@ const FormDriverInfo = ({ licenseNumer, ssn, inputActionHandler }) => {
                 />
             </ScreenWrapper.Section>
             <ScreenWrapper.Section>
-                <TextInput
+                <SecretInputText
                     mode="outlined"
                     label={localized('socialSecurityNumber')}
                     value={ssn}
-                    secureTextEntry
                     onChangeText={(text) => inputActionHandler('ssn', text)}
                 />
             </ScreenWrapper.Section>
