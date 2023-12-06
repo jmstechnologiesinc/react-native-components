@@ -1,13 +1,10 @@
 import React from 'react';
 
 import { TextInput, HelperText, Divider, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
-
 import { VENDOR_INDUSTRIES_MAPPING, VENDOR_INDUSTRIES } from '@jmstechnologiesinc/vendor';
-
-import ScreenWrapper from '@jmstechnologiesinc/react-native-components/lib/ScreenWrapper/ScreenWrapper';
-import { localized } from '@jmstechnologiesinc/react-native-components/lib/Localization/Localization';
-import OptionPickerActionSheet from '@jmstechnologiesinc/react-native-components/lib/OptionPicker/OptionPickerActionSheet';
-import SecretInputText from './SecretInputText';
+import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
+import { localized } from '../Localization/Localization';
+import OptionPickerActionSheet from '../OptionPicker/OptionPickerActionSheet';
 
 export const INDUSTRY_LIST = [
     {

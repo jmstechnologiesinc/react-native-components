@@ -1,9 +1,8 @@
 import React from 'react';
 
-import { TextInput } from '@jmstechnologiesinc/react-native-paper';
-import ScreenWrapper from '@jmstechnologiesinc/react-native-components/lib/ScreenWrapper/ScreenWrapper';
-import { localized } from '@jmstechnologiesinc/react-native-components/lib/Localization/Localization';
-import { Switch, List } from '@jmstechnologiesinc/react-native-paper';
+import { TextInput, Switch, List } from '@jmstechnologiesinc/react-native-paper';
+import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
+import { localized } from '../Localization/Localization';
 
 const FormVehicleInfo = ({
     active,

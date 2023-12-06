@@ -4,7 +4,6 @@ import { Paragraph, TextInput } from '@jmstechnologiesinc/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 import { handleDateOfBirhtChange } from './utils';
-import SecretInputText from './SecretInputText';
 
 import Config from 'react-native-config';
 
