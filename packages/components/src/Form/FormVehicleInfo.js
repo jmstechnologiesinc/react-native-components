@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { TextInput } from '@jmstechnologiesinc/react-native-paper';
+import { TextInput, Switch, List } from '@jmstechnologiesinc/react-native-paper';
+
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
-import { Switch, List } from '@jmstechnologiesinc/react-native-paper';
 
-const AuthFormVehicle = ({
+const FormVehicleInfo = ({
     active,
     title,
     make,
@@ -83,4 +83,4 @@ const AuthFormVehicle = ({
     );
 };
 
-export default AuthFormVehicle;
+export default FormVehicleInfo;

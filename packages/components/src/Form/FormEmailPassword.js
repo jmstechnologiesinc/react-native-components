@@ -4,7 +4,9 @@ import { TextInput, Button } from '@jmstechnologiesinc/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 
-const AuthFormEmailPassword = ({
+import SecretInputText from './SecretInputText';
+
+const FormEmailPassword = ({
     email,
     password,
     isEmailDisabled = false,
@@ -30,37 +32,21 @@ const AuthFormEmailPassword = ({
             </ScreenWrapper.Section>
 
             <ScreenWrapper.Section>
-                <TextInput
+                <SecretInputText
                     label={localized('password')}
                     value={isPasswordDisabled ? '********' : password}
                     onChangeText={(password) => inputActionHandler('password', password)}
                     disabled={isPasswordDisabled}
-                    secureTextEntry={isTextSecureEntry}
-                    right={
-                        !isPasswordDisabled && (
-                            <TextInput.Icon
-                                name={isTextSecureEntry ? 'eye' : 'eye-off'}
-                                onPress={() => setIsTextSecureEntry(!isTextSecureEntry)}
-                            />
-                        )
-                    }
                 />
             </ScreenWrapper.Section>
 
             {confirmPassword && (
                 <ScreenWrapper.Section>
-                    <TextInput
+                    <SecretInputText
                         label={localized('confirmPassword')}
                         value={passwordConfirm}
                         onChangeText={(passwordConfirm) => inputActionHandler('passwordConfirm', passwordConfirm)}
                         disabled={isPasswordDisabled}
-                        secureTextEntry={isTextSecureEntry}
-                        right={
-                            <TextInput.Icon
-                                name={isTextSecureEntry ? 'eye' : 'eye-off'}
-                                onPress={() => setIsTextSecureEntry(!isTextSecureEntry)}
-                            />
-                        }
                     />
                 </ScreenWrapper.Section>
             )}
@@ -76,4 +62,4 @@ const AuthFormEmailPassword = ({
     );
 };
 
-export default AuthFormEmailPassword;
+export default FormEmailPassword;
