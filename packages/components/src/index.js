@@ -2,14 +2,14 @@ import * as List from './List/List';
 import * as ProductList from './ProductList/ProductList';
 import * as Tabs from './Tabs/Tabs';
 import * as ActionGroup from './ActionGroup/ActionGroup';
-import * as AuthForm from './AuthForm/AuthForm';
+import * as Form from './Form/Form';
 import * as StripeForm from './StripeForm/StripeForm';
 
 import * as ImagePicker from './ImagePicker/ImagePicker';
 
 export { default as styles } from './styles';
 
-export { List, ImagePicker, Tabs, ProductList, ActionGroup, AuthForm, StripeForm };
+export { List, ImagePicker, Tabs, ProductList, ActionGroup, Form, StripeForm };
 
 export { default as VendorList } from './VendorList/VendorList';
 export { default as SegmentedButtonGroup } from './SegmentedButtonGroup/SegmentedButtonGroup';
