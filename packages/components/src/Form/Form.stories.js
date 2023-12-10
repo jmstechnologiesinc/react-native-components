@@ -4,7 +4,7 @@ export default {
     title: 'packages/AuthForm',
 };
 
-import * as AuthForm from './AuthForm';
+import * as Form from './Form';
 
 const state = {
     email: 'jms@gmail.com',
@@ -27,11 +27,11 @@ const state = {
 };
 
 export const AuthFormEmailPassword = () => (
-    <AuthForm.EmailPassword email={state.email} password={state.password} inputActionHandler={() => {}} />
+    <Form.EmailPassword email={state.email} password={state.password} inputActionHandler={() => {}} />
 );
 
 export const AuthFormConfirmPassword = () => (
-    <AuthForm.EmailPassword
+    <Form.EmailPassword
         email={state.email}
         password={state.password}
         passwordConfirm={state.passwordConfirm}
@@ -41,7 +41,7 @@ export const AuthFormConfirmPassword = () => (
 );
 
 export const AuthFormResetPassword = () => (
-    <AuthForm.EmailPassword
+    <Form.EmailPassword
         email={state.email}
         password={state.password}
         passwordConfirm={state.passwordConfirm}
@@ -52,7 +52,7 @@ export const AuthFormResetPassword = () => (
 );
 
 export const AuthFormEmailPasswordDisabled = () => (
-    <AuthForm.EmailPassword
+    <Form.EmailPassword
         email={state.email}
         password={state.password}
         passwordConfirm={state.passwordConfirm}
@@ -64,7 +64,7 @@ export const AuthFormEmailPasswordDisabled = () => (
 );
 
 export const AuthFormPersonInfo = () => (
-    <AuthForm.PersonInfo
+    <Form.PersonInfo
         firstName={state.firstName}
         lastName={state.lastName}
         phone={state.phone}
@@ -73,7 +73,7 @@ export const AuthFormPersonInfo = () => (
 );
 
 export const AuthFormDriverInfo = () => (
-    <AuthForm.DriverInfo
+    <Form.DriverInfo
         licenseNumer={state.licenseNumer}
         zipcode={state.zipcode}
         dateofBirth={state.dateofBirth}
@@ -83,7 +83,7 @@ export const AuthFormDriverInfo = () => (
 );
 
 export const AuthFormBusinessInfo = () => (
-    <AuthForm.BusinessInfo
+    <Form.BusinessInfo
         title="Business Details"
         storeTitle={state.storeTitle}
         storeAddress={state.storeAddress}
@@ -94,7 +94,7 @@ export const AuthFormBusinessInfo = () => (
 );
 
 export const AuthFormCarInfo = () => (
-    <AuthForm.CarInfo
+    <Form.VehicleInfo
         make={state.make}
         model={state.model}
         color={state.color}
