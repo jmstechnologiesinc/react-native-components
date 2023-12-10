@@ -8,8 +8,7 @@ export default {
     title: 'packages/List',
 };
 
-const photo =
-    'https://ik.imagekit.io/sog7th7xvupr/o/vendors%2FAHwW%2Bi2vQAKFUcuRPJUq0Q%3A0.jpeg?alt=media&token=ce6576d6-5aec-4a3f-91e4-ef7032f6e5eb';
+const photo = 'https://www.iaea.org/sites/default/files/styles/original_image_size/public/str7803.jpg?itok=oYsZLbj9';
 
 export const Image = () => (
     <List.Item
