@@ -40,7 +40,6 @@ const ProductListItem = ({
             metaQuantity={cartQuantity}
             onPress={onPress}
             titleNumberOfLines={0}
-            descriptionNumberOfLines={2}
             left={left}
             //style={{ height: setDynamicSize }}
         />

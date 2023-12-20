@@ -87,7 +87,7 @@ function OptionPickerActionSheet({
                 <Button
                     mode="outlined"
                     uppercase
-                    style={JMSStyles.fba}
+                    style={[JMSStyles.button, JMSStyles.buttonWithInset]}
                     disabled={isDisabled}
                     onPress={() => {
                         onPress(selectedOptions);

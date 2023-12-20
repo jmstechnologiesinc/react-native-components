@@ -67,15 +67,11 @@ export default class TabsScrollable extends React.PureComponent {
     };
 
     render() {
-        return (
-            <View
-                style={{
+        return (<ScrollView style={{
                     width: WindowWidth,
                     flexDirection: 'row',
-                    backgroundColor: MD3LightTheme.colors.background,
-                }}
-            >
-                <ScrollView ref={this.scrollViewRef} showsHorizontalScrollIndicator={false} horizontal>
+                    backgroundColor: MD3LightTheme.colors.surface,
+                }} ref={this.scrollViewRef} showsHorizontalScrollIndicator={false} horizontal>
                     <View onLayout={this.onTabsContainerLayout}>
                         <Tabs.List style={this.props.tabsListStyle}>
                             {React.Children.toArray(this.props.children).map((child, index) => (
@@ -86,7 +82,6 @@ export default class TabsScrollable extends React.PureComponent {
                         </Tabs.List>
                     </View>
                 </ScrollView>
-            </View>
         );
     }
 }

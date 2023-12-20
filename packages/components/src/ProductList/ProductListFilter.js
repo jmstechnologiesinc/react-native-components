@@ -3,6 +3,7 @@ import React from 'react';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import IndustryList from '../IndustryList/IndustryList';
 import SegmentedButtonGroup from '../SegmentedButtonGroup/SegmentedButtonGroup';
+import {Divider,MD3LightTheme} from "@jmstechnologiesinc/react-native-paper";
 
 const ProductListFilter = ({
     industryTitle,
@@ -16,6 +17,7 @@ const ProductListFilter = ({
 }) => {
    
     return <>
+        <Divider style={{ marginTop: MD3LightTheme.spacing.x2 }} />
         {industryList && (
             <ScreenWrapper.Section title={industryTitle} withPaddingHorizontal>
                 <IndustryList

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, MD3LightTheme, Text, TouchableRipple } from '@jmstechnologiesinc/react-native-paper';
+import {  MD3LightTheme, Text, TouchableRipple } from '@jmstechnologiesinc/react-native-paper';
 import { moderateScale } from 'react-native-size-matters';
 
 const TabsItem = ({ title, isSelected, onPress, style }) => (
@@ -8,8 +8,8 @@ const TabsItem = ({ title, isSelected, onPress, style }) => (
         onPress={onPress}
         style={[
             {
-                paddingHorizontal: moderateScale(16),
-                paddingVertical: moderateScale(16),
+                paddingHorizontal: MD3LightTheme.spacing.x4,
+                paddingVertical: MD3LightTheme.spacing.x4,
                 ...(isSelected && {
                     borderColor: MD3LightTheme.colors.primary,
                     borderBottomWidth: moderateScale(2),
@@ -20,7 +20,6 @@ const TabsItem = ({ title, isSelected, onPress, style }) => (
     >
         <Text
             style={{
-                textTransform: 'uppercase',
                 color: isSelected ? MD3LightTheme.colors.primary : MD3LightTheme.colors.onSurfaceVariant,
             }}
             variant="labelLarge"

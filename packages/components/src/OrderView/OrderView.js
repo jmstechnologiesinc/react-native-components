@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ScrollView, View } from 'react-native';
 
-import { Divider, List, MD3Colors } from '@jmstechnologiesinc/react-native-paper';
+import { Divider, List, MD3Colors,MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
 import { USER_ROLES } from '@jmstechnologiesinc/user';
 import { DELIVERY_METHODS, FULFILLMENT_METHODS } from '@jmstechnologiesinc/vendor';
@@ -256,7 +256,7 @@ const OrderView = ({
                     <OrderStatus
                         role={role}
                         formattedOrder={formattedOrder}
-                        headerTitleVariant={'headlineSmall'}
+                        headerTitleVariant='headlineSmall'
                         enableHeaderStatus={enableHeaderStatus}
                         enableVendorStatus={enableVendorStatus}
                         enableDriverStatus={enableDriverStatus}
@@ -273,6 +273,8 @@ const OrderView = ({
                         showDriverDescription={showDriverDescription}
                         showDriverAvatar={showDriverAvatar}
                     />
+
+                    <Divider style={{ marginTop: MD3LightTheme.spacing.x3 }} />
 
                     {fulfilmentDetails.length > 0 ? (
                         <List.Section
@@ -291,32 +293,36 @@ const OrderView = ({
                                         descriptionNumberOfLines={0}
                                         left={(props) => <List.Icon {...props} icon={item.icon} />}
                                     />
-                                    {itemSeparator(index, fulfilmentDetails.length) && <Divider />}
                                 </View>
                             ))}
                         </List.Section>
                     ) : null}
 
+                    <Divider />
+
                     {driverDetails?.length > 0 ? (
-                        <List.Section title={localized('order.driverDetails')}>
-                            {driverDetails.map((item, index) => (
-                                <View key={item.key}>
-                                    <List.Item
-                                        title={item.title}
-                                        description={item.description}
-                                        titleNumberOfLines={0}
-                                        descriptionNumberOfLines={0}
-                                        {...(item.icon
-                                            ? { left: (props) => <List.Icon {...props} icon={item.icon} /> }
-                                            : null)}
-                                    />
-                                    {itemSeparator(index, driverDetails.length) && <Divider />}
-                                </View>
-                            ))}
-                        </List.Section>
+                        <>
+                            <List.Section title={localized('order.driverDetails')}>
+                                {driverDetails.map((item, index) => (
+                                    <View key={item.key}>
+                                        <List.Item
+                                            title={item.title}
+                                            description={item.description}
+                                            titleNumberOfLines={0}
+                                            descriptionNumberOfLines={0}
+                                            {...(item.icon
+                                                ? { left: (props) => <List.Icon {...props} icon={item.icon} /> }
+                                                : null)}
+                                        />
+                                    </View>
+                                ))}
+                            </List.Section>
+                            <Divider />
+                        </>
                     ) : null}
 
                     {telemetryList.length > 0 ? (
+                        <>
                         <List.Section title={localized('order.telemetry')}>
                             {telemetryList.map((item, index) => (
                                 <View key={item.key}>
@@ -326,25 +332,28 @@ const OrderView = ({
                                         titleNumberOfLines={0}
                                         descriptionNumberOfLines={0}
                                     />
-                                    {itemSeparator(index, telemetryList.length) && <Divider />}
                                 </View>
                             ))}
                         </List.Section>
+                           <Divider />
+                           </>
                     ) : null}
 
                     {role === USER_ROLES.vendor || role === USER_ROLES.customer ? (
                         <List.Section
                             title={`${order.cart.products.length} ${plurulize(localized('order.item'), order.cart.products.length)}`}
                         >
-                            {order.cart.products.map((item) => (
+                            {order.cart.products.map((item, index) => (
                                 <View key={`product-item-${item.id}`}>
                                     <CartListProductItem data={item} interpunctAttributeGroup={false} />
+                                    {itemSeparator(index, order.cart.products.length) ? <Divider horizontalInset /> : null}
                                 </View>
                             ))}
                         </List.Section>
                     ) : null}
 
-                    <Divider />
+                    <Divider style={{ marginTop: MD3LightTheme.spacing.x1 }} />
+
                     <ScreenWrapper.Section>
                         <Accounting feeList={formattedOrder.fees} />
                     </ScreenWrapper.Section>

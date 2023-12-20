@@ -21,11 +21,11 @@ if (match) {
 }
 
 }
-
 const feesListItem = (feeList) => {
     if (!feeList?.length) {
         return null;
     }
+    console.log(JSON.stringify(MD3LightTheme.fonts.titleLarge.fontSize,null,2))
 
     const results = [];
 
@@ -34,14 +34,13 @@ const feesListItem = (feeList) => {
             feeItem.id === 'total'
                 ? {
                       titleVariant: 'headlineSmall',
-                      metaTitleVariant: 'headlineSmall',
+                      metaTitleVariant: 'labelLarge',
                       titleStyle: { color: MD3LightTheme.colors.onSurfaceVariant },
-                      metaTitleStyle: { color: MD3LightTheme.colors.onSurface },
+                      metaTitleStyle: { color: MD3LightTheme.colors.onSurface, lineHeight: MD3LightTheme.fonts.titleLarge.lineHeight, fontSize: MD3LightTheme.fonts.titleLarge.fontSize },
                   }
                 : {
                       style: { paddingVertical: 0 },
                       titleStyle: { color: MD3LightTheme.colors.onSurface },
-                      metaTitleStyle: { color: MD3LightTheme.colors.onSurfaceVariant },
                   };
 
         results.push(

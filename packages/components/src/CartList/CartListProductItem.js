@@ -6,6 +6,7 @@ import * as JMSList from '../List/List';
 import { MD3Colors } from '@jmstechnologiesinc/react-native-paper';
 const { dinero, toDecimal } = require('dinero.js');
 import I18n from 'i18n-js';
+import { moderateScale } from 'react-native-size-matters';
 
 const recursiveAttributeGroup = ({ parentId, attributeGroup }) => {
     const results = [];
@@ -81,10 +82,10 @@ const CartListProductItem = ({
                 right={() => <JMSList.MetaBadged title={I18n.l('currency', toDecimal(dinero(data.price)))} />}
                 onPress={onEdit}
             />
-            {!interpunctAttributeGroup
-                ? attributeGroup.map((item) => (
+            {interpunctAttributeGroup === false
+                ? attributeGroup.map((item,index) => (
                       <JMSList.Item
-                          key={`attribute-group-${item.id}`}
+                          key={`attribute-group-${item.id}-${index}`}
                           title={item.title}
                           titleNumberOfLines={0}
                           descriptionNumberOfLines={0}
@@ -104,7 +105,7 @@ const CartListProductItem = ({
                                   titleStyle={{ color: MD3LightTheme.colors.secondary }}
                               />
                           )}
-                          titleStyle={{ color: MD3LightTheme.colors.secondary }}
+                          titleStyle={{ color: MD3LightTheme.colors.onSurfaceVariant, fontSize: moderateScale(14) }}
                           style={{ paddingLeft: MD3LightTheme.spacing.x9 }}
                           onPress={onEdit}
                       />

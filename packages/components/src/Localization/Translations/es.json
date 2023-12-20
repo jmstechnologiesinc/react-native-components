@@ -51,11 +51,13 @@
     "helpTextStoreEmail": "El correo electrónico se mostrará públicamente.",
     "order": {
         "vendor": {
-            "selfCancelled": "Hubo un error al procesar el pedido."
+            "selfCancelled": "Hubo un error al procesar el pedido.",
+            "phone": "Teléfono de la tienda"
         },
         "customer": {
             "selfCancelled": "Hubo un error al procesar tu pedido. Por favor, inténtalo de nuevo más tarde."
         },
+        "newDeliveryRequest": "Nueva solicitud de entrega",
         "orderTitle": "Pedidos",
         "orderAutoConfirm": "Confirmar Automaticamente",
         "vendorAutoConfirm": "Los nuevos pedidos se confirmarán automáticamente. El cliente recibe un reconocimiento inmediato de que su pedido está siendo procesado y un conductor será asignado de inmediato.",
@@ -64,12 +66,12 @@
         "complete": "Completo",
         "noDriverFound": "No se encontró ningún conductor cercano. Por favor, inténtalo de nuevo más tarde.",
         "placed": "Esperando confirmación del vendedor.",
-        "preparing": "Preparando tu pedido.",
-        "readyForPickup": "Tu pedido está listo.",
+        "preparing": "Preparando",
+        "readyForPickup": "Listo Para Recoger",
+        "readyForPickupReminder": "Marcar como listo para ser recogido cuando esté preparado para notificar al cliente.",
         "vendorReadyforPickup": "Se informó al cliente que el pedido está listo para ser recogido.",
-        "customerDriverPending": "Se asignó el pedido a un conductor del personal. Esperando a que el conductor lo confirme.",
+        "staffPending": "Se asignó el pedido a un conductor del personal. Esperando a que el conductor lo confirme.",
         "driverPending": "El pedido se asignó a un conductor. Esperando a que el conductor lo confirme.",
-        "driverPendingOwnStaff": "El pedido se asignó a un conductor. Esperando confirmación del conductor.",
         "driverAccepted": "Entregando otro pedido.",
         "lookingForDriver": "Buscando un conductor cercano...",
         "needAttention": "Necesita atención",
@@ -87,8 +89,8 @@
         "inTransit": "En tránsito",
         "reject": "Rechazar",
         "accept": "Aceptar",
-        "vendorDriverRejected": "Reasignando la entrega a otro conductor del personal disponible.",
-        "verdorStaffDriverRejected": "Buscando otro conductor del personal...",
+        "staffReassigning": "Reasignando la entrega a otro conductor del personal disponible.",
+        "lookingForStaff": "Buscando otro conductor del personal...",
         "cancelled": "Cancelado",
         "history": "Historial",
         "newRequests": "Nuevas Solicitudes",
@@ -111,7 +113,6 @@
     },
     "global": {
         "tryAgainLater": "Por favor, inténtalo de nuevo más tarde.",
-        "newDeliveryRequest": "Nueva solicitud de entrega",
         "cancel": "Cancelar",
         "call": "Llamar",
         "preparing": "Preparando",
@@ -193,7 +194,7 @@
 "commingSoon": "Próximamente",
 "go": "IR",
 "history": "Historial",
-"noNewOrders": "Sin nuevos pedidos",
+"noNewOrders": "Esperando Nuevos Pedidos",
 "noRecentOrders": "Sin pedidos recientes",
 "noOrders": "Sin pedidos",
 "ordersWillBeListReceives": "Los pedidos se listarán en esta pantalla al recibirlos.",

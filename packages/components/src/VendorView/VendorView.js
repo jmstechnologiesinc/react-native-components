@@ -31,15 +31,12 @@ const VendorView = ({
                 style={{ paddingBottom: MD3LightTheme.spacing.x2 }}
             >
                 <>
-                    {formattedHitDistance ? (
-                        <Card.Title
-                            title={title}
-                            subtitle={formattedHitDistance}
-                            titleVariant="headlineMedium"
-                            subtitleVariant="bodyLarge"
-                            titleNumberOfLines={0}
-                        />
-                    ) : null}
+                    <Card.Title
+                        title={title}
+                        subtitle={formattedHitDistance}
+                        titleVariant="headlineSmall"
+                        titleNumberOfLines={0}
+                    />
                     <Card.Content>
                         <Text variant="bodyMedium">{formattedAddress}</Text>
                     </Card.Content>

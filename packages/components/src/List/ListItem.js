@@ -32,7 +32,7 @@ const ListItem = ({
                   ellipsizeMode={titleEllipsizeMode}
                   numberOfLines={titleNumberOfLines}
                   variant={titleVariant}
-                  style={{ color, titleStyle }}
+                  style={[{ color },titleStyle]}
               >
                   {title}
               </Text>
@@ -86,7 +86,7 @@ const ListItem = ({
                     title={metaTitle}
                     quantity={metaQuantity}
                     titleVariant={metaTitleVariant}
-                    titleStyle={{ color: props.color }}
+                    titleStyle={[{ color: props.color },metaTitleStyle]}
                 />
                 {right?.(props)}
               </>
@@ -104,6 +104,7 @@ const ListItem = ({
             descriptionNumberOfLines={descriptionNumberOfLines}
             onPress={onPress}
             style={style}
+            titleStyle={titleStyle}
             {...rests}
         />
     );

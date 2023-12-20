@@ -1,11 +1,11 @@
 import React, { useRef } from 'react';
 
-import { FlatList, Animated } from 'react-native';
+import { FlatList, Animated,View } from 'react-native';
 
 const { dinero, toDecimal } = require('dinero.js');
 import I18n from 'i18n-js';
 
-import { List, MD3Colors } from '@jmstechnologiesinc/react-native-paper';
+import { List, MD3Colors,Divider } from '@jmstechnologiesinc/react-native-paper';
 import {
     dynamicFormInitializeGroup,
     dynamicFormToggleCheckRadioValue,
@@ -43,6 +43,7 @@ const DynamicForm = ({
     sections,
     listHeaderComponent,
     listFooterComponent,
+    listBottomComponent,
     onChange,
     onContentOffsetYScroll,
     contentOffsetY,
@@ -123,40 +124,42 @@ const DynamicForm = ({
     };
 
     const renderItem = ({ item }) => (
-        <List.Accordion
-            title={item.title}
-            description={initialState[item.id]?.formattedQuantity || item.formattedQuantity}
-            descriptionStyle={{ ...((initialState[item.id] || item)?.isValid ? null : { color: MD3Colors.error50 }) }}
-        >
-            {item.data?.map((data) => {
-                const value = Boolean(getValue(data));
-                const isMaxSelection = validateMaxSelection(value, initialState[item.id]?.quantity, item.maxQuantity);
-                const isDisabled = data.isDisabled || isOutofStock || isMaxSelection;
+        <View style={{ marginTop: 1 }}>
+            <List.Accordion
+                title={item.title}
+                description={initialState[item.id]?.formattedQuantity || item.formattedQuantity}
+                descriptionStyle={{ ...((initialState[item.id] || item)?.isValid ? null : { color: MD3Colors.error50 }) }}
+            >
+                {item.data?.map((data) => {
+                    const value = Boolean(getValue(data));
+                    const isMaxSelection = validateMaxSelection(value, initialState[item.id]?.quantity, item.maxQuantity);
+                    const isDisabled = data.isDisabled || isOutofStock || isMaxSelection;
 
-                return (
-                    <DynamicFormSwitch
-                        key={`dymamic-form-switch-${data.id}`}
-                        type={data.type}
-                        title={data.title}
-                        description={data.description}
-                        metaTitle={I18n.l('currency', toDecimal(dinero(data.price)))}
-                        isChecked={value}
-                        isDisabled={isDisabled}
-                        onPress={(value) => onCheckRadioPress(data, item, value)}
-                    />
-                );
-            })}
-        </List.Accordion>
+                    return (
+                        <DynamicFormSwitch
+                            key={`dymamic-form-switch-${data.id}`}
+                            type={data.type}
+                            title={data.title}
+                            description={data.description}
+                            metaTitle={I18n.l('currency', toDecimal(dinero(data.price)))}
+                            isChecked={value}
+                            isDisabled={isDisabled}
+                            onPress={(value) => onCheckRadioPress(data, item, value)}
+                        />
+                    );
+                })}
+            </List.Accordion>
+        </View>
     );
 
-    const listFooterComponentWrapper = () => {
+    const listBottomComponentWrapper = () => {
         let isValid = initialState[parentId]?.isValid;
 
         if (isValid === undefined) {
             isValid = areAllFormValid(sections);
         }
 
-        return listFooterComponent(isValid);
+        return listBottomComponent(isValid);
     };
 
     return (
@@ -165,7 +168,9 @@ const DynamicForm = ({
                 data={sections}
                 keyExtractor={keyExtractor}
                 renderItem={renderItem}
+                ItemSeparatorComponent={Divider}
                 ListHeaderComponent={listHeaderComponent}
+                ListFooterComponent={listFooterComponent}
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
                 scrollEventThrottle={16}
@@ -190,7 +195,7 @@ const DynamicForm = ({
                         : null,
                 })}
             />
-            {listFooterComponentWrapper()}
+            {listBottomComponentWrapper()}
         </>
     );
 };

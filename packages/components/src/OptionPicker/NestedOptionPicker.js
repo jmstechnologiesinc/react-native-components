@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { List,  Checkbox, RadioButton } from '@jmstechnologiesinc/react-native-paper';
 import { imagekitUrl} from '@jmstechnologiesinc/react-native-components';
-import { localized } from '../Localization/Localization';
-
 
 function NestedOptionPicker({ 
     isDisabled, 
@@ -14,6 +12,10 @@ function NestedOptionPicker({
     multiple = true,
 }) {
     const [selectedOptions, setSelectedOptions] = useState(preSelectedOptions);
+
+    useEffect(() => {
+        setSelectedOptions(preSelectedOptions);
+    }, [preSelectedOptions]);
 
     const isOptionSelected = (id) => selectedOptions.some(option => option.id === id);
 
@@ -72,6 +74,5 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
 });
-
 
 export default NestedOptionPicker;

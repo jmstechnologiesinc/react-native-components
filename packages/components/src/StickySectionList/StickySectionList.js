@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { View, Animated, SectionList as NativeSectionList } from 'react-native';
 
-import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
+import { MD3LightTheme,Divider } from '@jmstechnologiesinc/react-native-paper';
 
 import { itemSeparator } from '../utils';
 import * as Tabs from '../Tabs/Tabs';
@@ -38,6 +38,7 @@ const StickyList = ({
     });
 
     const renderTab = (
+        <>
         <Tabs.Scrollable title={title} currentIndex={currentIndex}>
             {sections.map((item, index) => (
                 <Tabs.Item
@@ -61,6 +62,8 @@ const StickyList = ({
                 />
             ))}
         </Tabs.Scrollable>
+                    <Divider />
+</>
     );
 
      const getItemLayout = sectionListGetItemLayout({
