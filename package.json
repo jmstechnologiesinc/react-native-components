@@ -41,7 +41,7 @@
     "react-native-image-picker": "^4.10.1",
     "react-native-localize": "^2.2.4",
     "react-native-permissions": "^3.6.1",
-    "react-native-size-matters": "^0.4.0",
+    "@jmstechnologiesinc/react-native-size-matters": "^0.4.0",
     "react-native-svg": "^12.3.0",
     "react-native-web": "^0.17.7",
     "react-scripts": "^5.0.1",
