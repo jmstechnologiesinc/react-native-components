@@ -4,7 +4,7 @@ export default {
     title: 'packages/AuthForm',
 };
 
-import * as AuthForm from './AuthForm';
+import * as AuthForm from './Form';
 
 const state = {
     email: 'jms@gmail.com',

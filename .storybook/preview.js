@@ -1,6 +1,4 @@
-import React from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {Provider as PaperProvider} from '@jmstechnologiesinc/react-native-paper';
 
 export const parameters = {
   actions: {argTypesRegex: '^on[A-Z].*'},
@@ -15,9 +13,7 @@ export const parameters = {
 export const decorators = [
   Story => (
     <SafeAreaProvider>
-      <PaperProvider>
-        <Story />
-      </PaperProvider>
+      <Story />
     </SafeAreaProvider>
   ),
 ];
