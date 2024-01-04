@@ -373,7 +373,7 @@
     "@babel/helper-plugin-utils" "^7.22.5"
     "@babel/plugin-syntax-export-default-from" "^7.23.3"
 
-"@babel/plugin-proposal-nullish-coalescing-operator@^7.0.0", "@babel/plugin-proposal-nullish-coalescing-operator@^7.12.1", "@babel/plugin-proposal-nullish-coalescing-operator@^7.13.8", "@babel/plugin-proposal-nullish-coalescing-operator@^7.18.0":
+"@babel/plugin-proposal-nullish-coalescing-operator@^7.0.0", "@babel/plugin-proposal-nullish-coalescing-operator@^7.0.0-0", "@babel/plugin-proposal-nullish-coalescing-operator@^7.12.1", "@babel/plugin-proposal-nullish-coalescing-operator@^7.13.8", "@babel/plugin-proposal-nullish-coalescing-operator@^7.18.0":
   version "7.18.6"
   resolved "https://registry.npmjs.org/@babel/plugin-proposal-nullish-coalescing-operator/-/plugin-proposal-nullish-coalescing-operator-7.18.6.tgz"
   integrity sha512-wQxQzxYeJqHcfppzBDnm1yAY0jSRkUXR2z8RePZYrKwMKgMlE8+Z6LUno+bd6LvbGh8Gltvy74+9pIYkr+XkKA==
@@ -417,7 +417,7 @@
     "@babel/helper-plugin-utils" "^7.18.6"
     "@babel/plugin-syntax-optional-catch-binding" "^7.8.3"
 
-"@babel/plugin-proposal-optional-chaining@^7.0.0", "@babel/plugin-proposal-optional-chaining@^7.12.7", "@babel/plugin-proposal-optional-chaining@^7.13.12", "@babel/plugin-proposal-optional-chaining@^7.20.0":
+"@babel/plugin-proposal-optional-chaining@^7.0.0", "@babel/plugin-proposal-optional-chaining@^7.0.0-0", "@babel/plugin-proposal-optional-chaining@^7.12.7", "@babel/plugin-proposal-optional-chaining@^7.13.12", "@babel/plugin-proposal-optional-chaining@^7.20.0":
   version "7.21.0"
   resolved "https://registry.npmjs.org/@babel/plugin-proposal-optional-chaining/-/plugin-proposal-optional-chaining-7.21.0.tgz"
   integrity sha512-p4zeefM72gpmEe2fkUr/OnOXpWEf8nAgk7ZYVqqfFiyIG7oFfVZcCrU64hWn5xp4tQ9LkV4bTIa5rD0KANpKNA==
@@ -625,7 +625,7 @@
     "@babel/helper-create-regexp-features-plugin" "^7.18.6"
     "@babel/helper-plugin-utils" "^7.18.6"
 
-"@babel/plugin-transform-arrow-functions@^7.0.0", "@babel/plugin-transform-arrow-functions@^7.12.1", "@babel/plugin-transform-arrow-functions@^7.23.3":
+"@babel/plugin-transform-arrow-functions@^7.0.0", "@babel/plugin-transform-arrow-functions@^7.0.0-0", "@babel/plugin-transform-arrow-functions@^7.12.1", "@babel/plugin-transform-arrow-functions@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-arrow-functions/-/plugin-transform-arrow-functions-7.23.3.tgz"
   integrity sha512-NzQcQrzaQPkaEwoTm4Mhyl8jI1huEL/WWIEvudjTCMJ9aBZNpsJbMASx7EQECtQQPS/DcnFpo0FIh3LvEO9cxQ==
@@ -871,6 +871,13 @@
     "@babel/helper-plugin-utils" "^7.22.5"
     "@babel/plugin-syntax-numeric-separator" "^7.10.4"
 
+"@babel/plugin-transform-object-assign@^7.16.7":
+  version "7.23.3"
+  resolved "https://registry.npmjs.org/@babel/plugin-transform-object-assign/-/plugin-transform-object-assign-7.23.3.tgz"
+  integrity sha512-TPJ6O7gVC2rlQH2hvQGRH273G1xdoloCj9Pc07Q7JbIZYDi+Sv5gaE2fu+r5E7qK4zyt6vj0FbZaZTRU5C3OMA==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.22.5"
+
 "@babel/plugin-transform-object-rest-spread@^7.23.4":
   version "7.23.4"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-object-rest-spread/-/plugin-transform-object-rest-spread-7.23.4.tgz"
@@ -1013,7 +1020,7 @@
     babel-plugin-polyfill-regenerator "^0.5.3"
     semver "^6.3.1"
 
-"@babel/plugin-transform-shorthand-properties@^7.0.0", "@babel/plugin-transform-shorthand-properties@^7.12.1", "@babel/plugin-transform-shorthand-properties@^7.23.3":
+"@babel/plugin-transform-shorthand-properties@^7.0.0", "@babel/plugin-transform-shorthand-properties@^7.0.0-0", "@babel/plugin-transform-shorthand-properties@^7.12.1", "@babel/plugin-transform-shorthand-properties@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-shorthand-properties/-/plugin-transform-shorthand-properties-7.23.3.tgz"
   integrity sha512-ED2fgqZLmexWiN+YNFX26fx4gh5qHDhn1O2gvEhreLW2iI63Sqm4llRLCXALKrCnbN4Jy0VcMQZl/SAzqug/jg==
@@ -1035,7 +1042,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.22.5"
 
-"@babel/plugin-transform-template-literals@^7.0.0", "@babel/plugin-transform-template-literals@^7.12.1", "@babel/plugin-transform-template-literals@^7.23.3":
+"@babel/plugin-transform-template-literals@^7.0.0", "@babel/plugin-transform-template-literals@^7.0.0-0", "@babel/plugin-transform-template-literals@^7.12.1", "@babel/plugin-transform-template-literals@^7.23.3":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/plugin-transform-template-literals/-/plugin-transform-template-literals-7.23.3.tgz"
   integrity sha512-Flok06AYNp7GV2oJPZZcP9vZdszev6vPBkHLwxwSpaIqx75wn6mUd3UFWsSsA0l8nXAKkyCmL/sR02m8RYGeHg==
@@ -1206,7 +1213,7 @@
     "@babel/plugin-transform-react-jsx-development" "^7.22.5"
     "@babel/plugin-transform-react-pure-annotations" "^7.23.3"
 
-"@babel/preset-typescript@^7.12.7", "@babel/preset-typescript@^7.13.0":
+"@babel/preset-typescript@^7.12.7", "@babel/preset-typescript@^7.13.0", "@babel/preset-typescript@^7.16.7", "@babel/preset-typescript@^7.17.12":
   version "7.23.3"
   resolved "https://registry.npmjs.org/@babel/preset-typescript/-/preset-typescript-7.23.3.tgz"
   integrity sha512-17oIGVlqz6CchO9RFYn5U6ZpWRZIngayYCtrPRSgANSwC2V1Jb+iP74nVxzzXJte8b8BYxrL1yY96xfhTBrNNQ==
@@ -1694,22 +1701,22 @@
     "@types/yargs" "^17.0.8"
     chalk "^4.0.0"
 
-"@jmstechnologiesinc/cart@^0.0.56":
-  version "0.0.56"
-  resolved "https://npm.pkg.github.com/download/@jmstechnologiesinc/cart/0.0.56/2930076df584615bbd93eca08f3f4add4e0ba2fc"
-  integrity sha512-H3bgjj3nEosMuQ1NnyiJToS12CbGwgL/niLVGDD7JWba2n2S9BXnf0mMkYSCjM2g0ntQ+2H7dRw+3hqdjL7V2g==
+"@jmstechnologiesinc/cart@^0.0.58":
+  version "0.0.58"
+  resolved "https://npm.pkg.github.com/download/@jmstechnologiesinc/cart/0.0.58/e4be9b2c6791c2982f5afcd2dfaa5b9be8520186"
+  integrity sha512-urAawtaOch1B/THgl0Y/2PuohoN7l5xe0hWu8zaPG4Ixvcznlqy4zRomI20Qm5dHQYq61X6If8UY35XPcKkYag==
   dependencies:
-    "@jmstechnologiesinc/commons" "^0.0.55"
+    "@jmstechnologiesinc/commons" "^0.0.57"
     "@jmstechnologiesinc/user" "^0.0.51"
-    "@jmstechnologiesinc/vendor" "^0.0.54"
+    "@jmstechnologiesinc/vendor" "^0.0.56"
 
-"@jmstechnologiesinc/commons@^0.0.55":
-  version "0.0.55"
-  resolved "https://npm.pkg.github.com/download/@jmstechnologiesinc/commons/0.0.55/0bb29f4bb2f81def246edeec5e40c6af1764b452"
-  integrity sha512-BeUBi9OahH5gH5Y9VVUI71RWD7d/zq/CyPjSptZi7FlebjuSO/1VdMjT65bdrCLEwLid+CFZRqWUvexwon9+sA==
+"@jmstechnologiesinc/commons@^0.0.57":
+  version "0.0.57"
+  resolved "https://npm.pkg.github.com/download/@jmstechnologiesinc/commons/0.0.57/d5732c9c1e380fd5070246e6651050fe53e97f68"
+  integrity sha512-xKf/yo9sCiixKFda4IB6cnaKgRZXQmAswqQtMw2EeJQz5KlWRX5RASTpXJhkk/Rv48oIjLVSeH/eRjC7YB0ZjA==
   dependencies:
     "@jmstechnologiesinc/user" "^0.0.51"
-    "@jmstechnologiesinc/vendor" "^0.0.54"
+    "@jmstechnologiesinc/vendor" "^0.0.56"
     turf-distance "^3.0.12"
 
 "@jmstechnologiesinc/driver@^0.0.52":
@@ -1724,21 +1731,21 @@
   dependencies:
     "@react-navigation/elements" "^1.3.4"
 
-"@jmstechnologiesinc/material-tokens@0.0.16":
+"@jmstechnologiesinc/material-tokens@*", "@jmstechnologiesinc/material-tokens@0.0.16":
   version "0.0.16"
   resolved "https://npm.pkg.github.com/download/@jmstechnologiesinc/material-tokens/0.0.16/bb5d25f9dca1717f7f74ec3ef9161eaa22dd418e"
   integrity sha512-00ut9s9sbkUZNqBPV87Skzb9Y5k3ltPd1l0gi5rrnsMQoGooJIQeom0ieVK8cwDZgBMpE2HVtdC5Sj1N5ymBWA==
 
-"@jmstechnologiesinc/order@^0.0.56":
-  version "0.0.56"
-  resolved "https://npm.pkg.github.com/download/@jmstechnologiesinc/order/0.0.56/0a55bb9fb74b4d7e2a11f443169f5b0f4eb09a06"
-  integrity sha512-zAsb1Xi12VG70RXCB3ZvoJoWf51cKQQPA91AawhZUURyyhDaXW7UM5upKCZWhMdRvpV/OzKEzJuLURCZwd6QCA==
+"@jmstechnologiesinc/order@^0.0.58":
+  version "0.0.58"
+  resolved "https://npm.pkg.github.com/download/@jmstechnologiesinc/order/0.0.58/81a823afff1218eec4c7222edb7a9d2f79ccd388"
+  integrity sha512-/FXNHOr57nXAU06s7Wxuw9Ja5SMBB/MlNcRPiN98fnRomMfEEwqskK5fF/2tfrtf8fSxO4D5+V45+zDUHleirQ==
   dependencies:
-    "@jmstechnologiesinc/cart" "^0.0.56"
-    "@jmstechnologiesinc/commons" "^0.0.55"
+    "@jmstechnologiesinc/cart" "^0.0.58"
+    "@jmstechnologiesinc/commons" "^0.0.57"
     "@jmstechnologiesinc/driver" "^0.0.52"
     "@jmstechnologiesinc/user" "^0.0.51"
-    "@jmstechnologiesinc/vendor" "^0.0.54"
+    "@jmstechnologiesinc/vendor" "^0.0.56"
 
 "@jmstechnologiesinc/react-native-google-places-autocomplete@^2.4.5":
   version "2.4.5"
@@ -1754,23 +1761,30 @@
   resolved "https://npm.pkg.github.com/download/@jmstechnologiesinc/react-native-mapbox-navigation/1.1.3/52b34d5436cf21b437a6717e11c13934ea9f7f85"
   integrity sha512-fVJMUqWF5C1cwGrnd9EwZOTtnnr+nfD5y1LQcjqqIRGcXiMFEoxj58nic/g6G3gH1TtUEC/SAJberPPPTcFVPg==
 
-"@jmstechnologiesinc/react-native-paper@*", "@jmstechnologiesinc/react-native-paper@^5.0.0-rc.25":
-  version "5.0.0-rc.25"
-  resolved "https://npm.pkg.github.com/download/@jmstechnologiesinc/react-native-paper/5.0.0-rc.25/3706521d0e6de8c7ee5789a96455b32d2dfd6af6"
-  integrity sha512-0m3AUFSPn4DLisSnXPUGy7oh32quluRFKXpMABq8HCEU6sMutKG2akL83IsLNMbvuFC+00k4zZOpLnDN3z7Syw==
+"@jmstechnologiesinc/react-native-paper@*", "@jmstechnologiesinc/react-native-paper@^5.0.0-rc.26":
+  version "5.0.0-rc.26"
+  resolved "https://npm.pkg.github.com/download/@jmstechnologiesinc/react-native-paper/5.0.0-rc.26/9d4b67513f58dbd2ba4c0dc7c6de0eb584701442"
+  integrity sha512-kLr5BoD9I6i34HbFiXMJLlTcCQmnbqAVFaJJTm32Hk+rBjSDpY60XW0XDw3JO0SbPbD+YHMHGPXs9TSZbE+1aA==
   dependencies:
     "@callstack/react-theme-provider" "^3.0.8"
+    "@jmstechnologiesinc/react-native-size-matters" "^0.4.2"
     color "^3.1.2"
+    react-native-fast-image "^8.6.3"
+
+"@jmstechnologiesinc/react-native-size-matters@^0.4.0", "@jmstechnologiesinc/react-native-size-matters@^0.4.2":
+  version "0.4.2"
+  resolved "https://npm.pkg.github.com/download/@jmstechnologiesinc/react-native-size-matters/0.4.2/0dd3877bdb09f144c083bff058b5e423821ab3b2"
+  integrity sha512-o2V+IzIwlFGfzzaG79ftgrXg0oln6WxaB1VAbiG7vpnnoQhKe75iZ94LKRHxvdqjitMbHFbRVr2yHW4WECKEew==
 
 "@jmstechnologiesinc/user@^0.0.51":
   version "0.0.51"
   resolved "https://npm.pkg.github.com/download/@jmstechnologiesinc/user/0.0.51/0ce5125119bfbc1a132c931d09f0d17cdef8b5d7"
   integrity sha512-CHDcgwfmKH9jWLlrKI5kKXlFKwDHfv8tqyQrFfHS6PWQO555p0+vl5ZPWELWcY4AaoA1SNDXNEnRi45v6Umxwg==
 
-"@jmstechnologiesinc/vendor@^0.0.54":
-  version "0.0.54"
-  resolved "https://npm.pkg.github.com/download/@jmstechnologiesinc/vendor/0.0.54/0a41d085c986444b70ba093c138415fe9f8ba3a1"
-  integrity sha512-piIEeUlngLpoHbH2P3O8IRiQq93TkaS+VY/kIVl5q3crqpqhBHp6TtzwmzVb74izokTfAGqQeG3MLmnd0f3ZUw==
+"@jmstechnologiesinc/vendor@^0.0.56":
+  version "0.0.56"
+  resolved "https://npm.pkg.github.com/download/@jmstechnologiesinc/vendor/0.0.56/c77f097f49a247007dd1d68450ec7383376e8d2f"
+  integrity sha512-FPH/QUJZw/eqQvRsW8xXmSGolvxh7cLniMR651pAoQK2CLhqONrlx0tLWRWFM41+JWiECKWxVxKjN1eReqJ80w==
 
 "@jridgewell/gen-mapping@^0.3.0", "@jridgewell/gen-mapping@^0.3.2":
   version "0.3.3"
@@ -12395,12 +12409,19 @@ react-native-config@^1.5.1:
   resolved "https://registry.npmjs.org/react-native-config/-/react-native-config-1.5.1.tgz"
   integrity sha512-g1xNgt1tV95FCX+iWz6YJonxXkQX0GdD3fB8xQtR1GUBEqweB9zMROW77gi2TygmYmUkBI7LU4pES+zcTyK4HA==
 
+react-native-draggable-flatlist@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.npmjs.org/react-native-draggable-flatlist/-/react-native-draggable-flatlist-4.0.1.tgz"
+  integrity sha512-ZO1QUTNx64KZfXGXeXcBfql67l38X7kBcJ3rxUVZzPHt5r035GnGzIC0F8rqSXp6zgnwgUYMfB6zQc5PKmPL9Q==
+  dependencies:
+    "@babel/preset-typescript" "^7.17.12"
+
 react-native-fast-image@^8.6.3:
   version "8.6.3"
   resolved "https://registry.npmjs.org/react-native-fast-image/-/react-native-fast-image-8.6.3.tgz"
   integrity sha512-Sdw4ESidXCXOmQ9EcYguNY2swyoWmx53kym2zRsvi+VeFCHEdkO+WG1DK+6W81juot40bbfLNhkc63QnWtesNg==
 
-react-native-gesture-handler@^2.1.0, "react-native-gesture-handler@>= 1.0.0":
+react-native-gesture-handler@^2.1.0, "react-native-gesture-handler@>= 1.0.0", react-native-gesture-handler@>=2.0.0:
   version "2.14.0"
   resolved "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-2.14.0.tgz"
   integrity sha512-cOmdaqbpzjWrOLUpX3hdSjsMby5wq3PIEdMq7okJeg9DmCzanysHSrktw1cXWNc/B5MAgxAn9J7Km0/4UIqKAQ==
@@ -12448,6 +12469,16 @@ react-native-permissions@^3.6.1:
   version "3.10.1"
   resolved "https://registry.npmjs.org/react-native-permissions/-/react-native-permissions-3.10.1.tgz"
   integrity sha512-Gc5BxxpjZn4QNUDiVeHOO0vXh3AH7ToolmwTJozqC6DsxV7NAf3ttap+8BSmzDR8WxuAM3Cror+YNiBhHJx7/w==
+
+react-native-reanimated@>=2.8.0:
+  version "3.6.1"
+  resolved "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-3.6.1.tgz"
+  integrity sha512-F4vG9Yf9PKmE3GaWtVGUpzj3SM6YY2cx1yRHCwiMd1uY7W0gU017LfcVUorboJnj0y5QZqEriEK1Usq2Y8YZqg==
+  dependencies:
+    "@babel/plugin-transform-object-assign" "^7.16.7"
+    "@babel/preset-typescript" "^7.16.7"
+    convert-source-map "^2.0.0"
+    invariant "^2.2.4"
 
 react-native-safe-area-context@*, react-native-safe-area-context@^4.4.1, "react-native-safe-area-context@>= 3.0.0":
   version "4.7.4"
@@ -12501,7 +12532,7 @@ react-native-web@^0.18.10:
     postcss-value-parser "^4.2.0"
     styleq "^0.1.2"
 
-react-native@*, "react-native@^0.0.0-0 || >=0.60 <1.0", "react-native@>= 0.59", react-native@>=0.50.0, react-native@>=0.57.0, react-native@>=0.60.0, react-native@>=0.63.3, react-native@>=0.65.0, react-native@0.72.5:
+react-native@*, "react-native@^0.0.0-0 || >=0.60 <1.0", "react-native@>= 0.59", react-native@>=0.50.0, react-native@>=0.57.0, react-native@>=0.60.0, react-native@>=0.63.3, react-native@>=0.64.0, react-native@>=0.65.0, react-native@0.72.5:
   version "0.72.5"
   resolved "https://registry.npmjs.org/react-native/-/react-native-0.72.5.tgz"
   integrity sha512-oIewslu5DBwOmo7x5rdzZlZXCqDIna0R4dUwVpfmVteORYLr4yaZo5wQnMeR+H7x54GaMhmgeqp0ZpULtulJFg==
