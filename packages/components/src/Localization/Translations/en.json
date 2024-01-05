@@ -55,7 +55,7 @@
             "phone": "Store Phone"
         },
         "customer": {
-            "selfCancelled": "There was an error processing your order. Please try again later.",
+            "selfCancelled": "There was an error processing your order. Please try again later."
         },
 
         "newDeliveryRequest": "New Delivery Request",
