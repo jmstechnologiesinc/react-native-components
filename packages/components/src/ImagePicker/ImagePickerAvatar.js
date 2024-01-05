@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 import { Avatar as PaperAvatar, MD3LightTheme, TouchableRipple, List } from '@jmstechnologiesinc/react-native-paper';
 
 import ActionSheet from 'react-native-actions-sheet';

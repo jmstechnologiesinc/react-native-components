@@ -4,7 +4,7 @@ import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import { List,Text } from '@jmstechnologiesinc/react-native-paper';
 
 import ScreenWrapperContainer, { containerPaddings } from './ScreenWrapperContainer';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 
 const sectionPaddings = {
     ...containerPaddings,

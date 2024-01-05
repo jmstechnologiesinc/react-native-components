@@ -6,7 +6,7 @@ import * as JMSList from '../List/List';
 import { MD3Colors } from '@jmstechnologiesinc/react-native-paper';
 const { dinero, toDecimal } = require('dinero.js');
 import I18n from 'i18n-js';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 
 const recursiveAttributeGroup = ({ parentId, attributeGroup }) => {
     const results = [];
@@ -83,7 +83,7 @@ const CartListProductItem = ({
                 onPress={onEdit}
             />
             {interpunctAttributeGroup === false
-                ? attributeGroup.map((item,index) => (
+                ? attributeGroup.map((item, index) => (
                       <JMSList.Item
                           key={`attribute-group-${item.id}-${index}`}
                           title={item.title}
