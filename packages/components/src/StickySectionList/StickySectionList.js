@@ -7,7 +7,7 @@ import { itemSeparator } from '../utils';
 import * as Tabs from '../Tabs/Tabs';
 
 import sectionListGetItemLayout from './getItemLayout';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 
 
 const AnimatedSectionList = Animated.createAnimatedComponent(NativeSectionList);

@@ -2,7 +2,7 @@ import React from 'react';
 
 import * as JMSList from '../List/List';
 import { localized } from '../Localization/Localization';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 
 const ProductListItem = ({
     title,

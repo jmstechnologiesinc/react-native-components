@@ -11,6 +11,8 @@ import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import ButtonWrapper from '../ButtonWrapper/ButtonWrapper';
 import { localized } from '../Localization/Localization';
 
+import { useHeaderHeight } from '@react-navigation/elements';
+
 const WINDOW_HEIGHT = Dimensions.get('window').height;
 
 function OptionPickerActionSheet({
@@ -29,6 +31,8 @@ function OptionPickerActionSheet({
 
     const [selectedOptions, setSelectedOptions] = useState(preSelectedOptions);
 
+    const HEADER_HEIGHT = useHeaderHeight();
+
     const handleRemoveChip = (index) => {
         const optionToRemove = preSelectedOptions[index];
         setSelectedOptions((prev) => prev.filter((option) => option.id !== optionToRemove.id));
@@ -43,7 +47,7 @@ function OptionPickerActionSheet({
     };
 
     const hideActionSheet = () => actionSheetRef.current.hide();
-    const actionSheetHeight = Platform.OS === 'ios' ? WINDOW_HEIGHT - 120 : null;
+    const actionSheetHeight = Platform.OS === 'ios' ? WINDOW_HEIGHT - HEADER_HEIGHT : null;
 
     return (
         <>
