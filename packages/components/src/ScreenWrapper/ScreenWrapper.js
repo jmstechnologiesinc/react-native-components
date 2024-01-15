@@ -35,7 +35,7 @@ export default function ScreenWrapper({
                         contentContainerStyle={contentContainerStyle}
                         alwaysBounceVertical={false}
                         showsVerticalScrollIndicator={false}
-                       
+                        keyboardShouldPersistTaps="always"
                     >
                         {children}
                     </ScrollView>
