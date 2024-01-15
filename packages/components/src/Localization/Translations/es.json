@@ -445,5 +445,12 @@
     "luggageAndTravelGear": "Equipaje y Accesorios de Viaje",
     "videoGames": "Video Juegos",
     "flowerShop": "Florería"
-}
+},
+"accountSecurity": "Seguridad de la cuenta",
+"deleteAccount": "Eliminar cuenta",
+"helpTextdeleteAccount": "Tu cuenta se desactivará de inmediato y se eliminará permanentemente después de un período de 30 días. Si vuelves a iniciar sesión en tu cuenta durante este tiempo, se restablecerá.",
+"helpTextdeleteAccountDataRetention": "Ten en cuenta que, de acuerdo con nuestro Aviso de Privacidad, información específica sobre ti podría ser conservada según sea necesario por ley o con fines legítimos de negocios en la medida permitida por la ley.",
+"privacy": "Privacidad",
+"confirmAccountDeletion": "¿Estás seguro de que deseas eliminar tu cuenta?",
+"confirmAccountDeletionNotice": "Tu cuenta se desactivará de inmediato y se eliminará permanentemente después de un período de 30 días."
 }

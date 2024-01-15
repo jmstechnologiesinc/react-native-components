@@ -18,8 +18,6 @@ const FormEmailPassword = ({
     onPasswordReset,
     titleCredentials = false,
 }) => {
-    const [isTextSecureEntry, setIsTextSecureEntry] = useState(true);
-
     return (
         <>
             <ScreenWrapper.Section title={titleCredentials ? localized('credentials') : null}>
