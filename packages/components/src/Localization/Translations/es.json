@@ -452,5 +452,9 @@
 "helpTextdeleteAccountDataRetention": "Ten en cuenta que, de acuerdo con nuestro Aviso de Privacidad, información específica sobre ti podría ser conservada según sea necesario por ley o con fines legítimos de negocios en la medida permitida por la ley.",
 "privacy": "Privacidad",
 "confirmAccountDeletion": "¿Estás seguro de que deseas eliminar tu cuenta?",
-"confirmAccountDeletionNotice": "Tu cuenta se desactivará de inmediato y se eliminará permanentemente después de un período de 30 días."
+"confirmAccountDeletionNotice": "Tu cuenta se desactivará de inmediato y se eliminará permanentemente después de un período de 30 días.",
+"useYourLocation": "Usar tu ubicación",
+"locationServicesInfo": "Esta aplicación recopila datos de ubicación para ofrecer servicios mejorados, como la localización precisa del conductor, estimaciones de llegada en tiempo real y la optimización de rutas, incluso cuando la aplicación está cerrada o no está en uso.",
+"additionalInfo": "Además, aprovechamos esta información para recomendarte restaurantes cercanos y opciones de entrega más eficientes, asegurando una experiencia completa y conveniente.",
+"agree": "Aceptar"
 }

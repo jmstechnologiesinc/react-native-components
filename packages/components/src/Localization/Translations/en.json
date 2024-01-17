@@ -452,5 +452,10 @@
     "helpTextdeleteAccountDataRetention": "Please be aware that, in line with our Privacy Notice, specific information about you may be retained as necessary by law or for legitimate business purposes to the extent permitted by law.",
     "privacy": "Privacy",
     "confirmAccountDeletion": "Are you sure you want to delete your account?",
-    "confirmAccountDeletionNotice": "Your account will be deactivated immediately and permanently deleted after a 30-day period."
+    "confirmAccountDeletionNotice": "Your account will be deactivated immediately and permanently deleted after a 30-day period.",
+    "useYourLocation": "Use your location",
+    "locationServicesInfo": "This application collects location data to provide enhanced services such as precise driver location, real-time arrival estimates, and route optimization, even when the app is closed or not in use.",
+   "additionalInfo": "Additionally, we leverage this information to recommend nearby restaurants and more efficient delivery options, ensuring a comprehensive and convenient experience.",
+   "agree": "Agree"
+
 }
