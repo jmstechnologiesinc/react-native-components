@@ -128,7 +128,7 @@
     "noNearbyVendorsFound": "No se encontraron vendedores cercanos. Todavía no hemos establecido asociaciones con vendedores potenciales en esta área.",
     "globalVendorMarketplace": "Mercado global de vendedores",
     "yourLocationIsRequired": "Se requiere tu ubicación",
-    "appRequiresGeolocation": "Esta aplicación necesita tu ubicación geográfica para buscar vendedores potenciales a tu alrededor.",
+    "appRequiresGeolocation": "Esta aplicación necesita su ubicación para recomendar proveedores cercanos a su alrededor y brindar servicios de posicionamiento, como monitoreo preciso del conductor, estimación de llegada en tiempo real y opciones de entrega.",
     "addLocation": "Agregar ubicación",
     "pleaseTryagain": "Por favor, inténtalo de nuevo.",
     "requestProcessingError": "Se produjo un error al procesar tu solicitud.",
@@ -454,7 +454,7 @@
 "confirmAccountDeletion": "¿Estás seguro de que deseas eliminar tu cuenta?",
 "confirmAccountDeletionNotice": "Tu cuenta se desactivará de inmediato y se eliminará permanentemente después de un período de 30 días.",
 "useYourLocation": "Usar tu ubicación",
-"locationServicesInfo": "Esta aplicación recopila datos de ubicación para ofrecer servicios mejorados, como la localización precisa del conductor, estimaciones de llegada en tiempo real y la optimización de rutas, incluso cuando la aplicación está cerrada o no está en uso.",
-"additionalInfo": "Además, aprovechamos esta información para recomendarte restaurantes cercanos y opciones de entrega más eficientes, asegurando una experiencia completa y conveniente.",
+"locationServicesInfo1": "Esta aplicación recopila datos de ubicación para brindar servicios de posicionamiento, como monitoreo preciso del conductor, estimaciones de llegada en tiempo real y optimización de rutas, incluso cuando la aplicación está cerrada o no está en uso.",
+"locationServicesInfo2": "Además, aprovechamos esta información para recomendarte vendedores cercanos y opciones de entrega más eficientes, asegurando una experiencia completa y conveniente.",
 "agree": "Aceptar"
 }

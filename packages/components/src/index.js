@@ -38,6 +38,5 @@ export { default as Swipeable } from './SwipeToDelete/SwipeToDelete';
 export { default as ButtonWrapper} from "./ButtonWrapper/ButtonWrapper";
 export { LAYOUT_MODE } from './consts';
 export { localized, setI18nConfig } from './Localization/Localization';
-export {ShowPrivacyPolicy, getShouldShowPrivacyPolicy, setShouldShowPrivacyPolicy } from './ShowPrivacyPolicy'
 
 export { default as ActionPaymentSheet } from './ActionPaymentSheet/ActionPaymentSheet';
