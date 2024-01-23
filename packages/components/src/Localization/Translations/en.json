@@ -129,7 +129,7 @@
     "noNearbyVendorsFound": "No nearby vendors found. we have not established any partnership with prospect vendors around this area yet.",
     "globalVendorMarketplace": "Global Vendor Marketplace",
     "yourLocationIsRequired": "Your Location Is Required",
-    "appRequiresGeolocation": "This app needs your geo location to search for prospect vendors around you.",
+    "appRequiresGeolocation": "This app needs your location to recommend nearby vendors around you, and provide positioning services, such as precise driver monitoring, real-time arrival estimate and delivery options.",
     "addLocation": "Add Location",
     "pleaseTryagain": "Please try again.",
     "requestProcessingError": "An error occured while procesing your request.",
@@ -452,5 +452,10 @@
     "helpTextdeleteAccountDataRetention": "Please be aware that, in line with our Privacy Notice, specific information about you may be retained as necessary by law or for legitimate business purposes to the extent permitted by law.",
     "privacy": "Privacy",
     "confirmAccountDeletion": "Are you sure you want to delete your account?",
-    "confirmAccountDeletionNotice": "Your account will be deactivated immediately and permanently deleted after a 30-day period."
+    "confirmAccountDeletionNotice": "Your account will be deactivated immediately and permanently deleted after a 30-day period.",
+    "useYourLocation": "Use your location",
+    "locationServicesInfo1": "This application collects location data to provide positioning services such as precise driver monitoring, real-time arrival estimates, and route optimization, even when the app is closed or not in use.",
+    "locationServicesInfo2": "Additionally, we leverage this information to recommend nearby vendors and more efficient delivery options, ensuring a comprehensive and convenient experience.",
+   "agree": "Agree"
+
 }

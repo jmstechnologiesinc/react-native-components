@@ -6,6 +6,7 @@ import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 
 const FormVehicleInfo = ({
+    selected,
     active,
     title,
     make,
@@ -18,17 +19,17 @@ const FormVehicleInfo = ({
 }) => {
     return (
         <>
-            <List.Item
+           {/*  <List.Item
                 title={localized('active')}
-                disabled={true}
+                disabled={active}
                 right={() => (
                     <Switch
-                        disabled={true}
-                        value={active}
-                        onValueChange={(text) => inputActionHandler('active', text)}
+                        disabled={isDisabled}
+                        value={selected}
+                        onValueChange={(text) => inputActionHandler('selected', text)}
                     />
                 )}
-            />
+            /> */}
             <ScreenWrapper.Container>
                 <ScreenWrapper.Section title={title}>
                     <TextInput
