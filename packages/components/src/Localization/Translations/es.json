@@ -410,7 +410,8 @@
     "storeDetailsUpdated": "Detalles de la tienda actualizados.",
     "fulfillmentMethodsUpdated": "Métodos de cumplimiento actualizados.",
     "preferencesUpdated": "¡Preferencias actualizadas con éxito!",
-    "submissionStatus": "Solicitud recibida. Estamos revisando tu envío."
+    "submissionStatus": "Solicitud recibida. Estamos revisando tu envío.",
+    "paymentMethodUpdated": "Su método de pago se actualizó exitosamente."
 },
 "industry": {
     "restaurant": "Restaurante",
