@@ -129,7 +129,7 @@ const OrderView = ({
             key: 'vendor-phone',
             title: order.vendor.phone,
             icon: MATERIAL_ICONS.call,
-            description: localized('order.vendorPhone'),
+            description: localized('order.vendor.phone'),
         });
 
         fulfilmentDetails.push({

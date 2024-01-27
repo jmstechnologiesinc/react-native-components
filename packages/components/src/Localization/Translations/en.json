@@ -410,7 +410,8 @@
         "storeDetailsUpdated": "Store details updated.",
         "fulfillmentMethodsUpdated": "Fulfillment Methods updated.",
         "preferencesUpdated": "Preferences updated successfully!",
-        "submissionStatus": "Request received. We are reviewing your submission."
+        "submissionStatus": "Request received. We are reviewing your submission.",
+        "paymentMethodUpdated": "Your payment method was updated successfully."
     },
     "industry": {
     "restaurant": "Restaurant",
@@ -456,6 +457,6 @@
     "useYourLocation": "Use your location",
     "locationServicesInfo1": "This application collects location data to provide positioning services such as precise driver monitoring, real-time arrival estimates, and route optimization, even when the app is closed or not in use.",
     "locationServicesInfo2": "Additionally, we leverage this information to recommend nearby vendors and more efficient delivery options, ensuring a comprehensive and convenient experience.",
-   "agree": "Agree"
-
+    "agree": "Agree",
+     "welcomeToApp": "Welcome to"
 }
