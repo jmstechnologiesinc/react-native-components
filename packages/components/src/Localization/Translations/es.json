@@ -410,7 +410,8 @@
     "storeDetailsUpdated": "Detalles de la tienda actualizados.",
     "fulfillmentMethodsUpdated": "Métodos de cumplimiento actualizados.",
     "preferencesUpdated": "¡Preferencias actualizadas con éxito!",
-    "submissionStatus": "Solicitud recibida. Estamos revisando tu envío."
+    "submissionStatus": "Solicitud recibida. Estamos revisando tu envío.",
+    "paymentMethodUpdated": "Su método de pago se actualizó exitosamente."
 },
 "industry": {
     "restaurant": "Restaurante",
@@ -456,5 +457,21 @@
 "useYourLocation": "Usar tu ubicación",
 "locationServicesInfo1": "Esta aplicación recopila datos de ubicación para brindar servicios de posicionamiento, como monitoreo preciso del conductor, estimaciones de llegada en tiempo real y optimización de rutas, incluso cuando la aplicación está cerrada o no está en uso.",
 "locationServicesInfo2": "Además, aprovechamos esta información para recomendarte vendedores cercanos y opciones de entrega más eficientes, asegurando una experiencia completa y conveniente.",
-"agree": "Aceptar"
+"agree": "Aceptar",
+"welcomeToApp": "Te damos la bienvenida a ",
+"Placed": "Realizado",
+"Vendor Accepted": "Aceptado por el proveedor ",
+"Driver Pending": "Conductor Pendiente",
+"Driver Accepted": "Aceptado por el conductor",
+"Driver Cancelled": "Cancelado por el conductor ",
+"Driver Rejected": "Rechazado por el Conductor",
+"Shipped": "Enviado",
+"In Transit": "En Tránsito",
+"Self Cancelled": "Cancelado por el  cliente",
+"Customer Cancelled": "Cancelado por el  Cliente",
+"Vendor Cancelled": "Cancelado por el proveedor",
+"Vendor Rejected": "Rechazado por el proveedor ",
+"Completed":"Completado",
+"No Driver Found":"No se encontró ningún conductor",
+"Ready for Pickup":"Listo para Recoger"
 }
