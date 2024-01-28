@@ -458,6 +458,19 @@
     "locationServicesInfo1": "This application collects location data to provide positioning services such as precise driver monitoring, real-time arrival estimates, and route optimization, even when the app is closed or not in use.",
     "locationServicesInfo2": "Additionally, we leverage this information to recommend nearby vendors and more efficient delivery options, ensuring a comprehensive and convenient experience.",
     "agree": "Agree",
-     "welcomeToApp": "Welcome to"
-
+     "welcomeToApp": "Welcome to",
+     "Vendor Accepted": "Vendor Accepted",
+"Driver Pending": "Driver Pending",
+"Driver Accepted": "Driver Accepted",
+"Driver Cancelled": "Driver Cancelled",
+"Driver Rejected": "Driver Rejected",
+"Shipped": "Shipped",
+"In Transit": "In Transit",
+"Self Cancelled": "Self Cancelled",
+"Customer Cancelled": "Customer Cancelled",
+"Vendor Cancelled": "Vendor Cancelled",
+"Vendor Rejected": "Vendor Rejected",
+"Completed":"Completed",
+"No Driver Found":"No Driver Found",
+"Ready for Pickup":"Ready for Pickup"
 }
