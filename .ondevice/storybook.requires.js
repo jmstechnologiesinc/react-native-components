@@ -41,6 +41,7 @@ const getStories = () => {
   return [
     // require('../components/Button/Button.stories.tsx'),
     require('../packages/components/src/List/List.stories'),
+    require('../packages/components/src/Form/Form.stories'),
   ];
 };
 
