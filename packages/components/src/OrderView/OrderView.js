@@ -143,20 +143,22 @@ const OrderView = ({
             driverDetails = getDriverDetails(order);
         } 
     } else if (role === USER_ROLES.vendor) {
-        fulfilmentDetails.push({
-            key: 'author-name',
-            title: order.author.formattedName,
-            icon: MATERIAL_ICONS.account,
-        });
-
-        if (order.author.phone) {
+        if(order.author) {
             fulfilmentDetails.push({
-                key: 'author-phone',
-                title: order.author.phone,
-                icon: MATERIAL_ICONS.call,
+                key: 'author-name',
+                title: order.author.formattedName,
+                icon: MATERIAL_ICONS.account,
             });
+    
+            if (order.author.phone) {
+                fulfilmentDetails.push({
+                    key: 'author-phone',
+                    title: order.author.phone,
+                    icon: MATERIAL_ICONS.call,
+                });
+            }
         }
-
+      
         if (order.fulfillmentMethod === FULFILLMENT_METHODS.delivery) {
             fulfilmentDetails.push({
                 key: 'fulfillment-address',
