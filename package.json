@@ -24,6 +24,7 @@
     "@jmstechnologiesinc/order": "^0.0.58",
     "@jmstechnologiesinc/react-native-google-places-autocomplete": "^2.4.5",
     "@jmstechnologiesinc/react-native-paper": "^5.0.0-rc.26",
+    "@jmstechnologiesinc/react-native-phone-input": "^1.3.7",
     "@jmstechnologiesinc/react-native-size-matters": "^0.4.0",
     "@jmstechnologiesinc/user": "^0.0.51",
     "@jmstechnologiesinc/vendor": "^0.0.56",

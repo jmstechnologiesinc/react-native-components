@@ -1,16 +1,19 @@
-import { Image } from 'react-native';
+import { Image, Platform } from 'react-native';
 import React from 'react';
-import ScreenWrapper from '../ScreenWrapper';
-import { Button } from 'react-native-paper';
+import ScreenWrapper from '@jmstechnologiesinc/react-native-components/lib/ScreenWrapper';
+import { Button } from '@jmstechnologiesinc/react-native-paper';
+import { localized } from '../Localization/Localization';
 
-const SocialLogin = () => {
+const SocialAuthentication = ({ onApplePress,
+    onGooglePress,
+    onFacebookPress }) => {
     return (
         <>
+
             <ScreenWrapper.Section>
                 <Button
                     mode="outlined"
-                    isCustomLoginButton={true}
-                    onPress={() => navigation.navigate('SignupScreen')}
+                    onPress={onApplePress}
                     icon={({ size }) => (
                         <Image
                             source={require('./icon/mac-os-logo.png')}
@@ -19,14 +22,14 @@ const SocialLogin = () => {
                         />
                     )}
                 >
-                    Continue with Apple
+                    {localized('continueApple')}
                 </Button>
             </ScreenWrapper.Section>
             <ScreenWrapper.Section>
                 <Button
                     mode="outlined"
                     isCustomLoginButton={true}
-                    onPress={() => navigation.navigate('SignupScreen')}
+                    onPress={onGooglePress}
                     icon={({ size }) => (
                         <Image
                             source={require('./icon/googlebutton.png')}
@@ -35,14 +38,15 @@ const SocialLogin = () => {
                         />
                     )}
                 >
-                    Continue with Google
+                    {localized('continueGoogle')}
+
                 </Button>
             </ScreenWrapper.Section>
             <ScreenWrapper.Section>
                 <Button
                     mode="outlined"
                     isCustomLoginButton={true}
-                    onPress={() => navigation.navigate('SignupScreen')}
+                    onPress={onFacebookPress}
                     icon={({ size }) => (
                         <Image
                             source={require('./icon/facebook.png')}
@@ -56,27 +60,12 @@ const SocialLogin = () => {
                         />
                     )}
                 >
-                    Continue with Facebook
+                    {localized('continueFacebook')}
                 </Button>
             </ScreenWrapper.Section>
-            <ScreenWrapper.Section>
-                <Button
-                    mode="outlined"
-                    isCustomLoginButton={true}
-                    onPress={() => navigation.navigate('SignupScreen')}
-                    icon={({ size }) => (
-                        <Image
-                            source={require('./icon/phone-call.png')}
-                            style={{ width: size, height: size, borderRadius: size / 2 }}
-                            accessibilityIgnoresInvertColors
-                        />
-                    )}
-                >
-                    Continue with Phone Number
-                </Button>
-            </ScreenWrapper.Section>
+
         </>
     );
 };
 
-export default SocialLogin;
+export default SocialAuthentication;

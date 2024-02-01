@@ -473,5 +473,8 @@
 "Vendor Rejected": "Rechazado por el proveedor ",
 "Completed":"Completado",
 "No Driver Found":"No se encontró ningún conductor",
-"Ready for Pickup":"Listo para Recoger"
+"Ready for Pickup":"Listo para Recoger",
+"continueApple": "Continuar con Apple",
+"continueGoogle": "Continuar con Google",
+"continueFacebook": "Continuar con Facebook"
 }
