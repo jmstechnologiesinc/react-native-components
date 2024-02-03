@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper'
 
 import FormPhoneNumber from './FormPhoneNumber'
@@ -12,16 +12,16 @@ const OPTION_LOGIN = {
     EMAIL: "EMAIL"
 }
 
-const FormWrapperContact = ({
-    isSelected = OPTION_LOGIN.PHONE,
+const EmailOrPhoneSwitcher = ({
     email,
     password,
     inputActionHandler,
     isLoading,
-    onLoginUIPress,
     onEmailPasswordPress,
     onPressSend
 }) => {
+    const [isSelected, setSelected] = useState(OPTION_LOGIN.PHONE)
+
     return (
         <>
             {
@@ -35,14 +35,12 @@ const FormWrapperContact = ({
                         <ScreenWrapper.Section>
                             <Button
                                 mode='outlined'
-                                onPress={() => onLoginUIPress(OPTION_LOGIN.EMAIL)}
+                                onPress={() => setSelected(OPTION_LOGIN.EMAIL)}
                                 style={{ marginTop: MD3LightTheme.spacing.x3 }}
                             >
                                 {localized('continueEmail')}
                             </Button>
                         </ScreenWrapper.Section>
-
-
 
                     </>
                     :
@@ -66,11 +64,10 @@ const FormWrapperContact = ({
 
                         <OrDividerContainer />
 
-
                         <ScreenWrapper.Section>
                             <Button
                                 mode='outlined'
-                                onPress={() => onLoginUIPress(OPTION_LOGIN.PHONE)}
+                                onPress={() => setSelected(OPTION_LOGIN.PHONE)}
                                 style={{ marginTop: MD3LightTheme.spacing.x3 }}
                             >
                                 {localized('continuePhoneNumber')}
@@ -84,4 +81,4 @@ const FormWrapperContact = ({
 }
 
 
-export default FormWrapperContact
+export default EmailOrPhoneSwitcher
