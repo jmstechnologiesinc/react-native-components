@@ -1,7 +1,7 @@
 import { Image, Platform } from 'react-native';
 import React from 'react';
 import ScreenWrapper from '@jmstechnologiesinc/react-native-components/lib/ScreenWrapper';
-import { Button } from '@jmstechnologiesinc/react-native-paper';
+import { Button, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import { localized } from '../Localization/Localization';
 
 const SocialAuthentication = ({ onApplePress,
@@ -21,6 +21,7 @@ const SocialAuthentication = ({ onApplePress,
                             accessibilityIgnoresInvertColors
                         />
                     )}
+                    style={{ marginTop: MD3LightTheme.spacing.x3 }}
                 >
                     {localized('continueApple')}
                 </Button>
@@ -37,6 +38,7 @@ const SocialAuthentication = ({ onApplePress,
                             accessibilityIgnoresInvertColors
                         />
                     )}
+                    style={{ marginTop: MD3LightTheme.spacing.x3 }}
                 >
                     {localized('continueGoogle')}
 
@@ -58,7 +60,9 @@ const SocialAuthentication = ({ onApplePress,
                             }}
                             accessibilityIgnoresInvertColors
                         />
+
                     )}
+                    style={{ marginTop: MD3LightTheme.spacing.x3 }}
                 >
                     {localized('continueFacebook')}
                 </Button>

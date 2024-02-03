@@ -1,22 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Dimensions, Platform, ScrollView, Alert } from 'react-native';
 
-import { List, Button, TextInput } from '@jmstechnologiesinc/react-native-paper';
-import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
-;
-
+import { List, Button, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import ActionSheet, { useScrollHandlers } from 'react-native-actions-sheet';
 
 import PhoneInput from '@jmstechnologiesinc/react-native-phone-input';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useHeaderHeight } from '@react-navigation/elements';
-import { Dimensions, Platform, ScrollView, Alert } from 'react-native';
+
+import { localized } from '../Localization/Localization'
+import FormVerificationCode from './FormVerificationCode';
+import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
+
 
 const WINDOW_HEIGHT = Dimensions.get('window').height;
 
 const FormPhoneNumber = ({ onPressSend }) => {
     const [countriesPickerData, setCountriesPickerData] = useState(null);
-    const [isPhoneVisible, setIsPhoneVisible] = useState(true);
-    const [code, setCode] = useState(null);
+
     const [confirm, setConfirm] = useState(null);
     const phoneRef = useRef();
 
@@ -48,46 +49,26 @@ const FormPhoneNumber = ({ onPressSend }) => {
             const userValidPhoneNumber = phoneRef.current.getValue();
             const result = await onPressSend(userValidPhoneNumber)
             setConfirm(result)
-            setIsPhoneVisible(false)
-
         } else {
-            Alert.alert('', 'Please enter a valid phone number', [{ text: 'OK' }], {
+            Alert.alert('', localized('pleaseValidPhoneNumber'), [{ text: 'OK' }], {
                 cancelable: false,
             })
         }
     };
 
-    const confirmCode = async () => {
-        try {
-            await confirm.confirm(code);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
     return (
         <>
-            {isPhoneVisible ? <>
-                <ScreenWrapper.Section>
-                    <PhoneInput ref={phoneRef} initialCountry={'us'} onPressFlag={onPressFlag} />
-                </ScreenWrapper.Section>
-                <ScreenWrapper.Section>
-                    <Button onPress={onPress}>Send Code </Button>
-                </ScreenWrapper.Section>
+            <ScreenWrapper.Section>
+                <PhoneInput ref={phoneRef} initialCountry={'us'} onPressFlag={onPressFlag} />
+            </ScreenWrapper.Section>
 
-            </> : <>
-                <ScreenWrapper.Section>
-                    <TextInput
-                        onChangeText={text => setCode(text)}
-                    />
-                </ScreenWrapper.Section>
-                <ScreenWrapper.Section>
-                    <Button onPress={confirmCode}>Confirm Code</Button>
-                </ScreenWrapper.Section>
+            <ScreenWrapper.Section>
+                <Button mode='contained' onPress={onPress} style={{ marginTop: MD3LightTheme.spacing.x3 }}> {localized('logIn')} </Button>
+            </ScreenWrapper.Section>
 
-
-            </>}
-
+            <FormVerificationCode
+                confirm={confirm}
+            />
 
             <ActionSheet
                 ref={actionSheetRef}
