@@ -7,6 +7,7 @@ import { formatOrder } from '../Order/utils';
 import OrderStatus from '../Order/OrderStatus';
 import * as ActionGroup from '../ActionGroup/ActionGroup';
 import TouchableRippleWrapper from '../TouchableRippleWrapper/TouchableRippleWrapper';
+import DriverStatus from './DriverStatus';
 
 const OrderListItem = ({
     role,
@@ -70,6 +71,21 @@ const OrderListItem = ({
                 titleStyle={contentColor}
                 overlineStyle={contentColor}
             />
+
+            {(formattedOrder.fulfilmentStatus.driver.description.length > 0 || formattedOrder.fulfilmentStatus.driver.title || formattedOrder.fulfilmentStatus.driver.chips.length > 0) ? (
+                <DriverStatus
+                    key="DriverStatus"
+                    role={role}
+                    orderID={formattedOrder.orderID}
+                    deliveryMethod={formattedOrder.deliveryMethod}
+                    status={formattedOrder.status}
+                    overline={formattedOrder.fulfilmentStatus.driver.overlines}
+                    header={formattedOrder.fulfilmentStatus.driver.title}
+                    subHeader={formattedOrder.fulfilmentStatus.driver.description}
+                    chips={formattedOrder.fulfilmentStatus.driver.chips}
+                    avatar={formattedOrder.fulfilmentStatus.driver.avatar}
+                />
+            ) : null}
 
             {onButtonPress && (
                 <List.Section>

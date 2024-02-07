@@ -3,7 +3,6 @@ import React from 'react';
 import { interpunct } from '@jmstechnologiesinc/commons';
 
 import VendorStatus from './VendorStatus';
-import DriverStatus from './DriverStatus';
 import OrderStatusWrapper from './OrderStatusWrapper';
 import { localized } from '../Localization/Localization';
 
@@ -99,33 +98,6 @@ const OrderStatus = ({
             />
         );
     }
-
-    if (
-        enableDriverStatus &&
-        (driverStatus.description.length > 0 || driverStatus.title || driverStatus.chips.length > 0)
-    ) {
-        renderStatuses.push(
-            <DriverStatus
-                key="DriverStatus"
-                role={role}
-                orderID={formattedOrder.orderID}
-                deliveryMethod={formattedOrder.deliveryMethod}
-                status={formattedOrder.status}
-                overline={driverStatus.overlines}
-                header={driverStatus.title}
-                subHeader={driverStatus.description}
-                chips={driverStatus.chips}
-                avatar={driverStatus.avatar}
-                showOverline={showDriverOverline}
-                showTitle={showDriverTitle}
-                showDescription={showDriverDescription}
-                showAvatar={showDriverAvatar}
-                titleStyle={titleStyle}
-                overlineStyle={overlineStyle}
-            />
-        );
-    }
-
     return renderStatuses;
 };
 

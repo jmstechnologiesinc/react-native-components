@@ -24,6 +24,7 @@ import { firestoreTimestampToDate, plurulize } from '@jmstechnologiesinc/commons
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 import { localized } from '../Localization/Localization';
+import DriverStatus from './DriverStatus';
 
 const getDriverDetails = (order, role) => {
     const results = [];
@@ -276,7 +277,21 @@ const OrderView = ({
                         showDriverAvatar={showDriverAvatar}
                     />
 
-                    <Divider style={{ marginTop: MD3LightTheme.spacing.x3 }} />
+                    {(formattedOrder.fulfilmentStatus.driver.description.length > 0 || formattedOrder.fulfilmentStatus.driver.title || formattedOrder.fulfilmentStatus.driver.chips.length > 0) ? (
+                        <DriverStatus
+                            key="DriverStatus"
+                            role={role}
+                            orderID={formattedOrder.orderID}
+                            deliveryMethod={formattedOrder.deliveryMethod}
+                            status={formattedOrder.status}
+                            header={formattedOrder.fulfilmentStatus.driver.title}
+                            vehicle={formattedOrder.fulfilmentStatus.driver.vehicle}
+                            description={formattedOrder.fulfilmentStatus.driver.status}
+                            chips={formattedOrder.fulfilmentStatus.driver.chips}
+                            avatar={formattedOrder.fulfilmentStatus.driver.avatar}
+                    />) : null}
+
+                    <Divider />
 
                     {fulfilmentDetails.length > 0 ? (
                         <List.Section
