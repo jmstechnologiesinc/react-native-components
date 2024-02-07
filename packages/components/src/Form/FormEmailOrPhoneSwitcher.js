@@ -18,25 +18,28 @@ const EmailOrPhoneSwitcher = ({
     inputActionHandler,
     isLoading,
     onEmailPasswordPress,
-    onPressSend
+    onPressSend,
+    title,
+    onSignupPress,
+    onForgotPasswordPress,
+    isVendorOrDriver
 }) => {
     const [isSelected, setSelected] = useState(OPTION_LOGIN.PHONE)
 
     return (
         <>
             {
-                isSelected === OPTION_LOGIN.PHONE ?
+                isSelected === OPTION_LOGIN.PHONE && !isVendorOrDriver ?
                     <>
                         <FormPhoneNumber
                             onPressSend={onPressSend}
                         />
 
-                        <OrDividerContainer />
                         <ScreenWrapper.Section>
                             <Button
                                 mode='outlined'
                                 onPress={() => setSelected(OPTION_LOGIN.EMAIL)}
-                                style={{ marginTop: MD3LightTheme.spacing.x3 }}
+
                             >
                                 {localized('continueEmail')}
                             </Button>
@@ -62,17 +65,29 @@ const EmailOrPhoneSwitcher = ({
                             </Button>
                         </ScreenWrapper.Section>
 
-                        <OrDividerContainer />
 
-                        <ScreenWrapper.Section>
+                        {!isVendorOrDriver && <ScreenWrapper.Section>
                             <Button
                                 mode='outlined'
                                 onPress={() => setSelected(OPTION_LOGIN.PHONE)}
-                                style={{ marginTop: MD3LightTheme.spacing.x3 }}
                             >
                                 {localized('continuePhoneNumber')}
                             </Button>
+                        </ScreenWrapper.Section>}
+
+                        <ScreenWrapper.Section>
+                            <Button
+                                mode="outlined"
+                                onPress={onSignupPress}
+                            >
+                                {localized(title)}
+                            </Button>
                         </ScreenWrapper.Section>
+
+                        <ScreenWrapper.Section>
+                            <Button onPress={onForgotPasswordPress} >{localized('resetPassword')}</Button>
+                        </ScreenWrapper.Section>
+
                     </>
             }
 

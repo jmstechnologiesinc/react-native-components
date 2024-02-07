@@ -1,8 +1,10 @@
-import { Image, Platform } from 'react-native';
+
 import React from 'react';
-import ScreenWrapper from '@jmstechnologiesinc/react-native-components/lib/ScreenWrapper';
-import { Button, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
+import ScreenWrapper from '../ScreenWrapper';
+import { Button } from '@jmstechnologiesinc/react-native-paper';
+import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons'
 import { localized } from '../Localization/Localization';
+import { Platform } from 'react-native';
 
 const SocialAuthentication = ({ onApplePress,
     onGooglePress,
@@ -10,35 +12,26 @@ const SocialAuthentication = ({ onApplePress,
     return (
         <>
 
+            {
+                Platform.OS === 'ios' &&
+                <ScreenWrapper.Section>
+                    <Button
+                        mode="outlined"
+                        onPress={onApplePress}
+                        icon={MATERIAL_ICONS.apple}
+
+                    >
+                        {localized('continueApple')}
+                    </Button>
+                </ScreenWrapper.Section>
+            }
+
+
             <ScreenWrapper.Section>
                 <Button
                     mode="outlined"
-                    onPress={onApplePress}
-                    icon={({ size }) => (
-                        <Image
-                            source={require('./icon/mac-os-logo.png')}
-                            style={{ width: size, height: size, borderRadius: size / 2 }}
-                            accessibilityIgnoresInvertColors
-                        />
-                    )}
-                    style={{ marginTop: MD3LightTheme.spacing.x3 }}
-                >
-                    {localized('continueApple')}
-                </Button>
-            </ScreenWrapper.Section>
-            <ScreenWrapper.Section>
-                <Button
-                    mode="outlined"
-                    isCustomLoginButton={true}
                     onPress={onGooglePress}
-                    icon={({ size }) => (
-                        <Image
-                            source={require('./icon/googlebutton.png')}
-                            style={{ width: size, height: size, borderRadius: size / 2 }}
-                            accessibilityIgnoresInvertColors
-                        />
-                    )}
-                    style={{ marginTop: MD3LightTheme.spacing.x3 }}
+                    icon={MATERIAL_ICONS.google}
                 >
                     {localized('continueGoogle')}
 
@@ -47,22 +40,8 @@ const SocialAuthentication = ({ onApplePress,
             <ScreenWrapper.Section>
                 <Button
                     mode="outlined"
-                    isCustomLoginButton={true}
                     onPress={onFacebookPress}
-                    icon={({ size }) => (
-                        <Image
-                            source={require('./icon/facebook.png')}
-                            style={{
-                                width: size,
-                                height: size,
-                                borderRadius: size / 2,
-                                flexDirection: 'row',
-                            }}
-                            accessibilityIgnoresInvertColors
-                        />
-
-                    )}
-                    style={{ marginTop: MD3LightTheme.spacing.x3 }}
+                    icon={MATERIAL_ICONS.facebook}
                 >
                     {localized('continueFacebook')}
                 </Button>

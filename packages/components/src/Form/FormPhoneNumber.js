@@ -20,6 +20,7 @@ const FormPhoneNumber = ({ onPressSend }) => {
 
     const [confirm, setConfirm] = useState(null);
     const phoneRef = useRef();
+    const [isLoading, setIsLoading] = useState(false);
 
     const actionSheetRef = useRef();
     const insets = useSafeAreaInsets();
@@ -45,6 +46,7 @@ const FormPhoneNumber = ({ onPressSend }) => {
 
 
     const onPress = async () => {
+        setIsLoading(true)
         if (phoneRef.current.isValidNumber()) {
             const userValidPhoneNumber = phoneRef.current.getValue();
             const result = await onPressSend(userValidPhoneNumber)
@@ -53,21 +55,37 @@ const FormPhoneNumber = ({ onPressSend }) => {
             Alert.alert('', localized('pleaseValidPhoneNumber'), [{ text: 'OK' }], {
                 cancelable: false,
             })
+
         }
+        setIsLoading(false)
     };
 
+    const onDismiss = () => {
+        setConfirm(!confirm)
+    }
     return (
         <>
             <ScreenWrapper.Section>
-                <PhoneInput ref={phoneRef} initialCountry={'us'} onPressFlag={onPressFlag} />
+                <PhoneInput ref={phoneRef}
+                    initialCountry={'us'}
+                    countries={['us', 'ca', 'mx']}
+                    onPressFlag={onPressFlag} />
             </ScreenWrapper.Section>
 
             <ScreenWrapper.Section>
-                <Button mode='contained' onPress={onPress} style={{ marginTop: MD3LightTheme.spacing.x3 }}> {localized('logIn')} </Button>
+                <Button mode='contained'
+                    onPress={onPress}
+                    style={{ marginTop: MD3LightTheme.spacing.x3 }}
+                    loading={isLoading}
+                    disabled={isLoading}
+
+                > {localized('logIn')} </Button>
             </ScreenWrapper.Section>
 
             <FormVerificationCode
                 confirm={confirm}
+                onDismiss={onDismiss}
+
             />
 
             <ActionSheet

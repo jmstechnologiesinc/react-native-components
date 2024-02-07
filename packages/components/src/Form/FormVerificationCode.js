@@ -5,23 +5,29 @@ import { Button, TextInput, MD3LightTheme, Portal, Dialog, HelperText } from '@j
 
 import { localized } from '../Localization/Localization'
 
-const FormVerificationCode = ({ confirm }) => {
+const FormVerificationCode = ({ confirm, onDismiss }) => {
 
     const [code, setCode] = useState(null);
     const [error, setError] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
+
 
     const confirmCode = async () => {
+        setIsLoading(true)
         try {
             await confirm.confirm(code);
         } catch (error) {
             setError(true)
 
         }
+        setIsLoading(false)
     };
 
     return (
         <Portal>
-            <Dialog visible={confirm} >
+            <Dialog visible={confirm}
+                onDismiss={onDismiss}
+            >
                 <Dialog.Title>{localized('EnterCodeSendYou')}</Dialog.Title>
                 <Dialog.Content>
                     <TextInput
@@ -31,10 +37,11 @@ const FormVerificationCode = ({ confirm }) => {
                             setError(false)
                         }}
                     />
-                    <HelperText type="error" visible={error}>
+                    {error && (<HelperText type="error" visible={error}>
                         {localized('helpTextPasscodeIncorrect')}
-                    </HelperText>
-                    <Button mode='contained' onPress={confirmCode} style={{ marginTop: MD3LightTheme.spacing.x4 }}>{localized('confirmCode')}</Button>
+                    </HelperText>)}
+
+                    <Button mode='contained' onPress={confirmCode} style={{ marginTop: MD3LightTheme.spacing.x3 }} loading={isLoading} disabled={isLoading}>{localized('confirmCode')}</Button>
                 </Dialog.Content>
 
             </Dialog>

@@ -227,6 +227,8 @@
     "vehicleRequirementsNewer": "you need a vehicle that is 1990 or newer, and not salvaged.",
     "addVehicle": "Add Vehicle",
     "requestReviewMessage": "We're reviewing your request. It usually takes less than a day for us to complete the process.",
+    "applicationReviewWillConctact": "We are reviewing your application. We will contact you soon if we need more information.",
+
     "cancel": "Cancel",
     "welcomeTo": "Welcome to",
     "businessRequirements": "Business Requirements",
