@@ -15,7 +15,7 @@ import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 
 const WINDOW_HEIGHT = Dimensions.get('window').height;
 
-const FormPhoneNumber = ({ onPressSend }) => {
+const FormPhoneNumber = ({ onPhoneNumberPress }) => {
     const [countriesPickerData, setCountriesPickerData] = useState(null);
 
     const [confirm, setConfirm] = useState(null);
@@ -49,7 +49,7 @@ const FormPhoneNumber = ({ onPressSend }) => {
         setIsLoading(true)
         if (phoneRef.current.isValidNumber()) {
             const userValidPhoneNumber = phoneRef.current.getValue();
-            const result = await onPressSend(userValidPhoneNumber)
+            const result = await onPhoneNumberPress(userValidPhoneNumber)
             setConfirm(result)
         } else {
             Alert.alert('', localized('pleaseValidPhoneNumber'), [{ text: 'OK' }], {

@@ -39,8 +39,6 @@ export { default as ButtonWrapper } from "./ButtonWrapper/ButtonWrapper";
 
 export { default as SocialAuthentication } from "./SocialAuthentication/SocialAuthentication";
 
-export { default as OrDividerContainer } from './OrDividerContainer/OrDividerContainer'
-
 export { LAYOUT_MODE } from './consts';
 export { localized, setI18nConfig } from './Localization/Localization';
 

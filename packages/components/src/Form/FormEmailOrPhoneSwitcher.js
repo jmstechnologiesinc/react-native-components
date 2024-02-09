@@ -5,9 +5,8 @@ import FormPhoneNumber from './FormPhoneNumber'
 import EmailPassword from './FormEmailPassword'
 import ScreenWrapper from '../ScreenWrapper'
 import { localized } from '../Localization/Localization'
-import OrDividerContainer from '../OrDividerContainer/OrDividerContainer'
 
-const OPTION_LOGIN = {
+const OPTION_LOGIN_LOGIN_OPTIONS = {
     PHONE: "PHONE",
     EMAIL: "EMAIL"
 }
@@ -18,27 +17,28 @@ const EmailOrPhoneSwitcher = ({
     inputActionHandler,
     isLoading,
     onEmailPasswordPress,
-    onPressSend,
+    onPhoneNumberPress,
     title,
     onSignupPress,
     onForgotPasswordPress,
-    isVendorOrDriver
+    showPhoneLogin
 }) => {
-    const [isSelected, setSelected] = useState(OPTION_LOGIN.PHONE)
+
+    const [selectedLogin, setSelectedLogin] = useState(OPTION_LOGIN_LOGIN_OPTIONS.PHONE)
 
     return (
         <>
             {
-                isSelected === OPTION_LOGIN.PHONE && !isVendorOrDriver ?
+                selectedLogin === OPTION_LOGIN_LOGIN_OPTIONS.PHONE && showPhoneLogin ?
                     <>
                         <FormPhoneNumber
-                            onPressSend={onPressSend}
+                            onPhoneNumberPress={onPhoneNumberPress}
                         />
 
                         <ScreenWrapper.Section>
                             <Button
                                 mode='outlined'
-                                onPress={() => setSelected(OPTION_LOGIN.EMAIL)}
+                                onPress={() => setSelectedLogin(OPTION_LOGIN_LOGIN_OPTIONS.EMAIL)}
 
                             >
                                 {localized('continueEmail')}
@@ -66,10 +66,10 @@ const EmailOrPhoneSwitcher = ({
                         </ScreenWrapper.Section>
 
 
-                        {!isVendorOrDriver && <ScreenWrapper.Section>
+                        {showPhoneLogin && <ScreenWrapper.Section>
                             <Button
                                 mode='outlined'
-                                onPress={() => setSelected(OPTION_LOGIN.PHONE)}
+                                onPress={() => setSelectedLogin(OPTION_LOGIN_LOGIN_OPTIONS.PHONE)}
                             >
                                 {localized('continuePhoneNumber')}
                             </Button>
