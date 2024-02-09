@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 
-import { Button, TextInput, MD3LightTheme, Portal, Dialog, HelperText } from '@jmstechnologiesinc/react-native-paper';
+import { Button, TextInput,  Portal, Dialog, HelperText } from '@jmstechnologiesinc/react-native-paper';
 
 import { localized } from '../Localization/Localization'
 
@@ -11,14 +11,12 @@ const FormVerificationCode = ({ confirm, onDismiss }) => {
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
 
-
     const confirmCode = async () => {
         setIsLoading(true)
         try {
             await confirm.confirm(code);
         } catch (error) {
             setError(true)
-
         }
         setIsLoading(false)
     };
@@ -37,16 +35,27 @@ const FormVerificationCode = ({ confirm, onDismiss }) => {
                             setError(false)
                         }}
                     />
-                    {error && (<HelperText type="error" visible={error}>
-                        {localized('helpTextPasscodeIncorrect')}
-                    </HelperText>)}
-
-                    <Button mode='contained' onPress={confirmCode} style={{ marginTop: MD3LightTheme.spacing.x3 }} loading={isLoading} disabled={isLoading}>{localized('confirmCode')}</Button>
+                    {error ? (
+                        <HelperText type="error" visible={true}>
+                            {localized('helpTextPasscodeIncorrect')}
+                        </HelperText>
+                    ) : null}
                 </Dialog.Content>
-
+                <Dialog.Actions>
+                    <Button 
+                        onPress={confirmCode} >
+                        {localized('resendCode')}
+                    </Button>
+                    <Button 
+                        loading={isLoading}
+                        disabled={isLoading}
+                        mode='contained' 
+                        onPress={confirmCode} >
+                        {localized('confirmCode')}
+                    </Button>
+                </Dialog.Actions>
             </Dialog>
         </Portal>
-
     )
 }
 
