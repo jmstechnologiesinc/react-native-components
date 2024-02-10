@@ -31,11 +31,14 @@ export { default as OrderView } from './OrderView/OrderView';
 export { default as IndustryList } from './IndustryList/IndustryList';
 export { default as QuantityButton } from './QuantityButton/QuantityButton';
 export { default as ScreenWrapper } from './ScreenWrapper';
-export { default as OptionPicker} from './OptionPicker/OptionPicker';
+export { default as OptionPicker } from './OptionPicker/OptionPicker';
 export { default as SwipeToDelete } from './SwipeToDelete/SwipeToDelete';
 export { default as SideNav } from './SideNav/SideNav';
 export { default as Swipeable } from './SwipeToDelete/SwipeToDelete';
-export { default as ButtonWrapper} from "./ButtonWrapper/ButtonWrapper";
+export { default as ButtonWrapper } from "./ButtonWrapper/ButtonWrapper";
+
+export { default as SocialAuthentication } from "./SocialAuthentication/SocialAuthentication";
+
 export { LAYOUT_MODE } from './consts';
 export { localized, setI18nConfig } from './Localization/Localization';
 
