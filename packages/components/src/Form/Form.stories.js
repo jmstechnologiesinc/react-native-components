@@ -5,6 +5,7 @@ export default {
 };
 
 import * as AuthForm from './Form';
+// import FormPhoneNumber from './FormPhoneNumber';
 
 const state = {
     email: 'jms@gmail.com',
@@ -102,3 +103,5 @@ export const AuthFormCarInfo = () => (
         inputActionHandler={() => {}}
     />
 );
+
+export const PhoneNumber = () => <AuthForm.PhoneNumber phone={state.password} inputActionHandler={() => {}} />;

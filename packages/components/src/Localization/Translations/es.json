@@ -473,5 +473,15 @@
 "Vendor Rejected": "Rechazado por el proveedor ",
 "Completed":"Completado",
 "No Driver Found":"No se encontró ningún conductor",
-"Ready for Pickup":"Listo para Recoger"
+"Ready for Pickup":"Listo para Recoger",
+"continueApple": "Continuar con Apple",
+"continueGoogle": "Continuar con Google",
+"continueFacebook": "Continuar con Facebook",
+"continuePhoneNumber": "Continuar con número de teléfono",
+"continueEmail": "Continuar con correo electrónico",
+"helpTextPasscodeIncorrect": "El código SMS que has ingresado es incorrecto.",
+"EnterCodeSendYou": "Ingresa el código de 4 dígitos enviado a ti.",
+"confirmCode": "Confirmar Código",
+"pleaseValidPhoneNumber": "Por favor, ingresa un número de teléfono válido",
+"resendCode": "Reenviar codigo"
 }
