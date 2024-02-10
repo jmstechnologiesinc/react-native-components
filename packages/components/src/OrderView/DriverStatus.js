@@ -1,37 +1,28 @@
 import React from 'react';
 
-import { formattedETATime, milliseconsExtractor } from '@jmstechnologiesinc/commons';
+import { ITEM_TYPE, ITEM_TYPE_ICON_MAPPING, formattedETATime, milliseconsExtractor } from '@jmstechnologiesinc/commons';
 
 import usePubNubETA from '../Order/usePubNubETA';
 import { Avatar, Divider, List, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
-import { imagekitUrl } from '@jmstechnologiesinc/react-native-components/lib/utils';
-import SettingsListItems from '../../../../../src/Core/settings/SettingsListItems';
+import { imagekitUrl, makeLinkingCall } from '@jmstechnologiesinc/react-native-components';
 
 const DriverStatus = ({
     role,
     orderID,
-    status,
-    deliveryMethod,
+    orderStatus,
+    orderDeliveryMethod,
 
-    header,
-    description,
+    name,
     vehicle,
-    chips,
+    phone,
+    status,
     avatar,
-
-    showOverline,
-    showTitle = true,
-    showDescription,
-    showAvatar = true,
-
-    titleStyle,
-    overlineStyle,
 }) => {
     const milliseconds = usePubNubETA({
         role,
         orderID,
-        deliveryMethod,
-        status,
+        deliveryMethod: orderDeliveryMethod,
+        status: orderStatus,
     });
 
     let eta;
@@ -44,8 +35,7 @@ const DriverStatus = ({
         };
     }
 
-    const renderAvatar =
-    showAvatar && avatar
+    const renderAvatar = avatar
         ? (props) => <Avatar.Image style={props.style} source={{ uri: imagekitUrl(avatar) }} />
         : null;
 
@@ -55,7 +45,7 @@ const DriverStatus = ({
       
             <List.Section title="Driver">
                 <List.Item
-                        title={showTitle ? header : null}
+                        title={name}
                         description={vehicle}
                         left={renderAvatar}
                     />
@@ -69,11 +59,18 @@ const DriverStatus = ({
                 ) : null}
         
                 <List.Item
-                    title={description}
+                    title={status}
+                    titleNumberOfLines={0}
                     left={(props) => <List.Icon {...props} icon='message-text-clock-outline' />}
                 />
 
-                <SettingsListItems menuItems={chips} />
+                {phone ? (
+                    <List.Item
+                        title={phone}
+                        left={(props) => <List.Icon {...props} icon={ITEM_TYPE_ICON_MAPPING[ITEM_TYPE.call]} />}
+                        onPress={() => makeLinkingCall(phone)}
+                    /> 
+                ): null}
             </List.Section>
         </>
     );

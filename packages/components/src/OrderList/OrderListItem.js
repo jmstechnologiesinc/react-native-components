@@ -8,6 +8,8 @@ import OrderStatus from '../Order/OrderStatus';
 import * as ActionGroup from '../ActionGroup/ActionGroup';
 import TouchableRippleWrapper from '../TouchableRippleWrapper/TouchableRippleWrapper';
 import DriverStatus from './DriverStatus';
+import { imagekitUrl,PhotoGallery,ScreenWrapper } from '@jmstechnologiesinc/react-native-components';
+import { USER_ROLES } from '@jmstechnologiesinc/user';
 
 const OrderListItem = ({
     role,
@@ -50,6 +52,20 @@ const OrderListItem = ({
 
     const renderStatus = (
         <>
+            {role === USER_ROLES.customer && (
+                ORDER_STATUS_PREPARING(formattedOrder.status) ||
+                formattedOrder.status === ORDER_STATUS.shipped ||
+                formattedOrder.status === ORDER_STATUS.inTransit ||
+                formattedOrder.status === ORDER_STATUS.placed
+            ) ? (
+                <ScreenWrapper.Container>
+                    <PhotoGallery 
+                        photos={imagekitUrl([formattedOrder.photo])} 
+                        showNav={false}
+                        styles={{marginTop: MD3LightTheme.spacing.x2}} />
+                </ScreenWrapper.Container>
+            ) : null}
+
             <OrderStatus
                 role={role}
                 formattedOrder={formattedOrder}
@@ -59,7 +75,8 @@ const OrderListItem = ({
                 showHeaderOverline={showHeaderOverline}
                 showHeaderTitle={showHeaderTitle}
                 showHeaderDescription={showHeaderDescription}
-                showHeaderAvatar={showHeaderAvatar}
+                showHeaderAvatar={ORDER_STATUS_CANCELLED(formattedOrder.status) ||
+                    formattedOrder.status === ORDER_STATUS.completed}
                 showVendorOverline={showVendorOverline}
                 showVendorTitle={showVendorTitle}
                 showVendorDescription={showVendorDescription}
@@ -72,18 +89,22 @@ const OrderListItem = ({
                 overlineStyle={contentColor}
             />
 
-            {(formattedOrder.fulfilmentStatus.driver.description.length > 0 || formattedOrder.fulfilmentStatus.driver.title || formattedOrder.fulfilmentStatus.driver.chips.length > 0) ? (
+            {role === USER_ROLES.customer && (
+                formattedOrder.fulfilmentStatus.driver.description.length > 0 || 
+                formattedOrder.fulfilmentStatus.driver.title || 
+                formattedOrder.fulfilmentStatus.driver.chips.length > 0
+            ) ? (
                 <DriverStatus
-                    key="DriverStatus"
                     role={role}
                     orderID={formattedOrder.orderID}
-                    deliveryMethod={formattedOrder.deliveryMethod}
-                    status={formattedOrder.status}
-                    overline={formattedOrder.fulfilmentStatus.driver.overlines}
-                    header={formattedOrder.fulfilmentStatus.driver.title}
-                    subHeader={formattedOrder.fulfilmentStatus.driver.description}
-                    chips={formattedOrder.fulfilmentStatus.driver.chips}
+                    orderStatus={formattedOrder.status}
+                    orderDeliveryMethod={formattedOrder.deliveryMethod}
+                    deliveryMethod={formattedOrder.fulfilmentStatus.deliveryMethod}
+                    name={formattedOrder.fulfilmentStatus.driver.title}
+                    phone={formattedOrder.fulfilmentStatus.driver.phone}
+                    vehicle={formattedOrder.fulfilmentStatus.driver.vehicle}
                     avatar={formattedOrder.fulfilmentStatus.driver.avatar}
+                    status={formattedOrder.fulfilmentStatus.driver.status}
                 />
             ) : null}
 
@@ -101,12 +122,8 @@ const OrderListItem = ({
     );
 
     return showSelectedOverlay ? (
-        <TouchableRippleWrapper isSelected={isSelected} onPress={onPress}>
-            {renderStatus}
-        </TouchableRippleWrapper>
-    ) : (
-        <TouchableRipple onPress={onPress}>{renderStatus}</TouchableRipple>
-    );
+        <TouchableRippleWrapper isSelected={isSelected} onPress={onPress}>{renderStatus}</TouchableRippleWrapper>
+    ) : <TouchableRipple onPress={onPress}>{renderStatus}</TouchableRipple>;
 };
 
 export default OrderListItem;

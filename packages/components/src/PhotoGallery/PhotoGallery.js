@@ -15,7 +15,7 @@ export const renderImageSeparator = () => (
     />
 );
 
-const PhotoGallery = ({ photos, showNav = true }) => {
+const PhotoGallery = ({ photos, showNav = true, styles }) => {
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     const renderItem = ({ item, index }) => (
@@ -24,25 +24,21 @@ const PhotoGallery = ({ photos, showNav = true }) => {
         </TouchableRipple>
     );
 
-    return (
-        <>
-            {photos?.length > 0 ? (
-                <>
-                    <PhotoGalleryMainImage uri={photos[selectedIndex]} />
-                    {(showNav && photos?.length > 1) && (
-                        <FlatList
-                            data={photos}
-                            horizontal
-                            ItemSeparatorComponent={renderImageSeparator}
-                            renderItem={renderItem}
-                            showsHorizontalScrollIndicator={false}
-                            keyExtractor={(_, index) => `photo-gallery-${index}`}
-                        />
-                    )}
-                </>
-            ) : null}
-        </>
-    );
+    return photos?.length > 0 ? (
+        <View style={styles}>
+            <PhotoGalleryMainImage uri={photos[selectedIndex]} />
+            {(showNav && photos?.length > 1) && (
+                <FlatList
+                    data={photos}
+                    horizontal
+                    ItemSeparatorComponent={renderImageSeparator}
+                    renderItem={renderItem}
+                    showsHorizontalScrollIndicator={false}
+                    keyExtractor={(_, index) => `photo-gallery-${index}`}
+                />
+            )}
+        </View>
+    ) : null
 };
 
 export default PhotoGallery;

@@ -247,7 +247,7 @@ const OrderView = ({
                 </ScreenWrapper.Section>
             </ScreenWrapper.Container>
         ) : null;
-
+console.log(JSON.stringify(formattedOrder.fulfilmentStatus.driver,null,2))
     return (
         <>
             <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
@@ -277,18 +277,18 @@ const OrderView = ({
                         showDriverAvatar={showDriverAvatar}
                     />
 
-                    {(formattedOrder.fulfilmentStatus.driver.description.length > 0 || formattedOrder.fulfilmentStatus.driver.title || formattedOrder.fulfilmentStatus.driver.chips.length > 0) ? (
+                    {(formattedOrder.fulfilmentStatus.driver.status || formattedOrder.fulfilmentStatus.driver.title) ? (
                         <DriverStatus
-                            key="DriverStatus"
                             role={role}
                             orderID={formattedOrder.orderID}
-                            deliveryMethod={formattedOrder.deliveryMethod}
-                            status={formattedOrder.status}
-                            header={formattedOrder.fulfilmentStatus.driver.title}
+                            orderStatus={formattedOrder.status}
+                            orderDeliveryMethod={formattedOrder.deliveryMethod}
+                            deliveryMethod={formattedOrder.fulfilmentStatus.deliveryMethod}
+                            name={formattedOrder.fulfilmentStatus.driver.title}
+                            phone={formattedOrder.fulfilmentStatus.driver.phone}
                             vehicle={formattedOrder.fulfilmentStatus.driver.vehicle}
-                            description={formattedOrder.fulfilmentStatus.driver.status}
-                            chips={formattedOrder.fulfilmentStatus.driver.chips}
                             avatar={formattedOrder.fulfilmentStatus.driver.avatar}
+                            status={formattedOrder.fulfilmentStatus.driver.status}
                     />) : null}
 
                     <Divider />

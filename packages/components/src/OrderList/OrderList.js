@@ -61,8 +61,8 @@ const OrderList = ({
                 </List.Subheader>
             ) : null
         }
-       // SectionSeparatorComponent={showItemSeparator ? Divider : null}
-        ItemSeparatorComponent={showItemSeparator ? () => <Divider horizontalInset  /> : null}
+        SectionSeparatorComponent={showItemSeparator ? Divider : null}
+        //ItemSeparatorComponent={showItemSeparator ? () => <Divider horizontalInset /> : null}
         renderItem={({ item }) => (
             <OrderListItem
                 role={role}

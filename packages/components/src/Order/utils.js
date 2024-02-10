@@ -65,17 +65,17 @@ export const ORDER_LIST_STATUS = {
 const ORDER_LIST_STATUS_MAPPING = {
     [ORDER_LIST_STATUS.completed]: localized('order.history'),
     [ORDER_LIST_STATUS.placed]: localized('order.newRequests'),
-    [ORDER_LIST_STATUS.inTransit]: localized('In Transit'),
+    [ORDER_LIST_STATUS.inTransit]: localized('order.inTransit'),
     [ORDER_LIST_STATUS.readyforPickup]: localized('order.readyForPickup'),
     [ORDER_LIST_STATUS.cancelled]: localized('order.cancelled'),
-    [ORDER_LIST_STATUS.preparing]: localized('order.preparing'),
+    [ORDER_LIST_STATUS.preparing]: localized('order.inTheKitchen'),
 };
 
 const ROLE_ORDER_LIST_STATUS_MAPPING = {
     [USER_ROLES.vendor]: ORDER_LIST_STATUS_MAPPING,
     [USER_ROLES.customer]: {
         ...ORDER_LIST_STATUS_MAPPING,
-        [ORDER_LIST_STATUS.placed]: localized('Placed'),
+        [ORDER_LIST_STATUS.placed]: localized('order.placed'),
     },
     [USER_ROLES.driver]: {
         ...ORDER_LIST_STATUS_MAPPING,
@@ -95,8 +95,8 @@ const ROLE_ORDER_LIST_STATUS_SORT = {
         ORDER_LIST_STATUS.cancelled,
     ],
     [USER_ROLES.customer]: [
-        ORDER_LIST_STATUS.placed,
         ORDER_LIST_STATUS.inTransit,
+        ORDER_LIST_STATUS.placed,
         ORDER_LIST_STATUS.readyforPickup,
         ORDER_LIST_STATUS.preparing,
         ORDER_LIST_STATUS.completed,
