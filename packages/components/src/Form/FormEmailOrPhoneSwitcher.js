@@ -16,18 +16,18 @@ const EmailOrPhoneSwitcher = ({
     password,
     inputActionHandler,
     isLoading,
-    onEmailPasswordPress,
+    onEmailPasswordLoginPress,
     onPhoneNumberPress,
     title,
     onSignupPress,
     onForgotPasswordPress,
-    showPhoneLogin
+    showPhoneForm
 }) => {
     const [selectedLogin, setSelectedLogin] = useState(LOGIN_OPTIONS.PHONE)
     return (
         <>
             {
-                selectedLogin === LOGIN_OPTIONS.PHONE && showPhoneLogin ?
+                selectedLogin === LOGIN_OPTIONS.PHONE && showPhoneForm ?
                     <>
                         <FormPhoneNumber
                             onPhoneNumberPress={onPhoneNumberPress}
@@ -56,7 +56,7 @@ const EmailOrPhoneSwitcher = ({
                                 loading={isLoading}
                                 disabled={isLoading}
                                 mode="contained"
-                                onPress={onEmailPasswordPress}
+                                onPress={onEmailPasswordLoginPress}
                                 style={{ marginTop: MD3LightTheme.spacing.x3 }}
                             >
                                 {localized('logIn')}
@@ -64,7 +64,7 @@ const EmailOrPhoneSwitcher = ({
                         </ScreenWrapper.Section>
 
 
-                        {showPhoneLogin && <ScreenWrapper.Section>
+                        {showPhoneForm && <ScreenWrapper.Section>
                             <Button
                                 mode='outlined'
                                 onPress={() => setSelectedLogin(LOGIN_OPTIONS.PHONE)}
