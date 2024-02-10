@@ -482,5 +482,6 @@
 "helpTextPasscodeIncorrect": "El código SMS que has ingresado es incorrecto.",
 "EnterCodeSendYou": "Ingresa el código de 4 dígitos enviado a ti.",
 "confirmCode": "Confirmar Código",
-"pleaseValidPhoneNumber": "Por favor, ingresa un número de teléfono válido"
+"pleaseValidPhoneNumber": "Por favor, ingresa un número de teléfono válido",
+"resendCode": "Reenviar codigo"
 }

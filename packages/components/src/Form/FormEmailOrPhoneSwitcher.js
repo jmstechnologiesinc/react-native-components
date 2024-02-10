@@ -6,7 +6,7 @@ import EmailPassword from './FormEmailPassword'
 import ScreenWrapper from '../ScreenWrapper'
 import { localized } from '../Localization/Localization'
 
-const OPTION_LOGIN_LOGIN_OPTIONS = {
+const LOGIN_OPTIONS = {
     PHONE: "PHONE",
     EMAIL: "EMAIL"
 }
@@ -23,13 +23,11 @@ const EmailOrPhoneSwitcher = ({
     onForgotPasswordPress,
     showPhoneLogin
 }) => {
-
-    const [selectedLogin, setSelectedLogin] = useState(OPTION_LOGIN_LOGIN_OPTIONS.PHONE)
-
+    const [selectedLogin, setSelectedLogin] = useState(LOGIN_OPTIONS.PHONE)
     return (
         <>
             {
-                selectedLogin === OPTION_LOGIN_LOGIN_OPTIONS.PHONE && showPhoneLogin ?
+                selectedLogin === LOGIN_OPTIONS.PHONE && showPhoneLogin ?
                     <>
                         <FormPhoneNumber
                             onPhoneNumberPress={onPhoneNumberPress}
@@ -38,7 +36,7 @@ const EmailOrPhoneSwitcher = ({
                         <ScreenWrapper.Section>
                             <Button
                                 mode='outlined'
-                                onPress={() => setSelectedLogin(OPTION_LOGIN_LOGIN_OPTIONS.EMAIL)}
+                                onPress={() => setSelectedLogin(LOGIN_OPTIONS.EMAIL)}
 
                             >
                                 {localized('continueEmail')}
@@ -69,7 +67,7 @@ const EmailOrPhoneSwitcher = ({
                         {showPhoneLogin && <ScreenWrapper.Section>
                             <Button
                                 mode='outlined'
-                                onPress={() => setSelectedLogin(OPTION_LOGIN_LOGIN_OPTIONS.PHONE)}
+                                onPress={() => setSelectedLogin(LOGIN_OPTIONS.PHONE)}
                             >
                                 {localized('continuePhoneNumber')}
                             </Button>

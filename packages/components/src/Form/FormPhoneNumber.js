@@ -68,7 +68,6 @@ const FormPhoneNumber = ({ onPhoneNumberPress }) => {
             <ScreenWrapper.Section>
                 <PhoneInput ref={phoneRef}
                     initialCountry={'us'}
-                    countries={['us', 'ca', 'mx']}
                     onPressFlag={onPressFlag} />
             </ScreenWrapper.Section>
 
@@ -85,6 +84,7 @@ const FormPhoneNumber = ({ onPhoneNumberPress }) => {
             <FormVerificationCode
                 confirm={confirm}
                 onDismiss={onDismiss}
+                onResendCode={onPress}
 
             />
 

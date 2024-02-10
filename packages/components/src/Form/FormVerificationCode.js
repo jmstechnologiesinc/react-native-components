@@ -1,11 +1,11 @@
 
 import React, { useState } from 'react';
 
-import { Button, TextInput,  Portal, Dialog, HelperText } from '@jmstechnologiesinc/react-native-paper';
+import { Button, TextInput, Portal, Dialog, HelperText } from '@jmstechnologiesinc/react-native-paper';
 
 import { localized } from '../Localization/Localization'
 
-const FormVerificationCode = ({ confirm, onDismiss }) => {
+const FormVerificationCode = ({ confirm, onDismiss, onResendCode }) => {
 
     const [code, setCode] = useState(null);
     const [error, setError] = useState(false)
@@ -14,7 +14,7 @@ const FormVerificationCode = ({ confirm, onDismiss }) => {
     const confirmCode = async () => {
         setIsLoading(true)
         try {
-            await confirm.confirm(code);
+            await confirm.confirm(code)
         } catch (error) {
             setError(true)
         }
@@ -42,14 +42,13 @@ const FormVerificationCode = ({ confirm, onDismiss }) => {
                     ) : null}
                 </Dialog.Content>
                 <Dialog.Actions>
-                    <Button 
-                        onPress={confirmCode} >
+                    <Button
+                        onPress={onResendCode} >
                         {localized('resendCode')}
                     </Button>
-                    <Button 
+                    <Button
                         loading={isLoading}
                         disabled={isLoading}
-                        mode='contained' 
                         onPress={confirmCode} >
                         {localized('confirmCode')}
                     </Button>

@@ -469,8 +469,6 @@
      "helpTextPasscodeIncorrect":"The SMS passcode you've entered is incorrect.",
      "EnterCodeSendYou":"Enter the 4-digit code sent you.",
      "confirmCode": "Confirm Code",
-     "pleaseValidPhoneNumber": "Please enter a valid phone number"
-
-
-
+     "pleaseValidPhoneNumber": "Please enter a valid phone number",
+     "resendCode": "Resend code"
 }
