@@ -5,21 +5,12 @@ import { Button, TextInput, Portal, Dialog, HelperText } from '@jmstechnologiesi
 
 import { localized } from '../Localization/Localization'
 
-const FormVerificationCode = ({ confirm, onDismiss, onResendCode }) => {
+const FormVerificationCode = ({ confirm, onDismiss, onResendCode, onConfirmCode,
+    isLoading }) => {
 
     const [code, setCode] = useState(null);
     const [error, setError] = useState(false)
-    const [isLoading, setIsLoading] = useState(false);
 
-    const confirmCode = async () => {
-        setIsLoading(true)
-        try {
-            await confirm.confirm(code)
-        } catch (error) {
-            setError(true)
-        }
-        setIsLoading(false)
-    };
 
     return (
         <Portal>
@@ -43,13 +34,16 @@ const FormVerificationCode = ({ confirm, onDismiss, onResendCode }) => {
                 </Dialog.Content>
                 <Dialog.Actions>
                     <Button
-                        onPress={onResendCode} >
+                        onPress={onResendCode}
+                        loading={isLoading}
+                        disabled={isLoading}
+                    >
                         {localized('resendCode')}
                     </Button>
                     <Button
                         loading={isLoading}
                         disabled={isLoading}
-                        onPress={confirmCode} >
+                        onPress={() => onConfirmCode(code)} >
                         {localized('confirmCode')}
                     </Button>
                 </Dialog.Actions>

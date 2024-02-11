@@ -63,6 +63,17 @@ const FormPhoneNumber = ({ onPhoneNumberPress }) => {
     const onDismiss = () => {
         setConfirm(!confirm)
     }
+
+    const onConfirmCode = async (code) => {
+        setIsLoading(true)
+        try {
+            await confirm.confirm(code)
+        } catch (error) {
+            setError(true)
+        }
+        setIsLoading(false)
+    };
+
     return (
         <>
             <ScreenWrapper.Section>
@@ -85,6 +96,8 @@ const FormPhoneNumber = ({ onPhoneNumberPress }) => {
                 confirm={confirm}
                 onDismiss={onDismiss}
                 onResendCode={onPress}
+                onConfirmCode={onConfirmCode}
+                isLoading={isLoading}
 
             />
 
