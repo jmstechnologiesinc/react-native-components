@@ -6,11 +6,8 @@ import { Button, TextInput, Portal, Dialog, HelperText } from '@jmstechnologiesi
 import { localized } from '../Localization/Localization'
 
 const FormVerificationCode = ({ confirm, onDismiss, onResendCode, onConfirmCode,
-    isLoading }) => {
-
+    isLoading, isError, setError }) => {
     const [code, setCode] = useState(null);
-    const [error, setError] = useState(false)
-
 
     return (
         <Portal>
@@ -26,7 +23,7 @@ const FormVerificationCode = ({ confirm, onDismiss, onResendCode, onConfirmCode,
                             setError(false)
                         }}
                     />
-                    {error ? (
+                    {isError ? (
                         <HelperText type="error" visible={true}>
                             {localized('helpTextPasscodeIncorrect')}
                         </HelperText>

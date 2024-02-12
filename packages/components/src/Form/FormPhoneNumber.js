@@ -4,7 +4,7 @@ import { Dimensions, Platform, ScrollView, Alert } from 'react-native';
 import { List, Button, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import ActionSheet, { useScrollHandlers } from 'react-native-actions-sheet';
 
-import PhoneInput from '@jmstechnologiesinc/react-native-phone-input';
+import { PhoneInput } from '@jmstechnologiesinc/react-native-phone-input';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useHeaderHeight } from '@react-navigation/elements';
 
@@ -21,6 +21,8 @@ const FormPhoneNumber = ({ onPhoneNumberPress }) => {
     const [confirm, setConfirm] = useState(null);
     const phoneRef = useRef();
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(false)
+
 
     const actionSheetRef = useRef();
     const insets = useSafeAreaInsets();
@@ -34,6 +36,8 @@ const FormPhoneNumber = ({ onPhoneNumberPress }) => {
 
         }
     }, [phoneRef]);
+
+
 
     const onPressFlag = () => {
         actionSheetRef.current.show();
@@ -98,9 +102,10 @@ const FormPhoneNumber = ({ onPhoneNumberPress }) => {
                 onResendCode={onPress}
                 onConfirmCode={onConfirmCode}
                 isLoading={isLoading}
+                isError={error}
+                setError={setError}
 
             />
-
             <ActionSheet
                 ref={actionSheetRef}
                 statusBarTranslucent={true}
