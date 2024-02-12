@@ -6,7 +6,7 @@ import { Button, TextInput, Portal, Dialog, HelperText } from '@jmstechnologiesi
 import { localized } from '../Localization/Localization'
 
 const FormVerificationCode = ({ confirm, onDismiss, onResendCode, onConfirmCode,
-    isLoading, isError, setError }) => {
+    isLoading, isError, onError }) => {
     const [code, setCode] = useState(null);
 
     return (
@@ -20,7 +20,7 @@ const FormVerificationCode = ({ confirm, onDismiss, onResendCode, onConfirmCode,
                         autoFocus
                         onChangeText={(text) => {
                             setCode(text)
-                            setError(false)
+                            onError(false)
                         }}
                     />
                     {isError ? (
