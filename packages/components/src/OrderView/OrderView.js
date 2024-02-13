@@ -24,7 +24,7 @@ import { firestoreTimestampToDate, plurulize } from '@jmstechnologiesinc/commons
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 import { localized } from '../Localization/Localization';
-import DriverStatus from './DriverStatus';
+import DriverStatus from '../Order/DriverStatus';
 
 const getDriverDetails = (order, role) => {
     const results = [];
@@ -65,7 +65,6 @@ const OrderView = ({
     role,
     onButtonPress,
 
-    enableDriverStatus,
     enableHeaderStatus,
     enableVendorStatus,
 
@@ -77,13 +76,7 @@ const OrderView = ({
     showVendorOverline = false,
     showVendorTitle,
     showVendorDescription,
-    showVendorAvatar = false,
-
-    showDriverOverline,
-    showDriverTitle,
-    showDriverDescription,
-    showDriverAvatar,
-    
+    showVendorAvatar = false,  
 }) => {
     if (!order?.id || !USER_ROLES[role]) {
         return null;
@@ -241,13 +234,13 @@ const OrderView = ({
                     <ActionGroup.Group>
                         <ActionGroup.Buttons
                             buttons={buttonsMapping}
-                            onPress={(button) => onButtonPress(button, formattedOrder.orderID)}
+                            onPress={(button) => onButtonPress(button, formattedOrder.orderId)}
                         />
                     </ActionGroup.Group>
                 </ScreenWrapper.Section>
             </ScreenWrapper.Container>
         ) : null;
-console.log(JSON.stringify(formattedOrder.fulfilmentStatus.driver,null,2))
+
     return (
         <>
             <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
@@ -262,7 +255,6 @@ console.log(JSON.stringify(formattedOrder.fulfilmentStatus.driver,null,2))
                         headerTitleVariant='headlineSmall'
                         enableHeaderStatus={enableHeaderStatus}
                         enableVendorStatus={enableVendorStatus}
-                        enableDriverStatus={enableDriverStatus}
                         showHeaderOverline={showHeaderOverline}
                         showHeaderTitle={showHeaderTitle}
                         showHeaderDescription={showHeaderDescription}
@@ -271,27 +263,30 @@ console.log(JSON.stringify(formattedOrder.fulfilmentStatus.driver,null,2))
                         showVendorTitle={showVendorTitle}
                         showVendorDescription={showVendorDescription}
                         showVendorAvatar={showVendorAvatar}
-                        showDriverOverline={showDriverOverline}
-                        showDriverTitle={showDriverTitle}
-                        showDriverDescription={showDriverDescription}
-                        showDriverAvatar={showDriverAvatar}
+                        showChevron={false}
                     />
 
-                    {(formattedOrder.fulfilmentStatus.driver.status || formattedOrder.fulfilmentStatus.driver.title) ? (
-                        <DriverStatus
-                            role={role}
-                            orderID={formattedOrder.orderID}
-                            orderStatus={formattedOrder.status}
-                            orderDeliveryMethod={formattedOrder.deliveryMethod}
-                            deliveryMethod={formattedOrder.fulfilmentStatus.deliveryMethod}
-                            name={formattedOrder.fulfilmentStatus.driver.title}
-                            phone={formattedOrder.fulfilmentStatus.driver.phone}
-                            vehicle={formattedOrder.fulfilmentStatus.driver.vehicle}
-                            avatar={formattedOrder.fulfilmentStatus.driver.avatar}
-                            status={formattedOrder.fulfilmentStatus.driver.status}
-                    />) : null}
+                    <Divider style={{ marginTop: MD3LightTheme.spacing.x3 }} />
 
-                    <Divider />
+                    {(formattedOrder.fulfilmentStatus.driver.status || formattedOrder.fulfilmentStatus.driver.title) ? (
+                        <>
+                            <List.Section title={localized("driver")}>
+                                <DriverStatus
+                                    role={role}
+                                    orderId={formattedOrder.orderId}
+                                    orderStatus={formattedOrder.status}
+                                    orderDeliveryMethod={formattedOrder.deliveryMethod}
+                                    deliveryMethod={formattedOrder.fulfilmentStatus.driver.deliveryMethod}
+                                    name={formattedOrder.fulfilmentStatus.driver.title}
+                                    phone={formattedOrder.fulfilmentStatus.driver.phone}
+                                    vehicle={formattedOrder.fulfilmentStatus.driver.vehicle}
+                                    avatar={formattedOrder.fulfilmentStatus.driver.avatar}
+                                    status={formattedOrder.fulfilmentStatus.driver.status}
+                                />
+                            </List.Section>
+                            <Divider />
+                        </>
+                    ) : null}
 
                     {fulfilmentDetails.length > 0 ? (
                         <List.Section
@@ -315,10 +310,9 @@ console.log(JSON.stringify(formattedOrder.fulfilmentStatus.driver,null,2))
                         </List.Section>
                     ) : null}
 
-                    <Divider />
-
                     {driverDetails?.length > 0 ? (
                         <>
+                            <Divider />
                             <List.Section title={localized('order.driverDetails')}>
                                 {driverDetails.map((item, index) => (
                                     <View key={item.key}>
@@ -334,39 +328,41 @@ console.log(JSON.stringify(formattedOrder.fulfilmentStatus.driver,null,2))
                                     </View>
                                 ))}
                             </List.Section>
-                            <Divider />
                         </>
                     ) : null}
 
                     {telemetryList.length > 0 ? (
                         <>
-                        <List.Section title={localized('order.telemetry')}>
-                            {telemetryList.map((item, index) => (
-                                <View key={item.key}>
-                                    <List.Item
-                                        title={item.title}
-                                        description={item.description}
-                                        titleNumberOfLines={0}
-                                        descriptionNumberOfLines={0}
-                                    />
-                                </View>
-                            ))}
-                        </List.Section>
-                           <Divider />
-                           </>
+                            <Divider />
+                            <List.Section title={localized('order.telemetry')}>
+                                {telemetryList.map((item, index) => (
+                                    <View key={item.key}>
+                                        <List.Item
+                                            title={item.title}
+                                            description={item.description}
+                                            titleNumberOfLines={0}
+                                            descriptionNumberOfLines={0}
+                                        />
+                                    </View>
+                                ))}
+                            </List.Section>
+                        </>
                     ) : null}
 
                     {role === USER_ROLES.vendor || role === USER_ROLES.customer ? (
-                        <List.Section
-                            title={`${order.cart.products.length} ${plurulize(localized('order.item'), order.cart.products.length)}`}
-                        >
-                            {order.cart.products.map((item, index) => (
-                                <View key={`product-item-${item.id}`}>
-                                    <CartListProductItem data={item} interpunctAttributeGroup={false} />
-                                    {itemSeparator(index, order.cart.products.length) ? <Divider horizontalInset /> : null}
-                                </View>
-                            ))}
-                        </List.Section>
+                        <>
+                            <Divider />
+                            <List.Section
+                                title={`${order.cart.products.length} ${plurulize(localized('order.item'), order.cart.products.length)}`}
+                            >
+                                {order.cart.products.map((item, index) => (
+                                    <View key={`product-item-${item.id}`}>
+                                        <CartListProductItem data={item} interpunctAttributeGroup={false} />
+                                        {itemSeparator(index, order.cart.products.length) ? <Divider horizontalInset /> : null}
+                                    </View>
+                                ))}
+                            </List.Section>
+                        </>
                     ) : null}
 
                     <Divider style={{ marginTop: MD3LightTheme.spacing.x1 }} />
@@ -374,11 +370,11 @@ console.log(JSON.stringify(formattedOrder.fulfilmentStatus.driver,null,2))
                     <ScreenWrapper.Section>
                         <Accounting feeList={formattedOrder.fees} />
                     </ScreenWrapper.Section>
-                    {role === USER_ROLES.customer && renderActionButtons}
+                    {role === USER_ROLES.customer ? renderActionButtons : null}
                 </View>
             </ScrollView>
 
-            {role === USER_ROLES.vendor && renderActionButtons}
+            {role === USER_ROLES.vendor ? renderActionButtons : null}
         </>
     );
 };

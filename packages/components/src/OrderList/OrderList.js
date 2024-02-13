@@ -6,8 +6,13 @@ import { Divider, List, MD3LightTheme } from '@jmstechnologiesinc/react-native-p
 
 import OrderListItem from './OrderListItem';
 import { LAYOUT_MODE } from '../consts';
+import { isOrderActive } from '@jmstechnologiesinc/order';
+import { USER_ROLES } from '@jmstechnologiesinc/user';
 
 const keyExtractor = (order) => `order-list-${order.id}`;
+const horizontalInsetDivider = (data, role) => <Divider 
+        horizontalInset
+        style={role === USER_ROLES.customer && isOrderActive(data.trailingItem?.status) ? {marginBottom: MD3LightTheme.spacing.x2} : null} />;
 
 const OrderList = ({
     data,
@@ -19,7 +24,6 @@ const OrderList = ({
     layoutMode = LAYOUT_MODE.portrait,
     showSelectedOverlay,
 
-    enableDriverStatus,
     enableHeaderStatus,
     enableVendorStatus,
 
@@ -32,11 +36,7 @@ const OrderList = ({
     showVendorTitle,
     showVendorDescription,
     showVendorAvatar,
-
-    showDriverOverline,
-    showDriverTitle,
-    showDriverDescription,
-    showDriverAvatar,
+    showChevron,
 
     onButtonPress,
     onPress,
@@ -62,7 +62,7 @@ const OrderList = ({
             ) : null
         }
         SectionSeparatorComponent={showItemSeparator ? Divider : null}
-        //ItemSeparatorComponent={showItemSeparator ? () => <Divider horizontalInset /> : null}
+        ItemSeparatorComponent={showItemSeparator ? (data) => horizontalInsetDivider(data, role) : null}
         renderItem={({ item }) => (
             <OrderListItem
                 role={role}
@@ -71,7 +71,6 @@ const OrderList = ({
                 currentOrderId={currentOrderId}
                 enableHeaderStatus={enableHeaderStatus}
                 enableVendorStatus={enableVendorStatus}
-                enableDriverStatus={enableDriverStatus}
                 showHeaderOverline={showHeaderOverline}
                 showHeaderTitle={showHeaderTitle}
                 showHeaderDescription={showHeaderDescription}
@@ -80,10 +79,7 @@ const OrderList = ({
                 showVendorTitle={showVendorTitle}
                 showVendorDescription={showVendorDescription}
                 showVendorAvatar={showVendorAvatar}
-                showDriverOverline={showDriverOverline}
-                showDriverTitle={showDriverTitle}
-                showDriverDescription={showDriverDescription}
-                showDriverAvatar={showDriverAvatar}
+                showChevron={showChevron}
                 onButtonPress={onButtonPress}
                 onPress={() => onPress(item, role)}
             />
