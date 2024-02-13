@@ -6,7 +6,7 @@ import { Button, TextInput, Portal, Dialog, HelperText } from '@jmstechnologiesi
 import { localized } from '../Localization/Localization'
 
 const FormVerificationCode = ({ confirm, onDismiss, onResendCode, onConfirmCode,
-    isLoading, isError, onError }) => {
+    isLoading, isError, onError, isLoadingResend }) => {
     const [code, setCode] = useState(null);
 
     return (
@@ -32,8 +32,8 @@ const FormVerificationCode = ({ confirm, onDismiss, onResendCode, onConfirmCode,
                 <Dialog.Actions>
                     <Button
                         onPress={onResendCode}
-                        loading={isLoading}
-                        disabled={isLoading}
+                        loading={isLoadingResend}
+                        disabled={isLoadingResend}
                     >
                         {localized('resendCode')}
                     </Button>

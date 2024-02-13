@@ -18,9 +18,12 @@ const FormPhoneNumber = ({ onPhoneNumberPress }) => {
 
     const [confirm, setConfirm] = useState(null);
     const phoneRef = useRef();
-    const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false)
 
+    const [isLoading, setIsLoading] = useState({
+        onPhonePress: false,
+        onConfirmPress: false,
+    });
 
     const actionSheetRef = useRef();
 
@@ -44,7 +47,7 @@ const FormPhoneNumber = ({ onPhoneNumberPress }) => {
 
 
     const onPress = async () => {
-        setIsLoading(true)
+        setIsLoading({ ...isLoading, onPhonePress: true })
         if (phoneRef.current.isValidNumber()) {
             const userValidPhoneNumber = phoneRef.current.getValue();
             const result = await onPhoneNumberPress(userValidPhoneNumber)
@@ -55,7 +58,7 @@ const FormPhoneNumber = ({ onPhoneNumberPress }) => {
             })
 
         }
-        setIsLoading(false)
+        setIsLoading({ ...isLoading, onPhonePress: false })
     };
 
     const onDismiss = () => {
@@ -63,13 +66,14 @@ const FormPhoneNumber = ({ onPhoneNumberPress }) => {
     }
 
     const onConfirmCode = async (code) => {
-        setIsLoading(true)
+        setIsLoading({ ...isLoading, onConfirmPress: true })
         try {
             await confirm.confirm(code)
         } catch (error) {
             setIsError(true)
         }
-        setIsLoading(false)
+        setIsLoading({ ...isLoading, onConfirmPress: false })
+
     };
 
     return (
@@ -84,8 +88,8 @@ const FormPhoneNumber = ({ onPhoneNumberPress }) => {
                 <Button mode='contained'
                     onPress={onPress}
                     style={{ marginTop: MD3LightTheme.spacing.x3 }}
-                    loading={isLoading}
-                    disabled={isLoading}
+                    loading={isLoading.onPhonePress}
+                    disabled={isLoading.onPhonePress}
 
                 > {localized('logIn')} </Button>
             </ScreenWrapper.Section>
@@ -95,7 +99,8 @@ const FormPhoneNumber = ({ onPhoneNumberPress }) => {
                 onDismiss={onDismiss}
                 onResendCode={onPress}
                 onConfirmCode={onConfirmCode}
-                isLoading={isLoading}
+                isLoading={isLoading.onConfirmPress}
+                isLoadingResend={isLoading.onPhonePress}
                 isError={isError}
                 onError={setIsError}
 
