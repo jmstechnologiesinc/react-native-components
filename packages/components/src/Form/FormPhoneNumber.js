@@ -81,15 +81,18 @@ const FormPhoneNumber = ({ onPhoneNumberPress }) => {
     return (
         <>
             <ScreenWrapper.Section>
-                <PhoneInput ref={phoneRef}
+                {
+                    phoneRef &&         <PhoneInput ref={phoneRef}
                     initialCountry={'us'}
                     onPressFlag={onPressFlag} />
+                }
+        
             </ScreenWrapper.Section>
 
-            <ScreenWrapper.Section>
+            <ScreenWrapper.Section tyle={{ marginTop: MD3LightTheme.spacing.x2 }}
+>
                 <Button mode='contained'
                     onPress={onPress}
-                    style={{ marginTop: MD3LightTheme.spacing.x3 }}
                     loading={isLoading}
                     disabled={isLoading}
 
