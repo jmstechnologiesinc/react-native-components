@@ -2,8 +2,8 @@ import React from 'react';
 
 import { StyleSheet } from 'react-native';
 
-import { Avatar, Chip, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
-import { ITEM_TYPE, ITEM_TYPE_ICON_MAPPING } from '@jmstechnologiesinc/commons';
+import { Avatar, Chip, List, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
+import { ITEM_TYPE, ITEM_TYPE_ICON_MAPPING, MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 
 import JMSItem from '../List/ListItem';
 import { imagekitUrl, makeLinkingCall } from '../utils';
@@ -48,6 +48,7 @@ const OrderStatusWrapper = ({
     showDescription = true,
     showAvatar = true,
     showChips = true,
+    showChevron = true,
 
     titleVariant,
     style,
@@ -82,6 +83,7 @@ const OrderStatusWrapper = ({
             description={description}
             chips={renderChips}
             left={renderAvatar}
+            right={showChevron ? (props) => <List.Icon {...props} icon={MATERIAL_ICONS.chevron} /> : null}
             titleNumberOfLines={0}
             descriptionNumberOfLines={0}
             style={style}
