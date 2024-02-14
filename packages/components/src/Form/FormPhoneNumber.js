@@ -1,34 +1,31 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Dimensions, Platform, ScrollView, Alert } from 'react-native';
+import { Alert } from 'react-native';
 
-import { List, Button, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
-import ActionSheet, { useScrollHandlers } from 'react-native-actions-sheet';
+import { Button, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
 import { PhoneInput } from '@jmstechnologiesinc/react-native-phone-input';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useHeaderHeight } from '@react-navigation/elements';
+
 
 import { localized } from '../Localization/Localization'
 import FormVerificationCode from './FormVerificationCode';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
+import CountryPicker from './countryPicker';
 
 
-const WINDOW_HEIGHT = Dimensions.get('window').height;
 
 const FormPhoneNumber = ({ onPhoneNumberPress }) => {
     const [countriesPickerData, setCountriesPickerData] = useState(null);
 
     const [confirm, setConfirm] = useState(null);
     const phoneRef = useRef();
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(false)
+    const [isError, setIsError] = useState(false)
 
+    const [isLoading, setIsLoading] = useState({
+        onPhonePress: false,
+        onConfirmPress: false,
+    });
 
     const actionSheetRef = useRef();
-    const insets = useSafeAreaInsets();
-    const scrollHandlers = useScrollHandlers('scrollview-1', actionSheetRef);
-    const HEADER_HEIGHT = useHeaderHeight();
-    const actionSheetHeight = Platform.OS === 'ios' ? WINDOW_HEIGHT - HEADER_HEIGHT : null;
 
     useEffect(() => {
         if (phoneRef && phoneRef.current) {
@@ -50,7 +47,7 @@ const FormPhoneNumber = ({ onPhoneNumberPress }) => {
 
 
     const onPress = async () => {
-        setIsLoading(true)
+        setIsLoading({ ...isLoading, onPhonePress: true })
         if (phoneRef.current.isValidNumber()) {
             const userValidPhoneNumber = phoneRef.current.getValue();
             const result = await onPhoneNumberPress(userValidPhoneNumber)
@@ -61,7 +58,7 @@ const FormPhoneNumber = ({ onPhoneNumberPress }) => {
             })
 
         }
-        setIsLoading(false)
+        setIsLoading({ ...isLoading, onPhonePress: false })
     };
 
     const onDismiss = () => {
@@ -69,13 +66,14 @@ const FormPhoneNumber = ({ onPhoneNumberPress }) => {
     }
 
     const onConfirmCode = async (code) => {
-        setIsLoading(true)
+        setIsLoading({ ...isLoading, onConfirmPress: true })
         try {
             await confirm.confirm(code)
         } catch (error) {
-            setError(true)
+            setIsError(true)
         }
-        setIsLoading(false)
+        setIsLoading({ ...isLoading, onConfirmPress: false })
+
     };
 
     return (
@@ -93,8 +91,9 @@ const FormPhoneNumber = ({ onPhoneNumberPress }) => {
 >
                 <Button mode='contained'
                     onPress={onPress}
-                    loading={isLoading}
-                    disabled={isLoading}
+                    style={{ marginTop: MD3LightTheme.spacing.x3 }}
+                    loading={isLoading.onPhonePress}
+                    disabled={isLoading.onPhonePress}
 
                 > {localized('logIn')} </Button>
             </ScreenWrapper.Section>
@@ -104,37 +103,17 @@ const FormPhoneNumber = ({ onPhoneNumberPress }) => {
                 onDismiss={onDismiss}
                 onResendCode={onPress}
                 onConfirmCode={onConfirmCode}
-                isLoading={isLoading}
-                isError={error}
-                setError={setError}
+                isLoading={isLoading.onConfirmPress}
+                isLoadingResend={isLoading.onPhonePress}
+                isError={isError}
+                onError={setIsError}
 
             />
-            <ActionSheet
+            <CountryPicker
                 ref={actionSheetRef}
-                statusBarTranslucent={true}
-                drawUnderStatusBar={false}
-                springOffset={50}
-                defaultOverlayOpacity={0.3}
-                gestureEnabled
-                containerStyle={{
-                    paddingBottom: insets.bottom,
-                    height: actionSheetHeight,
-                }}
-            >
-
-                <ScrollView {...scrollHandlers}>
-                    {countriesPickerData?.map((item) => (
-                        <ScreenWrapper.Container>
-                            <List.Item
-                                title={item.label}
-                                key={item.key}
-                                onPress={() => selectCountry(item)}
-                                left={() => <List.Image variant="flag" source={item.image} />}
-                            />
-                        </ScreenWrapper.Container>
-                    ))}
-                </ScrollView>
-            </ActionSheet>
+                data={countriesPickerData}
+                onSelect={selectCountry}
+            />
         </>
     );
 };
