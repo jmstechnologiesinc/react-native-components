@@ -15,14 +15,20 @@ const EmailOrPhoneSwitcher = ({
     signUpTitle,
     email,
     password,
+    vereficationCodeError,
+    isVerificationCodeVisible,
+    isVereficationCodeLoading,
     isLoading,
     isSwitcherEnable=true,
     initialLoginOption=LOGIN_OPTIONS.PHONE,
-    resetPassword,
+    showResetPassword,
     onEmailPasswordLoginPress,
-    onPhoneNumberPress,
+    onPhoneNumberLoginPress,
     onSignupPress,
     onForgotPasswordPress,
+    onDismiss,
+    onResendCodePress,
+    onConfirmCodePress,
     inputActionHandler,
 }) => {
     const [selectedLogin, setSelectedLogin] = useState(initialLoginOption);
@@ -34,7 +40,14 @@ const EmailOrPhoneSwitcher = ({
     return  <>
         {selectedLogin === LOGIN_OPTIONS.PHONE ? (
             <FormPhoneNumber 
-                onPhoneNumberPress={onPhoneNumberPress} />
+                isVerificationCodeVisible={isVerificationCodeVisible}
+                isVereficationCodeLoading={isVereficationCodeLoading}
+                isLoading={isLoading}
+                vereficationCodeError={vereficationCodeError}
+                onPhoneNumberLoginPress={onPhoneNumberLoginPress}
+                onDismiss={onDismiss}
+                onResendCodePress={onResendCodePress}
+                onConfirmCodePress={onConfirmCodePress} />
         ) : (
             <EmailPassword
                 loginTitle={localized('logIn')}
@@ -44,7 +57,7 @@ const EmailOrPhoneSwitcher = ({
                 password={password}
                 showLoginButton
                 showSignupButton
-                resetPassword={resetPassword}
+                showResetPassword={showResetPassword}
                 onLoginPress={onEmailPasswordLoginPress}
                 onSignupPress={onSignupPress}
                 onPasswordReset={onForgotPasswordPress}

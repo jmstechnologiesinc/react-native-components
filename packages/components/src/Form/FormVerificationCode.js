@@ -1,46 +1,66 @@
 
 import React, { useState } from 'react';
 
-import { Button, TextInput, Portal, Dialog, HelperText } from '@jmstechnologiesinc/react-native-paper';
+import { Button, TextInput, Portal, Dialog, HelperText, Text } from '@jmstechnologiesinc/react-native-paper';
 
 import { localized } from '../Localization/Localization'
+import { Alert, ScrollView, StyleSheet } from 'react-native';
+import ScreenWrapper from '@jmstechnologiesinc/react-native-components/lib/ScreenWrapper/ScreenWrapper';
 
-const FormVerificationCode = ({ confirm, onDismiss, onResendCode, onConfirmCode,
-    isLoading, isError, onError, isLoadingResend }) => {
+const FormVerificationCode = ({ 
+    isVisible, 
+    isLoading, 
+    error,
+    onResendCodePress, 
+    onDismiss, 
+    onConfirmCodePress,
+}) => {
     const [code, setCode] = useState(null);
 
     return (
         <Portal>
-            <Dialog visible={confirm}
-                onDismiss={onDismiss}
-            >
-                <Dialog.Title>{localized('EnterCodeSendYou')}</Dialog.Title>
-                <Dialog.Content>
-                    <TextInput
-                        autoFocus
-                        onChangeText={(text) => {
-                            setCode(text)
-                            onError(false)
-                        }}
-                    />
-                    {isError ? (
-                        <HelperText type="error" visible={true}>
-                            {localized('helpTextPasscodeIncorrect')}
-                        </HelperText>
-                    ) : null}
-                </Dialog.Content>
+            <Dialog 
+                visible={isVisible}
+                dismissable={false}>
+                <Dialog.Title>{localized('verificationCodeModalTitle')}</Dialog.Title>
+                
+                <Dialog.ScrollArea style={styles.container}>
+                    <Dialog.Content>
+                        <ScreenWrapper.Section>
+                            <Text>{localized("enterTheVerificationCode")}</Text>
+                        </ScreenWrapper.Section>
+                        <ScreenWrapper.Section>
+                            <TextInput
+                                autoFocus
+                                onChangeText={(text) => {
+                                    setCode(text)
+                                }}
+                            />
+                            {error ? (
+                                <HelperText type="error" visible={true}>
+                                    {error}
+                                </HelperText>
+                            ) : null}
+                        </ScreenWrapper.Section>
+
+                        <Button
+                            onPress={onResendCodePress}
+                            disabled={isLoading}
+                            style={{flexDirection: 'row'}}>
+                            {localized('resendCode')}
+                        </Button>
+                    </Dialog.Content>
+                </Dialog.ScrollArea>
+
                 <Dialog.Actions>
-                    <Button
-                        onPress={onResendCode}
-                        loading={isLoadingResend}
-                        disabled={isLoadingResend}
-                    >
-                        {localized('resendCode')}
+                    <Button onPress={onDismiss}>
+                        {localized('cancel')}
                     </Button>
                     <Button
+                        mode="contained"
                         loading={isLoading}
                         disabled={isLoading}
-                        onPress={() => onConfirmCode(code)} >
+                        onPress={() => onConfirmCodePress(code)} >
                         {localized('confirmCode')}
                     </Button>
                 </Dialog.Actions>
@@ -48,5 +68,11 @@ const FormVerificationCode = ({ confirm, onDismiss, onResendCode, onConfirmCode,
         </Portal>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        paddingHorizontal: 0,
+    },
+});
 
 export default FormVerificationCode

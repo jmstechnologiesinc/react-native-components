@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { TextInput, Button, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
+import { TextInput, Button } from '@jmstechnologiesinc/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 
@@ -17,7 +17,7 @@ const FormEmailPassword = ({
     isPasswordDisabled = false,
     confirmPassword = false,
     passwordConfirm,
-    resetPassword = false,
+    showResetPassword = false,
     showLoginButton=false,
     showSignupButton=false,
     onLoginPress,
@@ -57,9 +57,7 @@ const FormEmailPassword = ({
             )}
 
             {showLoginButton ? (
-                <ScreenWrapper.Section 
-                    tyle={{ marginTop: MD3LightTheme.spacing.x2 }}
-                >
+                <ScreenWrapper.Section >
                     <Button
                         mode="contained"
                         loading={isLoading}
@@ -82,7 +80,7 @@ const FormEmailPassword = ({
                 </ScreenWrapper.Section>
             ) : null}
 
-            {resetPassword && (
+            {showResetPassword && (
                 <ScreenWrapper.Section>
                     <Button mode="text" onPress={onPasswordReset}>
                         {localized('resetPassword')}

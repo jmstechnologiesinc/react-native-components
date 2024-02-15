@@ -4,7 +4,7 @@ import { TextInput } from '@jmstechnologiesinc/react-native-paper';
 import { PhoneInput } from '@jmstechnologiesinc/react-native-phone-input';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
-import CountryPicker from './countryPicker'
+import CountryPicker from './CountryPicker'
 
 
 const FormPersonInfo = ({ isDisabled, firstName, inputActionHandler, lastName, phone, email, phoneInput = false, currentPhone }) => {

@@ -47,7 +47,7 @@ export const AuthFormResetPassword = () => (
         password={state.password}
         passwordConfirm={state.passwordConfirm}
         inputActionHandler={() => {}}
-        resetPassword={true}
+        showResetPassword={true}
         onPasswordReset={() => {}}
     />
 );

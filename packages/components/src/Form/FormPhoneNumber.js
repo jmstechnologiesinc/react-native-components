@@ -1,42 +1,37 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Alert } from 'react-native';
 
-import { Button, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
+import { Button, HelperText, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
 import { PhoneInput } from '@jmstechnologiesinc/react-native-phone-input';
-
 
 import { localized } from '../Localization/Localization'
 import FormVerificationCode from './FormVerificationCode';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
-import CountryPicker from './countryPicker';
+import CountryPicker from './CountryPicker';
 
-
-
-const FormPhoneNumber = ({ onPhoneNumberPress }) => {
-    const [countriesPickerData, setCountriesPickerData] = useState(null);
-
-    const [confirm, setConfirm] = useState(null);
+const FormPhoneNumber = ({ 
+    isVerificationCodeVisible,
+    isVereficationCodeLoading,
+    isLoading,
+    vereficationCodeError,
+    onPhoneNumberLoginPress,
+    onDismiss,
+    onResendCodePress,
+    onConfirmCodePress
+ }) => {
     const phoneRef = useRef();
-    const [isError, setIsError] = useState(false)
-
-    const [isLoading, setIsLoading] = useState({
-        onPhonePress: false,
-        onConfirmPress: false,
-    });
-
     const actionSheetRef = useRef();
 
-    useEffect(() => {
-        if (phoneRef && phoneRef.current) {
-            setCountriesPickerData(phoneRef.current.getPickerData());
+    const [countriesPickerData, setCountriesPickerData] = useState(null);
 
+    useEffect(() => {
+        if (phoneRef?.current) {
+            setCountriesPickerData(phoneRef.current.getPickerData());
         }
     }, [phoneRef]);
 
-
-
-    const onPressFlag = () => {
+    const onFlagPress = () => {
         actionSheetRef.current.show();
     };
 
@@ -45,70 +40,49 @@ const FormPhoneNumber = ({ onPhoneNumberPress }) => {
         actionSheetRef.current.hide();
     };
 
-
-    const onPress = async () => {
-        setIsLoading({ ...isLoading, onPhonePress: true })
+    const onPress = () => {
         if (phoneRef.current.isValidNumber()) {
-            const userValidPhoneNumber = phoneRef.current.getValue();
-            const result = await onPhoneNumberPress(userValidPhoneNumber)
-            setConfirm(result)
+            onPhoneNumberLoginPress(phoneRef.current.getValue());
         } else {
             Alert.alert('', localized('pleaseValidPhoneNumber'), [{ text: 'OK' }], {
                 cancelable: false,
             })
-
         }
-        setIsLoading({ ...isLoading, onPhonePress: false })
     };
 
-    const onDismiss = () => {
-        setConfirm(!confirm)
+    const resendVerificationCode = () => {
+        onResendCodePress(phoneRef.current.getValue());
     }
-
-    const onConfirmCode = async (code) => {
-        setIsLoading({ ...isLoading, onConfirmPress: true })
-        try {
-            await confirm.confirm(code)
-        } catch (error) {
-            setIsError(true)
-        }
-        setIsLoading({ ...isLoading, onConfirmPress: false })
-
-    };
 
     return (
         <>
             <ScreenWrapper.Section>
-                {
-                    phoneRef &&         <PhoneInput ref={phoneRef}
-                    initialCountry={'us'}
-                    onPressFlag={onPressFlag} />
-                }
-        
+                {phoneRef ? (
+                    <PhoneInput ref={phoneRef}
+                        initialCountry='us'
+                        onPressFlag={onFlagPress} />
+                )  : null}
             </ScreenWrapper.Section>
 
-            <ScreenWrapper.Section tyle={{ marginTop: MD3LightTheme.spacing.x2 }}
->
+            <ScreenWrapper.Section>
                 <Button mode='contained'
                     onPress={onPress}
-                    style={{ marginTop: MD3LightTheme.spacing.x3 }}
-                    loading={isLoading.onPhonePress}
-                    disabled={isLoading.onPhonePress}
-
-                > {localized('logIn')} </Button>
+                    loading={isLoading}
+                    disabled={isLoading}> 
+                    {localized('logIn')} 
+                </Button>
             </ScreenWrapper.Section>
+            <HelperText style={{ marginBottom: MD3LightTheme.spacing.x2 }}>{localized('signInPhoneVerificationCodeAgreement')}</HelperText>
 
             <FormVerificationCode
-                confirm={confirm}
+                isVisible={isVerificationCodeVisible}
+                isLoading={isVereficationCodeLoading}
+                error={vereficationCodeError}
                 onDismiss={onDismiss}
-                onResendCode={onPress}
-                onConfirmCode={onConfirmCode}
-                isLoading={isLoading.onConfirmPress}
-                isLoadingResend={isLoading.onPhonePress}
-                isError={isError}
-                onError={setIsError}
-
+                onResendCodePress={resendVerificationCode}
+                onConfirmCodePress={onConfirmCodePress}
             />
+            
             <CountryPicker
                 ref={actionSheetRef}
                 data={countriesPickerData}

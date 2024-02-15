@@ -1,10 +1,10 @@
-import React, { useRef, forwardRef } from 'react';
-import ActionSheet, { useScrollHandlers } from 'react-native-actions-sheet';
+import React, { forwardRef } from 'react';
 import { Dimensions, Platform, ScrollView } from 'react-native';
 import { useHeaderHeight } from '@react-navigation/elements';
+
+import ActionSheet, { useScrollHandlers } from 'react-native-actions-sheet';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { List } from '@jmstechnologiesinc/react-native-paper';
-import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 
 const WINDOW_HEIGHT = Dimensions.get('window').height;
 
@@ -29,13 +29,12 @@ const CountryPicker = forwardRef(({ data, onSelect }, ref) => {
         >
             <ScrollView {...scrollHandlers}>
                 {data?.map((item) => (
-                    <ScreenWrapper.Container key={item.key}>
-                        <List.Item
-                            title={item.label}
-                            onPress={() => onSelect(item)}
-                            left={() => <List.Image variant="flag" source={item.image} />}
-                        />
-                    </ScreenWrapper.Container>
+                    <List.Item
+                        key={item.key}
+                        title={item.label}
+                        onPress={() => onSelect(item)}
+                        left={(props) => <List.Image {...props} variant="flag" source={item.image} />}
+                    />
                 ))}
             </ScrollView>
         </ActionSheet>
