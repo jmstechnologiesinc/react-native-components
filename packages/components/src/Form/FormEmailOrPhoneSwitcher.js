@@ -22,6 +22,7 @@ const EmailOrPhoneSwitcher = ({
     isSwitcherEnable=true,
     initialLoginOption=LOGIN_OPTIONS.PHONE,
     showResetPassword,
+    showConfirmPasswordInput,
     onEmailPasswordLoginPress,
     onPhoneNumberLoginPress,
     onSignupPress,
@@ -57,6 +58,7 @@ const EmailOrPhoneSwitcher = ({
                 password={password}
                 showLoginButton
                 showSignupButton
+                showConfirmPasswordInput={showConfirmPasswordInput}
                 showResetPassword={showResetPassword}
                 onLoginPress={onEmailPasswordLoginPress}
                 onSignupPress={onSignupPress}

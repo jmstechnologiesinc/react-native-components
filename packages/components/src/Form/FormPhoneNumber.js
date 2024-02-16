@@ -11,12 +11,17 @@ import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import CountryPicker from './CountryPicker';
 
 const FormPhoneNumber = ({ 
+    mode,
+    title,
+    value,
     isVerificationCodeVisible,
     isVereficationCodeLoading,
+    showSubmitButton=true,
     isLoading,
     vereficationCodeError,
     onPhoneNumberLoginPress,
     onDismiss,
+    onChangeText,
     onResendCodePress,
     onConfirmCodePress
  }) => {
@@ -56,23 +61,31 @@ const FormPhoneNumber = ({
 
     return (
         <>
-            <ScreenWrapper.Section>
+            <ScreenWrapper.Section title={title}>
                 {phoneRef ? (
-                    <PhoneInput ref={phoneRef}
+                    <PhoneInput 
+                        ref={phoneRef}
+                        mode={mode}
                         initialCountry='us'
+                        initialValue={value}
+                        onChangePhoneNumber={onChangeText}
                         onPressFlag={onFlagPress} />
                 )  : null}
             </ScreenWrapper.Section>
 
-            <ScreenWrapper.Section>
-                <Button mode='contained'
-                    onPress={onPress}
-                    loading={isLoading}
-                    disabled={isLoading}> 
-                    {localized('logIn')} 
-                </Button>
-            </ScreenWrapper.Section>
-            <HelperText style={{ marginBottom: MD3LightTheme.spacing.x2 }}>{localized('signInPhoneVerificationCodeAgreement')}</HelperText>
+            {showSubmitButton ? (
+                <>
+                    <ScreenWrapper.Section>
+                        <Button mode='contained'
+                            onPress={onPress}
+                            loading={isLoading}
+                            disabled={isLoading}> 
+                            {localized('logIn')} 
+                        </Button>
+                    </ScreenWrapper.Section>
+                    <HelperText style={{ marginBottom: MD3LightTheme.spacing.x2 }}>{localized('signInPhoneVerificationCodeAgreement')}</HelperText>
+                </>
+            ) : null}
 
             <FormVerificationCode
                 isVisible={isVerificationCodeVisible}

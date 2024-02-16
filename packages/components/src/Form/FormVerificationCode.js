@@ -57,7 +57,7 @@ const FormVerificationCode = ({
                         {localized('cancel')}
                     </Button>
                     <Button
-                        mode="contained"
+                        mode="outlined"
                         loading={isLoading}
                         disabled={isLoading}
                         onPress={() => onConfirmCodePress(code)} >

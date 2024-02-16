@@ -37,7 +37,7 @@ export const AuthFormConfirmPassword = () => (
         password={state.password}
         passwordConfirm={state.passwordConfirm}
         inputActionHandler={() => {}}
-        confirmPassword={true}
+        showConfirmPasswordInput={true}
     />
 );
 
@@ -58,7 +58,7 @@ export const AuthFormEmailPasswordDisabled = () => (
         password={state.password}
         passwordConfirm={state.passwordConfirm}
         inputActionHandler={() => {}}
-        confirmPassword={false}
+        showConfirmPasswordInput={false}
         isEmailDisabled={true}
         isPasswordDisabled={true}
     />

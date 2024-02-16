@@ -1,25 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { TextInput, Button } from '@jmstechnologiesinc/react-native-paper';
+import { TextInput, Button, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 
 import SecretInputText from './SecretInputText';
 
 const FormEmailPassword = ({
-    titleCredentials = false,
+    title,
     loginTitle,
     signUpTitle,
     email,
     password,
+    passwordConfirm,
     isLoading=false,
     isEmailDisabled = false,
     isPasswordDisabled = false,
-    confirmPassword = false,
-    passwordConfirm,
+    showConfirmPasswordInput = true,
+    showPasswordInput = true,
     showResetPassword = false,
     showLoginButton=false,
     showSignupButton=false,
+    mode,
+    resetPasswordStyle,
     onLoginPress,
     onSignupPress,
     onPasswordReset,
@@ -27,8 +30,9 @@ const FormEmailPassword = ({
 }) => {
     return (
         <>
-            <ScreenWrapper.Section title={titleCredentials ? localized('credentials') : null}>
+            <ScreenWrapper.Section title={title}>
                 <TextInput
+                    mode={mode}
                     label={localized('email')}
                     value={email}
                     onChangeText={(email) => inputActionHandler('email', email)}
@@ -36,18 +40,22 @@ const FormEmailPassword = ({
                 />
             </ScreenWrapper.Section>
 
-            <ScreenWrapper.Section>
-                <SecretInputText
-                    label={localized('password')}
-                    value={isPasswordDisabled ? '********' : password}
-                    onChangeText={(password) => inputActionHandler('password', password)}
-                    disabled={isPasswordDisabled}
-                />
-            </ScreenWrapper.Section>
-
-            {confirmPassword && (
+            {showPasswordInput ? (
                 <ScreenWrapper.Section>
                     <SecretInputText
+                        mode={mode}
+                        label={localized('password')}
+                        value={isPasswordDisabled ? '********' : password}
+                        onChangeText={(password) => inputActionHandler('password', password)}
+                        disabled={isPasswordDisabled}
+                    />
+                </ScreenWrapper.Section>
+            ) : null}
+
+            {showConfirmPasswordInput && (
+                <ScreenWrapper.Section>
+                    <SecretInputText
+                        mode={mode}
                         label={localized('confirmPassword')}
                         value={passwordConfirm}
                         onChangeText={(passwordConfirm) => inputActionHandler('passwordConfirm', passwordConfirm)}
@@ -82,7 +90,10 @@ const FormEmailPassword = ({
 
             {showResetPassword && (
                 <ScreenWrapper.Section>
-                    <Button mode="text" onPress={onPasswordReset}>
+                    <Button 
+                        mode="text" 
+                        style={resetPasswordStyle}
+                        onPress={onPasswordReset}>
                         {localized('resetPassword')}
                     </Button>
                 </ScreenWrapper.Section>
