@@ -494,7 +494,11 @@
 "verifyYourEmailAddress": "Para completar tu registro en Daxir, por favor verifica tu dirección de correo electrónico.",
 "verification": "Verificación",
 "confirmationEmailAddress": "Hemos enviado un correo de confirmación a tu dirección de correo electrónico. Por favor, revisa tu bandeja de entrada y sigue las instrucciones para completar el proceso de verificación.",
-"failedSendVerificationEmail": "El envío del correo de verificación ha fallado. Lamentamos cualquier inconveniente."
+"failedSendVerificationEmail": "El envío del correo de verificación ha fallado. Lamentamos cualquier inconveniente.",
+"errorApi": {
+    "smsQuotaexceeded": "Lo siento, hemos excedido el límite de autenticación por SMS en este momento. Por favor, intenta iniciar sesión más tarde. Gracias por tu paciencia.",
+    "userDisabled": "Tu cuenta ha sido deshabilitada. Por favor, contacta al soporte para obtener ayuda."
+ }
 
 
 }
