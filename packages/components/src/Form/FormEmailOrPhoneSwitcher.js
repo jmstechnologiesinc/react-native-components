@@ -43,6 +43,7 @@ const EmailOrPhoneSwitcher = ({
             <FormPhoneNumber 
                 isVerificationCodeVisible={isVerificationCodeVisible}
                 isVereficationCodeLoading={isVereficationCodeLoading}
+                showPhoneNumberValidationError={false}
                 isLoading={isLoading}
                 vereficationCodeError={vereficationCodeError}
                 onPhoneNumberLoginPress={onPhoneNumberLoginPress}

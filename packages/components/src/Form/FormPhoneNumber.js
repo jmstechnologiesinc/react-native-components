@@ -17,6 +17,7 @@ const FormPhoneNumber = ({
     isVerificationCodeVisible,
     isVereficationCodeLoading,
     showSubmitButton=true,
+    showPhoneNumberValidationError=true,
     isLoading,
     vereficationCodeError,
     onPhoneNumberLoginPress,
@@ -63,13 +64,21 @@ const FormPhoneNumber = ({
         <>
             <ScreenWrapper.Section title={title}>
                 {phoneRef ? (
-                    <PhoneInput 
-                        ref={phoneRef}
-                        mode={mode}
-                        initialCountry='us'
-                        initialValue={value}
-                        onChangePhoneNumber={onChangeText}
-                        onPressFlag={onFlagPress} />
+                    <>                    
+                        <PhoneInput 
+                            ref={phoneRef}
+                            mode={mode}
+                            error={showPhoneNumberValidationError && !value}
+                            initialCountry='us'
+                            initialValue={value}
+                            onChangePhoneNumber={onChangeText}
+                            onPressFlag={onFlagPress} />
+                        {showPhoneNumberValidationError && !value ? (
+                            <HelperText type="error" padding="none" visible={true}>
+                                {localized('phoneNumberIsRequired')}
+                            </HelperText>
+                        ) : null}
+                    </>
                 )  : null}
             </ScreenWrapper.Section>
 
