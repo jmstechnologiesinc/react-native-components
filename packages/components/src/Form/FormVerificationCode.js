@@ -4,26 +4,28 @@ import React, { useState } from 'react';
 import { Button, TextInput, Portal, Dialog, HelperText, Text } from '@jmstechnologiesinc/react-native-paper';
 
 import { localized } from '../Localization/Localization'
-import { Alert, ScrollView, StyleSheet } from 'react-native';
-import ScreenWrapper from '@jmstechnologiesinc/react-native-components/lib/ScreenWrapper/ScreenWrapper';
+import { StyleSheet } from 'react-native';
 
-const FormVerificationCode = ({ 
-    isVisible, 
-    isLoading, 
+
+
+import ScreenWrapper from '../ScreenWrapper';
+
+const FormVerificationCode = ({
+    isVisible,
+    isLoading,
     error,
-    onResendCodePress, 
-    onDismiss, 
+    onResendCodePress,
+    onDismiss,
     onConfirmCodePress,
 }) => {
-    const [code, setCode] = useState(null);
-
+    const [code, setCode] = useState(null)
     return (
         <Portal>
-            <Dialog 
+            <Dialog
                 visible={isVisible}
                 dismissable={false}>
                 <Dialog.Title>{localized('verificationCodeModalTitle')}</Dialog.Title>
-                
+
                 <Dialog.ScrollArea style={styles.container}>
                     <Dialog.Content>
                         <ScreenWrapper.Section>
@@ -32,6 +34,9 @@ const FormVerificationCode = ({
                         <ScreenWrapper.Section>
                             <TextInput
                                 autoFocus
+                                textContentType="oneTimeCode"
+                                autocomplete="one-time-code"
+                                maxlength="6"
                                 onChangeText={(text) => {
                                     setCode(text)
                                 }}
@@ -46,7 +51,7 @@ const FormVerificationCode = ({
                         <Button
                             onPress={onResendCodePress}
                             disabled={isLoading}
-                            style={{flexDirection: 'row'}}>
+                            style={{ flexDirection: 'row' }}>
                             {localized('resendCode')}
                         </Button>
                     </Dialog.Content>
