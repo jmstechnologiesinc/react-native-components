@@ -32,6 +32,7 @@ const CountryPicker = forwardRef(({ data, onSelect }, ref) => {
                     <List.Item
                         key={item.key}
                         title={item.label}
+                        description={item.dialCode}
                         onPress={() => onSelect(item)}
                         left={(props) => <List.Image {...props} variant="flag" source={item.image} />}
                     />
