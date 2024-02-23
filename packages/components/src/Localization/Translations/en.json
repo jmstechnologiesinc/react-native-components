@@ -16,11 +16,13 @@
     "auth/wrong-password": "The password is invalid or the user does not have a password",
     "auth/user-not-found": "The email or username provided is incorrect.",
     "auth/invalid-email": "Please enter a valid email address",
-    "auth/user-disabled": "Account Disabled: Unable to Sign In. Please Contact Support for Assistance.",
     "auth/weak-password": "Please Choose a Stronger Password. Password should be at least 6 characters long and include both letters and numbers",
     "auth/expired-action-code": "The Password Reset Link has Expired. Please Request a New Link to Reset Your Password.",
     "auth/invalid-action-code": "The Password Reset Link is Invalid. Please Request a New Link to Reset Your Password.",
     "auth/network-request-failed": "Network Issue: Your action couldn't be completed due to a network problem. Please attempt it again.",
+    "auth/invalid-phone-number": "Please enter a valid phone number",
+    "auth/quota-exceeded": "Sorry, we have exceeded the SMS authentication limit at this time. Please try logging in later. Thank you for your patience.",
+    "auth/user-disabled": "Your account has been disabled. Please contact support for assistance.",
     "registerYourBusiness": "Register your business",
     "resetPassword": "Reset password",
     "explorePlatform": "Explore our platform",
@@ -500,10 +502,7 @@
      "verifyYourEmailAddress": "To complete your registration on Daxir, please verify your email address.",
      "verification": "Verification",
      "confirmationEmailAddress": "We have sent a confirmation email to your email address. Please check your inbox and follow the instructions to complete the verification process",
-     "failedSendVerificationEmail": "The verification email sending has failed. We apologize for any inconvenience.",
-     "errorApi": {
-        "smsQuotaexceeded": "Sorry, we have exceeded the SMS authentication limit at this time. Please try logging in later. Thank you for your patience.",
-        "userDisabled": "Your account has been disabled. Please contact support for assistance."
-     }
+     "failedSendVerificationEmail": "The verification email sending has failed. We apologize for any inconvenience."
+    
      
 }

@@ -17,10 +17,12 @@
     "auth/wrong-password": "La contraseña es incorrecta o el usuario no tiene una contraseña",
     "auth/user-not-found": "El correo electrónico o nombre de usuario proporcionado es incorrecto.",
     "auth/invalid-email": "Por favor, ingresa una dirección de correo electrónico válida.",
-    "auth/user-disabled": "Cuenta deshabilitada: No se puede iniciar sesión. Por favor, póngase en contacto con el soporte para obtener ayuda",
     "auth/weak-password": "Por favor, elija una contraseña más segura. La contraseña debe tener al menos 6 caracteres y contener tanto letras como números.",
     "auth/expired-action-code": "El enlace para restablecer la contraseña ha caducado. Por favor, solicite un nuevo enlace para restablecer su contraseña.",
     "auth/invalid-action-code": "El enlace de restablecimiento de contraseña no es válido. Solicita un nuevo enlace para restablecer tu contraseña.",
+    "auth/invalid-phone-number": "Por favor, ingresa un número de teléfono válido",
+    "auth/quota-exceeded": "Lo siento, hemos excedido el límite de autenticación por SMS en este momento. Por favor, intenta iniciar sesión más tarde. Gracias por tu paciencia.",
+    "auth/user-disabled": "Tu cuenta ha sido deshabilitada. Por favor, contacta al soporte para obtener ayuda.",
     "auth/network-request-failed": "Problema de red: No se pudo completar tu acción debido a un problema de red. Por favor, inténtalo nuevamente.",
     "registerYourBusiness": "Registra tu negocio",
     "resetPassword": "Restablecer contraseña",
@@ -499,11 +501,5 @@
 "verifyYourEmailAddress": "Para completar tu registro en Daxir, por favor verifica tu dirección de correo electrónico.",
 "verification": "Verificación",
 "confirmationEmailAddress": "Hemos enviado un correo de confirmación a tu dirección de correo electrónico. Por favor, revisa tu bandeja de entrada y sigue las instrucciones para completar el proceso de verificación.",
-"failedSendVerificationEmail": "El envío del correo de verificación ha fallado. Lamentamos cualquier inconveniente.",
-"errorApi": {
-    "smsQuotaexceeded": "Lo siento, hemos excedido el límite de autenticación por SMS en este momento. Por favor, intenta iniciar sesión más tarde. Gracias por tu paciencia.",
-    "userDisabled": "Tu cuenta ha sido deshabilitada. Por favor, contacta al soporte para obtener ayuda."
- }
-
-
+"failedSendVerificationEmail": "El envío del correo de verificación ha fallado. Lamentamos cualquier inconveniente."
 }
