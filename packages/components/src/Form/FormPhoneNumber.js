@@ -50,7 +50,7 @@ const FormPhoneNumber = ({
         if (phoneRef.current.isValidNumber()) {
             onPhoneNumberLoginPress(phoneRef.current.getValue());
         } else {
-            Alert.alert('', localized('pleaseValidPhoneNumber'), [{ text: 'OK' }], {
+            Alert.alert(localized('pleaseTryagain'), localized('pleaseValidPhoneNumber'), [{ text: 'OK' }], {
                 cancelable: false,
             })
         }

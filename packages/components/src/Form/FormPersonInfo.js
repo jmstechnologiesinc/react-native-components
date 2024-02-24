@@ -7,7 +7,7 @@ import { localized } from '../Localization/Localization';
 const FormPersonInfo = ({ 
     firstName, 
     lastName, 
-    phone, 
+    phoneNumber, 
     email, 
     isDisabled, 
     showFirstNameValidationError=true,
@@ -65,10 +65,10 @@ const FormPersonInfo = ({
                     <TextInput
                         mode="outlined"
                         label={localized('phoneNumber')}
-                        value={phone}
+                        value={phoneNumber}
                         disabled={isDisabled}
                         keyboardType="numeric"
-                        onChangeText={(text) => inputActionHandler('phone', text)} />
+                        onChangeText={(text) => inputActionHandler('phoneNumber', text)} />
                 </ScreenWrapper.Section>
             ) : null}
         </>

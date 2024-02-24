@@ -89,7 +89,7 @@ const FormBusinessInfo = ({
     showTIN = false,
     tin,
     website,
-    phone,
+    phoneNumber,
     email,
     inputActionHandler,
     industries,
@@ -139,9 +139,9 @@ const FormBusinessInfo = ({
                         <TextInput
                             mode="outlined"
                             label={localized('phoneNumber')}
-                            value={phone}
+                            value={phoneNumber}
                             disabled={isDisabled}
-                            onChangeText={(text) => inputActionHandler('phone', text)}
+                            onChangeText={(text) => inputActionHandler('phoneNumber', text)}
                         />
                         <HelperText>{localized('helpTextStorePhoneNumber')}</HelperText>
                     </ScreenWrapper.Section>

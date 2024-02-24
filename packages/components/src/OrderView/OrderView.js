@@ -120,10 +120,10 @@ const OrderView = ({
         });
 
         fulfilmentDetails.push({
-            key: 'vendor-phone',
-            title: order.vendor.phone,
+            key: 'vendor-phoneNumber',
+            title: order.vendor.phoneNumber,
             icon: MATERIAL_ICONS.call,
-            description: localized('order.vendor.phone'),
+            description: localized('order.vendor.phoneNumber'),
         });
 
         fulfilmentDetails.push({
@@ -144,10 +144,10 @@ const OrderView = ({
                 icon: MATERIAL_ICONS.account,
             });
     
-            if (order.author.phone) {
+            if (order.author.phoneNumber) {
                 fulfilmentDetails.push({
-                    key: 'author-phone',
-                    title: order.author.phone,
+                    key: 'author-phoneNumber',
+                    title: order.author.phoneNumber,
                     icon: MATERIAL_ICONS.call,
                 });
             }
@@ -278,7 +278,7 @@ const OrderView = ({
                                     orderDeliveryMethod={formattedOrder.deliveryMethod}
                                     deliveryMethod={formattedOrder.fulfilmentStatus.driver.deliveryMethod}
                                     name={formattedOrder.fulfilmentStatus.driver.title}
-                                    phone={formattedOrder.fulfilmentStatus.driver.phone}
+                                    phoneNumber={formattedOrder.fulfilmentStatus.driver.phoneNumber}
                                     vehicle={formattedOrder.fulfilmentStatus.driver.vehicle}
                                     avatar={formattedOrder.fulfilmentStatus.driver.avatar}
                                     status={formattedOrder.fulfilmentStatus.driver.status}

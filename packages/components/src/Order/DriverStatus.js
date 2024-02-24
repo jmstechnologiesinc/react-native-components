@@ -15,7 +15,7 @@ const DriverStatus = ({
 
     name,
     vehicle,
-    phone,
+    phoneNumber,
     status,
     avatar,
 
@@ -81,11 +81,11 @@ const DriverStatus = ({
                 /> 
             ) : null}
 
-            {showPhoneNumber && phone ? (
+            {showPhoneNumber && phoneNumber ? (
                 <List.Item
-                    title={phone}
+                    title={phoneNumber}
                     left={(props) => <List.Icon {...props} icon={ITEM_TYPE_ICON_MAPPING[ITEM_TYPE.call]} />}
-                    onPress={() => makeLinkingCall(phone)}
+                    onPress={() => makeLinkingCall(phoneNumber)}
                 /> 
             ) : null}
         </>
