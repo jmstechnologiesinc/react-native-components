@@ -18,6 +18,7 @@ const FormPhoneNumber = ({
     isVereficationCodeLoading,
     showSubmitButton=true,
     showPhoneNumberValidationError=true,
+    showPhoneVerificationCodeAgreement=true,
     isLoading,
     vereficationCodeError,
     onPhoneNumberLoginPress,
@@ -83,17 +84,20 @@ const FormPhoneNumber = ({
             </ScreenWrapper.Section>
 
             {showSubmitButton ? (
-                <>
-                    <ScreenWrapper.Section>
-                        <Button mode='contained'
-                            onPress={onPress}
-                            loading={isLoading}
-                            disabled={isLoading}> 
-                            {localized('logIn')} 
-                        </Button>
-                    </ScreenWrapper.Section>
-                    <HelperText style={{ marginBottom: MD3LightTheme.spacing.x2 }}>{localized('signInPhoneVerificationCodeAgreement')}</HelperText>
-                </>
+                <ScreenWrapper.Section>
+                    <Button mode='contained'
+                        onPress={onPress}
+                        loading={isLoading}
+                        disabled={isLoading}> 
+                        {localized('logIn')} 
+                    </Button>
+                </ScreenWrapper.Section>
+            ) : null}
+
+            {showPhoneVerificationCodeAgreement ? (
+                <HelperText style={{ marginBottom: MD3LightTheme.spacing.x2 }}>
+                    {localized('phoneVerificationCodeAgreement')}
+                </HelperText>
             ) : null}
 
             <FormVerificationCode
