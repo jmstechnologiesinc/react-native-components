@@ -1,12 +1,10 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 
-import { Button, TextInput, Portal, Dialog, HelperText, Text, MD3Colors, ActivityIndicator } from '@jmstechnologiesinc/react-native-paper';
+import { Button, TextInput, Portal, Dialog, HelperText, Text, MD3LightTheme, ProgressBar, MD3Colors } from '@jmstechnologiesinc/react-native-paper';
 
 import { localized } from '../Localization/Localization'
-import { Platform, StyleSheet } from 'react-native';
-
-const isIOS = Platform.OS === 'ios';
+import { StyleSheet } from 'react-native';
 
 import ScreenWrapper from '../ScreenWrapper';
 
@@ -18,64 +16,67 @@ const FormVerificationCode = ({
     onDismiss,
     onConfirmCodePress,
 }) => {
-    const [code, setCode] = useState(null)
     return (
         <Portal>
             <Dialog
                 visible={isVisible}
                 dismissable={false}>
                 <Dialog.Title>{localized('verificationCodeModalTitle')}</Dialog.Title>
-                    {isLoading ? (
+                    <Dialog.ScrollArea style={styles.container}>
                         <Dialog.Content>
-                            <ActivityIndicator
-                                color={MD3Colors.tertiary30}
-                                size={isIOS ? 'large' : 48}
-                            />
-                        </Dialog.Content>
-                    ) : (
-                        <>
-                            <Dialog.ScrollArea style={styles.container}>
-                                <Dialog.Content>
-                                    <ScreenWrapper.Section>
-                                        <Text>{localized("enterTheVerificationCode")}</Text>
-                                    </ScreenWrapper.Section>
-                                    <ScreenWrapper.Section>
-                                        <TextInput
-                                            autoFocus
-                                            textContentType="oneTimeCode"
-                                            autocomplete="one-time-code"
-                                            maxlength="6"
-                                            onChangeText={(text) => {
-                                                setCode(text)
-                                            }}
-                                        />
-                                        {error ? (
-                                            <HelperText type="error" visible={true}>
-                                                {error}
-                                            </HelperText>
-                                        ) : null}
-                                    </ScreenWrapper.Section>
+                        {isLoading ? (
+                            <ProgressBar 
+                                indeterminate 
+                                style={{alignItems: "left", marginTop: MD3LightTheme.spacing.x5}} /> 
+                        ) : (
+                            <>
+                        
+                                <ScreenWrapper.Section>
+                                    <Text>{localized("enterTheVerificationCode")}</Text>
+                                </ScreenWrapper.Section>
+                                <ScreenWrapper.Section>
+                                    <TextInput
+                                        textContentType="oneTimeCode"
+                                        autocomplete="one-time-code"
+                                        maxlength="6"
+                                        onChangeText={(text) => {
+                                            if(text.length === 6) {
+                                                onConfirmCodePress(text)
+                                            }
+                                        }}
+                                    />
+                                    {error ? (
+                                        <HelperText type="error" visible={true}>
+                                            {error}
+                                        </HelperText>
+                                    ) : null}
+                                </ScreenWrapper.Section>
 
-                                    <Button
-                                        onPress={onResendCodePress}
-                                        disabled={isLoading}
-                                        style={{ flexDirection: 'row' }}>
-                                        {localized('resendCode')}
-                                    </Button>
-                                </Dialog.Content>
-                            </Dialog.ScrollArea>     
+                                <Button
+                                    onPress={onResendCodePress}
+                                    disabled={isLoading}
+                                    style={{ flexDirection: 'row' }}>
+                                    {localized('resendCode')}
+                                </Button>
+                            
+                        </>  
+                                         
+                    )}
+                        </Dialog.Content>
+                                </Dialog.ScrollArea>  
                             <Dialog.Actions>
-                                <Button onPress={onDismiss}>
+                                <Button 
+                                    onPress={onDismiss} 
+                                    textColor={MD3Colors.error50}>
                                     {localized('cancel')}
                                 </Button>
-                                <Button
+                              {/*   <Button
                                     mode="contained"
+                                    disabled={isLoading}
                                     onPress={() => onConfirmCodePress(code)} >
                                     {localized('confirmCode')}
-                                </Button>
+                                </Button> */}
                             </Dialog.Actions>
-                        </>                   
-                    )}
             </Dialog>
         </Portal>
     )
