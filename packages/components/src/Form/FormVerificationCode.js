@@ -1,61 +1,91 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 
-import { Button, TextInput, Portal, Dialog, HelperText } from '@jmstechnologiesinc/react-native-paper';
+import { Button, TextInput, Portal, Dialog, HelperText, Text, MD3LightTheme, ProgressBar, MD3Colors } from '@jmstechnologiesinc/react-native-paper';
 
 import { localized } from '../Localization/Localization'
+import { StyleSheet } from 'react-native';
 
-const FormVerificationCode = ({ confirm, onDismiss, onResendCode }) => {
+import ScreenWrapper from '../ScreenWrapper';
 
-    const [code, setCode] = useState(null);
-    const [error, setError] = useState(false)
-    const [isLoading, setIsLoading] = useState(false);
-
-    const confirmCode = async () => {
-        setIsLoading(true)
-        try {
-            await confirm.confirm(code)
-        } catch (error) {
-            setError(true)
-        }
-        setIsLoading(false)
-    };
-
+const FormVerificationCode = ({
+    isVisible,
+    isLoading,
+    error,
+    onResendCodePress,
+    onDismiss,
+    onConfirmCodePress,
+}) => {
     return (
         <Portal>
-            <Dialog visible={confirm}
-                onDismiss={onDismiss}
-            >
-                <Dialog.Title>{localized('EnterCodeSendYou')}</Dialog.Title>
-                <Dialog.Content>
-                    <TextInput
-                        autoFocus
-                        onChangeText={(text) => {
-                            setCode(text)
-                            setError(false)
-                        }}
-                    />
-                    {error ? (
-                        <HelperText type="error" visible={true}>
-                            {localized('helpTextPasscodeIncorrect')}
-                        </HelperText>
-                    ) : null}
-                </Dialog.Content>
-                <Dialog.Actions>
-                    <Button
-                        onPress={onResendCode} >
-                        {localized('resendCode')}
-                    </Button>
-                    <Button
-                        loading={isLoading}
-                        disabled={isLoading}
-                        onPress={confirmCode} >
-                        {localized('confirmCode')}
-                    </Button>
-                </Dialog.Actions>
+            <Dialog
+                visible={isVisible}
+                dismissable={false}>
+                <Dialog.Title>{localized('verificationCodeModalTitle')}</Dialog.Title>
+                    <Dialog.ScrollArea style={styles.container}>
+                        <Dialog.Content>
+                        {isLoading ? (
+                            <ProgressBar 
+                                indeterminate 
+                                style={{alignItems: "left", marginTop: MD3LightTheme.spacing.x5}} /> 
+                        ) : (
+                            <>
+                        
+                                <ScreenWrapper.Section>
+                                    <Text>{localized("enterTheVerificationCode")}</Text>
+                                </ScreenWrapper.Section>
+                                <ScreenWrapper.Section>
+                                    <TextInput
+                                        textContentType="oneTimeCode"
+                                        autocomplete="one-time-code"
+                                        maxlength="6"
+                                        onChangeText={(text) => {
+                                            if(text.length === 6) {
+                                                onConfirmCodePress(text)
+                                            }
+                                        }}
+                                    />
+                                    {error ? (
+                                        <HelperText type="error" visible={true}>
+                                            {error}
+                                        </HelperText>
+                                    ) : null}
+                                </ScreenWrapper.Section>
+
+                                <Button
+                                    onPress={onResendCodePress}
+                                    disabled={isLoading}
+                                    style={{ flexDirection: 'row' }}>
+                                    {localized('resendCode')}
+                                </Button>
+                            
+                        </>  
+                                         
+                    )}
+                        </Dialog.Content>
+                                </Dialog.ScrollArea>  
+                            <Dialog.Actions>
+                                <Button 
+                                    onPress={onDismiss} 
+                                    textColor={MD3Colors.error50}>
+                                    {localized('cancel')}
+                                </Button>
+                              {/*   <Button
+                                    mode="contained"
+                                    disabled={isLoading}
+                                    onPress={() => onConfirmCodePress(code)} >
+                                    {localized('confirmCode')}
+                                </Button> */}
+                            </Dialog.Actions>
             </Dialog>
         </Portal>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        paddingHorizontal: 0,
+    },
+});
 
 export default FormVerificationCode

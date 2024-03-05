@@ -17,7 +17,7 @@ const pubnub = new PubNub({
     ssl: true,
 });
 
-const usePubNubETA = ({ orderID, deliveryMethod, status, role, onPubNub }) => {
+const usePubNubETA = ({ orderId, deliveryMethod, status, role, onPubNub }) => {
     const [etaValue, setEtaValue] = useState(null);
 
     useEffect(() => {
@@ -34,11 +34,11 @@ const usePubNubETA = ({ orderID, deliveryMethod, status, role, onPubNub }) => {
                 },
             });
 
-            pubnub.subscribe({ channels: [pubnubEtaChannelName(orderID)] });
+            pubnub.subscribe({ channels: [pubnubEtaChannelName(orderId)] });
         } else {
             setEtaValue(undefined);
         }
-    }, [deliveryMethod, status, orderID, role]);
+    }, [deliveryMethod, status, orderId, role]);
 
     return etaValue;
 };

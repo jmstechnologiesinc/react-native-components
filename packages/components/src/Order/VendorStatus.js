@@ -21,7 +21,7 @@ const VendorStatus = ({
 }) => {
     /*   const milliseconds = usePreparingTimeCoutdown({
         role,
-        orderID: orderID,
+        orderId: orderId,
         deliveryMethod: deliveryMethod,
         status: status,
         vendorAcceptedTime: vendorAcceptedTime,
@@ -45,6 +45,7 @@ const VendorStatus = ({
             showOverline={showOverline}
             showTitle={showTitle}
             showDescription={showDescription}
+            showChevron={false}
             showAvatar={showAvatar}
             style={{ paddingTop: 0 }}
             titleStyle={titleStyle}

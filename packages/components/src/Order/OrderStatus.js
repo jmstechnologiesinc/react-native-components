@@ -3,15 +3,13 @@ import React from 'react';
 import { interpunct } from '@jmstechnologiesinc/commons';
 
 import VendorStatus from './VendorStatus';
-import DriverStatus from './DriverStatus';
 import OrderStatusWrapper from './OrderStatusWrapper';
-import { localized } from '../Localization/Localization';
+import { ROLE_ORDER_LIST_STATUS_MAPPING, humanizeOrderStatus } from '@jmstechnologiesinc/react-native-components/lib/Order/utils';
 
 const OrderStatus = ({
     role,
     formattedOrder,
 
-    enableDriverStatus = true,
     enableHeaderStatus = true,
     enableVendorStatus = true,
 
@@ -25,10 +23,7 @@ const OrderStatus = ({
     showVendorDescription,
     showVendorAvatar = false,
 
-    showDriverOverline,
-    showDriverTitle,
-    showDriverDescription,
-    showDriverAvatar,
+    showChevron,
 
     headerTitleVariant,
     titleStyle,
@@ -38,10 +33,8 @@ const OrderStatus = ({
     const fulfilmentStatus = formattedOrder.fulfilmentStatus;
     const headerStatus = fulfilmentStatus.header;
     const vendorStatus = fulfilmentStatus.vendor;
-    const driverStatus = fulfilmentStatus.driver;
 
     const renderStatuses = [];
-
 
     if (
         enableHeaderStatus &&
@@ -55,12 +48,13 @@ const OrderStatus = ({
                 key="headerStatus"
                 overline={interpunct(headerStatus.overlines)}
                 header={headerStatus.title}
-                subHeader={localized(headerStatus.description)}
+                subHeader={ROLE_ORDER_LIST_STATUS_MAPPING[role][humanizeOrderStatus(formattedOrder.status, role)]}
                 avatar={headerStatus.avatar}
                 chips={headerStatus.chips}
                 showOverline={showHeaderOverline}
                 showTitle={showHeaderTitle}
                 showDescription={showHeaderDescription}
+                showChevron={showChevron}
                 showAvatar={showHeaderAvatar && headerStatus.avatar}
                 titleVariant={headerTitleVariant}
                 titleStyle={overlineStyle}
@@ -79,7 +73,7 @@ const OrderStatus = ({
             <VendorStatus
                 key="vendorStatus"
                 role={role}
-                orderID={formattedOrder.orderID}
+                orderId={formattedOrder.orderId}
                 deliveryMethod={formattedOrder.deliveryMethod}
                 status={formattedOrder.status}
                 vendorAcceptedTime={formattedOrder.vendorAcceptedTime}
@@ -93,39 +87,13 @@ const OrderStatus = ({
                 showOverline={showVendorOverline}
                 showTitle={showVendorTitle}
                 showDescription={showVendorDescription}
+                showChevron={showChevron}
                 showAvatar={showVendorAvatar}
                 titleStyle={titleStyle}
                 overlineStyle={overlineStyle}
             />
         );
     }
-
-    if (
-        enableDriverStatus &&
-        (driverStatus.description.length > 0 || driverStatus.title || driverStatus.chips.length > 0)
-    ) {
-        renderStatuses.push(
-            <DriverStatus
-                key="DriverStatus"
-                role={role}
-                orderID={formattedOrder.orderID}
-                deliveryMethod={formattedOrder.deliveryMethod}
-                status={formattedOrder.status}
-                overline={driverStatus.overlines}
-                header={driverStatus.title}
-                subHeader={driverStatus.description}
-                chips={driverStatus.chips}
-                avatar={driverStatus.avatar}
-                showOverline={showDriverOverline}
-                showTitle={showDriverTitle}
-                showDescription={showDriverDescription}
-                showAvatar={showDriverAvatar}
-                titleStyle={titleStyle}
-                overlineStyle={overlineStyle}
-            />
-        );
-    }
-
     return renderStatuses;
 };
 

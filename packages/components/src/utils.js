@@ -2,12 +2,12 @@ import { Linking, Platform } from 'react-native';
 import { getMainPhoto } from '@jmstechnologiesinc/commons'
 import Config from 'react-native-config';
 
-export const makeLinkingCall = (phone) => {
+export const makeLinkingCall = (phoneNumber) => {
     if (Platform.OS === 'android') {
-        Linking.openURL(`tel: +${phone}`);
+        Linking.openURL(`tel: +${phoneNumber}`);
     } else {
         console.log('Call');
-        Linking.openURL(`telprompt:: +${phone}`);
+        Linking.openURL(`telprompt:: +${phoneNumber}`);
     }
 };
 

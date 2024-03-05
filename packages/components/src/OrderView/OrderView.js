@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ScrollView, View } from 'react-native';
 
-import { Divider, List, MD3Colors,MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
+import { Divider, List, MD3Colors, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
 import { USER_ROLES } from '@jmstechnologiesinc/user';
 import { DELIVERY_METHODS, FULFILLMENT_METHODS } from '@jmstechnologiesinc/vendor';
@@ -24,6 +24,7 @@ import { firestoreTimestampToDate, plurulize } from '@jmstechnologiesinc/commons
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 import { localized } from '../Localization/Localization';
+import DriverStatus from '../Order/DriverStatus';
 
 const getDriverDetails = (order, role) => {
     const results = [];
@@ -40,7 +41,7 @@ const getDriverDetails = (order, role) => {
                 description: order.driver.deliveryMethod,
                 icon: MATERIAL_ICONS.account,
             });
-            if(order.driver?.deliveryMethod === DELIVERY_METHODS.ownStaff) {
+            if (order.driver?.deliveryMethod === DELIVERY_METHODS.ownStaff) {
                 results.push({
                     key: 'car-info',
                     title: order.driver.vehicle.formattedValue,
@@ -64,7 +65,6 @@ const OrderView = ({
     role,
     onButtonPress,
 
-    enableDriverStatus,
     enableHeaderStatus,
     enableVendorStatus,
 
@@ -77,12 +77,6 @@ const OrderView = ({
     showVendorTitle,
     showVendorDescription,
     showVendorAvatar = false,
-
-    showDriverOverline,
-    showDriverTitle,
-    showDriverDescription,
-    showDriverAvatar,
-    
 }) => {
     if (!order?.id || !USER_ROLES[role]) {
         return null;
@@ -126,8 +120,8 @@ const OrderView = ({
         });
 
         fulfilmentDetails.push({
-            key: 'vendor-phone',
-            title: order.vendor.phone,
+            key: 'vendor-phoneNumber',
+            title: order.vendor.phoneNumber,
             icon: MATERIAL_ICONS.call,
             description: localized('order.vendor.phone'),
         });
@@ -141,20 +135,22 @@ const OrderView = ({
 
         if (order.fulfillmentMethod === FULFILLMENT_METHODS.delivery) {
             driverDetails = getDriverDetails(order);
-        } 
+        }
     } else if (role === USER_ROLES.vendor) {
-        fulfilmentDetails.push({
-            key: 'author-name',
-            title: order.author.formattedName,
-            icon: MATERIAL_ICONS.account,
-        });
-
-        if (order.author.phone) {
+        if (order.author) {
             fulfilmentDetails.push({
-                key: 'author-phone',
-                title: order.author.phone,
-                icon: MATERIAL_ICONS.call,
+                key: 'author-name',
+                title: order.author.formattedName,
+                icon: MATERIAL_ICONS.account,
             });
+
+            if (order.author.phoneNumber) {
+                fulfilmentDetails.push({
+                    key: 'author-phoneNumber',
+                    title: order.author.phoneNumber,
+                    icon: MATERIAL_ICONS.call,
+                });
+            }
         }
 
         if (order.fulfillmentMethod === FULFILLMENT_METHODS.delivery) {
@@ -165,13 +161,13 @@ const OrderView = ({
             });
 
             driverDetails = getDriverDetails(order, role);
-        } 
+        }
     }
 
     const telemetryList = [];
     if (
-        (role === USER_ROLES.driver || 
-        (role === USER_ROLES.vendor && order.driver?.deliveryMethod === DELIVERY_METHODS.ownStaff)) && 
+        (role === USER_ROLES.driver ||
+            (role === USER_ROLES.vendor && order.driver?.deliveryMethod === DELIVERY_METHODS.ownStaff)) &&
         order.driver?.telemetry
     ) {
         const telemetry = ORDER_STATUS_CANCELLED(order.status)
@@ -238,7 +234,7 @@ const OrderView = ({
                     <ActionGroup.Group>
                         <ActionGroup.Buttons
                             buttons={buttonsMapping}
-                            onPress={(button) => onButtonPress(button, formattedOrder.orderID)}
+                            onPress={(button) => onButtonPress(button, formattedOrder.orderId)}
                         />
                     </ActionGroup.Group>
                 </ScreenWrapper.Section>
@@ -250,7 +246,7 @@ const OrderView = ({
             <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
                 <View style={{ flex: 1 }}>
                     {role === USER_ROLES.customer || role === USER_ROLES.driver ? (
-                        <PhotoGallery photos={imagekitUrl([formattedOrder.photo])}  showNav={false} />
+                        <PhotoGallery photos={imagekitUrl([formattedOrder.photo])} showNav={false} />
                     ) : null}
 
                     <OrderStatus
@@ -259,7 +255,6 @@ const OrderView = ({
                         headerTitleVariant='headlineSmall'
                         enableHeaderStatus={enableHeaderStatus}
                         enableVendorStatus={enableVendorStatus}
-                        enableDriverStatus={enableDriverStatus}
                         showHeaderOverline={showHeaderOverline}
                         showHeaderTitle={showHeaderTitle}
                         showHeaderDescription={showHeaderDescription}
@@ -268,13 +263,30 @@ const OrderView = ({
                         showVendorTitle={showVendorTitle}
                         showVendorDescription={showVendorDescription}
                         showVendorAvatar={showVendorAvatar}
-                        showDriverOverline={showDriverOverline}
-                        showDriverTitle={showDriverTitle}
-                        showDriverDescription={showDriverDescription}
-                        showDriverAvatar={showDriverAvatar}
+                        showChevron={false}
                     />
 
                     <Divider style={{ marginTop: MD3LightTheme.spacing.x3 }} />
+
+                    {(formattedOrder.fulfilmentStatus.driver.status || formattedOrder.fulfilmentStatus.driver.title) ? (
+                        <>
+                            <List.Section title={localized("driver")}>
+                                <DriverStatus
+                                    role={role}
+                                    orderId={formattedOrder.orderId}
+                                    orderStatus={formattedOrder.status}
+                                    orderDeliveryMethod={formattedOrder.deliveryMethod}
+                                    deliveryMethod={formattedOrder.fulfilmentStatus.driver.deliveryMethod}
+                                    name={formattedOrder.fulfilmentStatus.driver.title}
+                                    phoneNumber={formattedOrder.fulfilmentStatus.driver.phoneNumber}
+                                    vehicle={formattedOrder.fulfilmentStatus.driver.vehicle}
+                                    avatar={formattedOrder.fulfilmentStatus.driver.avatar}
+                                    status={formattedOrder.fulfilmentStatus.driver.status}
+                                />
+                            </List.Section>
+                            <Divider />
+                        </>
+                    ) : null}
 
                     {fulfilmentDetails.length > 0 ? (
                         <List.Section
@@ -298,10 +310,9 @@ const OrderView = ({
                         </List.Section>
                     ) : null}
 
-                    <Divider />
-
                     {driverDetails?.length > 0 ? (
                         <>
+                            <Divider />
                             <List.Section title={localized('order.driverDetails')}>
                                 {driverDetails.map((item, index) => (
                                     <View key={item.key}>
@@ -317,39 +328,41 @@ const OrderView = ({
                                     </View>
                                 ))}
                             </List.Section>
-                            <Divider />
                         </>
                     ) : null}
 
                     {telemetryList.length > 0 ? (
                         <>
-                        <List.Section title={localized('order.telemetry')}>
-                            {telemetryList.map((item, index) => (
-                                <View key={item.key}>
-                                    <List.Item
-                                        title={item.title}
-                                        description={item.description}
-                                        titleNumberOfLines={0}
-                                        descriptionNumberOfLines={0}
-                                    />
-                                </View>
-                            ))}
-                        </List.Section>
-                           <Divider />
-                           </>
+                            <Divider />
+                            <List.Section title={localized('order.telemetry')}>
+                                {telemetryList.map((item, index) => (
+                                    <View key={item.key}>
+                                        <List.Item
+                                            title={item.title}
+                                            description={item.description}
+                                            titleNumberOfLines={0}
+                                            descriptionNumberOfLines={0}
+                                        />
+                                    </View>
+                                ))}
+                            </List.Section>
+                        </>
                     ) : null}
 
                     {role === USER_ROLES.vendor || role === USER_ROLES.customer ? (
-                        <List.Section
-                            title={`${order.cart.products.length} ${plurulize(localized('order.item'), order.cart.products.length)}`}
-                        >
-                            {order.cart.products.map((item, index) => (
-                                <View key={`product-item-${item.id}`}>
-                                    <CartListProductItem data={item} interpunctAttributeGroup={false} />
-                                    {itemSeparator(index, order.cart.products.length) ? <Divider horizontalInset /> : null}
-                                </View>
-                            ))}
-                        </List.Section>
+                        <>
+                            <Divider />
+                            <List.Section
+                                title={`${order.cart.products.length} ${plurulize(localized('order.item'), order.cart.products.length)}`}
+                            >
+                                {order.cart.products.map((item, index) => (
+                                    <View key={`product-item-${item.id}`}>
+                                        <CartListProductItem data={item} interpunctAttributeGroup={false} />
+                                        {itemSeparator(index, order.cart.products.length) ? <Divider horizontalInset /> : null}
+                                    </View>
+                                ))}
+                            </List.Section>
+                        </>
                     ) : null}
 
                     <Divider style={{ marginTop: MD3LightTheme.spacing.x1 }} />
@@ -357,11 +370,11 @@ const OrderView = ({
                     <ScreenWrapper.Section>
                         <Accounting feeList={formattedOrder.fees} />
                     </ScreenWrapper.Section>
-                    {role === USER_ROLES.customer && renderActionButtons}
+                    {role === USER_ROLES.customer ? renderActionButtons : null}
                 </View>
             </ScrollView>
 
-            {role === USER_ROLES.vendor && renderActionButtons}
+            {role === USER_ROLES.vendor ? renderActionButtons : null}
         </>
     );
 };

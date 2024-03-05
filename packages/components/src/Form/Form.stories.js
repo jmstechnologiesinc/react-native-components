@@ -13,7 +13,7 @@ const state = {
     passwordConfirm: '233232332',
     firstName: 'Jose',
     lastName: 'Santos',
-    phone: '8297872134',
+    phoneNumber: '8297872134',
     licenseNumer: '121212212',
     zipcode: '51000',
     dateofBirth: '12/2/1900',
@@ -37,7 +37,7 @@ export const AuthFormConfirmPassword = () => (
         password={state.password}
         passwordConfirm={state.passwordConfirm}
         inputActionHandler={() => {}}
-        confirmPassword={true}
+        showConfirmPasswordInput={true}
     />
 );
 
@@ -47,7 +47,7 @@ export const AuthFormResetPassword = () => (
         password={state.password}
         passwordConfirm={state.passwordConfirm}
         inputActionHandler={() => {}}
-        resetPassword={true}
+        showResetPassword={true}
         onPasswordReset={() => {}}
     />
 );
@@ -58,7 +58,7 @@ export const AuthFormEmailPasswordDisabled = () => (
         password={state.password}
         passwordConfirm={state.passwordConfirm}
         inputActionHandler={() => {}}
-        confirmPassword={false}
+        showConfirmPasswordInput={false}
         isEmailDisabled={true}
         isPasswordDisabled={true}
     />
@@ -68,7 +68,7 @@ export const AuthFormPersonInfo = () => (
     <AuthForm.PersonInfo
         firstName={state.firstName}
         lastName={state.lastName}
-        phone={state.phone}
+        phoneNumber={state.phoneNumber}
         inputActionHandler={() => {}}
     />
 );
@@ -104,4 +104,4 @@ export const AuthFormCarInfo = () => (
     />
 );
 
-export const PhoneNumber = () => <AuthForm.PhoneNumber phone={state.password} inputActionHandler={() => {}} />;
+export const PhoneNumber = () => <AuthForm.PhoneNumber phoneNumber={state.password} inputActionHandler={() => {}} />;

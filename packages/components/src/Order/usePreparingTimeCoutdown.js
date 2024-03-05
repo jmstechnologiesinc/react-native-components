@@ -6,7 +6,7 @@ import { ORDER_STATUS, ORDER_STATUS_PREPARING } from '@jmstechnologiesinc/order'
 const ETA_INTERVAL = 1000;
 
 const usePreparingTimeCoutdown = ({
-    orderID,
+    orderId,
     deliveryMethod,
     status,
     role,
@@ -44,7 +44,7 @@ const usePreparingTimeCoutdown = ({
         }
 
         return clearEtaInterval;
-    }, [durationValue, vendorAcceptedTime, deliveryMethod, status, orderID, role]);
+    }, [durationValue, vendorAcceptedTime, deliveryMethod, status, orderId, role]);
 
     return etaValue;
 };
