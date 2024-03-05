@@ -8,6 +8,11 @@ import { StyleSheet } from 'react-native';
 
 import ScreenWrapper from '../ScreenWrapper';
 
+export const PHONE_NUMBER_VERIFICATION_CODE_LENGTH = 6;
+export function isValidPhoneNumberVerificationCode(code) {
+    return code?.length === PHONE_NUMBER_VERIFICATION_CODE_LENGTH;
+}
+
 const FormVerificationCode = ({
     isVisible,
     isLoading,
@@ -24,59 +29,50 @@ const FormVerificationCode = ({
                 <Dialog.Title>{localized('verificationCodeModalTitle')}</Dialog.Title>
                     <Dialog.ScrollArea style={styles.container}>
                         <Dialog.Content>
-                        {isLoading ? (
-                            <ProgressBar 
-                                indeterminate 
-                                style={{alignItems: "left", marginTop: MD3LightTheme.spacing.x5}} /> 
-                        ) : (
-                            <>
-                        
-                                <ScreenWrapper.Section>
-                                    <Text>{localized("enterTheVerificationCode")}</Text>
-                                </ScreenWrapper.Section>
-                                <ScreenWrapper.Section>
-                                    <TextInput
-                                        textContentType="oneTimeCode"
-                                        autocomplete="one-time-code"
-                                        maxlength="6"
-                                        onChangeText={(text) => {
-                                            if(text.length === 6) {
-                                                onConfirmCodePress(text)
-                                            }
-                                        }}
-                                    />
-                                    {error ? (
-                                        <HelperText type="error" visible={true}>
-                                            {error}
-                                        </HelperText>
-                                    ) : null}
-                                </ScreenWrapper.Section>
+                            {isLoading ? (
+                                <ProgressBar 
+                                    indeterminate 
+                                    style={{marginTop: MD3LightTheme.spacing.x6}} /> 
+                            ) : (
+                                <>
+                                    <ScreenWrapper.Section>
+                                        <Text>{localized("enterTheVerificationCode")}</Text>
+                                    </ScreenWrapper.Section>
+                                    <ScreenWrapper.Section>
+                                        <TextInput
+                                            textContentType="oneTimeCode"
+                                            autocomplete="one-time-code"
+                                            maxlength={PHONE_NUMBER_VERIFICATION_CODE_LENGTH}
+                                            onChangeText={(text) => {
+                                                if(isValidPhoneNumberVerificationCode(text)) {
+                                                    onConfirmCodePress(text)
+                                                }
+                                            }}
+                                        />
+                                        {error ? (
+                                            <HelperText type="error" visible={true}>
+                                                {error}
+                                            </HelperText>
+                                        ) : null}
+                                    </ScreenWrapper.Section>
 
-                                <Button
-                                    onPress={onResendCodePress}
-                                    disabled={isLoading}
-                                    style={{ flexDirection: 'row' }}>
-                                    {localized('resendCode')}
-                                </Button>
-                            
-                        </>  
-                                         
-                    )}
+                                    <Button
+                                        onPress={onResendCodePress}
+                                        disabled={isLoading}
+                                        style={{ flexDirection: 'row' }}>
+                                        {localized('resendCode')}
+                                    </Button>
+                                </>              
+                        )}
                         </Dialog.Content>
-                                </Dialog.ScrollArea>  
-                            <Dialog.Actions>
-                                <Button 
-                                    onPress={onDismiss} 
-                                    textColor={MD3Colors.error50}>
-                                    {localized('cancel')}
-                                </Button>
-                              {/*   <Button
-                                    mode="contained"
-                                    disabled={isLoading}
-                                    onPress={() => onConfirmCodePress(code)} >
-                                    {localized('confirmCode')}
-                                </Button> */}
-                            </Dialog.Actions>
+                    </Dialog.ScrollArea>  
+                    <Dialog.Actions>
+                        <Button 
+                            onPress={onDismiss} 
+                            textColor={MD3Colors.error50}>
+                            {localized('cancel')}
+                        </Button>
+                    </Dialog.Actions>
             </Dialog>
         </Portal>
     )
