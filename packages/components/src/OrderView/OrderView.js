@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ScrollView, View } from 'react-native';
 
-import { Divider, List, MD3Colors,MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
+import { Divider, List, MD3Colors, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
 import { USER_ROLES } from '@jmstechnologiesinc/user';
 import { DELIVERY_METHODS, FULFILLMENT_METHODS } from '@jmstechnologiesinc/vendor';
@@ -41,7 +41,7 @@ const getDriverDetails = (order, role) => {
                 description: order.driver.deliveryMethod,
                 icon: MATERIAL_ICONS.account,
             });
-            if(order.driver?.deliveryMethod === DELIVERY_METHODS.ownStaff) {
+            if (order.driver?.deliveryMethod === DELIVERY_METHODS.ownStaff) {
                 results.push({
                     key: 'car-info',
                     title: order.driver.vehicle.formattedValue,
@@ -76,7 +76,7 @@ const OrderView = ({
     showVendorOverline = false,
     showVendorTitle,
     showVendorDescription,
-    showVendorAvatar = false,  
+    showVendorAvatar = false,
 }) => {
     if (!order?.id || !USER_ROLES[role]) {
         return null;
@@ -123,7 +123,7 @@ const OrderView = ({
             key: 'vendor-phoneNumber',
             title: order.vendor.phoneNumber,
             icon: MATERIAL_ICONS.call,
-            description: localized('order.vendor.phoneNumber'),
+            description: localized('order.vendor.phone'),
         });
 
         fulfilmentDetails.push({
@@ -135,15 +135,15 @@ const OrderView = ({
 
         if (order.fulfillmentMethod === FULFILLMENT_METHODS.delivery) {
             driverDetails = getDriverDetails(order);
-        } 
+        }
     } else if (role === USER_ROLES.vendor) {
-        if(order.author) {
+        if (order.author) {
             fulfilmentDetails.push({
                 key: 'author-name',
                 title: order.author.formattedName,
                 icon: MATERIAL_ICONS.account,
             });
-    
+
             if (order.author.phoneNumber) {
                 fulfilmentDetails.push({
                     key: 'author-phoneNumber',
@@ -152,7 +152,7 @@ const OrderView = ({
                 });
             }
         }
-      
+
         if (order.fulfillmentMethod === FULFILLMENT_METHODS.delivery) {
             fulfilmentDetails.push({
                 key: 'fulfillment-address',
@@ -161,13 +161,13 @@ const OrderView = ({
             });
 
             driverDetails = getDriverDetails(order, role);
-        } 
+        }
     }
 
     const telemetryList = [];
     if (
-        (role === USER_ROLES.driver || 
-        (role === USER_ROLES.vendor && order.driver?.deliveryMethod === DELIVERY_METHODS.ownStaff)) && 
+        (role === USER_ROLES.driver ||
+            (role === USER_ROLES.vendor && order.driver?.deliveryMethod === DELIVERY_METHODS.ownStaff)) &&
         order.driver?.telemetry
     ) {
         const telemetry = ORDER_STATUS_CANCELLED(order.status)
@@ -246,7 +246,7 @@ const OrderView = ({
             <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
                 <View style={{ flex: 1 }}>
                     {role === USER_ROLES.customer || role === USER_ROLES.driver ? (
-                        <PhotoGallery photos={imagekitUrl([formattedOrder.photo])}  showNav={false} />
+                        <PhotoGallery photos={imagekitUrl([formattedOrder.photo])} showNav={false} />
                     ) : null}
 
                     <OrderStatus
