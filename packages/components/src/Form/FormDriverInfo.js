@@ -41,14 +41,14 @@ const FormDriverInfo = ({ licenseNumer, ssn, inputActionHandler }) => {
                     }
                 />
             </ScreenWrapper.Section>
-            <ScreenWrapper.Section>
-                <SecretInputText
-                    mode="outlined"
-                    label={localized('socialSecurityNumber')}
-                    value={ssn}
-                    onChangeText={(text) => inputActionHandler('ssn', text)}
-                />
-            </ScreenWrapper.Section>
+            {/* <ScreenWrapper.Section>
+        <SecretInputText
+          mode="outlined"
+          label={ localized( 'socialSecurityNumber' ) }
+          value={ ssn }
+          onChangeText={ ( text ) => inputActionHandler( 'ssn', text ) }
+        />
+      </ScreenWrapper.Section> */}
         </>
     );
 };
