@@ -37,7 +37,7 @@ const SocialAuthentication = ({ onApplePress,
 
                 </Button>
             </ScreenWrapper.Section>
-            <ScreenWrapper.Section>
+            {/* <ScreenWrapper.Section>
                 <Button
                     mode="outlined"
                     onPress={onFacebookPress}
@@ -45,7 +45,7 @@ const SocialAuthentication = ({ onApplePress,
                 >
                     {localized('continueFacebook')}
                 </Button>
-            </ScreenWrapper.Section>
+            </ScreenWrapper.Section> */}
 
         </>
     );

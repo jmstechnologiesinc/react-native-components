@@ -25,17 +25,23 @@ const hideActionSheet = (actionSheetRef) => {
 
 
 const imagekitUrl = (photos) => {
-
     const urlImageKit = `https://ik.imagekit.io/${Config.IMAGEKIT_URL}`;
 
     if (photos === null || photos === undefined) {
         return null;
     } else if (Array.isArray(photos)) {
-       return photos?.map((photo) => `${urlImageKit}/tr:w-850,h-720/${photo}`)
+        return photos.map(photo => {
+            if (photo?.includes('https://')) {
+                return photo;
+            } else {
+                return `${urlImageKit}/tr:w-850,h-720/${photo}`;
+            }
+        });
     } else if (photos.includes?.('https://')) {
         return photos;
+    } else {
+        return `${urlImageKit}/${photos}`
     }
-    return `${urlImageKit}/${photos}`;
 };
 
 export { itemSeparator, showActionSheet, hideActionSheet, imagekitUrl };
