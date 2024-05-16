@@ -7,6 +7,7 @@ import { interpunct } from '@jmstechnologiesinc/commons';
 import { sectionPaddings } from '../ScreenWrapper/ScreenWrapperSection';
 import { imagekitUrl } from '../utils';
 import { localized } from '../Localization/Localization';
+import FastImage from 'react-native-fast-image';
 
 const VendorListItem = ({ item, withPaddingHorizontal, onPress }) => (
     <Card
@@ -16,7 +17,10 @@ const VendorListItem = ({ item, withPaddingHorizontal, onPress }) => (
         }}
         onPress={() => onPress(item)}
     >
-        <Card.Cover source={{ uri: imagekitUrl(`tr:w-850,h-720/${item.photos}`) }} />
+        <Card.Cover source={{
+            uri: imagekitUrl(`tr:w-850,h-720/${item.photos}`),
+            cache: FastImage.cacheControl.immutable,
+        }} />
         <Card.Title
             title={item.title}
             subtitle={interpunct([localized(item.formattedFulfillmentMethod), item.formattedHitDistance])}
