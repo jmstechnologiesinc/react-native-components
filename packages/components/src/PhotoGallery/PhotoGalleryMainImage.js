@@ -3,9 +3,8 @@ import React from 'react'
 import { moderateScale } from 'react-native-size-matters';
 import FastImage from 'react-native-fast-image';
 
-
 const PhotoGalleryMainImage = ({ uri }) => (
-    <FastImage source={{ uri: uri, cache: FastImage.cacheControl.immutable }} style={styles.mainImage} />
+    <FastImage source={{ uri: uri, cache: FastImage.cacheControl.immutable }} style={styles.mainImage} resizeMode={FastImage.resizeMode.stretch} />
 )
 
 
