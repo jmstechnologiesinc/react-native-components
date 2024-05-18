@@ -16,9 +16,10 @@ const VendorListItem = ({ item, withPaddingHorizontal, onPress }) => (
             ...(withPaddingHorizontal ? { marginHorizontal: sectionPaddings.left } : null),
         }}
         onPress={() => onPress(item)}
+
     >
         <Card.Cover source={{
-            uri: imagekitUrl(`tr:w-850,h-720/${item.photos}`),
+            uri: imagekitUrl(`tr:w-1079,h-1000,q-100,f-jpg,pr-true/${item.photos}`),
             cache: FastImage.cacheControl.immutable,
         }} />
         <Card.Title

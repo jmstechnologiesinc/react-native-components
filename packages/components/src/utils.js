@@ -1,5 +1,4 @@
 import { Linking, Platform } from 'react-native';
-import { getMainPhoto } from '@jmstechnologiesinc/commons'
 import Config from 'react-native-config';
 
 export const makeLinkingCall = (phoneNumber) => {
@@ -34,7 +33,7 @@ const imagekitUrl = (photos) => {
             if (photo?.includes('https://')) {
                 return photo;
             } else {
-                return `${urlImageKit}/tr:w-850,h-720/${photo}`;
+                return `${urlImageKit}/tr:w-1079,h-1000,q-100,f-jpg,pr-true/${photo}`;
             }
         });
     } else if (photos.includes?.('https://')) {

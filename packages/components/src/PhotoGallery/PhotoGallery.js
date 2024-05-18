@@ -6,6 +6,7 @@ import { MD3LightTheme, TouchableRipple } from '@jmstechnologiesinc/react-native
 import PhotoGalleryMainImage from './PhotoGalleryMainImage';
 import PhotoGalleryItem from './PhotoGalleryItem';
 
+
 export const renderImageSeparator = () => (
     <View
         style={{
@@ -19,8 +20,9 @@ const PhotoGallery = ({ photos, showNav = true, styles }) => {
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     const renderItem = ({ item, index }) => (
-        <TouchableRipple style={{marginVertical: MD3LightTheme.spacing.x2}} onPress={() => setSelectedIndex(index)}>
-            <PhotoGalleryItem isActive={selectedIndex === index} uri={item} />
+        <TouchableRipple style={{ marginVertical: MD3LightTheme.spacing.x2 }} onPress={() => setSelectedIndex(index)}>
+            <PhotoGalleryItem isActive={selectedIndex === index} uri={item}
+            />
         </TouchableRipple>
     );
 
