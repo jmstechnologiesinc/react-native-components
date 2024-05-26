@@ -3,6 +3,7 @@ import React from 'react';
 import { List, MD3LightTheme, Text } from '@jmstechnologiesinc/react-native-paper';
 import * as JMSList from './List';
 import { StyleSheet, ScrollView } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 const ListItem = ({
     photo,
@@ -27,55 +28,55 @@ const ListItem = ({
 }) => {
     const renderTitle = titleVariant
         ? ({ selectable, titleEllipsizeMode, color }) => (
-              <Text
-                  selectable={selectable}
-                  ellipsizeMode={titleEllipsizeMode}
-                  numberOfLines={titleNumberOfLines}
-                  variant={titleVariant}
-                  style={[{ color },titleStyle]}
-              >
-                  {title}
-              </Text>
-          )
+            <Text
+                selectable={selectable}
+                ellipsizeMode={titleEllipsizeMode}
+                numberOfLines={titleNumberOfLines}
+                variant={titleVariant}
+                style={[{ color }, titleStyle]}
+            >
+                {title}
+            </Text>
+        )
         : title;
 
     const renderDescription = Array.isArray(description)
         ? ({ selectable, ellipsizeMode, color: descriptionColor, fontSize }) => (
-              <>
-                  {description.map((item, index) => (
-                      <Text
-                          selectable={selectable}
-                          numberOfLines={index === 0 ? descriptionNumberOfLines : 0}
-                          ellipsizeMode={ellipsizeMode}
-                          variant={descriptionVariant && index === 0 && descriptionVariant}
-                          style={{
-                              color: descriptionColor,
-                              ...(index === 0 && descriptionVariant ? null : { fontSize }),
-                              ...(index === 0 ? descriptionStyle : styles.additionalPadding),
-                          }}
-                      >
-                          {item}
-                      </Text>
-                  ))}
-                  {chips ? (
-                      <ScrollView
-                          showsVerticalScrollIndicator={false}
-                          showsHorizontalScrollIndicator={false}
-                          horizontal
-                          style={[styles.chips, styles.additionalPadding]}
-                      >
-                          {chips}
-                      </ScrollView>
-                  ) : null}
-              </>
-          )
+            <>
+                {description.map((item, index) => (
+                    <Text
+                        selectable={selectable}
+                        numberOfLines={index === 0 ? descriptionNumberOfLines : 0}
+                        ellipsizeMode={ellipsizeMode}
+                        variant={descriptionVariant && index === 0 && descriptionVariant}
+                        style={{
+                            color: descriptionColor,
+                            ...(index === 0 && descriptionVariant ? null : { fontSize }),
+                            ...(index === 0 ? descriptionStyle : styles.additionalPadding),
+                        }}
+                    >
+                        {item}
+                    </Text>
+                ))}
+                {chips ? (
+                    <ScrollView
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                        horizontal
+                        style={[styles.chips, styles.additionalPadding]}
+                    >
+                        {chips}
+                    </ScrollView>
+                ) : null}
+            </>
+        )
         : description;
 
-        
+
     const renderLeft = photo ? (props) => (
         <>
             {left?.(props)}
-            <List.Image style={props.style} source={{ uri: photo }} />
+            <List.Image style={props.style} source={{ uri: photo, cache: FastImage.cacheControl.immutable }} />
         </>
     ) : left;
 
@@ -86,11 +87,11 @@ const ListItem = ({
                     title={metaTitle}
                     quantity={metaQuantity}
                     titleVariant={metaTitleVariant}
-                    titleStyle={[{ color: props.color },metaTitleStyle]}
+                    titleStyle={[{ color: props.color }, metaTitleStyle]}
                 />
                 {right?.(props)}
-              </>
-          )
+            </>
+        )
         : right;
 
     return (

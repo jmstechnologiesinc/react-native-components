@@ -1,12 +1,18 @@
 import React from 'react';
 
-import { List ,Divider} from '@jmstechnologiesinc/react-native-paper';
+import { List, Divider } from '@jmstechnologiesinc/react-native-paper';
+
+import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
+
 
 import StickySectionList from '../StickySectionList/StickySectionList';
 import ProductListItem from './ProductListItem';
-import { imagekitUrl } from '../utils';
+
 
 const keyExtractor = (productItem) => productItem.id;
+import { imagekitUrl } from '../utils';
+const IMAGE_DIMENSIONS = moderateScale(76)
+
 
 const ProductListSticky = ({
     sections,
@@ -33,7 +39,7 @@ const ProductListSticky = ({
             <ProductListItem
                 id={item.id}
                 uuid={item.uuid}
-                photo={imagekitUrl(item.photo)}
+                photo={item.photo?.includes('https://') ? imagekitUrl(item.photo) : item.photo !== null ? imagekitUrl(`tr:w-${IMAGE_DIMENSIONS},h-${IMAGE_DIMENSIONS},q-100,f-jpg,pr-true/${item.photo}`) : null}
                 title={item.title}
                 description={item.description}
                 formattedPrice={item.price.formattedValue}
