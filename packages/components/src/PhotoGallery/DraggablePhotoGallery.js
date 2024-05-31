@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { Dimensions, PixelRatio, StyleSheet, TouchableOpacity } from 'react-native';
 import { IconButton } from '@jmstechnologiesinc/react-native-paper';
 import DraggableFlatList, { ScaleDecorator, NestableScrollContainer } from 'react-native-draggable-flatlist';
 import { MD3Colors, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
@@ -10,6 +10,7 @@ import PhotoGalleryItem from './PhotoGalleryItem';
 import { renderImageSeparator } from './PhotoGallery';
 import JMSStyles from '../styles';
 import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
+import { moderateScale } from 'react-native-size-matters';
 
 function getPhotoUrl(photo) {
     return photo.uri ? photo.uri : imagekitUrl(photo);
@@ -30,7 +31,9 @@ const DraggablePhotoGallery = ({ photos, onChange, isDisabled }) => {
                     disabled={isActive}
                     style={[isActive ? JMSStyles.activeItem : null, { marginVertical: MD3LightTheme.spacing.x2 }]}
                 >
-                    <PhotoGalleryItem isActive={isSelected || isActive} uri={getPhotoUrl(item)} />
+                    <PhotoGalleryItem 
+                        isActive={isSelected || isActive} 
+                        uri={item?.uri ? item.uri : imagekitUrl(`tr:h-${moderateScale(76)},w-${moderateScale(76)},q-100,pr-true,fo-auto,lo-true,dpr-${PixelRatio.get()}/${item}`)} />
                     <IconButton
                         icon={MATERIAL_ICONS.remove}
                         mode="contained"
@@ -44,7 +47,6 @@ const DraggablePhotoGallery = ({ photos, onChange, isDisabled }) => {
         );
     };
 
-    const photoUrls = photos?.map((photo) => getPhotoUrl(photo));
 
     const onRemove = (index) => {
         setSelectedIndex(0);
@@ -59,9 +61,9 @@ const DraggablePhotoGallery = ({ photos, onChange, isDisabled }) => {
         onChange(newData);
     };
 
-    return photoUrls?.length > 0 ? (
+    return photos?.length > 0 ? (
         <>
-            <PhotoGalleryMainImage uri={photoUrls[selectedIndex]} />
+            <PhotoGalleryMainImage uri={photos[selectedIndex]?.uri ? photos[selectedIndex].uri : imagekitUrl(`tr:h-${moderateScale(195)},w-${Dimensions.get('window').width},q-100,pr-true,cm-pad_resize,fo-auto,lo-true,dpr-${PixelRatio.get()}/${photos[selectedIndex]}`)} />
             <NestableScrollContainer>
                 <DraggableFlatList
                     horizontal

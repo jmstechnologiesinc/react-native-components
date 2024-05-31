@@ -11,6 +11,7 @@ import ProductListItem from './ProductListItem';
 
 const keyExtractor = (productItem) => productItem.id;
 import { imagekitUrl } from '../utils';
+import { Dimensions, PixelRatio } from 'react-native';
 const IMAGE_DIMENSIONS = moderateScale(76)
 
 
@@ -39,7 +40,7 @@ const ProductListSticky = ({
             <ProductListItem
                 id={item.id}
                 uuid={item.uuid}
-                photo={item.photo?.includes('https://') ? imagekitUrl(item.photo) : item.photo !== null ? imagekitUrl(`tr:w-${IMAGE_DIMENSIONS},h-${IMAGE_DIMENSIONS},q-100,f-jpg,pr-true/${item.photo}`) : null}
+                photo={item.photo}
                 title={item.title}
                 description={item.description}
                 formattedPrice={item.price.formattedValue}

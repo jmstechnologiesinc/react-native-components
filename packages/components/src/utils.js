@@ -1,7 +1,5 @@
 import { Linking, Platform } from 'react-native';
 import Config from 'react-native-config';
-import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
-
 
 export const makeLinkingCall = (phoneNumber) => {
     if (Platform.OS === 'android') {
@@ -26,7 +24,6 @@ const hideActionSheet = (actionSheetRef) => {
 
 
 const imagekitUrl = (photos) => {
-    const IMAGE_HEIGHT = moderateScale(195)
     const urlImageKit = `https://ik.imagekit.io/${Config.IMAGEKIT_URL}`;
 
     if (photos === null || photos === undefined) {
@@ -36,7 +33,7 @@ const imagekitUrl = (photos) => {
             if (photo?.includes('https://')) {
                 return photo;
             } else {
-                return `${urlImageKit}/tr:h-${IMAGE_HEIGHT},q-100,f-jpg,pr-true/${photo}`;
+                return `${urlImageKit}/${photo}`;
             }
         });
     } else if (photos.includes?.('https://')) {

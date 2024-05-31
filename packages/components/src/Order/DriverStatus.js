@@ -1,10 +1,12 @@
 import React from 'react';
 
-import { ITEM_TYPE, ITEM_TYPE_ICON_MAPPING, MATERIAL_ICONS, formattedETATime, milliseconsExtractor } from '@jmstechnologiesinc/commons';
+import { ITEM_TYPE, ITEM_TYPE_ICON_MAPPING, MATERIAL_ICONS, formattedETATime, getMainPhoto, milliseconsExtractor } from '@jmstechnologiesinc/commons';
 
 import usePubNubETA from '../Order/usePubNubETA';
 import { Avatar, List } from '@jmstechnologiesinc/react-native-paper';
 import { imagekitUrl, localized, makeLinkingCall } from '@jmstechnologiesinc/react-native-components';
+import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
+import { PixelRatio } from 'react-native';
 
 const DriverStatus = ({
     role,
@@ -42,7 +44,7 @@ const DriverStatus = ({
     }
 
     const renderAvatar = avatar
-        ? (props) => <Avatar.Image style={props.style} source={{ uri: imagekitUrl(avatar) }} />
+        ? (props) => <Avatar.Image style={props.style} source={{ uri: imagekitUrl(`tr:h-${moderateScale(150)},w-${moderateScale(150)},r-${moderateScale(150)},q-100,pr-true,fo-face,lo-true,dpr-${PixelRatio.get()}/${getMainPhoto(avatar)}`) }} />
         : null;
 
     return (

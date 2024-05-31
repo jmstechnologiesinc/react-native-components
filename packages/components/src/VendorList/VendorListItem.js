@@ -9,12 +9,10 @@ import { imagekitUrl } from '../utils';
 import { localized } from '../Localization/Localization';
 import FastImage from 'react-native-fast-image';
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
-
+import { PixelRatio } from 'react-native';
 
 const VendorListItem = ({ item, withPaddingHorizontal, onPress }) => {
-    const IMAGE_HEIGHT = moderateScale(195)
     return (
-        (
             <Card
                 style={{
                     marginVertical: MD3LightTheme.spacing.x1,
@@ -24,7 +22,7 @@ const VendorListItem = ({ item, withPaddingHorizontal, onPress }) => {
 
             >
                 <Card.Cover source={{
-                    uri: imagekitUrl(`tr:h-${IMAGE_HEIGHT},q-100,f-jpg,pr-true/${item.photos}`),
+                    uri: imagekitUrl(`tr:h-${moderateScale(195)},q-100,pr-true,fo-auto,lo-true,dpr-${PixelRatio.get()}/${item.photos}`),
                     cache: FastImage.cacheControl.immutable,
                 }} />
                 <Card.Title
@@ -43,7 +41,6 @@ const VendorListItem = ({ item, withPaddingHorizontal, onPress }) => {
                     </Card.Content>
                 ) : null}
             </Card>
-        )
     )
 }
 
