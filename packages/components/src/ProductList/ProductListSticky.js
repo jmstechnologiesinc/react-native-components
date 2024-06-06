@@ -2,18 +2,10 @@ import React from 'react';
 
 import { List, Divider } from '@jmstechnologiesinc/react-native-paper';
 
-import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
-
-
 import StickySectionList from '../StickySectionList/StickySectionList';
 import ProductListItem from './ProductListItem';
 
-
 const keyExtractor = (productItem) => productItem.id;
-import { imagekitUrl } from '../utils';
-import { Dimensions, PixelRatio } from 'react-native';
-const IMAGE_DIMENSIONS = moderateScale(76)
-
 
 const ProductListSticky = ({
     sections,

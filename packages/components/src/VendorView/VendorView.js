@@ -13,8 +13,6 @@ const VendorView = ({
     formattedErrors = [],
     onPressVendorOverview,
 }) => {
-
-
     return (
         <>
             {formattedErrors ? (
@@ -23,7 +21,7 @@ const VendorView = ({
                 </Banner>
             ) : null}
 
-            <PhotoGallery photos={[photos]} showNav={false} />
+            <PhotoGallery photos={[photos]} showNav={false} imagekitCropMode="c-maintain_ratio" />
 
             <TouchableRipple
                 onPress={onPressVendorOverview}

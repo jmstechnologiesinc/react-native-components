@@ -3,10 +3,10 @@ import React from 'react';
 import { List, MD3LightTheme, Text } from '@jmstechnologiesinc/react-native-paper';
 import * as JMSList from './List';
 import { StyleSheet, ScrollView } from 'react-native';
-import FastImage from 'react-native-fast-image';
 
 const ListItem = ({
     photo,
+    photoLqip,
     title,
     description,
     chips,
@@ -76,7 +76,7 @@ const ListItem = ({
     const renderLeft = photo ? (props) => (
         <>
             {left?.(props)}
-            <List.Image style={props.style} source={{ uri: photo, cache: FastImage.cacheControl.immutable }} />
+            <List.Image style={props.style} source={{ uri: photo,lqipUri: photoLqip }} />
         </>
     ) : left;
 

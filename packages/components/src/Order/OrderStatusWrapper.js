@@ -6,7 +6,7 @@ import { Avatar, Chip, List, MD3LightTheme } from '@jmstechnologiesinc/react-nat
 import { ITEM_TYPE, ITEM_TYPE_ICON_MAPPING, MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 
 import JMSItem from '../List/ListItem';
-import { imagekitUrl, makeLinkingCall } from '../utils';
+import { imageKitAvatar, makeLinkingCall } from '../utils';
 
 export const renderChipType = (chip) => {
     switch (chip.type) {
@@ -58,7 +58,7 @@ const OrderStatusWrapper = ({
 }) => {
     const renderAvatar =
         showAvatar && avatar
-            ? (props) => <Avatar.Image style={props.style} source={{ uri: imagekitUrl(avatar) }} />
+            ? (props) => <Avatar.Image style={props.style} source={{ uri: imageKitAvatar(avatar) }} />
             : null;
 
     const renderChips = showChips && chips?.length > 0 ? chips.map(renderChipType) : null;

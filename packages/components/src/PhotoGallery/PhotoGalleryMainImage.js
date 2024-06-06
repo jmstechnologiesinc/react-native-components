@@ -1,10 +1,16 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import React from 'react'
 import { moderateScale } from 'react-native-size-matters';
-import FastImage from 'react-native-fast-image';
+import ImageBlurLoading from '@jmstechnologiesinc/react-native-image-blur-loading'
 
-const PhotoGalleryMainImage = ({ uri }) => (
-    <FastImage source={{ uri: uri, cache: FastImage.cacheControl.immutable }} style={styles.mainImage} />
+const PhotoGalleryMainImage = ({ uri,lqipUri }) => (
+    <View style={styles.mainImage} >
+        <ImageBlurLoading
+            thumbnailSource={{ uri: lqipUri }}
+            source={{ uri: uri }}
+            fastImage={true}
+            style={styles.mainImage}/>
+    </View>
 )
 
 const styles = StyleSheet.create({

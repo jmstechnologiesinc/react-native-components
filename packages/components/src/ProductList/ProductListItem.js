@@ -3,8 +3,7 @@ import React from 'react';
 import * as JMSList from '../List/List';
 import { localized } from '../Localization/Localization';
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
-import { imagekitUrl } from '@jmstechnologiesinc/react-native-components/lib/utils';
-import { PixelRatio } from 'react-native';
+import { imageKitListImage, imageKitListImagelqip } from '../utils';
 
 const ProductListItem = ({
     title,
@@ -37,7 +36,8 @@ const ProductListItem = ({
         <JMSList.Item
             title={title}
             description={descriptionList}
-            photo={photo ? imagekitUrl(`tr:h-${moderateScale(76)},w-${moderateScale(76)},q-100,pr-true,fo-auto,lo-true,dpr-${PixelRatio.get()}/${photo}`) : null}
+            photo={photo ? imageKitListImage(photo) : null}
+            photoLqip={photo ? imageKitListImagelqip(photo) : null}
             metaTitle={formattedPrice}
             metaQuantity={cartQuantity}
             onPress={onPress}

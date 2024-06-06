@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { List, Checkbox, RadioButton } from '@jmstechnologiesinc/react-native-paper';
-import { imagekitUrl } from '../utils';
+import { imageKitListImage } from '../utils';
 
 function NestedOptionPicker({ isDisabled, onPress, options = [], preSelectedOptions = [], multiple = true }) {
     const [selectedOptions, setSelectedOptions] = useState(preSelectedOptions);
@@ -39,7 +39,7 @@ function NestedOptionPicker({ isDisabled, onPress, options = [], preSelectedOpti
                 onPress={() => onCheckboxPress(option)}
                 left={
                     option.photo
-                        ? (props) => <List.Image style={props.style} source={{ uri: imagekitUrl(option.photo) }} />
+                        ? (props) => <List.Image style={props.style} source={{ uri: imageKitListImage(option.photo) }} />
                         : null
                 }
                 right={() =>

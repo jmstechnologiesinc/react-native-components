@@ -1,20 +1,15 @@
 import React, { useState } from 'react';
 
-import { Dimensions, PixelRatio, StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { IconButton } from '@jmstechnologiesinc/react-native-paper';
 import DraggableFlatList, { ScaleDecorator, NestableScrollContainer } from 'react-native-draggable-flatlist';
 import { MD3Colors, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
-import { imagekitUrl } from '../utils';
+import { imageKitListImage, imageKitListImagelqip, imageKitPhotoGalleryMainImage, imageKitPhotoGalleryMainImageLqip } from '../utils';
 import PhotoGalleryMainImage from './PhotoGalleryMainImage';
 import PhotoGalleryItem from './PhotoGalleryItem';
 import { renderImageSeparator } from './PhotoGallery';
 import JMSStyles from '../styles';
 import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
-import { moderateScale } from 'react-native-size-matters';
-
-function getPhotoUrl(photo) {
-    return photo.uri ? photo.uri : imagekitUrl(photo);
-}
 
 const DraggablePhotoGallery = ({ photos, onChange, isDisabled }) => {
     const [selectedIndex, setSelectedIndex] = useState(0);
@@ -33,7 +28,8 @@ const DraggablePhotoGallery = ({ photos, onChange, isDisabled }) => {
                 >
                     <PhotoGalleryItem 
                         isActive={isSelected || isActive} 
-                        uri={item?.uri ? item.uri : imagekitUrl(`tr:h-${moderateScale(76)},w-${moderateScale(76)},q-100,pr-true,fo-auto,lo-true,dpr-${PixelRatio.get()}/${item}`)} />
+                        lqipUri={item?.uri ? item.uri : imageKitListImagelqip(item)}
+                        uri={item?.uri ? item.uri : imageKitListImage(item)} />
                     <IconButton
                         icon={MATERIAL_ICONS.remove}
                         mode="contained"
@@ -63,7 +59,9 @@ const DraggablePhotoGallery = ({ photos, onChange, isDisabled }) => {
 
     return photos?.length > 0 ? (
         <>
-            <PhotoGalleryMainImage uri={photos[selectedIndex]?.uri ? photos[selectedIndex].uri : imagekitUrl(`tr:h-${moderateScale(195)},w-${Dimensions.get('window').width},q-100,pr-true,cm-pad_resize,fo-auto,lo-true,dpr-${PixelRatio.get()}/${photos[selectedIndex]}`)} />
+            <PhotoGalleryMainImage 
+                lqipUri={photos[selectedIndex]?.uri ? photos[selectedIndex].uri : imageKitPhotoGalleryMainImageLqip(photos[selectedIndex])}
+                uri={photos[selectedIndex]?.uri ? photos[selectedIndex].uri : imageKitPhotoGalleryMainImage(photos[selectedIndex])} />
             <NestableScrollContainer>
                 <DraggableFlatList
                     horizontal

@@ -8,7 +8,7 @@ import OrderStatus from '../Order/OrderStatus';
 import * as ActionGroup from '../ActionGroup/ActionGroup';
 import TouchableRippleWrapper from '../TouchableRippleWrapper/TouchableRippleWrapper';
 import DriverStatus from '../Order/DriverStatus';
-import { imagekitUrl,PhotoGallery,ScreenWrapper } from '@jmstechnologiesinc/react-native-components';
+import { PhotoGallery,ScreenWrapper } from '@jmstechnologiesinc/react-native-components';
 import { USER_ROLES } from '@jmstechnologiesinc/user';
 
 const OrderListItem = ({
@@ -43,7 +43,8 @@ const OrderListItem = ({
             {role === USER_ROLES.customer && isOrderActive(formattedOrder.status) ? (
                 <ScreenWrapper.Container>
                     <PhotoGallery 
-                        photos={imagekitUrl([formattedOrder.photo])} 
+                        photos={[formattedOrder.photo]} 
+                        imagekitCropMode="c-maintain_ratio"
                         showNav={false}
                         styles={{paddingTop: MD3LightTheme.spacing.x2}}
               />
