@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { View, Animated, SectionList as NativeSectionList } from 'react-native';
 
-import { MD3LightTheme,Divider } from '@jmstechnologiesinc/react-native-paper';
+import { MD3LightTheme, Divider } from '@jmstechnologiesinc/react-native-paper';
 
 import { itemSeparator } from '../utils';
 import * as Tabs from '../Tabs/Tabs';
@@ -39,35 +39,34 @@ const StickyList = ({
 
     const renderTab = (
         <>
-        <Tabs.Scrollable title={title} currentIndex={currentIndex}>
-            {sections.map((item, index) => (
-                <Tabs.Item
-                    key={`sticky-section-${item.id}`}
-                    title={item.title}
-                    isSelected={currentIndex === index}
-                    style={{ backgroundColor: itemSeparator(index, sections.length) ? MD3LightTheme.spacing.x4 : null }}
-                    onPress={() => {
-                        setCurrentIdex(index);
-                        blockUpdateIndexRef.current = true;
-                        const sectionList = sectionListRef.current;
-                        if (sectionList && sectionList.scrollToLocation) {
-                            sectionList.scrollToLocation({
-                                animated: true,
-                                itemIndex: 0,
-                                viewOffset: 0,
-                                sectionIndex: index,
-                            });
-                        }
-                    }}
-                />
-            ))}
-        </Tabs.Scrollable>
-                    <Divider />
-</>
+            <Tabs.Scrollable title={title} currentIndex={currentIndex}>
+                {sections.map((item, index) => (
+                    <Tabs.Item
+                        key={`sticky-section-${item.id}`}
+                        title={item.title}
+                        isSelected={currentIndex === index}
+                        style={{ backgroundColor: itemSeparator(index, sections.length) ? MD3LightTheme.spacing.x4 : null }}
+                        onPress={() => {
+                            setCurrentIdex(index);
+                            blockUpdateIndexRef.current = true;
+                            const sectionList = sectionListRef.current;
+                            if (sectionList && sectionList.scrollToLocation) {
+                                sectionList.scrollToLocation({
+                                    animated: true,
+                                    itemIndex: 0,
+                                    viewOffset: 0,
+                                    sectionIndex: index,
+                                });
+                            }
+                        }}
+                    />
+                ))}
+            </Tabs.Scrollable>
+            <Divider />
+        </>
     );
 
-     const getItemLayout = sectionListGetItemLayout({
-        getSectionHeaderHeight: () => moderateScale(50),
+    const getItemLayout = sectionListGetItemLayout({
         getSectionFooterHeight: () => 0,
         listHeaderHeight: layoutHeight,
     });
@@ -84,20 +83,20 @@ const StickyList = ({
                     useNativeDriver: true,
                     listener: onContentOffsetYScroll
                         ? (event) => {
-                              if (
-                                  event.nativeEvent.contentOffset.y > contentOffsetY &&
-                                  contentOffsetYRangeRef.current === false
-                              ) {
-                                  onContentOffsetYScroll(event.nativeEvent.contentOffset.y);
-                                  contentOffsetYRangeRef.current = true;
-                              } else if (
-                                  event.nativeEvent.contentOffset.y < contentOffsetY &&
-                                  contentOffsetYRangeRef.current === true
-                              ) {
-                                  onContentOffsetYScroll(event.nativeEvent.contentOffset.y);
-                                  contentOffsetYRangeRef.current = false;
-                              }
-                          }
+                            if (
+                                event.nativeEvent.contentOffset.y > contentOffsetY &&
+                                contentOffsetYRangeRef.current === false
+                            ) {
+                                onContentOffsetYScroll(event.nativeEvent.contentOffset.y);
+                                contentOffsetYRangeRef.current = true;
+                            } else if (
+                                event.nativeEvent.contentOffset.y < contentOffsetY &&
+                                contentOffsetYRangeRef.current === true
+                            ) {
+                                onContentOffsetYScroll(event.nativeEvent.contentOffset.y);
+                                contentOffsetYRangeRef.current = false;
+                            }
+                        }
                         : null,
                 })}
                 onMomentumScrollEnd={() => (blockUpdateIndexRef.current = false)}

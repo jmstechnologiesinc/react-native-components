@@ -1,3 +1,18 @@
+
+// material design value
+
+// List subheaders:  48dp
+
+// One line:  56dp 
+// Two line:  72dp
+// Three line: 88dp
+
+// Divider:  StyleSheet.hairlineWidth
+
+// custom option
+// height: 100
+
+
 import React from 'react';
 
 import * as JMSList from '../List/List';
@@ -30,7 +45,7 @@ const ProductListItem = ({
         descriptionList.push(description);
     }
 
-    const setDynamicSize = description === undefined && photo === null ? moderateScale(90) : moderateScale(100);
+    const setDynamicSize = description === undefined && photo === null ? moderateScale(56) : moderateScale(100);
 
     return (
         <JMSList.Item
@@ -43,7 +58,7 @@ const ProductListItem = ({
             onPress={onPress}
             titleNumberOfLines={0}
             left={left}
-            //style={{ height: setDynamicSize }}
+            style={{ height: setDynamicSize }}
         />
     );
 };

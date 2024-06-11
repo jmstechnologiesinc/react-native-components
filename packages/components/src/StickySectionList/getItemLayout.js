@@ -1,8 +1,10 @@
 import { moderateScale } from "@jmstechnologiesinc/react-native-size-matters"
+import { StyleSheet } from 'react-native'
+
 
 export default ({
-  getSeparatorHeight = () => 0,
-  getSectionHeaderHeight = () => 0,
+  getSeparatorHeight = () => StyleSheet.hairlineWidth,
+  getSectionHeaderHeight = () => moderateScale(48),
   getSectionFooterHeight = () => 0,
   listHeaderHeight = 0
 }) => (data, index) => {
@@ -14,7 +16,7 @@ export default ({
       ? listHeaderHeight()
       : listHeaderHeight
 
-    
+
   while (i < index) {
     switch (elementPointer.type) {
       case "SECTION_HEADER": {
@@ -37,12 +39,12 @@ export default ({
 
         const rowIndex = elementPointer.index
 
-         const isData = data[sectionIndex].data[rowIndex];
+        const isData = data[sectionIndex].data[rowIndex];
 
-        const setDynamicSize =  isData.description === undefined  && isData.photo === null ?   moderateScale(90) : moderateScale(100)
+        const setDynamicSize = isData.description === undefined && isData.photo === null ? moderateScale(56) : moderateScale(100)
 
-      const getItemHeight = () => setDynamicSize;
-      
+        const getItemHeight = () => setDynamicSize;
+
 
         offset += getItemHeight(sectionData[rowIndex], sectionIndex, rowIndex)
         elementPointer.index += 1
@@ -74,8 +76,8 @@ export default ({
     case "ROW":
       const rowIndex = elementPointer.index
       const isData = data[sectionIndex].data[rowIndex]
-      const setDynamicSize =  isData.description === undefined && isData.photo === null ?  moderateScale(90) : moderateScale(100);
-      
+      const setDynamicSize = isData.description === undefined && isData.photo === null ? moderateScale(90) : moderateScale(100);
+
       const getItemHeight = () => setDynamicSize;
 
       length = getItemHeight(
