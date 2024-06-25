@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ImageBackground } from 'react-native';
 
-import FastImage from 'jmstechnologiesinc/react-native-fast-image';
+import FastImage from '@jmstechnologiesinc/react-native-fast-image';
 
 const Fast2ImageKit = ({
     src,
