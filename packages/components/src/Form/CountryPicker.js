@@ -34,7 +34,7 @@ const CountryPicker = forwardRef(({ data, onSelect }, ref) => {
                         title={item.label}
                         description={item.dialCode}
                         onPress={() => onSelect(item)}
-                        left={(props) => <List.Image {...props} variant="flag" source={item.image} />}
+                        left={(props) => <List.Image {...props} variant="flag" source={item.image} defaultImageComponent={true} />}
                     />
                 ))}
             </ScrollView>
