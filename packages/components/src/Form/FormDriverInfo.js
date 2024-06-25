@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 
 import { Paragraph, TextInput } from '@jmstechnologiesinc/react-native-paper';
-import Config from 'react-native-config';
+
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 import { handleDateOfBirhtChange } from './utils';
 import SecretInputText from './SecretInputText';
+import { Config } from '../config';
 
 const FormDriverInfo = ({ licenseNumer, ssn, inputActionHandler }) => {
     const [dateOfBirth, setDateOfBirth] = useState('');
