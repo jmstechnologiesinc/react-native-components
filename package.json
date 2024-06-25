@@ -45,7 +45,7 @@
     "react-native-actionsheet": "^2.4.2",
     "react-native-config": "^1.5.1",
     "react-native-draggable-flatlist": "^4.0.1",
-    "react-native-fast-image": "^8.6.3",
+    "jmstechnologiesinc/react-native-fast-image": "^8.6.3",
     "react-native-gesture-handler": "^2.1.0",
     "react-native-image-picker": "^4.10.1",
     "react-native-localize": "^2.2.6",
