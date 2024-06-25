@@ -1,7 +1,8 @@
 import { Dimensions, Linking, PixelRatio, Platform } from 'react-native';
-import Config from 'react-native-config';
+
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
+import { Config } from './config';
 
 export const makeLinkingCall = (phoneNumber) => {
     if (Platform.OS === 'android') {
@@ -58,11 +59,11 @@ function imageKitAvatar(photo) {
     return imagekitUrl(`tr:h-${moderateScale(150)},w-${moderateScale(150)},r-${moderateScale(150)},q-100,pr-true,fo-face,lo-true,f-avif,dpr-${PixelRatio.get()}/${photo}`)
 }
 
-function imageKitPhotoGalleryMainImage(photo, cropMode="cm-pad_resize") {
+function imageKitPhotoGalleryMainImage(photo, cropMode = "cm-pad_resize") {
     return imagekitUrl(`tr:h-${moderateScale(195)},w-${Dimensions.get('window').width},q-100,pr-true,${cropMode},fo-auto,lo-true,f-avif,dpr-${PixelRatio.get()}/${photo}`)
 }
 
-function imageKitPhotoGalleryMainImageLqip(photo, cropMode="cm-pad_resize") {
+function imageKitPhotoGalleryMainImageLqip(photo, cropMode = "cm-pad_resize") {
     console.log(imagekitUrl(`tr:h-${moderateScale(195)},w-${Dimensions.get('window').width},q-1,${cropMode},bl-10,f-webp/${photo}`))
     return imagekitUrl(`tr:h-${moderateScale(195)},w-${Dimensions.get('window').width},q-1,${cropMode},bl-10,f-webp/${photo}`)
 }
@@ -78,4 +79,4 @@ function imageKitCardLqip(photo) {
     return imagekitUrl(`tr:w-${NET_CARD_WIDTH},h-${moderateScale(195)},q-1,bl-10,f-webp/${photo}`)
 }
 
-export { itemSeparator, showActionSheet, hideActionSheet, imagekitUrl, imageKitListImage, imageKitAvatar, imageKitPhotoGalleryMainImage, imageKitPhotoGalleryMainImageLqip, imageKitCard,imageKitCardLqip,imageKitListImagelqip };
+export { itemSeparator, showActionSheet, hideActionSheet, imagekitUrl, imageKitListImage, imageKitAvatar, imageKitPhotoGalleryMainImage, imageKitPhotoGalleryMainImageLqip, imageKitCard, imageKitCardLqip, imageKitListImagelqip };

@@ -23,7 +23,7 @@ export { default as Accounting } from './Accounting/Accounting';
 export { default as Fast2ImageKit } from './Fast2ImageKit/Fast2ImageKit';
 export { default as ChipList } from './ChipList/ChipList';
 export { default as OrderStatus } from './Order/OrderStatus';
-export { makeLinkingCall, itemSeparator, showActionSheet, hideActionSheet, imagekitUrl, imageKitListImage, imageKitAvatar,imageKitPhotoGalleryMainImage,imageKitPhotoGalleryMainImageLqip,imageKitCard,imageKitCardLqip,imageKitListImagelqip } from './utils';
+export { makeLinkingCall, itemSeparator, showActionSheet, hideActionSheet, imagekitUrl, imageKitListImage, imageKitAvatar, imageKitPhotoGalleryMainImage, imageKitPhotoGalleryMainImageLqip, imageKitCard, imageKitCardLqip, imageKitListImagelqip } from './utils';
 export { formatOrder, orderListStatus, groupedOrderListToSectionList, ORDER_LIST_STATUS } from './Order/utils';
 export { default as OrderList } from './OrderList/OrderList';
 export { default as OrderListItem } from './OrderList/OrderListItem';
@@ -40,4 +40,6 @@ export { default as ButtonWrapper } from "./ButtonWrapper/ButtonWrapper";
 export { default as SocialAuthentication } from "./SocialAuthentication/SocialAuthentication";
 
 export { LAYOUT_MODE } from './consts';
-export { localized, setI18nConfig } from './Localization/Localization';
+export { localized, setI18nConfig } from './Localization/Localization.native';
+
+export { default as CustomAlert } from './Alert/Alert'

@@ -8,6 +8,7 @@ import * as Tabs from '../Tabs/Tabs';
 
 import sectionListGetItemLayout from './getItemLayout';
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
+import { IS_WEB_PLATFORM } from '../config';
 
 
 const AnimatedSectionList = Animated.createAnimatedComponent(NativeSectionList);
@@ -48,7 +49,7 @@ const StickyList = ({
                         style={{ backgroundColor: itemSeparator(index, sections.length) ? MD3LightTheme.spacing.x4 : null }}
                         onPress={() => {
                             setCurrentIdex(index);
-                            blockUpdateIndexRef.current = true;
+                            blockUpdateIndexRef.current = IS_WEB_PLATFORM ? false : true;
                             const sectionList = sectionListRef.current;
                             if (sectionList && sectionList.scrollToLocation) {
                                 sectionList.scrollToLocation({
