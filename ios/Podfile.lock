@@ -605,7 +605,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
-  - RNFastImage (from `../node_modules/react-native-fast-image`)
+  - RNFastImage (from `../node_modules/@jmstechnologiesinc/react-native-fast-image`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNPermissions (from `../node_modules/react-native-permissions`)
@@ -723,7 +723,7 @@ EXTERNAL SOURCES:
   RNDateTimePicker:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNFastImage:
-    :path: "../node_modules/react-native-fast-image"
+    :path: "../node_modules/@jmstechnologiesinc/react-native-fast-image"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNLocalize:
