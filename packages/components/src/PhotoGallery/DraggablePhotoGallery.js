@@ -26,8 +26,8 @@ const DraggablePhotoGallery = ({ photos, onChange, isDisabled }) => {
                     disabled={isActive}
                     style={[isActive ? JMSStyles.activeItem : null, { marginVertical: MD3LightTheme.spacing.x2 }]}
                 >
-                    <PhotoGalleryItem 
-                        isActive={isSelected || isActive} 
+                    <PhotoGalleryItem
+                        isActive={isSelected || isActive}
                         lqipUri={item?.uri ? item.uri : imageKitListImagelqip(item)}
                         uri={item?.uri ? item.uri : imageKitListImage(item)} />
                     <IconButton
@@ -59,7 +59,7 @@ const DraggablePhotoGallery = ({ photos, onChange, isDisabled }) => {
 
     return photos?.length > 0 ? (
         <>
-            <PhotoGalleryMainImage 
+            <PhotoGalleryMainImage
                 lqipUri={photos[selectedIndex]?.uri ? photos[selectedIndex].uri : imageKitPhotoGalleryMainImageLqip(photos[selectedIndex])}
                 uri={photos[selectedIndex]?.uri ? photos[selectedIndex].uri : imageKitPhotoGalleryMainImage(photos[selectedIndex])} />
             <NestableScrollContainer>

@@ -6,7 +6,7 @@ import DraggablePhotoGallery from '../PhotoGallery/DraggablePhotoGallery'
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper'
 import { HelperText } from '@jmstechnologiesinc/react-native-paper';
 
-const PhotoGallery = ({ photos, onChange,  isDisabled  }) =>  (
+const PhotoGallery = ({ photos, onChange, isDisabled, onShowCamera }) => (
     <ScreenWrapper.Section title={localized('photos')}>
         <DraggablePhotoGallery
             photos={photos}
@@ -17,10 +17,11 @@ const PhotoGallery = ({ photos, onChange,  isDisabled  }) =>  (
             variant="button"
             title={localized('add')}
             isDisabled={isDisabled}
+            onShowCamera={onShowCamera}
             withPaddingHorizontal={false}
             onChange={(photo) => {
-                    const newPhotos = photos ? [...photos, photo] : [photo];
-                    onChange(newPhotos);
+                const newPhotos = photos ? [...photos, photo] : [photo];
+                onChange(newPhotos);
             }}
         />
 
