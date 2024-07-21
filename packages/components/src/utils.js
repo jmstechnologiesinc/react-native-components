@@ -25,6 +25,17 @@ const hideActionSheet = (actionSheetRef) => {
     actionSheetRef.current.hide();
 };
 
+const isAVIFSupported = () => {
+    if (Platform.OS === 'ios') {
+        return Platform.Version >= 16 ? true : false;
+    } else if (Platform.OS === 'android') {
+        const androidVersion = Platform.constants['Release'];
+        return androidVersion >= 14 ? true : false;
+    }
+    return true;
+};
+
+const format = isAVIFSupported() ? 'f-avif' : 'f-jpeg';
 
 const imagekitUrl = (photos) => {
     const urlImageKit = `https://ik.imagekit.io/${Config.IMAGEKIT_URL}`;
@@ -48,7 +59,7 @@ const imagekitUrl = (photos) => {
 
 
 function imageKitListImage(photo) {
-    return imagekitUrl(`tr:h-${moderateScale(76)},w-${moderateScale(76)},q-100,pr-true,fo-auto,lo-true,f-avif,dpr-${PixelRatio.get()}/${photo}`)
+    return imagekitUrl(`tr:h-${moderateScale(76)},w-${moderateScale(76)},q-100,pr-true,fo-auto,lo-true,${format},dpr-${PixelRatio.get()}/${photo}`)
 }
 
 function imageKitListImagelqip(photo) {
@@ -56,11 +67,11 @@ function imageKitListImagelqip(photo) {
 }
 
 function imageKitAvatar(photo) {
-    return imagekitUrl(`tr:h-${moderateScale(150)},w-${moderateScale(150)},r-${moderateScale(150)},q-100,pr-true,fo-face,lo-true,f-avif,dpr-${PixelRatio.get()}/${photo}`)
+    return imagekitUrl(`tr:h-${moderateScale(150)},w-${moderateScale(150)},r-${moderateScale(150)},q-100,pr-true,fo-face,lo-true,${format},dpr-${PixelRatio.get()}/${photo}`)
 }
 
 function imageKitPhotoGalleryMainImage(photo, cropMode = "cm-pad_resize") {
-    return imagekitUrl(`tr:h-${moderateScale(195)},w-${Dimensions.get('window').width},q-100,pr-true,${cropMode},fo-auto,lo-true,f-avif,dpr-${PixelRatio.get()}/${photo}`)
+    return imagekitUrl(`tr:h-${moderateScale(195)},w-${Dimensions.get('window').width},q-100,pr-true,${cropMode},fo-auto,lo-true,${format},dpr-${PixelRatio.get()}/${photo}`)
 }
 
 function imageKitPhotoGalleryMainImageLqip(photo, cropMode = "cm-pad_resize") {
@@ -72,7 +83,7 @@ const HORIZONTAL_CARD_PADDING = MD3LightTheme.spacing.x4 * 2;
 const NET_CARD_WIDTH = Dimensions.get('window').width - HORIZONTAL_CARD_PADDING;
 
 function imageKitCard(photo) {
-    return imagekitUrl(`tr:w-${NET_CARD_WIDTH},h-${moderateScale(195)},q-100,pr-true,fo-auto,lo-true,f-avif,dpr-${PixelRatio.get()}/${photo}`)
+    return imagekitUrl(`tr:w-${NET_CARD_WIDTH},h-${moderateScale(195)},q-100,pr-true,fo-auto,lo-true,${format},dpr-${PixelRatio.get()}/${photo}`)
 }
 
 function imageKitCardLqip(photo) {

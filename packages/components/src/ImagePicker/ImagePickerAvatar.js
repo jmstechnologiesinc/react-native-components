@@ -10,6 +10,8 @@ import { localized } from '../Localization/Localization';
 
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import ButtonWrapper from '../ButtonWrapper/ButtonWrapper';
+import { useNavigation } from '@react-navigation/native';
+import { checkAndAskForPermissionCamara } from '@jmstechnologiesinc/react-native-components/lib/ImagePicker/utils';
 
 export const IMAGE_PICKER_ACTIONS = {
     launchCamera: 'launchCamera',
@@ -22,17 +24,22 @@ const Avatar = ({
     photo,
     onChange,
     onRemove,
+    onShowCamera,
     title,
     variant = 'avatar',
     icon = 'account',
     size = moderateScale(150),
     options = [],
     isDisabled,
+
 }) => {
     const imagePickerRef = useRef();
     const actionSheetRef = useRef();
 
     const insets = useSafeAreaInsets();
+    const navigation = useNavigation()
+
+
 
     useEffect(() => {
         imagePickerRef.current = new ImagePickerAPI({
@@ -50,11 +57,19 @@ const Avatar = ({
     };
 
     const onActionDone = async (value) => {
+
         if (value === IMAGE_PICKER_ACTIONS.launchCamera) {
-            imagePickerRef.current.takePhoto().then((rep) => {
-                onChange(rep);
-                actionSheetRef.current.hide();
-            });
+            checkAndAskForPermissionCamara()
+                .then(() =>
+                    onShowCamera()
+                )
+                .catch(() => imagePickerRef.current.catchPermissionStatusCamara())
+
+
+            // imagePickerRef.current.takePhoto().then((rep) => {
+            //     onChange(rep);
+            //     actionSheetRef.current.hide();
+            // });
         } else if (value === IMAGE_PICKER_ACTIONS.launchImageLibrary) {
             imagePickerRef.current.chooseFromLibrary().then((rep) => {
                 onChange(rep);
