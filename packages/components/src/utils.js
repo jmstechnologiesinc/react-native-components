@@ -2,7 +2,8 @@ import { Dimensions, Linking, PixelRatio, Platform } from 'react-native';
 
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
-import { Config } from './config';
+
+import Config from 'react-native-config';
 
 export const makeLinkingCall = (phoneNumber) => {
     if (Platform.OS === 'android') {
