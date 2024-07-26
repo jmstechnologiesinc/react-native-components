@@ -5,7 +5,7 @@ import { MD3LightTheme, TouchableRipple } from '@jmstechnologiesinc/react-native
 
 import PhotoGalleryMainImage from './PhotoGalleryMainImage';
 import PhotoGalleryItem from './PhotoGalleryItem';
-import { imageKitListImage, imageKitListImagelqip, imageKitPhotoGalleryMainImage, imageKitPhotoGalleryMainImageLqip } from '../utils';
+import { imageKitListImage, imageKitListImagelqip, imageKitPhotoGalleryMainImage, imageKitPhotoGalleryMainImageLqip, isPublicUrl } from '../utils';
 
 export const renderImageSeparator = () => (
     <View
@@ -23,16 +23,16 @@ const PhotoGallery = ({ photos, showNav = true,imagekitCropMode, styles }) => {
         <TouchableRipple style={{marginVertical: MD3LightTheme.spacing.x2}} onPress={() => setSelectedIndex(index)}>
             <PhotoGalleryItem 
                 isActive={selectedIndex === index} 
-                lqipUri={imageKitListImagelqip(item)}
-                uri={imageKitListImage(item)} />
+                lqipUri={isPublicUrl(item) ? item : imageKitListImagelqip(item)}
+                uri={isPublicUrl(item) ? item : imageKitListImage(item)} />
         </TouchableRipple>
     );
 
     return photos?.length > 0 ? (
         <View style={styles}>
             <PhotoGalleryMainImage 
-                lqipUri={imageKitPhotoGalleryMainImageLqip(photos[selectedIndex], imagekitCropMode)}
-                uri={imageKitPhotoGalleryMainImage(photos[selectedIndex], imagekitCropMode)} />
+                lqipUri={isPublicUrl(photos[selectedIndex]) ? photos[selectedIndex] : imageKitPhotoGalleryMainImageLqip(photos[selectedIndex], imagekitCropMode)}
+                uri={isPublicUrl(photos[selectedIndex]) ? photos[selectedIndex] : imageKitPhotoGalleryMainImage(photos[selectedIndex], imagekitCropMode)} />
             {(showNav && photos?.length > 1) && (
                 <FlatList
                     data={photos}

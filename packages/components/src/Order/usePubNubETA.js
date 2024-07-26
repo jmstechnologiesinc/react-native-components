@@ -11,12 +11,12 @@ const PUBNUB = {
     SUBSCRIBE_KEY: 'sub-c-c64f4f86-dad8-11eb-8c90-a639cde32e15',
 };
 
-const pubnub = new PubNub({
+/* const pubnub = new PubNub({
     publishKey: PUBNUB.PUBLISH_KEY,
     subscribeKey: PUBNUB.SUBSCRIBE_KEY,
     ssl: true,
 });
-
+ */
 const usePubNubETA = ({ orderId, deliveryMethod, status, role, onPubNub }) => {
     const [etaValue, setEtaValue] = useState(null);
 

@@ -37,6 +37,10 @@ const isAVIFSupported = () => {
 
 const format = isAVIFSupported() ? 'f-avif' : 'f-jpeg';
 
+function isPublicUrl(url) {
+    return url?.includes?.('https://')
+}
+
 const imagekitUrl = (photos) => {
     const urlImageKit = `https://ik.imagekit.io/${Config.IMAGEKIT_URL}`;
 
@@ -75,7 +79,6 @@ function imageKitPhotoGalleryMainImage(photo, cropMode = "cm-pad_resize") {
 }
 
 function imageKitPhotoGalleryMainImageLqip(photo, cropMode = "cm-pad_resize") {
-    console.log(imagekitUrl(`tr:h-${moderateScale(195)},w-${Dimensions.get('window').width},q-1,${cropMode},bl-10,f-webp/${photo}`))
     return imagekitUrl(`tr:h-${moderateScale(195)},w-${Dimensions.get('window').width},q-1,${cropMode},bl-10,f-webp/${photo}`)
 }
 
@@ -90,4 +93,4 @@ function imageKitCardLqip(photo) {
     return imagekitUrl(`tr:w-${NET_CARD_WIDTH},h-${moderateScale(195)},q-1,bl-10,f-webp/${photo}`)
 }
 
-export { itemSeparator, showActionSheet, hideActionSheet, imagekitUrl, imageKitListImage, imageKitAvatar, imageKitPhotoGalleryMainImage, imageKitPhotoGalleryMainImageLqip, imageKitCard, imageKitCardLqip, imageKitListImagelqip };
+export { itemSeparator, showActionSheet, hideActionSheet, imagekitUrl, imageKitListImage, imageKitAvatar, imageKitPhotoGalleryMainImage, imageKitPhotoGalleryMainImageLqip, imageKitCard, imageKitCardLqip, imageKitListImagelqip,isPublicUrl };

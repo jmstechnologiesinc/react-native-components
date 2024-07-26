@@ -4,7 +4,7 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { IconButton } from '@jmstechnologiesinc/react-native-paper';
 import DraggableFlatList, { ScaleDecorator, NestableScrollContainer } from 'react-native-draggable-flatlist';
 import { MD3Colors, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
-import { imageKitListImage, imageKitListImagelqip, imageKitPhotoGalleryMainImage, imageKitPhotoGalleryMainImageLqip } from '../utils';
+import { imageKitListImage, imageKitListImagelqip, imageKitPhotoGalleryMainImage, imageKitPhotoGalleryMainImageLqip, isPublicUrl } from '../utils';
 import PhotoGalleryMainImage from './PhotoGalleryMainImage';
 import PhotoGalleryItem from './PhotoGalleryItem';
 import { renderImageSeparator } from './PhotoGallery';
@@ -28,8 +28,8 @@ const DraggablePhotoGallery = ({ photos, onChange, isDisabled }) => {
                 >
                     <PhotoGalleryItem
                         isActive={isSelected || isActive}
-                        lqipUri={item?.uri ? item.uri : imageKitListImagelqip(item)}
-                        uri={item?.uri ? item.uri : imageKitListImage(item)} />
+                        lqipUri={isPublicUrl(item) ? item : item?.uri ? item.uri : imageKitListImagelqip(item)}
+                        uri={isPublicUrl(item) ? item : item?.uri ? item.uri : imageKitListImage(item)} />
                     <IconButton
                         icon={MATERIAL_ICONS.remove}
                         mode="contained"
@@ -60,8 +60,8 @@ const DraggablePhotoGallery = ({ photos, onChange, isDisabled }) => {
     return photos?.length > 0 ? (
         <>
             <PhotoGalleryMainImage
-                lqipUri={photos[selectedIndex]?.uri ? photos[selectedIndex].uri : imageKitPhotoGalleryMainImageLqip(photos[selectedIndex])}
-                uri={photos[selectedIndex]?.uri ? photos[selectedIndex].uri : imageKitPhotoGalleryMainImage(photos[selectedIndex])} />
+                lqipUri={isPublicUrl(photos[selectedIndex]) ? photos[selectedIndex] : photos[selectedIndex]?.uri ? photos[selectedIndex].uri : imageKitPhotoGalleryMainImageLqip(photos[selectedIndex])}
+                uri={isPublicUrl(photos[selectedIndex]) ? photos[selectedIndex] : photos[selectedIndex]?.uri ? photos[selectedIndex].uri : imageKitPhotoGalleryMainImage(photos[selectedIndex])} />
             <NestableScrollContainer>
                 <DraggableFlatList
                     horizontal
