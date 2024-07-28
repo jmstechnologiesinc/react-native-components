@@ -1,6 +1,6 @@
 {
     "name": "@jmstechnologiesinc/react-native-components",
-    "version": "0.1.63",
+    "version": "0.1.67",
     "description": "> TODO: description",
     "author": "yerloveraaa <yerloveraaa@gmail.com>",
     "homepage": "https://github.com/jmstechnologiesinc/react-native-components#readme",
@@ -33,5 +33,5 @@
         "react": "*",
         "react-native": "*"
     },
-    "gitHead": "0f42e205cee57a6587bed5a3652b1e2762b30f84"
+    "gitHead": "6c5ad15cf5e166b5d05f36666a3560573e27d172"
 }
