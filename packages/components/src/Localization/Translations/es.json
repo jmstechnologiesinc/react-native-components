@@ -160,6 +160,7 @@
     "pleaseTryagain": "Por favor, inténtalo de nuevo.",
     "requestProcessingError": "Se produjo un error al procesar tu solicitud.",
     "industries": "Industrias",
+    "isLoading": "Cargando...",
     "geoPosition": "Posición geográfica",
     "recentLocation": "Ubicación reciente",
     "barCodeNumber": "Numbero de código de barra",

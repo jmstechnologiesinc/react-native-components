@@ -159,6 +159,7 @@
     "pleaseTryagain": "Please try again.",
     "requestProcessingError": "An error occured while procesing your request.",
     "industries": "Industries",
+    "isLoading": "Loading...",
     "geoPosition": "Geo Position",
     "recentLocation": "Recent Location",
     "locationPermissionRequired": "Location Permission Required",
