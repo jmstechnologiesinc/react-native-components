@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { StyleSheet, Dimensions, View } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import MapViewDirections from 'react-native-maps-directions';
+import MapViewDirections from '@jmstechnologiesinc/react-native-maps-directions';
 import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import { mapStyle } from '@jmstechnologiesinc/react-native-components/lib/GeoPositionTracker/mapStyle'
 const GOOGLE_PLACES_API_KEY = 'AIzaSyDj4t6Z_P4Iw8Az0-CrpfJZamqCHrwM950'
