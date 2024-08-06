@@ -5,20 +5,24 @@ import PubNub from 'pubnub';
 import { USER_ROLES } from '@jmstechnologiesinc/user';
 import { ORDER_STATUS } from '@jmstechnologiesinc/order';
 import { pubnubEtaChannelName } from '@jmstechnologiesinc/commons';
+import { useSelector } from 'react-redux';
 
 const PUBNUB = {
     PUBLISH_KEY: 'pub-c-e618e49b-b38a-4d80-8ee7-0fad9fcda279',
     SUBSCRIBE_KEY: 'sub-c-c64f4f86-dad8-11eb-8c90-a639cde32e15',
 };
 
-/* const pubnub = new PubNub({
-    publishKey: PUBNUB.PUBLISH_KEY,
-    subscribeKey: PUBNUB.SUBSCRIBE_KEY,
-    ssl: true,
-});
- */
 const usePubNubETA = ({ orderId, deliveryMethod, status, role, onPubNub }) => {
     const [etaValue, setEtaValue] = useState(null);
+    const [location, setLocation] = useState(null);
+    const user = useSelector((state) => state.auth.user);
+
+    const pubnub = new PubNub({
+        publishKey: PUBNUB.PUBLISH_KEY,
+        subscribeKey: PUBNUB.SUBSCRIBE_KEY,
+        ssl: true,
+        userId: user.id
+    });
 
     useEffect(() => {
         if (
@@ -31,6 +35,7 @@ const usePubNubETA = ({ orderId, deliveryMethod, status, role, onPubNub }) => {
                 message: function (msg) {
                     onPubNub?.(msg);
                     setEtaValue(msg.message.durationRemaining);
+                    setLocation(msg.message.location)
                 },
             });
 
@@ -40,7 +45,7 @@ const usePubNubETA = ({ orderId, deliveryMethod, status, role, onPubNub }) => {
         }
     }, [deliveryMethod, status, orderId, role]);
 
-    return etaValue;
+    return { etaValue, location };
 };
 
 export default usePubNubETA;
