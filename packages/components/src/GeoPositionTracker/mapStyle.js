@@ -1,3 +1,5 @@
+// https://mapstyle.withgoogle.com/
+
 export const mapStyle = [
     {
         "elementType": "geometry",
