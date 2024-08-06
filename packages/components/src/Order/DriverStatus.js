@@ -1,19 +1,15 @@
 import React from 'react';
 
-import { ITEM_TYPE, ITEM_TYPE_ICON_MAPPING, MATERIAL_ICONS, formattedETATime, getMainPhoto, milliseconsExtractor } from '@jmstechnologiesinc/commons';
+import { ITEM_TYPE, ITEM_TYPE_ICON_MAPPING, MATERIAL_ICONS, formattedETATime, milliseconsExtractor } from '@jmstechnologiesinc/commons';
 
-import usePubNubETA from '../Order/usePubNubETA';
 import { Avatar, List } from '@jmstechnologiesinc/react-native-paper';
-import { imagekitUrl, localized, makeLinkingCall } from '@jmstechnologiesinc/react-native-components';
-import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
-import { PixelRatio } from 'react-native';
+import { localized, makeLinkingCall } from '@jmstechnologiesinc/react-native-components';
+
 import { imageKitAvatar } from '../utils';
 
 const DriverStatus = ({
-    role,
-    orderId,
-    orderStatus,
-    orderDeliveryMethod,
+    milliseconds,
+
     deliveryMethod,
 
     name,
@@ -25,14 +21,8 @@ const DriverStatus = ({
     showEta = true,
     showStatus = true,
     showPhoneNumber = true,
-    showDeliveryMethod=true,
+    showDeliveryMethod = true,
 }) => {
-    const milliseconds = usePubNubETA({
-        role,
-        orderId,
-        deliveryMethod: orderDeliveryMethod,
-        status: orderStatus,
-    });
 
     let eta;
     if (milliseconds) {
@@ -49,8 +39,8 @@ const DriverStatus = ({
         : null;
 
     return (
-        <>      
-            {name ? ( 
+        <>
+            {name ? (
                 <List.Item
                     title={name}
                     description={vehicle}
@@ -67,7 +57,7 @@ const DriverStatus = ({
                     left={(props) => <List.Icon {...props} icon={eta.icon} />}
                 />
             ) : null}
-    
+
             {showStatus && status ? (
                 <List.Item
                     title={status}
@@ -75,13 +65,13 @@ const DriverStatus = ({
                     left={(props) => <List.Icon {...props} icon='message-text-clock-outline' />}
                 />
             ) : null}
-            
+
             {showDeliveryMethod && deliveryMethod ? (
                 <List.Item
                     title={deliveryMethod}
                     description={localized("driverPartnership")}
                     left={(props) => <List.Icon {...props} icon={MATERIAL_ICONS.fulfillmentMethod} />}
-                /> 
+                />
             ) : null}
 
             {showPhoneNumber && phoneNumber ? (
@@ -89,7 +79,7 @@ const DriverStatus = ({
                     title={phoneNumber}
                     left={(props) => <List.Icon {...props} icon={ITEM_TYPE_ICON_MAPPING[ITEM_TYPE.call]} />}
                     onPress={() => makeLinkingCall(phoneNumber)}
-                /> 
+                />
             ) : null}
         </>
     );
