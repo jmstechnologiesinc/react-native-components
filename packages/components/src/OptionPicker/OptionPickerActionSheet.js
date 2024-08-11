@@ -1,48 +1,68 @@
 import React, { useRef, useState } from 'react';
-import { Dimensions, Platform, ScrollView } from 'react-native';
-import { Button, HelperText } from '@jmstechnologiesinc/react-native-paper';
-import ActionSheet, { useScrollHandlers } from 'react-native-actions-sheet';
+import { Dimensions, Platform, FlatList } from 'react-native';
+import { Button, HelperText, List, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
+import ActionSheet from 'react-native-actions-sheet';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import JMSStyles from '../styles';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
-import ChipList from '../ChipList/ChipList';
 import NestedOptionPicker from './NestedOptionPicker';
-import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
-import ButtonWrapper from '../ButtonWrapper/ButtonWrapper';
 import { localized } from '../Localization/Localization';
-
 import { useHeaderHeight } from '@react-navigation/elements';
+import { TNActivityIndicator } from '../../../../../src/Core/truly-native';
+import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
+import ButtonWrapper from '@jmstechnologiesinc/react-native-components/lib/ButtonWrapper/ButtonWrapper';
+import ChipList from '@jmstechnologiesinc/react-native-components/lib/ChipList/ChipList';
 
 const WINDOW_HEIGHT = Dimensions.get('window').height;
 
 function OptionPickerActionSheet({
     isDisabled,
-    onPress,
+    variant = "chipList",
     options = [],
     preSelectedOptions = [],
     multiple = true,
-    chipListTitle = localized('Categories'),
     helpText,
     addButtonTitle = localized('pick'),
+    chipListTitle = localized('Categories'),
+    titleStyle,
+    helperTextStyle,
+    buttonWrapperStyle,
+    onShowActionSheetPress,
+    onPress
 }) {
     const actionSheetRef = useRef();
     const insets = useSafeAreaInsets();
-    const scrollHandlers = useScrollHandlers('scrollview-1', actionSheetRef);
-
+    const HEADER_HEIGHT = useHeaderHeight();
+    
     const [selectedOptions, setSelectedOptions] = useState(preSelectedOptions);
 
-    const HEADER_HEIGHT = useHeaderHeight();
+    const handleOptionPress = (option) => {
+        let updatedOptions;
 
-    const handleRemoveChip = (index) => {
-        const optionToRemove = preSelectedOptions[index];
-        setSelectedOptions((prev) => prev.filter((option) => option.id !== optionToRemove.id));
-        onPress(preSelectedOptions.filter((option) => option.id !== optionToRemove.id));
+        if (multiple) {
+            updatedOptions = selectedOptions.some((opt) => opt.id === option.id)
+                ? selectedOptions.filter((opt) => opt.id !== option.id)
+                : [...selectedOptions, option];
+        } else {
+            updatedOptions = [option];
+        }
+
+        setSelectedOptions(updatedOptions);
     };
 
-    const selectedTitles = preSelectedOptions.map((option) => option.title);
+    const handleRemoveChip = (index) => {
+        const updatedOptions = preSelectedOptions.filter((_, i) => i !== index);
+        onPress(updatedOptions);
+    };
+
+    const handlePickButtonPress = () => {
+        onPress(selectedOptions);
+        hideActionSheet();
+    };
 
     const showActionSheet = () => {
-        setSelectedOptions(preSelectedOptions);
+        setSelectedOptions(preSelectedOptions)
+        onShowActionSheetPress?.();
         actionSheetRef.current.show();
     };
 
@@ -51,21 +71,34 @@ function OptionPickerActionSheet({
 
     return (
         <>
-            <ScreenWrapper.Section title={chipListTitle}>
-                <ChipList
-                    isDisabled={isDisabled}
-                    options={selectedTitles}
-                    onPress={showActionSheet}
-                    onClose={handleRemoveChip}
-                    chipStyle={{ marginBottom: MD3LightTheme.spacing.x2 }}
-                />
+            <ScreenWrapper.Section title={chipListTitle} titleStyle={titleStyle}>
+                {variant === "chipList" ? (
+                    <ChipList
+                        isDisabled={isDisabled}
+                        options={preSelectedOptions.map(option => option.title)}
+                        onPress={showActionSheet}
+                        onClose={handleRemoveChip}
+                        chipStyle={{ marginBottom: MD3LightTheme.spacing.x2 }}
+                    />
+                ) : preSelectedOptions.map((option) => (
+                    <List.Item
+                        key={option.id}
+                        title={option.description}
+                        //description={option.description}
+                        titleNumberOfLines={0}
+                        descriptionNumberOfLines={0}
+                        right={(props) => <List.Icon {...props} icon={MATERIAL_ICONS.chevron} />}
+                        onPress={showActionSheet}
+                        style={{ marginLeft: 0 }}
+                    />
+                ))}
                 <ButtonWrapper
                     title={addButtonTitle}
                     isDisabled={isDisabled}
                     onPress={showActionSheet}
-                    style={{ marginLeft: 0 }}
+                    style={[{ marginLeft: 0 }, buttonWrapperStyle]}
                 />
-                {helpText ? <HelperText padding="none">{helpText}</HelperText> : null}
+                {helpText ? <HelperText style={helperTextStyle} padding='none'>{helpText}</HelperText> : null}
             </ScreenWrapper.Section>
 
             <ActionSheet
@@ -78,26 +111,31 @@ function OptionPickerActionSheet({
                 containerStyle={{
                     paddingBottom: insets.bottom,
                     height: actionSheetHeight,
-                }}
-            >
-                <ScrollView {...scrollHandlers}>
-                    <NestedOptionPicker
-                        isDisabled={isDisabled}
-                        options={options}
-                        preSelectedOptions={preSelectedOptions}
-                        multiple={multiple}
-                        onPress={setSelectedOptions}
+                }}>
+                {options?.length ? (
+                    <FlatList
+                        data={options}
+                        renderItem={({ item }) => (
+                            <NestedOptionPicker
+                                isDisabled={isDisabled}
+                                options={[item]}
+                                selectedOptions={selectedOptions}
+                                multiple={multiple}
+                                onOptionPress={handleOptionPress}
+                            />
+                        )}
+                        keyExtractor={(item) => item.id}
                     />
-                </ScrollView>
+                ) : (
+                    <TNActivityIndicator />
+                )}
+
                 <Button
                     mode="outlined"
                     uppercase
                     style={[JMSStyles.button, JMSStyles.buttonWithInset]}
                     disabled={isDisabled}
-                    onPress={() => {
-                        onPress(selectedOptions);
-                        hideActionSheet();
-                    }}
+                    onPress={handlePickButtonPress}
                 >
                     {localized('pick')}
                 </Button>

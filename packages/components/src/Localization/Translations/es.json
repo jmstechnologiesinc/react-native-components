@@ -147,6 +147,8 @@
         "saving": "GUARDANDO...",
         "save": "GUARDAR"
     },
+    "taxCode": "Código fiscal",
+    "taxCodeHelper": "Los códigos fiscales identifican productos que tienen tasas impositivas específicas dependiendo de dónde se gravan. Determinan la tributación de los bienes y servicios que vendes.",
     "noLocation": "Sin ubicación",
     "shoppingMode": "Modo de compra",
     "nearbyVendors": "Vendedores cercanos",
