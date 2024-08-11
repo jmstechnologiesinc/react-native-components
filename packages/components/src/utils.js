@@ -3,7 +3,8 @@ import { Dimensions, Linking, PixelRatio, Platform } from 'react-native';
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
-import Config from 'react-native-config';
+import { Config } from './Config'
+// import Config from 'react-native-config';
 
 export const makeLinkingCall = (phoneNumber) => {
     if (Platform.OS === 'android') {
@@ -94,4 +95,4 @@ function imageKitCardLqip(photo) {
     return imagekitUrl(`tr:w-${NET_CARD_WIDTH},h-${moderateScale(195)},q-1,bl-10,f-webp/${photo}`)
 }
 
-export { itemSeparator, showActionSheet, hideActionSheet, imagekitUrl, imageKitListImage, imageKitAvatar, imageKitPhotoGalleryMainImage, imageKitPhotoGalleryMainImageLqip, imageKitCard, imageKitCardLqip, imageKitListImagelqip,isPublicUrl };
+export { itemSeparator, showActionSheet, hideActionSheet, imagekitUrl, imageKitListImage, imageKitAvatar, imageKitPhotoGalleryMainImage, imageKitPhotoGalleryMainImageLqip, imageKitCard, imageKitCardLqip, imageKitListImagelqip, isPublicUrl };

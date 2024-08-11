@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 import { Button, TextInput, Portal, Dialog, HelperText, Text, MD3LightTheme, ProgressBar, MD3Colors } from '@jmstechnologiesinc/react-native-paper';
 
-import { localized } from '../Localization/Localization.native'
+import { localized } from '../Localization/Localization'
 import { StyleSheet } from 'react-native';
 
 import ScreenWrapper from '../ScreenWrapper';
