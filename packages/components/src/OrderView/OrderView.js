@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ScrollView, View } from 'react-native';
+import { ScrollView, View, Text } from 'react-native';
 
 import { Divider, List, MD3Colors, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
@@ -25,6 +25,8 @@ import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 import { localized } from '../Localization/Localization';
 import DriverStatus from '../Order/DriverStatus';
+import GeoPositionTracker from '../GeoPositionTracker';
+import usePubNubETA from '../Order/usePubNubETA';
 
 const getDriverDetails = (order, role) => {
     const results = [];
@@ -241,15 +243,24 @@ const OrderView = ({
             </ScreenWrapper.Container>
         ) : null;
 
+
+    const { etaValue: milliseconds, location: currentDriverPosition } = usePubNubETA({
+        role: role,
+        orderId: formattedOrder.orderId,
+        deliveryMethod: formattedOrder.deliveryMethod,
+        status: formattedOrder.status,
+    });
+
+
     return (
         <>
             <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
                 <View style={{ flex: 1 }}>
                     {role === USER_ROLES.customer || role === USER_ROLES.driver ? (
-                        <PhotoGallery 
-                            photos={[formattedOrder.photo]} 
+                        <PhotoGallery
+                            photos={[formattedOrder.photo]}
                             showNav={false}
-                            imagekitCropMode="c-maintain_ratio"/>
+                            imagekitCropMode="c-maintain_ratio" />
                     ) : null}
 
                     <OrderStatus
@@ -271,20 +282,28 @@ const OrderView = ({
 
                     <Divider style={{ marginTop: MD3LightTheme.spacing.x3 }} />
 
+                    <GeoPositionTracker
+                        customerPosition={{
+                            longitude: order.fulfillmentAddress.longitude,
+                            latitude: order.fulfillmentAddress.latitude
+                        }}
+                        currentDriverPosition={currentDriverPosition}
+                        vendorPosition={order.vendor.location}
+                    />
+                    <Divider style={{ marginTop: MD3LightTheme.spacing.x3 }} />
+
                     {(formattedOrder.fulfilmentStatus.driver.status || formattedOrder.fulfilmentStatus.driver.title) ? (
                         <>
                             <List.Section title={localized("driver")}>
                                 <DriverStatus
-                                    role={role}
-                                    orderId={formattedOrder.orderId}
-                                    orderStatus={formattedOrder.status}
-                                    orderDeliveryMethod={formattedOrder.deliveryMethod}
+                                    milliseconds={milliseconds}
                                     deliveryMethod={formattedOrder.fulfilmentStatus.driver.deliveryMethod}
                                     name={formattedOrder.fulfilmentStatus.driver.title}
                                     phoneNumber={formattedOrder.fulfilmentStatus.driver.phoneNumber}
                                     vehicle={formattedOrder.fulfilmentStatus.driver.vehicle}
                                     avatar={formattedOrder.fulfilmentStatus.driver.avatar}
                                     status={formattedOrder.fulfilmentStatus.driver.status}
+                                    order={order}
                                 />
                             </List.Section>
                             <Divider />
