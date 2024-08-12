@@ -5,7 +5,7 @@ import { imageKitListImage } from '../utils';
 
 function NestedOptionPicker({
     isDisabled,
-    options = [],
+    option,
     selectedOptions = [],
     multiple = true,
     onOptionPress,
@@ -50,7 +50,7 @@ function NestedOptionPicker({
         </>
     );
 
-    return options.map((option) => renderNestedOption(option));
+    return renderNestedOption(option);
 }
 
 const styles = StyleSheet.create({

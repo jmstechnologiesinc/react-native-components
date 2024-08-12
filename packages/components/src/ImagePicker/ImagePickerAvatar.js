@@ -11,7 +11,6 @@ import { localized } from '../Localization/Localization';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import ButtonWrapper from '../ButtonWrapper/ButtonWrapper';
 
-
 export const IMAGE_PICKER_ACTIONS = {
     launchCamera: 'launchCamera',
     launchImageLibrary: 'launchImageLibrary',
@@ -23,7 +22,6 @@ const Avatar = ({
     photo,
     onChange,
     onRemove,
-    onShowCamera,
     title,
     variant = 'avatar',
     icon = 'account',
@@ -34,10 +32,7 @@ const Avatar = ({
 }) => {
     const imagePickerRef = useRef();
     const actionSheetRef = useRef();
-
     const insets = useSafeAreaInsets();
-
-
 
     useEffect(() => {
         imagePickerRef.current = new ImagePickerAPI({
@@ -105,7 +100,6 @@ const Avatar = ({
                     title={title}
                     isDisabled={isDisabled}
                     onPress={isDisabled ? null : showActionSheet}
-                    style={{ marginLeft: 0 }}
                 />
             )}
 

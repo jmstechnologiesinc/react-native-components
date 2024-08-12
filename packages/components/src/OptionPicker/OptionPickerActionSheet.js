@@ -9,7 +9,6 @@ import NestedOptionPicker from './NestedOptionPicker';
 import { localized } from '../Localization/Localization';
 import { useHeaderHeight } from '@react-navigation/elements';
 import { TNActivityIndicator } from '../../../../../src/Core/truly-native';
-import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 import ButtonWrapper from '@jmstechnologiesinc/react-native-components/lib/ButtonWrapper/ButtonWrapper';
 import ChipList from '@jmstechnologiesinc/react-native-components/lib/ChipList/ChipList';
 
@@ -17,7 +16,7 @@ const WINDOW_HEIGHT = Dimensions.get('window').height;
 
 function OptionPickerActionSheet({
     isDisabled,
-    variant = "chipList",
+    isChipRemoveable=true,
     options = [],
     preSelectedOptions = [],
     multiple = true,
@@ -28,6 +27,7 @@ function OptionPickerActionSheet({
     helperTextStyle,
     buttonWrapperStyle,
     onShowActionSheetPress,
+    chipListOptionTitle,
     onPress
 }) {
     const actionSheetRef = useRef();
@@ -72,26 +72,13 @@ function OptionPickerActionSheet({
     return (
         <>
             <ScreenWrapper.Section title={chipListTitle} titleStyle={titleStyle}>
-                {variant === "chipList" ? (
-                    <ChipList
-                        isDisabled={isDisabled}
-                        options={preSelectedOptions.map(option => option.title)}
-                        onPress={showActionSheet}
-                        onClose={handleRemoveChip}
-                        chipStyle={{ marginBottom: MD3LightTheme.spacing.x2 }}
-                    />
-                ) : preSelectedOptions.map((option) => (
-                    <List.Item
-                        key={option.id}
-                        title={option.description}
-                        //description={option.description}
-                        titleNumberOfLines={0}
-                        descriptionNumberOfLines={0}
-                        right={(props) => <List.Icon {...props} icon={MATERIAL_ICONS.chevron} />}
-                        onPress={showActionSheet}
-                        style={{ marginLeft: 0 }}
-                    />
-                ))}
+                <ChipList
+                    isDisabled={isDisabled}
+                    options={preSelectedOptions.map(option => chipListOptionTitle ? chipListOptionTitle(option) : option.title)}
+                    onPress={showActionSheet}
+                    onClose={isChipRemoveable ? handleRemoveChip : null}
+                    chipStyle={{ marginBottom: MD3LightTheme.spacing.x2 }}
+                />
                 <ButtonWrapper
                     title={addButtonTitle}
                     isDisabled={isDisabled}
@@ -118,7 +105,7 @@ function OptionPickerActionSheet({
                         renderItem={({ item }) => (
                             <NestedOptionPicker
                                 isDisabled={isDisabled}
-                                options={[item]}
+                                option={item}
                                 selectedOptions={selectedOptions}
                                 multiple={multiple}
                                 onOptionPress={handleOptionPress}
