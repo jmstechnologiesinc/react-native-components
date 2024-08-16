@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { View } from 'react-native';
+import { View, Platform } from 'react-native';
 
-import { Text, Button, List, MD3LightTheme,Divider, Avatar, MD3Colors } from '@jmstechnologiesinc/react-native-paper';
+import { Text, Button, List, MD3LightTheme, Divider, Avatar, MD3Colors } from '@jmstechnologiesinc/react-native-paper';
 import { CART_ITEM_TYPE } from '@jmstechnologiesinc/cart';
 
 import CartListProductItem from './CartListProductItem';
@@ -23,9 +23,11 @@ const CartListItem = ({
     onEdit,
     onCheckout,
     renderTips,
-   
+
 }) => {
     const { vendor, type, description, isValid, data: productList, cartIndustryId } = item;
+
+    const [isSwiped, SetIsSwiped] = useState(true)
 
     if (type === CART_ITEM_TYPE.emptyItem) {
         return null;
@@ -64,29 +66,48 @@ const CartListItem = ({
                 )}
             />
 
-            {productList?.map((product, index) => (
-                <SwipeToDelete
-                    key={`swipeable-${index}`}
-                    onSwipeableRightOpen={() => onDelete(vendor.id, product.cartId, cartIndustryId)}
-                >
-                    <CartListProductItem
-                    key={`cart-list-product-item-${index}`}
-                    data={product}
-                        onEdit={() => onEdit(product, item.vendor, cartIndustryId)}
-                        descriptionNumberOfLines={1}
-                        showProductDescription={showProductDescription}
-                        interpunctAttributeGroup={false}
-                    />
-                    {itemSeparator(index, productList.length) ? <Divider horizontalInset key={`cart-list-item-divider-${index}`} /> : null}
-                </SwipeToDelete>
-            ))}
+            {
+                Platform.OS === 'web' ? productList?.map((product, index) => (
+                    <SwipeToDelete
+                        key={`swipeable-${index}`}
+                        onSwipeableRightOpen={() => onDelete(vendor.id, product.cartId, cartIndustryId)}
+                        handleSwipeChange={SetIsSwiped}
+                    >
+                        <CartListProductItem
+                            key={`cart-list-product-item-${index}`}
+                            data={product}
+                            onEdit={() => isSwiped ? onEdit(product, item.vendor, cartIndustryId) : null}
+                            descriptionNumberOfLines={1}
+                            showProductDescription={showProductDescription}
+                            interpunctAttributeGroup={false}
+                        />
+                        {itemSeparator(index, productList.length) ? <Divider horizontalInset key={`cart-list-item-divider-${index}`} /> : null}
+                    </SwipeToDelete>
+                )) : productList?.map((product, index) => (
+                    <SwipeToDelete
+                        key={`swipeable-${index}`}
+                        onSwipeableRightOpen={() => onDelete(vendor.id, product.cartId, cartIndustryId)}
+                    >
+                        <CartListProductItem
+                            key={`cart-list-product-item-${index}`}
+                            data={product}
+                            onEdit={() => onEdit(product, item.vendor, cartIndustryId)}
+                            descriptionNumberOfLines={1}
+                            showProductDescription={showProductDescription}
+                            interpunctAttributeGroup={false}
+                        />
+                        {itemSeparator(index, productList.length) ? <Divider horizontalInset key={`cart-list-item-divider-${index}`} /> : null}
+                    </SwipeToDelete>
+                ))
+            }
+
 
             <List.Section>
                 <ButtonWrapper
                     title={addTitle}
                     onPress={() => onAdd(item.vendor, cartIndustryId)} />
             </List.Section>
-   
+
             {renderTips ? renderTips(item) : null}
         </>
     );
