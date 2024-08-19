@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Alert } from 'react-native';
+import { Alert, View, Text } from 'react-native';
 
 import { Button, HelperText, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
@@ -10,15 +10,15 @@ import FormVerificationCode from './FormVerificationCode';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import CountryPicker from './CountryPicker';
 
-const FormPhoneNumber = ({ 
+const FormPhoneNumber = ({
     mode,
     title,
     value,
     isVerificationCodeVisible,
     isVereficationCodeLoading,
-    showSubmitButton=true,
-    showPhoneNumberValidationError=true,
-    showPhoneVerificationCodeAgreement=true,
+    showSubmitButton = true,
+    showPhoneNumberValidationError = true,
+    showPhoneVerificationCodeAgreement = true,
     isLoading,
     vereficationCodeError,
     onPhoneNumberLoginPress,
@@ -26,7 +26,7 @@ const FormPhoneNumber = ({
     onChangeText,
     onResendCodePress,
     onConfirmCodePress
- }) => {
+}) => {
     const phoneRef = useRef();
     const actionSheetRef = useRef();
 
@@ -65,8 +65,8 @@ const FormPhoneNumber = ({
         <>
             <ScreenWrapper.Section title={title}>
                 {phoneRef ? (
-                    <>                    
-                        <PhoneInput 
+                    <>
+                        <PhoneInput
                             ref={phoneRef}
                             mode={mode}
                             error={showPhoneNumberValidationError && !value}
@@ -79,8 +79,9 @@ const FormPhoneNumber = ({
                                 {localized('phoneNumberIsRequired')}
                             </HelperText>
                         ) : null}
+                        <View id='recaptcha' />
                     </>
-                )  : null}
+                ) : null}
             </ScreenWrapper.Section>
 
             {showSubmitButton ? (
@@ -88,8 +89,8 @@ const FormPhoneNumber = ({
                     <Button mode='contained'
                         onPress={onPress}
                         loading={isLoading}
-                        disabled={isLoading}> 
-                        {localized('logIn')} 
+                        disabled={isLoading}>
+                        {localized('logIn')}
                     </Button>
                 </ScreenWrapper.Section>
             ) : null}
@@ -108,7 +109,7 @@ const FormPhoneNumber = ({
                 onResendCodePress={resendVerificationCode}
                 onConfirmCodePress={onConfirmCodePress}
             />
-            
+
             <CountryPicker
                 ref={actionSheetRef}
                 data={countriesPickerData}
