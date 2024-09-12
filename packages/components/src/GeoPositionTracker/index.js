@@ -3,8 +3,9 @@ import { StyleSheet, Dimensions, View, Platform } from 'react-native';
 import MapView, { PROVIDER_GOOGLE,PROVIDER_DEFAULT } from 'react-native-maps';
 import MapViewDirections from '@jmstechnologiesinc/react-native-maps-directions';
 import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
-import { mapStyle } from '@jmstechnologiesinc/react-native-components/lib/GeoPositionTracker/mapStyle'
-const GOOGLE_PLACES_API_KEY = 'AIzaSyDj4t6Z_P4Iw8Az0-CrpfJZamqCHrwM950'
+import { mapStyle } from './mapStyle'
+
+import Config from 'react-native-config';
 
 const screen = Dimensions.get('window');
 const ASPECT_RATIO = screen.width / screen.height;
@@ -55,7 +56,7 @@ const GeoPositionTracker = ({
         <MapViewDirections
           origin={currentDriverPosition !== null ? currentDriverPosition : vendorPosition}
           destination={customerPosition}
-          apikey={GOOGLE_PLACES_API_KEY}
+          apikey={Config.GOOGLE_MAP_API_KEY}
           strokeColor={MD3LightTheme.colors.primary}
           strokeWidth={4}
           optimizeWaypoints={true}
