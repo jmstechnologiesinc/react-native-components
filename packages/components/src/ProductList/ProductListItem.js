@@ -51,14 +51,16 @@ const ProductListItem = ({
         <JMSList.Item
             title={title}
             description={descriptionList}
-            photo={isPublicUrl(photo) ? photo : imageKitListImage(photo)}
-            photoLqip={isPublicUrl(photo) ? photo : imageKitListImagelqip(photo)}
+            {...(photo && {
+                photo:isPublicUrl(photo) ? photo : imageKitListImage(photo),
+                photoLqip:isPublicUrl(photo) ? photo : imageKitListImagelqip(photo),
+            })}
             metaTitle={formattedPrice}
             metaQuantity={cartQuantity}
             onPress={onPress}
             titleNumberOfLines={0}
             left={left}
-            style={{ height: setDynamicSize }}
+           // style={{ height: setDynamicSize }}
         />
     );
 };

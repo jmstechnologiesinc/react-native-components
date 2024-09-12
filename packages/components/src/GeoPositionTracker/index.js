@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { StyleSheet, Dimensions, View } from 'react-native';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import { StyleSheet, Dimensions, View, Platform } from 'react-native';
+import MapView, { PROVIDER_GOOGLE,PROVIDER_DEFAULT } from 'react-native-maps';
 import MapViewDirections from '@jmstechnologiesinc/react-native-maps-directions';
 import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import { mapStyle } from '@jmstechnologiesinc/react-native-components/lib/GeoPositionTracker/mapStyle'
@@ -37,7 +37,10 @@ const GeoPositionTracker = ({
 
   return (
     <View style={styles.container}>
-      <MapView provider={PROVIDER_GOOGLE} style={styles.map}
+      <MapView 
+        provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT}
+
+        style={styles.map}
         ref={mapRef}
         initialRegion={{
           latitude: cameraLocation.current.latitude,
