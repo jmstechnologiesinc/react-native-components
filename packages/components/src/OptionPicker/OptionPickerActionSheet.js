@@ -16,7 +16,7 @@ const WINDOW_HEIGHT = Dimensions.get('window').height;
 
 function OptionPickerActionSheet({
     isDisabled,
-    isChipRemoveable=true,
+    isChipRemoveable = true,
     options = [],
     preSelectedOptions = [],
     multiple = true,
@@ -28,12 +28,13 @@ function OptionPickerActionSheet({
     buttonWrapperStyle,
     onShowActionSheetPress,
     chipListOptionTitle,
-    onPress
+    onPress,
+    onNavigation = false
 }) {
     const actionSheetRef = useRef();
     const insets = useSafeAreaInsets();
     const HEADER_HEIGHT = useHeaderHeight();
-    
+
     const [selectedOptions, setSelectedOptions] = useState(preSelectedOptions);
 
     const handleOptionPress = (option) => {
@@ -61,9 +62,13 @@ function OptionPickerActionSheet({
     };
 
     const showActionSheet = () => {
-        setSelectedOptions(preSelectedOptions)
-        onShowActionSheetPress?.();
-        actionSheetRef.current.show();
+        if (options?.length === 0 && onNavigation) {
+            onNavigation()
+        } else {
+            setSelectedOptions(preSelectedOptions)
+            onShowActionSheetPress?.()
+            actionSheetRef.current.show()
+        }
     };
 
     const hideActionSheet = () => actionSheetRef.current.hide();
