@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Dimensions, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import MapboxGL, { Logger } from '@rnmapbox/maps';
 import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Config } from '../Config'
 
-const APIKEY = 'pk.eyJ1Ijoiam1zdGVjaG5vbG9naWVzaW5jIiwiYSI6ImNsZWtrd2JqdDBpdXkzcnA1YzZ6amNwOGIifQ.1GwSU5_aWllbCNmP9M23aw'
-MapboxGL.setAccessToken(APIKEY);
 
 Logger.setLogCallback((log) => {
   const { message } = log;
@@ -18,8 +17,8 @@ Logger.setLogCallback((log) => {
   }
   return false;
 });
-MapboxGL.setAccessToken(APIKEY);
 
+MapboxGL.setAccessToken(Config.MAPBOX_ACCESS_TOKEN);
 MapboxGL.setTelemetryEnabled(false);
 
 
@@ -34,6 +33,8 @@ const GeoPositionTracker = ({
     customerPosition.latitude,
   ]);
   const [loading, setLoading] = useState(true);
+
+  const APIKEY = Config.MAPBOX_ACCESS_TOKEN
 
   useEffect(() => {
 
@@ -93,6 +94,9 @@ const GeoPositionTracker = ({
     ? [currentDriverPosition.longitude, currentDriverPosition.latitude]
     : [vendorPosition.longitude, vendorPosition.latitude];
 
+
+
+
   return (
     <View style={styles.container}>
       <MapboxGL.MapView
@@ -108,14 +112,25 @@ const GeoPositionTracker = ({
           animationDuration={2000}
         />
 
+        {centerCoordinate && (
+          <MapboxGL.PointAnnotation id="destination" coordinate={centerCoordinate}>
+            <View style={styles.destinationIcon}>
+              <MaterialCommunityIcons name="checkbox-blank-circle" size={24} color={MD3LightTheme.colors.primary} />
+            </View>
+          </MapboxGL.PointAnnotation>
+        )}
+
         {routeDirections && (
           <MapboxGL.ShapeSource id="routeSource" shape={routeDirections}>
             <MapboxGL.LineLayer
               id="routeLine"
               style={{ lineColor: MD3LightTheme.colors.primary, lineWidth: 4 }}
-            />
+            >
+            </MapboxGL.LineLayer>
           </MapboxGL.ShapeSource>
         )}
+
+
 
         {destinationCoords && (
           <MapboxGL.PointAnnotation id="destination" coordinate={destinationCoords}>
@@ -125,11 +140,11 @@ const GeoPositionTracker = ({
           </MapboxGL.PointAnnotation>
         )}
 
-        <MapboxGL.UserLocation
+        {/* <MapboxGL.UserLocation
           animated
           androidRenderMode="gps"
           showsUserHeadingIndicator
-        />
+        /> */}
 
       </MapboxGL.MapView>
 
@@ -141,19 +156,10 @@ const GeoPositionTracker = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: 800
+    height: 200
   },
   map: {
     flex: 1,
-  },
-  backButton: {
-    position: 'absolute',
-    top: 20,
-    left: 20,
-    zIndex: 1,
-    backgroundColor: 'rgba(0, 0 ,0 , 0.5)',
-    borderRadius: 20,
-    padding: 8,
   },
   loadingIndicator: {
     position: 'absolute',
@@ -161,53 +167,12 @@ const styles = StyleSheet.create({
     left: '50%',
     zIndex: 2,
   },
-  cardContainer: {
-    position: 'absolute',
-    top: 20,
-    right: 20,
-    zIndex: 1,
-  },
+
   destinationIcon: {
     width: 30,
     height: 30,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  routeProfileList: {
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-    backgroundColor: 'transparent',
-    zIndex: 1,
-  },
-  flatList: {
-    position: 'absolute',
-    bottom: 20,
-    left: Dimensions.get('window').width / 2 - 40,
-    right: 0,
-    backgroundColor: 'transparent',
-    zIndex: 1,
-  },
-  routeProfileButton: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    marginHorizontal: 8,
-    borderColor: '#fff',
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
-  },
-  selectedRouteProfileButton: {
-    backgroundColor: '#FA9E14',
-    borderColor: '#FA9E14',
-  },
-  routeProfileButtonText: {
-    color: '#fff',
-    marginTop: 5,
-  },
-  selectedRouteProfileButtonText: {
-    color: 'white',
   },
 });
 
