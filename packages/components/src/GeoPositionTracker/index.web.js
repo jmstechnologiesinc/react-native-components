@@ -1,8 +1,7 @@
+import 'mapbox-gl/dist/mapbox-gl.css';
 import React, { useEffect, useState } from 'react';
 import Map, { Source, Layer, Marker } from 'react-map-gl';
 import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
-
-
 
 import { ActivityIndicator, Dimensions, StyleSheet, View } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -66,6 +65,7 @@ const GeoPositionTracker = ({ customerPosition, currentDriverPosition, vendorPos
     ? [currentDriverPosition.longitude, currentDriverPosition.latitude]
     : [vendorPosition.longitude, vendorPosition.latitude];
 
+  console.log(centerCoordinate)
   return (
     <View style={styles.container}>
       <Map
@@ -78,9 +78,16 @@ const GeoPositionTracker = ({ customerPosition, currentDriverPosition, vendorPos
         mapStyle="mapbox://styles/mapbox/streets-v9"
         // mapStyle="mapbox://styles/mapbox/navigation-night-v1"
         mapboxAccessToken={Config.MAPBOX_ACCESS_TOKEN}
-        attributionControl={false}
+        attributionControl={true}
 
       >
+
+
+        {centerCoordinate && (
+          <Marker longitude={centerCoordinate[0]} latitude={centerCoordinate[1]}>
+            <MaterialCommunityIcons name="checkbox-blank-circle" size={16} color={MD3LightTheme.colors.primary} />
+          </Marker>
+        )}
         {routeDirections && (
           <Source id="routeSource" type="geojson" data={routeDirections}>
             <Layer
@@ -92,12 +99,11 @@ const GeoPositionTracker = ({ customerPosition, currentDriverPosition, vendorPos
           </Source>
         )}
 
-        {/* {destinationCoords && (
+        {destinationCoords && (
           <Marker longitude={destinationCoords[0]} latitude={destinationCoords[1]}>
             <MaterialCommunityIcons name="map-marker-radius" size={24} color={MD3LightTheme.colors.primary} />
-
           </Marker>
-        )} */}
+        )}
 
 
       </Map>
