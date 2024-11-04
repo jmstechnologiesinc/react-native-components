@@ -541,7 +541,6 @@
           "closing": "Gracias por utilizar nuestra aplicación. Nos esforzamos por proporcionar una experiencia fluida, ya sea que esté utilizando las secciones de Conductor, Comprar Comida, Vendedor o Compartir Viaje.",
           "signature": "Atentamente, El equipo de [Nombre de Su Empresa]",
           "buttonGoHome": "Ir a Inicio"
-        }
-      
-      
+        },
+        "locationPermissionDeniedBrowser": "Actualmente, el acceso a la ubicación está bloqueado en tu navegador para esta aplicación. Para activar este permiso y disfrutar de una experiencia personalizada basada en tu ubicación, haz clic en el ícono de candado o configuración junto a la barra de direcciones, abre 'Configuración del sitio' o 'Permisos del sitio' y ajusta la opción de 'Ubicación' a 'Permitir'. Esto mejorará tu experiencia al ofrecer servicios adaptados a tu ubicación. Agradecemos tu colaboración."
 }

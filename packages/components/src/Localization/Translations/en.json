@@ -542,5 +542,6 @@
         "closing": "Thank you for using our app. We strive to provide a seamless experience whether you are delivering food or driving.",
         "signature": "Best regards, The [Your Company Name] Team",
         "buttonGoHome": "Go to Home"
-    } 
+    },
+     "locationPermissionDeniedBrowser": "Location access is currently blocked in your browser for this application. To enable this permission and enjoy a more personalized experience based on your location, click the lock or settings icon next to the address bar, open “Site Settings” or “Permissions,” and set “Location” to “Allow.” This will enhance your experience by providing services tailored to your location. Thank you for your cooperation."
 }
