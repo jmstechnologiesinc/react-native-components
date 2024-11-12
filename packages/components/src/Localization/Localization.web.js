@@ -1,26 +1,33 @@
-import memoize from 'lodash.memoize';
-import i18n from 'i18n-js';
-
-export const translationGetters = {
-    es: () => require('./Translations/es.json'),
-    en: () => require('./Translations/en.json'),
-};
+import i18n from "i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
+import { initReactI18next } from "react-i18next";
+import enTranslation from './Translations/en.json';
+import esTranslation from './Translations/es.json';
 
 
+i18n
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    resources: {
+      en: { translation: enTranslation },
+      es: { translation: esTranslation },
+    },
+    debug: false,
+    fallbackLng: "en",
+
+    interpolation: {
+      escapeValue: false, 
+    },
+
+    react: {
+      useSuspense: false,
+    },
+  });
+
+  export const localized = (key, config = {}) => i18n.t(key, config);
 
 
-export const setI18nConfig = () => {
-    const language = navigator.language || navigator.userLanguage;
 
-    const languageTag = language.startsWith('es') ? 'es' : 'en';
-
-    i18n.translations = { [languageTag]: translationGetters[languageTag]() };
-    i18n.locale = languageTag;
-};
-
-export const localized = memoize(
-    (key, config) => (i18n.t(key, config).includes('missing') ? key : i18n.t(key, config)),
-    (key, config) => (config ? key + JSON.stringify(config) : key)
-);
-
+export default i18n;
 
