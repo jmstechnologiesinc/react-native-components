@@ -25,7 +25,6 @@ const feesListItem = (feeList) => {
     if (!feeList?.length) {
         return null;
     }
-    console.log(JSON.stringify(MD3LightTheme.fonts.titleLarge.fontSize,null,2))
 
     const results = [];
 

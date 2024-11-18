@@ -25,6 +25,7 @@ const DriverStatus = ({
 }) => {
 
     let eta;
+
     if (milliseconds) {
         const { hrs, mins } = milliseconsExtractor(milliseconds);
         eta = {
