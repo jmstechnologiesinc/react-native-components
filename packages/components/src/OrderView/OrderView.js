@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 
-import { ScrollView, View, Text } from 'react-native';
+import { ScrollView, View,  } from 'react-native';
 
 import { Divider, List, MD3Colors, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
@@ -24,9 +24,7 @@ import { firestoreTimestampToDate, plurulize } from '@jmstechnologiesinc/commons
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 import { localized } from '../Localization/Localization';
-import DriverStatus from '../Order/DriverStatus';
-import GeoPositionTracker from '../GeoPositionTracker';
-import usePubNubETA from '../Order/usePubNubETA';
+import RealTimeDriverTacking from '../Order/RealTimeDriverTacking';
 
 import Geolocation from 'react-native-geolocation-service';
 
@@ -246,42 +244,6 @@ const OrderView = ({
             </ScreenWrapper.Container>
         ) : null;
 
-
-    const { etaValue: milliseconds, location: currentDriverPosition } = usePubNubETA({
-        role: role,
-        orderId: formattedOrder.orderId,
-        deliveryMethod: formattedOrder.deliveryMethod,
-        status: formattedOrder.status,
-    });
-
-
-    const getLiveLocation = () => {
-        Geolocation.getCurrentPosition(
-            (position) => {
-                const { latitude, longitude } = position.coords;
-                setCoord({
-                    latitude,
-                    longitude,
-                });
-            },
-            (error) => {
-                console.error(error);
-            },
-            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-        );
-    };
-
-    useEffect(() => {
-
-        const locationInterval = setInterval(() => {
-            getLiveLocation();
-        }, 4000);
-        return () => {
-            clearInterval(locationInterval);
-        };
-    }, []);
-
-    console.log('get:' + JSON.stringify(coord, null, 2))
     return (
         <>
             <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
@@ -312,32 +274,29 @@ const OrderView = ({
 
                     <Divider style={{ marginTop: MD3LightTheme.spacing.x3 }} />
 
-                    <View style={{ flex: 1, scrollEnabled: false }}>
-                        <GeoPositionTracker
-                            customerPosition={{
-                                longitude: order.fulfillmentAddress.longitude,
-                                latitude: order.fulfillmentAddress.latitude,
-                            }}
-                            currentDriverPosition={coord}
-                            vendorPosition={order.vendor.location}
-                        />
-                    </View>
+                   {/*  <GeoPositionTracker
+                        customerPosition={{
+                            longitude: order.fulfillmentAddress.longitude,
+                            latitude: order.fulfillmentAddress.latitude
+                        }}
+                        currentDriverPosition={currentDriverPosition}
+                        vendorPosition={order.vendor.location}
+                    />
                     <Divider style={{ marginTop: MD3LightTheme.spacing.x3 }} />
-
+ */}
                     {(formattedOrder.fulfilmentStatus.driver.status || formattedOrder.fulfilmentStatus.driver.title) ? (
                         <>
-                            <List.Section title={localized("driver")}>
-                                <DriverStatus
-                                    milliseconds={milliseconds}
-                                    deliveryMethod={formattedOrder.fulfilmentStatus.driver.deliveryMethod}
-                                    name={formattedOrder.fulfilmentStatus.driver.title}
-                                    phoneNumber={formattedOrder.fulfilmentStatus.driver.phoneNumber}
-                                    vehicle={formattedOrder.fulfilmentStatus.driver.vehicle}
-                                    avatar={formattedOrder.fulfilmentStatus.driver.avatar}
-                                    status={formattedOrder.fulfilmentStatus.driver.status}
-                                    order={order}
-                                />
-                            </List.Section>
+                            <RealTimeDriverTacking
+                                orderId={order.id}
+                                status={order.status}
+                                role={role}
+                                deliveryMethod={formattedOrder.fulfilmentStatus.driver.deliveryMethod}
+                                driverName={formattedOrder.fulfilmentStatus.driver.title}
+                                phoneNumber={formattedOrder.fulfilmentStatus.driver.phoneNumber}
+                                vehicle={formattedOrder.fulfilmentStatus.driver.vehicle}
+                                avatar={formattedOrder.fulfilmentStatus.driver.avatar}
+                                driverStatus={formattedOrder.fulfilmentStatus.driver.status}
+                            />
                             <Divider />
                         </>
                     ) : null}
