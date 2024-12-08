@@ -8,17 +8,17 @@ import { localized } from '../Localization/Localization';
 
 const isTranslatePlatformCommission = (title) => {
 
-const regex = /^platformCommission\((\d+%)\)$/;
+    const regex = /^platformCommission\((\d+%)\)$/;
 
-const match = title.match(regex);
+    const match = title.match(regex);
 
-if (match) {
-  const percentage = match[1];
-  return localized('platformCommission', {percentage})
-} else {
-    return localized(title)
-  
-}
+    if (match) {
+        const percentage = match[1];
+        return localized('platformCommission', { percentage })
+    } else {
+        return localized(title)
+
+    }
 
 }
 const feesListItem = (feeList) => {
@@ -32,15 +32,15 @@ const feesListItem = (feeList) => {
         const styles =
             feeItem.id === 'total'
                 ? {
-                      titleVariant: 'headlineSmall',
-                      metaTitleVariant: 'labelLarge',
-                      titleStyle: { color: MD3LightTheme.colors.onSurfaceVariant },
-                      metaTitleStyle: { color: MD3LightTheme.colors.onSurface, lineHeight: MD3LightTheme.fonts.titleLarge.lineHeight, fontSize: MD3LightTheme.fonts.titleLarge.fontSize },
-                  }
+                    titleVariant: 'headlineSmall',
+                    metaTitleVariant: 'labelLarge',
+                    titleStyle: { color: MD3LightTheme.colors.onSurfaceVariant },
+                    metaTitleStyle: { color: MD3LightTheme.colors.onSurface, lineHeight: MD3LightTheme.fonts.titleLarge.lineHeight, fontSize: MD3LightTheme.fonts.titleLarge.fontSize },
+                }
                 : {
-                      style: { paddingVertical: 0 },
-                      titleStyle: { color: MD3LightTheme.colors.onSurface },
-                  };
+                    style: { paddingVertical: 0 },
+                    titleStyle: { color: MD3LightTheme.colors.onSurface },
+                };
 
         results.push(
             <JMSList.Item

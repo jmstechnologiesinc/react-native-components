@@ -357,7 +357,7 @@
     "useGPSLocation": "Utilizar ubicación GPS",
     "pending": "Pendiente",
     "from": "De",
-    "platformCommission": "Comisión de plataforma(%{percentage})",
+    "platformCommission": "Comisión de la plataforma {{percentage}}",
     "total": "Total",
     "subTotal": "Subtotal",
     "taxes": "Impuestos",
