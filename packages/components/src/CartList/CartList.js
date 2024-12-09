@@ -20,7 +20,6 @@ const CartList = ({
     listFooterComponent,
     listBottomComponent,
     listFooterComponentStyle,
-  
     ...props
 }) => {
     return (
@@ -39,8 +38,7 @@ const CartList = ({
                         onAdd={onAdd}
                         onDelete={onDelete} 
                         onEdit={onEdit} 
-                        onCheckout={onCheckout} 
-                        />
+                        onCheckout={onCheckout} />
                 )}
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}

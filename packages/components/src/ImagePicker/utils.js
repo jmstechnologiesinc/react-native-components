@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { PERMISSIONS, request } from 'react-native-permissions';
 
 export const checkAndAskForPermissionCamara = () =>
@@ -30,6 +31,9 @@ export const checkAndAskForPermissionMediaLibrary = () =>
                 permissionStatus = await request(PERMISSIONS.IOS.PHOTO_LIBRARY);
             }
 
+            if (Platform.OS === 'web') {
+                resolve(permissionStatus);
+            }
             if (permissionStatus === 'granted') {
                 resolve(permissionStatus);
             } else {

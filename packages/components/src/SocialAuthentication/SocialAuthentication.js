@@ -13,7 +13,7 @@ const SocialAuthentication = ({ onApplePress,
         <>
 
             {
-                Platform.OS === 'ios' &&
+
                 <ScreenWrapper.Section>
                     <Button
                         mode="outlined"

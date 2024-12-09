@@ -1,4 +1,4 @@
-import React  from 'react';
+import React, {  useState } from 'react';
 
 import { ScrollView, View,  } from 'react-native';
 
@@ -25,6 +25,8 @@ import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 import { localized } from '../Localization/Localization';
 import RealTimeDriverTacking from '../Order/RealTimeDriverTacking';
+
+import Geolocation from 'react-native-geolocation-service';
 
 const getDriverDetails = (order, role) => {
     const results = [];
@@ -83,6 +85,7 @@ const OrderView = ({
     }
 
     const fulfilmentDetails = [];
+    const [coord, setCoord] = useState(null);
 
     if (order.note === true) {
         fulfilmentDetails.push({

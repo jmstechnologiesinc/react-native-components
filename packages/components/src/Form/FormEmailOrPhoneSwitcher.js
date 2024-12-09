@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button,  Text } from '@jmstechnologiesinc/react-native-paper'
+import { Button, Text } from '@jmstechnologiesinc/react-native-paper'
 
 import FormPhoneNumber from './FormPhoneNumber'
 import EmailPassword from './FormEmailPassword'
@@ -19,8 +19,8 @@ const EmailOrPhoneSwitcher = ({
     isVerificationCodeVisible,
     isVereficationCodeLoading,
     isLoading,
-    isSwitcherEnable=true,
-    initialLoginOption=LOGIN_OPTIONS.PHONE,
+    isSwitcherEnable = true,
+    initialLoginOption = LOGIN_OPTIONS.PHONE,
     showResetPassword,
     showConfirmPasswordInput,
     onEmailPasswordLoginPress,
@@ -31,6 +31,7 @@ const EmailOrPhoneSwitcher = ({
     onResendCodePress,
     onConfirmCodePress,
     inputActionHandler,
+    onFailure
 }) => {
     const [selectedLogin, setSelectedLogin] = useState(initialLoginOption);
 
@@ -38,9 +39,9 @@ const EmailOrPhoneSwitcher = ({
         setSelectedLogin(initialLoginOption);
     }, [initialLoginOption])
 
-    return  <>
+    return <>
         {selectedLogin === LOGIN_OPTIONS.PHONE ? (
-            <FormPhoneNumber 
+            <FormPhoneNumber
                 isVerificationCodeVisible={isVerificationCodeVisible}
                 isVereficationCodeLoading={isVereficationCodeLoading}
                 showPhoneNumberValidationError={false}
@@ -49,7 +50,9 @@ const EmailOrPhoneSwitcher = ({
                 onPhoneNumberLoginPress={onPhoneNumberLoginPress}
                 onDismiss={onDismiss}
                 onResendCodePress={onResendCodePress}
-                onConfirmCodePress={onConfirmCodePress} />
+                onConfirmCodePress={onConfirmCodePress}
+                onFailure={onFailure}
+            />
         ) : (
             <EmailPassword
                 loginTitle={localized('logIn')}

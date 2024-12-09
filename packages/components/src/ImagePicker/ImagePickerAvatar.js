@@ -10,6 +10,7 @@ import { localized } from '../Localization/Localization';
 
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import ButtonWrapper from '../ButtonWrapper/ButtonWrapper';
+import { Platform } from 'react-native';
 
 export const IMAGE_PICKER_ACTIONS = {
     launchCamera: 'launchCamera',
@@ -28,10 +29,10 @@ const Avatar = ({
     size = moderateScale(150),
     options = [],
     isDisabled,
-
 }) => {
     const imagePickerRef = useRef();
     const actionSheetRef = useRef();
+
     const insets = useSafeAreaInsets();
 
     useEffect(() => {
@@ -50,7 +51,6 @@ const Avatar = ({
     };
 
     const onActionDone = async (value) => {
-
         if (value === IMAGE_PICKER_ACTIONS.launchCamera) {
             imagePickerRef.current.takePhoto().then((rep) => {
                 onChange(rep);
@@ -70,7 +70,11 @@ const Avatar = ({
     };
 
     const OPTIONS = [
-        { title: localized('takePhoto'), value: IMAGE_PICKER_ACTIONS.launchCamera, icon: 'camera' },
+        ...(Platform.OS !== 'web' ? [{
+            title: localized('takePhoto'),
+            value: IMAGE_PICKER_ACTIONS.launchCamera,
+            icon: 'camera'
+        }] : []),
         {
             title: localized('chooseFromLibrary'),
             value: IMAGE_PICKER_ACTIONS.launchImageLibrary,
@@ -100,6 +104,7 @@ const Avatar = ({
                     title={title}
                     isDisabled={isDisabled}
                     onPress={isDisabled ? null : showActionSheet}
+                    style={{ marginLeft: 0 }}
                 />
             )}
 
