@@ -160,6 +160,7 @@
     "appRequiresGeolocation": "This app needs your location to recommend nearby vendors around you, and provide positioning services, such as precise driver monitoring, real-time arrival estimate and delivery options.",
     "addLocation": "Add Location",
     "pleaseTryagain": "Please try again",
+    "anErrorOccurred": "An Error Occurred",
     "requestProcessingError": "An error occured while procesing your request.",
     "industries": "Industries",
     "isLoading": "Loading...",
