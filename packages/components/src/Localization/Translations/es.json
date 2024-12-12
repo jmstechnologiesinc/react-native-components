@@ -161,6 +161,7 @@
     "appRequiresGeolocation": "Esta aplicación necesita su ubicación para recomendar vendedores cercanos a su alrededor y brindar servicios de posicionamiento, como monitoreo preciso del conductor, estimación de llegada en tiempo real y opciones de entrega.",
     "addLocation": "Agregar ubicación",
     "pleaseTryagain": "Por favor, inténtalo de nuevo",
+    "anErrorOccurred": "Hubo un Error",
     "requestProcessingError": "Se produjo un error al procesar tu solicitud.",
     "industries": "Industrias",
     "isLoading": "Cargando...",
