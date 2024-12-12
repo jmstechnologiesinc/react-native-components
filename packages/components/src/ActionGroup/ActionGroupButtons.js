@@ -7,7 +7,7 @@ import { itemSeparator } from '../utils';
 
 const isPrimaryButton = (buttonLength, index) => index === buttonLength - 1;
 
-function isGreaterThan(arr) {
+const isGreaterThan = (arr) => {
     return arr.some(item => {
         const numericValue = parseFloat(item.title.replace('Update ·', '').replace('$', '').trim().replace(',', ''));
         return numericValue >= 1000;
