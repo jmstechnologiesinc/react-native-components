@@ -1,19 +1,31 @@
 import React from 'react';
 
-import { View } from 'react-native';
+import { Dimensions, View } from 'react-native';
 
-import { Button, FAB, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
+import { Button, FAB, MD3LightTheme, } from '@jmstechnologiesinc/react-native-paper';
 import { itemSeparator } from '../utils';
 
 const isPrimaryButton = (buttonLength, index) => index === buttonLength - 1;
 
+function isGreaterThan(arr) {
+    return arr.some(item => {
+        const numericValue = parseFloat(item.title.replace('Update ·', '').replace('$', '').trim().replace(',', ''));
+        return numericValue >= 1000;
+    });
+}
+
 const ActionGroupButtons = ({ buttons, isLoading, isStretched = false, style, onPress, variant = 'button' }) => {
+
+    const { width } = Dimensions.get('window');
+
     if (!buttons.length) {
         return null;
     }
 
+    const isGreaterText = width <= 600 && isGreaterThan(buttons) ? 1.2 : 1
+
     return (
-        <View style={[{ flexDirection: 'row', justifyContent: 'flex-end', flex: 1.2 }]}>
+        <View style={[{ flexDirection: 'row', justifyContent: 'flex-end', flex: isGreaterText }]}>
             {buttons.map((button, index) => {
                 return (
                     <View
@@ -56,6 +68,7 @@ const ActionGroupButtons = ({ buttons, isLoading, isStretched = false, style, on
                                 }
                                 icon={button.icon}
                                 onPress={() => onPress?.(button)}
+
                             >
                                 {button.title}
                             </Button>
