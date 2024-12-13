@@ -6,7 +6,7 @@ const styles = {
         marginHorizontal: MD3LightTheme.spacing.x4,
     },
     button: {
-        marginTop: MD3LightTheme.spacing.x2,
+        marginTop: MD3LightTheme.spacing.x1,
         marginHorizontal: MD3LightTheme.spacing.x4,
     },
     buttonWithInset: {

@@ -70,6 +70,8 @@
         "customer": {
             "selfCancelled": "Hubo un error al procesar tu pedido. Por favor, inténtalo de nuevo más tarde."
         },
+        "rejectNewOrder": "¿Estás seguro que deseas rechazar OID:",
+        "cancelOrder": "¿Estás seguro que deseas cancelar OID:",
         "newDeliveryRequest": "Nueva solicitud de entrega",
         "orderTitle": "Pedidos",
         "orderAutoConfirm": "Confirmar Automaticamente",
@@ -213,9 +215,9 @@
     "documents": "Documentos",
     "account": "Cuenta",
     "webDeliveryNotSupported": "La Aplicación Web Es Limitada.",
-    "installNativeDriverApp": "Descarga la aplicación móvil para acceder a todas las funciones y comenzar a ganar dinero con entregas. La plataforma web tiene funcionalidades limitadas para entregas.",
+    "installNativeDriverApp": "Descarga la aplicación móvil para acceder a todas las funciones y empezar a ganar dinero transportando paquetes, comida o pasajeros",
     "deliveryHistory": "Historial de Entregas",
-    "deliveryManager": "Managedor de Entregas",
+    "deliveryManager": "Manejador de Entregas",
     "paymentMethod": "Método de pago",
     "notifications": "Notificaciónes",
     "preferences": "Preferencias",
@@ -229,7 +231,7 @@
     "businessHours": "Horario de atención",
     "fulfillmentMethods": "Métodos de cumplimiento",
     "driverPartnership": "Asociación",
-    "financials": "Finanzas",
+    "financials": "Analítica",
     "users": "Usuarios",
     "customerFeebacks": "Comentarios de los clientes",
     "printerSetup": "Configuración de la impresora",
@@ -317,7 +319,6 @@
     "instructionsDelivery": "Agrega instrucciones para ayudarte con la entrega",
     "shippingAddress": "Dirección de envío",
     "currentLocation": "Ubicación actual",
-    "confirmAction": "¿Estás seguro de que quieres",
     "confirmActionRemoveImage": "¿Estás seguro de que quieres eliminar esta imagen?",
     "no": "No",
     "yes": "Sí",
@@ -393,7 +394,7 @@
     "createCategory": "Crear Categoría",
     "addCategory": "Agregar Categoría",
     "editCategory": "Editar categoría",
-    "inventoryManager": "Gestor de inventario",
+    "inventoryManager": "Manejador de inventario",
     "modifierGroups": "Grupos de modificadores",
     "modifierGroupsHelpText": "Ofrece opciones personalizables según las preferencias del cliente. Por ejemplo, un grupo de modificadores para una hamburguesa podría incluir opciones como Tipo de queso, Preferencia de cocción, Extras, etc.",
     "price": "Precio",
@@ -512,6 +513,7 @@
     "continuePhoneNumber": "Continuar con número de teléfono",
     "phoneVerificationCodeAgreement": "Por tu seguridad, aceptas recibir un codigo de verificacion por una unica vez por mensajes de texto a este numero de telefono. Es Posible que se apliquen cargos por mensajes y datos.",
     "continueEmail": "Continuar con correo electrónico",
+    "or": "O",
     "submitAndContinue": "Guardar y Continuar",
     "helpTextPasscodeIncorrect": "El código SMS que has ingresado es incorrecto.",
     "verificationCodeModalTitle": "Verifica tu numero de telefono",
@@ -548,5 +550,5 @@
           "signature": "Atentamente, El equipo de [Nombre de Su Empresa]",
           "buttonGoHome": "Ir a Inicio"
         },
-        "locationPermissionDeniedBrowser": "Actualmente, el acceso a la ubicación está bloqueado en tu navegador para esta aplicación. Para activar este permiso y disfrutar de una experiencia personalizada basada en tu ubicación, haz clic en el ícono de candado o configuración junto a la barra de direcciones, abre 'Configuración del sitio' o 'Permisos del sitio' y ajusta la opción de 'Ubicación' a 'Permitir'. Esto mejorará tu experiencia al ofrecer servicios adaptados a tu ubicación. Agradecemos tu colaboración."
+        "locationPermissionDeniedBrowser": "Para activar este permiso, haz clic en el ícono de candado o configuración junto a la barra de direcciones, abre 'Configuración del sitio' o 'Permisos del sitio' y ajusta la opción de 'Ubicación' a 'Permitir'"
 }

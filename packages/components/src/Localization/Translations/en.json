@@ -69,7 +69,8 @@
         "customer": {
             "selfCancelled": "There was an error processing your order. Please try again later."
         },
-
+        "rejectNewOrder": "Are you sure you want to reject OID:",
+        "cancelOrder": "Are you sure you want to cancel OID:",
         "newDeliveryRequest": "New Delivery Request",
         "orderTitle": "Order",
         "orderAutoConfirm": "Auto Confirm",
@@ -212,7 +213,7 @@
     "documents": "Documents",
     "account": "Account",
     "webDeliveryNotSupported": "Web App is Limited",
-    "installNativeDriverApp": " Download the mobile app to access full functionality and start earning money with deliveries. The web platform has limited features for delivery.",
+    "installNativeDriverApp": " Download the mobile app to access full functionality and start earning money trasporting goods, foods or riders",
     "deliveryHistory": "Delivery History",
     "deliveryManager": "Delivery Manager",
     "paymentMethod": "Payment Method",
@@ -228,7 +229,7 @@
     "businessHours": "Business Hours",
     "fulfillmentMethods": "Fulfillment Methods",
     "driverPartnership": "Asociación",
-    "financials": "Financials",
+    "financials": "Analytics",
     "users": "Users",
     "customerFeebacks": "Customer Feebacks",
     "printerSetup": "Printer Setup",
@@ -317,7 +318,6 @@
     "instructionsDelivery": "Add instructions to help you with delivery",
     "shippingAddress": "Shipping Address",
     "currentLocation": "Current Location",
-    "confirmAction": "Are you sure you want to",
     "confirmActionRemoveImage": "Are you sure you want to delete this image?",
     "no": "No",
     "yes": "Yes",
@@ -511,6 +511,7 @@
     "continueFacebook": "Continue with Facebook",
     "continuePhoneNumber": "Continue with Phone Number",
     "continueEmail": "Continue with email",
+    "or": "OR",
     "submitAndContinue": "Save and Continue",
     "completeYourProfile": "Complete Yor Profile",
     "phoneVerificationCodeAgreement": "For your security, you agree to receive a one-time verification code via text message to this phone number. Message and data charges may apply.",
@@ -549,5 +550,5 @@
         "signature": "Best regards, The [Your Company Name] Team",
         "buttonGoHome": "Go to Home"
     },
-     "locationPermissionDeniedBrowser": "Location access is currently blocked in your browser for this application. To enable this permission and enjoy a more personalized experience based on your location, click the lock or settings icon next to the address bar, open “Site Settings” or “Permissions,” and set “Location” to “Allow.” This will enhance your experience by providing services tailored to your location. Thank you for your cooperation."
+     "locationPermissionDeniedBrowser": "To enable location permission, click the lock or settings icon next to the address bar, open “Site Settings” or “Permissions,” and set “Location” to “Allow”"
 }

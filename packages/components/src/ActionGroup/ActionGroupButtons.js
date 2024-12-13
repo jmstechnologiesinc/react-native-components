@@ -13,7 +13,7 @@ const ActionGroupButtons = ({ buttons, isLoading, isStretched = false, style, on
     }
 
     return (
-        <View style={[{ flexDirection: 'row', justifyContent: 'flex-end', flex: 1 }]}>
+        <View style={[{ flexDirection: 'row', justifyContent: 'flex-end', flex: 2 }]}>
             {buttons.map((button, index) => {
                 return (
                     <View
