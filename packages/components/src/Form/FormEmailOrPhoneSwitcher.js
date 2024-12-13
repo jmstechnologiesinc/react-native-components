@@ -79,6 +79,7 @@ const EmailOrPhoneSwitcher = ({
                 <ScreenWrapper.Section>
                     <Button
                         mode="contained-tonal"
+                        icon={selectedLogin === LOGIN_OPTIONS.PHONE ?"email-outline" : "cellphone"}
                         onPress={() => setSelectedLogin(selectedLogin === LOGIN_OPTIONS.PHONE ? LOGIN_OPTIONS.EMAIL : LOGIN_OPTIONS.PHONE)}
                     >
                         {localized(selectedLogin === LOGIN_OPTIONS.PHONE ? 'continueEmail' : 'continuePhoneNumber')}
