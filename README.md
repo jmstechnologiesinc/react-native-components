@@ -1,22 +1,41 @@
+A starter project with react native 0.75.3, @storybook/react-native 8, storybook/addon-react-native-web
 
-## Made with ❤️ at Daxir
+![picture of storybook](https://github.com/user-attachments/assets/cf98766d-8b90-44ab-b718-94ab16e63205)
 
-`@jmstechnologiesinc/react-natice-components` is an open source project to cover tax/delivery use cases and will always remain free to use. Contact us at [joelmsantos@jmstechnologiesinc.com](mailto:joelmsantos@jmstechnologiesinc.com) if you need any help with these or just want to say hi!
+# getting started
 
-## Getting Started
+To get all the dependencies run
 
-Comming soon!
+```
+yarn install
+```
 
-## Documentation
+To run on the web with addon-react-native-web use:
 
-Comming soon!
+```
+yarn storybook:web
+```
 
-## Features
+To run storybook on ios or android using metro (this starts the metro server with storybook enabled)
 
-- Follows [material design guidelines](https://m3.material.io/get-started/)
-- Works on both iOS and Android following [platform adaptation guidelines](https://material.io/design/platform-guidance/cross-platform-adaptation.html)
+```
+yarn storybook
+```
 
+then to build for ios or android in another terminal run
 
-## Figma and Sketch component kits
+```
+yarn storybook:ios
+```
 
-Use official component kits provided by [Material Design](https://m3.material.io/).
+or
+
+```
+yarn storybook:android
+```
+
+To update the stories one time, this happens once automatically when metro starts and withStorybook is enabled.
+
+```
+yarn storybook-generate
+```
