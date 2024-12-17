@@ -1,11 +1,11 @@
 /** @type{import("@storybook/react-webpack5").StorybookConfig} */
 module.exports = {
-  stories: ['../components/**/*.stories.?(ts|tsx|js|jsx)'],
+  stories: ['../packages/components/src/**/*.stories.?(ts|tsx|js|jsx)'],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-react-native-web',
-    '@storybook/addon-webpack5-compiler-babel'
+    '@storybook/addon-webpack5-compiler-babel',
   ],
   framework: {
     name: '@storybook/react-webpack5',
