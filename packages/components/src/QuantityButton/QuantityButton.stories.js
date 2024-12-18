@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { View } from 'react-native';
 import QuantityButton from './QuantityButton';
 
-import useState from 'storybook-addon-state';
+
 import { IconButton, Text } from '@jmstechnologiesinc/react-native-paper';
 
 export default {

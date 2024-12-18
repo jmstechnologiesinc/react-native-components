@@ -1,4 +1,5 @@
 import type {Preview} from '@storybook/react';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 const preview: Preview = {
   parameters: {
@@ -12,4 +13,11 @@ const preview: Preview = {
   },
 };
 
+export const decorators = [
+  Story => (
+    <SafeAreaProvider>
+      <Story />
+    </SafeAreaProvider>
+  ),
+];
 export default preview;

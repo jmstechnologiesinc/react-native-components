@@ -551,5 +551,7 @@
         "signature": "Best regards, The [Your Company Name] Team",
         "buttonGoHome": "Go to Home"
     },
-     "locationPermissionDeniedBrowser": "To enable location permission, click the lock or settings icon next to the address bar, open “Site Settings” or “Permissions,” and set “Location” to “Allow”"
+     "locationPermissionDeniedBrowser": "To enable location permission, click the lock or settings icon next to the address bar, open “Site Settings” or “Permissions,” and set “Location” to “Allow”",
+     "dropoffLocation": "Dropoff location"
+     
 }

@@ -551,5 +551,6 @@
           "signature": "Atentamente, El equipo de [Nombre de Su Empresa]",
           "buttonGoHome": "Ir a Inicio"
         },
-        "locationPermissionDeniedBrowser": "Para activar este permiso, haz clic en el ícono de candado o configuración junto a la barra de direcciones, abre 'Configuración del sitio' o 'Permisos del sitio' y ajusta la opción de 'Ubicación' a 'Permitir'"
+        "locationPermissionDeniedBrowser": "Para activar este permiso, haz clic en el ícono de candado o configuración junto a la barra de direcciones, abre 'Configuración del sitio' o 'Permisos del sitio' y ajusta la opción de 'Ubicación' a 'Permitir'",
+        "dropoffLocation": "Ubicación de entrega"
 }
