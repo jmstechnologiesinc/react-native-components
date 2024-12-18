@@ -7,7 +7,6 @@ import { Config } from '../Config'
 
 const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus }) => {
   const ref = useRef(null);
-  console.log(`${Config.LOCAL_IP}/${Config.CORS_PROXY_DISPATCHER}`)
   return (
     <ScreenWrapper.Section title={localized(title)}>
       <GooglePlacesAutocomplete
@@ -39,7 +38,7 @@ const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus }
           types: 'geocode',
         }}
         requestUrl={{
-          url: `http://${Config.LOCAL_IP}/${Config.CORS_PROXY_DISPATCHER}`,
+          url: `${Config.CORS_PROXY_DISPATCHER_APP}`,
           useOnPlatform: 'web',
         }}
         listViewDisplayed="true"
