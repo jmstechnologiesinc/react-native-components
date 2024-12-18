@@ -1506,10 +1506,10 @@
     prop-types "^15.7.2"
     qs "~6.9.1"
 
-"@jmstechnologiesinc/react-native-image-blur-loading@^1.2.1":
-  version "1.2.2"
-  resolved "https://npm.pkg.github.com/download/@jmstechnologiesinc/react-native-image-blur-loading/1.2.2/13acfd7751459e1fe6bdc452869ec5416f847701"
-  integrity sha512-In4gNthhA9e8YnYW8p8ATljtWFnNhW/Pk/CcM8Hj09YYXNoqYYD5LHmMBRfK1l4TZe9OTX3vhDpGdmUFCZKkjQ==
+"@jmstechnologiesinc/react-native-image-blur-loading@^1.2.1", "@jmstechnologiesinc/react-native-image-blur-loading@^1.2.3":
+  version "1.2.3"
+  resolved "https://npm.pkg.github.com/download/@jmstechnologiesinc/react-native-image-blur-loading/1.2.3/a514de141292c149c3741ca674a153483cfad1a5"
+  integrity sha512-ycp2x7tZsBRsi1aaC410Jr6fnlZkdfc4oqoZB0rSNb5Kd3gn3s9m3vlvxSp0GiicYDdFi1CpvnUSLGzpD2UD+g==
   dependencies:
     "@jmstechnologiesinc/react-native-fast-image" "8.6.32"
 
