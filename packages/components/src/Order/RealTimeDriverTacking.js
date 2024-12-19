@@ -1,16 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import Config from 'react-native-config';
+import { List } from '@jmstechnologiesinc/react-native-paper';
 
 import { USER_ROLES } from '@jmstechnologiesinc/user';
 import { ORDER_STATUS } from '@jmstechnologiesinc/order';
 import { pubnubEtaChannelName } from '@jmstechnologiesinc/commons';
+
 import { Centrifuge } from 'centrifuge';
-import { List } from '@jmstechnologiesinc/react-native-paper';
 import DriverStatus from './DriverStatus';
 import { localized } from '../Localization/Localization';
 
-const centrifugeClient = new Centrifuge('ws://127.0.0.1:8000/connection/websocket');
+const centrifugeClient = new Centrifuge(`ws://${Config.FLEET_MANAGEMENT_CENTRIFUGO_HOST}:${Config.FLEET_MANAGEMENT_CENTRIFUGO_PORT}}/connection/websocket`);
 
 centrifugeClient.on('connected', function (ctx) {
   console.log(`centrifugo client connected:`, ctx);
@@ -70,19 +71,17 @@ const RealTimeDriverTacking = ({
     }, [status, orderId, role]);
   
     return (
-        <>
-            <List.Section title={localized("driver")}>
-                <DriverStatus
-                    milliseconds={etaValue}
-                    deliveryMethod={deliveryMethod}
-                    name={driverName}
-                    phoneNumber={phoneNumber}
-                    vehicle={vehicle}
-                    avatar={avatar}
-                    status={driverStatus}
-                />
-            </List.Section>
-        </>
+      <List.Section title={localized("driver")}>
+          <DriverStatus
+              milliseconds={etaValue}
+              deliveryMethod={deliveryMethod}
+              name={driverName}
+              phoneNumber={phoneNumber}
+              vehicle={vehicle}
+              avatar={avatar}
+              status={driverStatus}
+          />
+      </List.Section>
     )
 };
 
