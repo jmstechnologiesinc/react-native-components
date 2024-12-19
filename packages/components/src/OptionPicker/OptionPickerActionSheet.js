@@ -8,7 +8,7 @@ import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import NestedOptionPicker from './NestedOptionPicker';
 import { localized } from '../Localization/Localization';
 import { useHeaderHeight } from '@react-navigation/elements';
-import { TNActivityIndicator } from '../../../../../src/Core/truly-native';
+import { TNActivityIndicator } from '../truly-native';
 import ButtonWrapper from '@jmstechnologiesinc/react-native-components/lib/ButtonWrapper/ButtonWrapper';
 import ChipList from '@jmstechnologiesinc/react-native-components/lib/ChipList/ChipList';
 
