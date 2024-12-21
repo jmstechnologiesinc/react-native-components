@@ -40,6 +40,8 @@ export { default as ButtonWrapper } from "./ButtonWrapper/ButtonWrapper";
 export { default as SocialAuthentication } from "./SocialAuthentication/SocialAuthentication";
 
 export { default as AutoCompleteInput } from "./AutoCompleteInput";
+export { default as TNActivityIndicator } from "./truly-native/TNActivityIndicator";
+export { default as TNEmptyStateView } from "./truly-native/TNEmptyStateView";
 
 export { LAYOUT_MODE } from './consts';
 export { localized, setI18nConfig } from './Localization/Localization';
