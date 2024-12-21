@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import useState from 'storybook-addon-state';
 
 import ChipList from './ChipList';
 
