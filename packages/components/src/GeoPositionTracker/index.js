@@ -114,7 +114,7 @@ const GeoPositionTracker = ({
         <MapboxGL.Camera
           zoomLevel={12}
           centerCoordinate={centerCoordinate}
-          animationMode='moveTo'
+          animationMode='easeTo'
           animationDuration={2000}
         />
 
@@ -145,7 +145,7 @@ const GeoPositionTracker = ({
                   iconAnchor: 'center',
                   iconAllowOverlap: true,
                   iconRotate: driverHeading,
-                  iconSize: 0.7,
+                  iconSize: 0.5,
                 }}
               />
             </MapboxGL.ShapeSource>
