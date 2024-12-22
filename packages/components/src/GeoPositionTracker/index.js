@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import MapboxGL, { Logger } from '@rnmapbox/maps';
+import { View, StyleSheet, } from 'react-native';
+import MapboxGL, { Logger, SymbolLayer, Images } from '@rnmapbox/maps';
 import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Config } from '../Config'
@@ -83,11 +83,6 @@ const GeoPositionTracker = ({
       if (json.routes && json.routes.length) {
         const route = json.routes[0];
         const coordinates = route.geometry.coordinates;
-
-        // Log the entire response to understand its structure
-        console.log('Directions API response:', json);
-
-        // Extract the heading from the first step if available
         const steps = route.legs[0]?.steps;
         if (steps && steps.length) {
           const heading = steps[0].maneuver.bearing_after;
@@ -134,18 +129,27 @@ const GeoPositionTracker = ({
         )}
 
         {centerCoordinate && (
-          <MapboxGL.ShapeSource id="driverSource" shape={routeDirections}>
-            <MapboxGL.SymbolLayer
-              id="driverIcon"
-              style={{
-                iconImage: require('./tracking/car.png'),
-                iconSize: 0.5,
-                iconAnchor: 'center',
-                iconAllowOverlap: true,
-                iconRotate: driverHeading
+          <>
+
+            <MapboxGL.Images
+              images={{
+                driverIcon: require('./tracking/car.png'),
               }}
             />
-          </MapboxGL.ShapeSource>
+
+            <MapboxGL.ShapeSource id="driverSource" shape={routeDirections}>
+              <MapboxGL.SymbolLayer
+                id="driverIconLayer"
+                style={{
+                  iconImage: 'driverIcon',
+                  iconAnchor: 'center',
+                  iconAllowOverlap: true,
+                  iconRotate: driverHeading,
+                  iconSize: 0.7,
+                }}
+              />
+            </MapboxGL.ShapeSource>
+          </>
         )}
 
 
@@ -166,7 +170,7 @@ const GeoPositionTracker = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: 500
+    height: 200
   },
   map: {
     flex: 1,
