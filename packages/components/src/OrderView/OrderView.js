@@ -1,6 +1,6 @@
-import React, {  useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { ScrollView, View,  } from 'react-native';
+import { ScrollView, View, } from 'react-native';
 
 import { Divider, List, MD3Colors, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
@@ -25,6 +25,8 @@ import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 import { localized } from '../Localization/Localization';
 import RealTimeDriverTacking from '../Order/RealTimeDriverTacking';
+
+import GeoPositionTracker from '../GeoPositionTracker'
 
 import Geolocation from 'react-native-geolocation-service';
 
@@ -86,6 +88,33 @@ const OrderView = ({
 
     const fulfilmentDetails = [];
     const [coord, setCoord] = useState(null);
+
+    const getLiveLocation = () => {
+        Geolocation.getCurrentPosition(
+            (position) => {
+                const { latitude, longitude } = position.coords;
+                setCoord({
+                    latitude,
+                    longitude,
+                });
+            },
+            (error) => {
+                console.error(error);
+            },
+            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+        );
+    };
+
+    useEffect(() => {
+        const locationInterval = setInterval(() => {
+            getLiveLocation();
+        }, 4000);
+        return () => {
+            clearInterval(locationInterval);
+        };
+    }, []);
+
+    console.log('get:' + JSON.stringify(coord, null, 2))
 
     if (order.note === true) {
         fulfilmentDetails.push({
@@ -274,16 +303,17 @@ const OrderView = ({
 
                     <Divider style={{ marginTop: MD3LightTheme.spacing.x3 }} />
 
-                   {/*  <GeoPositionTracker
+                    <GeoPositionTracker
                         customerPosition={{
                             longitude: order.fulfillmentAddress.longitude,
                             latitude: order.fulfillmentAddress.latitude
                         }}
-                        currentDriverPosition={currentDriverPosition}
+                        currentDriverPosition={coord}
                         vendorPosition={order.vendor.location}
                     />
+
                     <Divider style={{ marginTop: MD3LightTheme.spacing.x3 }} />
- */}
+
                     {(formattedOrder.fulfilmentStatus.driver.status || formattedOrder.fulfilmentStatus.driver.title) ? (
                         <>
                             <RealTimeDriverTacking
