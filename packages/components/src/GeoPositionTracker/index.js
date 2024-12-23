@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
-import MapboxGL, { Logger } from '@rnmapbox/maps';
+import { View, StyleSheet, } from 'react-native';
+import MapboxGL, { Logger, SymbolLayer, Images } from '@rnmapbox/maps';
 import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Config } from '../Config'
-
 
 Logger.setLogCallback((log) => {
   const { message } = log;
@@ -32,7 +31,8 @@ const GeoPositionTracker = ({
     customerPosition.longitude,
     customerPosition.latitude,
   ]);
-  const [loading, setLoading] = useState(true);
+
+  const [driverHeading, setDriverHeading] = useState(0)
 
   const APIKEY = Config.MAPBOX_ACCESS_TOKEN
 
@@ -64,8 +64,9 @@ const GeoPositionTracker = ({
     };
   };
 
+
+
   const createRouteLine = async (startPosition, endPosition) => {
-    setLoading(true);
 
     const startCoords = `${startPosition.longitude},${startPosition.latitude}`;
     const endCoords = `${endPosition.longitude},${endPosition.latitude}`;
@@ -74,51 +75,48 @@ const GeoPositionTracker = ({
 
     const url = `https://api.mapbox.com/directions/v5/mapbox/${typeVehicle}/${startCoords};${endCoords}?alternatives=false&geometries=${geometries}&steps=true&overview=full&access_token=${APIKEY}`;
 
+
     try {
       const response = await fetch(url);
       const json = await response.json();
 
       if (json.routes && json.routes.length) {
-        const coordinates = json.routes[0].geometry.coordinates;
+        const route = json.routes[0];
+        const coordinates = route.geometry.coordinates;
+        const steps = route.legs[0]?.steps;
+        if (steps && steps.length) {
+          const heading = steps[0].maneuver.bearing_after;
+          setDriverHeading(heading);
+          console.log('Initial heading:', heading);
+        }
+
         setRouteDirections(makeRouterFeature(coordinates));
         setDestinationCoords(coordinates[coordinates.length - 1]);
       }
-      setLoading(false);
+
     } catch (error) {
       console.error('Error fetching directions:', error);
-      setLoading(false);
     }
+
   };
 
   const centerCoordinate = currentDriverPosition
     ? [currentDriverPosition.longitude, currentDriverPosition.latitude]
     : [vendorPosition.longitude, vendorPosition.latitude];
 
-
-
-
   return (
     <View style={styles.container}>
       <MapboxGL.MapView
         style={styles.map}
         zoomEnabled={true}
-        // styleURL="mapbox://styles/mapbox/navigation-night-v1"
         rotateEnabled={true}
       >
         <MapboxGL.Camera
           zoomLevel={12}
           centerCoordinate={centerCoordinate}
-          animationMode="flyTo"
+          animationMode='easeTo'
           animationDuration={2000}
         />
-
-        {centerCoordinate && (
-          <MapboxGL.PointAnnotation id="destination" coordinate={centerCoordinate}>
-            <View style={styles.destinationIcon}>
-              <MaterialCommunityIcons name="checkbox-blank-circle" size={24} color={MD3LightTheme.colors.primary} />
-            </View>
-          </MapboxGL.PointAnnotation>
-        )}
 
         {routeDirections && (
           <MapboxGL.ShapeSource id="routeSource" shape={routeDirections}>
@@ -128,6 +126,30 @@ const GeoPositionTracker = ({
             >
             </MapboxGL.LineLayer>
           </MapboxGL.ShapeSource>
+        )}
+
+        {centerCoordinate && (
+          <>
+
+            <MapboxGL.Images
+              images={{
+                driverIcon: require('./tracking/car.png'),
+              }}
+            />
+
+            <MapboxGL.ShapeSource id="driverSource" shape={routeDirections}>
+              <MapboxGL.SymbolLayer
+                id="driverIconLayer"
+                style={{
+                  iconImage: 'driverIcon',
+                  iconAnchor: 'center',
+                  iconAllowOverlap: true,
+                  iconRotate: driverHeading,
+                  iconSize: 0.5,
+                }}
+              />
+            </MapboxGL.ShapeSource>
+          </>
         )}
 
 
@@ -140,15 +162,7 @@ const GeoPositionTracker = ({
           </MapboxGL.PointAnnotation>
         )}
 
-        {/* <MapboxGL.UserLocation
-          animated
-          androidRenderMode="gps"
-          showsUserHeadingIndicator
-        /> */}
-
       </MapboxGL.MapView>
-
-      {loading && <ActivityIndicator size="large" color="white" style={styles.loadingIndicator} />}
     </View>
   );
 };
