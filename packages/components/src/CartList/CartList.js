@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useMemo, useRef } from 'react';
 
-import {FlatList, View} from 'react-native';
+import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
+import { FlatList, View } from 'react-native'
 
 import CartListItem from './CartListItem';
 
@@ -20,32 +21,71 @@ const CartList = ({
     listFooterComponent,
     listBottomComponent,
     listFooterComponentStyle,
+    isVisibleRideAndShare,
     ...props
 }) => {
+
+    const snapPoints = useMemo(() => ["80%", "85", "90", "95", "100%"], []);
+    const bottomSheetRef = useRef()
+
     return (
         <>
-            <FlatList
-                {...props}
-                data={sections}
-                keyExtractor={keyExtractor}
-                renderItem={({ item }) => (
-                    <CartListItem 
-                        checkoutTitle={checkoutTitle}
-                        addTitle={addTitle}
-                        showProductDescription={showProductDescription}
-                        item={item} 
-                        renderTips={renderTips} 
-                        onAdd={onAdd}
-                        onDelete={onDelete} 
-                        onEdit={onEdit} 
-                        onCheckout={onCheckout} />
-                )}
-                showsVerticalScrollIndicator={false}
-                showsHorizontalScrollIndicator={false}
-                ListHeaderComponent={listHeaderComponent}
-                ListFooterComponent={<View style={listFooterComponentStyle}>{listFooterComponent}</View>}
-            />
-            {listBottomComponent}
+
+            {isVisibleRideAndShare ?
+                <BottomSheet ref={bottomSheetRef} snapPoints={snapPoints} footerComponent={listBottomComponent}>
+                    <BottomSheetFlatList
+                        {...props}
+                        data={sections}
+                        keyExtractor={keyExtractor}
+                        renderItem={({ item }) => (
+                            <CartListItem
+                                checkoutTitle={checkoutTitle}
+                                addTitle={addTitle}
+                                showProductDescription={showProductDescription}
+                                item={item}
+                                renderTips={renderTips}
+                                onAdd={onAdd}
+                                onDelete={onDelete}
+                                onEdit={onEdit}
+                                onCheckout={onCheckout}
+                                isVisibleRideAndShare={isVisibleRideAndShare}
+                            />
+                        )}
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                        ListHeaderComponent={listHeaderComponent}
+                        ListFooterComponent={listFooterComponent}
+                    />
+                </BottomSheet>
+                :
+                <>
+                    <FlatList
+                        {...props}
+                        data={sections}
+                        keyExtractor={keyExtractor}
+                        renderItem={({ item }) => (
+                            <CartListItem
+                                checkoutTitle={checkoutTitle}
+                                addTitle={addTitle}
+                                showProductDescription={showProductDescription}
+                                item={item}
+                                renderTips={renderTips}
+                                onAdd={onAdd}
+                                onDelete={onDelete}
+                                onEdit={onEdit}
+                                onCheckout={onCheckout} />
+                        )}
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
+                        ListHeaderComponent={listHeaderComponent}
+                        ListFooterComponent={<View style={listFooterComponentStyle}>{listFooterComponent}</View>}
+                    />
+                    {listBottomComponent}
+                </>
+
+            }
+
+
         </>
     );
 };
