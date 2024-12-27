@@ -25,14 +25,18 @@ const CartList = ({
     ...props
 }) => {
 
-    const snapPoints = useMemo(() => ["80%", "85", "90", "95", "100%"], []);
+    const snapPoints = useMemo(() => ["50%", "70%", "80%", "85", "90", "95", "100%"], []);
     const bottomSheetRef = useRef()
 
     return (
         <>
 
             {isVisibleRideAndShare ?
-                <BottomSheet ref={bottomSheetRef} snapPoints={snapPoints} footerComponent={listBottomComponent}>
+                <BottomSheet
+                    ref={bottomSheetRef}
+                    snapPoints={snapPoints} footerComponent={listBottomComponent}
+                    index={2}
+                >
                     <BottomSheetFlatList
                         {...props}
                         data={sections}
