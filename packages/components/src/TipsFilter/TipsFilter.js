@@ -1,15 +1,15 @@
 import React from 'react';
 
-import {  Divider, MD3LightTheme, Text } from '@jmstechnologiesinc/react-native-paper';
+import { Divider, MD3LightTheme, Text } from '@jmstechnologiesinc/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper';
 import { localized } from '../Localization/Localization';
 import ChipList from '../ChipList/ChipList';
 
-const TipsFilter = ({ 
+const TipsFilter = ({
     options,
     description,
     selectedTipsPercentIndex,
-    onTipsPercentPress ,
+    onTipsPercentPress,
 }) => {
     return options?.length ? (
         <>
@@ -21,7 +21,7 @@ const TipsFilter = ({
                 <ChipList
                     options={options.map((item) => item.formattedValue)}
                     currentIndex={selectedTipsPercentIndex}
-                    onPress={(tipsIndex) => onTipsPercentPress(tipsIndex)}
+                    onPress={onTipsPercentPress}
                 />
             </ScreenWrapper.Section>
         </>

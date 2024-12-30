@@ -46,4 +46,7 @@ export { default as TNEmptyStateView } from "./truly-native/TNEmptyStateView";
 export { LAYOUT_MODE } from './consts';
 export { localized, setI18nConfig } from './Localization/Localization';
 
-export { default as CustomAlert } from './Alert/Alert'
+export { default as TipsFilter } from './TipsFilter/TipsFilter';
+export { default as CheckoutSummary } from './CheckoutSummary/CheckoutSummary';
+export { default as RideAndSharingCheckout } from './RideAndSharing/RideAndSharingCheckout'
+
