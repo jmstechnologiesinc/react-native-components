@@ -5,7 +5,7 @@ import { FlatList, View } from 'react-native'
 
 import CartListItem from './CartListItem';
 
-const keyExtractor = productItem => productItem.key || productItem.id;
+export const keyExtractor = productItem => productItem.key || productItem.id;
 
 const CartList = ({
     checkoutTitle,

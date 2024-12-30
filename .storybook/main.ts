@@ -5,6 +5,8 @@ module.exports = {
     '../packages/components/src/VendorView/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/ScreenWrapper/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/QuantityButton/*.stories.?(ts|tsx|js|jsx)',
+    '../packages/components/src/RideAndSharing/*.stories.?(ts|tsx|js|jsx)',
+    '../packages/components/src/TipsFilter/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/Accounting/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/ActionGroup/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/CartList/*.stories.?(ts|tsx|js|jsx)',
