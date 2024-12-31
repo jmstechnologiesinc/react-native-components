@@ -9,7 +9,7 @@ const TipsFilter = ({
     options,
     description,
     selectedTipsPercentIndex,
-    onTipsPercentPress ,
+    onTipsPercentPress,
 }) => {
     return options?.length ? (
         <>

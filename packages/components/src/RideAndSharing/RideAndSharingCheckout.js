@@ -10,6 +10,7 @@ import LocationListItem, { LOCATION_LIST_ITEM } from '../LocationListItem/Locati
 import { localized } from '../Localization/Localization';
 import ProductListItem from './ProductListItem';
 import { keyExtractor } from '../CartList/CartList';
+import JMSStyles from '../styles';
 
 const RideAndSharingCheckout = ({ 
     originLocationTitle,
@@ -87,7 +88,7 @@ const RideAndSharingCheckout = ({
                 ListHeaderComponent={listHeaderComponent}
                 ListFooterComponent={ListFooterComponent} 
             />
-            <FAB label={localized('requestRide')} onPress={onRequestRidePress}  />
+            <FAB label={localized('requestRide')} onPress={onRequestRidePress} style={JMSStyles.button}  />
         </>
       )
 };
