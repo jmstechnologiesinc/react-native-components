@@ -24,7 +24,9 @@ const RideAndSharingCheckout = ({
     dropoffLocationOnPress,
     onItemPress,
     onTipsPercentPress,
-    onRequestRidePress
+    onRequestRidePress,
+    isPaymentMethodVisible = true,
+    RenderPaymentMethod
 }) => {
     const listHeaderComponent = () => (
         <>
@@ -40,7 +42,14 @@ const RideAndSharingCheckout = ({
                     variant={LOCATION_LIST_ITEM.currentLocation}
                     onPress={dropoffLocationOnPress} />
             </List.Section>
-            <Divider style={{ marginBottom: MD3LightTheme.spacing.x1 }} />
+            {
+                isPaymentMethodVisible ? <>
+                    <Divider style={{ marginBottom: MD3LightTheme.spacing.x1 }} />
+                    <RenderPaymentMethod />
+                    <Divider style={{ marginBottom: MD3LightTheme.spacing.x1 }} />
+                </> : null
+            }
+
         </>
     );
 
