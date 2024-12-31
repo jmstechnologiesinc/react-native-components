@@ -12,10 +12,6 @@ import SwipeToDelete from '../SwipeToDelete/SwipeToDelete';
 import { Item as JMSItem } from '../List/List';
 import ButtonWrapper from '../ButtonWrapper/ButtonWrapper';
 import { getMainPhoto } from '@jmstechnologiesinc/commons';
-import { ridesData } from './mockDataUber'
-
-import * as JMSList from '../List/List';
-
 
 const CartListItem = ({
     checkoutTitle,
@@ -27,7 +23,6 @@ const CartListItem = ({
     onEdit,
     onCheckout,
     renderTips,
-    isVisibleRideAndShare
 
 }) => {
     const { vendor, type, description, isValid, data: productList, cartIndustryId } = item;
@@ -60,89 +55,58 @@ const CartListItem = ({
 
     return (
         <>
+            <JMSItem
+                title={vendor.title}
+                description={description}
+                descriptionStyle={isValid === false ? { color: MD3Colors.error50 } : null}
+                titleNumberOfLines={0}
+                descriptionNumberOfLines={0}
+                left={(props) => (
+                    <Avatar.Image style={props.style} source={{ uri: imageKitAvatar(getMainPhoto(vendor.photos)) }} />
+                )}
+            />
 
             {
-                !isVisibleRideAndShare ?
-                    <JMSItem
-                        title={vendor.title}
-                        description={description}
-                        descriptionStyle={isValid === false ? { color: MD3Colors.error50 } : null}
-                        titleNumberOfLines={0}
-                        descriptionNumberOfLines={0}
-                        left={(props) => (
-                            <Avatar.Image style={props.style} source={{ uri: imageKitAvatar(getMainPhoto(vendor.photos)) }} />
-                        )}
-                    />
-                    : null
+                Platform.OS === 'web' ? productList?.map((product, index) => (
+                    <SwipeToDelete
+                        key={`swipeable-${index}`}
+                        onSwipeableRightOpen={() => onDelete(vendor.id, product.cartId, cartIndustryId)}
+                        handleSwipeChange={SetIsSwiped}
+                    >
+                        <CartListProductItem
+                            key={`cart-list-product-item-${index}`}
+                            data={product}
+                            onEdit={() => isSwiped ? onEdit(product, item.vendor, cartIndustryId) : null}
+                            descriptionNumberOfLines={1}
+                            showProductDescription={showProductDescription}
+                            interpunctAttributeGroup={false}
+                        />
+                        {itemSeparator(index, productList.length) ? <Divider horizontalInset key={`cart-list-item-divider-${index}`} /> : null}
+                    </SwipeToDelete>
+                )) : productList?.map((product, index) => (
+                    <SwipeToDelete
+                        key={`swipeable-${index}`}
+                        onSwipeableRightOpen={() => onDelete(vendor.id, product.cartId, cartIndustryId)}
+                    >
+                        <CartListProductItem
+                            key={`cart-list-product-item-${index}`}
+                            data={product}
+                            onEdit={() => onEdit(product, item.vendor, cartIndustryId)}
+                            descriptionNumberOfLines={1}
+                            showProductDescription={showProductDescription}
+                            interpunctAttributeGroup={false}
+                        />
+                        {itemSeparator(index, productList.length) ? <Divider horizontalInset key={`cart-list-item-divider-${index}`} /> : null}
+                    </SwipeToDelete>
+                ))
             }
 
-            {
-                isVisibleRideAndShare ?
-                    ridesData.map((ride) => (
-                        <>
-                            <List.Section title={ride.title}>
-                                {ride.data.map((ride) => (
-                                    <>
-                                        <JMSList.Item
-                                            title={ride.type}
-                                            description={ride.description}
-                                            metaTitle={`$${ride.price}`}
-                                            photo={ride.photo}
-                                            titleNumberOfLines={0}
-                                        />
-                                        <Divider />
-                                    </>
-                                ))}
-                            </List.Section>
 
-
-                        </>
-
-                    ))
-                    :
-                    Platform.OS === 'web' ? productList?.map((product, index) => (
-                        <SwipeToDelete
-                            key={`swipeable-${index}`}
-                            onSwipeableRightOpen={() => onDelete(vendor.id, product.cartId, cartIndustryId)}
-                            handleSwipeChange={SetIsSwiped}
-                        >
-                            <CartListProductItem
-                                key={`cart-list-product-item-${index}`}
-                                data={product}
-                                onEdit={() => isSwiped ? onEdit(product, item.vendor, cartIndustryId) : null}
-                                descriptionNumberOfLines={1}
-                                showProductDescription={showProductDescription}
-                                interpunctAttributeGroup={false}
-                            />
-                            {itemSeparator(index, productList.length) ? <Divider horizontalInset key={`cart-list-item-divider-${index}`} /> : null}
-                        </SwipeToDelete>
-                    )) : productList?.map((product, index) => (
-                        <SwipeToDelete
-                            key={`swipeable-${index}`}
-                            onSwipeableRightOpen={() => onDelete(vendor.id, product.cartId, cartIndustryId)}
-                        >
-                            <CartListProductItem
-                                key={`cart-list-product-item-${index}`}
-                                data={product}
-                                onEdit={() => onEdit(product, item.vendor, cartIndustryId)}
-                                descriptionNumberOfLines={1}
-                                showProductDescription={showProductDescription}
-                                interpunctAttributeGroup={false}
-                            />
-                            {itemSeparator(index, productList.length) ? <Divider horizontalInset key={`cart-list-item-divider-${index}`} /> : null}
-                        </SwipeToDelete>
-                    ))
-            }
-
-            {
-                !isVisibleRideAndShare ? <List.Section>
-                    <ButtonWrapper
-                        title={addTitle}
-                        onPress={() => onAdd(item.vendor, cartIndustryId)} />
-                </List.Section>
-                    : null
-            }
-
+            <List.Section>
+                <ButtonWrapper
+                    title={addTitle}
+                    onPress={() => onAdd(item.vendor, cartIndustryId)} />
+            </List.Section>
 
             {renderTips ? renderTips(item) : null}
         </>
