@@ -1,29 +1,31 @@
 import React from 'react';
 
-import {  SectionList } from 'react-native';
+import { SectionList } from 'react-native';
 
-import {  Divider, FAB, HelperText, List, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
-import ScreenWrapper from '../ScreenWrapper';
-import Accounting from '../Accounting/Accounting';
+import { Divider, FAB, List, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import TipsFilter from '../TipsFilter/TipsFilter';
 import LocationListItem, { LOCATION_LIST_ITEM } from '../LocationListItem/LocationListItem';
 import { localized } from '../Localization/Localization';
 import ProductListItem from './ProductListItem';
 import { keyExtractor } from '../CartList/CartList';
+import styles from '../styles';
 
-const RideAndSharingCheckout = ({ 
+import CheckoutSummary from '../CheckoutSummary/CheckoutSummary'
+
+const RideAndSharingCheckout = ({
     originLocationTitle,
     originLocationDescription,
     dropoffLocationTitle,
     dropoffLocationDescription,
     products,
-    fees, 
+    fees,
     tipsFilter,
     originLocationOnPress,
     dropoffLocationOnPress,
     onItemPress,
-    onTipsPercentPress ,
-    onRequestRidePress
+    onTipsPercentPress,
+    onRequestRidePress,
+    RenderPaymentMethod
 }) => {
     const listHeaderComponent = () => (
         <>
@@ -39,7 +41,12 @@ const RideAndSharingCheckout = ({
                     variant={LOCATION_LIST_ITEM.currentLocation}
                     onPress={dropoffLocationOnPress} />
             </List.Section>
-            <Divider style={{ marginBottom: MD3LightTheme.spacing.x1 }} />
+            {
+                RenderPaymentMethod ? <List.Section title={localized("paymentMethod")}>
+                    <RenderPaymentMethod />
+                </List.Section> : null
+            }
+
         </>
     );
 
@@ -49,30 +56,25 @@ const RideAndSharingCheckout = ({
                 options={tipsFilter.options}
                 description={tipsFilter.description}
                 selectedTipsPercentIndex={tipsFilter.selectedTipsPercentIndex}
-                onTipsPercentPress={onTipsPercentPress}  />
-            {fees?.length ? (
-                <>
-                    <Divider style={{ marginTop: MD3LightTheme.spacing.x4 }} />
-                    <ScreenWrapper.Section>
-                        <Accounting feeList={fees} style={{ marginTop: MD3LightTheme.spacing.x4 }} />
-                    </ScreenWrapper.Section>
-                    <ScreenWrapper.Section>
-                        <HelperText padding='none' >{localized('checkoutTermAndCondition')}</HelperText>
-                    </ScreenWrapper.Section>
-                </>
-            ) : null}
+                onTipsPercentPress={onTipsPercentPress} />
+
+            <CheckoutSummary
+                netFeeList={fees}
+                termsAndConditions={'checkoutTermAndCondition'}
+            />
+
         </>
     );
 
     return (
-        <>  
+        <>
             <SectionList
                 sections={products}
                 keyExtractor={keyExtractor}
                 renderSectionHeader={({ section: { title } }) => (
                     <List.Subheader >
                         {title}
-                    </List.Subheader>       
+                    </List.Subheader>
                 )}
                 renderItem={({ item }) => (
                     <ProductListItem
@@ -85,11 +87,12 @@ const RideAndSharingCheckout = ({
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
                 ListHeaderComponent={listHeaderComponent}
-                ListFooterComponent={ListFooterComponent} 
+                ListFooterComponent={ListFooterComponent}
+                stickySectionHeadersEnabled={false}
             />
-            <FAB label={localized('requestRide')} onPress={onRequestRidePress}  />
+            <FAB label={localized('requestRide')} onPress={onRequestRidePress} style={styles.fba} />
         </>
-      )
+    )
 };
 
 

@@ -78,18 +78,20 @@ export const Pricing = () => {
   return (
     <ScreenWrapper>
       <ScreenWrapper.Container>
-        <RideAndSharingCheckout 
+        <RideAndSharingCheckout
           originLocationTitle={"155 Boxford St, Lawrence MA 01843"}
           originLocationDescription={"Origin Location"}
           dropoffLocationTitle={"2 Railroad St, Lawrence MA 01841"}
           dropoffLocationDescription={"Drop off Location"}
           tipsFilter={tipsFilter}
           products={products}
-          fees={ mockData}
+          fees={mockData}
           originLocationOnPress={() => null}
           dropoffLocationOnPress={() => null}
           onItemPress={() => null}
-          onTipsPercentPress={() => null} />
+          onTipsPercentPress={() => null}
+          isPaymentMethodVisible={false}
+        />
       </ScreenWrapper.Container>
     </ScreenWrapper>
   )
