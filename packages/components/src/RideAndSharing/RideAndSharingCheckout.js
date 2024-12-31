@@ -25,7 +25,6 @@ const RideAndSharingCheckout = ({
     onItemPress,
     onTipsPercentPress,
     onRequestRidePress,
-    isPaymentMethodVisible = true,
     RenderPaymentMethod
 }) => {
     const listHeaderComponent = () => (
@@ -43,11 +42,9 @@ const RideAndSharingCheckout = ({
                     onPress={dropoffLocationOnPress} />
             </List.Section>
             {
-                isPaymentMethodVisible ? <>
-                    <Divider style={{ marginBottom: MD3LightTheme.spacing.x1 }} />
+                RenderPaymentMethod ? <List.Section title={localized("paymentMethod")}>
                     <RenderPaymentMethod />
-                    <Divider style={{ marginBottom: MD3LightTheme.spacing.x1 }} />
-                </> : null
+                </List.Section> : null
             }
 
         </>
