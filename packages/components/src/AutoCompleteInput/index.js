@@ -1,12 +1,19 @@
-
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { GooglePlacesAutocomplete } from '@jmstechnologiesinc/react-native-google-places-autocomplete';
-import ScreenWrapper from '../ScreenWrapper'
-import { localized } from '../Localization/Localization'
-import { Config } from '../Config'
+import ScreenWrapper from '../ScreenWrapper';
+import { localized } from '../Localization/Localization';
+import { Config } from '../Config';
 
-const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus }) => {
+const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus, originLocation, dropoffLocation, }) => {
   const ref = useRef(null);
+  useEffect(() => {
+    if (originLocation) {
+      ref.current.setAddressText(originLocation);
+    } else if (dropoffLocation) {
+      ref.current.setAddressText(dropoffLocation);
+    }
+  }, [originLocation, dropoffLocation]);
+
   return (
     <ScreenWrapper.Section title={localized(title)}>
       <GooglePlacesAutocomplete
@@ -46,7 +53,7 @@ const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus }
         fetchDetails={false}
       />
     </ScreenWrapper.Section>
-  )
-}
+  );
+};
 
-export default AutoCompleteInput
+export default AutoCompleteInput;
