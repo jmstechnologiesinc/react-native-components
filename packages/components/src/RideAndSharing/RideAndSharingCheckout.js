@@ -17,7 +17,7 @@ const RideAndSharingCheckout = ({
     originLocationDescription,
     dropoffLocationTitle,
     dropoffLocationDescription,
-    products,
+    cart,
     fees,
     tipsFilter,
     originLocationOnPress,
@@ -52,24 +52,26 @@ const RideAndSharingCheckout = ({
 
     const ListFooterComponent = () => (
         <>
-            <TipsFilter
-                options={tipsFilter.options}
-                description={tipsFilter.description}
-                selectedTipsPercentIndex={tipsFilter.selectedTipsPercentIndex}
-                onTipsPercentPress={onTipsPercentPress} />
+            {tipsFilter ? (
+                <TipsFilter
+                    options={tipsFilter.options}
+                    description={tipsFilter.description}
+                    selectedTipsPercentIndex={tipsFilter.selectedTipsPercentIndex}
+                    onTipsPercentPress={onTipsPercentPress} />
+            ): null}
 
-            <CheckoutSummary
-                netFeeList={fees}
-                termsAndConditions={'checkoutTermAndCondition'}
-            />
-
+            {fees ? (
+                <CheckoutSummary
+                    netFeeList={fees}
+                    termsAndConditions={'checkoutTermAndCondition'} />
+            ) : null}
         </>
     );
 
     return (
         <>
             <SectionList
-                sections={products}
+                sections={cart.products}
                 keyExtractor={keyExtractor}
                 renderSectionHeader={({ section: { title } }) => (
                     <List.Subheader >
@@ -82,7 +84,7 @@ const RideAndSharingCheckout = ({
                         description={item.description}
                         price={item.price}
                         chips={item.chips}
-                        onPress={onItemPress} />
+                        onPress={() => onItemPress(item)} />
                 )}
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
