@@ -10,6 +10,7 @@ const ProductListItem = ({
     title,
     description,
     price,
+    isChecked,
     chips,
     onPress
  }) => (
@@ -18,6 +19,7 @@ const ProductListItem = ({
         title={title}
         description={description}
         metaTitle={price}
+        isChecked={isChecked}
         chips={chips?.map(chip => (
         <Chip
             mode="outlined"
