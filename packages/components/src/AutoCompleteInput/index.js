@@ -4,15 +4,13 @@ import ScreenWrapper from '../ScreenWrapper';
 import { localized } from '../Localization/Localization';
 import { Config } from '../Config';
 
-const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus, originLocation, dropoffLocation, }) => {
+const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus, value }) => {
   const ref = useRef(null);
   useEffect(() => {
-    if (originLocation) {
-      ref.current.setAddressText(originLocation);
-    } else if (dropoffLocation) {
-      ref.current.setAddressText(dropoffLocation);
+    if (value) {
+      ref.current.setAddressText(value);
     }
-  }, [originLocation, dropoffLocation]);
+  }, [value]);
 
   return (
     <ScreenWrapper.Section title={localized(title)}>
