@@ -11,6 +11,7 @@ import { keyExtractor } from '../CartList/CartList';
 import styles from '../styles';
 
 import CheckoutSummary from '../CheckoutSummary/CheckoutSummary'
+import GeoPositionTracker from '../GeoPositionTracker';
 
 const RideAndSharingCheckout = ({
     originLocationTitle,
@@ -25,10 +26,20 @@ const RideAndSharingCheckout = ({
     onItemPress,
     onTipsPercentPress,
     onRequestRidePress,
-    RenderPaymentMethod
+    RenderPaymentMethod,
+    originLocation,
+    dropoffLocation
 }) => {
     const listHeaderComponent = () => (
         <>
+            <GeoPositionTracker
+                customerPosition={{
+                    longitude: originLocation.longitude,
+                    latitude: originLocation.latitude
+                }}
+                currentDriverPosition={dropoffLocation}
+                vendorPosition={dropoffLocation}
+            />
             <List.Section title="Shipping Details">
                 <LocationListItem
                     title={originLocationTitle}
