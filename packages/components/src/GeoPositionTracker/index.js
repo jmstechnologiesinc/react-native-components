@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, } from 'react-native';
+import { View, StyleSheet, Dimensions, } from 'react-native';
 import MapboxGL, { Logger, SymbolLayer, Images } from '@rnmapbox/maps';
 import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -33,6 +33,8 @@ const GeoPositionTracker = ({
   ]);
 
   const [driverHeading, setDriverHeading] = useState(0)
+
+  const { height } = Dimensions.get('window');
 
   const APIKEY = Config.MAPBOX_ACCESS_TOKEN
 
@@ -105,83 +107,77 @@ const GeoPositionTracker = ({
     : [vendorPosition.longitude, vendorPosition.latitude];
 
   return (
-    <View style={styles.container}>
-      <MapboxGL.MapView
-        style={styles.map}
-        zoomEnabled={true}
-        rotateEnabled={true}
-      >
-        <MapboxGL.Camera
-          zoomLevel={12}
-          centerCoordinate={centerCoordinate}
-          animationMode='easeTo'
-          animationDuration={2000}
-        />
 
-        {routeDirections && (
-          <MapboxGL.ShapeSource id="routeSource" shape={routeDirections}>
-            <MapboxGL.LineLayer
-              id="routeLine"
-              style={{ lineColor: MD3LightTheme.colors.primary, lineWidth: 4 }}
-            >
-            </MapboxGL.LineLayer>
-          </MapboxGL.ShapeSource>
-        )}
+    <MapboxGL.MapView
+      style={{
+        height: height * 0.7
+      }}
+      zoomEnabled={true}
 
-        {centerCoordinate && (
-          <>
+    >
+      <MapboxGL.Camera
+        zoomLevel={15}
+        centerCoordinate={centerCoordinate}
+        animationMode='easeTo'
+        animationDuration={2000}
+      />
 
-            <MapboxGL.Images
-              images={{
-                driverIcon: require('./tracking/car.png'),
+      {routeDirections && (
+        <MapboxGL.ShapeSource id="routeSource" shape={routeDirections}>
+          <MapboxGL.LineLayer
+            id="routeLine"
+            style={{ lineColor: MD3LightTheme.colors.primary, lineWidth: 4 }}
+          >
+          </MapboxGL.LineLayer>
+        </MapboxGL.ShapeSource>
+      )}
+
+      {centerCoordinate && (
+        <>
+
+          <MapboxGL.Images
+            images={{
+              driverIcon: require('./tracking/car.png'),
+            }}
+          />
+
+          <MapboxGL.ShapeSource id="driverSource" shape={routeDirections}>
+            <MapboxGL.SymbolLayer
+              id="driverIconLayer"
+              style={{
+                iconImage: 'driverIcon',
+                iconAnchor: 'center',
+                iconAllowOverlap: true,
+                iconRotate: driverHeading,
+                iconSize: 0.5,
               }}
             />
+          </MapboxGL.ShapeSource>
 
-            <MapboxGL.ShapeSource id="driverSource" shape={routeDirections}>
-              <MapboxGL.SymbolLayer
-                id="driverIconLayer"
-                style={{
-                  iconImage: 'driverIcon',
-                  iconAnchor: 'center',
-                  iconAllowOverlap: true,
-                  iconRotate: driverHeading,
-                  iconSize: 0.5,
-                }}
-              />
-            </MapboxGL.ShapeSource>
-          </>
-        )}
+          <MapboxGL.UserLocation
+            animated={true}
+            androidRenderMode={'gps'}
+            showsUserHeadingIndicator={true}
+          />
+        </>
+      )}
 
 
 
-        {destinationCoords && (
-          <MapboxGL.PointAnnotation id="destination" coordinate={destinationCoords}>
-            <View style={styles.destinationIcon}>
-              <MaterialCommunityIcons name="map-marker-radius" size={24} color={MD3LightTheme.colors.primary} />
-            </View>
-          </MapboxGL.PointAnnotation>
-        )}
+      {destinationCoords && (
+        <MapboxGL.PointAnnotation id="destination" coordinate={destinationCoords}>
+          <View style={styles.destinationIcon}>
+            <MaterialCommunityIcons name="map-marker-radius" size={24} color={MD3LightTheme.colors.primary} />
+          </View>
+        </MapboxGL.PointAnnotation>
+      )}
 
-      </MapboxGL.MapView>
-    </View>
+    </MapboxGL.MapView>
+
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    height: 200
-  },
-  map: {
-    flex: 1,
-  },
-  loadingIndicator: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    zIndex: 2,
-  },
-
   destinationIcon: {
     width: 30,
     height: 30,
