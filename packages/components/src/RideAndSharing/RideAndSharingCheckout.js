@@ -2,8 +2,9 @@ import React from 'react';
 
 import { SectionList } from 'react-native';
 
-import { Divider, FAB, List, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
+import { FAB, List } from '@jmstechnologiesinc/react-native-paper';
 import TipsFilter from '../TipsFilter/TipsFilter';
+import {ACCOUNTING_ITEMS} from "@jmstechnologiesinc/cart";
 import LocationListItem, { LOCATION_LIST_ITEM } from '../LocationListItem/LocationListItem';
 import { localized } from '../Localization/Localization';
 import ProductListItem from './ProductListItem';
@@ -18,6 +19,7 @@ const RideAndSharingCheckout = ({
     dropoffLocationTitle,
     dropoffLocationDescription,
     cart,
+    selectedProductIndex,
     fees,
     tipsFilter,
     originLocationOnPress,
@@ -41,12 +43,11 @@ const RideAndSharingCheckout = ({
                     variant={LOCATION_LIST_ITEM.currentLocation}
                     onPress={dropoffLocationOnPress} />
             </List.Section>
-            {
-                RenderPaymentMethod ? <List.Section title={localized("paymentMethod")}>
+            {RenderPaymentMethod ? (
+                <List.Section title={localized("paymentMethod")}>
                     <RenderPaymentMethod />
-                </List.Section> : null
-            }
-
+                </List.Section> 
+            ): null}
         </>
     );
 
@@ -80,11 +81,12 @@ const RideAndSharingCheckout = ({
                 )}
                 renderItem={({ item }) => (
                     <ProductListItem
+                        isChecked={item.driver.id === selectedProductIndex}
                         title={item.title}
-                        description={item.description}
-                        price={item.price}
+                        description={item.description ? [item.eta.formattedValue, item.description] : item.eta.formattedValue}
+                        price={item.fees[ACCOUNTING_ITEMS.total].formattedValue}
                         chips={item.chips}
-                        onPress={() => onItemPress(item)} />
+                        onPress={() => onItemPress(item.driver.id)} />
                 )}
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}

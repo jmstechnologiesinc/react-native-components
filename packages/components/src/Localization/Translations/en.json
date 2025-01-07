@@ -129,8 +129,6 @@
         "shippingAddress": "Shipping Address",
         "pickupAddress": "Pickup Address",
         "paymentMethod": "Payment Method",
-        "distance": "Distance",
-        "duration": "Duration",
         "deliveryDetails": "Delivery Details",
         "pickupDetails": "Pickup Details",
         "telemetry": "Telemetry",

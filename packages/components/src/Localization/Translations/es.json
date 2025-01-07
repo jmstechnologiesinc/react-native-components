@@ -117,8 +117,6 @@
         "shippingAddress": "Dirección de envío",
         "pickupAddress": "Dirección de recogida",
         "paymentMethod": "Método de pago",
-        "distance": "Distancia",
-        "duration": "Duración",
         "deliveryDetails": "Detalles de entrega",
         "pickupDetails": "Detalles de recogida",
         "telemetry": "Telemetría",
