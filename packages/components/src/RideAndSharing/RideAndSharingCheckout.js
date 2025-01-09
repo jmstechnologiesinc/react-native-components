@@ -107,7 +107,7 @@ const RideAndSharingCheckout = ({
         <>
             <BottomSheet
                 ref={bottomSheetRef}
-                index={3}
+                index={1}
                 snapPoints={snapPoints}
                 enablePanDownToClose={false}
                 footerComponent={renderFooter}
