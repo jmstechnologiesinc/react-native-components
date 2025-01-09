@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import BottomSheet, { BottomSheetFooter, BottomSheetSectionList } from "@gorhom/bottom-sheet";
 import { Divider, FAB, List, MD3LightTheme, Text } from "@jmstechnologiesinc/react-native-paper";
 import TipsFilter from "../TipsFilter/TipsFilter";
@@ -12,6 +12,7 @@ import CheckoutSummary from "../CheckoutSummary/CheckoutSummary";
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper'
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import GeoPositionTracker from "../GeoPositionTracker";
 const RideAndSharingCheckout = ({
     originLocationTitle,
     originLocationDescription,
@@ -28,11 +29,13 @@ const RideAndSharingCheckout = ({
     RenderPaymentMethod,
     withBottomInset = true,
     withTopInset = false,
+    originLocation,
+    dropoffLocation
 }) => {
     const bottomSheetRef = useRef(null);
 
     const snapPoints = useMemo(() => ["50%", "70%", "80%", "85", "90", "95", "100%"], []);
-
+    const [currentSnapPoint, setCurrentSnapPoint] = useState(0.5);
     const insets = useSafeAreaInsets();
 
     const isInsetsBottom = insets.bottom === 0 ? MD3LightTheme.spacing.x4 : insets.bottom;
@@ -103,11 +106,40 @@ const RideAndSharingCheckout = ({
         []
     );
 
+    const getValueFromIndex = (index) => {
+        switch (index) {
+            case 0:
+                return 0.5;
+            case 1:
+                return 0.3;
+            default:
+                return 0.5;
+        }
+    };
+
+    const handleSheetChange = useCallback((index) => {
+        const value = getValueFromIndex(index);
+        setCurrentSnapPoint(value);
+        console.log(index)
+    }, []);
+
+
     return (
-        <>
+        <ScreenWrapper withScrollView={false} withPaddingHorizontal={false} withBottomInset={true}>
+
+            <GeoPositionTracker
+                customerPosition={{
+                    longitude: originLocation.longitude,
+                    latitude: originLocation.latitude
+                }}
+                currentDriverPosition={dropoffLocation}
+                vendorPosition={dropoffLocation}
+                currentSnapPoint={currentSnapPoint}
+            />
+
             <BottomSheet
                 ref={bottomSheetRef}
-                index={1}
+                index={0}
                 snapPoints={snapPoints}
                 enablePanDownToClose={false}
                 footerComponent={renderFooter}
@@ -119,7 +151,9 @@ const RideAndSharingCheckout = ({
                 handleStyle={{
                     backgroundColor: MD3LightTheme.colors.background,
                 }}
+                onChange={handleSheetChange}
             >
+
                 <BottomSheetSectionList
                     sections={products}
                     keyExtractor={keyExtractor}
@@ -142,7 +176,7 @@ const RideAndSharingCheckout = ({
                 />
 
             </BottomSheet>
-        </>
+        </ScreenWrapper>
     );
 };
 

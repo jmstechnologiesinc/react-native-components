@@ -24,7 +24,8 @@ MapboxGL.setTelemetryEnabled(false);
 const GeoPositionTracker = ({
   customerPosition,
   currentDriverPosition,
-  vendorPosition
+  vendorPosition,
+  currentSnapPoint
 }) => {
   const [routeDirections, setRouteDirections] = useState(null);
   const [destinationCoords, setDestinationCoords] = useState([
@@ -140,19 +141,26 @@ const GeoPositionTracker = ({
     };
   };
 
+
+
+
   const centerCoordinate = currentDriverPosition
     ? [currentDriverPosition.longitude, currentDriverPosition.latitude]
     : [vendorPosition.longitude, vendorPosition.latitude];
 
   return (
     <MapboxGL.MapView
-      style={{ height: height * 0.7 }}
+      style={{
+        // flex: 1,
+        height: height * 0.5
+      }}
       zoomEnabled={true}
       styleURL={Mapbox.StyleURL.Street}
       compassEnabled={false}
       logoEnabled={false}
       attributionEnabled={false}
       scaleBarEnabled={false}
+
     >
       {boundingBox && (
         <MapboxGL.Camera
