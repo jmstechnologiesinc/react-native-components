@@ -5,6 +5,7 @@ import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Config } from '../Config'
 import Mapbox from '@rnmapbox/maps';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 Logger.setLogCallback((log) => {
   const { message } = log;
@@ -25,13 +26,21 @@ const GeoPositionTracker = ({
   customerPosition,
   currentDriverPosition,
   vendorPosition,
-  currentSnapPoint
+  currentSnapPoint,
 }) => {
+  const mapRef = useRef(null);
+
   const [routeDirections, setRouteDirections] = useState(null);
   const [destinationCoords, setDestinationCoords] = useState([
     customerPosition.longitude,
     customerPosition.latitude,
   ]);
+
+  const insets = useSafeAreaInsets();
+
+  const top = insets.top === 0 ? MD3LightTheme.spacing.x8 : insets.top;
+  const right = insets.right === 0 ? MD3LightTheme.spacing.x8 : insets.right;
+  const left = insets.left === 0 ? MD3LightTheme.spacing.x8 : insets.left
 
   const [driverHeading, setDriverHeading] = useState(0)
   const [zoomLevel, setZoomLevel] = useState(12);
@@ -40,15 +49,11 @@ const GeoPositionTracker = ({
   const { height } = Dimensions.get('window');
   const APIKEY = Config.MAPBOX_ACCESS_TOKEN;
 
-
   const getBoundingBox = (coordinates) => {
     let minLng = Infinity;
     let minLat = Infinity;
     let maxLng = -Infinity;
     let maxLat = -Infinity;
-
-    const lngMargin = 0.01;
-    const latMargin = 0.01;
 
     coordinates.forEach(coord => {
       const [lng, lat] = coord;
@@ -59,17 +64,17 @@ const GeoPositionTracker = ({
     });
 
     return {
-      sw: [minLng - lngMargin, minLat - latMargin],
-      ne: [maxLng + lngMargin, maxLat + latMargin],
-    };
+      sw: [minLng, minLat],
+      ne: [maxLng, maxLat],
+    }
+
+
   };
 
 
   const calculateZoomLevel = (boundingBox) => {
     const width = boundingBox.ne[0] - boundingBox.sw[0];
     const height = boundingBox.ne[1] - boundingBox.sw[1];
-
-
     const area = width * height;
 
     if (area < 0.01) return 14
@@ -125,6 +130,37 @@ const GeoPositionTracker = ({
     }
   }, [currentDriverPosition]);
 
+
+  useEffect(() => {
+    if (currentSnapPoint !== 0.5) {
+      mapRef.current?.setCamera({
+        bounds: boundingBox,
+        zoomLevel: zoomLevel,
+        padding: {
+          paddingTop: top,
+          paddingRight: right,
+          paddingLeft: left,
+          paddingBottom: height * 0.7,
+        },
+        animationMode: 'flyTo',
+        animationDuration: 250,
+      })
+    } else {
+      mapRef.current?.setCamera({
+        bounds: boundingBox,
+        zoomLevel: zoomLevel,
+        padding: {
+          paddingTop: top,
+          paddingRight: right,
+          paddingLeft: left,
+          paddingBottom: height * 0.5,
+        },
+        animationMode: 'flyTo',
+        animationDuration: 250,
+      })
+    }
+  }, [currentSnapPoint]);
+
   const makeRouterFeature = (coordinates) => {
     return {
       type: 'FeatureCollection',
@@ -141,9 +177,6 @@ const GeoPositionTracker = ({
     };
   };
 
-
-
-
   const centerCoordinate = currentDriverPosition
     ? [currentDriverPosition.longitude, currentDriverPosition.latitude]
     : [vendorPosition.longitude, vendorPosition.latitude];
@@ -151,8 +184,7 @@ const GeoPositionTracker = ({
   return (
     <MapboxGL.MapView
       style={{
-        // flex: 1,
-        height: height * 0.5
+        flex: 1
       }}
       zoomEnabled={true}
       styleURL={Mapbox.StyleURL.Street}
@@ -160,19 +192,22 @@ const GeoPositionTracker = ({
       logoEnabled={false}
       attributionEnabled={false}
       scaleBarEnabled={false}
-
     >
-      {boundingBox && (
-        <MapboxGL.Camera
-          zoomLevel={zoomLevel}
-          bounds={boundingBox}
-          // padding={{ top: 50, left: 50, bottom: 50, right: 100 }}
-          animationMode="flyTo"
-          animationDuration={20}
-        // followUserMode="course"
-        />
-      )}
 
+      <MapboxGL.Camera
+        zoomLevel={zoomLevel}
+        bounds={boundingBox}
+        ref={mapRef}
+        padding={{
+          paddingTop: top,
+          paddingRight: right,
+          paddingLeft: left,
+          paddingBottom: height * 0.5,
+        }}
+        animationMode="flyTo"
+        animationDuration={200}
+      // followUserMode="course"
+      />
       {routeDirections && (
         <MapboxGL.ShapeSource id="routeSource" shape={routeDirections}>
           <MapboxGL.LineLayer id="routeLine" style={{ lineColor: MD3LightTheme.colors.primary, lineWidth: 4 }} />
