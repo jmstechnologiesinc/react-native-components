@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import BottomSheet, { BottomSheetFooter, BottomSheetSectionList } from "@gorhom/bottom-sheet";
-import { Divider, FAB, List, MD3LightTheme, Text } from "@jmstechnologiesinc/react-native-paper";
+import { FAB, List, MD3LightTheme } from "@jmstechnologiesinc/react-native-paper";
 import TipsFilter from "../TipsFilter/TipsFilter";
 import LocationListItem, { LOCATION_LIST_ITEM } from "../LocationListItem/LocationListItem";
 import { localized } from "../Localization/Localization";
@@ -41,14 +41,13 @@ const RideAndSharingCheckout = ({
 
     const isInsetsBottom = insets.bottom === 0 ? MD3LightTheme.spacing.x4 : insets.bottom;
 
-
     const containerStyle = [
         {
             paddingTop: withTopInset ? insets.top : 0,
             paddingBottom: withBottomInset ? isInsetsBottom : 0,
             paddingLeft: insets.left,
             paddingRight: insets.left,
-
+            marginTop: insets.top,
         },
     ]
 
