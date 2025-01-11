@@ -35,7 +35,7 @@ const RideAndSharingCheckout = ({
     const bottomSheetRef = useRef(null);
 
 
-    const snapPoints = useMemo(() => ["50%", "70%", "80%", "85", "90", "95", "100%"], []);
+    const snapPoints = useMemo(() => ["50%", "75%", "100%"], []);
     const [currentSnapPoint, setCurrentSnapPoint] = useState(0.5);
     const insets = useSafeAreaInsets();
 

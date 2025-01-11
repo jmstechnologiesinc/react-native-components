@@ -140,7 +140,7 @@ const GeoPositionTracker = ({
           paddingTop: top,
           paddingRight: right,
           paddingLeft: left,
-          paddingBottom: height * 0.7,
+          paddingBottom: height * 0.8,
         },
         animationMode: 'flyTo',
         animationDuration: 250,
