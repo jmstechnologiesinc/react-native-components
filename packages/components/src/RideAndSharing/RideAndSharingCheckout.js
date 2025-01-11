@@ -1,21 +1,23 @@
 import React, { useCallback, useMemo, useRef } from "react";
 import BottomSheet, { BottomSheetFooter, BottomSheetSectionList } from "@gorhom/bottom-sheet";
-import { Divider, FAB, List, MD3LightTheme, Text } from "@jmstechnologiesinc/react-native-paper";
+import { FAB, List, MD3LightTheme } from "@jmstechnologiesinc/react-native-paper";
 import TipsFilter from "../TipsFilter/TipsFilter";
-import LocationListItem, { LOCATION_LIST_ITEM } from "../LocationListItem/LocationListItem";
 import { localized } from "../Localization/Localization";
 import ProductListItem from "./ProductListItem";
 import { keyExtractor } from "../CartList/CartList";
 import styles from "../styles";
 import CheckoutSummary from "../CheckoutSummary/CheckoutSummary";
+import {ACCOUNTING_ITEMS} from "@jmstechnologiesinc/cart";
 
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper'
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import RideAndSharingDetails from "./RideAndSharingDetails";
+
 const RideAndSharingCheckout = ({
-    originLocationTitle,
+    originLocation,
     originLocationDescription,
-    dropoffLocationTitle,
+    dropoffLocation,
     dropoffLocationDescription,
     cart,
     selectedProductIndex,
@@ -49,27 +51,14 @@ const RideAndSharingCheckout = ({
     ]
 
     const listHeaderComponent = () => (
-        <>
-            <List.Section title="Shipping Details">
-                <LocationListItem
-                    title={originLocationTitle}
-                    description={originLocationDescription}
-                    variant={LOCATION_LIST_ITEM.currentLocation}
-                    onPress={originLocationOnPress}
-                />
-                <LocationListItem
-                    title={dropoffLocationTitle}
-                    description={dropoffLocationDescription}
-                    variant={LOCATION_LIST_ITEM.currentLocation}
-                    onPress={dropoffLocationOnPress}
-                />
-            </List.Section>
-            {RenderPaymentMethod ? (
-                <List.Section title={localized("paymentMethod")}>
-                    <RenderPaymentMethod />
-                </List.Section>
-            ) : null}
-        </>
+        <RideAndSharingDetails
+            originLocation={originLocation}
+            originLocationDescription={originLocationDescription}
+            dropoffLocation={dropoffLocation}
+            dropoffLocationDescription={dropoffLocationDescription}
+            originLocationOnPress={originLocationOnPress}
+            dropoffLocationOnPress={dropoffLocationOnPress}
+            RenderPaymentMethod={RenderPaymentMethod} />
     );
 
     const listFooterComponent = () => (
@@ -86,7 +75,6 @@ const RideAndSharingCheckout = ({
             />
         </View>
     );
-
 
     const renderFooter = useCallback(
         props => (
@@ -122,7 +110,7 @@ const RideAndSharingCheckout = ({
                 }}
             >
                 <BottomSheetSectionList
-                    sections={products}
+                    sections={cart.products}
                     keyExtractor={keyExtractor}
                     renderSectionHeader={({ section: { title } }) => (
                         <List.Subheader>{title}</List.Subheader>
@@ -137,7 +125,7 @@ const RideAndSharingCheckout = ({
                             onPress={() => onItemPress(item.driver.id)} />
                     )}
                     ListHeaderComponent={listHeaderComponent}
-                    ListFooterComponent={listFooterComponent}
+                    //ListFooterComponent={listFooterComponent}
                     stickySectionHeadersEnabled={false}
                     showsVerticalScrollIndicator={false}
                 />
