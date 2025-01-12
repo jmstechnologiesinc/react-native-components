@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import BottomSheet, { BottomSheetFooter, BottomSheetSectionList } from "@gorhom/bottom-sheet";
 import { FAB, List, MD3LightTheme } from "@jmstechnologiesinc/react-native-paper";
 import TipsFilter from "../TipsFilter/TipsFilter";
@@ -13,6 +13,8 @@ import ScreenWrapper from '../ScreenWrapper/ScreenWrapper'
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import RideAndSharingDetails from "./RideAndSharingDetails";
+
+import GeoPositionTracker from "../GeoPositionTracker";
 
 const RideAndSharingCheckout = ({
     originLocation,
@@ -34,8 +36,9 @@ const RideAndSharingCheckout = ({
 }) => {
     const bottomSheetRef = useRef(null);
 
-    const snapPoints = useMemo(() => ["50%", "70%", "80%", "85", "90", "95", "100%"], []);
 
+    const snapPoints = useMemo(() => ["50%", "75%", "100%"], []);
+    const [currentSnapPoint, setCurrentSnapPoint] = useState(0.5);
     const insets = useSafeAreaInsets();
 
     const isInsetsBottom = insets.bottom === 0 ? MD3LightTheme.spacing.x4 : insets.bottom;
@@ -46,7 +49,7 @@ const RideAndSharingCheckout = ({
             paddingBottom: withBottomInset ? isInsetsBottom : 0,
             paddingLeft: insets.left,
             paddingRight: insets.left,
-
+            marginTop: insets.top,
         },
     ]
 
@@ -92,11 +95,40 @@ const RideAndSharingCheckout = ({
         []
     );
 
+    const getValueFromIndex = (index) => {
+        switch (index) {
+            case 0:
+                return 0.5;
+            case 1:
+                return 0.3;
+            default:
+                return 0.5;
+        }
+    };
+
+    const handleSheetChange = useCallback((index) => {
+        const value = getValueFromIndex(index);
+        setCurrentSnapPoint(value);
+    }, []);
+
+
     return (
-        <>
+        <ScreenWrapper withScrollView={false} withPaddingHorizontal={false} withBottomInset={true}>
+
+            <GeoPositionTracker
+                customerPosition={{
+                    longitude: originLocation.longitude,
+                    latitude: originLocation.latitude
+                }}
+                currentDriverPosition={dropoffLocation}
+                vendorPosition={dropoffLocation}
+                currentSnapPoint={currentSnapPoint}
+
+            />
+
             <BottomSheet
                 ref={bottomSheetRef}
-                index={3}
+                index={0}
                 snapPoints={snapPoints}
                 enablePanDownToClose={false}
                 footerComponent={renderFooter}
@@ -108,7 +140,9 @@ const RideAndSharingCheckout = ({
                 handleStyle={{
                     backgroundColor: MD3LightTheme.colors.background,
                 }}
+                onChange={handleSheetChange}
             >
+
                 <BottomSheetSectionList
                     sections={products}
                     keyExtractor={keyExtractor}
@@ -130,7 +164,7 @@ const RideAndSharingCheckout = ({
                     showsVerticalScrollIndicator={false}
                 />
             </BottomSheet>
-        </>
+        </ScreenWrapper>
     );
 };
 
