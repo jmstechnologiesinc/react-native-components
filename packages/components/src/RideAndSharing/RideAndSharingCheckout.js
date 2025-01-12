@@ -19,18 +19,18 @@ const RideAndSharingCheckout = ({
     originLocationDescription,
     dropoffLocation,
     dropoffLocationDescription,
-    cart,
+    products,
     selectedProductIndex,
     fees,
     tipsFilter,
     originLocationOnPress,
     dropoffLocationOnPress,
-    onItemPress,
     onTipsPercentPress,
-    onRequestRidePress,
     RenderPaymentMethod,
     withBottomInset = true,
     withTopInset = false,
+    onItemPress,
+    onPress,
 }) => {
     const bottomSheetRef = useRef(null);
 
@@ -85,7 +85,7 @@ const RideAndSharingCheckout = ({
                         variant='secondary'
                         mode="elevated"
                         style={[styles.button]}
-                        onPress={onRequestRidePress} />
+                        onPress={onPress} />
                 </ScreenWrapper>
             </BottomSheetFooter>
         ),
@@ -110,7 +110,7 @@ const RideAndSharingCheckout = ({
                 }}
             >
                 <BottomSheetSectionList
-                    sections={cart.products}
+                    sections={products}
                     keyExtractor={keyExtractor}
                     renderSectionHeader={({ section: { title } }) => (
                         <List.Subheader>{title}</List.Subheader>
@@ -120,9 +120,9 @@ const RideAndSharingCheckout = ({
                             isChecked={item.driver.id === selectedProductIndex}
                             title={item.title}
                             description={item.description ? [item.eta.formattedValue, item.description] : item.eta.formattedValue}
-                            price={item.fees[ACCOUNTING_ITEMS.total].formattedValue}
+                            //price={item.fees[ACCOUNTING_ITEMS.total].formattedValue}
                             chips={item.chips}
-                            onPress={() => onItemPress(item.driver.id)} />
+                            onPress={() => onItemPress(item)} />
                     )}
                     ListHeaderComponent={listHeaderComponent}
                     //ListFooterComponent={listFooterComponent}

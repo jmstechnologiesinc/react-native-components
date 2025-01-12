@@ -35,7 +35,7 @@ export const formatOrder = (order, role) => {
         formattedDriverCar: order.driver?.vehicle?.formattedValue,
         formattedDriverName: order?.driver?.formattedName,
         formattedCustomerName: order.author.formattedName,
-        formattedFulfillmentAddress: order.fulfillmentAddress.formattedAddress,
+        formattedFulfillmentAddress: order?.fulfillmentAddress?.formattedAddress,
         vendorAvatar: order.vendor.photo,
         driverAvatar: order?.driver?.photo,
         translation: localized,
