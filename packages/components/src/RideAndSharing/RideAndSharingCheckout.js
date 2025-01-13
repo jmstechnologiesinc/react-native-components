@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import BottomSheet, { BottomSheetFooter, BottomSheetSectionList } from "@gorhom/bottom-sheet";
-import { FAB, List, MD3LightTheme } from "@jmstechnologiesinc/react-native-paper";
+import { Appbar, FAB, List, MD3LightTheme, Surface } from "@jmstechnologiesinc/react-native-paper";
 import TipsFilter from "../TipsFilter/TipsFilter";
 import { localized } from "../Localization/Localization";
 import ProductListItem from "./ProductListItem";
@@ -10,11 +10,12 @@ import CheckoutSummary from "../CheckoutSummary/CheckoutSummary";
 import {ACCOUNTING_ITEMS} from "@jmstechnologiesinc/cart";
 
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper'
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import RideAndSharingDetails from "./RideAndSharingDetails";
 
 import GeoPositionTracker from "../GeoPositionTracker";
+import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters'
 
 const RideAndSharingCheckout = ({
     originLocation,
@@ -33,12 +34,14 @@ const RideAndSharingCheckout = ({
     withTopInset = false,
     onItemPress,
     onPress,
+    goBack
 }) => {
+
+    const point = Platform.OS === 'ios' ? 0.5 : 0.54
+
     const bottomSheetRef = useRef(null);
-
-
     const snapPoints = useMemo(() => ["50%", "75%", "100%"], []);
-    const [currentSnapPoint, setCurrentSnapPoint] = useState(0.5);
+    const [currentSnapPoint, setCurrentSnapPoint] = useState(point);
     const insets = useSafeAreaInsets();
 
     const isInsetsBottom = insets.bottom === 0 ? MD3LightTheme.spacing.x4 : insets.bottom;
@@ -50,8 +53,10 @@ const RideAndSharingCheckout = ({
             paddingLeft: insets.left,
             paddingRight: insets.left,
             marginTop: insets.top,
+
         },
     ]
+
 
     const listHeaderComponent = () => (
         <RideAndSharingDetails
@@ -98,11 +103,11 @@ const RideAndSharingCheckout = ({
     const getValueFromIndex = (index) => {
         switch (index) {
             case 0:
-                return 0.5;
+                return point;
             case 1:
-                return 0.3;
+                return 0.8;
             default:
-                return 0.5;
+                return point;
         }
     };
 
@@ -113,8 +118,7 @@ const RideAndSharingCheckout = ({
 
 
     return (
-        <ScreenWrapper withScrollView={false} withPaddingHorizontal={false} withBottomInset={true}>
-
+        <>
             <GeoPositionTracker
                 customerPosition={{
                     longitude: originLocation.longitude,
@@ -126,6 +130,10 @@ const RideAndSharingCheckout = ({
 
             />
 
+            <View style={{ position: 'absolute', top: moderateScale(insets.top) }}>
+                <Appbar.BackAction mode='contained' onPress={goBack} />
+            </View >
+
             <BottomSheet
                 ref={bottomSheetRef}
                 index={0}
@@ -136,13 +144,21 @@ const RideAndSharingCheckout = ({
                 backgroundStyle={{
                     flex: 1,
                     backgroundColor: MD3LightTheme.colors.background,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                        width: 0,
+                        height: moderateScale(2),
+                    },
+                    shadowOpacity: moderateScale(0.25),
+                    shadowRadius: moderateScale(3.84),
+                    elevation: moderateScale(10),
                 }}
                 handleStyle={{
                     backgroundColor: MD3LightTheme.colors.background,
                 }}
+
                 onChange={handleSheetChange}
             >
-
                 <BottomSheetSectionList
                     sections={products}
                     keyExtractor={keyExtractor}
@@ -164,7 +180,7 @@ const RideAndSharingCheckout = ({
                     showsVerticalScrollIndicator={false}
                 />
             </BottomSheet>
-        </ScreenWrapper>
+        </>
     );
 };
 
