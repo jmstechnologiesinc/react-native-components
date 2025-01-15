@@ -4,7 +4,7 @@ import { interpunct } from '@jmstechnologiesinc/commons';
 
 import VendorStatus from './VendorStatus';
 import OrderStatusWrapper from './OrderStatusWrapper';
-import { ROLE_ORDER_LIST_STATUS_MAPPING, humanizeOrderStatus } from '@jmstechnologiesinc/react-native-components/lib/Order/utils';
+import { ROLE_ORDER_LIST_STATUS_MAPPING, humanizeOrderStatus } from '../Order/utils';
 
 const OrderStatus = ({
     role,
@@ -28,7 +28,7 @@ const OrderStatus = ({
     headerTitleVariant,
     titleStyle,
     overlineStyle,
-   
+
 }) => {
     const fulfilmentStatus = formattedOrder.fulfilmentStatus;
     const headerStatus = fulfilmentStatus.header;
