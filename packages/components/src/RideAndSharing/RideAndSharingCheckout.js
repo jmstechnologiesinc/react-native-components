@@ -23,7 +23,7 @@ const RideAndSharingCheckout = ({
     dropoffLocation,
     dropoffLocationDescription,
     products,
-    selectedProductIndex,
+    selectedItemId,
     fees,
     tipsFilter,
     originLocationOnPress,
@@ -36,7 +36,6 @@ const RideAndSharingCheckout = ({
     onPress,
     goBack
 }) => {
-
     const point = Platform.OS === 'ios' ? 0.5 : 0.54
 
     const bottomSheetRef = useRef(null);
@@ -84,21 +83,18 @@ const RideAndSharingCheckout = ({
         </View>
     );
 
-    const renderFooter = useCallback(
-        props => (
-            <BottomSheetFooter {...props}>
-                <ScreenWrapper withScrollView={false} withPaddingHorizontal={false} withBottomInset={true}>
-                    <FAB
-                        label={localized('requestRide')}
-                        variant='secondary'
-                        mode="elevated"
-                        style={[styles.button]}
-                        onPress={onPress} />
-                </ScreenWrapper>
-            </BottomSheetFooter>
-        ),
-        []
-    );
+    const renderFooter = (props) => (
+        <BottomSheetFooter {...props}>
+            <ScreenWrapper withScrollView={false} withPaddingHorizontal={false} withBottomInset={true}>
+                <FAB
+                    label={localized('trip.requestRide')}
+                    variant='secondary'
+                    mode="elevated"
+                    style={[styles.button]}
+                    onPress={onPress} />
+            </ScreenWrapper>
+        </BottomSheetFooter>
+    )
 
     const getValueFromIndex = (index) => {
         switch (index) {
@@ -136,7 +132,7 @@ const RideAndSharingCheckout = ({
 
             <BottomSheet
                 ref={bottomSheetRef}
-                index={0}
+                index={2}
                 snapPoints={snapPoints}
                 enablePanDownToClose={false}
                 footerComponent={renderFooter}
@@ -159,7 +155,8 @@ const RideAndSharingCheckout = ({
 
                 onChange={handleSheetChange}
             >
-                <BottomSheetSectionList
+                {products?.length ? (
+                    <BottomSheetSectionList
                     sections={products}
                     keyExtractor={keyExtractor}
                     renderSectionHeader={({ section: { title } }) => (
@@ -167,10 +164,10 @@ const RideAndSharingCheckout = ({
                     )}
                     renderItem={({ item }) => (
                         <ProductListItem
-                            isChecked={item.driver.id === selectedProductIndex}
+                            isChecked={item.driver.id === selectedItemId}
                             title={item.title}
                             description={item.description ? [item.eta.formattedValue, item.description] : item.eta.formattedValue}
-                            //price={item.fees[ACCOUNTING_ITEMS.total].formattedValue}
+                            price={item.fees[ACCOUNTING_ITEMS.total].formattedValue}
                             chips={item.chips}
                             onPress={() => onItemPress(item)} />
                     )}
@@ -179,6 +176,7 @@ const RideAndSharingCheckout = ({
                     stickySectionHeadersEnabled={false}
                     showsVerticalScrollIndicator={false}
                 />
+                ) : null}
             </BottomSheet>
         </>
     );

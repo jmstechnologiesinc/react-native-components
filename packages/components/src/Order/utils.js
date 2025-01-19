@@ -11,12 +11,13 @@ import {
 } from '@jmstechnologiesinc/order';
 import { localized } from '../Localization/Localization';
 
-export const formatOrder = (order, role) => {
+export const formatOrder = (order, role, platform) => {
     const formattedOrderId = formatOrderID(order.id);
     const fees = getRoleFees(order, role);
 
     const fulfilmentStatus = whatIsTheOrderStatus({
         role,
+        platform,
         fees,
         status: order.status,
         driverStatus: order?.driver?.status,
@@ -36,6 +37,8 @@ export const formatOrder = (order, role) => {
         formattedDriverName: order?.driver?.formattedName,
         formattedCustomerName: order.author.formattedName,
         formattedFulfillmentAddress: order?.fulfillmentAddress?.formattedAddress,
+        originLocationLine1: order?.originLocation?.line1,
+        fulfillmentAddressLine1: order?.fulfillmentAddress?.line1,
         vendorAvatar: order.vendor.photo,
         driverAvatar: order?.driver?.photo,
         translation: localized,
@@ -64,7 +67,7 @@ export const ORDER_LIST_STATUS = {
 };
 
 const ORDER_LIST_STATUS_MAPPING = {
-    [ORDER_LIST_STATUS.preparing]: localized('order.inTheKitchen'),
+    [ORDER_LIST_STATUS.preparing]: localized('order.ongoing'),
     [ORDER_LIST_STATUS.completed]: localized('order.Completed'),
     [ORDER_LIST_STATUS.placed]: localized('order.Placed'),
     [ORDER_LIST_STATUS.inTransit]: localized('order.inTransit'),

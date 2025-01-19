@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 
 import { Avatar, Chip, List, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
-import { ITEM_TYPE, ITEM_TYPE_ICON_MAPPING, MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
+import { ITEM_TYPE, ITEM_TYPE_ICON_MAPPING, LOGISTICS_PLATFORMS, MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 
 import JMSItem from '../List/ListItem';
 import { imageKitAvatar, makeLinkingCall } from '../utils';
@@ -37,6 +37,7 @@ export const renderChipType = (chip) => {
 };
 
 const OrderStatusWrapper = ({
+    platform,
     overline,
     header,
     subHeader,
@@ -56,10 +57,16 @@ const OrderStatusWrapper = ({
     overlineStyle,
   
 }) => {
-    const renderAvatar =
-        showAvatar && avatar
-            ? (props) => <Avatar.Image style={props.style} source={{ uri: imageKitAvatar(avatar) }} />
-            : null;
+    let renderAvatar;
+    if(platform === LOGISTICS_PLATFORMS.rideshare) {
+        renderAvatar = showAvatar && avatar
+        ? (props) => <Avatar.Icon style={props.style} icon={'car'} />
+        : null;
+    } else {
+        renderAvatar = showAvatar && avatar
+        ? (props) => <Avatar.Image style={props.style} source={{ uri: imageKitAvatar(avatar) }} />
+        : null;
+    }
 
     const renderChips = showChips && chips?.length > 0 ? chips.map(renderChipType) : null;
 

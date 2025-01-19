@@ -14,8 +14,14 @@ const RideAndSharingDetails = ({
     RenderPaymentMethod,
 }) => {
     const [iscoordinateOpen, setisCoordinateOpen] = useState(false)
-    console.log(JSON.stringify(dropoffLocation,null,2))
+
     return  <>
+      
+        <List.Section title="Ride Detail">
+            {RenderPaymentMethod ? (
+                <RenderPaymentMethod   />
+            ) : null}
+
         <List.Accordion
             expanded={iscoordinateOpen}
             onPress={() => setisCoordinateOpen(!iscoordinateOpen)}
@@ -27,22 +33,21 @@ const RideAndSharingDetails = ({
             <LocationListItem
                 title={originLocation?.formattedAddress}
                 description={originLocationDescription}
-                variant={LOCATION_LIST_ITEM.currentLocation}
+                variant={LOCATION_LIST_ITEM.hailLocation}
+                iconColor={null}
                 onPress={originLocationOnPress}
             />
             <LocationListItem
                 title={dropoffLocation?.formattedAddress}
                 description={dropoffLocationDescription}
-                variant={LOCATION_LIST_ITEM.currentLocation}
+                variant={LOCATION_LIST_ITEM.fulfillmentAddress}
+                iconColor={null}
                 onPress={dropoffLocationOnPress}
             />
         </List.Accordion>
-        <List.Section >
-            {RenderPaymentMethod ? (
-                <RenderPaymentMethod  />
-            ) : null}
+        <Divider />
+
         </List.Section>
-        <Divider style={{ marginBottom: MD3LightTheme.spacing.x1 }}  />
     </>
 };
 

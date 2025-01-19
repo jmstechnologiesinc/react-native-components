@@ -8,6 +8,7 @@ import { ROLE_ORDER_LIST_STATUS_MAPPING, humanizeOrderStatus } from '@jmstechnol
 
 const OrderStatus = ({
     role,
+    platform,
     formattedOrder,
 
     enableHeaderStatus = true,
@@ -46,6 +47,7 @@ const OrderStatus = ({
         renderStatuses.push(
             <OrderStatusWrapper
                 key="headerStatus"
+                platform={platform}
                 overline={interpunct(headerStatus.overlines)}
                 header={headerStatus.title}
                 subHeader={ROLE_ORDER_LIST_STATUS_MAPPING[role][humanizeOrderStatus(formattedOrder.status, role)]}
