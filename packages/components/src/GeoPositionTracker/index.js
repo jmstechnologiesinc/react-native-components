@@ -7,6 +7,8 @@ import { Config } from '../Config'
 import Mapbox from '@rnmapbox/maps';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { carList } from './tracking/carList'
+
 Logger.setLogCallback((log) => {
   const { message } = log;
 
@@ -19,7 +21,6 @@ Logger.setLogCallback((log) => {
   return false;
 });
 
-
 MapboxGL.setAccessToken(Config.MAPBOX_ACCESS_TOKEN);
 MapboxGL.setTelemetryEnabled(false);
 
@@ -27,11 +28,10 @@ const GeoPositionTracker = ({
   customerPosition,
   currentDriverPosition,
   vendorPosition,
-  currentSnapPoint,
+  currentSnapPoint = 0,
+
 }) => {
   const mapRef = useRef(null);
-
-
 
   const [routeDirections, setRouteDirections] = useState(null);
   const [destinationCoords, setDestinationCoords] = useState([
@@ -50,7 +50,7 @@ const GeoPositionTracker = ({
   const [boundingBox, setBoundingBox] = useState(null);
 
   const { height } = Dimensions.get('window');
-
+  const APIKEY = Config.MAPBOX_ACCESS_TOKEN;
 
   const getBoundingBox = (coordinates) => {
     let minLng = Infinity;
@@ -92,7 +92,7 @@ const GeoPositionTracker = ({
     const geometries = 'geojson';
     const typeVehicle = 'driving';
 
-    const url = `https://api.mapbox.com/directions/v5/mapbox/${typeVehicle}/${startCoords};${endCoords}?alternatives=false&geometries=${geometries}&steps=true&overview=full&access_token=${Config.MAPBOX_ACCESS_TOKEN}`;
+    const url = `https://api.mapbox.com/directions/v5/mapbox/${typeVehicle}/${startCoords};${endCoords}?alternatives=false&geometries=${geometries}&steps=true&overview=full&access_token=${APIKEY}`;
 
     try {
       const response = await fetch(url);
@@ -180,6 +180,23 @@ const GeoPositionTracker = ({
     };
   };
 
+  const vehiclesFeatureCollection = {
+    type: 'FeatureCollection',
+    features: carList.map(car => ({
+      type: 'Feature',
+      properties: {
+        id: car.id,
+        type: car.type,
+        image: car.image,
+      },
+      geometry: {
+        type: 'Point',
+        coordinates: [car.longitude, car.latitude],
+      },
+    })),
+  };
+
+
   const centerCoordinate = currentDriverPosition
     ? [currentDriverPosition.longitude, currentDriverPosition.latitude]
     : [vendorPosition.longitude, vendorPosition.latitude];
@@ -187,7 +204,7 @@ const GeoPositionTracker = ({
   return (
     <MapboxGL.MapView
       style={{
-        flex: 1
+        flex: 1,
       }}
       zoomEnabled={true}
       styleURL={Mapbox.StyleURL.Street}
@@ -243,6 +260,43 @@ const GeoPositionTracker = ({
           </View>
         </MapboxGL.PointAnnotation>
       )}
+
+
+      <MapboxGL.Images
+        images={{
+          carIcon: require('./tracking/car.png'),
+          bikeIcon: require('./tracking/bike.png'),
+        }}
+      />
+
+
+      <MapboxGL.ShapeSource id="vehiclesSource" shape={vehiclesFeatureCollection}>
+        {
+          carList.map((car) => {
+            return (
+              <MapboxGL.SymbolLayer
+                id="vehiclesLayer"
+                style={{
+                  iconImage: car.iconImage,
+                  iconSize: 0.5,
+                  iconAllowOverlap: true,
+                }}
+              />
+            )
+          })
+        }
+
+        {/* <MapboxGL.SymbolLayer
+          id="driverIconLayer"
+          style={{
+            iconImage: 'driverIcon',
+            iconAnchor: 'center',
+            iconAllowOverlap: true,
+            iconRotate: driverHeading,
+            iconSize: 0.5,
+          }}
+        /> */}
+      </MapboxGL.ShapeSource>
     </MapboxGL.MapView>
   );
 };

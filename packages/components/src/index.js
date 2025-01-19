@@ -51,6 +51,7 @@ export { default as CheckoutSummary } from './CheckoutSummary/CheckoutSummary';
 export { default as RideAndSharingCheckout } from './RideAndSharing/RideAndSharingCheckout'
 
 export { default as GeoPositionTracker } from './GeoPositionTracker'
+export { default as DriverPosition } from './GeoPositionTracker/DriverPosition'
 
 
 

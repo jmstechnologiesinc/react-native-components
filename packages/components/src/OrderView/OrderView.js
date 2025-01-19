@@ -303,14 +303,18 @@ const OrderView = ({
 
                     <Divider style={{ marginTop: MD3LightTheme.spacing.x3 }} />
 
-                    <GeoPositionTracker
-                        customerPosition={{
-                            longitude: order.fulfillmentAddress.longitude,
-                            latitude: order.fulfillmentAddress.latitude
-                        }}
-                        currentDriverPosition={coord}
-                        vendorPosition={order.vendor.location}
-                    />
+                    <View style={{ height: 300 }}>
+                        <GeoPositionTracker
+                            customerPosition={{
+                                longitude: order.fulfillmentAddress.longitude,
+                                latitude: order.fulfillmentAddress.latitude
+                            }}
+                            currentDriverPosition={coord}
+                            vendorPosition={order.vendor.location}
+                        />
+
+                    </View>
+
 
                     <Divider style={{ marginTop: MD3LightTheme.spacing.x3 }} />
 

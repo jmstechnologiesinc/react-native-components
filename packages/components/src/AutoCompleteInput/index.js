@@ -48,8 +48,9 @@ const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus, 
           },
         }}
         query={{
-          key: Config.GOOGLE_GEO_CODER_PLACE_API,
+          key: Config.MAPBOX_ACCESS_TOKEN,
           components: 'country:us|country:pa|country:do',
+          countries: 'us,pa,do',
           types: 'geocode|establishment',
         }}
         requestUrl={{
