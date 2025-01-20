@@ -3,26 +3,20 @@ import { GooglePlacesAutocomplete } from '@jmstechnologiesinc/react-native-googl
 import ScreenWrapper from '../ScreenWrapper';
 import { localized } from '../Localization/Localization';
 import { Config } from '../Config';
-import { Keyboard } from 'react-native';
 
-const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus, value, onBlur, isFocused }) => {
+const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus, value = "", onBlur, isLoading, placeholder }) => {
   const ref = useRef(null);
+
   useEffect(() => {
-    if (value) {
+    if (ref.current || isLoading) {
       ref.current.setAddressText(value);
     }
-    if (!isFocused) {
-      console.log(isFocused)
-      Keyboard.dismiss();
 
-      ref.current?.clear();
-    }
+  }, [value, isLoading]);
 
-  }, [value, isFocused]);
 
   return (
     <ScreenWrapper.Section title={localized(title)}>
-
       <GooglePlacesAutocomplete
         ref={ref}
         predefinedPlaces={
@@ -36,19 +30,20 @@ const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus, 
             ]
         }
         predefinedPlacesAlwaysVisible
+        placeholder={placeholder}
         onPress={onPress}
         textInputProps={{
           onFocus: () => {
-            onFocus(true);
+            onFocus(false);
           },
           onBlur: () => {
             onFocus(false);
-            onBlur?.(false)
-            ref.current?.clear();
+            onBlur?.(false);
+            // ref.current?.clear();
           },
         }}
         query={{
-          key: Config.GOOGLE_GEO_CODER_PLACE_API,
+          key: 'AIzaSyDjvZkrGWV0ulbGYm8fYcf-6lX1tnpvcBk',
           components: 'country:us|country:pa|country:do',
           types: 'geocode|establishment',
         }}

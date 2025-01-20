@@ -3,7 +3,7 @@ import React from 'react';
 import { View } from 'react-native';
 
 import { RadioButton, Checkbox } from '@jmstechnologiesinc/react-native-paper';
-import * as JMSList from '../List/List';
+import * as JMSList from './List';
 
 const CheckRadio = ({
     title,
