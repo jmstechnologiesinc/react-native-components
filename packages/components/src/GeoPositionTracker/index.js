@@ -19,6 +19,7 @@ Logger.setLogCallback((log) => {
   return false;
 });
 
+
 MapboxGL.setAccessToken(Config.MAPBOX_ACCESS_TOKEN);
 MapboxGL.setTelemetryEnabled(false);
 
@@ -29,6 +30,8 @@ const GeoPositionTracker = ({
   currentSnapPoint,
 }) => {
   const mapRef = useRef(null);
+
+
 
   const [routeDirections, setRouteDirections] = useState(null);
   const [destinationCoords, setDestinationCoords] = useState([
@@ -47,7 +50,7 @@ const GeoPositionTracker = ({
   const [boundingBox, setBoundingBox] = useState(null);
 
   const { height } = Dimensions.get('window');
-  const APIKEY = Config.MAPBOX_ACCESS_TOKEN;
+
 
   const getBoundingBox = (coordinates) => {
     let minLng = Infinity;
@@ -89,7 +92,7 @@ const GeoPositionTracker = ({
     const geometries = 'geojson';
     const typeVehicle = 'driving';
 
-    const url = `https://api.mapbox.com/directions/v5/mapbox/${typeVehicle}/${startCoords};${endCoords}?alternatives=false&geometries=${geometries}&steps=true&overview=full&access_token=${APIKEY}`;
+    const url = `https://api.mapbox.com/directions/v5/mapbox/${typeVehicle}/${startCoords};${endCoords}?alternatives=false&geometries=${geometries}&steps=true&overview=full&access_token=${Config.MAPBOX_ACCESS_TOKEN}`;
 
     try {
       const response = await fetch(url);

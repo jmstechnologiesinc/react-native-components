@@ -40,7 +40,7 @@ const RideAndSharingCheckout = ({
 
     const bottomSheetRef = useRef(null);
     const snapPoints = useMemo(() => ["50%", "75%", "100%"], []);
-    const [currentSnapPoint, setCurrentSnapPoint] = useState(point);
+    const [currentSnapPoint, setCurrentSnapPoint] = useState(0);
     const insets = useSafeAreaInsets();
 
     const isInsetsBottom = insets.bottom === 0 ? MD3LightTheme.spacing.x4 : insets.bottom;
@@ -123,7 +123,6 @@ const RideAndSharingCheckout = ({
                 currentDriverPosition={dropoffLocation}
                 vendorPosition={dropoffLocation}
                 currentSnapPoint={currentSnapPoint}
-
             />
 
             <View style={{ position: 'absolute', top: moderateScale(insets.top) }}>

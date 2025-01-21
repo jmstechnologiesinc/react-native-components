@@ -76,22 +76,20 @@ const products = [{
 
 export const Pricing = () => {
   return (
-    <ScreenWrapper>
-      <ScreenWrapper.Container>
-        <RideAndSharingCheckout 
-          originLocation={"155 Boxford St, Lawrence MA 01843"}
-          originLocationDescription={"Origin Location"}
-          dropoffLocation={"2 Railroad St, Lawrence MA 01841"}
-          dropoffLocationDescription={"Drop off Location"}
-          tipsFilter={tipsFilter}
-          products={products}
-          fees={ mockData}
-          originLocationOnPress={() => null}
-          dropoffLocationOnPress={() => null}
-          onItemPress={() => null}
-          onTipsPercentPress={() => null} />
-      </ScreenWrapper.Container>
-    </ScreenWrapper>
+
+    <RideAndSharingCheckout
+      originLocationTitle={"155 Boxford St, Lawrence MA 01843"}
+      originLocationDescription={"Origin Location"}
+      dropoffLocationTitle={"2 Railroad St, Lawrence MA 01841"}
+      dropoffLocationDescription={"Drop off Location"}
+      tipsFilter={tipsFilter}
+      products={products}
+      fees={mockData}
+      originLocation={{ latitude: 42.707564063918513, longitude: -71.16235187906001 }}
+      dropoffLocation={{ latitude: 42.71074176591852, longitude: -71.16283362348541 }}
+      onItemPress={() => null}
+      onTipsPercentPress={() => null} />
+
   )
 }
 
