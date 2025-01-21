@@ -2,40 +2,40 @@ import React, { useCallback, useMemo, useRef, useState } from "react";
 import BottomSheet, { BottomSheetFooter, BottomSheetSectionList } from "@gorhom/bottom-sheet";
 import { Appbar, FAB, List, MD3LightTheme, Surface } from "@jmstechnologiesinc/react-native-paper";
 import TipsFilter from "../TipsFilter/TipsFilter";
-import LocationListItem, { LOCATION_LIST_ITEM } from "../LocationListItem/LocationListItem";
 import { localized } from "../Localization/Localization";
 import ProductListItem from "./ProductListItem";
 import { keyExtractor } from "../CartList/CartList";
 import styles from "../styles";
 import CheckoutSummary from "../CheckoutSummary/CheckoutSummary";
+import {ACCOUNTING_ITEMS} from "@jmstechnologiesinc/cart";
 
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper'
 import { Platform, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import RideAndSharingDetails from "./RideAndSharingDetails";
+
 import GeoPositionTracker from "../GeoPositionTracker";
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters'
 
 const RideAndSharingCheckout = ({
-    originLocationTitle,
+    originLocation,
     originLocationDescription,
-    dropoffLocationTitle,
+    dropoffLocation,
     dropoffLocationDescription,
     products,
+    selectedItemId,
     fees,
     tipsFilter,
     originLocationOnPress,
     dropoffLocationOnPress,
-    onItemPress,
     onTipsPercentPress,
-    onRequestRidePress,
     RenderPaymentMethod,
     withBottomInset = true,
     withTopInset = false,
-    originLocation,
-    dropoffLocation,
+    onItemPress,
+    onPress,
     goBack
 }) => {
-
     const point = Platform.OS === 'ios' ? 0.5 : 0.54
 
     const bottomSheetRef = useRef(null);
@@ -58,27 +58,14 @@ const RideAndSharingCheckout = ({
 
 
     const listHeaderComponent = () => (
-        <>
-            <List.Section title="Shipping Details">
-                <LocationListItem
-                    title={originLocationTitle}
-                    description={originLocationDescription}
-                    variant={LOCATION_LIST_ITEM.currentLocation}
-                    onPress={originLocationOnPress}
-                />
-                <LocationListItem
-                    title={dropoffLocationTitle}
-                    description={dropoffLocationDescription}
-                    variant={LOCATION_LIST_ITEM.currentLocation}
-                    onPress={dropoffLocationOnPress}
-                />
-            </List.Section>
-            {RenderPaymentMethod ? (
-                <List.Section title={localized("paymentMethod")}>
-                    <RenderPaymentMethod />
-                </List.Section>
-            ) : null}
-        </>
+        <RideAndSharingDetails
+            originLocation={originLocation}
+            originLocationDescription={originLocationDescription}
+            dropoffLocation={dropoffLocation}
+            dropoffLocationDescription={dropoffLocationDescription}
+            originLocationOnPress={originLocationOnPress}
+            dropoffLocationOnPress={dropoffLocationOnPress}
+            RenderPaymentMethod={RenderPaymentMethod} />
     );
 
     const listFooterComponent = () => (
@@ -96,22 +83,18 @@ const RideAndSharingCheckout = ({
         </View>
     );
 
-
-    const renderFooter = useCallback(
-        props => (
-            <BottomSheetFooter {...props}>
-                <ScreenWrapper withScrollView={false} withPaddingHorizontal={false} withBottomInset={true}>
-                    <FAB
-                        label={localized('requestRide')}
-                        variant='secondary'
-                        mode="elevated"
-                        style={[styles.button]}
-                        onPress={onRequestRidePress} />
-                </ScreenWrapper>
-            </BottomSheetFooter>
-        ),
-        []
-    );
+    const renderFooter = (props) => (
+        <BottomSheetFooter {...props}>
+            <ScreenWrapper withScrollView={false} withPaddingHorizontal={false} withBottomInset={true}>
+                <FAB
+                    label={localized('trip.requestRide')}
+                    variant='secondary'
+                    mode="elevated"
+                    style={[styles.button]}
+                    onPress={onPress} />
+            </ScreenWrapper>
+        </BottomSheetFooter>
+    )
 
     const getValueFromIndex = (index) => {
         switch (index) {
@@ -148,7 +131,7 @@ const RideAndSharingCheckout = ({
 
             <BottomSheet
                 ref={bottomSheetRef}
-                index={0}
+                index={2}
                 snapPoints={snapPoints}
                 enablePanDownToClose={false}
                 footerComponent={renderFooter}
@@ -171,7 +154,8 @@ const RideAndSharingCheckout = ({
 
                 onChange={handleSheetChange}
             >
-                <BottomSheetSectionList
+                {products?.length ? (
+                    <BottomSheetSectionList
                     sections={products}
                     keyExtractor={keyExtractor}
                     renderSectionHeader={({ section: { title } }) => (
@@ -179,18 +163,19 @@ const RideAndSharingCheckout = ({
                     )}
                     renderItem={({ item }) => (
                         <ProductListItem
+                            isChecked={item.driver.id === selectedItemId}
                             title={item.title}
-                            description={item.description}
-                            price={item.price}
+                            description={item.description ? [item.eta.formattedValue, item.description] : item.eta.formattedValue}
+                            price={item.fees[ACCOUNTING_ITEMS.total].formattedValue}
                             chips={item.chips}
-                            onPress={onItemPress}
-                        />
+                            onPress={() => onItemPress(item)} />
                     )}
                     ListHeaderComponent={listHeaderComponent}
-                    ListFooterComponent={listFooterComponent}
+                    //ListFooterComponent={listFooterComponent}
                     stickySectionHeadersEnabled={false}
                     showsVerticalScrollIndicator={false}
                 />
+                ) : null}
             </BottomSheet>
         </>
     );

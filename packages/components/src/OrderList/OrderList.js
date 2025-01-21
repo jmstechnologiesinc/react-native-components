@@ -17,6 +17,7 @@ const horizontalInsetDivider = (data, role) => <Divider
 const OrderList = ({
     data,
     role,
+    platform,
     currentOrderId,
     showItemSeparator = true,
     listHeaderComponent,
@@ -67,6 +68,7 @@ const OrderList = ({
             <OrderListItem
                 role={role}
                 order={item}
+                platform={platform}
                 showSelectedOverlay={showSelectedOverlay}
                 currentOrderId={currentOrderId}
                 enableHeaderStatus={enableHeaderStatus}

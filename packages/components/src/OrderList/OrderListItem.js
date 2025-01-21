@@ -10,10 +10,12 @@ import TouchableRippleWrapper from '../TouchableRippleWrapper/TouchableRippleWra
 import DriverStatus from '../Order/DriverStatus';
 import { PhotoGallery, ScreenWrapper } from '@jmstechnologiesinc/react-native-components';
 import { USER_ROLES } from '@jmstechnologiesinc/user';
+import { LOGISTICS_PLATFORMS } from '@jmstechnologiesinc/commons';
 
 const OrderListItem = ({
     role,
     order,
+    platform,
     currentOrderId,
     showSelectedOverlay = false,
 
@@ -33,14 +35,14 @@ const OrderListItem = ({
     onPress,
 
 }) => {
-    const formattedOrder = formatOrder(order, role);
+    const formattedOrder = formatOrder(order, role, platform);
 
     const isSelected = currentOrderId === order?.id && showSelectedOverlay;
     const contentColor = isSelected ? { color: MD3LightTheme.colors.onSecondaryContainer } : null;
 
     const renderStatus = (
         <>
-            {role === USER_ROLES.customer && isOrderActive(formattedOrder.status) ? (
+            {platform === LOGISTICS_PLATFORMS.shopping && role === USER_ROLES.customer && isOrderActive(formattedOrder.status) ? (
                 <ScreenWrapper.Container>
                     <PhotoGallery
                         photos={[formattedOrder.photo]}
@@ -53,11 +55,12 @@ const OrderListItem = ({
 
             <OrderStatus
                 role={role}
+                platform={platform}
                 formattedOrder={formattedOrder}
-                enableHeaderStatus={enableHeaderStatus}
                 enableVendorStatus={enableVendorStatus}
                 showHeaderOverline={showHeaderOverline}
                 showHeaderTitle={showHeaderTitle}
+                enableHeaderStatus={isOrderActive(formattedOrder.status) === false}
                 showHeaderDescription={isOrderActive(formattedOrder.status) === false}
                 showHeaderAvatar={isOrderActive(formattedOrder.status) === false}
                 showVendorOverline={showVendorOverline}
