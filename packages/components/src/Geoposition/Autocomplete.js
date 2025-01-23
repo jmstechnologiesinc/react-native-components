@@ -30,7 +30,9 @@ const Autocomplete = ({
     onDropoffLocationPress,
     onFailure,
     onAskForPermission,
-    isLoading
+    isLoading,
+    removeDropoffLocation,
+    removeOriginLocation
 }) => {
 
     const [isFocused, setIsFocused] = useState(false);
@@ -135,6 +137,7 @@ const Autocomplete = ({
                             isFocused={isOriginFocused}
                             isLoading={isLoading}
                             placeholder="Starting point"
+                            onClear={removeOriginLocation}
                         />
                     </Pressable>
 
@@ -151,6 +154,8 @@ const Autocomplete = ({
                             value={dropoffLocation?.formattedAddress}
                             isLoading={isLoading}
                             placeholder="Where are you going?"
+                            predefinedPlaces={false}
+                            onClear={removeDropoffLocation}
                         />
                     ) : null}
                 </ScreenWrapper.Container>
