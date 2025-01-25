@@ -27,8 +27,8 @@ const RideAndSharingDetails = ({
                 onPress={() => setisCoordinateOpen(!iscoordinateOpen)}
                 description={!iscoordinateOpen ? "Leave Now" : null}
                 title={!iscoordinateOpen ? interpunct([
-                    originLocation.line1,
-                    dropoffLocation.line1
+                    originLocation?.line1,
+                    dropoffLocation?.line1
                 ]) : "Leave Now"}>
                 <LocationListItem
                     title={originLocation?.formattedAddress}

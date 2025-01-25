@@ -7,6 +7,9 @@ import { Config } from '../Config'
 import Mapbox from '@rnmapbox/maps';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { carList } from './tracking/carList'
+
+
 Logger.setLogCallback((log) => {
   const { message } = log;
 
@@ -32,8 +35,8 @@ const GeoPositionTracker = ({
 
   const [routeDirections, setRouteDirections] = useState(null);
   const [destinationCoords, setDestinationCoords] = useState([
-    customerPosition.longitude,
-    customerPosition.latitude,
+    customerPosition?.longitude,
+    customerPosition?.latitude,
   ]);
 
   const insets = useSafeAreaInsets();
@@ -67,10 +70,7 @@ const GeoPositionTracker = ({
       sw: [minLng, minLat],
       ne: [maxLng, maxLat],
     }
-
-
   };
-
 
   const calculateZoomLevel = (boundingBox) => {
     const width = boundingBox.ne[0] - boundingBox.sw[0];
@@ -177,9 +177,30 @@ const GeoPositionTracker = ({
     };
   };
 
+
+  const vehiclesFeatureCollection = {
+    type: 'FeatureCollection',
+    features: carList.map(car => ({
+      type: 'Feature',
+      properties: {
+        id: car.id,
+        type: car.type,
+        image: car.image,
+      },
+      geometry: {
+        type: 'Point',
+        coordinates: [car.longitude, car.latitude],
+      },
+    })),
+  };
+
+
   const centerCoordinate = currentDriverPosition
-    ? [currentDriverPosition.longitude, currentDriverPosition.latitude]
-    : [vendorPosition.longitude, vendorPosition.latitude];
+    ? [currentDriverPosition?.longitude, currentDriverPosition?.latitude]
+    : vendorPosition
+      ? [vendorPosition?.longitude, vendorPosition?.latitude]
+      : false;
+
 
   return (
     <MapboxGL.MapView
@@ -208,14 +229,17 @@ const GeoPositionTracker = ({
         animationDuration={200}
       // followUserMode="course"
       />
-      {routeDirections && (
+
+      {centerCoordinate && customerPosition ?
         <MapboxGL.ShapeSource id="routeSource" shape={routeDirections}>
           <MapboxGL.LineLayer id="routeLine" style={{ lineColor: MD3LightTheme.colors.primary, lineWidth: 4 }} />
         </MapboxGL.ShapeSource>
-      )}
+        :
+        <MapboxGL.UserLocation animated={true} androidRenderMode="gps" showsUserHeadingIndicator={true} />
+      }
 
-      {centerCoordinate && (
-        <>
+      {
+        centerCoordinate && customerPosition ? <>
           <MapboxGL.Images images={{ driverIcon: require('./tracking/car.png') }} />
           <MapboxGL.ShapeSource id="driverSource" shape={routeDirections}>
             <MapboxGL.SymbolLayer
@@ -229,17 +253,45 @@ const GeoPositionTracker = ({
               }}
             />
           </MapboxGL.ShapeSource>
-          <MapboxGL.UserLocation animated={true} androidRenderMode="gps" showsUserHeadingIndicator={true} />
         </>
-      )}
+          : null
+      }
 
-      {destinationCoords && (
-        <MapboxGL.PointAnnotation id="destination" coordinate={destinationCoords}>
-          <View style={styles.destinationIcon}>
-            <MaterialCommunityIcons name="map-marker-radius" size={24} color={MD3LightTheme.colors.primary} />
-          </View>
-        </MapboxGL.PointAnnotation>
-      )}
+
+      {
+        centerCoordinate && customerPosition ?
+          <MapboxGL.PointAnnotation id="destination" coordinate={destinationCoords}>
+            <View style={styles.destinationIcon}>
+              <MaterialCommunityIcons name="map-marker-radius" size={24} color={MD3LightTheme.colors.primary} />
+            </View>
+          </MapboxGL.PointAnnotation>
+          :
+          null
+      }
+
+
+      <MapboxGL.ShapeSource id="vehiclesSource" shape={vehiclesFeatureCollection}>
+        <MapboxGL.Images
+          images={{
+            carIcon: require('./tracking/car.png'),
+          }}
+        />
+        {
+          carList.map((car) => {
+            return (
+              <MapboxGL.SymbolLayer
+                id="vehiclesLayer"
+                style={{
+                  iconImage: car.iconImage,
+                  iconSize: 0.5,
+                  iconAllowOverlap: true,
+                }}
+              />
+            )
+          })
+        }
+      </MapboxGL.ShapeSource>
+
     </MapboxGL.MapView>
   );
 };
@@ -254,4 +306,5 @@ const styles = StyleSheet.create({
 });
 
 export default GeoPositionTracker;
+
 
