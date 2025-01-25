@@ -7,9 +7,6 @@ import { Config } from '../Config'
 import Mapbox from '@rnmapbox/maps';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { carList } from './tracking/carList'
-
-
 Logger.setLogCallback((log) => {
   const { message } = log;
 
@@ -30,6 +27,7 @@ const GeoPositionTracker = ({
   currentDriverPosition,
   vendorPosition,
   currentSnapPoint,
+  vehicleListPositions
 }) => {
   const mapRef = useRef(null);
 
@@ -177,23 +175,21 @@ const GeoPositionTracker = ({
     };
   };
 
-
   const vehiclesFeatureCollection = {
     type: 'FeatureCollection',
-    features: carList.map(car => ({
+    features: vehicleListPositions?.map((car, index) => ({
       type: 'Feature',
       properties: {
-        id: car.id,
-        type: car.type,
-        image: car.image,
+        id: `vehicle-${index}`,
+        type: 'car',
+        image: require('./tracking/car.png'),
       },
       geometry: {
         type: 'Point',
-        coordinates: [car.longitude, car.latitude],
+        coordinates: [car.longitud, car.latitud],
       },
     })),
   };
-
 
   const centerCoordinate = currentDriverPosition
     ? [currentDriverPosition?.longitude, currentDriverPosition?.latitude]
@@ -277,12 +273,12 @@ const GeoPositionTracker = ({
           }}
         />
         {
-          carList.map((car) => {
+          vehicleListPositions?.map((car, index) => {
             return (
               <MapboxGL.SymbolLayer
                 id="vehiclesLayer"
                 style={{
-                  iconImage: car.iconImage,
+                  iconImage: 'carIcon',
                   iconSize: 0.5,
                   iconAllowOverlap: true,
                 }}

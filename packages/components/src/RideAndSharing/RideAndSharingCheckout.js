@@ -113,6 +113,21 @@ const RideAndSharingCheckout = ({
         setCurrentSnapPoint(value);
     }, []);
 
+    const getVehiclePositions = (products) => {
+        return products?.reduce((acc, item) => {
+            const positions = item.data.map((dataItem) => {
+                const { position } = dataItem.driver;
+                return {
+                    longitud: position[0],
+                    latitud: position[1]
+                };
+            });
+            return acc.concat(positions);
+        }, []);
+    };
+
+    const vehicleListPositions = getVehiclePositions(products)
+
     return (
         <>
             <GeoPositionTracker
@@ -123,7 +138,7 @@ const RideAndSharingCheckout = ({
                 }}
                 vendorPosition={dropoffLocation}
                 currentSnapPoint={currentSnapPoint}
-
+                vehicleListPositions={vehicleListPositions}
             />
 
             <View style={{ position: 'absolute', top: moderateScale(insets.top) }}>
