@@ -163,7 +163,7 @@ const RideAndSharingCheckout = ({
                     )}
                     renderItem={({ item }) => (
                         <ProductListItem
-                            isChecked={item.driver.id === selectedItemId}
+                            isChecked={item.id === selectedItemId}
                             title={item.title}
                             description={item.description ? [item.eta.formattedValue, item.description] : item.eta.formattedValue}
                             price={item.fees[ACCOUNTING_ITEMS.total].formattedValue}
