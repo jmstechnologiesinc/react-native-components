@@ -4,7 +4,7 @@ import ScreenWrapper from '../ScreenWrapper';
 import { localized } from '../Localization/Localization';
 import { Config } from '../Config';
 
-const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus, value = "", onBlur, isLoading, placeholder }) => {
+const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus, value = "", onBlur, isLoading, placeholder, predefinedPlaces = true, onClear }) => {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -14,13 +14,12 @@ const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus, 
 
   }, [value, isLoading]);
 
-
   return (
     <ScreenWrapper.Section title={localized(title)}>
       <GooglePlacesAutocomplete
         ref={ref}
         predefinedPlaces={
-          locationPermissionStatus
+          locationPermissionStatus || !predefinedPlaces
             ? []
             : [
               {
@@ -32,6 +31,7 @@ const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus, 
         predefinedPlacesAlwaysVisible
         placeholder={placeholder}
         onPress={onPress}
+        onClear={onClear}
         textInputProps={{
           onFocus: () => {
             onFocus(false);
@@ -39,7 +39,6 @@ const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus, 
           onBlur: () => {
             onFocus(false);
             onBlur?.(false);
-            // ref.current?.clear();
           },
         }}
         query={{

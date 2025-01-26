@@ -7,7 +7,7 @@ import ProductListItem from "./ProductListItem";
 import { keyExtractor } from "../CartList/CartList";
 import styles from "../styles";
 import CheckoutSummary from "../CheckoutSummary/CheckoutSummary";
-import {ACCOUNTING_ITEMS} from "@jmstechnologiesinc/cart";
+import { ACCOUNTING_ITEMS } from "@jmstechnologiesinc/cart";
 
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper'
 import { Platform, View } from "react-native";
@@ -34,7 +34,8 @@ const RideAndSharingCheckout = ({
     withTopInset = false,
     onItemPress,
     onPress,
-    goBack
+    goBack,
+    selectedDriver
 }) => {
     const point = Platform.OS === 'ios' ? 0.5 : 0.54
 
@@ -112,17 +113,32 @@ const RideAndSharingCheckout = ({
         setCurrentSnapPoint(value);
     }, []);
 
+    const getVehiclePositions = (products) => {
+        return products?.reduce((acc, item) => {
+            const positions = item.data.map((dataItem) => {
+                const { position } = dataItem.driver;
+                return {
+                    longitud: position[0],
+                    latitud: position[1]
+                };
+            });
+            return acc.concat(positions);
+        }, []);
+    };
+
+    const vehicleListPositions = getVehiclePositions(products)
 
     return (
         <>
             <GeoPositionTracker
-                customerPosition={{
-                    longitude: originLocation.longitude,
-                    latitude: originLocation.latitude
+                customerPosition={originLocation}
+                currentDriverPosition={{
+                    longitude: selectedDriver?.[0],
+                    latitude: selectedDriver?.[1],
                 }}
-                currentDriverPosition={dropoffLocation}
                 vendorPosition={dropoffLocation}
                 currentSnapPoint={currentSnapPoint}
+                vehicleListPositions={vehicleListPositions}
             />
 
             <View style={{ position: 'absolute', top: moderateScale(insets.top) }}>
@@ -156,25 +172,25 @@ const RideAndSharingCheckout = ({
             >
                 {products?.length ? (
                     <BottomSheetSectionList
-                    sections={products}
-                    keyExtractor={keyExtractor}
-                    renderSectionHeader={({ section: { title } }) => (
-                        <List.Subheader>{title}</List.Subheader>
-                    )}
-                    renderItem={({ item }) => (
-                        <ProductListItem
-                            isChecked={item.id === selectedItemId}
-                            title={item.title}
-                            description={item.description ? [item.eta.formattedValue, item.description] : item.eta.formattedValue}
-                            price={item.fees[ACCOUNTING_ITEMS.total].formattedValue}
-                            chips={item.chips}
-                            onPress={() => onItemPress(item)} />
-                    )}
-                    ListHeaderComponent={listHeaderComponent}
-                    //ListFooterComponent={listFooterComponent}
-                    stickySectionHeadersEnabled={false}
-                    showsVerticalScrollIndicator={false}
-                />
+                        sections={products}
+                        keyExtractor={keyExtractor}
+                        renderSectionHeader={({ section: { title } }) => (
+                            <List.Subheader>{title}</List.Subheader>
+                        )}
+                        renderItem={({ item }) => (
+                            <ProductListItem
+                                isChecked={item.driver.id === selectedItemId}
+                                title={item.title}
+                                description={item.description ? [item.eta.formattedValue, item.description] : item.eta.formattedValue}
+                                price={item.fees[ACCOUNTING_ITEMS.total].formattedValue}
+                                chips={item.chips}
+                                onPress={() => onItemPress(item)} />
+                        )}
+                        ListHeaderComponent={listHeaderComponent}
+                        //ListFooterComponent={listFooterComponent}
+                        stickySectionHeadersEnabled={false}
+                        showsVerticalScrollIndicator={false}
+                    />
                 ) : null}
             </BottomSheet>
         </>
