@@ -6,6 +6,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { Config } from '../Config'
 import Mapbox from '@rnmapbox/maps';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import VehiclesList from './VehiclesList';
 
 Logger.setLogCallback((log) => {
   const { message } = log;
@@ -18,8 +19,9 @@ Logger.setLogCallback((log) => {
   }
   return false;
 });
+const APIKEY = Config.MAPBOX_ACCESS_TOKEN;
 
-MapboxGL.setAccessToken(Config.MAPBOX_ACCESS_TOKEN);
+MapboxGL.setAccessToken(APIKEY);
 MapboxGL.setTelemetryEnabled(false);
 
 const GeoPositionTracker = ({
@@ -30,7 +32,6 @@ const GeoPositionTracker = ({
   vehicleListPositions
 }) => {
   const mapRef = useRef(null);
-
   const [routeDirections, setRouteDirections] = useState(null);
   const [destinationCoords, setDestinationCoords] = useState([
     customerPosition?.longitude,
@@ -48,7 +49,11 @@ const GeoPositionTracker = ({
   const [boundingBox, setBoundingBox] = useState(null);
 
   const { height } = Dimensions.get('window');
-  const APIKEY = Config.MAPBOX_ACCESS_TOKEN;
+
+
+  const filterVehiclePositions = vehicleListPositions?.filter(item =>
+    !(item.latitud === currentDriverPosition?.latitude && item.longitud === currentDriverPosition?.longitude)
+  );
 
   const getBoundingBox = (coordinates) => {
     let minLng = Infinity;
@@ -175,21 +180,7 @@ const GeoPositionTracker = ({
     };
   };
 
-  const vehiclesFeatureCollection = {
-    type: 'FeatureCollection',
-    features: vehicleListPositions?.map((car, index) => ({
-      type: 'Feature',
-      properties: {
-        id: `vehicle-${index}`,
-        type: 'car',
-        image: require('./tracking/car.png'),
-      },
-      geometry: {
-        type: 'Point',
-        coordinates: [car.longitud, car.latitud],
-      },
-    })),
-  };
+
 
   const centerCoordinate = currentDriverPosition
     ? [currentDriverPosition?.longitude, currentDriverPosition?.latitude]
@@ -265,28 +256,12 @@ const GeoPositionTracker = ({
           null
       }
 
-
-      <MapboxGL.ShapeSource id="vehiclesSource" shape={vehiclesFeatureCollection}>
-        <MapboxGL.Images
-          images={{
-            carIcon: require('./tracking/car.png'),
-          }}
+      {vehicleListPositions &&
+        <VehiclesList
+          vehicleListPositions={filterVehiclePositions}
+          filterVehiclePositions={filterVehiclePositions}
         />
-        {
-          vehicleListPositions?.map((car, index) => {
-            return (
-              <MapboxGL.SymbolLayer
-                id="vehiclesLayer"
-                style={{
-                  iconImage: 'carIcon',
-                  iconSize: 0.5,
-                  iconAllowOverlap: true,
-                }}
-              />
-            )
-          })
-        }
-      </MapboxGL.ShapeSource>
+      }
 
     </MapboxGL.MapView>
   );
