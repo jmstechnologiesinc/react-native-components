@@ -127,7 +127,7 @@ const RideAndSharingCheckout = ({
         }, []);
     };
 
-    const vehicleListPositions = getVehiclePositions(products)
+    const nearbyVehicleLocations = getVehiclePositions(products)
 
     return (
         <>
@@ -140,7 +140,7 @@ const RideAndSharingCheckout = ({
                 // currentDriverPosition={dropoffLocation}
                 vendorPosition={dropoffLocation}
                 currentSnapPoint={currentSnapPoint}
-                vehicleListPositions={vehicleListPositions}
+                nearbyVehicleLocations={nearbyVehicleLocations}
             />
 
             <View style={{ position: 'absolute', top: moderateScale(insets.top) }}>

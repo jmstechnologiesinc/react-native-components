@@ -29,7 +29,7 @@ const GeoPositionTracker = ({
   currentDriverPosition,
   vendorPosition,
   currentSnapPoint,
-  vehicleListPositions
+  nearbyVehicleLocations
 }) => {
   const mapRef = useRef(null);
   const [routeDirections, setRouteDirections] = useState(null);
@@ -51,7 +51,7 @@ const GeoPositionTracker = ({
   const { height } = Dimensions.get('window');
 
 
-  const filterVehiclePositions = vehicleListPositions?.filter(item =>
+  const filterVehiclePositions = nearbyVehicleLocations?.filter(item =>
     !(item.latitud === currentDriverPosition?.latitude && item.longitud === currentDriverPosition?.longitude)
   );
 
@@ -217,7 +217,7 @@ const GeoPositionTracker = ({
       // followUserMode="course"
       />
 
-      {centerCoordinate && customerPosition ?
+      {centerCoordinate && customerPosition && vendorPosition ?
         <MapboxGL.ShapeSource id="routeSource" shape={routeDirections}>
           <MapboxGL.LineLayer id="routeLine" style={{ lineColor: MD3LightTheme.colors.primary, lineWidth: 4 }} />
         </MapboxGL.ShapeSource>
@@ -244,9 +244,8 @@ const GeoPositionTracker = ({
           : null
       }
 
-
       {
-        centerCoordinate && customerPosition ?
+        centerCoordinate && customerPosition && vendorPosition ?
           <MapboxGL.PointAnnotation id="destination" coordinate={destinationCoords}>
             <View style={styles.destinationIcon}>
               <MaterialCommunityIcons name="map-marker-radius" size={24} color={MD3LightTheme.colors.primary} />
@@ -256,9 +255,9 @@ const GeoPositionTracker = ({
           null
       }
 
-      {vehicleListPositions &&
+      {nearbyVehicleLocations &&
         <VehiclesList
-          vehicleListPositions={filterVehiclePositions}
+          vehicleListPositions={nearbyVehicleLocations}
           filterVehiclePositions={filterVehiclePositions}
         />
       }
