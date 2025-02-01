@@ -189,7 +189,7 @@ const GeoPositionTracker = ({
       },
       geometry: {
         type: 'Point',
-        coordinates: [car.longitud, car.latitud],
+        coordinates: [car.longitude, car.latitude],
       },
     })),
   };
@@ -199,7 +199,6 @@ const GeoPositionTracker = ({
     : vendorPosition
       ? [vendorPosition?.longitude, vendorPosition?.latitude]
       : false;
-
 
   return (
     <MapboxGL.MapView

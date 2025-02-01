@@ -7,7 +7,7 @@ import ProductListItem from "./ProductListItem";
 import { keyExtractor } from "../CartList/CartList";
 import styles from "../styles";
 import CheckoutSummary from "../CheckoutSummary/CheckoutSummary";
-import { ACCOUNTING_ITEMS } from "@jmstechnologiesinc/cart";
+import { ACCOUNTING_ITEMS } from "@jmstechnologiesinc/commons";
 
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper'
 import { Platform, View } from "react-native";
@@ -118,23 +118,23 @@ const RideAndSharingCheckout = ({
             const positions = item.data.map((dataItem) => {
                 const { position } = dataItem.driver;
                 return {
-                    longitud: position[0],
-                    latitud: position[1]
+                    longitude: position.longitude,
+                    latitude: position.latitude
                 };
             });
             return acc.concat(positions);
         }, []);
     };
 
-    const vehicleListPositions = getVehiclePositions(products)
+   const vehicleListPositions = getVehiclePositions(products)
 
     return (
         <>
             <GeoPositionTracker
                 customerPosition={originLocation}
                 currentDriverPosition={{
-                    longitude: selectedDriver?.[0],
-                    latitude: selectedDriver?.[1],
+                    longitude: selectedDriver?.longitude,
+                    latitude: selectedDriver?.latitude,
                 }}
                 vendorPosition={dropoffLocation}
                 currentSnapPoint={currentSnapPoint}
@@ -179,7 +179,7 @@ const RideAndSharingCheckout = ({
                         )}
                         renderItem={({ item }) => (
                             <ProductListItem
-                                isChecked={item.driver.id === selectedItemId}
+                                isChecked={item.id === selectedItemId}
                                 title={item.title}
                                 description={item.description ? [item.eta.formattedValue, item.description] : item.eta.formattedValue}
                                 price={item.fees[ACCOUNTING_ITEMS.total].formattedValue}

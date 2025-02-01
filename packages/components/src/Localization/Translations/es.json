@@ -375,7 +375,7 @@
     "platformFee": "Comisión de plataforma",
     "baseFare": "Tarifa base",
     "smallOrderFee": "Tarifa por pedido pequeño",
-    "deliveryFee": "Costos de envío",
+    "deliveryCost": "Costos de envío",
     "pickupFee": "Tarifa de recogida",
     "pretaxTotal": "Total antes de impuestos",
     "aftertaxTotal": "Total después de impuestos",
