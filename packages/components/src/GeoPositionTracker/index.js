@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import MapboxGL, { Logger } from '@rnmapbox/maps';
-import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
+import { MD3LightTheme, IconButton } from '@jmstechnologiesinc/react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Config } from '../Config'
 import Mapbox from '@rnmapbox/maps';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import VehiclesList from './VehiclesList';
+import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters'
+
 
 Logger.setLogCallback((log) => {
   const { message } = log;
@@ -29,7 +31,8 @@ const GeoPositionTracker = ({
   currentDriverPosition,
   vendorPosition,
   currentSnapPoint,
-  nearbyVehicleLocations
+  nearbyVehicleLocations,
+  getGPSLocationOnPress
 }) => {
   const mapRef = useRef(null);
   const [routeDirections, setRouteDirections] = useState(null);
@@ -189,6 +192,28 @@ const GeoPositionTracker = ({
       : false;
 
 
+  const resetToInitialPosition = async () => {
+    await getGPSLocationOnPress();
+
+    if (mapRef.current) {
+      mapRef.current.setCamera({
+        centerCoordinate: [customerPosition?.longitude, customerPosition?.latitude],
+        zoomLevel: zoomLevel,
+        bounds: boundingBox,
+        padding: {
+          paddingTop: top,
+          paddingRight: right,
+          paddingLeft: left,
+          paddingBottom: height * currentSnapPoint,
+        },
+        animationMode: 'flyTo',
+        animationDuration: 500,
+      });
+    }
+  };
+
+
+
   return (
     <MapboxGL.MapView
       style={{
@@ -260,6 +285,22 @@ const GeoPositionTracker = ({
           vehicleListPositions={nearbyVehicleLocations}
           filterVehiclePositions={filterVehiclePositions}
         />
+      }
+
+      {true ?
+        <View style={{
+          position: 'absolute',
+          bottom: height * 0.48,
+          right: 0
+        }}>
+          <IconButton
+            icon="crosshairs-gps"
+            size={moderateScale(24)}
+            mode='contained'
+            onPress={resetToInitialPosition}
+          />
+        </View>
+        : null
       }
 
     </MapboxGL.MapView>
