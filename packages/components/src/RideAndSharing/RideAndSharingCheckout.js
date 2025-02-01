@@ -35,7 +35,8 @@ const RideAndSharingCheckout = ({
     onItemPress,
     onPress,
     goBack,
-    selectedDriver
+    selectedDriver,
+    getGPSLocationOnPress
 }) => {
     const point = Platform.OS === 'ios' ? 0.5 : 0.54
 
@@ -113,6 +114,7 @@ const RideAndSharingCheckout = ({
         setCurrentSnapPoint(value);
     }, []);
 
+
     const getVehiclePositions = (products) => {
         return products?.reduce((acc, item) => {
             const positions = item.data.map((dataItem) => {
@@ -126,7 +128,7 @@ const RideAndSharingCheckout = ({
         }, []);
     };
 
-   const vehicleListPositions = getVehiclePositions(products)
+    const nearbyVehicleLocations = getVehiclePositions(products)
 
     return (
         <>
@@ -136,9 +138,11 @@ const RideAndSharingCheckout = ({
                     longitude: selectedDriver?.longitude,
                     latitude: selectedDriver?.latitude,
                 }}
+                // currentDriverPosition={dropoffLocation}
                 vendorPosition={dropoffLocation}
                 currentSnapPoint={currentSnapPoint}
-                vehicleListPositions={vehicleListPositions}
+                nearbyVehicleLocations={nearbyVehicleLocations}
+                getGPSLocationOnPress={getGPSLocationOnPress}
             />
 
             <View style={{ position: 'absolute', top: moderateScale(insets.top) }}>
