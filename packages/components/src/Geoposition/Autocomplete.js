@@ -32,7 +32,10 @@ const Autocomplete = ({
     onAskForPermission,
     isLoading,
     removeDropoffLocation,
-    removeOriginLocation
+    removeOriginLocation,
+    onMapPicker,
+    predefinedPlaces = true,
+    isShowMapPicker = false
 }) => {
 
     const [isFocused, setIsFocused] = useState(false);
@@ -93,6 +96,14 @@ const Autocomplete = ({
         Keyboard.dismiss()
     }
 
+    const onCallMapPicker = () => {
+        onMapPicker()
+        setIsOriginFocused(false);
+        setIsShowRecentLocation(true)
+        Keyboard.dismiss()
+
+    }
+
     return (
         <>
             {isLocationPermissionDenied === true ? (
@@ -137,6 +148,7 @@ const Autocomplete = ({
                             isFocused={isOriginFocused}
                             isLoading={isLoading}
                             placeholder="Starting point"
+                            predefinedPlaces={predefinedPlaces}
                             onClear={removeOriginLocation}
                         />
                     </Pressable>
@@ -159,6 +171,17 @@ const Autocomplete = ({
                         />
                     ) : null}
                 </ScreenWrapper.Container>
+
+                {
+                    isOriginFocused && isShowMapPicker ? <LocationListItem
+                        title={"Set location on map"}
+                        // description={interpunctLocationListItemDescription(currentLocation)}
+                        variant="currentLocation"
+                        onPress={onCallMapPicker}
+                    />
+                        :
+                        null
+                }
 
                 {isCurrentLocationVisible && isFocused === false && currentLocation?.id ? (
                     <List.Section title={localized(currentLocationTitle)}>
