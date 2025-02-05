@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import MapboxGL from '@rnmapbox/maps';
 
-const VehiclesList = ({ vehicleListPositions, filterVehiclePositions }) => {
+const VehiclesList = ({ vehicleListPositions, filterVehiclePositions, driverHeading }) => {
   const shapeSourceRef = useRef(null);
   const imagesRef = useRef(null);
   const symbolLayerRefs = useRef([]);
@@ -29,7 +29,6 @@ const VehiclesList = ({ vehicleListPositions, filterVehiclePositions }) => {
       },
     })),
   };
-
   useEffect(() => {
     if (shapeSourceRef.current) {
       shapeSourceRef.current.setNativeProps({
@@ -59,6 +58,7 @@ const VehiclesList = ({ vehicleListPositions, filterVehiclePositions }) => {
           style={{
             iconImage: 'carIcon',
             iconSize: 0.5,
+            iconRotate: -driverHeading,
             iconAllowOverlap: true,
           }}
         />

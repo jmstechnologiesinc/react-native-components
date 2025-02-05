@@ -36,7 +36,8 @@ const RideAndSharingCheckout = ({
     onPress,
     goBack,
     selectedDriver,
-    getGPSLocationOnPress
+    getGPSLocationOnPress,
+    isLocationPermission
 }) => {
     const point = Platform.OS === 'ios' ? 0.5 : 0.54
 
@@ -143,6 +144,7 @@ const RideAndSharingCheckout = ({
                 currentSnapPoint={currentSnapPoint}
                 nearbyVehicleLocations={nearbyVehicleLocations}
                 getGPSLocationOnPress={getGPSLocationOnPress}
+                isLocationPermission={isLocationPermission}
             />
 
             <View style={{ position: 'absolute', top: moderateScale(insets.top) }}>

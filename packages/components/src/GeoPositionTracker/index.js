@@ -9,7 +9,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import VehiclesList from './VehiclesList';
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters'
 
-
 Logger.setLogCallback((log) => {
   const { message } = log;
 
@@ -32,7 +31,8 @@ const GeoPositionTracker = ({
   vendorPosition,
   currentSnapPoint,
   nearbyVehicleLocations,
-  getGPSLocationOnPress
+  getGPSLocationOnPress,
+  isLocationPermission
 }) => {
   const mapRef = useRef(null);
   const [routeDirections, setRouteDirections] = useState(null);
@@ -40,6 +40,7 @@ const GeoPositionTracker = ({
     customerPosition?.longitude,
     customerPosition?.latitude,
   ]);
+
 
   const insets = useSafeAreaInsets();
 
@@ -108,7 +109,6 @@ const GeoPositionTracker = ({
         if (steps && steps.length) {
           const heading = steps[0].maneuver.bearing_after;
           setDriverHeading(heading);
-          console.log('Initial heading:', heading);
         }
 
         setRouteDirections(makeRouterFeature(coordinates));
@@ -191,9 +191,12 @@ const GeoPositionTracker = ({
       ? [vendorPosition?.longitude, vendorPosition?.latitude]
       : false;
 
-
   const resetToInitialPosition = async () => {
-    await getGPSLocationOnPress();
+
+
+    if (!isLocationPermission) {
+      await getGPSLocationOnPress();
+    }
 
     if (mapRef.current) {
       mapRef.current.setCamera({
@@ -212,12 +215,11 @@ const GeoPositionTracker = ({
     }
   };
 
-
-
   return (
     <MapboxGL.MapView
       style={{
-        flex: 1
+        flex: 1,
+
       }}
       zoomEnabled={true}
       styleURL={Mapbox.StyleURL.Street}
@@ -225,6 +227,7 @@ const GeoPositionTracker = ({
       logoEnabled={false}
       attributionEnabled={false}
       scaleBarEnabled={false}
+      mapRef={mapRef}
     >
 
       <MapboxGL.Camera
@@ -239,7 +242,6 @@ const GeoPositionTracker = ({
         }}
         animationMode="flyTo"
         animationDuration={200}
-      // followUserMode="course"
       />
 
       {centerCoordinate && customerPosition && vendorPosition ?
@@ -250,8 +252,8 @@ const GeoPositionTracker = ({
         <MapboxGL.UserLocation animated={true} androidRenderMode="gps" showsUserHeadingIndicator={true} />
       }
 
-      {
-        centerCoordinate && customerPosition ? <>
+      {centerCoordinate && customerPosition ? (
+        <>
           <MapboxGL.Images images={{ driverIcon: require('./tracking/car.png') }} />
           <MapboxGL.ShapeSource id="driverSource" shape={routeDirections}>
             <MapboxGL.SymbolLayer
@@ -266,12 +268,13 @@ const GeoPositionTracker = ({
             />
           </MapboxGL.ShapeSource>
         </>
-          : null
-      }
+      ) : null}
+
 
       {
         centerCoordinate && customerPosition && vendorPosition ?
           <MapboxGL.PointAnnotation id="destination" coordinate={destinationCoords}>
+
             <View style={styles.destinationIcon}>
               <MaterialCommunityIcons name="map-marker-radius" size={24} color={MD3LightTheme.colors.primary} />
             </View>
@@ -284,31 +287,30 @@ const GeoPositionTracker = ({
         <VehiclesList
           vehicleListPositions={nearbyVehicleLocations}
           filterVehiclePositions={filterVehiclePositions}
+          driverHeading={driverHeading}
         />
       }
 
-      {true ?
-        <View style={{
-          position: 'absolute',
-          bottom: height * 0.48,
-          right: 0
-        }}>
-          <IconButton
-            icon="crosshairs-gps"
-            size={moderateScale(24)}
-            mode='contained'
-            onPress={resetToInitialPosition}
-          />
-        </View>
-        : null
-      }
+      <View style={{
+        position: 'absolute',
+        bottom: height * 0.48,
+        right: 0,
 
+      }}>
+        <IconButton
+          icon="crosshairs-gps"
+          size={moderateScale(24)}
+          mode='contained'
+          onPress={resetToInitialPosition}
+        />
+      </View>
     </MapboxGL.MapView>
   );
 };
 
 const styles = StyleSheet.create({
   destinationIcon: {
+    flex: 1,
     width: 30,
     height: 30,
     justifyContent: 'center',
