@@ -1,5 +1,7 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {LogBox, StyleSheet, Text, View} from 'react-native';
+import ENV from 'react-native-config';
+import {STORYBOOK_ENABLED} from 'react-native-dotenv';
 
 const styles = StyleSheet.create({
   container: {
@@ -20,7 +22,8 @@ function App() {
 
 let AppEntryPoint = App;
 
-if (process.env.STORYBOOK_ENABLED) {
+if (STORYBOOK_ENABLED) {
+  LogBox.ignoreAllLogs();
   AppEntryPoint = require('./.ondevice').default;
 }
 

@@ -28,7 +28,7 @@ const state = {
 };
 
 export const AuthFormEmailPassword = () => (
-    <AuthForm.EmailPassword email={state.email} password={state.password} inputActionHandler={() => {}} />
+    <AuthForm.EmailPassword email={state.email} password={state.password} inputActionHandler={() => { }} />
 );
 
 export const AuthFormConfirmPassword = () => (
@@ -36,7 +36,7 @@ export const AuthFormConfirmPassword = () => (
         email={state.email}
         password={state.password}
         passwordConfirm={state.passwordConfirm}
-        inputActionHandler={() => {}}
+        inputActionHandler={() => { }}
         showConfirmPasswordInput={true}
     />
 );
@@ -46,9 +46,9 @@ export const AuthFormResetPassword = () => (
         email={state.email}
         password={state.password}
         passwordConfirm={state.passwordConfirm}
-        inputActionHandler={() => {}}
+        inputActionHandler={() => { }}
         showResetPassword={true}
-        onPasswordReset={() => {}}
+        onPasswordReset={() => { }}
     />
 );
 
@@ -57,7 +57,7 @@ export const AuthFormEmailPasswordDisabled = () => (
         email={state.email}
         password={state.password}
         passwordConfirm={state.passwordConfirm}
-        inputActionHandler={() => {}}
+        inputActionHandler={() => { }}
         showConfirmPasswordInput={false}
         isEmailDisabled={true}
         isPasswordDisabled={true}
@@ -69,7 +69,7 @@ export const AuthFormPersonInfo = () => (
         firstName={state.firstName}
         lastName={state.lastName}
         phoneNumber={state.phoneNumber}
-        inputActionHandler={() => {}}
+        inputActionHandler={() => { }}
     />
 );
 
@@ -79,7 +79,7 @@ export const AuthFormDriverInfo = () => (
         zipcode={state.zipcode}
         dateofBirth={state.dateofBirth}
         ssn={state.ssn}
-        inputActionHandler={() => {}}
+        inputActionHandler={() => { }}
     />
 );
 
@@ -90,7 +90,7 @@ export const AuthFormBusinessInfo = () => (
         storeAddress={state.storeAddress}
         industries={state.industries}
         placeholder={['Restaurant', 'Pharmacy', 'Grocery']}
-        inputActionHandler={() => {}}
+        inputActionHandler={() => { }}
     />
 );
 
@@ -100,8 +100,8 @@ export const AuthFormCarInfo = () => (
         model={state.model}
         color={state.color}
         year={state.year}
-        inputActionHandler={() => {}}
+        inputActionHandler={() => { }}
     />
 );
 
-export const PhoneNumber = () => <AuthForm.PhoneNumber phoneNumber={state.password} inputActionHandler={() => {}} />;
+export const PhoneNumber = () => <AuthForm.PhoneNumber phoneNumber={state.password} inputActionHandler={() => { }} />;

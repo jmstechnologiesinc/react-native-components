@@ -1,13 +1,13 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import BottomSheet, { BottomSheetFooter, BottomSheetSectionList } from "@gorhom/bottom-sheet";
-import { Appbar, FAB, List, MD3LightTheme, Surface } from "@jmstechnologiesinc/react-native-paper";
+import BottomSheet, { BottomSheetFooter, BottomSheetFlatList } from "@gorhom/bottom-sheet";
+import { Appbar, FAB, HelperText, List, MD3LightTheme, Surface, Text } from "@jmstechnologiesinc/react-native-paper";
 import TipsFilter from "../TipsFilter/TipsFilter";
 import { localized } from "../Localization/Localization";
 import ProductListItem from "./ProductListItem";
 import { keyExtractor } from "../CartList/CartList";
 import styles from "../styles";
 import CheckoutSummary from "../CheckoutSummary/CheckoutSummary";
-import { ACCOUNTING_ITEMS } from "@jmstechnologiesinc/cart";
+import { ACCOUNTING_ITEMS } from "@jmstechnologiesinc/commons";
 
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper'
 import { Platform, View } from "react-native";
@@ -22,8 +22,8 @@ const RideAndSharingCheckout = ({
     originLocationDescription,
     dropoffLocation,
     dropoffLocationDescription,
-    products,
-    selectedItemId,
+    cart,
+    selectedItem,
     fees,
     tipsFilter,
     originLocationOnPress,
@@ -35,7 +35,6 @@ const RideAndSharingCheckout = ({
     onItemPress,
     onPress,
     goBack,
-    selectedDriver,
     getGPSLocationOnPress,
     isLocationPermission
 }) => {
@@ -43,7 +42,7 @@ const RideAndSharingCheckout = ({
 
     const bottomSheetRef = useRef(null);
     const snapPoints = useMemo(() => ["50%", "75%", "100%"], []);
-    const [currentSnapPoint, setCurrentSnapPoint] = useState(point);
+    const [currentSnapPoint, setCurrentSnapPoint] = useState(0);
     const insets = useSafeAreaInsets();
 
     const isInsetsBottom = insets.bottom === 0 ? MD3LightTheme.spacing.x4 : insets.bottom;
@@ -61,7 +60,8 @@ const RideAndSharingCheckout = ({
 
 
     const listHeaderComponent = () => (
-        <RideAndSharingDetails
+        <>
+          <RideAndSharingDetails
             originLocation={originLocation}
             originLocationDescription={originLocationDescription}
             dropoffLocation={dropoffLocation}
@@ -69,6 +69,8 @@ const RideAndSharingCheckout = ({
             originLocationOnPress={originLocationOnPress}
             dropoffLocationOnPress={dropoffLocationOnPress}
             RenderPaymentMethod={RenderPaymentMethod} />
+        <List.Subheader>{cart.title}</List.Subheader>
+        </>
     );
 
     const listFooterComponent = () => (
@@ -116,33 +118,33 @@ const RideAndSharingCheckout = ({
     }, []);
 
 
-    const getVehiclePositions = (products) => {
+ /*    const getVehiclePositions = (products) => {
         return products?.reduce((acc, item) => {
             const positions = item.data.map((dataItem) => {
                 const { position } = dataItem.driver;
                 return {
-                    longitud: position[0],
-                    latitud: position[1]
+                    longitude: position.longitude,
+                    latitude: position.latitude
                 };
             });
             return acc.concat(positions);
         }, []);
-    };
+    }; */
 
-    const nearbyVehicleLocations = getVehiclePositions(products)
+    ////const nearbyVehicleLocations = getVehiclePositions(products)
 
     return (
         <>
-            <GeoPositionTracker
+           <GeoPositionTracker
                 customerPosition={originLocation}
                 currentDriverPosition={{
-                    longitude: selectedDriver?.[0],
-                    latitude: selectedDriver?.[1],
+                    longitude: selectedItem?.driver?.longitude,
+                    latitude: selectedItem?.driver?.latitude,
                 }}
                 // currentDriverPosition={dropoffLocation}
                 vendorPosition={dropoffLocation}
                 currentSnapPoint={currentSnapPoint}
-                nearbyVehicleLocations={nearbyVehicleLocations}
+                nearbyVehicleLocations={cart?.vehicleLocations}
                 getGPSLocationOnPress={getGPSLocationOnPress}
                 isLocationPermission={isLocationPermission}
             />
@@ -176,21 +178,26 @@ const RideAndSharingCheckout = ({
 
                 onChange={handleSheetChange}
             >
-                {products?.length ? (
-                    <BottomSheetSectionList
-                        sections={products}
-                        keyExtractor={keyExtractor}
-                        renderSectionHeader={({ section: { title } }) => (
-                            <List.Subheader>{title}</List.Subheader>
-                        )}
+                {cart?.products?.length ? (
+                    <BottomSheetFlatList
+                        data={cart.products}
+                        //keyExtractor={keyExtractor}
                         renderItem={({ item }) => (
-                            <ProductListItem
-                                isChecked={item.driver.id === selectedItemId}
+                            <List.Accordion
+                                right={() => null}
+                                expanded
                                 title={item.title}
-                                description={item.description ? [item.eta.formattedValue, item.description] : item.eta.formattedValue}
-                                price={item.fees[ACCOUNTING_ITEMS.total].formattedValue}
-                                chips={item.chips}
-                                onPress={() => onItemPress(item)} />
+                                description={item.description}>
+                                {item.data.map(offer => (
+                                    <ProductListItem
+                                        isChecked={offer.token === selectedItem?.token}
+                                        title={offer.eta.formattedValue}
+                                        price={offer.costs[ACCOUNTING_ITEMS.total].formattedValue}
+                                        chips={item.chips}
+                                        onPress={() => onItemPress(offer)}
+                                    />
+                                ))}
+                            </List.Accordion>
                         )}
                         ListHeaderComponent={listHeaderComponent}
                         //ListFooterComponent={listFooterComponent}
