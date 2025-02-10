@@ -17,6 +17,7 @@ import RideAndSharingDetails from "./RideAndSharingDetails";
 import GeoPositionTracker from "../GeoPositionTracker";
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters'
 
+
 const RideAndSharingCheckout = ({
     originLocation,
     originLocationDescription,
@@ -40,7 +41,6 @@ const RideAndSharingCheckout = ({
     isLocationPermission
 }) => {
     const point = Platform.OS === 'ios' ? 0.5 : 0.54
-
     const bottomSheetRef = useRef(null);
     const snapPoints = useMemo(() => ["50%", "75%", "100%"], []);
     const [currentSnapPoint, setCurrentSnapPoint] = useState(point);
@@ -119,10 +119,13 @@ const RideAndSharingCheckout = ({
     const getVehiclePositions = (products) => {
         return products?.reduce((acc, item) => {
             const positions = item.data.map((dataItem) => {
+                const { formattedValue } = dataItem.eta
                 const { position } = dataItem.driver;
                 return {
                     longitud: position[0],
-                    latitud: position[1]
+                    latitud: position[1],
+                    formattedValue: formattedValue,
+                    driverId: dataItem.driver.id
                 };
             });
             return acc.concat(positions);
@@ -130,6 +133,7 @@ const RideAndSharingCheckout = ({
     };
 
     const nearbyVehicleLocations = getVehiclePositions(products)
+
 
     return (
         <>
@@ -145,6 +149,9 @@ const RideAndSharingCheckout = ({
                 nearbyVehicleLocations={nearbyVehicleLocations}
                 getGPSLocationOnPress={getGPSLocationOnPress}
                 isLocationPermission={isLocationPermission}
+                originLocation={originLocation}
+                dropoffLocation={dropoffLocation}
+                selectedItemId={selectedItemId}
             />
 
             <View style={{ position: 'absolute', top: moderateScale(insets.top) }}>

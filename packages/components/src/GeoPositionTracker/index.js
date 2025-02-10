@@ -216,85 +216,88 @@ const GeoPositionTracker = ({
   };
 
   return (
-    <MapboxGL.MapView
-      style={{
-        flex: 1,
+    <>
+      <MapboxGL.MapView
+        style={{
+          flex: 1,
 
-      }}
-      zoomEnabled={true}
-      styleURL={Mapbox.StyleURL.Street}
-      compassEnabled={false}
-      logoEnabled={false}
-      attributionEnabled={false}
-      scaleBarEnabled={false}
-      mapRef={mapRef}
-    >
-
-      <MapboxGL.Camera
-        zoomLevel={zoomLevel}
-        bounds={boundingBox}
-        ref={mapRef}
-        padding={{
-          paddingTop: top,
-          paddingRight: right,
-          paddingLeft: left,
-          paddingBottom: height * currentSnapPoint,
         }}
-        animationMode="flyTo"
-        animationDuration={200}
-      />
+        zoomEnabled={true}
+        styleURL={Mapbox.StyleURL.Street}
+        compassEnabled={false}
+        logoEnabled={false}
+        attributionEnabled={false}
+        scaleBarEnabled={false}
+        mapRef={mapRef}
+      >
 
-      {centerCoordinate && customerPosition && vendorPosition ?
-        <MapboxGL.ShapeSource id="routeSource" shape={routeDirections}>
-          <MapboxGL.LineLayer id="routeLine" style={{ lineColor: MD3LightTheme.colors.primary, lineWidth: 4 }} />
-        </MapboxGL.ShapeSource>
-        :
-        <MapboxGL.UserLocation animated={true} androidRenderMode="gps" showsUserHeadingIndicator={true} />
-      }
-
-      {centerCoordinate && customerPosition ? (
-        <>
-          <MapboxGL.Images images={{ driverIcon: require('./tracking/car.png') }} />
-          <MapboxGL.ShapeSource id="driverSource" shape={routeDirections}>
-            <MapboxGL.SymbolLayer
-              id="driverIconLayer"
-              style={{
-                iconImage: 'driverIcon',
-                iconAnchor: 'center',
-                iconAllowOverlap: true,
-                iconRotate: driverHeading,
-                iconSize: 0.5,
-              }}
-            />
-          </MapboxGL.ShapeSource>
-        </>
-      ) : null}
-
-
-      {
-        centerCoordinate && customerPosition && vendorPosition ?
-          <MapboxGL.PointAnnotation id="destination" coordinate={destinationCoords}>
-
-            <View style={styles.destinationIcon}>
-              <MaterialCommunityIcons name="map-marker-radius" size={24} color={MD3LightTheme.colors.primary} />
-            </View>
-          </MapboxGL.PointAnnotation>
-          :
-          null
-      }
-
-      {nearbyVehicleLocations &&
-        <VehiclesList
-          vehicleListPositions={nearbyVehicleLocations}
-          filterVehiclePositions={filterVehiclePositions}
-          driverHeading={driverHeading}
+        <MapboxGL.Camera
+          zoomLevel={zoomLevel}
+          bounds={boundingBox}
+          ref={mapRef}
+          padding={{
+            paddingTop: top,
+            paddingRight: right,
+            paddingLeft: left,
+            paddingBottom: height * currentSnapPoint,
+          }}
+          animationMode="flyTo"
+          animationDuration={200}
         />
-      }
 
+        {centerCoordinate && customerPosition && vendorPosition ?
+          <MapboxGL.ShapeSource id="routeSource" shape={routeDirections}>
+            <MapboxGL.LineLayer id="routeLine" style={{ lineColor: MD3LightTheme.colors.primary, lineWidth: 4 }} />
+          </MapboxGL.ShapeSource>
+          :
+          <MapboxGL.UserLocation animated={true} androidRenderMode="gps" showsUserHeadingIndicator={true} />
+        }
+
+        {centerCoordinate && customerPosition ? (
+          <>
+            <MapboxGL.Images images={{ driverIcon: require('./tracking/car.png') }} />
+            <MapboxGL.ShapeSource id="driverSource" shape={routeDirections}>
+              <MapboxGL.SymbolLayer
+                id="driverIconLayer"
+                style={{
+                  iconImage: 'driverIcon',
+                  iconAnchor: 'center',
+                  iconAllowOverlap: true,
+                  iconRotate: driverHeading,
+                  iconSize: 0.5,
+                }}
+              />
+            </MapboxGL.ShapeSource>
+          </>
+        ) : null}
+
+
+        {
+          centerCoordinate && customerPosition && vendorPosition ?
+            <MapboxGL.PointAnnotation id="destination" coordinate={destinationCoords}>
+
+              <View style={styles.destinationIcon}>
+                <MaterialCommunityIcons name="map-marker-radius" size={24} color={MD3LightTheme.colors.primary} />
+              </View>
+            </MapboxGL.PointAnnotation>
+            :
+            null
+        }
+
+        {nearbyVehicleLocations &&
+          <VehiclesList
+            vehicleListPositions={nearbyVehicleLocations}
+            filterVehiclePositions={filterVehiclePositions}
+            driverHeading={driverHeading}
+          />
+        }
+
+
+      </MapboxGL.MapView>
       <View style={{
         position: 'absolute',
-        bottom: height * 0.48,
-        right: 0,
+        bottom: height * currentSnapPoint,
+        right: 16,
 
       }}>
         <IconButton
@@ -304,7 +307,7 @@ const GeoPositionTracker = ({
           onPress={resetToInitialPosition}
         />
       </View>
-    </MapboxGL.MapView>
+    </>
   );
 };
 
