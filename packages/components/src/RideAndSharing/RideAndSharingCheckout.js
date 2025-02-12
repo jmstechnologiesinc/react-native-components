@@ -36,8 +36,7 @@ const RideAndSharingCheckout = ({
     onItemPress,
     onPress,
     goBack,
-    getGPSLocationOnPress,
-    isLocationPermission
+    getGPSLocationOnPress
 }) => {
     const point = Platform.OS === 'ios' ? 0.5 : 0.54
     const bottomSheetRef = useRef(null);
