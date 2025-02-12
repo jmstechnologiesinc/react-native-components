@@ -152,6 +152,7 @@ const RideAndSharingCheckout = ({
                 originLocation={originLocation}
                 dropoffLocation={dropoffLocation}
                 selectedItemId={selectedItemId}
+                locationOnPress={originLocationOnPress}
             />
 
             <View style={{ position: 'absolute', top: moderateScale(insets.top) }}>

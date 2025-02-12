@@ -1,13 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import { View, StyleSheet, Dimensions, Pressable } from 'react-native';
 import MapboxGL, { Logger } from '@rnmapbox/maps';
-import { MD3LightTheme, IconButton } from '@jmstechnologiesinc/react-native-paper';
+import { MD3LightTheme, IconButton, Text } from '@jmstechnologiesinc/react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Config } from '../Config'
-import Mapbox from '@rnmapbox/maps';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import VehiclesList from './VehiclesList';
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters'
+import Mapbox from '@rnmapbox/maps';
+
+import { Config } from '../Config'
+import VehiclesList from './VehiclesList';
+import AddressMarker from './AddressMarker'
 
 Logger.setLogCallback((log) => {
   const { message } = log;
@@ -32,7 +34,9 @@ const GeoPositionTracker = ({
   currentSnapPoint,
   nearbyVehicleLocations,
   getGPSLocationOnPress,
-  isLocationPermission
+  isLocationPermission,
+  selectedItemId,
+  locationOnPress
 }) => {
   const mapRef = useRef(null);
   const [routeDirections, setRouteDirections] = useState(null);
@@ -58,6 +62,8 @@ const GeoPositionTracker = ({
   const filterVehiclePositions = nearbyVehicleLocations?.filter(item =>
     !(item.latitud === currentDriverPosition?.latitude && item.longitud === currentDriverPosition?.longitude)
   );
+
+  const vehicleSelected = nearbyVehicleLocations?.find(item => item.driverId === selectedItemId)
 
   const getBoundingBox = (coordinates) => {
     let minLng = Infinity;
@@ -143,9 +149,9 @@ const GeoPositionTracker = ({
         bounds: boundingBox,
         zoomLevel: zoomLevel,
         padding: {
-          paddingTop: top,
-          paddingRight: right,
-          paddingLeft: left,
+          paddingTop: top + moderateScale(50),
+          paddingRight: right + moderateScale(50),
+          paddingLeft: left + moderateScale(50),
           paddingBottom: height * currentSnapPoint,
         },
         animationMode: 'flyTo',
@@ -156,9 +162,9 @@ const GeoPositionTracker = ({
         bounds: boundingBox,
         zoomLevel: zoomLevel,
         padding: {
-          paddingTop: top,
-          paddingRight: right,
-          paddingLeft: left,
+          paddingTop: top + moderateScale(50),
+          paddingRight: right + moderateScale(50),
+          paddingLeft: left + moderateScale(50),
           paddingBottom: height * currentSnapPoint,
         },
         animationMode: 'flyTo',
@@ -204,9 +210,9 @@ const GeoPositionTracker = ({
         zoomLevel: zoomLevel,
         bounds: boundingBox,
         padding: {
-          paddingTop: top,
-          paddingRight: right,
-          paddingLeft: left,
+          paddingTop: top + moderateScale(50),
+          paddingRight: right + moderateScale(50),
+          paddingLeft: left + moderateScale(50),
           paddingBottom: height * currentSnapPoint,
         },
         animationMode: 'flyTo',
@@ -236,9 +242,9 @@ const GeoPositionTracker = ({
           bounds={boundingBox}
           ref={mapRef}
           padding={{
-            paddingTop: top,
-            paddingRight: right,
-            paddingLeft: left,
+            paddingTop: top + moderateScale(50),
+            paddingRight: right + moderateScale(50),
+            paddingLeft: left + moderateScale(50),
             paddingBottom: height * currentSnapPoint,
           }}
           animationMode="flyTo"
@@ -292,12 +298,25 @@ const GeoPositionTracker = ({
           />
         }
 
+        <AddressMarker
+          coordinate={centerCoordinate}
+          onPress={locationOnPress}
+          title={vehicleSelected?.formattedValue}
+        />
+
+        <AddressMarker
+          coordinate={[customerPosition?.longitude,
+          customerPosition?.latitude,]}
+          onPress={locationOnPress}
+          title={customerPosition?.formattedAddress}
+        />
 
       </MapboxGL.MapView>
+
       <View style={{
         position: 'absolute',
         bottom: height * currentSnapPoint,
-        right: 16,
+        right: 0,
 
       }}>
         <IconButton
@@ -319,6 +338,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
 });
 
 export default GeoPositionTracker;
