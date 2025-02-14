@@ -1,7 +1,7 @@
 import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import React from 'react';
 import { View } from 'react-native';
-import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
+import ScreenWrapper from './ScreenWrapper';
 import ScreenWrapperContainer from './ScreenWrapperContainer';
 import ScreenWrapperSection from './ScreenWrapperSection';
 

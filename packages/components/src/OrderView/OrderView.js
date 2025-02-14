@@ -20,7 +20,7 @@ import OrderStatus from '../Order/OrderStatus';
 import PhotoGallery from '../PhotoGallery/PhotoGallery';
 import * as ActionGroup from '../ActionGroup/ActionGroup';
 import { itemSeparator } from '../utils';
-import { firestoreTimestampToDate, plurulize } from '@jmstechnologiesinc/commons';
+import { LOGISTICS_PLATFORMS, firestoreTimestampToDate, plurulize } from '@jmstechnologiesinc/commons';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 import { localized } from '../Localization/Localization';
@@ -67,6 +67,7 @@ const getDriverDetails = (order, role) => {
 const OrderView = ({
     order,
     role,
+    platform,
     onButtonPress,
 
     enableHeaderStatus,
@@ -87,9 +88,9 @@ const OrderView = ({
     }
 
     const fulfilmentDetails = [];
-    const [coord, setCoord] = useState(null);
+   // const [coord, setCoord] = useState(null);
 
-    const getLiveLocation = () => {
+   /*  const getLiveLocation = () => {
         Geolocation.getCurrentPosition(
             (position) => {
                 const { latitude, longitude } = position.coords;
@@ -103,9 +104,9 @@ const OrderView = ({
             },
             { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
         );
-    };
+    }; */
 
-    useEffect(() => {
+  /*   useEffect(() => {
         const locationInterval = setInterval(() => {
             getLiveLocation();
         }, 4000);
@@ -113,9 +114,7 @@ const OrderView = ({
             clearInterval(locationInterval);
         };
     }, []);
-
-    console.log('get:' + JSON.stringify(coord, null, 2))
-
+ */
     if (order.note === true) {
         fulfilmentDetails.push({
             key: 'cancel-note',
@@ -143,21 +142,35 @@ const OrderView = ({
     let driverDetails;
 
     if (role === USER_ROLES.customer) {
-        fulfilmentDetails.push({
-            key: 'fulfillment-address',
-            title: order.fulfillmentAddress.formattedAddress,
-            icon: MATERIAL_ICONS.location,
-            description:
-                order.fulfillmentMethod === FULFILLMENT_METHODS.delivery ? localized('order.shippingAddress') : localized('order.pickupAddress'),
-        });
-
-        fulfilmentDetails.push({
-            key: 'vendor-phoneNumber',
-            title: order.vendor.phoneNumber,
-            icon: MATERIAL_ICONS.call,
-            description: localized('order.vendor.phone'),
-        });
-
+        if(platform === LOGISTICS_PLATFORMS.rideshare) {
+            fulfilmentDetails.push({
+                key: 'origin-location',
+                title: order.originLocation.formattedAddress,
+                icon: 'hail',
+                description: localized('trip.originLocation') 
+            });
+            fulfilmentDetails.push({
+                key: 'drop-off-location',
+                title: order.fulfillmentAddress.formattedAddress,
+                icon: 'home-map-marker',
+                description: localized('trip.dropoffLocation')
+            });
+        } else {
+            fulfilmentDetails.push({
+                key: 'drop-off-location',
+                title: order.fulfillmentAddress.formattedAddress,
+                icon: 'home-map-marker',
+                description:
+                    order.fulfillmentMethod === FULFILLMENT_METHODS.delivery ? localized('order.fulfillmentAddress') : localized('order.pickupAddress'),
+            });
+            fulfilmentDetails.push({
+                key: 'vendor-phoneNumber',
+                title: order.vendor.phoneNumber,
+                icon: MATERIAL_ICONS.call,
+                description: localized('order.vendor.phone'),
+            });
+        }
+       
         fulfilmentDetails.push({
             key: 'payment-method',
             title: order.payment.formattedPaymentMethod,
@@ -186,6 +199,7 @@ const OrderView = ({
         }
 
         if (order.fulfillmentMethod === FULFILLMENT_METHODS.delivery) {
+            driverDetails = getDriverDetails(order, role);
             fulfilmentDetails.push({
                 key: 'fulfillment-address',
                 title: order.fulfillmentAddress.formattedAddress,
@@ -277,7 +291,7 @@ const OrderView = ({
         <>
             <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
                 <View style={{ flex: 1 }}>
-                    {role === USER_ROLES.customer || role === USER_ROLES.driver ? (
+                    {platform === LOGISTICS_PLATFORMS.shopping && (role === USER_ROLES.customer || role === USER_ROLES.driver) ? (
                         <PhotoGallery
                             photos={[formattedOrder.photo]}
                             showNav={false}
@@ -288,7 +302,7 @@ const OrderView = ({
                         role={role}
                         formattedOrder={formattedOrder}
                         headerTitleVariant='headlineSmall'
-                        enableHeaderStatus={enableHeaderStatus}
+                        enableHeaderStatus={platform === LOGISTICS_PLATFORMS.shopping ? true : false}
                         enableVendorStatus={enableVendorStatus}
                         showHeaderOverline={showHeaderOverline}
                         showHeaderTitle={showHeaderTitle}
@@ -301,7 +315,7 @@ const OrderView = ({
                         showChevron={false}
                     />
 
-                    <Divider style={{ marginTop: MD3LightTheme.spacing.x3 }} />
+                  {/*   <Divider style={{ marginTop: MD3LightTheme.spacing.x3 }} />
 
                     <GeoPositionTracker
                         customerPosition={{
@@ -313,7 +327,7 @@ const OrderView = ({
                     />
 
                     <Divider style={{ marginTop: MD3LightTheme.spacing.x3 }} />
-
+ */}
                     {(formattedOrder.fulfilmentStatus.driver.status || formattedOrder.fulfilmentStatus.driver.title) ? (
                         <>
                             <RealTimeDriverTacking
@@ -334,9 +348,11 @@ const OrderView = ({
                     {fulfilmentDetails.length > 0 ? (
                         <List.Section
                             title={
-                                order.fulfillmentMethod === FULFILLMENT_METHODS.delivery
-                                    ? localized('order.deliveryDetails')
-                                    : localized('order.pickupDetails')
+                                platform === LOGISTICS_PLATFORMS.rideshare ?
+                                    localized('trip.details') :
+                                    order.fulfillmentMethod === FULFILLMENT_METHODS.delivery
+                                        ? localized('order.deliveryDetails')
+                                        : localized('order.pickupDetails')
                             }
                         >
                             {fulfilmentDetails.map((item, index) => (
@@ -392,7 +408,7 @@ const OrderView = ({
                         </>
                     ) : null}
 
-                    {role === USER_ROLES.vendor || role === USER_ROLES.customer ? (
+                    {platform === LOGISTICS_PLATFORMS.shopping && (role === USER_ROLES.vendor || role === USER_ROLES.customer) ? (
                         <>
                             <Divider />
                             <List.Section
