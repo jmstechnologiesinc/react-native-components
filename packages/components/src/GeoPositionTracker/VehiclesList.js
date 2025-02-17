@@ -58,7 +58,7 @@ const VehiclesList = ({ vehicleListPositions, filterVehiclePositions, driverHead
           style={{
             iconImage: 'carIcon',
             iconSize: 0.5,
-            iconRotate: -driverHeading,
+            iconRotate: driverHeading,
             iconAllowOverlap: true,
           }}
         />
