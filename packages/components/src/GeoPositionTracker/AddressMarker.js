@@ -1,7 +1,8 @@
-import { View, Text, StyleSheet, TouchableOpacity, Pressable, } from 'react-native'
+import { View, StyleSheet, Pressable, } from 'react-native'
 import React from 'react'
 import MapboxGL from '@rnmapbox/maps';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Text } from '@jmstechnologiesinc/react-native-paper';
 
 
 const AddressMarker = ({ coordinate, title, onPress }) => {
@@ -23,15 +24,15 @@ const AddressMarker = ({ coordinate, title, onPress }) => {
           ]}
           onPress={onPress}
         >
-          <View style={styles.markerContainer}>
-            <Text style={styles.markerText}>
-              {title?.length > 20
-                ? `${title.substring(0, 20)}...`
+          {title ? <View style={styles.markerContainer}>
+            <Text variant="titleMedium">
+              {title?.length > 15
+                ? `${title.substring(0, 15)}...`
                 : title}
             </Text>
 
             <MaterialCommunityIcons name="chevron-right" size={24} color="black" />
-          </View>
+          </View> : null}
         </Pressable>
       </MapboxGL.MarkerView>
       : null
@@ -53,11 +54,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  markerText: {
-    color: '#000',
-    fontSize: 14,
-    marginRight: 5,
-  },
+
 });
 
 
