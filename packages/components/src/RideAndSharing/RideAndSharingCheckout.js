@@ -36,7 +36,8 @@ const RideAndSharingCheckout = ({
     onItemPress,
     onPress,
     goBack,
-    getGPSLocationOnPress
+    getGPSLocationOnPress,
+    isLocationPermission
 }) => {
     const point = Platform.OS === 'ios' ? 0.5 : 0.54
     const bottomSheetRef = useRef(null);
@@ -116,26 +117,6 @@ const RideAndSharingCheckout = ({
         setCurrentSnapPoint(value);
     }, []);
 
-
- /*    const getVehiclePositions = (products) => {
-        return products?.reduce((acc, item) => {
-            const positions = item.data.map((dataItem) => {
-                const { formattedValue } = dataItem.eta
-                const { position } = dataItem.driver;
-                return {
-                    longitud: position[0],
-                    latitud: position[1],
-                    formattedValue: formattedValue,
-                    driverId: dataItem.driver.id
-                };
-            });
-            return acc.concat(positions);
-        }, []);
-    }; */
-
-    ////const nearbyVehicleLocations = getVehiclePositions(products)
-
-
     return (
         <>
            <GeoPositionTracker
@@ -144,15 +125,14 @@ const RideAndSharingCheckout = ({
                     longitude: selectedItem?.driver?.longitude,
                     latitude: selectedItem?.driver?.latitude,
                 }}
-                // currentDriverPosition={dropoffLocation}
                 vendorPosition={dropoffLocation}
                 currentSnapPoint={currentSnapPoint}
-                nearbyVehicleLocations={cart?.vehicleLocations}
+                nearbyVehicleLocations={cart?.vehiclePoints}
                 getGPSLocationOnPress={getGPSLocationOnPress}
                 isLocationPermission={isLocationPermission}
                 originLocation={originLocation}
                 dropoffLocation={dropoffLocation}
-                selectedItemId={selectedItemId}
+                selectedItem={selectedItem}
                 locationOnPress={originLocationOnPress}
             />
 

@@ -15,8 +15,7 @@ const RideAndSharingDetails = ({
 }) => {
     const [iscoordinateOpen, setisCoordinateOpen] = useState(false)
 
-    return <>
-
+    return (
         <List.Section title="Ride Detail">
             {RenderPaymentMethod ? (
                 <RenderPaymentMethod />
@@ -46,9 +45,8 @@ const RideAndSharingDetails = ({
                 />
             </List.Accordion>
             <Divider />
-
         </List.Section>
-    </>
+    )
 };
 
 export default RideAndSharingDetails;

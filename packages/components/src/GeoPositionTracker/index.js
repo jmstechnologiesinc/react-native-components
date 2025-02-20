@@ -35,7 +35,7 @@ const GeoPositionTracker = ({
   nearbyVehicleLocations,
   getGPSLocationOnPress,
   isLocationPermission,
-  selectedItemId,
+  selectedItem,
   locationOnPress
 }) => {
   const mapRef = useRef(null);
@@ -60,11 +60,11 @@ const GeoPositionTracker = ({
 
 
   const filterVehiclePositions = nearbyVehicleLocations?.filter(item =>
-    !(item.latitud === currentDriverPosition?.latitude && item.longitud === currentDriverPosition?.longitude)
+    !(item.latitud === currentDriverPosition?.latitude && item.longitude === currentDriverPosition?.longitudee)
   );
 
-  const vehicleSelected = nearbyVehicleLocations?.find(item => item.driverId === selectedItemId)
-
+  const vehicleSelected = nearbyVehicleLocations?.find(item => item.token === selectedItem?.token)
+console.log(JSON.stringify(vehicleSelected,null,2))
   const getBoundingBox = (coordinates) => {
     let minLng = Infinity;
     let minLat = Infinity;
