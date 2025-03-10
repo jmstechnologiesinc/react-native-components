@@ -554,5 +554,16 @@
           "buttonGoHome": "Ir a Inicio"
         },
         "locationPermissionDeniedBrowser": "Para activar este permiso, haz clic en el ícono de candado o configuración junto a la barra de direcciones, abre 'Configuración del sitio' o 'Permisos del sitio' y ajusta la opción de 'Ubicación' a 'Permitir'",
-        "dropoffLocation": "Ubicación de entrega"
+        "dropoffLocation": "Ubicación de entrega",
+         "confirmYourLocation": "Confirmar ubicación",
+  "destinationSuggestions": "Sugerencias de destino",
+  "markYourCurrentLocation": "Marcar ubicación actual",
+  "whereAreYouGoing": "¿A dónde vas?",
+  "mapPicker": "Seleccionar en el mapa",
+  "hail": "Pedir un viaje",
+  "scheduleTripNow": "Programar un viaje",
+  "leaveNow": "Salir ahora",
+  "rideDetail": "Detalles del viaje",
+  "startingPoint": "Punto de partida",
+  "setLocationMap": "Establecer ubicación en el mapa"
 }
