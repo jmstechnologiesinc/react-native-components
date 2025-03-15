@@ -562,6 +562,10 @@
       "leaveNow": "Leave Now",
       "rideDetail":"Ride Detail",
       "startingPoint": "Starting point",
-      "setLocationMap": "Set location on map"
+      "setLocationMap": "Set location on map",
+      "yourPaymentUpdatedSuccesfuly": "Your payment method was updated succesfuly.",
+      "distanceRatePerMile": "Rate per mile",
+      "durationRatePerMinute": "Rate per minute"
+
      
 }
