@@ -16,6 +16,8 @@ import RideAndSharingDetails from "./RideAndSharingDetails";
 
 import GeoPositionTracker from "../GeoPositionTracker";
 
+
+
 const RideAndSharingCheckout = ({
     originLocation,
     originLocationDescription,
@@ -180,7 +182,7 @@ const RideAndSharingCheckout = ({
                                     right={() => null}
                                     expanded
                                     title={item.title}
-                                    description={item.description}>
+                                    description={item.token}>
                                     {item.data.map(offer => (
                                         <ProductListItem
                                             isChecked={offer.token === selectedItem?.token}
