@@ -551,6 +551,21 @@
         "buttonGoHome": "Go to Home"
     },
      "locationPermissionDeniedBrowser": "To enable location permission, click the lock or settings icon next to the address bar, open “Site Settings” or “Permissions,” and set “Location” to “Allow”",
-     "dropoffLocation": "Dropoff location"
+     "dropoffLocation": "Dropoff location",
+      "confirmYourLocation": "Confirm your location",
+      "destinationSuggestions": "Destination suggestions",
+      "markYourCurrentLocation": "Mark your current location",
+      "whereAreYouGoing": "Where are you going?",
+      "mapPicker": "Map Picker",
+      "hail": "Hail",
+      "scheduleTripNow": "Schedule a Trip Now",
+      "leaveNow": "Leave Now",
+      "rideDetail":"Ride Detail",
+      "startingPoint": "Starting point",
+      "setLocationMap": "Set location on map",
+      "yourPaymentUpdatedSuccesfuly": "Your payment method was updated succesfuly.",
+      "distanceRatePerMile": "Rate per mile",
+      "durationRatePerMinute": "Rate per minute"
+
      
 }

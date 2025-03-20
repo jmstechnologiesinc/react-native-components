@@ -147,7 +147,7 @@ const Autocomplete = ({
                             }}
                             isFocused={isOriginFocused}
                             isLoading={isLoading}
-                            placeholder="Starting point"
+                            placeholder={localized("startingPoint")}
                             predefinedPlaces={predefinedPlaces}
                             onClear={removeOriginLocation}
                         />
@@ -166,7 +166,7 @@ const Autocomplete = ({
                             }}
                             value={dropoffLocation?.formattedAddress}
                             isLoading={isLoading}
-                            placeholder="Where are you going?"
+                            placeholder={localized("whereAreYouGoing")}
                             predefinedPlaces={false}
                             onClear={removeDropoffLocation}
                         />
@@ -186,7 +186,7 @@ const Autocomplete = ({
 
                 {
                     isShowMapPicker ? <LocationListItem
-                        title={"Set location on map"}
+                        title={localized("setLocationMap")}
                         variant="currentLocation"
                         onPress={onCallMapPicker}
                     />

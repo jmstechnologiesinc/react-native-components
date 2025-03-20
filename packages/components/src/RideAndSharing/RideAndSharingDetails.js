@@ -16,7 +16,7 @@ const RideAndSharingDetails = ({
     const [iscoordinateOpen, setisCoordinateOpen] = useState(false)
 
     return (
-        <List.Section title="Ride Detail">
+        <List.Section title={localized("rideDetail")}>
             {RenderPaymentMethod ? (
                 <RenderPaymentMethod />
             ) : null}
@@ -24,11 +24,11 @@ const RideAndSharingDetails = ({
             <List.Accordion
                 expanded={iscoordinateOpen}
                 onPress={() => setisCoordinateOpen(!iscoordinateOpen)}
-                description={!iscoordinateOpen ? "Leave Now" : null}
+                description={!iscoordinateOpen ? localized("rideDetail") : null}
                 title={!iscoordinateOpen ? interpunct([
                     originLocation?.line1,
                     dropoffLocation?.line1
-                ]) : "Leave Now"}>
+                ]) : localized("rideDetail")}>
                 <LocationListItem
                     title={originLocation?.formattedAddress}
                     description={originLocationDescription}
