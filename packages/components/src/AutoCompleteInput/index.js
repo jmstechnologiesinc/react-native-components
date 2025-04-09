@@ -4,7 +4,7 @@ import ScreenWrapper from '../ScreenWrapper';
 import { localized } from '../Localization/Localization';
 import { Config } from '../Config';
 
-const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus, value = "", onBlur, isLoading, placeholder, predefinedPlaces = true, onClear }) => {
+const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus, value = "", onBlur, isLoading, placeholder, onClear, onCallMapPicker, predefinedPlaces = true, showMapPicker = false }) => {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -13,6 +13,8 @@ const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus, 
     }
 
   }, [value, isLoading]);
+
+
 
   return (
     <ScreenWrapper.Section title={localized(title)}>
@@ -29,6 +31,8 @@ const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus, 
             ]
         }
         predefinedPlacesAlwaysVisible
+        showMapPicker={showMapPicker}
+        onCallMapPicker={onCallMapPicker}
         placeholder={placeholder}
         onPress={onPress}
         onClear={onClear}
