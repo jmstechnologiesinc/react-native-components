@@ -35,7 +35,7 @@ const RecentLocations = ({
                         key={location?.id}
                         title={location?.formattedAddress}
                         variant={variant}
-                        iconColor={null}
+                       // iconColor={null}
                         description={
                             location?.description || interpunctLocationListItemDescription(location)
                         }

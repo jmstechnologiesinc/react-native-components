@@ -98,10 +98,10 @@
       },
       "toJSON": {}
     },
-    "id": "deliveryFee",
+    "id": "deliveryCost",
     "description": null,
     "formattedValue": "$0.49",
-    "label": "deliveryFee"
+    "label": "deliveryCost"
   },
   {
     "amount": {

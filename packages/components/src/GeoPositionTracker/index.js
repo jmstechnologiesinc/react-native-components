@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, Dimensions, Pressable } from 'react-native';
+import { View, StyleSheet, Dimensions } from 'react-native';
 import MapboxGL, { Logger } from '@rnmapbox/maps';
-import { MD3LightTheme, IconButton, Text } from '@jmstechnologiesinc/react-native-paper';
+import { MD3LightTheme, IconButton } from '@jmstechnologiesinc/react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters'
@@ -35,11 +35,14 @@ const GeoPositionTracker = ({
   nearbyVehicleLocations,
   getGPSLocationOnPress,
   isLocationPermission,
-  selectedItemId,
+  selectedItem,
   locationOnPress
 }) => {
   const mapRef = useRef(null);
   const [routeDirections, setRouteDirections] = useState(null);
+
+  const [originRoutes, setOriginRoutes] = useState();
+
   const [destinationCoords, setDestinationCoords] = useState([
     customerPosition?.longitude,
     customerPosition?.latitude,
@@ -57,13 +60,6 @@ const GeoPositionTracker = ({
   const [boundingBox, setBoundingBox] = useState(null);
 
   const { height } = Dimensions.get('window');
-
-
-  const filterVehiclePositions = nearbyVehicleLocations?.filter(item =>
-    !(item.latitud === currentDriverPosition?.latitude && item.longitud === currentDriverPosition?.longitude)
-  );
-
-  const vehicleSelected = nearbyVehicleLocations?.find(item => item.driverId === selectedItemId)
 
   const getBoundingBox = (coordinates) => {
     let minLng = Infinity;
@@ -118,6 +114,7 @@ const GeoPositionTracker = ({
         }
 
         setRouteDirections(makeRouterFeature(coordinates));
+        setOriginRoutes(coordinates[0])
         setDestinationCoords(coordinates[coordinates.length - 1]);
 
         const boundingBox = getBoundingBox(coordinates);
@@ -134,7 +131,7 @@ const GeoPositionTracker = ({
 
   useEffect(() => {
     createRouteLine(vendorPosition, customerPosition);
-  }, []);
+  }, [vendorPosition, customerPosition]);
 
   useEffect(() => {
     if (currentDriverPosition) {
@@ -190,12 +187,18 @@ const GeoPositionTracker = ({
   };
 
 
-
   const centerCoordinate = currentDriverPosition
     ? [currentDriverPosition?.longitude, currentDriverPosition?.latitude]
     : vendorPosition
       ? [vendorPosition?.longitude, vendorPosition?.latitude]
       : false;
+
+
+  const filterVehiclePositions = nearbyVehicleLocations?.filter(item =>
+    !(item.latitud === customerPosition?.latitude && item.longitud === customerPosition?.longitude)
+  );
+
+  const vehicleSelected = nearbyVehicleLocations?.find(item => item.token === selectedItem?.token)
 
   const resetToInitialPosition = async () => {
 
@@ -206,7 +209,7 @@ const GeoPositionTracker = ({
 
     if (mapRef.current) {
       mapRef.current.setCamera({
-        centerCoordinate: [customerPosition?.longitude, customerPosition?.latitude],
+        centerCoordinate: [vendorPosition?.longitude, vendorPosition?.latitude],
         zoomLevel: zoomLevel,
         bounds: boundingBox,
         padding: {
@@ -253,13 +256,13 @@ const GeoPositionTracker = ({
 
         {centerCoordinate && customerPosition && vendorPosition ?
           <MapboxGL.ShapeSource id="routeSource" shape={routeDirections}>
-            <MapboxGL.LineLayer id="routeLine" style={{ lineColor: MD3LightTheme.colors.primary, lineWidth: 4 }} />
+            <MapboxGL.LineLayer id="routeLine" style={{ lineColor: MD3LightTheme.colors.primary, lineWidth: 4, lineOffset: -2, }} />
           </MapboxGL.ShapeSource>
           :
           <MapboxGL.UserLocation animated={true} androidRenderMode="gps" showsUserHeadingIndicator={true} />
         }
 
-        {centerCoordinate && customerPosition ? (
+        {centerCoordinate && customerPosition && currentDriverPosition ? (
           <>
             <MapboxGL.Images images={{ driverIcon: require('./tracking/car.png') }} />
             <MapboxGL.ShapeSource id="driverSource" shape={routeDirections}>
@@ -275,8 +278,26 @@ const GeoPositionTracker = ({
               />
             </MapboxGL.ShapeSource>
           </>
-        ) : null}
+        ) :
+          originRoutes ? <MapboxGL.PointAnnotation id="destination" coordinate={originRoutes}>
 
+            <View style={[styles.destinationIcon]}>
+              <MaterialCommunityIcons name="map-marker-account" size={24} color={MD3LightTheme.colors.primary} />
+            </View>
+          </MapboxGL.PointAnnotation>
+            : null
+
+        }
+
+        {/* {
+          originRoutes ? <MapboxGL.PointAnnotation id="destination" coordinate={originRoutes}>
+
+            <View style={styles.destinationIcon}>
+              <MaterialCommunityIcons name="radiobox-marked" size={24} color={MD3LightTheme.colors.primary} />
+            </View>
+          </MapboxGL.PointAnnotation>
+            : null
+        } */}
 
         {
           centerCoordinate && customerPosition && vendorPosition ?
@@ -301,15 +322,15 @@ const GeoPositionTracker = ({
         <AddressMarker
           coordinate={centerCoordinate}
           onPress={locationOnPress}
-          title={vehicleSelected?.formattedValue}
+          title={currentDriverPosition ? vehicleSelected?.formattedValue : customerPosition?.formattedAddress}
         />
 
         <AddressMarker
-          coordinate={[customerPosition?.longitude,
-          customerPosition?.latitude,]}
+          coordinate={destinationCoords}
           onPress={locationOnPress}
-          title={customerPosition?.formattedAddress}
+          title={vendorPosition?.formattedAddress}
         />
+
 
       </MapboxGL.MapView>
 

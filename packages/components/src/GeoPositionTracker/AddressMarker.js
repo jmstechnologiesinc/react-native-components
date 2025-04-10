@@ -2,6 +2,7 @@ import { View, StyleSheet } from 'react-native'
 import React from 'react'
 import MapboxGL from '@rnmapbox/maps';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Text } from '@jmstechnologiesinc/react-native-paper';
 
 import { MD3LightTheme, Text, TouchableRipple } from '@jmstechnologiesinc/react-native-paper';
 

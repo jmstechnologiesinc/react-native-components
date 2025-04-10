@@ -147,9 +147,11 @@ const Autocomplete = ({
                             }}
                             isFocused={isOriginFocused}
                             isLoading={isLoading}
-                            placeholder="Starting point"
+                            placeholder={localized("startingPoint")}
                             predefinedPlaces={predefinedPlaces}
                             onClear={removeOriginLocation}
+                            onCallMapPicker={onCallMapPicker}
+                            showMapPicker={isShowMapPicker}
                         />
                     </Pressable>
 
@@ -166,9 +168,12 @@ const Autocomplete = ({
                             }}
                             value={dropoffLocation?.formattedAddress}
                             isLoading={isLoading}
-                            placeholder="Where are you going?"
+                            placeholder={localized("whereAreYouGoing")}
                             predefinedPlaces={false}
                             onClear={removeDropoffLocation}
+                            onCallMapPicker={onCallMapPicker}
+                            showMapPicker={isShowMapPicker}
+
                         />
                     ) : null}
                 </ScreenWrapper.Container>
@@ -184,15 +189,7 @@ const Autocomplete = ({
                     </List.Section>
                 ) : null}
 
-                {
-                    isShowMapPicker ? <LocationListItem
-                        title={"Set location on map"}
-                        variant="currentLocation"
-                        onPress={onCallMapPicker}
-                    />
-                        :
-                        null
-                }
+
 
                 {isShowRecentLocation && isFocused === false && recentLocations?.length > 0 ? (
                     <RecentLocations
