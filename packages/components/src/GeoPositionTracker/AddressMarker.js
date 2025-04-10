@@ -1,9 +1,10 @@
-import { View, StyleSheet, Pressable, } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import React from 'react'
 import MapboxGL from '@rnmapbox/maps';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Text } from '@jmstechnologiesinc/react-native-paper';
 
+import { MD3LightTheme, Text, TouchableRipple } from '@jmstechnologiesinc/react-native-paper';
 
 const AddressMarker = ({ coordinate, title, onPress }) => {
 
@@ -17,44 +18,33 @@ const AddressMarker = ({ coordinate, title, onPress }) => {
         coordinate={coordinate}
         anchor={{ x: 0.5, y: 1.2 }}
       >
-        <Pressable
-          style={({ pressed }) => [
-            styles.pressableContainer,
-            pressed && styles.pressed
-          ]}
+        <TouchableRipple
           onPress={onPress}
         >
-          {title ? <View style={styles.markerContainer}>
+          <View style={styles.markerContainer}>
             <Text variant="titleMedium">
-              {title?.length > 15
-                ? `${title.substring(0, 15)}...`
+              {title?.length > 20
+                ? `${title.substring(0, 20)}...`
                 : title}
             </Text>
 
             <MaterialCommunityIcons name="chevron-right" size={24} color="black" />
-          </View> : null}
-        </Pressable>
+          </View>
+        </TouchableRipple>
       </MapboxGL.MarkerView>
       : null
   )
 }
 
 const styles = StyleSheet.create({
-  pressableContainer: {
-    padding: 10,
-  },
-  pressed: {
-    opacity: 0.7,
-  },
   markerContainer: {
-    backgroundColor: 'white',
+    backgroundColor: MD3LightTheme.colors.background,
     paddingHorizontal: 10,
     paddingVertical: 4,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   },
-
 });
 
 
