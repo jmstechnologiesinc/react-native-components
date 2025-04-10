@@ -27,8 +27,8 @@
       "amount": 4
     },
     {
-      "id": "deliveryFee",
-      "label": "Delivery Fee",
+      "id": "deliveryCost",
+      "label": "Delivery Cost",
       "formattedValue": "$0.35",
       "amount": 0.3476598183682173
     }

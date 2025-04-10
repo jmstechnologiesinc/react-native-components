@@ -2,13 +2,13 @@ import React from 'react';
 
 import { List, MD3LightTheme, TouchableRipple } from '@jmstechnologiesinc/react-native-paper';
 
-import {  isOrderActive } from '@jmstechnologiesinc/order';
+import { isOrderActive } from '@jmstechnologiesinc/order';
 import { formatOrder } from '../Order/utils';
 import OrderStatus from '../Order/OrderStatus';
 import * as ActionGroup from '../ActionGroup/ActionGroup';
 import TouchableRippleWrapper from '../TouchableRippleWrapper/TouchableRippleWrapper';
 import DriverStatus from '../Order/DriverStatus';
-import { PhotoGallery,ScreenWrapper } from '@jmstechnologiesinc/react-native-components';
+import { PhotoGallery, ScreenWrapper } from '@jmstechnologiesinc/react-native-components';
 import { USER_ROLES } from '@jmstechnologiesinc/user';
 import { LOGISTICS_PLATFORMS } from '@jmstechnologiesinc/commons';
 
@@ -33,7 +33,7 @@ const OrderListItem = ({
 
     onButtonPress,
     onPress,
-    
+
 }) => {
     const formattedOrder = formatOrder(order, role, platform);
 
@@ -44,12 +44,12 @@ const OrderListItem = ({
         <>
             {platform === LOGISTICS_PLATFORMS.shopping && role === USER_ROLES.customer && isOrderActive(formattedOrder.status) ? (
                 <ScreenWrapper.Container>
-                    <PhotoGallery 
-                        photos={[formattedOrder.photo]} 
+                    <PhotoGallery
+                        photos={[formattedOrder.photo]}
                         imagekitCropMode="c-maintain_ratio"
                         showNav={false}
-                        styles={{paddingTop: MD3LightTheme.spacing.x2}}
-              />
+                        styles={{ paddingTop: MD3LightTheme.spacing.x2 }}
+                    />
                 </ScreenWrapper.Container>
             ) : null}
 
@@ -73,8 +73,8 @@ const OrderListItem = ({
             />
 
             {role === USER_ROLES.customer && (
-                formattedOrder.fulfilmentStatus.driver.description.length > 0 || 
-                formattedOrder.fulfilmentStatus.driver.title || 
+                formattedOrder.fulfilmentStatus.driver.description.length > 0 ||
+                formattedOrder.fulfilmentStatus.driver.title ||
                 formattedOrder.fulfilmentStatus.driver.chips.length > 0
             ) ? (
                 <DriverStatus
@@ -106,10 +106,10 @@ const OrderListItem = ({
     );
 
     return showSelectedOverlay ? (
-        <TouchableRippleWrapper 
-            isSelected={isSelected} 
+        <TouchableRippleWrapper
+            isSelected={isSelected}
             onPress={onPress}>
-                {renderStatus}
+            {renderStatus}
         </TouchableRippleWrapper>
     ) : (
         <TouchableRipple onPress={onPress}>

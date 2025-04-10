@@ -8,7 +8,8 @@ import { localized } from '../Localization/Localization';
 
 const isTranslatePlatformCommission = (title) => {
 
-    const regex = /^platformCommission\((\d+%)\)$/;
+    const regex = /^platformCommission\((\d+(\.\d+)?%)\)$/;
+
 
     const match = title.match(regex);
 

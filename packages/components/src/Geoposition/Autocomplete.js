@@ -32,7 +32,10 @@ const Autocomplete = ({
     onAskForPermission,
     isLoading,
     removeDropoffLocation,
-    removeOriginLocation
+    removeOriginLocation,
+    onMapPicker,
+    predefinedPlaces = true,
+    isShowMapPicker = false
 }) => {
 
     const [isFocused, setIsFocused] = useState(false);
@@ -93,6 +96,14 @@ const Autocomplete = ({
         Keyboard.dismiss()
     }
 
+    const onCallMapPicker = () => {
+        onMapPicker(isOriginFocused ? 'originLocation' : 'dropoffLocation')
+        setIsOriginFocused(false);
+        setIsShowRecentLocation(true)
+        Keyboard.dismiss()
+
+    }
+
     return (
         <>
             {isLocationPermissionDenied === true ? (
@@ -136,7 +147,8 @@ const Autocomplete = ({
                             }}
                             isFocused={isOriginFocused}
                             isLoading={isLoading}
-                            placeholder="Starting point"
+                            placeholder={localized("startingPoint")}
+                            predefinedPlaces={predefinedPlaces}
                             onClear={removeOriginLocation}
                         />
                     </Pressable>
@@ -148,17 +160,19 @@ const Autocomplete = ({
                             onPress={onDropoffAutoCompleteInputPress}
                             onFocus={(value) => {
                                 onFocus(value)
-
                             }}
-                            onBlur={() => { setIsShowRecentLocation(true) }}
+                            onBlur={() => {
+                                setIsShowRecentLocation(true)
+                            }}
                             value={dropoffLocation?.formattedAddress}
                             isLoading={isLoading}
-                            placeholder="Where are you going?"
+                            placeholder={localized("whereAreYouGoing")}
                             predefinedPlaces={false}
                             onClear={removeDropoffLocation}
                         />
                     ) : null}
                 </ScreenWrapper.Container>
+
 
                 {isCurrentLocationVisible && isFocused === false && currentLocation?.id ? (
                     <List.Section title={localized(currentLocationTitle)}>
@@ -170,6 +184,16 @@ const Autocomplete = ({
                     </List.Section>
                 ) : null}
 
+                {
+                    isShowMapPicker ? <LocationListItem
+                        title={localized("setLocationMap")}
+                        variant="currentLocation"
+                        onPress={onCallMapPicker}
+                    />
+                        :
+                        null
+                }
+
                 {isShowRecentLocation && isFocused === false && recentLocations?.length > 0 ? (
                     <RecentLocations
                         title={recentLocationTitle}
@@ -177,6 +201,9 @@ const Autocomplete = ({
                         onPress={onRecentLocation}
                     />
                 ) : null}
+
+
+
             </ScreenWrapper>
         </>
     );
