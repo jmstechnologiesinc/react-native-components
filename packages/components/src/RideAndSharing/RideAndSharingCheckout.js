@@ -25,7 +25,7 @@ const RideAndSharingCheckout = ({
     dropoffLocationDescription,
     cart,
     selectedItem,
-    fees,
+fees,
     tipsFilter,
     originLocationOnPress,
     dropoffLocationOnPress,
@@ -33,7 +33,7 @@ const RideAndSharingCheckout = ({
     RenderPaymentMethod,
     withBottomInset = true,
     withTopInset = false,
-    onItemPress,
+        onItemPress,
     onPress,
     getGPSLocationOnPress,
     isLocationPermission,
@@ -110,20 +110,8 @@ const RideAndSharingCheckout = ({
         </BottomSheetFooter>
     )
 
-    const getValueFromIndex = (index) => {
-        switch (index) {
-            case 0:
-                return point;
-            case 1:
-                return 0.8;
-            default:
-                return point;
-        }
-    };
-
     const handleSheetChange = useCallback((index) => {
-        const value = getValueFromIndex(index);
-        setCurrentSnapPoint(value);
+        setCurrentSnapPoint(parseFloat(snapPoints[index]) / 100);
     }, []);
 
     return (
