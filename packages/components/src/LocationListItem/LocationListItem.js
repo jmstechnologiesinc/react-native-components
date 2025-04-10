@@ -15,18 +15,18 @@ const LOCATION_LIST_ITEM_MAPPING = {
     [LOCATION_LIST_ITEM.fulfillmentAddress]: 'home-map-marker',
     [LOCATION_LIST_ITEM.pickupAddress]: 'store-marker',
     [LOCATION_LIST_ITEM.currentLocation]: MATERIAL_ICONS.location,
-    [LOCATION_LIST_ITEM.hailLocation]:'hail',
+    [LOCATION_LIST_ITEM.hailLocation]: 'hail',
 };
 
 export const interpunctLocationListItemDescription = ({ floorNumber, buildingName, note }) =>
     interpunct([floorNumber, buildingName, note]);
 
-const LocationListItem = ({ 
-    title, 
-    description, 
-    variant, 
-    iconColor=MD3LightTheme.colors.primary, 
-    onPress 
+export const LocationListItem = ({
+    title,
+    description,
+    variant,
+    iconColor = MD3LightTheme.colors.primary,
+    onPress
 }) => (
     <List.Item
         title={title}
@@ -34,12 +34,12 @@ const LocationListItem = ({
         left={
             variant
                 ? (props) => (
-                      <List.Icon
-                          {...props}
-                          icon={LOCATION_LIST_ITEM_MAPPING[variant]}
-                          color={iconColor}
-                      />
-                  )
+                    <List.Icon
+                        {...props}
+                        icon={LOCATION_LIST_ITEM_MAPPING[variant]}
+                        color={iconColor}
+                    />
+                )
                 : null
         }
         right={onPress ? (props) => <List.Icon {...props} icon={MATERIAL_ICONS.chevron} /> : null}
@@ -49,4 +49,4 @@ const LocationListItem = ({
     />
 );
 
-export default LocationListItem;
+

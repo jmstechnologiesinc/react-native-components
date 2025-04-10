@@ -1,11 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import MapboxGL, { Logger } from '@rnmapbox/maps';
-import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
+import { MD3LightTheme, IconButton } from '@jmstechnologiesinc/react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Config } from '../Config'
-import Mapbox from '@rnmapbox/maps';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters'
+import Mapbox from '@rnmapbox/maps';
+
+import { Config } from '../Config'
+import VehiclesList from './VehiclesList';
+import AddressMarker from './AddressMarker'
 
 Logger.setLogCallback((log) => {
   const { message } = log;
@@ -18,8 +22,9 @@ Logger.setLogCallback((log) => {
   }
   return false;
 });
+const APIKEY = Config.MAPBOX_ACCESS_TOKEN;
 
-MapboxGL.setAccessToken(Config.MAPBOX_ACCESS_TOKEN);
+MapboxGL.setAccessToken(APIKEY);
 MapboxGL.setTelemetryEnabled(false);
 
 const GeoPositionTracker = ({
@@ -27,14 +32,22 @@ const GeoPositionTracker = ({
   currentDriverPosition,
   vendorPosition,
   currentSnapPoint,
+  nearbyVehicleLocations,
+  getGPSLocationOnPress,
+  isLocationPermission,
+  selectedItem,
+  locationOnPress
 }) => {
   const mapRef = useRef(null);
-
   const [routeDirections, setRouteDirections] = useState(null);
+
+  const [originRoutes, setOriginRoutes] = useState();
+
   const [destinationCoords, setDestinationCoords] = useState([
-    customerPosition.longitude,
-    customerPosition.latitude,
+    customerPosition?.longitude,
+    customerPosition?.latitude,
   ]);
+
 
   const insets = useSafeAreaInsets();
 
@@ -47,7 +60,6 @@ const GeoPositionTracker = ({
   const [boundingBox, setBoundingBox] = useState(null);
 
   const { height } = Dimensions.get('window');
-  const APIKEY = Config.MAPBOX_ACCESS_TOKEN;
 
   const getBoundingBox = (coordinates) => {
     let minLng = Infinity;
@@ -67,10 +79,7 @@ const GeoPositionTracker = ({
       sw: [minLng, minLat],
       ne: [maxLng, maxLat],
     }
-
-
   };
-
 
   const calculateZoomLevel = (boundingBox) => {
     const width = boundingBox.ne[0] - boundingBox.sw[0];
@@ -89,7 +98,7 @@ const GeoPositionTracker = ({
     const geometries = 'geojson';
     const typeVehicle = 'driving';
 
-    const url = `https://api.mapbox.com/directions/v5/mapbox/${typeVehicle}/${startCoords};${endCoords}?alternatives=false&geometries=${geometries}&steps=true&overview=full&access_token=${APIKEY}`;
+    const url = `https://api.mapbox.com/directions/v5/mapbox/${typeVehicle}/${startCoords};${endCoords}?alternatives=false&geometries=${geometries}&steps=true&overview=full&access_token=${Config.MAPBOX_ACCESS_TOKEN}`;
 
     try {
       const response = await fetch(url);
@@ -102,10 +111,10 @@ const GeoPositionTracker = ({
         if (steps && steps.length) {
           const heading = steps[0].maneuver.bearing_after;
           setDriverHeading(heading);
-          console.log('Initial heading:', heading);
         }
 
         setRouteDirections(makeRouterFeature(coordinates));
+        setOriginRoutes(coordinates[0])
         setDestinationCoords(coordinates[coordinates.length - 1]);
 
         const boundingBox = getBoundingBox(coordinates);
@@ -122,7 +131,7 @@ const GeoPositionTracker = ({
 
   useEffect(() => {
     createRouteLine(vendorPosition, customerPosition);
-  }, []);
+  }, [vendorPosition, customerPosition]);
 
   useEffect(() => {
     if (currentDriverPosition) {
@@ -137,9 +146,9 @@ const GeoPositionTracker = ({
         bounds: boundingBox,
         zoomLevel: zoomLevel,
         padding: {
-          paddingTop: top,
-          paddingRight: right,
-          paddingLeft: left,
+          paddingTop: top + moderateScale(50),
+          paddingRight: right + moderateScale(50),
+          paddingLeft: left + moderateScale(50),
           paddingBottom: height * currentSnapPoint,
         },
         animationMode: 'flyTo',
@@ -150,9 +159,9 @@ const GeoPositionTracker = ({
         bounds: boundingBox,
         zoomLevel: zoomLevel,
         padding: {
-          paddingTop: top,
-          paddingRight: right,
-          paddingLeft: left,
+          paddingTop: top + moderateScale(50),
+          paddingRight: right + moderateScale(50),
+          paddingLeft: left + moderateScale(50),
           paddingBottom: height * currentSnapPoint,
         },
         animationMode: 'flyTo',
@@ -177,80 +186,180 @@ const GeoPositionTracker = ({
     };
   };
 
+
   const centerCoordinate = currentDriverPosition
-    ? [currentDriverPosition.longitude, currentDriverPosition.latitude]
-    : [vendorPosition.longitude, vendorPosition.latitude];
+    ? [currentDriverPosition?.longitude, currentDriverPosition?.latitude]
+    : vendorPosition
+      ? [vendorPosition?.longitude, vendorPosition?.latitude]
+      : false;
+
+
+  const filterVehiclePositions = nearbyVehicleLocations?.filter(item =>
+    !(item.latitud === customerPosition?.latitude && item.longitud === customerPosition?.longitude)
+  );
+
+  const vehicleSelected = nearbyVehicleLocations?.find(item => item.token === selectedItem?.token)
+
+  const resetToInitialPosition = async () => {
+
+
+    if (!isLocationPermission) {
+      await getGPSLocationOnPress();
+    }
+
+    if (mapRef.current) {
+      mapRef.current.setCamera({
+        centerCoordinate: [vendorPosition?.longitude, vendorPosition?.latitude],
+        zoomLevel: zoomLevel,
+        bounds: boundingBox,
+        padding: {
+          paddingTop: top + moderateScale(50),
+          paddingRight: right + moderateScale(50),
+          paddingLeft: left + moderateScale(50),
+          paddingBottom: height * currentSnapPoint,
+        },
+        animationMode: 'flyTo',
+        animationDuration: 500,
+      });
+    }
+  };
 
   return (
-    <MapboxGL.MapView
-      style={{
-        flex: 1
-      }}
-      zoomEnabled={true}
-      styleURL={Mapbox.StyleURL.Street}
-      compassEnabled={false}
-      logoEnabled={false}
-      attributionEnabled={false}
-      scaleBarEnabled={false}
-    >
+    <>
+      <MapboxGL.MapView
+        style={{
+          flex: 1,
 
-      <MapboxGL.Camera
-        zoomLevel={zoomLevel}
-        bounds={boundingBox}
-        ref={mapRef}
-        padding={{
-          paddingTop: top,
-          paddingRight: right,
-          paddingLeft: left,
-          paddingBottom: height * currentSnapPoint,
         }}
-        animationMode="flyTo"
-        animationDuration={200}
-      // followUserMode="course"
-      />
-      {routeDirections && (
-        <MapboxGL.ShapeSource id="routeSource" shape={routeDirections}>
-          <MapboxGL.LineLayer id="routeLine" style={{ lineColor: MD3LightTheme.colors.primary, lineWidth: 4 }} />
-        </MapboxGL.ShapeSource>
-      )}
+        zoomEnabled={true}
+        styleURL={Mapbox.StyleURL.Street}
+        compassEnabled={false}
+        logoEnabled={false}
+        attributionEnabled={false}
+        scaleBarEnabled={false}
+        mapRef={mapRef}
+      >
 
-      {centerCoordinate && (
-        <>
-          <MapboxGL.Images images={{ driverIcon: require('./tracking/car.png') }} />
-          <MapboxGL.ShapeSource id="driverSource" shape={routeDirections}>
-            <MapboxGL.SymbolLayer
-              id="driverIconLayer"
-              style={{
-                iconImage: 'driverIcon',
-                iconAnchor: 'center',
-                iconAllowOverlap: true,
-                iconRotate: driverHeading,
-                iconSize: 0.5,
-              }}
-            />
+        <MapboxGL.Camera
+          zoomLevel={zoomLevel}
+          bounds={boundingBox}
+          ref={mapRef}
+          padding={{
+            paddingTop: top + moderateScale(50),
+            paddingRight: right + moderateScale(50),
+            paddingLeft: left + moderateScale(50),
+            paddingBottom: height * currentSnapPoint,
+          }}
+          animationMode="flyTo"
+          animationDuration={200}
+        />
+
+        {centerCoordinate && customerPosition && vendorPosition ?
+          <MapboxGL.ShapeSource id="routeSource" shape={routeDirections}>
+            <MapboxGL.LineLayer id="routeLine" style={{ lineColor: MD3LightTheme.colors.primary, lineWidth: 4, lineOffset: -2, }} />
           </MapboxGL.ShapeSource>
+          :
           <MapboxGL.UserLocation animated={true} androidRenderMode="gps" showsUserHeadingIndicator={true} />
-        </>
-      )}
+        }
 
-      {destinationCoords && (
-        <MapboxGL.PointAnnotation id="destination" coordinate={destinationCoords}>
-          <View style={styles.destinationIcon}>
-            <MaterialCommunityIcons name="map-marker-radius" size={24} color={MD3LightTheme.colors.primary} />
-          </View>
-        </MapboxGL.PointAnnotation>
-      )}
-    </MapboxGL.MapView>
+        {centerCoordinate && customerPosition && currentDriverPosition ? (
+          <>
+            <MapboxGL.Images images={{ driverIcon: require('./tracking/car.png') }} />
+            <MapboxGL.ShapeSource id="driverSource" shape={routeDirections}>
+              <MapboxGL.SymbolLayer
+                id="driverIconLayer"
+                style={{
+                  iconImage: 'driverIcon',
+                  iconAnchor: 'center',
+                  iconAllowOverlap: true,
+                  iconRotate: driverHeading,
+                  iconSize: 0.5,
+                }}
+              />
+            </MapboxGL.ShapeSource>
+          </>
+        ) :
+          originRoutes ? <MapboxGL.PointAnnotation id="destination" coordinate={originRoutes}>
+
+            <View style={[styles.destinationIcon]}>
+              <MaterialCommunityIcons name="map-marker-account" size={24} color={MD3LightTheme.colors.primary} />
+            </View>
+          </MapboxGL.PointAnnotation>
+            : null
+
+        }
+
+        {/* {
+          originRoutes ? <MapboxGL.PointAnnotation id="destination" coordinate={originRoutes}>
+
+            <View style={styles.destinationIcon}>
+              <MaterialCommunityIcons name="radiobox-marked" size={24} color={MD3LightTheme.colors.primary} />
+            </View>
+          </MapboxGL.PointAnnotation>
+            : null
+        } */}
+
+        {
+          centerCoordinate && customerPosition && vendorPosition ?
+            <MapboxGL.PointAnnotation id="destination" coordinate={destinationCoords}>
+
+              <View style={styles.destinationIcon}>
+                <MaterialCommunityIcons name="map-marker-radius" size={24} color={MD3LightTheme.colors.primary} />
+              </View>
+            </MapboxGL.PointAnnotation>
+            :
+            null
+        }
+
+        {nearbyVehicleLocations &&
+          <VehiclesList
+            vehicleListPositions={nearbyVehicleLocations}
+            filterVehiclePositions={filterVehiclePositions}
+            driverHeading={driverHeading}
+          />
+        }
+
+        <AddressMarker
+          coordinate={centerCoordinate}
+          onPress={locationOnPress}
+          title={currentDriverPosition ? vehicleSelected?.formattedValue : customerPosition?.formattedAddress}
+        />
+
+        <AddressMarker
+          coordinate={destinationCoords}
+          onPress={locationOnPress}
+          title={vendorPosition?.formattedAddress}
+        />
+
+
+      </MapboxGL.MapView>
+
+      <View style={{
+        position: 'absolute',
+        bottom: height * currentSnapPoint,
+        right: 0,
+
+      }}>
+        <IconButton
+          icon="crosshairs-gps"
+          size={moderateScale(24)}
+          mode='contained'
+          onPress={resetToInitialPosition}
+        />
+      </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   destinationIcon: {
+    flex: 1,
     width: 30,
     height: 30,
     justifyContent: 'center',
     alignItems: 'center',
   },
+
 });
 
 export default GeoPositionTracker;

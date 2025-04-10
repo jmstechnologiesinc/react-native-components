@@ -1,13 +1,13 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import BottomSheet, { BottomSheetFooter, BottomSheetSectionList } from "@gorhom/bottom-sheet";
-import { Appbar, FAB, List, MD3LightTheme, Surface } from "@jmstechnologiesinc/react-native-paper";
+import BottomSheet, { BottomSheetFooter, BottomSheetFlatList } from "@gorhom/bottom-sheet";
+import { FAB, List, MD3LightTheme } from "@jmstechnologiesinc/react-native-paper";
+import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters'
 import TipsFilter from "../TipsFilter/TipsFilter";
 import { localized } from "../Localization/Localization";
 import ProductListItem from "./ProductListItem";
-import { keyExtractor } from "../CartList/CartList";
 import styles from "../styles";
 import CheckoutSummary from "../CheckoutSummary/CheckoutSummary";
-import {ACCOUNTING_ITEMS} from "@jmstechnologiesinc/cart";
+import { ACCOUNTING_ITEMS } from "@jmstechnologiesinc/commons";
 
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper'
 import { Platform, View } from "react-native";
@@ -15,15 +15,16 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import RideAndSharingDetails from "./RideAndSharingDetails";
 
 import GeoPositionTracker from "../GeoPositionTracker";
-import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters'
+
+
 
 const RideAndSharingCheckout = ({
     originLocation,
     originLocationDescription,
     dropoffLocation,
     dropoffLocationDescription,
-    products,
-    selectedItemId,
+    cart,
+    selectedItem,
     fees,
     tipsFilter,
     originLocationOnPress,
@@ -34,14 +35,17 @@ const RideAndSharingCheckout = ({
     withTopInset = false,
     onItemPress,
     onPress,
-    goBack
+    getGPSLocationOnPress,
+    isLocationPermission,
+    BackButton
 }) => {
     const point = Platform.OS === 'ios' ? 0.5 : 0.54
-
     const bottomSheetRef = useRef(null);
     const snapPoints = useMemo(() => ["50%", "75%", "100%"], []);
-    const [currentSnapPoint, setCurrentSnapPoint] = useState(point);
+    const [currentSnapPoint, setCurrentSnapPoint] = useState(0);
     const insets = useSafeAreaInsets();
+    const [footerHeight, setFooterHeight] = useState(0);
+
 
     const isInsetsBottom = insets.bottom === 0 ? MD3LightTheme.spacing.x4 : insets.bottom;
 
@@ -58,14 +62,17 @@ const RideAndSharingCheckout = ({
 
 
     const listHeaderComponent = () => (
-        <RideAndSharingDetails
-            originLocation={originLocation}
-            originLocationDescription={originLocationDescription}
-            dropoffLocation={dropoffLocation}
-            dropoffLocationDescription={dropoffLocationDescription}
-            originLocationOnPress={originLocationOnPress}
-            dropoffLocationOnPress={dropoffLocationOnPress}
-            RenderPaymentMethod={RenderPaymentMethod} />
+        <>
+            <RideAndSharingDetails
+                originLocation={originLocation}
+                originLocationDescription={originLocationDescription}
+                dropoffLocation={dropoffLocation}
+                dropoffLocationDescription={dropoffLocationDescription}
+                originLocationOnPress={originLocationOnPress}
+                dropoffLocationOnPress={dropoffLocationOnPress}
+                RenderPaymentMethod={RenderPaymentMethod} />
+            <List.Subheader>{cart.title}</List.Subheader>
+        </>
     );
 
     const listFooterComponent = () => (
@@ -84,14 +91,21 @@ const RideAndSharingCheckout = ({
     );
 
     const renderFooter = (props) => (
-        <BottomSheetFooter {...props}>
-            <ScreenWrapper withScrollView={false} withPaddingHorizontal={false} withBottomInset={true}>
+        <BottomSheetFooter {...props} >
+            <ScreenWrapper withScrollView={false} withPaddingHorizontal={false} withBottomInset={true}
+
+            >
                 <FAB
                     label={localized('trip.requestRide')}
                     variant='secondary'
                     mode="elevated"
                     style={[styles.button]}
-                    onPress={onPress} />
+                    onPress={onPress}
+                    onLayout={(event) => {
+                        const { height } = event.nativeEvent.layout;
+                        setFooterHeight(height);
+                    }}
+                />
             </ScreenWrapper>
         </BottomSheetFooter>
     )
@@ -112,23 +126,26 @@ const RideAndSharingCheckout = ({
         setCurrentSnapPoint(value);
     }, []);
 
-
     return (
         <>
             <GeoPositionTracker
-                customerPosition={{
-                    longitude: originLocation.longitude,
-                    latitude: originLocation.latitude
+                customerPosition={originLocation}
+                currentDriverPosition={{
+                    longitude: selectedItem?.driver?.longitude,
+                    latitude: selectedItem?.driver?.latitude,
                 }}
-                currentDriverPosition={dropoffLocation}
                 vendorPosition={dropoffLocation}
                 currentSnapPoint={currentSnapPoint}
-
+                nearbyVehicleLocations={cart?.vehiclePoints}
+                getGPSLocationOnPress={getGPSLocationOnPress}
+                isLocationPermission={isLocationPermission}
+                originLocation={originLocation}
+                dropoffLocation={dropoffLocation}
+                selectedItem={selectedItem}
+                locationOnPress={originLocationOnPress}
             />
 
-            <View style={{ position: 'absolute', top: moderateScale(insets.top) }}>
-                <Appbar.BackAction mode='contained' onPress={goBack} />
-            </View >
+            <BackButton />
 
             <BottomSheet
                 ref={bottomSheetRef}
@@ -155,27 +172,35 @@ const RideAndSharingCheckout = ({
 
                 onChange={handleSheetChange}
             >
-                {products?.length ? (
-                    <BottomSheetSectionList
-                    sections={products}
-                    keyExtractor={keyExtractor}
-                    renderSectionHeader={({ section: { title } }) => (
-                        <List.Subheader>{title}</List.Subheader>
-                    )}
-                    renderItem={({ item }) => (
-                        <ProductListItem
-                            isChecked={item.driver.id === selectedItemId}
-                            title={item.title}
-                            description={item.description ? [item.eta.formattedValue, item.description] : item.eta.formattedValue}
-                            price={item.fees[ACCOUNTING_ITEMS.total].formattedValue}
-                            chips={item.chips}
-                            onPress={() => onItemPress(item)} />
-                    )}
-                    ListHeaderComponent={listHeaderComponent}
-                    //ListFooterComponent={listFooterComponent}
-                    stickySectionHeadersEnabled={false}
-                    showsVerticalScrollIndicator={false}
-                />
+                {cart?.products?.length ? (
+                    <>
+                        <BottomSheetFlatList
+                            data={cart.products}
+                            //keyExtractor={keyExtractor}
+                            renderItem={({ item }) => (
+                                <List.Accordion
+                                    right={() => null}
+                                    expanded
+                                    title={item.title}
+                                    description={item.token}>
+                                    {item.data.map(offer => (
+                                        <ProductListItem
+                                            isChecked={offer.token === selectedItem?.token}
+                                            title={offer.eta.formattedValue}
+                                            price={offer.costs[ACCOUNTING_ITEMS.total].formattedValue}
+                                            chips={item.chips}
+                                            onPress={() => onItemPress(offer)}
+                                        />
+                                    ))}
+                                </List.Accordion>
+                            )}
+                            ListHeaderComponent={listHeaderComponent}
+                            //ListFooterComponent={listFooterComponent}
+                            stickySectionHeadersEnabled={false}
+                            showsVerticalScrollIndicator={false}
+                        />
+                        <View style={{ height: moderateScale(footerHeight) + MD3LightTheme.spacing.x7 }} />
+                    </>
                 ) : null}
             </BottomSheet>
         </>
