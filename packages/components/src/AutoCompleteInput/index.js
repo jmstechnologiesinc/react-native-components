@@ -3,30 +3,23 @@ import { GooglePlacesAutocomplete } from '@jmstechnologiesinc/react-native-googl
 import ScreenWrapper from '../ScreenWrapper';
 import { localized } from '../Localization/Localization';
 import { Config } from '../Config';
-import { Keyboard } from 'react-native';
 
-const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus, value, onBlur, isFocused }) => {
+const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus, value = "", onBlur, isLoading, placeholder, predefinedPlaces = true, onClear }) => {
   const ref = useRef(null);
+
   useEffect(() => {
-    if (value) {
+    if (ref.current || isLoading) {
       ref.current.setAddressText(value);
     }
-    if (!isFocused) {
-      console.log(isFocused)
-      Keyboard.dismiss();
 
-      ref.current?.clear();
-    }
-
-  }, [value, isFocused]);
+  }, [value, isLoading]);
 
   return (
     <ScreenWrapper.Section title={localized(title)}>
-
       <GooglePlacesAutocomplete
         ref={ref}
         predefinedPlaces={
-          locationPermissionStatus
+          locationPermissionStatus || !predefinedPlaces
             ? []
             : [
               {
@@ -36,15 +29,16 @@ const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus, 
             ]
         }
         predefinedPlacesAlwaysVisible
+        placeholder={placeholder}
         onPress={onPress}
+        onClear={onClear}
         textInputProps={{
           onFocus: () => {
-            onFocus(true);
+            onFocus(false);
           },
           onBlur: () => {
             onFocus(false);
-            onBlur?.(false)
-            ref.current?.clear();
+            onBlur?.(false);
           },
         }}
         query={{

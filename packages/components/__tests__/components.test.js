@@ -1,6 +1,6 @@
 'use strict';
 
-const components = require('..');
+const components = require('../src');
 
 describe('components', () => {
     it('needs tests');
