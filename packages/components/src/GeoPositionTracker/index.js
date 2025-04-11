@@ -141,7 +141,8 @@ const GeoPositionTracker = ({
 
 
   useEffect(() => {
-    if (currentSnapPoint === 0.8) {
+    if (currentSnapPoint === 1) {
+
       mapRef.current?.setCamera({
         bounds: boundingBox,
         zoomLevel: zoomLevel,
@@ -149,7 +150,7 @@ const GeoPositionTracker = ({
           paddingTop: top + moderateScale(50),
           paddingRight: right + moderateScale(50),
           paddingLeft: left + moderateScale(50),
-          paddingBottom: height * currentSnapPoint,
+          paddingBottom: height * 0.7,
         },
         animationMode: 'flyTo',
         animationDuration: 250,
@@ -168,7 +169,7 @@ const GeoPositionTracker = ({
         animationDuration: 250,
       })
     }
-  }, [currentSnapPoint]);
+  }, [currentSnapPoint, selectedItem]);
 
   const makeRouterFeature = (coordinates) => {
     return {
@@ -248,7 +249,7 @@ const GeoPositionTracker = ({
             paddingTop: top + moderateScale(50),
             paddingRight: right + moderateScale(50),
             paddingLeft: left + moderateScale(50),
-            paddingBottom: height * currentSnapPoint,
+            paddingBottom: height * 0.5,
           }}
           animationMode="flyTo"
           animationDuration={200}
