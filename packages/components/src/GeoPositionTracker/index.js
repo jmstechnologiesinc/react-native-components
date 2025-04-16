@@ -31,12 +31,13 @@ const GeoPositionTracker = ({
   customerPosition,
   currentDriverPosition,
   vendorPosition,
-  currentSnapPoint,
+  currentSnapPoint = 0,
   nearbyVehicleLocations,
   getGPSLocationOnPress,
   isLocationPermission,
   selectedItem,
-  locationOnPress
+  locationOnPress,
+  rideAndSharing = true
 }) => {
   const mapRef = useRef(null);
   const [routeDirections, setRouteDirections] = useState(null);
@@ -230,7 +231,7 @@ const GeoPositionTracker = ({
       <MapboxGL.MapView
         style={{
           flex: 1,
-
+          ...(rideAndSharing ? {} : { height: 300 })
         }}
         zoomEnabled={true}
         styleURL={Mapbox.StyleURL.Street}
@@ -249,11 +250,12 @@ const GeoPositionTracker = ({
             paddingTop: top + moderateScale(50),
             paddingRight: right + moderateScale(50),
             paddingLeft: left + moderateScale(50),
-            paddingBottom: height * 0.5,
+            paddingBottom: rideAndSharing ? height * 0.5 : moderateScale(50)
           }}
           animationMode="flyTo"
           animationDuration={200}
         />
+
 
         {centerCoordinate && customerPosition && vendorPosition ?
           <MapboxGL.ShapeSource id="routeSource" shape={routeDirections}>
@@ -290,15 +292,7 @@ const GeoPositionTracker = ({
 
         }
 
-        {/* {
-          originRoutes ? <MapboxGL.PointAnnotation id="destination" coordinate={originRoutes}>
 
-            <View style={styles.destinationIcon}>
-              <MaterialCommunityIcons name="radiobox-marked" size={24} color={MD3LightTheme.colors.primary} />
-            </View>
-          </MapboxGL.PointAnnotation>
-            : null
-        } */}
 
         {
           centerCoordinate && customerPosition && vendorPosition ?
@@ -320,34 +314,46 @@ const GeoPositionTracker = ({
           />
         }
 
-        <AddressMarker
-          coordinate={centerCoordinate}
-          onPress={locationOnPress}
-          title={currentDriverPosition ? vehicleSelected?.formattedValue : customerPosition?.formattedAddress}
-        />
+        {
+          rideAndSharing ? <>
+            <AddressMarker
+              coordinate={centerCoordinate}
+              onPress={locationOnPress}
+              title={currentDriverPosition ? vehicleSelected?.formattedValue : customerPosition?.formattedAddress}
+            />
 
-        <AddressMarker
-          coordinate={destinationCoords}
-          onPress={locationOnPress}
-          title={vendorPosition?.formattedAddress}
-        />
+            <AddressMarker
+              coordinate={destinationCoords}
+              onPress={locationOnPress}
+              title={vendorPosition?.formattedAddress}
+            />
+
+          </>
+            :
+            null
+        }
 
 
       </MapboxGL.MapView>
 
-      <View style={{
-        position: 'absolute',
-        bottom: height * currentSnapPoint,
-        right: 0,
+      {
+        rideAndSharing ?
+          <View style={{
+            position: 'absolute',
+            bottom: height * currentSnapPoint,
+            right: 0,
 
-      }}>
-        <IconButton
-          icon="crosshairs-gps"
-          size={moderateScale(24)}
-          mode='contained'
-          onPress={resetToInitialPosition}
-        />
-      </View>
+          }}>
+            <IconButton
+              icon="crosshairs-gps"
+              size={moderateScale(24)}
+              mode='contained'
+              onPress={resetToInitialPosition}
+            />
+          </View>
+          : null
+      }
+
     </>
   );
 };
