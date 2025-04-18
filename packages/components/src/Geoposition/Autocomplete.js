@@ -169,10 +169,11 @@ const Autocomplete = ({
                             value={dropoffLocation?.formattedAddress}
                             isLoading={isLoading}
                             placeholder={localized("whereAreYouGoing")}
-                            predefinedPlaces={false}
+                            predefinedPlaces={true}
                             onClear={removeDropoffLocation}
                             onCallMapPicker={onCallMapPicker}
                             showMapPicker={isShowMapPicker}
+                            showGps={false}
 
                         />
                     ) : null}
