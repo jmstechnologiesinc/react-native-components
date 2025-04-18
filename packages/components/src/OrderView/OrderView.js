@@ -29,6 +29,7 @@ import RealTimeDriverTacking from '../Order/RealTimeDriverTacking';
 import GeoPositionTracker from '../GeoPositionTracker'
 
 import Geolocation from 'react-native-geolocation-service';
+import { useSimulatedDriverPosition } from './useSimulatedDriverPosition';
 
 const getDriverDetails = (order, role) => {
     const results = [];
@@ -88,33 +89,28 @@ const OrderView = ({
     }
 
     const fulfilmentDetails = [];
-   // const [coord, setCoord] = useState(null);
+    const [coord, setCoord] = useState(null);
 
-   /*  const getLiveLocation = () => {
-        Geolocation.getCurrentPosition(
-            (position) => {
-                const { latitude, longitude } = position.coords;
-                setCoord({
-                    latitude,
-                    longitude,
-                });
-            },
-            (error) => {
-                console.error(error);
-            },
-            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-        );
-    }; */
 
-  /*   useEffect(() => {
-        const locationInterval = setInterval(() => {
-            getLiveLocation();
-        }, 4000);
-        return () => {
-            clearInterval(locationInterval);
-        };
-    }, []);
- */
+    const origin = {
+        latitude: 42.69483709454096,
+        longitude: -71.15539271546031
+    }
+    const destination = {
+        latitude: 42.70729948552058,
+        longitude: -71.17515033937805
+    }
+
+    const position = useSimulatedDriverPosition(origin, destination);
+
+
+
+    useEffect(() => {
+        setCoord(position)
+        console.log("Simulated position:", position);
+    }, [position]);
+
+
     if (order.note === true) {
         fulfilmentDetails.push({
             key: 'cancel-note',
@@ -142,12 +138,12 @@ const OrderView = ({
     let driverDetails;
 
     if (role === USER_ROLES.customer) {
-        if(platform === LOGISTICS_PLATFORMS.rideshare) {
+        if (platform === LOGISTICS_PLATFORMS.rideshare) {
             fulfilmentDetails.push({
                 key: 'origin-location',
                 title: order.originLocation.formattedAddress,
                 icon: 'hail',
-                description: localized('trip.originLocation') 
+                description: localized('trip.originLocation')
             });
             fulfilmentDetails.push({
                 key: 'drop-off-location',
@@ -170,7 +166,7 @@ const OrderView = ({
                 description: localized('order.vendor.phone'),
             });
         }
-       
+
         fulfilmentDetails.push({
             key: 'payment-method',
             title: order.payment.formattedPaymentMethod,
@@ -315,7 +311,7 @@ const OrderView = ({
                         showChevron={false}
                     />
 
-                  {/*   <Divider style={{ marginTop: MD3LightTheme.spacing.x3 }} />
+                    <Divider style={{ marginTop: MD3LightTheme.spacing.x3 }} />
 
                     <GeoPositionTracker
                         customerPosition={{
@@ -323,11 +319,12 @@ const OrderView = ({
                             latitude: order.fulfillmentAddress.latitude
                         }}
                         currentDriverPosition={coord}
-                        vendorPosition={order.vendor.location}
+                        vendorPosition={coord}
+                        rideAndSharing={false}
                     />
 
                     <Divider style={{ marginTop: MD3LightTheme.spacing.x3 }} />
- */}
+
                     {(formattedOrder.fulfilmentStatus.driver.status || formattedOrder.fulfilmentStatus.driver.title) ? (
                         <>
                             <RealTimeDriverTacking
