@@ -4,7 +4,7 @@ import ScreenWrapper from '../ScreenWrapper';
 import { localized } from '../Localization/Localization';
 import { Config } from '../Config';
 
-const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus, value = "", onBlur, isLoading, placeholder, onClear, onCallMapPicker, predefinedPlaces = true, showMapPicker = false }) => {
+const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus, value = "", onBlur, isLoading, placeholder, onClear, onCallMapPicker, predefinedPlaces = true, showMapPicker = false, showGps = true }) => {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -58,6 +58,7 @@ const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus, 
         returnKeyType="search"
         fetchDetails={false}
         autoFillOnNotFound={true}
+        showGps={showGps}
       />
     </ScreenWrapper.Section>
   );
