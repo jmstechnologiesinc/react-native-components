@@ -3,28 +3,18 @@ import React, { useEffect, useRef, useState } from 'react';
 import Config from 'react-native-config';
 import { List } from '@jmstechnologiesinc/react-native-paper';
 
-import { USER_ROLES } from '@jmstechnologiesinc/user';
 import { ORDER_STATUS } from '@jmstechnologiesinc/order';
 import { pubnubEtaChannelName } from '@jmstechnologiesinc/commons';
 
 import { Centrifuge } from 'centrifuge';
 import DriverStatus from './DriverStatus';
 import { localized } from '../Localization/Localization';
-
-const centrifugeClient = new Centrifuge(`ws://${Config.FLEET_MANAGEMENT_CENTRIFUGO_HOST}:${Config.FLEET_MANAGEMENT_CENTRIFUGO_PORT}}/connection/websocket`);
-
-centrifugeClient.on('connected', function (ctx) {
-  console.log(`centrifugo client connected:`, ctx);
-}).on('disconnected', function (ctx) {
-  console.log(`centrifugo client connected:`, ctx);
-}).on('error', function(ctx) {
-  console.log('centrifugo client error:', ctx);
-})
+import GeoPositionTracker from '@jmstechnologiesinc/react-native-components/lib/GeoPositionTracker';
 
 const RealTimeDriverTacking = ({
     status, 
     orderId, 
-    role,
+    customerPosition,
     deliveryMethod,
     driverName,
     phoneNumber,
@@ -34,46 +24,58 @@ const RealTimeDriverTacking = ({
 }) => {
     const subscriptionRef = useRef();
 
-    const [etaValue, setEtaValue] = useState(null);
+    const [durationRemainingFormatted, setDurationRemainingFormatted] = useState(null);
     const [location, setLocation] = useState(null);
 
     useEffect(() => {
-      return () => {
-        subscriptionRef.current?.unsubscribe();
-        subscriptionRef.current?.removeAllListeners();
-        //centrifugeClient?.disconnect()
-      }
-    }, []);
-
-    useEffect(() => {
-        if (
-            (role === USER_ROLES.vendor && (status === ORDER_STATUS.shipped || status === ORDER_STATUS.inTransit)) ||
-            (role === USER_ROLES.customer && status === ORDER_STATUS.inTransit)
-        ) {            
+        if (status === ORDER_STATUS.shipped || status === ORDER_STATUS.inTransit) {            
           
-          const subcriptionState = centrifugeClient.getSubscription(pubnubEtaChannelName(orderId))
-   
-           if(subcriptionState === null) {
-            subscriptionRef.current = centrifugeClient.newSubscription(pubnubEtaChannelName(orderId));
-       
-            subscriptionRef.current.on('publication', function (ctx) {
-                setEtaValue(ctx.data.durationRemaining);
-                setLocation(ctx.data.latitude, ctx.data.longitude)
-              }).on('subscribed', function (ctx) {
-                console.log('centrifugo channel subscribed:', ctx);
-              }).on('unsubscribed', function (ctx) {
-                console.log(`centrifugo channel unsubscribed: ${ctx.code}, ${ctx.reason}`);
-              }).subscribe();
+          const centrifugeClientRef = new Centrifuge(`ws://${Config.FLEET_MANAGEMENT_CENTRIFUGO_HOST}:${Config.FLEET_MANAGEMENT_CENTRIFUGO_PORT}/connection/websocket`);
 
-              centrifugeClient.connect();
-           }
+          centrifugeClientRef.on('connected', function (ctx) {
+            console.log(`centrifugo client connected:`, ctx);
+          }).on('disconnected', function (ctx) {
+            console.log(`centrifugo client connected:`, ctx);
+          }).on('error', function(ctx) {
+            console.log('centrifugo client error:', ctx);
+          })
+
+          const subcriptionState = centrifugeClientRef.getSubscription(pubnubEtaChannelName(orderId))
+
+          if(subcriptionState === null) {
+          subscriptionRef.current = centrifugeClientRef.newSubscription(pubnubEtaChannelName(orderId));
+      
+          subscriptionRef.current.on('publication', function (ctx) {
+            console.log(ctx)
+              setDurationRemainingFormatted(ctx.data.durationRemainingFormatted);
+              setLocation({latitude: ctx.data.latitude, longitude: ctx.data.longitude})
+            }).on('subscribed', function (ctx) {
+              console.log('centrifugo channel subscribed:', ctx);
+            }).on('unsubscribed', function (ctx) {
+              console.log(`centrifugo channel unsubscribed: ${ctx.code}, ${ctx.reason}`);
+            }).subscribe();
+
+            centrifugeClientRef.connect();
+          }
         }
-    }, [status, orderId, role]);
-  
+
+        return () => {
+          subscriptionRef.current.unsubscribe?.();
+          subscriptionRef.current.removeAllListeners?.();
+        }
+    }, [status, orderId]);
+
     return (
-      <List.Section title={localized("driver")}>
+      <>
+        <GeoPositionTracker
+            customerPosition={customerPosition}
+            currentDriverPosition={location}
+            vendorPosition={location}
+            rideAndSharing={false}
+        />
+        <List.Section title={localized("driver")}>
           <DriverStatus
-              milliseconds={etaValue}
+              durationRemainingFormatted={durationRemainingFormatted}
               deliveryMethod={deliveryMethod}
               name={driverName}
               phoneNumber={phoneNumber}
@@ -81,7 +83,8 @@ const RealTimeDriverTacking = ({
               avatar={avatar}
               status={driverStatus}
           />
-      </List.Section>
+        </List.Section>
+      </>
     )
 };
 

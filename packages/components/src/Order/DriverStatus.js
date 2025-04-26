@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ITEM_TYPE, ITEM_TYPE_ICON_MAPPING, MATERIAL_ICONS, formattedETATime, milliseconsExtractor } from '@jmstechnologiesinc/commons';
+import { ITEM_TYPE, ITEM_TYPE_ICON_MAPPING, MATERIAL_ICONS} from '@jmstechnologiesinc/commons';
 
 import { Avatar, List } from '@jmstechnologiesinc/react-native-paper';
 import { localized, makeLinkingCall } from '@jmstechnologiesinc/react-native-components';
@@ -8,7 +8,7 @@ import { localized, makeLinkingCall } from '@jmstechnologiesinc/react-native-com
 import { imageKitAvatar } from '../utils';
 
 const DriverStatus = ({
-    milliseconds,
+    durationRemainingFormatted,
 
     deliveryMethod,
 
@@ -23,17 +23,6 @@ const DriverStatus = ({
     showPhoneNumber = true,
     showDeliveryMethod = true,
 }) => {
-
-    let eta;
-
-    if (milliseconds) {
-        const { hrs, mins } = milliseconsExtractor(milliseconds);
-        eta = {
-            title: formattedETATime(hrs, mins),
-            description: localized("estimateTimeOfArrival"),
-            icon: "car-clock",
-        };
-    }
 
     const renderAvatar = avatar
         ? (props) => <Avatar.Image style={props.style} source={{ uri: imageKitAvatar(avatar) }} />
@@ -50,12 +39,12 @@ const DriverStatus = ({
                 />
             ) : null}
 
-            {showEta && eta ? (
+            {showEta && durationRemainingFormatted ? (
                 <List.Item
-                    title={eta.title}
-                    description={eta.description}
+                    title={durationRemainingFormatted}
+                    description={localized("estimateTimeOfArrival")}
                     titleNumberOfLines={0}
-                    left={(props) => <List.Icon {...props} icon={eta.icon} />}
+                    left={(props) => <List.Icon {...props} icon={"car-clock"} />}
                 />
             ) : null}
 

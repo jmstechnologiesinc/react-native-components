@@ -29,7 +29,6 @@ import RealTimeDriverTacking from '../Order/RealTimeDriverTacking';
 import GeoPositionTracker from '../GeoPositionTracker'
 
 import Geolocation from 'react-native-geolocation-service';
-import { useSimulatedDriverPosition } from './useSimulatedDriverPosition';
 
 const getDriverDetails = (order, role) => {
     const results = [];
@@ -89,27 +88,6 @@ const OrderView = ({
     }
 
     const fulfilmentDetails = [];
-    const [coord, setCoord] = useState(null);
-
-
-    const origin = {
-        latitude: 42.69483709454096,
-        longitude: -71.15539271546031
-    }
-    const destination = {
-        latitude: 42.70729948552058,
-        longitude: -71.17515033937805
-    }
-
-    const position = useSimulatedDriverPosition(origin, destination);
-
-
-
-    useEffect(() => {
-        setCoord(position)
-        console.log("Simulated position:", position);
-    }, [position]);
-
 
     if (order.note === true) {
         fulfilmentDetails.push({
@@ -313,31 +291,22 @@ const OrderView = ({
 
                     <Divider style={{ marginTop: MD3LightTheme.spacing.x3 }} />
 
-                    <GeoPositionTracker
-                        customerPosition={{
-                            longitude: order.fulfillmentAddress.longitude,
-                            latitude: order.fulfillmentAddress.latitude
-                        }}
-                        currentDriverPosition={coord}
-                        vendorPosition={coord}
-                        rideAndSharing={false}
-                    />
-
-                    <Divider style={{ marginTop: MD3LightTheme.spacing.x3 }} />
-
                     {(formattedOrder.fulfilmentStatus.driver.status || formattedOrder.fulfilmentStatus.driver.title) ? (
                         <>
                             <RealTimeDriverTacking
                                 orderId={order.id}
                                 status={order.status}
+                                customerPosition={{
+                                    longitude: order.fulfillmentAddress.longitude,
+                                    latitude: order.fulfillmentAddress.latitude
+                                }}
                                 role={role}
                                 deliveryMethod={formattedOrder.fulfilmentStatus.driver.deliveryMethod}
                                 driverName={formattedOrder.fulfilmentStatus.driver.title}
                                 phoneNumber={formattedOrder.fulfilmentStatus.driver.phoneNumber}
                                 vehicle={formattedOrder.fulfilmentStatus.driver.vehicle}
                                 avatar={formattedOrder.fulfilmentStatus.driver.avatar}
-                                driverStatus={formattedOrder.fulfilmentStatus.driver.status}
-                            />
+                                driverStatus={formattedOrder.fulfilmentStatus.driver.status} />
                             <Divider />
                         </>
                     ) : null}
