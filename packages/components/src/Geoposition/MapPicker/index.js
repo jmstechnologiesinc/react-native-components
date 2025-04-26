@@ -1,93 +1,106 @@
-// import React, { useState, useEffect } from 'react';
+import { View, Text, Dimensions, StyleSheet } from 'react-native'
+import React from 'react'
+import MapboxGL from '@rnmapbox/maps';
+import { Appbar, IconButton, MD3LightTheme, ProgressBar } from '@jmstechnologiesinc/react-native-paper';
+import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import AddressSelectionSheet from './AddressSelectionSheet';
+import { Config } from '../../Config'
 
-// import { Alert, View, Dimensions, StyleSheet, Platform } from 'react-native';
+const MapPicker = ({
+    mapRef,
+    cameraRef,
+    isLocationPermissionDenied,
+    isLoading,
+    setIsLoading,
+    onSaveLocation,
+    onRegionChangeComplete,
+    currentLocation,
+    currentMapAdress,
+    findUserLocation,
+    centerMapOnUserLocation,
+    onBackPress
+}) => {
+    const { height } = Dimensions.get('window');
+    const insets = useSafeAreaInsets();
 
-// import { useNavigation } from '@react-navigation/native';
-// import { useSelector, useDispatch } from 'react-redux';
+    MapboxGL.setAccessToken(Config.MAPBOX_ACCESS_TOKEN);
 
-// import { geofirexToJSON } from '@jmstechnologiesinc/commons';
+    return (
+        <>
+            <MapboxGL.MapView
+                zoomEnabled={true}
+                compassEnabled={false}
+                attributionEnabled={false}
+                scaleBarEnabled={false}
+                logoEnabled={false}
+                ref={mapRef}
+                style={styles.map}
+                onRegionDidChange={onRegionChangeComplete}
+                styleURL={MapboxGL.StyleURL.Street}
+                onDidFinishLoadingMap={() => setIsLoading(false)}
+                onRegionIsChanging={() => setIsLoading(true)}
+            >
+                {currentLocation ? (
+                    <MapboxGL.Camera
+                        zoomLevel={15}
+                        centerCoordinate={[currentLocation.longitude, currentLocation.latitude]}
+                        animationDuration={1000}
+                        ref={cameraRef}
+                    />
+                ) : null}
+                <MapboxGL.UserLocation visible={true} />
+            </MapboxGL.MapView>
 
-// import { localized, TNActivityIndicator } from '@jmstechnologiesinc/react-native-components';
+            {currentLocation ? (
+                <View style={styles.iconLocation}>
+                    <IconButton
+                        icon="map-marker-outline"
+                        size={MD3LightTheme.spacing.x12}
+                        iconColor={MD3LightTheme.colors.primary}
+                    />
+                </View>
+            ) : null}
 
-// import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
-// import FormInputsScreenWrapper from '../../formInputs/FormInputsScreenWrapper';
+            {!isLocationPermissionDenied && (
+                <View style={[styles.centerButton, { bottom: height * 0.25 }]}>
+                    <IconButton
+                        icon="crosshairs-gps"
+                        size={MD3LightTheme.spacing.x6}
+                        mode="contained"
+                        onPress={centerMapOnUserLocation}
+                    />
+                </View>
+            )}
 
-// const MapPicker = () => {
-//     const navigation = useNavigation();
-//     const dispatch = useDispatch();
+            <AddressSelectionSheet
+                currentMapAdress={currentMapAdress ? findUserLocation(currentMapAdress) : currentLocation}
+                onSaveLocation={onSaveLocation}
+                isLoading={isLoading}
+            />
 
-//     const user = useSelector((state) => state.auth.user);
-//     const userGeoLocation = geofirexToJSON(user.location);
+            <View style={{ position: 'absolute', top: moderateScale(insets.top) }}>
+                <Appbar.BackAction mode="contained" onPress={onBackPress} />
+            </View>
+        </>
+    )
+}
 
-//     const [newLocation, setLocation] = useState();
+const styles = StyleSheet.create({
+    map: {
+        flex: 1,
+    },
+    centerButton: {
+        position: 'absolute',
+        right: MD3LightTheme.spacing.x2,
+    },
+    iconLocation: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: [{ translateX: -41 }, { translateY: -56 }],
+        zIndex: 1,
+    },
+});
 
-//     const { width, height } = Dimensions.get('window');
-
-//     const isHeight = Platform.OS === 'ios' ? height - moderateScale(210) : height;
-
-//     useEffect(() => {
-//         navigation.setOptions({
-//             headerBackTitleVisible: false,
-//         });
-
-//         if (userGeoLocation === null) {
-//             try {
-//             } catch (errorMessage) {
-//                 Alert.alert(localized('pleaseTryagain'), errorMessage, { cancelable: true });
-//             }
-//         }
-//     }, [dispatch, navigation, user?.id, userGeoLocation]);
-
-//     /*   const initial = {
-//         latitudeDelta: 0.0012262609183853357,
-//         longitudeDelta: 0.0008153915405273438,
-//         latitude: userGeoLocation?.latitude,
-//         longitude: userGeoLocation?.longitude,
-//     };
-//  */
-//     const onPress = async () => {
-//         try {
-//             navigation.navigate('VendorList');
-//         } catch (errorMessage) {
-//             Alert.alert(localized('pleaseTryagain'), errorMessage, { cancelable: true });
-//         }
-//     };
-
-//     const onRegionChangeComplete = (event) => {
-//         setLocation(event);
-//     };
-
-//     if (userGeoLocation === null || !user?.id) {
-//         return <TNActivityIndicator />;
-//     }
-
-//     return (
-//         <FormInputsScreenWrapper onPress={onPress}>
-//             <View style={[{ height: isHeight, width: width }]}>
-//                 {/*   <MapView
-//                     showsUserLocation
-//                     showsMyLocationButton
-//                     style={[styles.map]}
-//                     initialRegion={initial}
-//                     onRegionChangeComplete={onRegionChangeComplete}
-//                     provider={PROVIDER_GOOGLE}
-//                 /> */}
-//                 <View style={styles.iconLocation}></View>
-//             </View>
-//         </FormInputsScreenWrapper>
-//     );
-// };
-
-// const styles = StyleSheet.create({
-//     map: {
-//         flex: 1,
-//     },
-//     iconLocation: {
-//         top: '50%',
-//         left: '50%',
-//         marginLeft: -35,
-//         marginTop: -50,
-//         position: 'absolute',
-//     },
-// });
-// export default MapPicker;
+export default MapPicker

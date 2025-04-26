@@ -60,5 +60,5 @@ export {
 } from './LocationListItem/LocationListItem'
 
 
-export { checkAndAskForPermission, gpsLocation, RecentLocations, AddressOptions, Autocomplete } from './Geoposition'
+export { checkAndAskForPermission, gpsLocation, RecentLocations, AddressOptions, Autocomplete, MapPicker } from './Geoposition'
 
