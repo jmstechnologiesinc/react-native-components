@@ -35,7 +35,8 @@ const Autocomplete = ({
     removeOriginLocation,
     onMapPicker,
     predefinedPlaces = true,
-    isShowMapPicker = false
+    isShowMapPicker = false,
+    placeholder
 }) => {
 
     const [isFocused, setIsFocused] = useState(false);
@@ -147,7 +148,7 @@ const Autocomplete = ({
                             }}
                             isFocused={isOriginFocused}
                             isLoading={isLoading}
-                            placeholder={localized("startingPoint")}
+                            placeholder={placeholder}
                             predefinedPlaces={predefinedPlaces}
                             onClear={removeOriginLocation}
                             onCallMapPicker={onCallMapPicker}
