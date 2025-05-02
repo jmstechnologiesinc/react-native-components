@@ -25,7 +25,7 @@ const VehiclesList = ({ vehicleListPositions, filterVehiclePositions, driverHead
       },
       geometry: {
         type: 'Point',
-        coordinates: [car.longitud, car.latitud],
+        coordinates: [car.longitude, car.latitude],
       },
     })),
   };
