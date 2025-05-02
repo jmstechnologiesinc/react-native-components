@@ -1,6 +1,6 @@
 import React, { useRef, useMemo, useCallback } from "react";
 
-import BottomSheet, { BottomSheetFooter } from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetFooter } from "@jmstechnologiesinc/bottom-sheet";
 import { localized, LocationListItem, LOCATION_LIST_ITEM, } from '@jmstechnologiesinc/react-native-components';
 
 import { MD3LightTheme, ProgressBar, Button } from "@jmstechnologiesinc/react-native-paper";
