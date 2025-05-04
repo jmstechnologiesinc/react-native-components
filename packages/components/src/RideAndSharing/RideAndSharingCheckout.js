@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import BottomSheet, { BottomSheetFooter, BottomSheetFlatList } from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetFooter, BottomSheetFlatList } from "@jmstechnologiesinc/bottom-sheet";
 import { FAB, List, MD3LightTheme } from "@jmstechnologiesinc/react-native-paper";
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters'
 import { localized } from "../Localization/Localization";
