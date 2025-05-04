@@ -4,17 +4,26 @@ import ScreenWrapper from '../ScreenWrapper';
 import { localized } from '../Localization/Localization';
 import { Config } from '../Config';
 
-const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus, value = "", onBlur, isLoading, placeholder, onClear, onCallMapPicker, predefinedPlaces = true, showMapPicker = false, showGps = true }) => {
+const AutoCompleteInput = ({ 
+  title, 
+  placeholder, 
+  icon,
+  value = "", 
+  predefinedPlaces = true, 
+  showMapPicker = false, 
+  showGps = true,
+  onPress, 
+  onFocus, 
+  onBlur, 
+  onClear, 
+  locationPermissionStatus, 
+  onCallMapPicker
+}) => {
   const ref = useRef(null);
 
   useEffect(() => {
-    if (ref.current || isLoading) {
       ref.current.setAddressText(value);
-    }
-
-  }, [value, isLoading]);
-
-
+  }, [value]);
 
   return (
     <ScreenWrapper.Section title={localized(title)}>
@@ -27,26 +36,24 @@ const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus, 
               {
                 description: localized('useGPSLocation'),
                 isPredefinedPlace: true,
-              },
+              }
             ]
         }
         predefinedPlacesAlwaysVisible
-        showMapPicker={showMapPicker}
-        onCallMapPicker={onCallMapPicker}
+        icon={icon}
         placeholder={placeholder}
         onPress={onPress}
         onClear={onClear}
         textInputProps={{
           onFocus: () => {
-            onFocus(false);
+            onFocus?.()
           },
           onBlur: () => {
-            onFocus(false);
-            onBlur?.(false);
+            onBlur?.();
           },
         }}
         query={{
-          key: Config.GOOGLE_GEO_CODER_PLACE_API,
+          key: 'AIzaSyB7XFmNF8g4EPEKw7nT1purhTEtv-sJxEs',
           components: 'country:us|country:pa|country:do',
           types: 'geocode|establishment',
         }}
@@ -59,6 +66,8 @@ const AutoCompleteInput = ({ title, locationPermissionStatus, onPress, onFocus, 
         fetchDetails={false}
         autoFillOnNotFound={true}
         showGps={showGps}
+        showMapPicker={showMapPicker}
+        onCallMapPicker={onCallMapPicker}
       />
     </ScreenWrapper.Section>
   );

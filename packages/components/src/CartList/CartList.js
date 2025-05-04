@@ -7,6 +7,7 @@ import CartListItem from './CartListItem';
 const keyExtractor = productItem => productItem.key || productItem.id;
 
 const CartList = ({
+    title,
     checkoutTitle,
     addTitle,
     sections,
@@ -30,6 +31,7 @@ const CartList = ({
                 keyExtractor={keyExtractor}
                 renderItem={({ item }) => (
                     <CartListItem
+                        title={title}
                         checkoutTitle={checkoutTitle}
                         addTitle={addTitle}
                         showProductDescription={showProductDescription}

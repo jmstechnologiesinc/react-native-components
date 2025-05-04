@@ -2,20 +2,14 @@ import React from 'react';
 
 import { Divider, List } from '@jmstechnologiesinc/react-native-paper';
 import { plurulize } from '@jmstechnologiesinc/commons';
-import { LocationListItem, interpunctLocationListItemDescription } from '../LocationListItem/LocationListItem';
+import { LOCATION_LIST_ITEM, LocationListItem } from '../LocationListItem/LocationListItem';
 import {
     localized,
     itemSeparator
 } from '@jmstechnologiesinc/react-native-components';
 
-export const LOCATION_LIST_ITEM = {
-    fulfillmentAddress: 'fulfillmentAddress',
-    pickupAddress: 'pickupAddress',
-    currentLocation: 'currentLocation',
-};
-
 const RecentLocations = ({
-    title = localized('recentLocation'),
+    title = localized('savedAddresses'),
     locations,
     limit,
     variant = LOCATION_LIST_ITEM.currentLocation,
@@ -34,11 +28,9 @@ const RecentLocations = ({
                     <LocationListItem
                         key={location?.id}
                         title={location?.formattedAddress}
+                        description={location.vicinity}
                         variant={variant}
-                       // iconColor={null}
-                        description={
-                            location?.description || interpunctLocationListItemDescription(location)
-                        }
+                        iconColor={null}
                         onPress={() => onPress?.(location)} />
                     {itemSeparator(index, recentLocations.length) ? <Divider horizontalInset /> : null}
                 </>

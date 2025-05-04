@@ -52,13 +52,13 @@ export { default as RideAndSharingCheckout } from './RideAndSharing/RideAndShari
 
 export { default as GeoPositionTracker } from './GeoPositionTracker'
 
-
 export {
   LOCATION_LIST_ITEM,
+  LOCATION_LIST_ITEM_MAPPING,
   interpunctLocationListItemDescription,
   LocationListItem,
 } from './LocationListItem/LocationListItem'
 
 
-export { checkAndAskForPermission, gpsLocation, RecentLocations, AddressOptions, Autocomplete, MapPicker } from './Geoposition'
+export { checkAndAskForPermission, gpsLocation, RecentLocations, DriverInstructionForm, Autocomplete, MapPicker } from './Geoposition'
 

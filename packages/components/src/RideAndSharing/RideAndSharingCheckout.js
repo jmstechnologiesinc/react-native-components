@@ -2,11 +2,9 @@ import React, { useCallback, useMemo, useRef, useState } from "react";
 import BottomSheet, { BottomSheetFooter, BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import { FAB, List, MD3LightTheme } from "@jmstechnologiesinc/react-native-paper";
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters'
-import TipsFilter from "../TipsFilter/TipsFilter";
 import { localized } from "../Localization/Localization";
 import ProductListItem from "./ProductListItem";
 import styles from "../styles";
-import CheckoutSummary from "../CheckoutSummary/CheckoutSummary";
 import { ACCOUNTING_ITEMS } from "@jmstechnologiesinc/commons";
 
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper'
@@ -16,8 +14,6 @@ import RideAndSharingDetails from "./RideAndSharingDetails";
 
 import GeoPositionTracker from "../GeoPositionTracker";
 
-
-
 const RideAndSharingCheckout = ({
     originLocation,
     originLocationDescription,
@@ -25,11 +21,8 @@ const RideAndSharingCheckout = ({
     dropoffLocationDescription,
     cart,
     selectedItem,
-    fees,
-    tipsFilter,
     originLocationOnPress,
     dropoffLocationOnPress,
-    onTipsPercentPress,
     RenderPaymentMethod,
     withBottomInset = true,
     withTopInset = false,
@@ -65,29 +58,16 @@ const RideAndSharingCheckout = ({
         <>
             <RideAndSharingDetails
                 originLocation={originLocation}
-                originLocationDescription={originLocationDescription}
                 dropoffLocation={dropoffLocation}
+                originLocationDescription={originLocationDescription}
                 dropoffLocationDescription={dropoffLocationDescription}
                 originLocationOnPress={originLocationOnPress}
                 dropoffLocationOnPress={dropoffLocationOnPress}
                 RenderPaymentMethod={RenderPaymentMethod} />
+                                            <ScreenWrapper.Section />
+
             <List.Subheader>{cart.title}</List.Subheader>
         </>
-    );
-
-    const listFooterComponent = () => (
-        <View style={{ paddingBottom: insets.bottom }}>
-            <TipsFilter
-                options={tipsFilter.options}
-                description={tipsFilter.description}
-                selectedTipsPercentIndex={tipsFilter.selectedTipsPercentIndex}
-                onTipsPercentPress={onTipsPercentPress}
-            />
-            <CheckoutSummary
-                netFeeList={fees}
-                termsAndConditions={"checkoutTermAndCondition"}
-            />
-        </View>
     );
 
     const renderFooter = (props) => (
@@ -95,16 +75,23 @@ const RideAndSharingCheckout = ({
             <ScreenWrapper withScrollView={false} withPaddingHorizontal={false} withBottomInset={true}
 
             >
+                            <ScreenWrapper.Section >
+
+            {true ? (
+                <RenderPaymentMethod />
+            ) : null}
+</ScreenWrapper.Section>
                 <FAB
+                    disabled={!originLocation?.id || !dropoffLocation?.id}
                     label={localized('trip.requestRide')}
                     variant='secondary'
                     mode="elevated"
-                    style={[styles.button]}
                     onPress={onPress}
                     onLayout={(event) => {
                         const { height } = event.nativeEvent.layout;
                         setFooterHeight(height);
                     }}
+                    style={[styles.button]}
                 />
             </ScreenWrapper>
         </BottomSheetFooter>

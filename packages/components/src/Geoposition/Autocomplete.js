@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { Keyboard, Platform, Pressable } from 'react-native';
+import { Keyboard } from 'react-native';
 import { AppLifecycle } from 'react-native-applifecycle';
 import { checkAndAskForPermission, gpsLocation } from '.';
 import { Banner, List } from '@jmstechnologiesinc/react-native-paper';
@@ -9,19 +9,27 @@ import { localized } from '../Localization/Localization'
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper'
 import AutoCompleteInput from '../AutoCompleteInput'
 
-import { LocationListItem, interpunctLocationListItemDescription } from '../LocationListItem/LocationListItem';
+import {LocationListItem } from '../LocationListItem/LocationListItem';
 
 import RecentLocations from './RecentLocations';
+import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 
 const Autocomplete = ({
     originAutoCompleteInputTitle,
     dropoffAutoCompleteInputTitle,
+    originAutoCompleteInputIcon,
+    dropOffAutoCompleteInputIcon,
     currentLocationTitle,
     recentLocationTitle,
+    originLocationPlaceHolder,
+    destinationLocationPlaceHolder,
     originLocation,
     dropoffLocation,
     currentLocation,
     recentLocations,
+    recentLocationVariant,
+    currentLocationIconColor,
+    currentLocationVariant,
     isCurrentLocationVisible,
     isRecentLocationVisible,
     isDropoffLocationInputVisible,
@@ -30,19 +38,17 @@ const Autocomplete = ({
     onDropoffLocationPress,
     onFailure,
     onAskForPermission,
-    isLoading,
     removeDropoffLocation,
     removeOriginLocation,
     onMapPicker,
     predefinedPlaces = true,
     isShowMapPicker = false,
-    placeholder
 }) => {
-
-    const [isFocused, setIsFocused] = useState(false);
     const [isLocationPermissionDenied, setPermissions] = useState(false);
     const [isOriginFocused, setIsOriginFocused] = useState(false);
-    const [isShowRecentLocation, setIsShowRecentLocation] = useState(isRecentLocationVisible)
+    const [isDestinationFocused, setIsDestinationFocused] = useState(false);
+
+    const isFocused = isOriginFocused === true || isDestinationFocused === true;
 
     const togglePermisionWarning = () => {
         checkAndAskForPermission()
@@ -57,7 +63,6 @@ const Autocomplete = ({
     useEffect(() => {
         togglePermisionWarning();
         const listener = AppLifecycle.addEventListener('change', (state) => {
-            console.log(state);
             togglePermisionWarning();
         });
 
@@ -76,133 +81,103 @@ const Autocomplete = ({
                 onFailure();
             }
         } else {
-            onLocationPress(data.description);
+            onLocationPress(data);
         }
     };
 
     const onOriginAutoCompleteInputPress = (data) => processAutoCompleteInput(data, onOriginLocationPress);
-
     const onDropoffAutoCompleteInputPress = (data) => processAutoCompleteInput(data, onDropoffLocationPress);
 
-
-
-    const onFocus = (value) => {
-        if (Platform.OS === 'android' || Platform.OS === 'ios') {
-            setIsFocused(value);
-        }
-    };
-
-    const onRecentLocation = (data) => {
+    const onRecentLocationPressWrapper = (data) => {
         onRecentLocationPress(data)
-        Keyboard.dismiss()
+        Keyboard.dismiss();
     }
 
     const onCallMapPicker = () => {
         onMapPicker(isOriginFocused ? 'originLocation' : 'dropoffLocation')
         setIsOriginFocused(false);
-        setIsShowRecentLocation(true)
         Keyboard.dismiss()
-
     }
 
     return (
         <>
-            {isLocationPermissionDenied === true ? (
-                <Banner
-                    visible={true}
-                    actions={[
-                        {
-                            label: localized('goToSettings'),
-                            onPress: onAskForPermission,
-                        },
-                    ]}
-                >
-                    {localized('appRequiresGeolocation')}
-                </Banner>
-            ) : null}
-
             <ScreenWrapper withScrollView={true} keyboardShouldPersistTaps={'handled'}>
-
-                <ScreenWrapper.Container style={{ flex: isFocused === true ? 1 : null }} >
-                    <Pressable
-                        onPress={() => {
-                            setIsOriginFocused(false);
-                            setIsShowRecentLocation(true)
-                            Keyboard.dismiss()
-
-                        }}
+            {isLocationPermissionDenied === true ? (
+               <>
+                    <Banner
+                        visible={true}
+                        icon={MATERIAL_ICONS.location}
+                        actions={[
+                            {
+                                label: localized('goToSettings'),
+                                onPress: onAskForPermission,
+                            },
+                        ]}
                     >
-                        <AutoCompleteInput
-                            title={originAutoCompleteInputTitle}
-                            locationPermissionStatus={isLocationPermissionDenied}
-                            onPress={onOriginAutoCompleteInputPress}
-                            onFocus={(value) => {
-                                onFocus(value)
-                                setIsOriginFocused(true);
-                                setIsShowRecentLocation(false)
-                            }}
-                            value={originLocation?.formattedAddress}
-                            onBlur={() => {
-                                setIsOriginFocused(false)
-                                setIsShowRecentLocation(true)
-                            }}
-                            isFocused={isOriginFocused}
-                            isLoading={isLoading}
-                            placeholder={placeholder}
-                            predefinedPlaces={predefinedPlaces}
-                            onClear={removeOriginLocation}
-                            onCallMapPicker={onCallMapPicker}
-                            showMapPicker={isShowMapPicker}
-                        />
-                    </Pressable>
+                        {localized('appRequiresGeolocation')}
+                    </Banner>
+                    <ScreenWrapper.Section />
+               </>
+            ) : null}
+                <ScreenWrapper.Container >
+                    <AutoCompleteInput
+                        title={originAutoCompleteInputTitle}
+                        icon={originAutoCompleteInputIcon}
+                        value={originLocation?.formattedAddress}
+                        placeholder={originLocationPlaceHolder}
+                        locationPermissionStatus={isLocationPermissionDenied}
+                        predefinedPlaces={predefinedPlaces}
+                        showMapPicker={isShowMapPicker}
+                        onClear={removeOriginLocation}
+                        onPress={onOriginAutoCompleteInputPress}
+                        onCallMapPicker={onCallMapPicker}
+                        onFocus={() => {
+                            setIsOriginFocused(true);
+                        }}
+                        onBlur={() => {
+                            setIsOriginFocused(false)
+                        }} />
 
                     {isDropoffLocationInputVisible && !isOriginFocused ? (
                         <AutoCompleteInput
                             title={dropoffAutoCompleteInputTitle}
-                            locationPermissionStatus={isLocationPermissionDenied}
-                            onPress={onDropoffAutoCompleteInputPress}
-                            onFocus={(value) => {
-                                onFocus(value)
-                            }}
-                            onBlur={() => {
-                                setIsShowRecentLocation(true)
-                            }}
+                            icon={dropOffAutoCompleteInputIcon}
                             value={dropoffLocation?.formattedAddress}
-                            isLoading={isLoading}
-                            placeholder={localized("whereAreYouGoing")}
+                            locationPermissionStatus={isLocationPermissionDenied}
+                            placeholder={destinationLocationPlaceHolder}
                             predefinedPlaces={true}
-                            onClear={removeDropoffLocation}
-                            onCallMapPicker={onCallMapPicker}
                             showMapPicker={isShowMapPicker}
                             showGps={false}
-
-                        />
+                            onClear={removeDropoffLocation}
+                            onCallMapPicker={onCallMapPicker}
+                            onPress={onDropoffAutoCompleteInputPress}
+                            onFocus={() => {
+                                setIsDestinationFocused(true)
+                            }}
+                            onBlur={() => {
+                                setIsDestinationFocused(false)
+                            }} />
                     ) : null}
                 </ScreenWrapper.Container>
-
 
                 {isCurrentLocationVisible && isFocused === false && currentLocation?.id ? (
                     <List.Section title={localized(currentLocationTitle)}>
                         <LocationListItem
                             title={currentLocation?.formattedAddress}
-                            description={interpunctLocationListItemDescription(currentLocation)}
-                            variant="currentLocation"
+                            description={currentLocation.vicinity}
+                            iconColor={currentLocationIconColor}
+                            variant={currentLocationVariant}
                         />
                     </List.Section>
                 ) : null}
 
-
-
-                {isShowRecentLocation && isFocused === false && recentLocations?.length > 0 ? (
+                {isRecentLocationVisible && isFocused === false && recentLocations?.length > 0 ? (
                     <RecentLocations
                         title={recentLocationTitle}
-                        locations={recentLocations}
-                        onPress={onRecentLocation}
-                    />
+                        locations={recentLocations.filter(recent => recent.id !== currentLocation?.id)}
+                        variant={recentLocationVariant}
+                        onPress={onRecentLocationPressWrapper} />
                 ) : null}
-
-
-
             </ScreenWrapper>
         </>
     );

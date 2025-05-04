@@ -11,41 +11,48 @@ const RideAndSharingDetails = ({
     dropoffLocationDescription,
     originLocationOnPress,
     dropoffLocationOnPress,
-    RenderPaymentMethod,
 }) => {
     const [iscoordinateOpen, setisCoordinateOpen] = useState(false)
 
     return (
-        <List.Section title={localized("rideDetail")}>
-            {RenderPaymentMethod ? (
-                <RenderPaymentMethod />
-            ) : null}
-
+        <>
             <List.Accordion
                 expanded={iscoordinateOpen}
                 onPress={() => setisCoordinateOpen(!iscoordinateOpen)}
-                description={!iscoordinateOpen ? localized("rideDetail") : null}
-                title={!iscoordinateOpen ? interpunct([
-                    originLocation?.line1,
-                    dropoffLocation?.line1
-                ]) : localized("rideDetail")}>
-                <LocationListItem
-                    title={originLocation?.formattedAddress}
-                    description={originLocationDescription}
-                    variant={LOCATION_LIST_ITEM.hailLocation}
-                    iconColor={null}
-                    onPress={originLocationOnPress}
-                />
-                <LocationListItem
-                    title={dropoffLocation?.formattedAddress}
-                    description={dropoffLocationDescription}
-                    variant={LOCATION_LIST_ITEM.fulfillmentAddress}
-                    iconColor={null}
-                    onPress={dropoffLocationOnPress}
-                />
+                title={localized("plannedRoute")}
+                titleNumberOfLines={2}
+                description={!iscoordinateOpen ? interpunct([
+                    originLocation?.formattedAddress,
+                    dropoffLocation?.formattedAddress
+                ]) : null}>
+                {originLocation?.id ? (
+                    <List.Section title={localized('trip.originLocation')}>
+                        <LocationListItem
+                            title={originLocation.formattedAddress}
+                            description={originLocation.vicinity}
+                            variant={LOCATION_LIST_ITEM.hailLocation}
+                            iconColor={MD3LightTheme.colors.primary}
+                            onPress={originLocationOnPress}
+                            />
+                    </List.Section>
+                ) : null}
+
+                {dropoffLocation?.id ? (
+                    <>
+                        <List.Section title={localized('trip.dropoffLocation')}>
+                            <LocationListItem
+                                title={dropoffLocation.formattedAddress}
+                                description={dropoffLocation.vicinity}
+                                variant={LOCATION_LIST_ITEM.fulfillmentAddress}
+                                iconColor={MD3LightTheme.colors.primary}
+                                onPress={dropoffLocationOnPress}/>
+                        </List.Section>
+                        <Divider />
+                    </>
+                ) : null}
             </List.Accordion>
             <Divider />
-        </List.Section>
+        </>
     )
 };
 
