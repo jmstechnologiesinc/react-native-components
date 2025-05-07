@@ -77,9 +77,9 @@ const RideAndSharingCheckout = ({
             >
                             <ScreenWrapper.Section >
 
-            {true ? (
+             {true ? (
                 <RenderPaymentMethod />
-            ) : null}
+            ) : null} 
 </ScreenWrapper.Section>
                 <FAB
                     disabled={!originLocation?.id || !dropoffLocation?.id}
@@ -97,9 +97,20 @@ const RideAndSharingCheckout = ({
         </BottomSheetFooter>
     )
 
+    // const handleSheetChange = useCallback((index) => {
+    //     setCurrentSnapPoint(parseFloat(snapPoints[index]) / 100);
+    // }, []);
+    
     const handleSheetChange = useCallback((index) => {
-        setCurrentSnapPoint(parseFloat(snapPoints[index]) / 100);
-    }, []);
+        if (typeof index !== 'number' || !snapPoints[index]) return;
+    
+        const raw = snapPoints[index].replace('%', '');    
+        const percent = parseFloat(raw);                   
+        if (isNaN(percent)) return;                        
+        alert(percent / 100)
+        setCurrentSnapPoint(percent / 100);
+      }, [snapPoints]);
+
 
     return (
         <>

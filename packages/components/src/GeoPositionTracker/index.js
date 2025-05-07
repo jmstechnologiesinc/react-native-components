@@ -148,22 +148,36 @@ const GeoPositionTracker = ({
         bounds: boundingBox,
         zoomLevel: zoomLevel,
         padding: {
-          paddingTop: top + moderateScale(50),
-          paddingRight: right + moderateScale(50),
-          paddingLeft: left + moderateScale(50),
-          paddingBottom: height * 0.7,
+          paddingTop: top + MD3LightTheme.spacing.x15,
+          paddingRight: right + MD3LightTheme.spacing.x15,
+          paddingLeft: left + MD3LightTheme.spacing.x15,
+          paddingBottom: height * 0.73,
         },
         animationMode: 'flyTo',
         animationDuration: 250,
       })
+    }  else if(currentSnapPoint === 0.75){
+      mapRef.current?.setCamera({
+        bounds: boundingBox,
+        zoomLevel: zoomLevel,
+        padding: {
+          paddingTop: top + MD3LightTheme.spacing.x15,
+          paddingRight: right + MD3LightTheme.spacing.x15,
+          paddingLeft: left + MD3LightTheme.spacing.x15,
+          paddingBottom: height * 0.6,
+        },
+        animationMode: 'flyTo',
+        animationDuration: 250,
+      })
+
     } else {
       mapRef.current?.setCamera({
         bounds: boundingBox,
         zoomLevel: zoomLevel,
         padding: {
-          paddingTop: top + moderateScale(50),
-          paddingRight: right + moderateScale(50),
-          paddingLeft: left + moderateScale(50),
+          paddingTop: top + MD3LightTheme.spacing.x15,
+          paddingRight: right + MD3LightTheme.spacing.x15,
+          paddingLeft: left + MD3LightTheme.spacing.x15,
           paddingBottom: height * currentSnapPoint,
         },
         animationMode: 'flyTo',
@@ -215,9 +229,9 @@ const GeoPositionTracker = ({
         zoomLevel: zoomLevel,
         bounds: boundingBox,
         padding: {
-          paddingTop: top + moderateScale(50),
-          paddingRight: right + moderateScale(50),
-          paddingLeft: left + moderateScale(50),
+          paddingTop: top + MD3LightTheme.spacing.x15,
+          paddingRight: right + MD3LightTheme.spacing.x15,
+          paddingLeft: left + MD3LightTheme.spacing.x15,
           paddingBottom: height * currentSnapPoint,
         },
         animationMode: 'flyTo',
@@ -247,10 +261,10 @@ const GeoPositionTracker = ({
           bounds={boundingBox}
           ref={mapRef}
           padding={{
-            paddingTop: top + moderateScale(50),
-            paddingRight: right + moderateScale(50),
-            paddingLeft: left + moderateScale(50),
-            paddingBottom: rideAndSharing ? height * 0.5 : moderateScale(50)
+            paddingTop: top + MD3LightTheme.spacing.x15,
+            paddingRight: right + MD3LightTheme.spacing.x15,
+            paddingLeft: left + MD3LightTheme.spacing.x15,
+            paddingBottom: rideAndSharing ? height * 0.5 : MD3LightTheme.spacing.x15
           }}
           animationMode="flyTo"
           animationDuration={200}
@@ -370,4 +384,3 @@ const styles = StyleSheet.create({
 });
 
 export default GeoPositionTracker;
-
