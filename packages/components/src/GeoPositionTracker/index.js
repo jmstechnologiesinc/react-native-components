@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import { View, StyleSheet, Dimensions, Platform } from 'react-native';
 import MapboxGL, { Logger } from '@rnmapbox/maps';
 import { MD3LightTheme, IconButton } from '@jmstechnologiesinc/react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -55,6 +55,11 @@ const GeoPositionTracker = ({
   const top = insets.top === 0 ? MD3LightTheme.spacing.x8 : insets.top;
   const right = insets.right === 0 ? MD3LightTheme.spacing.x8 : insets.right;
   const left = insets.left === 0 ? MD3LightTheme.spacing.x8 : insets.left
+
+  const SNAP_POINT_SMALL = Platform.OS === 'ios' ? 0.73 : 0.77
+  const SNAP_POINT_MEDIUM = Platform.OS === 'ios' ? 0.6 : 0.64
+  const SNAP_POINT_HALF = Platform.OS === 'ios' ? 0.5 : 0.54
+  
 
   const [driverHeading, setDriverHeading] = useState(0)
   const [zoomLevel, setZoomLevel] = useState(12);
@@ -151,7 +156,7 @@ const GeoPositionTracker = ({
           paddingTop: top + MD3LightTheme.spacing.x15,
           paddingRight: right + MD3LightTheme.spacing.x15,
           paddingLeft: left + MD3LightTheme.spacing.x15,
-          paddingBottom: height * 0.73,
+          paddingBottom: height * SNAP_POINT_SMALL,
         },
         animationMode: 'flyTo',
         animationDuration: 250,
@@ -164,7 +169,7 @@ const GeoPositionTracker = ({
           paddingTop: top + MD3LightTheme.spacing.x15,
           paddingRight: right + MD3LightTheme.spacing.x15,
           paddingLeft: left + MD3LightTheme.spacing.x15,
-          paddingBottom: height * 0.6,
+          paddingBottom: height * SNAP_POINT_MEDIUM,
         },
         animationMode: 'flyTo',
         animationDuration: 250,
@@ -264,7 +269,7 @@ const GeoPositionTracker = ({
             paddingTop: top + MD3LightTheme.spacing.x15,
             paddingRight: right + MD3LightTheme.spacing.x15,
             paddingLeft: left + MD3LightTheme.spacing.x15,
-            paddingBottom: rideAndSharing ? height * 0.5 : MD3LightTheme.spacing.x15
+            paddingBottom: rideAndSharing ? height * SNAP_POINT_HALF : MD3LightTheme.spacing.x15
           }}
           animationMode="flyTo"
           animationDuration={200}

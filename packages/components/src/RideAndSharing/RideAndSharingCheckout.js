@@ -32,7 +32,7 @@ const RideAndSharingCheckout = ({
     isLocationPermission,
     BackButton
 }) => {
-    const point = Platform.OS === 'ios' ? 0.5 : 0.54
+   
     const bottomSheetRef = useRef(null);
     const snapPoints = useMemo(() => ["50%", "75%", "100%"], []);
     const [currentSnapPoint, setCurrentSnapPoint] = useState(0);
@@ -107,7 +107,6 @@ const RideAndSharingCheckout = ({
         const raw = snapPoints[index].replace('%', '');    
         const percent = parseFloat(raw);                   
         if (isNaN(percent)) return;                        
-        alert(percent / 100)
         setCurrentSnapPoint(percent / 100);
       }, [snapPoints]);
 
