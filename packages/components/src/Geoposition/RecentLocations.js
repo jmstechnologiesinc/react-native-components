@@ -12,7 +12,7 @@ const RecentLocations = ({
     title = localized('savedAddresses'),
     locations,
     limit,
-    variant = LOCATION_LIST_ITEM.currentLocation,
+    variant = LOCATION_LIST_ITEM.locationHistory,
     onPress
 }) => {
     if (!locations?.length) {

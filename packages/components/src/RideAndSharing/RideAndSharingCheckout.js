@@ -64,7 +64,7 @@ const RideAndSharingCheckout = ({
                 originLocationOnPress={originLocationOnPress}
                 dropoffLocationOnPress={dropoffLocationOnPress}
                 RenderPaymentMethod={RenderPaymentMethod} />
-                                            <ScreenWrapper.Section />
+            <ScreenWrapper.Section />
 
             <List.Subheader>{cart.title}</List.Subheader>
         </>
