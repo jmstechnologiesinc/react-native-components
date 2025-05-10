@@ -32,7 +32,7 @@ const RideAndSharingCheckout = ({
     isLocationPermission,
     BackButton
 }) => {
-    const point = Platform.OS === 'ios' ? 0.5 : 0.54
+   
     const bottomSheetRef = useRef(null);
     const snapPoints = useMemo(() => ["50%", "75%", "100%"], []);
     const [currentSnapPoint, setCurrentSnapPoint] = useState(0);
@@ -77,9 +77,9 @@ const RideAndSharingCheckout = ({
             >
                             <ScreenWrapper.Section >
 
-            {true ? (
+             {true ? (
                 <RenderPaymentMethod />
-            ) : null}
+            ) : null} 
 </ScreenWrapper.Section>
                 <FAB
                     disabled={!originLocation?.id || !dropoffLocation?.id}
@@ -97,9 +97,19 @@ const RideAndSharingCheckout = ({
         </BottomSheetFooter>
     )
 
+    // const handleSheetChange = useCallback((index) => {
+    //     setCurrentSnapPoint(parseFloat(snapPoints[index]) / 100);
+    // }, []);
+    
     const handleSheetChange = useCallback((index) => {
-        setCurrentSnapPoint(parseFloat(snapPoints[index]) / 100);
-    }, []);
+        if (typeof index !== 'number' || !snapPoints[index]) return;
+    
+        const raw = snapPoints[index].replace('%', '');    
+        const percent = parseFloat(raw);                   
+        if (isNaN(percent)) return;                        
+        setCurrentSnapPoint(percent / 100);
+      }, [snapPoints]);
+
 
     return (
         <>
