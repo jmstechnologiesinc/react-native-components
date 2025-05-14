@@ -8,7 +8,7 @@ import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters'
 import Mapbox from '@rnmapbox/maps';
 
 import { Config } from '../Config'
-import VehiclesList from './VehiclesList';
+import EntitiesList from './EntitiesList';
 import AddressMarker from './AddressMarker'
 
 Logger.setLogCallback((log) => {
@@ -32,23 +32,26 @@ const GeoPositionTracker = ({
   currentDriverPosition,
   vendorPosition,
   currentSnapPoint = 0,
-  nearbyVehicleLocations,
+  nearbyEntities,
   getGPSLocationOnPress,
   isLocationPermission,
   selectedItem,
   locationOnPress,
-  rideAndSharing = true
+  rideAndSharing = true,
+  WatchDriverPosition = false
+
 }) => {
   const mapRef = useRef(null);
   const [routeDirections, setRouteDirections] = useState(null);
 
   const [originRoutes, setOriginRoutes] = useState();
 
+
+
   const [destinationCoords, setDestinationCoords] = useState([
     customerPosition?.longitude,
     customerPosition?.latitude,
   ]);
-
 
   const insets = useSafeAreaInsets();
 
@@ -59,7 +62,7 @@ const GeoPositionTracker = ({
   const SNAP_POINT_SMALL = Platform.OS === 'ios' ? 0.73 : 0.77
   const SNAP_POINT_MEDIUM = Platform.OS === 'ios' ? 0.6 : 0.64
   const SNAP_POINT_HALF = Platform.OS === 'ios' ? 0.5 : 0.54
-  
+
 
   const [driverHeading, setDriverHeading] = useState(0)
   const [zoomLevel, setZoomLevel] = useState(12);
@@ -161,7 +164,7 @@ const GeoPositionTracker = ({
         animationMode: 'flyTo',
         animationDuration: 250,
       })
-    }  else if(currentSnapPoint === 0.75){
+    } else if (currentSnapPoint === 0.75) {
       mapRef.current?.setCamera({
         bounds: boundingBox,
         zoomLevel: zoomLevel,
@@ -215,11 +218,11 @@ const GeoPositionTracker = ({
       : false;
 
 
-  const filterVehiclePositions = nearbyVehicleLocations?.filter(item =>
+  const filterPositions = nearbyEntities?.filter(item =>
     !(item.latitud === customerPosition?.latitude && item.longitud === customerPosition?.longitude)
   );
 
-  const vehicleSelected = nearbyVehicleLocations?.find(item => item.token === selectedItem?.token)
+  const vehicleSelected = nearbyEntities?.find(item => item.token === selectedItem?.token)
 
   const resetToInitialPosition = async () => {
 
@@ -259,79 +262,112 @@ const GeoPositionTracker = ({
         attributionEnabled={false}
         scaleBarEnabled={false}
         mapRef={mapRef}
+
       >
-
-        <MapboxGL.Camera
-          zoomLevel={zoomLevel}
-          bounds={boundingBox}
-          ref={mapRef}
-          padding={{
-            paddingTop: top + MD3LightTheme.spacing.x15,
-            paddingRight: right + MD3LightTheme.spacing.x15,
-            paddingLeft: left + MD3LightTheme.spacing.x15,
-            paddingBottom: rideAndSharing ? height * SNAP_POINT_HALF : MD3LightTheme.spacing.x15
-          }}
-          animationMode="flyTo"
-          animationDuration={200}
-        />
-
-
-        {centerCoordinate && customerPosition && vendorPosition ?
-          <MapboxGL.ShapeSource id="routeSource" shape={routeDirections}>
-            <MapboxGL.LineLayer id="routeLine" style={{ lineColor: MD3LightTheme.colors.primary, lineWidth: 4, lineOffset: -2, }} />
-          </MapboxGL.ShapeSource>
-          :
-          <MapboxGL.UserLocation animated={true} androidRenderMode="gps" showsUserHeadingIndicator={true} />
-        }
-
-        {centerCoordinate && customerPosition && currentDriverPosition ? (
-          <>
-            <MapboxGL.Images images={{ driverIcon: require('./tracking/car.png') }} />
-            <MapboxGL.ShapeSource id="driverSource" shape={routeDirections}>
-              <MapboxGL.SymbolLayer
-                id="driverIconLayer"
-                style={{
-                  iconImage: 'driverIcon',
-                  iconAnchor: 'center',
-                  iconAllowOverlap: true,
-                  iconRotate: driverHeading,
-                  iconSize: 0.5,
-                }}
-              />
-            </MapboxGL.ShapeSource>
-          </>
-        ) :
-          originRoutes ? <MapboxGL.PointAnnotation id="destination" coordinate={originRoutes}>
-
-            <View style={[styles.destinationIcon]}>
-              <MaterialCommunityIcons name="map-marker-account" size={24} color={MD3LightTheme.colors.primary} />
-            </View>
-          </MapboxGL.PointAnnotation>
-            : null
-
-        }
-
 
 
         {
-          centerCoordinate && customerPosition && vendorPosition ?
-            <MapboxGL.PointAnnotation id="destination" coordinate={destinationCoords}>
 
-              <View style={styles.destinationIcon}>
-                <MaterialCommunityIcons name="map-marker-radius" size={24} color={MD3LightTheme.colors.primary} />
-              </View>
-            </MapboxGL.PointAnnotation>
-            :
-            null
+          WatchDriverPosition ? <>
+            <MapboxGL.Camera
+              centerCoordinate={[currentDriverPosition?.longitude, currentDriverPosition?.latitude]}
+              zoomLevel={15}
+              followUserMode="course"
+
+            />
+
+            <MapboxGL.UserLocation animated={true} androidRenderMode="gps" showsUserHeadingIndicator={true} />
+
+            {nearbyEntities ?
+              <EntitiesList
+                entityListPositions={nearbyEntities}
+                filterEntityPositions={filterPositions}
+                rotation={driverHeading}
+              /> : null
+            }
+
+          </> :
+
+            <>
+
+              <MapboxGL.Camera
+                zoomLevel={zoomLevel}
+                bounds={boundingBox}
+                ref={mapRef}
+                padding={{
+                  paddingTop: top + MD3LightTheme.spacing.x15,
+                  paddingRight: right + MD3LightTheme.spacing.x15,
+                  paddingLeft: left + MD3LightTheme.spacing.x15,
+                  paddingBottom: rideAndSharing ? height * SNAP_POINT_HALF : MD3LightTheme.spacing.x15
+                }}
+                animationMode="flyTo"
+                animationDuration={200}
+              />
+
+
+              {centerCoordinate && customerPosition && vendorPosition ?
+                <MapboxGL.ShapeSource id="routeSource" shape={routeDirections}>
+                  <MapboxGL.LineLayer id="routeLine" style={{ lineColor: MD3LightTheme.colors.primary, lineWidth: 4, lineOffset: -2, }} />
+                </MapboxGL.ShapeSource>
+                :
+                <MapboxGL.UserLocation animated={true} androidRenderMode="gps" showsUserHeadingIndicator={true} />
+              }
+
+              {centerCoordinate && customerPosition && currentDriverPosition ? (
+                <>
+                  <MapboxGL.Images images={{ driverIcon: require('./tracking/car.png') }} />
+                  <MapboxGL.ShapeSource id="driverSource" shape={routeDirections}>
+                    <MapboxGL.SymbolLayer
+                      id="driverIconLayer"
+                      style={{
+                        iconImage: 'driverIcon',
+                        iconAnchor: 'center',
+                        iconAllowOverlap: true,
+                        iconRotate: driverHeading,
+                        iconSize: 0.5,
+                      }}
+                    />
+                  </MapboxGL.ShapeSource>
+                </>
+              ) :
+                originRoutes ? <MapboxGL.PointAnnotation id="destination" coordinate={originRoutes}>
+
+                  <View style={[styles.destinationIcon]}>
+                    <MaterialCommunityIcons name="map-marker-account" size={24} color={MD3LightTheme.colors.primary} />
+                  </View>
+                </MapboxGL.PointAnnotation>
+                  : null
+
+              }
+
+
+
+              {
+                centerCoordinate && customerPosition && vendorPosition ?
+                  <MapboxGL.PointAnnotation id="destination" coordinate={destinationCoords}>
+
+                    <View style={styles.destinationIcon}>
+                      <MaterialCommunityIcons name="map-marker-radius" size={24} color={MD3LightTheme.colors.primary} />
+                    </View>
+                  </MapboxGL.PointAnnotation>
+                  :
+                  null
+              }
+
+              {nearbyEntities ?
+                <EntitiesList
+                  entityListPositions={nearbyEntities}
+                  filterEntityPositions={filterPositions}
+                  rotation={driverHeading}
+                /> : null
+              }
+            </>
+
         }
 
-        {nearbyVehicleLocations &&
-          <VehiclesList
-            vehicleListPositions={nearbyVehicleLocations}
-            filterVehiclePositions={filterVehiclePositions}
-            driverHeading={driverHeading}
-          />
-        }
+
+
+
 
         {
           rideAndSharing ? <>

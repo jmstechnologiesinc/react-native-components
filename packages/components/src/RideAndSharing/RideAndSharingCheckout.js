@@ -121,7 +121,7 @@ const RideAndSharingCheckout = ({
                 }}
                 vendorPosition={dropoffLocation}
                 currentSnapPoint={currentSnapPoint}
-                nearbyVehicleLocations={cart?.vehiclePoints}
+                nearbyEntities={cart?.vehiclePoints}
                 getGPSLocationOnPress={getGPSLocationOnPress}
                 isLocationPermission={isLocationPermission}
                 originLocation={originLocation}
