@@ -157,7 +157,7 @@ const GeoPositionTracker = ({
         bounds: boundingBox,
         zoomLevel: zoomLevel,
         padding: {
-          paddingTop: top + MD3LightTheme.spacing.x15,
+          paddingTop: top + MD3LightTheme.spacing.x8,
           paddingRight: right + MD3LightTheme.spacing.x15,
           paddingLeft: left + MD3LightTheme.spacing.x15,
           paddingBottom: height * SNAP_POINT_SMALL,
@@ -170,7 +170,7 @@ const GeoPositionTracker = ({
         bounds: boundingBox,
         zoomLevel: zoomLevel,
         padding: {
-          paddingTop: top + MD3LightTheme.spacing.x15,
+          paddingTop: top + MD3LightTheme.spacing.x8,
           paddingRight: right + MD3LightTheme.spacing.x15,
           paddingLeft: left + MD3LightTheme.spacing.x15,
           paddingBottom: height * SNAP_POINT_MEDIUM,
@@ -184,7 +184,7 @@ const GeoPositionTracker = ({
         bounds: boundingBox,
         zoomLevel: zoomLevel,
         padding: {
-          paddingTop: top + MD3LightTheme.spacing.x15,
+          paddingTop: top + MD3LightTheme.spacing.x8,
           paddingRight: right + MD3LightTheme.spacing.x15,
           paddingLeft: left + MD3LightTheme.spacing.x15,
           paddingBottom: height * currentSnapPoint,
@@ -238,7 +238,7 @@ const GeoPositionTracker = ({
         zoomLevel: zoomLevel,
         bounds: boundingBox,
         padding: {
-          paddingTop: top + MD3LightTheme.spacing.x15,
+          paddingTop: top + MD3LightTheme.spacing.x8,
           paddingRight: right + MD3LightTheme.spacing.x15,
           paddingLeft: left + MD3LightTheme.spacing.x15,
           paddingBottom: height * currentSnapPoint,
@@ -299,7 +299,7 @@ const GeoPositionTracker = ({
                 bounds={boundingBox}
                 ref={mapRef}
                 padding={{
-                  paddingTop: top + MD3LightTheme.spacing.x15,
+                  paddingTop: top + MD3LightTheme.spacing.x8,
                   paddingRight: right + MD3LightTheme.spacing.x15,
                   paddingLeft: left + MD3LightTheme.spacing.x15,
                   paddingBottom: rideAndSharing ? height * SNAP_POINT_HALF : MD3LightTheme.spacing.x15
