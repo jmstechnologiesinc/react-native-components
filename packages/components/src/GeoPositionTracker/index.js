@@ -45,6 +45,7 @@ const GeoPositionTracker = ({
   const [routeDirections, setRouteDirections] = useState(null);
 
   const [originRoutes, setOriginRoutes] = useState();
+  const [isLoadingCamera, setIsLoadingCamera] = useState(false);
 
 
 
@@ -262,6 +263,9 @@ const GeoPositionTracker = ({
         attributionEnabled={false}
         scaleBarEnabled={false}
         mapRef={mapRef}
+        onRegionDidChange={() => {
+          setIsLoadingCamera(true)
+        }}
 
       >
 
@@ -278,7 +282,7 @@ const GeoPositionTracker = ({
 
             <MapboxGL.UserLocation animated={true} androidRenderMode="gps" showsUserHeadingIndicator={true} />
 
-            {nearbyEntities ?
+            {nearbyEntities && isLoadingCamera ?
               <EntitiesList
                 entityListPositions={nearbyEntities}
                 filterEntityPositions={filterPositions}

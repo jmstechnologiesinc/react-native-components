@@ -7,7 +7,7 @@ const EntitiesList = ({
   filterEntityPositions,
   rotation
 }) => {
-    
+
   const shapeSourceRef = useRef(null);
   const imagesRef = useRef(null);
   const symbolLayerRefs = useRef([]);
@@ -52,7 +52,7 @@ const EntitiesList = ({
         ref={imagesRef}
         images={{
           restaurantIcon: require('./tracking/restaurant.png'),
-          defaultIcon:    require('./tracking/car.png')  
+          defaultIcon: require('./tracking/car.png')
         }}
       />
 
@@ -65,15 +65,35 @@ const EntitiesList = ({
             iconImage: [
               'match',
               ['get', 'type'],
-              'restaurant',  'restaurantIcon',
+              'restaurant', 'restaurantIcon',
               /* default */   'defaultIcon'
             ],
-            iconSize: 0.5,
+            iconSize: [
+              'interpolate',
+              ['linear'],
+              ['zoom'],
+              15, 0.3,   
+              16, 0.4,
+              17, 0.5,
+              18, 0.6,
+              19, 0.7,
+              20, 0.8,   
+            ],
             iconRotate: rotation,
             iconAllowOverlap: true,
-            textField: ['get', 'title'],     
-            textSize: 12,
-            textOffset: [0, 1.2],            
+            textField: ['get', 'title'],
+            textSize: [
+              'interpolate',
+              ['linear'],
+              ['zoom'],
+              15, 0,    
+              16, 9,    
+              17, 14,
+              18, 16,
+              19, 18,
+              20, 20,    
+            ],
+            textOffset: [0, 1.2],
             textAllowOverlap: true,
             textAnchor: 'top'
           }}
