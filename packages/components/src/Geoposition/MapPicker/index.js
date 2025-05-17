@@ -1,7 +1,7 @@
 import { View, Text, Dimensions, StyleSheet } from 'react-native'
 import React from 'react'
 import MapboxGL from '@rnmapbox/maps';
-import { Appbar, IconButton, MD3LightTheme, ProgressBar } from '@jmstechnologiesinc/react-native-paper';
+import { Appbar, IconButton, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AddressSelectionSheet from './AddressSelectionSheet';

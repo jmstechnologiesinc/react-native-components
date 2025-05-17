@@ -139,7 +139,9 @@
         "telemetry": "Telemetry",
         "driverDetails": "Driver Details",
         "item": "Item",
-        "newOrderRequest": "New Order Request"
+        "newOrderRequest": "New Order Request",
+        "searchingForOrders": "Searching for orders...",
+        "waitingForOrderMotivation": "Hey! Hang tight nearby — new delivery requests will pop up soon. Keep the app open and get ready to roll! 🚗✨"
     },
     "global": {
         "tryAgainLater": "Please try again later.",

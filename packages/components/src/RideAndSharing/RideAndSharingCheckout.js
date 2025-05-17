@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
-import BottomSheet, { BottomSheetFooter, BottomSheetFlatList } from "@jmstechnologiesinc/bottom-sheet";
+import React, { useRef, useState } from "react";
+import { BottomSheetFooter, BottomSheetFlatList } from "@jmstechnologiesinc/bottom-sheet";
 import { FAB, List, MD3LightTheme } from "@jmstechnologiesinc/react-native-paper";
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters'
 import { localized } from "../Localization/Localization";
@@ -8,11 +8,44 @@ import styles from "../styles";
 import { ACCOUNTING_ITEMS } from "@jmstechnologiesinc/commons";
 
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper'
-import { Platform, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Dimensions, View } from "react-native";
 import RideAndSharingDetails from "./RideAndSharingDetails";
 
-import GeoPositionTracker from "../GeoPositionTracker";
+import MapboxGLWrapper from "@jmstechnologiesinc/react-native-components/lib/MapboxGLWrapper";
+import GorhomBottomSheetWrapper from "@jmstechnologiesinc/react-native-components/lib/GorhomBottomSheetWrapper";
+const nearbyPoints = [
+    {
+        id:  123,
+        title: 'Terra Luna',
+        longitude:  -71.15919996067139,
+        latitude:42.70798768081632,
+        iconKey: 'restaurantIcon',
+    },
+    {
+        id:  124,
+        title: 'La Grekka Café Art & Lounge',
+        longitude: -71.15860562951806,
+        latitude: 42.707942772972984,
+        iconKey: 'restaurantIcon',
+    },
+    {
+        id:  15,
+        title: "Dental Arts",
+        longitude: -71.1593603130583,
+        latitude:  42.707462193310384,
+        iconKey: 'carIcon',
+    },
+    {
+        id:  16,
+        title: "McDonald's",
+        longitude:-71.16874090687317,
+        latitude: 42.70519895303485,
+        iconKey: 'restaurantIcon',
+    },
+
+];
+
+const { height } = Dimensions.get('window');
 
 const RideAndSharingCheckout = ({
     originLocation,
@@ -21,38 +54,16 @@ const RideAndSharingCheckout = ({
     dropoffLocationDescription,
     cart,
     selectedItem,
-    originLocationOnPress,
-    dropoffLocationOnPress,
     RenderPaymentMethod,
-    withBottomInset = true,
-    withTopInset = false,
     onItemPress,
     onPress,
-    getGPSLocationOnPress,
-    isLocationPermission,
-    BackButton
+    originLocationOnPress,
+    dropoffLocationOnPress,
 }) => {
-   
-    const bottomSheetRef = useRef(null);
-    const snapPoints = useMemo(() => ["50%", "75%", "100%"], []);
+    const turnByTurnRouteRef = useRef();
     const [currentSnapPoint, setCurrentSnapPoint] = useState(0);
-    const insets = useSafeAreaInsets();
+
     const [footerHeight, setFooterHeight] = useState(0);
-
-
-    const isInsetsBottom = insets.bottom === 0 ? MD3LightTheme.spacing.x4 : insets.bottom;
-
-    const containerStyle = [
-        {
-            paddingTop: withTopInset ? insets.top : 0,
-            paddingBottom: withBottomInset ? isInsetsBottom : 0,
-            paddingLeft: insets.left,
-            paddingRight: insets.left,
-            marginTop: insets.top,
-
-        },
-    ]
-
 
     const listHeaderComponent = () => (
         <>
@@ -65,22 +76,19 @@ const RideAndSharingCheckout = ({
                 dropoffLocationOnPress={dropoffLocationOnPress}
                 RenderPaymentMethod={RenderPaymentMethod} />
             <ScreenWrapper.Section />
-
             <List.Subheader>{cart.title}</List.Subheader>
         </>
     );
 
-    const renderFooter = (props) => (
+    const footerComponent = (props) => (
         <BottomSheetFooter {...props} >
-            <ScreenWrapper withScrollView={false} withPaddingHorizontal={false} withBottomInset={true}
-
-            >
-                            <ScreenWrapper.Section >
-
-             {true ? (
-                <RenderPaymentMethod />
-            ) : null} 
-</ScreenWrapper.Section>
+            <ScreenWrapper withScrollView={false} withPaddingHorizontal={false} withBottomInset={true}>
+                {true ? (
+                    <ScreenWrapper.Section>
+                        <RenderPaymentMethod />
+                    </ScreenWrapper.Section>
+                ) : null} 
+                
                 <FAB
                     disabled={!originLocation?.id || !dropoffLocation?.id}
                     label={localized('trip.requestRide')}
@@ -91,77 +99,50 @@ const RideAndSharingCheckout = ({
                         const { height } = event.nativeEvent.layout;
                         setFooterHeight(height);
                     }}
-                    style={[styles.button]}
-                />
+                    style={[styles.button]}/>
             </ScreenWrapper>
         </BottomSheetFooter>
     )
-
-    // const handleSheetChange = useCallback((index) => {
-    //     setCurrentSnapPoint(parseFloat(snapPoints[index]) / 100);
-    // }, []);
     
-    const handleSheetChange = useCallback((index) => {
-        if (typeof index !== 'number' || !snapPoints[index]) return;
-    
-        const raw = snapPoints[index].replace('%', '');    
-        const percent = parseFloat(raw);                   
-        if (isNaN(percent)) return;                        
-        setCurrentSnapPoint(percent / 100);
-      }, [snapPoints]);
-
+    const handleSheetChange = (percent) => {
+        setCurrentSnapPoint(percent);
+        turnByTurnRouteRef.current.setCameraSnapPoint(percent);
+    };
 
     return (
-        <>
-            <GeoPositionTracker
-                customerPosition={originLocation}
-                currentDriverPosition={{
-                    longitude: selectedItem?.driver?.longitude,
+        <MapboxGLWrapper>
+            <MapboxGLWrapper.DriverRouteMonitoring
+                ref={turnByTurnRouteRef}
+                driverLocation={{
+                    longitude: selectedItem?.driver?.longitude, 
                     latitude: selectedItem?.driver?.latitude,
+                    formattedValue: selectedItem?.eta?.formattedValue
                 }}
-                vendorPosition={dropoffLocation}
-                currentSnapPoint={currentSnapPoint}
-                nearbyEntities={cart?.vehiclePoints}
-                getGPSLocationOnPress={getGPSLocationOnPress}
-                isLocationPermission={isLocationPermission}
-                originLocation={originLocation}
-                dropoffLocation={dropoffLocation}
-                selectedItem={selectedItem}
-                locationOnPress={originLocationOnPress}
-            />
-
-            <BackButton />
-
-            <BottomSheet
-                ref={bottomSheetRef}
-                index={2}
-                snapPoints={snapPoints}
-                enablePanDownToClose={false}
-                footerComponent={renderFooter}
-                containerStyle={containerStyle}
-                backgroundStyle={{
-                    flex: 1,
-                    backgroundColor: MD3LightTheme.colors.background,
-                    shadowColor: "#000",
-                    shadowOffset: {
-                        width: 0,
-                        height: moderateScale(2),
-                    },
-                    shadowOpacity: moderateScale(0.25),
-                    shadowRadius: moderateScale(3.84),
-                    elevation: moderateScale(10),
-                }}
-                handleStyle={{
-                    backgroundColor: MD3LightTheme.colors.background,
-                }}
-
-                onChange={handleSheetChange}
-            >
+                destinationLocation={dropoffLocation}
+                locationOnPress={originLocationOnPress}>
+                {nearbyPoints.map((marker) => (
+                    <MapboxGLWrapper.SingleIconMarker 
+                        key={marker.id}
+                        id={marker.id}
+                        iconKey={'carIcon'}
+                        longitude={marker.longitude}
+                        latitude={marker.latitude}
+                        rotation={0} />
+                ))}
+                <MapboxGLWrapper.ResetToInitialPositionIcon 
+                    altitude={height * currentSnapPoint}
+                    onPress={() => turnByTurnRouteRef.current.setCameraSnapPoint(currentSnapPoint)} />
+            </MapboxGLWrapper.DriverRouteMonitoring>
+            
+            <GorhomBottomSheetWrapper
+                snapPointIndex={2}
+                listHeaderComponent={listHeaderComponent}
+                footerComponent={footerComponent}
+                onChange={handleSheetChange}>
                 {cart?.products?.length ? (
                     <>
                         <BottomSheetFlatList
                             data={cart.products}
-                            //keyExtractor={keyExtractor}
                             renderItem={({ item }) => (
                                 <List.Accordion
                                     right={() => null}
@@ -180,15 +161,13 @@ const RideAndSharingCheckout = ({
                                 </List.Accordion>
                             )}
                             ListHeaderComponent={listHeaderComponent}
-                            //ListFooterComponent={listFooterComponent}
                             stickySectionHeadersEnabled={false}
-                            showsVerticalScrollIndicator={false}
-                        />
+                            showsVerticalScrollIndicator={false} />
                         <View style={{ height: moderateScale(footerHeight) + MD3LightTheme.spacing.x7 }} />
                     </>
                 ) : null}
-            </BottomSheet>
-        </>
+            </GorhomBottomSheetWrapper>
+        </MapboxGLWrapper>
     );
 };
 

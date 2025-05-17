@@ -9,7 +9,7 @@ import { pubnubEtaChannelName } from '@jmstechnologiesinc/commons';
 import { Centrifuge } from 'centrifuge';
 import DriverStatus from './DriverStatus';
 import { localized } from '../Localization/Localization';
-import GeoPositionTracker from '@jmstechnologiesinc/react-native-components/lib/GeoPositionTracker';
+import {MapboxGLWrapper} from '@jmstechnologiesinc/react-native-components';
 
 const RealTimeDriverTacking = ({
     status, 
@@ -25,7 +25,13 @@ const RealTimeDriverTacking = ({
     const subscriptionRef = useRef();
 
     const [durationRemainingFormatted, setDurationRemainingFormatted] = useState(null);
-    const [location, setLocation] = useState(null);
+    const [location, setLocation] = useState( {
+        id:  123,
+        title: 'Terra Luna',
+        longitude:  -71.15919996067139,
+        latitude:42.70798768081632,
+        iconKey: 'restaurantIcon',
+    });
 
     useEffect(() => {
         if (status === ORDER_STATUS.shipped || status === ORDER_STATUS.inTransit) {            
@@ -67,12 +73,12 @@ const RealTimeDriverTacking = ({
 
     return (
       <>
-        <GeoPositionTracker
-            customerPosition={customerPosition}
-            currentDriverPosition={location}
-            vendorPosition={location}
-            rideAndSharing={false}
-        />
+        <MapboxGLWrapper style={{height: 300}}>
+          <MapboxGLWrapper.DriverRouteMonitoring
+              driverLocation={location}
+              destinationLocation={customerPosition} />
+        </MapboxGLWrapper>
+
         <List.Section title={localized("driver")}>
           <DriverStatus
               durationRemainingFormatted={durationRemainingFormatted}
@@ -81,8 +87,7 @@ const RealTimeDriverTacking = ({
               phoneNumber={phoneNumber}
               vehicle={vehicle}
               avatar={avatar}
-              status={driverStatus}
-          />
+              status={driverStatus} />
         </List.Section>
       </>
     )

@@ -13,8 +13,6 @@ const RideAndSharingDetails = ({
     dropoffLocationOnPress,
 }) => {
     const [iscoordinateOpen, setisCoordinateOpen] = useState(false)
-console.log(JSON.stringify(originLocation,null,3))
-console.log(JSON.stringify(dropoffLocation,null,3))
 
     return (
         <>

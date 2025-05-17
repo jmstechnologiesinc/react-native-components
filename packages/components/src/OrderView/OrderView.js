@@ -26,9 +26,6 @@ import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 import { localized } from '../Localization/Localization';
 import RealTimeDriverTacking from '../Order/RealTimeDriverTacking';
 
-import GeoPositionTracker from '../GeoPositionTracker'
-
-import Geolocation from 'react-native-geolocation-service';
 
 const getDriverDetails = (order, role) => {
     const results = [];

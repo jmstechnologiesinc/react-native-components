@@ -16,6 +16,7 @@ export const formatOrder = (order, role, platform) => {
     const fees = getRoleFees(order, role);
 
     const fulfilmentStatus = whatIsTheOrderStatus({
+        order,
         role,
         platform,
         fees,

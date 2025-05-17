@@ -143,7 +143,9 @@
         "Vendor Rejected": "Rechazado por el vendedor ",
         "Completed": "Completado",
         "No Driver Found": "No se encontró ningún conductor",
-        "Ready for Pickup": "Listo para Recoger"
+        "Ready for Pickup": "Listo para Recoger",
+        "searchingForOrders": "Buscando pedidos...",
+        "waitingForOrderMotivation": "¡Hola! Quédate cerca — pronto aparecerán nuevas solicitudes de entrega. Mantén la app abierta y prepárate para arrancar. 🚗✨"
     },
     "global": {
         "tryAgainLater": "Por favor, inténtalo de nuevo más tarde.",

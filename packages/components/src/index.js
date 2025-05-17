@@ -50,8 +50,8 @@ export { default as TipsFilter } from './TipsFilter/TipsFilter';
 export { default as CheckoutSummary } from './CheckoutSummary/CheckoutSummary';
 export { default as RideAndSharingCheckout } from './RideAndSharing/RideAndSharingCheckout'
 
-export { default as GeoPositionTracker } from './GeoPositionTracker'
-
+export { default as MapboxGLWrapper } from './MapboxGLWrapper';
+export { default as GorhomBottomSheetWrapper} from "./GorhomBottomSheetWrapper";
 export {
   LOCATION_LIST_ITEM,
   LOCATION_LIST_ITEM_MAPPING,

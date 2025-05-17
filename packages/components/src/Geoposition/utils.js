@@ -5,7 +5,6 @@ import Geolocation from 'react-native-geolocation-service';
 
 navigator.geolocation = require('react-native-geolocation-service');
 
-
 export const checkAndAskForPermission = async () => {
     let permissionStatus;
     if (Platform.OS === 'ios' || Platform.OS === 'android') {
