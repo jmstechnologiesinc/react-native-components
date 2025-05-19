@@ -15,30 +15,30 @@ import MapboxGLWrapper from "@jmstechnologiesinc/react-native-components/lib/Map
 import GorhomBottomSheetWrapper from "@jmstechnologiesinc/react-native-components/lib/GorhomBottomSheetWrapper";
 const nearbyPoints = [
     {
-        id:  123,
+        id: 123,
         title: 'Terra Luna',
-        longitude:  -71.15919996067139,
-        latitude:42.70798768081632,
+        longitude: -71.15919996067139,
+        latitude: 42.70798768081632,
         iconKey: 'restaurantIcon',
     },
     {
-        id:  124,
+        id: 124,
         title: 'La Grekka Café Art & Lounge',
         longitude: -71.15860562951806,
         latitude: 42.707942772972984,
         iconKey: 'restaurantIcon',
     },
     {
-        id:  15,
+        id: 15,
         title: "Dental Arts",
         longitude: -71.1593603130583,
-        latitude:  42.707462193310384,
+        latitude: 42.707462193310384,
         iconKey: 'carIcon',
     },
     {
-        id:  16,
+        id: 16,
         title: "McDonald's",
-        longitude:-71.16874090687317,
+        longitude: -71.16874090687317,
         latitude: 42.70519895303485,
         iconKey: 'restaurantIcon',
     },
@@ -62,6 +62,8 @@ const RideAndSharingCheckout = ({
 }) => {
     const turnByTurnRouteRef = useRef();
     const [currentSnapPoint, setCurrentSnapPoint] = useState(0);
+    const [currentSnapPointGps, setCurrentSnapPointGps] = useState(0);
+
 
     const [footerHeight, setFooterHeight] = useState(0);
 
@@ -87,8 +89,8 @@ const RideAndSharingCheckout = ({
                     <ScreenWrapper.Section>
                         <RenderPaymentMethod />
                     </ScreenWrapper.Section>
-                ) : null} 
-                
+                ) : null}
+
                 <FAB
                     disabled={!originLocation?.id || !dropoffLocation?.id}
                     label={localized('trip.requestRide')}
@@ -99,29 +101,40 @@ const RideAndSharingCheckout = ({
                         const { height } = event.nativeEvent.layout;
                         setFooterHeight(height);
                     }}
-                    style={[styles.button]}/>
+                    style={[styles.button]} />
             </ScreenWrapper>
         </BottomSheetFooter>
     )
-    
+
+
+
     const handleSheetChange = (percent) => {
         setCurrentSnapPoint(percent);
         turnByTurnRouteRef.current.setCameraSnapPoint(percent);
-    };
+        const gpsMap = {
+            0.5: 0.47,
+            0.75: 0.56,
+            1: 0.7,
+        };
 
+        if (gpsMap[percent] !== undefined) {
+            setCurrentSnapPointGps(gpsMap[percent]);
+        }
+    };
+    
     return (
         <MapboxGLWrapper>
             <MapboxGLWrapper.DriverRouteMonitoring
                 ref={turnByTurnRouteRef}
                 driverLocation={{
-                    longitude: selectedItem?.driver?.longitude, 
+                    longitude: selectedItem?.driver?.longitude,
                     latitude: selectedItem?.driver?.latitude,
                     formattedValue: selectedItem?.eta?.formattedValue
                 }}
                 destinationLocation={dropoffLocation}
                 locationOnPress={originLocationOnPress}>
                 {nearbyPoints.map((marker) => (
-                    <MapboxGLWrapper.SingleIconMarker 
+                    <MapboxGLWrapper.SingleIconMarker
                         key={marker.id}
                         id={marker.id}
                         iconKey={'carIcon'}
@@ -129,11 +142,11 @@ const RideAndSharingCheckout = ({
                         latitude={marker.latitude}
                         rotation={0} />
                 ))}
-                <MapboxGLWrapper.ResetToInitialPositionIcon 
-                    altitude={height * currentSnapPoint}
-                    onPress={() => turnByTurnRouteRef.current.setCameraSnapPoint(currentSnapPoint)} />
+
             </MapboxGLWrapper.DriverRouteMonitoring>
-            
+            <MapboxGLWrapper.ResetToInitialPositionIcon
+                altitude={height * currentSnapPointGps}
+                onPress={() => turnByTurnRouteRef.current.setCameraSnapPoint(currentSnapPoint)} />
             <GorhomBottomSheetWrapper
                 snapPointIndex={2}
                 listHeaderComponent={listHeaderComponent}
