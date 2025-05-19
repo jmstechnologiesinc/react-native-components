@@ -1,11 +1,6 @@
 import React, { useRef } from 'react';
 import MapboxGL from '@rnmapbox/maps';
 
-const images = {
-  restaurantIcon: require('./assets/restaurant.png'),
-  carIcon: require('./assets/car.png'),
-};
-
 const MapboxGLWrapperSingleIconMarker = ({ 
   id, 
   title,
@@ -24,7 +19,7 @@ const MapboxGLWrapperSingleIconMarker = ({
       properties: {
         id: id,
         title: title,
-        iconKey: iconKey,
+        type: iconKey, 
       },
       geometry: {
         type: 'Point',
@@ -37,23 +32,45 @@ const MapboxGLWrapperSingleIconMarker = ({
     <MapboxGL.ShapeSource
       id={`source-${id}`}
       ref={shapeSourceRef}
-      shape={featureCollection}>
-      <MapboxGL.Images images={images} />
+      shape={featureCollection}
+    >
+      <MapboxGL.Images 
+        images={{
+          restaurantIcon: require('./assets/restaurant.png'),
+          defaultIcon: require('./assets/car.png')
+        }}
+      />
 
       <MapboxGL.SymbolLayer
         id={`layer-${id}`}
         ref={symbolLayerRef}
         style={{
-          iconImage: ['get', 'iconKey'],
-          iconSize: 0.5,
-          iconRotate: rotation,
-          iconAllowOverlap: true,
-          iconImage: ['get', 'iconKey'],
-          iconSize: 0.5,
+          iconImage: ['get', 'type'], 
+          iconSize: [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            15, 0.3,   
+            16, 0.4,
+            17, 0.5,
+            18, 0.6,
+            19, 0.7,
+            20, 0.8,
+          ],
           iconRotate: rotation,
           iconAllowOverlap: true,
           textField: ['get', 'title'],
-          textSize: 12,
+          textSize: [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            15, 0,
+            16, 9,
+            17, 14,
+            18, 16,
+            19, 18,
+            20, 20,
+          ],
           textOffset: [0, 1.2],
           textAllowOverlap: true,
           textAnchor: 'top',
