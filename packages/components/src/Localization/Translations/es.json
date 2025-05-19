@@ -145,7 +145,8 @@
         "No Driver Found": "No se encontró ningún conductor",
         "Ready for Pickup": "Listo para Recoger",
         "searchingForOrders": "Buscando pedidos...",
-        "waitingForOrderMotivation": "¡Hola! Quédate cerca — pronto aparecerán nuevas solicitudes de entrega. Mantén la app abierta y prepárate para arrancar. 🚗✨"
+        "waitingForOrderMotivationTitle": "¡Hola! Quédate cerca", 
+        "waitingForOrderMotivation": "Pronto aparecerán nuevas solicitudes de entrega. Mantén la app abierta y prepárate para arrancar. 🚗✨"
     },
     "global": {
         "tryAgainLater": "Por favor, inténtalo de nuevo más tarde.",
