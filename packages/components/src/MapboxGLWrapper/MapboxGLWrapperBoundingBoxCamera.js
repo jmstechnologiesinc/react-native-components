@@ -99,21 +99,22 @@ const MapboxGLWrapperBoundingBoxCamera = forwardRef(({
     });
   }
 
-  return (
-    <MapboxGL.Camera
-      ref={mapCameraRef}
-      zoomLevel={calculatedZoomLevel || zoomLevel}
-      bounds={boundingBox}
-      padding={{
-        paddingTop: top + MD3LightTheme.spacing.x8,
-        paddingRight: right + MD3LightTheme.spacing.x15,
-        paddingLeft: left + MD3LightTheme.spacing.x15,
-        paddingBottom: MD3LightTheme.spacing.x15
-      }}
-      animationMode="flyTo"
-      animationDuration={250}
-      {...props} />
-  );
+  return coordinates.length > 0 && boundingBox.sw[0] !== Infinity && boundingBox.ne[0] !== -Infinity ? (
+  <MapboxGL.Camera
+    ref={mapCameraRef}
+    zoomLevel={calculatedZoomLevel || zoomLevel}
+    bounds={boundingBox}
+    padding={{
+      paddingTop: top + MD3LightTheme.spacing.x8,
+      paddingRight: right + MD3LightTheme.spacing.x15,
+      paddingLeft: left + MD3LightTheme.spacing.x15,
+      paddingBottom: MD3LightTheme.spacing.x15,
+    }}
+    animationMode="flyTo"
+    animationDuration={250}
+    {...props}
+  />
+) : null;
 });
 
 export default MapboxGLWrapperBoundingBoxCamera;
