@@ -1,5 +1,5 @@
 import React, { forwardRef, useImperativeHandle, useRef } from 'react';
-import {  Dimensions, Platform } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 import MapboxGL from '@rnmapbox/maps';
 import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -10,19 +10,35 @@ const getBoundingBox = (coordinates) => {
   let maxLng = -Infinity;
   let maxLat = -Infinity;
 
-  coordinates.forEach(coord => {
-    const [lng, lat] = coord;
+  coordinates.forEach(([lng, lat]) => {
     minLng = Math.min(minLng, lng);
     minLat = Math.min(minLat, lat);
     maxLng = Math.max(maxLng, lng);
     maxLat = Math.max(maxLat, lat);
   });
 
+  if (coordinates.length !== 0) {
+     const MIN_DELTA = 0.001; 
+
+    if ((maxLng - minLng) < MIN_DELTA) {
+      const centerLng = (maxLng + minLng) / 2;
+      minLng = centerLng - MIN_DELTA / 2;
+      maxLng = centerLng + MIN_DELTA / 2;
+    }
+
+    if ((maxLat - minLat) < MIN_DELTA) {
+      const centerLat = (maxLat + minLat) / 2;
+      minLat = centerLat - MIN_DELTA / 2;
+      maxLat = centerLat + MIN_DELTA / 2;
+    }
+  } 
+
   return {
     sw: [minLng, minLat],
     ne: [maxLng, maxLat],
-  }
+  };
 };
+
 
 const calculateZoomLevel = (boundingBox) => {
   const width = boundingBox.ne[0] - boundingBox.sw[0];
@@ -37,7 +53,7 @@ const calculateZoomLevel = (boundingBox) => {
 const { height } = Dimensions.get('window');
 
 const MapboxGLWrapperBoundingBoxCamera = forwardRef(({
-  coordinates=[],
+  coordinates = [],
   zoomLevel = 12,
   ...props
 }, ref) => {
@@ -67,7 +83,7 @@ const MapboxGLWrapperBoundingBoxCamera = forwardRef(({
       paddingBottom = height * SNAP_POINT_MEDIUM;
     } else {
       paddingBottom = height * snapPoint;
-    } 
+    }
 
     mapCameraRef.current?.setCamera({
       bounds: boundingBox,
