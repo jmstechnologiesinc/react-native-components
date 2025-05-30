@@ -32,14 +32,12 @@ const MapboxGLWrapperSingleIconMarker = ({
     <MapboxGL.ShapeSource
       id={`source-${id}`}
       ref={shapeSourceRef}
-      shape={featureCollection}
-    >
+      shape={featureCollection}>
       <MapboxGL.Images 
         images={{
           restaurantIcon: require('./assets/restaurant.png'),
-          defaultIcon: require('./assets/car.png')
-        }}
-      />
+          carIcon: require('./assets/car.png')
+        }} />
 
       <MapboxGL.SymbolLayer
         id={`layer-${id}`}
@@ -74,8 +72,7 @@ const MapboxGLWrapperSingleIconMarker = ({
           textOffset: [0, 1.2],
           textAllowOverlap: true,
           textAnchor: 'top',
-        }}
-      />
+        }} />
     </MapboxGL.ShapeSource>
   );
 };

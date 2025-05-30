@@ -48,7 +48,6 @@ export { localized, setI18nConfig } from './Localization/Localization';
 
 export { default as TipsFilter } from './TipsFilter/TipsFilter';
 export { default as CheckoutSummary } from './CheckoutSummary/CheckoutSummary';
-export { default as RideAndSharingCheckout } from './RideAndSharing/RideAndSharingCheckout'
 
 export { default as MapboxGLWrapper } from './MapboxGLWrapper';
 export { default as GorhomBottomSheetWrapper} from "./GorhomBottomSheetWrapper";

@@ -66,7 +66,7 @@ const OrderStatus = ({
 
     if (
         enableVendorStatus &&
-        (vendorStatus.overlines.length > 0 ||
+        (vendorStatus.overlines?.length > 0 ||
             vendorStatus.title ||
             vendorStatus.description ||
             vendorStatus.chips.length > 0)
