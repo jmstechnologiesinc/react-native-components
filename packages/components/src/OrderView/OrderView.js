@@ -293,7 +293,7 @@ const OrderView = ({
                             <RealTimeDriverTacking
                                 orderId={order.id}
                                 status={order.status}
-                                customerPosition={{
+                                customerLocation={{
                                     longitude: order.fulfillmentAddress.longitude,
                                     latitude: order.fulfillmentAddress.latitude
                                 }}
