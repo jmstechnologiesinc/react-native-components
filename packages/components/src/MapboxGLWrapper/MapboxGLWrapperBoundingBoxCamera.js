@@ -3,6 +3,7 @@ import { Dimensions, Platform } from 'react-native';
 import MapboxGL from '@rnmapbox/maps';
 import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 
 const getBoundingBox = (coordinates) => {
   let minLng = Infinity;
@@ -74,14 +75,15 @@ const MapboxGLWrapperBoundingBoxCamera = forwardRef(({
     setCameraSnapPoint
   }));
 
+
   const setCameraSnapPoint = (snapPoint) => {
     mapCameraRef.current?.setCamera({
       bounds: boundingBox,
       zoomLevel: zoomLevel,
       padding: {
         paddingTop: top + MD3LightTheme.spacing.x8,
-        paddingRight: right + MD3LightTheme.spacing.x15,
-        paddingLeft: left + MD3LightTheme.spacing.x15,
+        paddingRight: right + MD3LightTheme.spacing.x15 + moderateScale(23),
+        paddingLeft: left + MD3LightTheme.spacing.x15 + moderateScale(23),
         paddingBottom: snapPoint + MD3LightTheme.spacing.x8
       },
       animationMode: 'flyTo',
