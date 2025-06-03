@@ -2,12 +2,12 @@ import React from 'react';
 
 import { List, MD3LightTheme, TouchableRipple } from '@jmstechnologiesinc/react-native-paper';
 
-import { isOrderActive } from '@jmstechnologiesinc/order';
+import { ORDER_STATUS, isOrderActive } from '@jmstechnologiesinc/order';
 import { formatOrder } from '../Order/utils';
 import OrderStatus from '../Order/OrderStatus';
 import * as ActionGroup from '../ActionGroup/ActionGroup';
 import TouchableRippleWrapper from '../TouchableRippleWrapper/TouchableRippleWrapper';
-import DriverStatus from '../Order/DriverStatus';
+import DriverInfoListItem from '../Order/DriverInfoListItem';
 import { PhotoGallery, ScreenWrapper } from '@jmstechnologiesinc/react-native-components';
 import { USER_ROLES } from '@jmstechnologiesinc/user';
 import { LOGISTICS_PLATFORMS } from '@jmstechnologiesinc/commons';
@@ -33,10 +33,9 @@ const OrderListItem = ({
 
     onButtonPress,
     onPress,
-
 }) => {
     const formattedOrder = formatOrder(order, role, platform);
-
+console.log(JSON.stringify(formattedOrder,null,2),3)
     const isSelected = currentOrderId === order?.id && showSelectedOverlay;
     const contentColor = isSelected ? { color: MD3LightTheme.colors.onSecondaryContainer } : null;
 
@@ -48,8 +47,7 @@ const OrderListItem = ({
                         photos={[formattedOrder.photo]}
                         imagekitCropMode="c-maintain_ratio"
                         showNav={false}
-                        styles={{ paddingTop: MD3LightTheme.spacing.x2 }}
-                    />
+                        styles={{ paddingTop: MD3LightTheme.spacing.x2 }} />
                 </ScreenWrapper.Container>
             ) : null}
 
@@ -69,27 +67,20 @@ const OrderListItem = ({
                 showChevron={showChevron}
                 showVendorAvatar={showVendorAvatar}
                 titleStyle={contentColor}
-                overlineStyle={contentColor}
-            />
+                overlineStyle={contentColor} />
 
-            {role === USER_ROLES.customer && (
-                formattedOrder.fulfilmentStatus.driver.description.length > 0 ||
-                formattedOrder.fulfilmentStatus.driver.title ||
-                formattedOrder.fulfilmentStatus.driver.chips.length > 0
-            ) ? (
-                <DriverStatus
+            {role === USER_ROLES.customer && ((order.status === ORDER_STATUS.shipped || order.status === ORDER_STATUS.inTransit)) ? (
+                <DriverInfoListItem
                     role={role}
-                    orderId={formattedOrder.orderId}
-                    orderStatus={formattedOrder.status}
-                    orderDeliveryMethod={formattedOrder.deliveryMethod}
-                    deliveryMethod={formattedOrder.fulfilmentStatus.deliveryMethod}
-                    name={formattedOrder.fulfilmentStatus.driver.title}
-                    phoneNumber={formattedOrder.fulfilmentStatus.driver.phoneNumber}
-                    vehicle={formattedOrder.fulfilmentStatus.driver.vehicle}
-                    avatar={formattedOrder.fulfilmentStatus.driver.avatar}
-                    status={formattedOrder.fulfilmentStatus.driver.status}
+                    orderId={order.id}
+                    partnership={order?.driver?.deliveryMethod}
+                    name={order.driver?.formattedName}
+                    phoneNumber={order.driver?.phoneNumber}
+                    vehicle={order.driver?.vehicle?.formattedValue}
+                    photo={order.driver?.photo}
+                    formattedTripStatus={formattedOrder.fulfilmentStatus.driver.formattedTripStatus}
                     showPhoneNumber={false}
-                />
+                    isDriverPartnerShipVisible={false} />
             ) : null}
 
             {onButtonPress && (
@@ -97,8 +88,7 @@ const OrderListItem = ({
                     <ActionGroup.Group>
                         <ActionGroup.Buttons
                             buttons={formattedOrder.fulfilmentStatus.buttons}
-                            onPress={(button) => onButtonPress(button, order.id)}
-                        />
+                            onPress={(button) => onButtonPress(button, order.id)}/>
                     </ActionGroup.Group>
                 </List.Section>
             )}

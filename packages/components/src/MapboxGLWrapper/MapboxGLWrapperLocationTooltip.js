@@ -17,16 +17,14 @@ const MapboxGLWrapperLocationTooltip = ({
       coordinate={[longitude, latitude]}
       anchor={{ x: 0.5, y: 1.6 }}
     >
-      <TouchableRipple
-        onPress={onPress}
-      >
+      <TouchableRipple onPress={onPress}>
         <View style={styles.markerContainer}>
           <Text variant="titleMedium">
             {title?.length > 20
               ? `${title.substring(0, 20)}...`
               : title}
           </Text>
-          <MaterialCommunityIcons name="chevron-right" size={24} color="black" />
+          {onPress ? <MaterialCommunityIcons name="chevron-right" size={24} color="black" /> : null}
         </View>
       </TouchableRipple>
     </MapboxGL.MarkerView>

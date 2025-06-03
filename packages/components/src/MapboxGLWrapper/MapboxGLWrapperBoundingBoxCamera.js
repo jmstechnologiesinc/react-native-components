@@ -64,9 +64,6 @@ const MapboxGLWrapperBoundingBoxCamera = forwardRef(({
   const right = insets.right === 0 ? MD3LightTheme.spacing.x8 : insets.right;
   const left = insets.left === 0 ? MD3LightTheme.spacing.x8 : insets.left
 
-  const SNAP_POINT_SMALL = Platform.OS === 'ios' ? 0.73 : 0.77
-  const SNAP_POINT_MEDIUM = Platform.OS === 'ios' ? 0.6 : 0.64
-
   const boundingBox = getBoundingBox(coordinates);
   const calculatedZoomLevel = calculateZoomLevel(boundingBox);
 

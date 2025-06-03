@@ -1,10 +1,9 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
 
 import MapboxGL from '@rnmapbox/maps';
 
 import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MapboxGLWrapperPointAnnotationMaterialIcon from '@jmstechnologiesinc/react-native-components/lib/MapboxGLWrapper/MapboxGLWrapperPointAnnotationMaterialIcon';
 
 const MapboxGLWrapperDrawTurnByTurnRoute = ({ 
   route,
@@ -26,28 +25,15 @@ const MapboxGLWrapperDrawTurnByTurnRoute = ({
             iconAllowOverlap: true,
             iconRotate: driverHeading,
             iconSize: 0.5,
-          }}
-        />
+          }}/>
       </MapboxGL.ShapeSource>
       {destinationCoords?.length > 0 ? (
-        <MapboxGL.PointAnnotation id="destination" coordinate={destinationCoords}>
-          <View style={styles.destinationIcon}>
-            <MaterialCommunityIcons name="map-marker" size={32} color={MD3LightTheme.colors.primary} />
-          </View>
-        </MapboxGL.PointAnnotation>
+        <MapboxGLWrapperPointAnnotationMaterialIcon 
+          id="tbt-drop-off-location-point-anotation" 
+          coordinate={destinationCoords} />
       ) : null}
     </>
   ) : null
 }
-
-const styles = StyleSheet.create({
-  destinationIcon: {
-    flex: 1,
-    width: 40,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default MapboxGLWrapperDrawTurnByTurnRoute

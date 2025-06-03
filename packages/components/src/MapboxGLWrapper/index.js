@@ -6,6 +6,7 @@ import MapboxGLWrapperResetToInitialPositionIcon from "./MapboxGLWrapperResetToI
 import MapboxGLWrapperDriverRouteMonitoring from "./MapboxGLWrapperDriverRouteMonitoring";
 import MapboxGLWrapperBoundingBoxCamera from "./MapboxGLWrapperBoundingBoxCamera";
 import MapboxGLWrapperHeatMap from "./MapboxGLWrapperHeatMap";
+import MapboxGLWrapperPointAnnotationMaterialIcon from "./MapboxGLWrapperPointAnnotationMaterialIcon";
 
 export default Object.assign(
     MapboxGLWrapper,
@@ -14,6 +15,7 @@ export default Object.assign(
         BoundingBoxCamera: MapboxGLWrapperBoundingBoxCamera,
         FolowUserLocation: MapboxGLWrapperUserLocation,
         SingleIconMarker: MapboxGLWrapperSingleIconMarker,
+        PointAnnotationMaterialIcon: MapboxGLWrapperPointAnnotationMaterialIcon,
         LocationTooltip: MapboxGLWrapperLocationTooltip,
         DrawTurnByTurnRoute: MapboxGLWrapperDrawTurnByTurnRoute,
         ResetToInitialPositionIcon: MapboxGLWrapperResetToInitialPositionIcon,
