@@ -3,39 +3,31 @@ import React, { useEffect, useRef, useState } from 'react';
 import Config from 'react-native-config';
 import { List } from '@jmstechnologiesinc/react-native-paper';
 
-import { ORDER_STATUS } from '@jmstechnologiesinc/order';
 import { pubnubEtaChannelName } from '@jmstechnologiesinc/commons';
 
 import { Centrifuge } from 'centrifuge';
-import DriverStatus from './DriverStatus';
+import DriverInfoListItem from './DriverInfoListItem';
 import { localized } from '../Localization/Localization';
 import {MapboxGLWrapper} from '@jmstechnologiesinc/react-native-components';
+import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 
 const RealTimeDriverTacking = ({
-    status, 
     orderId, 
-    customerPosition,
-    deliveryMethod,
-    driverName,
+    destination,
+    partnerShip,
+    name,
     phoneNumber,
     vehicle,
-    avatar,
-    driverStatus,
+    photo,
+    formattedTripStatus,
 }) => {
     const subscriptionRef = useRef();
 
-    const [durationRemainingFormatted, setDurationRemainingFormatted] = useState(null);
-    const [location, setLocation] = useState( {
-        id:  123,
-        title: 'Terra Luna',
-        longitude:  -71.15919996067139,
-        latitude:42.70798768081632,
-        iconKey: 'restaurantIcon',
-    });
+    const [driverLocation, setDriverLocation] = useState();
 
-    useEffect(() => {
-        if (status === ORDER_STATUS.shipped || status === ORDER_STATUS.inTransit) {            
-          
+    useEffect(() => {   
+          if(!orderId) return null;
+
           const centrifugeClientRef = new Centrifuge(`ws://${Config.FLEET_MANAGEMENT_CENTRIFUGO_HOST}:${Config.FLEET_MANAGEMENT_CENTRIFUGO_PORT}/connection/websocket`);
 
           centrifugeClientRef.on('connected', function (ctx) {
@@ -52,9 +44,11 @@ const RealTimeDriverTacking = ({
           subscriptionRef.current = centrifugeClientRef.newSubscription(pubnubEtaChannelName(orderId));
       
           subscriptionRef.current.on('publication', function (ctx) {
-            console.log(ctx)
-              setDurationRemainingFormatted(ctx.data.durationRemainingFormatted);
-              setLocation({latitude: ctx.data.latitude, longitude: ctx.data.longitude})
+              setDriverLocation({
+                latitude: ctx.data.latitude, 
+                longitude: ctx.data.longitude,
+                formattedAddress: ctx.data.formattedEta
+              });
             }).on('subscribed', function (ctx) {
               console.log('centrifugo channel subscribed:', ctx);
             }).on('unsubscribed', function (ctx) {
@@ -63,32 +57,42 @@ const RealTimeDriverTacking = ({
 
             centrifugeClientRef.connect();
           }
-        }
 
         return () => {
-          subscriptionRef.current.unsubscribe?.();
-          subscriptionRef.current.removeAllListeners?.();
+          subscriptionRef.current?.unsubscribe?.();
+          subscriptionRef.current?.removeAllListeners?.();
         }
-    }, [status, orderId]);
+    }, [orderId]);
 
     return (
       <>
-        <MapboxGLWrapper style={{height: 300}}>
-          <MapboxGLWrapper.DriverRouteMonitoring
-              driverLocation={location}
-              destinationLocation={customerPosition} />
+        <MapboxGLWrapper style={{height: moderateScale(300)}}>
+          {driverLocation ? (
+            <MapboxGLWrapper.DriverRouteMonitoring
+              originLocation={driverLocation}
+              dropoffLocation={destination} />
+          ) : <>
+              <MapboxGLWrapper.BoundingBoxCamera coordinates={[[destination.longitude, destination.latitude]]} />
+              <MapboxGLWrapper.PointAnnotationMaterialIcon 
+                id="destination"
+                coordinate={[destination.longitude, destination.latitude]} />
+              <MapboxGLWrapper.LocationTooltip 
+                title={destination.formattedAddress}
+                longitude={destination.longitude}
+                latitude={destination.latitude} />
+            </>
+          }
         </MapboxGLWrapper>
 
         <List.Section title={localized("driver")}>
-          <DriverStatus
-              durationRemainingFormatted={durationRemainingFormatted}
-              deliveryMethod={deliveryMethod}
-              name={driverName}
+          <DriverInfoListItem
+              partnerShip={partnerShip}
+              name={name}
               phoneNumber={phoneNumber}
               vehicle={vehicle}
-              avatar={avatar}
-              status={driverStatus} />
-        </List.Section>
+              photo={photo}
+              formattedTripStatus={formattedTripStatus} />
+        </List.Section> 
       </>
     )
 };

@@ -31,10 +31,10 @@ const MapboxGLWrapperDriverRouteMonitoring = forwardRef(({
   const [driverHeading, setDriverHeading] = useState(0)
 
   useEffect(() => {
-    if (originLocation) {
+    if (originLocation && dropoffLocation) {
       createRouteLine(originLocation, dropoffLocation);
     }
-  }, [originLocation]);
+  }, [originLocation, dropoffLocation]);
 
   const createRouteLine = async (startPosition, endPosition) => {
     const startCoords = `${startPosition.longitude},${startPosition.latitude}`;
@@ -75,9 +75,9 @@ const MapboxGLWrapperDriverRouteMonitoring = forwardRef(({
             driverHeading={driverHeading}
             route={makeRouterFeature(turnByTurnRoute)}
             destinationCoords={turnByTurnDropoffLocation} />
-          {originLocation?.formattedValue ? (
+          {originLocation?.formattedAddress ? (
             <MapboxGLWrapper.LocationTooltip 
-              title={originLocation.formattedValue}
+              title={originLocation.formattedAddress}
               longitude={turnByTurnOriginLocation[0]}
               latitude={turnByTurnOriginLocation[1]}
               onPress={onLocationPress} />
