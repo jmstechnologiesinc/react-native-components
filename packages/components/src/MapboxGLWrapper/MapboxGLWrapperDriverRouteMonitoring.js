@@ -20,21 +20,21 @@ const makeRouterFeature = (coordinates) => {
 };
 
 const MapboxGLWrapperDriverRouteMonitoring = forwardRef(({
-  driverLocation,
-  destinationLocation,
-  locationOnPress,
+  originLocation,
+  dropoffLocation,
+  onLocationPress,
 }, ref) => {
   const [turnByTurnRoute, setTurnByTurnRoute] = useState([]);
   const [turnByTurnOriginLocation, setTurnByTurnOriginLocation] = useState();
-  const [turnByTurnDestinationLocation, setTurnByTurnDestinationLocation] = useState([]);
+  const [turnByTurnDropoffLocation, setTurnByTurnDropoffLocation] = useState([]);
 
   const [driverHeading, setDriverHeading] = useState(0)
 
   useEffect(() => {
-    if (driverLocation) {
-      createRouteLine(driverLocation, destinationLocation);
+    if (originLocation && dropoffLocation) {
+      createRouteLine(originLocation, dropoffLocation);
     }
-  }, [driverLocation]);
+  }, [originLocation, dropoffLocation]);
 
   const createRouteLine = async (startPosition, endPosition) => {
     const startCoords = `${startPosition.longitude},${startPosition.latitude}`;
@@ -59,7 +59,7 @@ const MapboxGLWrapperDriverRouteMonitoring = forwardRef(({
 
         setTurnByTurnRoute(coordinates);
         setTurnByTurnOriginLocation(coordinates[0])
-        setTurnByTurnDestinationLocation(coordinates[coordinates.length - 1]);
+        setTurnByTurnDropoffLocation(coordinates[coordinates.length - 1]);
       }
     } catch (error) {
       console.error('Error fetching directions:', error);
@@ -74,23 +74,23 @@ const MapboxGLWrapperDriverRouteMonitoring = forwardRef(({
           <MapboxGLWrapper.DrawTurnByTurnRoute 
             driverHeading={driverHeading}
             route={makeRouterFeature(turnByTurnRoute)}
-            destinationCoords={turnByTurnDestinationLocation} />
-          {driverLocation?.formattedValue ? (
+            destinationCoords={turnByTurnDropoffLocation} />
+          {originLocation?.formattedAddress ? (
             <MapboxGLWrapper.LocationTooltip 
-              title={driverLocation.formattedValue}
+              title={originLocation.formattedAddress}
               longitude={turnByTurnOriginLocation[0]}
               latitude={turnByTurnOriginLocation[1]}
-              onPress={locationOnPress} />
+              onPress={onLocationPress} />
           ) : null}
         </>
       ) : null}
 
-      {turnByTurnDestinationLocation?.length > 0 && destinationLocation?.formattedAddress ? (
+      {turnByTurnDropoffLocation?.length > 0 && dropoffLocation?.formattedAddress ? (
         <MapboxGLWrapper.LocationTooltip 
-          title={destinationLocation?.formattedAddress}
-          longitude={turnByTurnDestinationLocation[0]}
-          latitude={turnByTurnDestinationLocation[1]}
-          onPress={locationOnPress} />
+          title={dropoffLocation?.formattedAddress}
+          longitude={turnByTurnDropoffLocation[0]}
+          latitude={turnByTurnDropoffLocation[1]}
+          onPress={onLocationPress} />
       ) : null}
     </>
   );

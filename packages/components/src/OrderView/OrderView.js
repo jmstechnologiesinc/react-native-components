@@ -283,27 +283,22 @@ const OrderView = ({
                         showVendorTitle={showVendorTitle}
                         showVendorDescription={showVendorDescription}
                         showVendorAvatar={showVendorAvatar}
-                        showChevron={false}
-                    />
+                        showChevron={false} />
 
                     <Divider style={{ marginTop: MD3LightTheme.spacing.x3 }} />
 
-                    {(formattedOrder.fulfilmentStatus.driver.status || formattedOrder.fulfilmentStatus.driver.title) ? (
+                    {order?.driver && (order.status === ORDER_STATUS.shipped || order.status === ORDER_STATUS.inTransit) ? (
                         <>
                             <RealTimeDriverTacking
-                                orderId={order.id}
-                                status={order.status}
-                                customerPosition={{
-                                    longitude: order.fulfillmentAddress.longitude,
-                                    latitude: order.fulfillmentAddress.latitude
-                                }}
                                 role={role}
-                                deliveryMethod={formattedOrder.fulfilmentStatus.driver.deliveryMethod}
-                                driverName={formattedOrder.fulfilmentStatus.driver.title}
-                                phoneNumber={formattedOrder.fulfilmentStatus.driver.phoneNumber}
-                                vehicle={formattedOrder.fulfilmentStatus.driver.vehicle}
-                                avatar={formattedOrder.fulfilmentStatus.driver.avatar}
-                                driverStatus={formattedOrder.fulfilmentStatus.driver.status} />
+                                orderId={order.id}
+                                partnership={order?.driver?.deliveryMethod}
+                                name={order.driver?.formattedName}
+                                phoneNumber={order.driver?.phoneNumber}
+                                vehicle={order.driver?.vehicle?.formattedValue}
+                                photo={order.driver?.photo}
+                                destination={formattedOrder.fulfilmentStatus.driver.destination}
+                                formattedTripStatus={formattedOrder.fulfilmentStatus.driver.formattedTripStatus} />
                             <Divider />
                         </>
                     ) : null}
@@ -316,8 +311,7 @@ const OrderView = ({
                                     order.fulfillmentMethod === FULFILLMENT_METHODS.delivery
                                         ? localized('order.deliveryDetails')
                                         : localized('order.pickupDetails')
-                            }
-                        >
+                            }>
                             {fulfilmentDetails.map((item, index) => (
                                 <View key={item.key}>
                                     <List.Item

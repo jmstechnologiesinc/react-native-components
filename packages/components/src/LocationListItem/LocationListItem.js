@@ -30,6 +30,8 @@ export const LocationListItem = ({
     description,
     variant,
     iconColor,
+    titleNumberOfLines=0,
+    descriptionNumberOfLines=1,
     onPress
 }) => (
     <List.Item
@@ -47,8 +49,8 @@ export const LocationListItem = ({
                 : null
         }
         right={onPress ? (props) => <List.Icon {...props} icon={MATERIAL_ICONS.chevron} /> : null}
-        titleNumberOfLines={0}
-        descriptionNumberOfLines={0}
+        titleNumberOfLines={titleNumberOfLines}
+        descriptionNumberOfLines={descriptionNumberOfLines}
         onPress={onPress}
     />
 );

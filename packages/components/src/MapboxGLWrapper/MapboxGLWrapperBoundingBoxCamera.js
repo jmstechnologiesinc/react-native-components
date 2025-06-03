@@ -64,9 +64,6 @@ const MapboxGLWrapperBoundingBoxCamera = forwardRef(({
   const right = insets.right === 0 ? MD3LightTheme.spacing.x8 : insets.right;
   const left = insets.left === 0 ? MD3LightTheme.spacing.x8 : insets.left
 
-  const SNAP_POINT_SMALL = Platform.OS === 'ios' ? 0.73 : 0.77
-  const SNAP_POINT_MEDIUM = Platform.OS === 'ios' ? 0.6 : 0.64
-
   const boundingBox = getBoundingBox(coordinates);
   const calculatedZoomLevel = calculateZoomLevel(boundingBox);
 
@@ -75,16 +72,6 @@ const MapboxGLWrapperBoundingBoxCamera = forwardRef(({
   }));
 
   const setCameraSnapPoint = (snapPoint) => {
-    let paddingBottom;
-
-    if (snapPoint === 1) {
-      paddingBottom = height * SNAP_POINT_SMALL;
-    } else if (snapPoint === 0.75) {
-      paddingBottom = height * SNAP_POINT_MEDIUM;
-    } else {
-      paddingBottom = height * snapPoint;
-    }
-
     mapCameraRef.current?.setCamera({
       bounds: boundingBox,
       zoomLevel: zoomLevel,
@@ -92,7 +79,7 @@ const MapboxGLWrapperBoundingBoxCamera = forwardRef(({
         paddingTop: top + MD3LightTheme.spacing.x8,
         paddingRight: right + MD3LightTheme.spacing.x15,
         paddingLeft: left + MD3LightTheme.spacing.x15,
-        paddingBottom,
+        paddingBottom: snapPoint + MD3LightTheme.spacing.x8
       },
       animationMode: 'flyTo',
       animationDuration: 250,
@@ -112,8 +99,7 @@ const MapboxGLWrapperBoundingBoxCamera = forwardRef(({
     }}
     animationMode="flyTo"
     animationDuration={250}
-    {...props}
-  />
+    {...props} />
 ) : null;
 });
 

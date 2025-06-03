@@ -4,7 +4,7 @@ import { interpunct } from '@jmstechnologiesinc/commons';
 
 import VendorStatus from './VendorStatus';
 import OrderStatusWrapper from './OrderStatusWrapper';
-import { ROLE_ORDER_LIST_STATUS_MAPPING, humanizeOrderStatus } from '../Order/utils';
+import { ROLE_ORDER_LIST_STATUS_MAPPING, humanizeOrderStatus } from './utils';
 
 const OrderStatus = ({
     role,
@@ -63,10 +63,10 @@ const OrderStatus = ({
             />
         );
     }
-
+console.log(enableVendorStatus)
     if (
         enableVendorStatus &&
-        (vendorStatus.overlines.length > 0 ||
+        (vendorStatus.overlines?.length > 0 ||
             vendorStatus.title ||
             vendorStatus.description ||
             vendorStatus.chips.length > 0)
