@@ -72,7 +72,6 @@ const MapboxGLWrapperBoundingBoxCamera = forwardRef(({
     setCameraSnapPoint
   }));
 
-
   const setCameraSnapPoint = (snapPoint) => {
     mapCameraRef.current?.setCamera({
       bounds: boundingBox,

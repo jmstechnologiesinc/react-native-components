@@ -63,7 +63,7 @@ const OrderStatus = ({
             />
         );
     }
-console.log(enableVendorStatus)
+
     if (
         enableVendorStatus &&
         (vendorStatus.overlines?.length > 0 ||

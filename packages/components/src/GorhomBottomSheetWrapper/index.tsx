@@ -39,8 +39,8 @@ const GorhomBottomSheetWrapper = forwardRef(({
   }));
 
   const getAnimatedPositionBeforeMiddleSnapPoint = (callback) => {
-    if(SCREEN_HEIGHT - animatedBottomSheetPosition.value < MIDDLE_SNAP_POINT) {
-      callback(SCREEN_HEIGHT - animatedBottomSheetPosition.value);
+    if(SCREEN_HEIGHT - crosshairsGpsIconAnimatedPosition.value < MIDDLE_SNAP_POINT) {
+      callback(SCREEN_HEIGHT - crosshairsGpsIconAnimatedPosition.value);
     }
   }
 
