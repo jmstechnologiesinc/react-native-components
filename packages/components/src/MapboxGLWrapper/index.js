@@ -1,5 +1,7 @@
 import MapboxGLWrapper, {MapboxGLWrapperCamera, MapboxGLWrapperUserLocation} from "./MapboxGLWrapper";
-import MapboxGLWrapperSingleIconMarker from "./MapboxGLWrapperSingleIconMarker";
+
+import MapboxGLWrapperBusinessIconMarker from "./MapboxGLWrapperBusinessIconMarker";
+import  MapboxGLWrapperVehicleIconMarker from './MapboxGLWrapperVehicleIconMarker'
 import MapboxGLWrapperLocationTooltip from "./MapboxGLWrapperLocationTooltip";
 import MapboxGLWrapperDrawTurnByTurnRoute from "./MapboxGLWrapperDrawTurnByTurnRoute";
 import MapboxGLWrapperResetToInitialPositionIcon from "./MapboxGLWrapperResetToInitialPositionIcon";
@@ -14,7 +16,8 @@ export default Object.assign(
         Camera: MapboxGLWrapperCamera,
         BoundingBoxCamera: MapboxGLWrapperBoundingBoxCamera,
         FolowUserLocation: MapboxGLWrapperUserLocation,
-        SingleIconMarker: MapboxGLWrapperSingleIconMarker,
+        VehicleIconMarker: MapboxGLWrapperVehicleIconMarker,
+        BusinessIconMarker: MapboxGLWrapperBusinessIconMarker,
         PointAnnotationMaterialIcon: MapboxGLWrapperPointAnnotationMaterialIcon,
         LocationTooltip: MapboxGLWrapperLocationTooltip,
         DrawTurnByTurnRoute: MapboxGLWrapperDrawTurnByTurnRoute,

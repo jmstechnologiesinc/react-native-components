@@ -74,7 +74,10 @@ const MapboxGLWrapperDriverRouteMonitoring = forwardRef(({
           <MapboxGLWrapper.DrawTurnByTurnRoute 
             driverHeading={driverHeading}
             route={makeRouterFeature(turnByTurnRoute)}
-            destinationCoords={turnByTurnDropoffLocation} />
+            destinationCoords={turnByTurnDropoffLocation} 
+            turnByTurnOriginLocation={turnByTurnOriginLocation}
+            
+            />
           {originLocation?.formattedAddress ? (
             <MapboxGLWrapper.LocationTooltip 
               title={originLocation.formattedAddress}

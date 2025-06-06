@@ -1,10 +1,9 @@
 import React, { useRef } from 'react';
 import MapboxGL from '@rnmapbox/maps';
 
-const MapboxGLWrapperSingleIconMarker = ({
+const MapboxGLWrapperBusinessIconMarker = ({
   id,
   title,
-  iconKey,
   longitude,
   latitude,
   rotation = 0
@@ -17,9 +16,8 @@ const MapboxGLWrapperSingleIconMarker = ({
     features: [{
       type: 'Feature',
       properties: {
-        id: id,
-        title: title,
-        type: iconKey,
+        id,
+        title,
       },
       geometry: {
         type: 'Point',
@@ -28,40 +26,34 @@ const MapboxGLWrapperSingleIconMarker = ({
     }],
   };
 
-  const iconSize =
-    iconKey === 'carIcon'
-      ? 0.5
-      : [
-        'interpolate',
-        ['linear'],
-        ['zoom'],
-        15, 0.3,
-        16, 0.4,
-        17, 0.5,
-        18, 0.6,
-        19, 0.7,
-        20, 0.8,
-      ]
-
   return (
     <MapboxGL.ShapeSource
       id={`source-${id}`}
       ref={shapeSourceRef}
-      shape={featureCollection}>
+      shape={featureCollection}
+    >
       <MapboxGL.Images
         images={{
-          restaurantIcon: require('./assets/restaurant.png'),
-          carIcon: require('./assets/car.png')
-        }} />
+          businessIcon: require('./assets/restaurant.png'),
+        }}
+      />
 
       <MapboxGL.SymbolLayer
         id={`layer-${id}`}
         ref={symbolLayerRef}
         style={{
-          iconImage: ['get', 'type'],
-
-          iconSize:iconSize,
-
+          iconImage: 'businessIcon',
+          iconSize: [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            15, 0.3,
+            16, 0.4,
+            17, 0.5,
+            18, 0.6,
+            19, 0.7,
+            20, 0.8,
+          ],
           iconRotate: rotation,
           iconAllowOverlap: true,
           textField: ['get', 'title'],
@@ -79,9 +71,10 @@ const MapboxGLWrapperSingleIconMarker = ({
           textOffset: [0, 1.2],
           textAllowOverlap: true,
           textAnchor: 'top',
-        }} />
+        }}
+      />
     </MapboxGL.ShapeSource>
   );
 };
 
-export default MapboxGLWrapperSingleIconMarker;
+export default MapboxGLWrapperBusinessIconMarker;
