@@ -5,9 +5,8 @@ import { View } from 'react-native';
 import { Divider, List} from '@jmstechnologiesinc/react-native-paper';
 import {  plurulize } from '@jmstechnologiesinc/commons';
 
-import { itemSeparator } from '@jmstechnologiesinc/react-native-components/lib/utils';
-import { localized } from '@jmstechnologiesinc/react-native-components/lib/Localization/Localization';
-import CartListProductItem from '@jmstechnologiesinc/react-native-components/lib/CartList/CartListProductItem';
+import CartListProductItem from '../CartList/CartListProductItem';
+import { itemSeparator, localized } from '..';
 
 const OrderProductList = ({
     products=[],

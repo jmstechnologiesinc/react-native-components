@@ -56,35 +56,23 @@ const OrderMapboxGLMonitoring = ({
     }, [orderId]);
 
     return (
-      <>
-        <MapboxGLWrapper style={{height: moderateScale(300)}}>
-          {driverLocation ? (
-            <MapboxGLWrapper.DriverRouteMonitoring
-              originLocation={driverLocation}
-              dropoffLocation={destination} />
-          ) : <>
-              <MapboxGLWrapper.BoundingBoxCamera coordinates={[[destination.longitude, destination.latitude]]} />
-              <MapboxGLWrapper.PointAnnotationMaterialIcon 
-                id="destination"
-                coordinate={[destination.longitude, destination.latitude]} />
-              <MapboxGLWrapper.LocationTooltip 
-                title={destination.formattedAddress}
-                longitude={destination.longitude}
-                latitude={destination.latitude} />
-            </>
-          }
-        </MapboxGLWrapper>
-
-       {/*  <List.Section title={localized("driver")}>
-          <DriverProfileListItem
-              partnerShip={partnerShip}
-              name={name}
-              phoneNumber={phoneNumber}
-              vehicle={vehicle}
-              photo={photo}
-              formattedTripStatus={formattedTripStatus} />
-        </List.Section>  */}
-      </>
+      <MapboxGLWrapper style={{height: moderateScale(300)}}>
+        {driverLocation ? (
+          <MapboxGLWrapper.DriverRouteMonitoring
+            originLocation={driverLocation}
+            dropoffLocation={destination} />
+        ) : <>
+            <MapboxGLWrapper.BoundingBoxCamera coordinates={[[destination.longitude, destination.latitude]]} />
+            <MapboxGLWrapper.PointAnnotationMaterialIcon 
+              id="destination"
+              coordinate={[destination.longitude, destination.latitude]} />
+            <MapboxGLWrapper.LocationTooltip 
+              title={destination.formattedAddress}
+              longitude={destination.longitude}
+              latitude={destination.latitude} />
+          </>
+        }
+      </MapboxGLWrapper>
     )
 };
 
