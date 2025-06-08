@@ -1,7 +1,7 @@
 import React from 'react';
 
 import MapboxGL from '@rnmapbox/maps';
-import { Config } from '@jmstechnologiesinc/react-native-components/lib/Config'
+import { Config } from '../Config'
 
 MapboxGL.setAccessToken(Config.MAPBOX_ACCESS_TOKEN);
 MapboxGL.setTelemetryEnabled(false);
