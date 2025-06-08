@@ -1,66 +1,11 @@
 import { USER_ROLES } from '@jmstechnologiesinc/user';
-import { firestoreTimestampToDate,  getRoleFees } from '@jmstechnologiesinc/commons';
 
 import {
     ORDER_STATUS,
     ORDER_STATUS_CANCELLED,
     ORDER_STATUS_PREPARING,
-    whatIsTheOrderStatus,
-    formatOrderID,
-    orderStatusTime,
 } from '@jmstechnologiesinc/order';
 import { localized } from '../Localization/Localization';
-
-export const formatOrder = (order, role, platform) => {
-    const formattedOrderId = formatOrderID(order.id);
-    const fees = getRoleFees(order, role);
-
-    const fulfilmentStatus = whatIsTheOrderStatus({
-        order,
-        role,
-        platform,
-        fees,
-        status: order.status,
-        driverStatus: order?.driver?.status,
-        formattedOrderId,
-        formattedStatusTime: order.formattedStatusTime,
-        itemNums: order.cart?.products?.length,
-        fulfillmentMethod: order.fulfillmentMethod,
-        deliveryMethod: order.deliveryMethod,
-        pickupMethod: order.pickupMethod,
-        driverDeliveryMethod: order?.driver?.deliveryMethod,
-        ...(order.vendor && {
-            vendorPhone: order.vendor?.phoneNumber,
-            formattedVendorTitle: order.vendor?.title,
-            formattedVendorAddress: order.vendor?.location?.formattedAddress,
-            vendorAvatar: order.vendor.photo,
-        }),
-        formattedDriverCar: order.driver?.vehicle?.formattedValue,
-        customerPhone: order.author?.phoneNumber,
-        driverPhone: order.driver?.phoneNumber,
-        formattedDriverName: order?.driver?.formattedName,
-        formattedCustomerName: order.author.formattedName,
-        formattedFulfillmentAddress: order?.fulfillmentAddress?.formattedAddress,
-        originLocationLine1: order?.originLocation?.line1,
-        fulfillmentAddressLine1: order?.fulfillmentAddress?.line1,
-        driverAvatar: order?.driver?.photo,
-        translation: localized,
-    });
-
-    return {
-        orderId: order.id,
-        fees,
-        fulfilmentStatus,
-        status: order.status,
-        photo: (role === USER_ROLES.customer || role === USER_ROLES.driver) && order.vendor?.photo,
-        deliveryMethod: order.deliveryMethod,
-        formattedOrderId,
-        durationValue: order.eta?.duration?.value,
-        deliveryTime: order.eta?.deliveryTime?.value,
-        formattedStatusTime: order.formattedStatusTime,
-        vendorAcceptedTime: firestoreTimestampToDate(order[orderStatusTime(ORDER_STATUS.vendorAccepted)]),
-    };
-};
 
 export const ORDER_LIST_STATUS = {
     ...ORDER_STATUS,
