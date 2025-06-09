@@ -58,7 +58,7 @@ const ListItem = ({
                         {item}
                     </Text>
                 ))}
-                {chips ? (
+                {chips?.length > 0 ? (
                     <ScrollView
                         showsVerticalScrollIndicator={false}
                         showsHorizontalScrollIndicator={false}

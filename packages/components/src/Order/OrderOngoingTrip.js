@@ -24,7 +24,7 @@ const OrderOngoingTrip = ({
                 chips={items.map(JMSList.Chip)} /> 
         ) : (
             <OrderDriverAvatar
-                isLoading={status === ORDER_STATUS.driverPending}
+                //isLoading={status === ORDER_STATUS.driverPending}
                 photo={driverPhoto}
                 formattedDriverName={formattedDriverName}
                 formattedTripStatus={formattedTripStatus}

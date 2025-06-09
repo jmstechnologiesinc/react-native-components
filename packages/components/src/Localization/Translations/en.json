@@ -64,7 +64,28 @@
         "requestRide": "Request ride",
         "details": "Trip Details",
         "originLocation": "Pickup Location",
-        "dropoffLocation": "Destination"
+        "dropoffLocation": "Destination",
+        "pickupTrajectory": "Pickup Details",
+        "dropoffTrajectory": "Delivery Details", 
+        "totalTrip": "Trip Summary",
+        "pickupDistance": {
+            "description": "Distance from your your location to pickup point"
+        },
+        "pickupDuration": {
+            "description": "Time to reach pickup location"
+        },
+        "dropoffDistance": {
+            "description": "Distance from pickup to delivery destination"
+        },
+        "dropoffDuration": {
+            "description": "Estimated delivery time from pickup to destination"
+        },
+        "totalDistance": {
+            "description": "Total distance including pickup and delivery"
+        },
+        "totalDuration": {
+            "description": "Total estimated trip time including pickup and delivery"
+        }
     },
     "order": {
         "vendor": {
@@ -570,7 +591,8 @@
       "setLocationMap": "Set location on map",
       "yourPaymentUpdatedSuccesfuly": "Your payment method was updated succesfuly.",
       "distanceRatePerMile": "Rate per mile",
-      "durationRatePerMinute": "Rate per minute"
+      "durationRatePerMinute": "Rate per minute",
+      
 
      
 }

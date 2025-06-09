@@ -14,10 +14,20 @@ const OrderDriverAvatar = ({
     formattedVehicleValue,
     chips=[]
 }) => {
+    
+    const description = [];
+    if(formattedVehicleValue) {
+        description.push(formattedVehicleValue);
+    }
+
+    if(formattedTripStatus) {
+        description.push(formattedTripStatus);
+    }
+
     return (
         <JMSList.Item
             title={formattedDriverName}
-            description={[formattedVehicleValue, formattedTripStatus]}
+            description={description.length > 0 ? description : null}
             titleNumberOfLines={0}
             descriptionNumberOfLines={0}
             chips={chips}

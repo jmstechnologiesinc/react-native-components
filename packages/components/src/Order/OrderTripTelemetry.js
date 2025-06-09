@@ -1,51 +1,50 @@
 import React from 'react';
 
-import { View } from 'react-native';
-
 import { List} from '@jmstechnologiesinc/react-native-paper';
 import { localized } from '@jmstechnologiesinc/react-native-components';
 
-import { ORDER_STATUS_CANCELLED } from '@jmstechnologiesinc/order';
-import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
-
 const OrderTripTelemetry = ({
-    trip
+    trajectory
 }) => {
-    const telemetryList = [];
-    if (trip.driver?.telemetry) {
-        const telemetry = ORDER_STATUS_CANCELLED(trip.status)
-            ? trip.driver.telemetry?.estimatedTravel
-            : trip.driver.telemetry?.estimated;
+    if(!trajectory) return null;
 
-            if (telemetry) {
-            telemetryList.push({
-                key: 'telemetry-total-distance',
-                title: telemetry.formattedTotalDistance,
-                icon: MATERIAL_ICONS.call,
-                description: localized('order.distance'),
-            });
-            telemetryList.push({
-                key: 'telemetry-total-duration',
-                title: telemetry.formattedTotalDuration,
-                icon: MATERIAL_ICONS.call,
-                description: localized('order.duration'),
-            });
-        }
-    }
+    return (
+        <>
 
-    return telemetryList.length > 0 ? (
-        <List.Section title={localized('order.telemetry')}>
-            {telemetryList.map((item) => (
-                <View key={item.key}>
-                    <List.Item
-                        title={item.title}
-                        description={item.description}
-                        titleNumberOfLines={0}
-                        descriptionNumberOfLines={0} />
-                </View>
-            ))}
-        </List.Section>
-    ) : null
+<List.Section title={localized('trip.originLocation')}>
+    <List.Item 
+        title={trajectory.formattedPickupDistance} 
+        description={localized('trip.pickupDistance.description')} // "Distance from your current location to pickup point"
+    />
+    <List.Item 
+        title={trajectory.formattedPickupDuration} 
+        description={localized('trip.pickupDuration.description')} // "Estimated time to reach pickup location"
+    />
+</List.Section>
+
+<List.Section title={localized('trip.dropoffLocation')}>
+    <List.Item 
+        title={trajectory.formattedDropOffDistance} 
+        description={localized('trip.dropoffDistance.description')} // "Distance from pickup to delivery destination"
+    />
+    <List.Item 
+        title={trajectory.formattedDropoffDuration} 
+        description={localized('trip.dropoffDuration.description')} // "Estimated delivery time from pickup to destination"
+    />
+</List.Section>
+
+<List.Section title={localized('trip.totalTrip')}>
+    <List.Item 
+        title={trajectory.formattedTotalDistance} 
+        description={localized('trip.totalDistance.description')} // "Total distance including pickup and delivery"
+    />
+    <List.Item 
+        title={trajectory.formattedTotalDuration} 
+        description={localized('trip.totalDuration.description')} // "Total estimated trip time including pickup and delivery"
+    />
+</List.Section>
+        </>
+    )
 }
 
 export default OrderTripTelemetry;
