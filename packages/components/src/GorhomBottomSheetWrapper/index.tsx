@@ -36,7 +36,7 @@ const GorhomBottomSheetWrapper = forwardRef(({
     close: animatedBottomSheetRef.current.close,
     collapse: animatedBottomSheetRef.current.collapse,
     expand: animatedBottomSheetRef.current.expand,
-    getCurrentSnapIndex: () => animatedBottomSheetIndex.value, // <-- aquí
+    getCurrentSnapIndex: () => animatedBottomSheetIndex.value, 
 
   }));
 
