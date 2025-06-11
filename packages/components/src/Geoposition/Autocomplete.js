@@ -101,7 +101,7 @@ const Autocomplete = ({
 
     return (
         <>
-            <ScreenWrapper withScrollView={true} keyboardShouldPersistTaps={'handled'}>
+            <ScreenWrapper withScrollView={false} keyboardShouldPersistTaps={'handled'}>
             {isLocationPermissionDenied === true ? (
                <>
                     <Banner
