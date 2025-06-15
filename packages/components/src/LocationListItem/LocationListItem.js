@@ -11,6 +11,7 @@ export const LOCATION_LIST_ITEM = {
     locationHistory: 'locationHistory',
     destinationSuggestion: 'destinationSuggestion',
     hailLocation: 'hailLocation',
+    mapMarkerCheckOutline: 'mapMarkerCheckOutline'
 };
 
 export const LOCATION_LIST_ITEM_MAPPING = {
@@ -20,8 +21,9 @@ export const LOCATION_LIST_ITEM_MAPPING = {
     [LOCATION_LIST_ITEM.locationHistory]: 'map-clock-outline',
     [LOCATION_LIST_ITEM.destinationSuggestion]: 'map-marker-star-outline',
     [LOCATION_LIST_ITEM.hailLocation]: 'hail',
+    [LOCATION_LIST_ITEM.mapMarkerCheckOutline]: 'map-marker-outline',
 };
-
+ 
 export const interpunctLocationListItemDescription = ({ floorNumber, buildingName, note }) =>
     interpunct([floorNumber, buildingName, note]);
 

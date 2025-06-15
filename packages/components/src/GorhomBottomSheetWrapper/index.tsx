@@ -81,7 +81,8 @@ const GorhomBottomSheetWrapper = forwardRef(({
         animatedPosition={animatedBottomSheetPosition}
         enablePanDownToClose={true}
         footerComponent={footerComponent}
-        onChange={onchange}>
+        onChange={onchange}
+        >
           {children}
       </AnimatedBottomSheet>
     </>

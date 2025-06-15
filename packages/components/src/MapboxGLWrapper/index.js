@@ -9,6 +9,7 @@ import MapboxGLWrapperDriverRouteMonitoring from "./MapboxGLWrapperDriverRouteMo
 import MapboxGLWrapperBoundingBoxCamera from "./MapboxGLWrapperBoundingBoxCamera";
 import MapboxGLWrapperHeatMap from "./MapboxGLWrapperHeatMap";
 import MapboxGLWrapperPointAnnotationMaterialIcon from "./MapboxGLWrapperPointAnnotationMaterialIcon";
+import MapboxGLWrapperLocationSelectorPin from './MapboxGLWrapperLocationSelectorPin'
 
 export default Object.assign(
     MapboxGLWrapper,
@@ -23,6 +24,7 @@ export default Object.assign(
         DrawTurnByTurnRoute: MapboxGLWrapperDrawTurnByTurnRoute,
         ResetToInitialPositionIcon: MapboxGLWrapperResetToInitialPositionIcon,
         DriverRouteMonitoring: MapboxGLWrapperDriverRouteMonitoring,
-        HeatMap: MapboxGLWrapperHeatMap
+        HeatMap: MapboxGLWrapperHeatMap,
+        LocationSelectorPin: MapboxGLWrapperLocationSelectorPin
     }
 )
