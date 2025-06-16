@@ -390,7 +390,7 @@
     "useGPSLocation": "Use GPS Location",
     "pending": "Pending",
     "from": "From",
-    "platformCommission": "Platform Commission ({{percentage}})",
+    "platformCommission": "Platform Commission {{percentage}}",
     "total": "Total",
     "subTotal": "Subtotal",
     "taxes": "Taxes",
@@ -590,9 +590,10 @@
       "startingPoint": "Starting point",
       "setLocationMap": "Set location on map",
       "yourPaymentUpdatedSuccesfuly": "Your payment method was updated succesfuly.",
+      "distanceCost": "Distance Cost {{percentage}}",
+      "durationCost": "Duration Cost {{percentage}}",
       "distanceRatePerMile": "Rate per mile",
       "durationRatePerMinute": "Rate per minute",
-      
-
-     
+      "pickupincentive": "Incentivo de Recogida",
+      "dropoffincentive": "Incentivo de Entrega"
 }

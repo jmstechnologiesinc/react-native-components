@@ -7,7 +7,6 @@ import { Avatar} from '@jmstechnologiesinc/react-native-paper';
 import { interpunct } from '@jmstechnologiesinc/commons';
 
 const OrderDriverAvatar = ({
-    isLoading,
     photo,
     formattedDriverName,
     formattedTripStatus,
@@ -31,15 +30,14 @@ const OrderDriverAvatar = ({
             titleNumberOfLines={0}
             descriptionNumberOfLines={0}
             chips={chips}
-            left={isLoading ?
-                (props) => (
-                    <Avatar.Icon 
-                        icon='car'    
-                        style={props.style} />
-                ) : (
-                    (props) => <Avatar.Image 
-                        source={{ uri: imageKitAvatar(photo) }}
-                        style={props.style}  />
+            left={photo ?(
+                (props) => <Avatar.Image 
+                    source={{ uri: imageKitAvatar(photo) }}
+                    style={props.style}  />
+            ) : (props) => (
+                <Avatar.Icon 
+                    icon='car'    
+                    style={props.style} />
             )} /> 
     )
 }

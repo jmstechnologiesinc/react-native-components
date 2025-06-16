@@ -10,18 +10,18 @@ const OrderHistoryOrderItem = ({
     id,
     title,
     photo,
-    icon,
+    icon='car-clock',
     status,
     platform,
     formattedTripStatus,
-    customerCost,
+    amount,
     items=[]
 }) => {
     const renderDescription = [
         interpunct([
             formatOrderID(id), 
             platform,
-            findAccountingItem(customerCost, ACCOUNTING_ITEMS.total)?.formattedValue
+            findAccountingItem(amount, ACCOUNTING_ITEMS.total)?.formattedValue
     ]),
         interpunct([localized(status), formattedTripStatus])
     ];

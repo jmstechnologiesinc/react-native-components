@@ -24,7 +24,7 @@ const OrderTripTelemetry = ({
 
 <List.Section title={localized('trip.dropoffLocation')}>
     <List.Item 
-        title={trajectory.formattedDropOffDistance} 
+        title={trajectory.formattedDropoffDistance} 
         description={localized('trip.dropoffDistance.description')} // "Distance from pickup to delivery destination"
     />
     <List.Item 

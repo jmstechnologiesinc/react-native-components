@@ -374,7 +374,7 @@
     "useGPSLocation": "Utilizar ubicación GPS",
     "pending": "Pendiente",
     "from": "De",
-    "platformCommission": "Comisión de la plataforma ({{percentage}})",
+    "platformCommission": "Comisión de la plataforma {{percentage}}",
     "total": "Total",
     "subTotal": "Subtotal",
     "taxes": "Impuestos",
@@ -575,5 +575,7 @@
     "setLocationMap": "Establecer ubicación en el mapa",
     "yourPaymentUpdatedSuccesfuly": "Tu método de pago se actualizó correctamente.",
     "distanceRatePerMile": "Tarifa por milla",
-    "durationRatePerMinute": "Tarifa por minuto"
+    "durationRatePerMinute": "Tarifa por minuto",
+    "pickupincentive": "Pickup Incentive",
+    "dropoffincentive": "Drop-off Incentive"
 }
