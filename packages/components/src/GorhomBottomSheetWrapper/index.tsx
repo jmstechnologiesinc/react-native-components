@@ -35,7 +35,9 @@ const GorhomBottomSheetWrapper = forwardRef(({
     snapToIndex: animatedBottomSheetRef.current.snapToIndex,
     close: animatedBottomSheetRef.current.close,
     collapse: animatedBottomSheetRef.current.collapse,
-    expand: animatedBottomSheetRef.current.expand
+    expand: animatedBottomSheetRef.current.expand,
+    getCurrentSnapIndex: () => animatedBottomSheetIndex.value, 
+
   }));
 
   const getAnimatedPositionBeforeMiddleSnapPoint = (callback) => {
@@ -79,7 +81,8 @@ const GorhomBottomSheetWrapper = forwardRef(({
         animatedPosition={animatedBottomSheetPosition}
         enablePanDownToClose={true}
         footerComponent={footerComponent}
-        onChange={onchange}>
+        onChange={onchange}
+        >
           {children}
       </AnimatedBottomSheet>
     </>

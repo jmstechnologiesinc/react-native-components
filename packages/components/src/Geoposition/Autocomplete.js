@@ -43,6 +43,7 @@ const Autocomplete = ({
     onMapPicker,
     predefinedPlaces = true,
     isShowMapPicker = false,
+    withScrollView= false
 }) => {
     const [isLocationPermissionDenied, setPermissions] = useState(false);
     const [isOriginFocused, setIsOriginFocused] = useState(false);
@@ -99,9 +100,10 @@ const Autocomplete = ({
         Keyboard.dismiss()
     }
 
+  
     return (
         <>
-            <ScreenWrapper withScrollView={true} keyboardShouldPersistTaps={'handled'}>
+            <ScreenWrapper withScrollView={withScrollView} keyboardShouldPersistTaps={'handled'}>
             {isLocationPermissionDenied === true ? (
                <>
                     <Banner
