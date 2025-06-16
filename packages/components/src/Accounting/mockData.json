@@ -1,36 +1,158 @@
-{
-  "total": {
-    "label": "Total",
-    "formattedValue": "$5,317.12",
-    "amount": 5317.119388557016
-  },
-  "tips": {
-    "label": "Tips",
-    "formattedValue": "$0.00",
-    "amount": 0
-  },
-  "subTotal": {
-    "label": "Subtotal",
-    "formattedValue": "$5,000.00",
-    "amount": 5000
-  },
-  "dynamicFees": [
-    {
-      "id": "platformFee",
-      "label": "Platform Fee",
-      "formattedValue": "$4.00",
-      "amount": 4
+[
+  {
+    "amount": {
+      "create": {},
+      "calculator": {
+        "decrement": {},
+        "zero": {},
+        "modulo": {},
+        "subtract": {},
+        "add": {},
+        "compare": {},
+        "power": {},
+        "multiply": {},
+        "integerDivide": {},
+        "increment": {}
+      },
+      "formatter": {
+        "toNumber": {},
+        "toString": {}
+      },
+      "toJSON": {}
     },
-    {
-      "id": "deliveryFee",
-      "label": "Delivery Fee",
-      "formattedValue": "$0.35",
-      "amount": 0.3476598183682173
-    }
-  ],
-  "taxes": {
-    "label": "Taxes",
-    "formattedValue": "$312.77",
-    "amount": 312.771728738648
+    "id": "total",
+    "description": null,
+    "formattedValue": "$11.02",
+    "label": "total"
+  },
+  {
+    "amount": {
+      "create": {},
+      "calculator": {
+        "decrement": {},
+        "zero": {},
+        "modulo": {},
+        "subtract": {},
+        "add": {},
+        "compare": {},
+        "power": {},
+        "multiply": {},
+        "integerDivide": {},
+        "increment": {}
+      },
+      "formatter": {
+        "toNumber": {},
+        "toString": {}
+      },
+      "toJSON": {}
+    },
+    "id": "subTotal",
+    "description": null,
+    "formattedValue": "$10.00",
+    "label": "subTotal"
+  },
+  {
+    "amount": {
+      "create": {},
+      "calculator": {
+        "decrement": {},
+        "zero": {},
+        "modulo": {},
+        "subtract": {},
+        "add": {},
+        "compare": {},
+        "power": {},
+        "multiply": {},
+        "integerDivide": {},
+        "increment": {}
+      },
+      "formatter": {
+        "toNumber": {},
+        "toString": {}
+      },
+      "toJSON": {}
+    },
+    "id": "platformFee",
+    "description": null,
+    "formattedValue": "$0.00",
+    "label": "platformCommission(0%)"
+  },
+  {
+    "amount": {
+      "create": {},
+      "calculator": {
+        "decrement": {},
+        "zero": {},
+        "modulo": {},
+        "subtract": {},
+        "add": {},
+        "compare": {},
+        "power": {},
+        "multiply": {},
+        "integerDivide": {},
+        "increment": {}
+      },
+      "formatter": {
+        "toNumber": {},
+        "toString": {}
+      },
+      "toJSON": {}
+    },
+    "id": "deliveryCost",
+    "description": null,
+    "formattedValue": "$0.49",
+    "label": "deliveryCost"
+  },
+  {
+    "amount": {
+      "create": {},
+      "calculator": {
+        "decrement": {},
+        "zero": {},
+        "modulo": {},
+        "subtract": {},
+        "add": {},
+        "compare": {},
+        "power": {},
+        "multiply": {},
+        "integerDivide": {},
+        "increment": {}
+      },
+      "formatter": {
+        "toNumber": {},
+        "toString": {}
+      },
+      "toJSON": {}
+    },
+    "id": "tips",
+    "description": null,
+    "formattedValue": "$0.53",
+    "label": "tips"
+  },
+  {
+    "amount": {
+      "create": {},
+      "calculator": {
+        "decrement": {},
+        "zero": {},
+        "modulo": {},
+        "subtract": {},
+        "add": {},
+        "compare": {},
+        "power": {},
+        "multiply": {},
+        "integerDivide": {},
+        "increment": {}
+      },
+      "formatter": {
+        "toNumber": {},
+        "toString": {}
+      },
+      "toJSON": {}
+    },
+    "id": "taxes",
+    "description": null,
+    "formattedValue": "$0.00",
+    "label": "taxes"
   }
-}
+]

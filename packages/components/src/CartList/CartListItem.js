@@ -12,8 +12,10 @@ import SwipeToDelete from '../SwipeToDelete/SwipeToDelete';
 import { Item as JMSItem } from '../List/List';
 import ButtonWrapper from '../ButtonWrapper/ButtonWrapper';
 import { getMainPhoto } from '@jmstechnologiesinc/commons';
+import { localized } from '@jmstechnologiesinc/react-native-components/lib/Localization/Localization';
 
 const CartListItem = ({
+    title,
     checkoutTitle,
     addTitle,
     showProductDescription,
@@ -35,7 +37,7 @@ const CartListItem = ({
         return (
             <ScreenWrapper.Section
                 withPaddingHorizontal
-                style={{ paddingTop: MD3LightTheme.spacing.x4, paddingBottom: MD3LightTheme.spacing.x4 }}
+                style={{ paddingTop: MD3LightTheme.spacing.x8, paddingBottom: MD3LightTheme.spacing.x4 }}
             >
                 <Button mode="contained" onPress={() => onCheckout(item.vendorIds)}>
                     {checkoutTitle}
@@ -55,7 +57,9 @@ const CartListItem = ({
 
     return (
         <>
-            <JMSItem
+            
+    <List.Section title={localized(title)}>
+    <JMSItem
                 title={vendor.title}
                 description={description}
                 descriptionStyle={isValid === false ? { color: MD3Colors.error50 } : null}
@@ -65,6 +69,8 @@ const CartListItem = ({
                     <Avatar.Image style={props.style} source={{ uri: imageKitAvatar(getMainPhoto(vendor.photos)) }} />
                 )}
             />
+        </List.Section>
+        <List.Section>
 
             {
                 Platform.OS === 'web' ? productList?.map((product, index) => (
@@ -101,12 +107,10 @@ const CartListItem = ({
                 ))
             }
 
-
-            <List.Section>
-                <ButtonWrapper
+</List.Section>
+<ButtonWrapper
                     title={addTitle}
                     onPress={() => onAdd(item.vendor, cartIndustryId)} />
-            </List.Section>
 
             {renderTips ? renderTips(item) : null}
         </>

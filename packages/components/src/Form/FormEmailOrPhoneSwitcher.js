@@ -6,7 +6,7 @@ import EmailPassword from './FormEmailPassword'
 import ScreenWrapper from '../ScreenWrapper'
 import { localized } from '../Localization/Localization'
 
-const LOGIN_OPTIONS = {
+export const LOGIN_OPTIONS = {
     PHONE: "PHONE",
     EMAIL: "EMAIL"
 }

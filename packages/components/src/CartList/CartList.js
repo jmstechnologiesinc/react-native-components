@@ -1,12 +1,13 @@
 import React from 'react';
 
-import {FlatList, View} from 'react-native';
+import { FlatList, View } from 'react-native';
 
 import CartListItem from './CartListItem';
 
 const keyExtractor = productItem => productItem.key || productItem.id;
 
 const CartList = ({
+    title,
     checkoutTitle,
     addTitle,
     sections,
@@ -29,15 +30,16 @@ const CartList = ({
                 data={sections}
                 keyExtractor={keyExtractor}
                 renderItem={({ item }) => (
-                    <CartListItem 
+                    <CartListItem
+                        title={title}
                         checkoutTitle={checkoutTitle}
                         addTitle={addTitle}
                         showProductDescription={showProductDescription}
-                        item={item} 
-                        renderTips={renderTips} 
+                        item={item}
+                        renderTips={renderTips}
                         onAdd={onAdd}
-                        onDelete={onDelete} 
-                        onEdit={onEdit} 
+                        onDelete={onDelete}
+                        onEdit={onEdit}
                         onCheckout={onCheckout} />
                 )}
                 showsVerticalScrollIndicator={false}

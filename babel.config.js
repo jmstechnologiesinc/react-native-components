@@ -1,6 +1,18 @@
 module.exports = {
-  presets: ["module:metro-react-native-babel-preset"],
+  presets: ['module:@react-native/babel-preset'],
   plugins: [
-    ["babel-plugin-react-docgen-typescript", { exclude: "node_modules" }],
+    'transform-inline-environment-variables',
+    [
+      'module:react-native-dotenv',
+      {
+        moduleName: 'react-native-dotenv',
+        verbose: false,
+      },
+    ],
+
+    ['babel-plugin-react-docgen-typescript', { exclude: 'node_modules' }],
+    'react-native-reanimated/plugin',
+
+
   ],
 };

@@ -8,20 +8,21 @@ import { localized } from '../Localization/Localization';
 
 const isTranslatePlatformCommission = (title) => {
 
-    const regex = /^platformCommission\((\d+%)\)$/;
+    const regex = /^platformCommission\((\d+(\.\d+)?%)\)$/;
+
 
     const match = title.match(regex);
 
     if (match) {
+        console.log(title)
         const percentage = match[1];
         return localized('platformCommission', { percentage })
     } else {
         return localized(title)
-
     }
-
 }
-const feesListItem = (feeList) => {
+
+const Accounting = ({ feeList, isLocalized = true }) => {
     if (!feeList?.length) {
         return null;
     }
@@ -54,8 +55,6 @@ const feesListItem = (feeList) => {
     }
 
     return results;
-};
-
-const Accounting = ({ feeList }) => feesListItem(feeList);
+}
 
 export default Accounting;

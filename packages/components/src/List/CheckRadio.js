@@ -2,13 +2,14 @@ import React from 'react';
 
 import { View } from 'react-native';
 
-import { List, RadioButton, Checkbox } from '@jmstechnologiesinc/react-native-paper';
-import { MetaBadged } from '../List/List';
+import { RadioButton, Checkbox } from '@jmstechnologiesinc/react-native-paper';
+import * as JMSList from './List';
 
 const CheckRadio = ({
     title,
     description,
     metaTitle,
+    chips,
     titleNumberOfLines = 0,
     descriptionNumberOfLines = 0,
     isDisabled,
@@ -17,9 +18,10 @@ const CheckRadio = ({
     variant = 'radio',
     ...props
 }) => (
-    <List.Item
+    <JMSList.Item
         title={title}
         description={description}
+        chips={chips}
         disabled={isDisabled}
         titleNumberOfLines={titleNumberOfLines}
         descriptionNumberOfLines={descriptionNumberOfLines}
@@ -43,7 +45,7 @@ const CheckRadio = ({
                 </View>
             )
         }
-        right={() => <MetaBadged title={metaTitle} />}
+        right={() => <JMSList.MetaBadged title={metaTitle} />}
         {...props}
     />
 );

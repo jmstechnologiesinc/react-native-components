@@ -44,6 +44,7 @@ const ActionGroupButtons = ({ buttons, isLoading, isStretched = false, style, on
                         ) : (
                             <Button
                                 compact={button.compact}
+                                theme={button.theme}
                                 loading={isLoading}
                                 textColor={button.textColor}
                                 disabled={isLoading || button.isDisabled}

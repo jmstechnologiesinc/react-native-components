@@ -1,60 +1,11 @@
 import { USER_ROLES } from '@jmstechnologiesinc/user';
-import { firestoreTimestampToDate,  getRoleFees } from '@jmstechnologiesinc/commons';
 
 import {
     ORDER_STATUS,
     ORDER_STATUS_CANCELLED,
     ORDER_STATUS_PREPARING,
-    whatIsTheOrderStatus,
-    formatOrderID,
-    orderStatusTime,
 } from '@jmstechnologiesinc/order';
 import { localized } from '../Localization/Localization';
-
-export const formatOrder = (order, role) => {
-    const formattedOrderId = formatOrderID(order.id);
-    const fees = getRoleFees(order, role);
-
-    const fulfilmentStatus = whatIsTheOrderStatus({
-        role,
-        fees,
-        status: order.status,
-        driverStatus: order?.driver?.status,
-        formattedOrderId,
-        formattedStatusTime: order.formattedStatusTime,
-        itemNums: order.cart?.products?.length,
-        fulfillmentMethod: order.fulfillmentMethod,
-        deliveryMethod: order.deliveryMethod,
-        pickupMethod: order.pickupMethod,
-        driverDeliveryMethod: order?.driver?.deliveryMethod,
-        vendorPhone: order.vendor?.phoneNumber,
-        customerPhone: order.author?.phoneNumber,
-        driverPhone: order.driver?.phoneNumber,
-        formattedVendorTitle: order.vendor.title,
-        formattedVendorAddress: order.vendor.location.formattedAddress,
-        formattedDriverCar: order.driver?.vehicle?.formattedValue,
-        formattedDriverName: order?.driver?.formattedName,
-        formattedCustomerName: order.author.formattedName,
-        formattedFulfillmentAddress: order.fulfillmentAddress.formattedAddress,
-        vendorAvatar: order.vendor.photo,
-        driverAvatar: order?.driver?.photo,
-        translation: localized,
-    });
-
-    return {
-        orderId: order.id,
-        fees,
-        fulfilmentStatus,
-        status: order.status,
-        photo: (role === USER_ROLES.customer || role === USER_ROLES.driver) && order.vendor.photo,
-        deliveryMethod: order.deliveryMethod,
-        formattedOrderId,
-        durationValue: order.eta?.duration?.value,
-        deliveryTime: order.eta?.deliveryTime?.value,
-        formattedStatusTime: order.formattedStatusTime,
-        vendorAcceptedTime: firestoreTimestampToDate(order[orderStatusTime(ORDER_STATUS.vendorAccepted)]),
-    };
-};
 
 export const ORDER_LIST_STATUS = {
     ...ORDER_STATUS,
@@ -64,7 +15,7 @@ export const ORDER_LIST_STATUS = {
 };
 
 const ORDER_LIST_STATUS_MAPPING = {
-    [ORDER_LIST_STATUS.preparing]: localized('order.inTheKitchen'),
+    [ORDER_LIST_STATUS.preparing]: localized('order.ongoing'),
     [ORDER_LIST_STATUS.completed]: localized('order.Completed'),
     [ORDER_LIST_STATUS.placed]: localized('order.Placed'),
     [ORDER_LIST_STATUS.inTransit]: localized('order.inTransit'),
