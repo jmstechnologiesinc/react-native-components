@@ -574,8 +574,8 @@
     "startingPoint": "Punto de partida",
     "setLocationMap": "Establecer ubicación en el mapa",
     "yourPaymentUpdatedSuccesfuly": "Tu método de pago se actualizó correctamente.",
-    "distanceRatePerMile": "Tarifa por milla",
-    "durationRatePerMinute": "Tarifa por minuto",
-    "pickupincentive": "Pickup Incentive",
-    "dropoffincentive": "Drop-off Incentive"
+    "distanceRatePerMile": "Tarifa por milla {{percentage}}",
+    "durationRatePerMinute": "Tarifa por minuto {{percentage}}",
+     "pickupincentive": "Incentivo de Recogida",
+      "dropoffincentive": "Incentivo de Entrega"
 }

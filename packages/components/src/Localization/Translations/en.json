@@ -592,8 +592,9 @@
       "yourPaymentUpdatedSuccesfuly": "Your payment method was updated succesfuly.",
       "distanceCost": "Distance Cost {{percentage}}",
       "durationCost": "Duration Cost {{percentage}}",
-      "distanceRatePerMile": "Rate per mile",
-      "durationRatePerMinute": "Rate per minute",
-      "pickupincentive": "Incentivo de Recogida",
-      "dropoffincentive": "Incentivo de Entrega"
+      "distanceRatePerMile": "Rate per mile {{percentage}}",
+      "durationRatePerMinute": "Rate per minute {{percentage}}",
+     
+      "pickupincentive": "Pickup Incentive",
+    "dropoffincentive": "Drop-off Incentive"
 }

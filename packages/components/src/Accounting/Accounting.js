@@ -1,27 +1,41 @@
-import React from 'react';
-
 import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import * as JMSList from '../List/List';
 
 import { calculatableAccoutingList } from '@jmstechnologiesinc/cart';
 import { localized } from '../Localization/Localization';
 
+
 const isTranslatePlatformCommission = (title) => {
 
-    const regex = /^platformCommission\((\d+(\.\d+)?%)\)$/;
-
-
-    const match = title.match(regex);
-
-    if (match) {
-        console.log(title)
-        const percentage = match[1];
-        return localized('platformCommission', { percentage })
-    } else {
-        return localized(title)
+  const functionPatterns = [
+    {
+        regex: /^platformCommission(\(.*?\))$/,  
+        key: 'platformCommission',
+        paramName: 'percentage'  
+    },
+    {
+        regex: /^distanceRatePerMile(\(.*?\))$/,
+        key: 'distanceRatePerMile',
+        paramName: 'percentage'  
+    },
+    {
+        regex: /^durationRatePerMinute(\(.*?\))$/,
+        key: 'durationRatePerMinute',
+        paramName: 'percentage'  
     }
-}
+];
 
+    for (const pattern of functionPatterns) {
+        const match = title.match(pattern.regex);
+        if (match) {
+            const paramValue = match[1];
+            const params = { [pattern.paramName]: paramValue };
+            return localized(pattern.key, params);
+        }
+    }
+
+    return localized(title);
+}
 const Accounting = ({ feeList, isLocalized = true }) => {
     if (!feeList?.length) {
         return null;
