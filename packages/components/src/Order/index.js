@@ -22,6 +22,7 @@ export default Object.assign(
         OngoingTrip: OrderOngoingTrip,
         FulfillmentInfo: OrderFulfillmentInfo,
         TripTelemetry: OrderTripTelemetry,
-        SectionList: OrderSectionList
+        SectionList: OrderSectionList,
+        
     }
 )
