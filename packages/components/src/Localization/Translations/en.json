@@ -600,5 +600,8 @@
     "distanceRatePerMile": "Rate per mile ",
     "durationRatePerMinute": "Rate per minute ",
     "pickupincentive": "Pickup Incentive",
-    "dropoffincentive": "Drop-off Incentive"
+    "dropoffincentive": "Drop-off Incentive",
+    "unitedStates": "United States",
+    "dominicanRepublic": "Dominican Republic",
+    "panama": "Panama"
 }

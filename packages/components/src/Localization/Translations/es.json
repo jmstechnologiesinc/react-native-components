@@ -325,7 +325,7 @@
     "re-enterAccountNumber": "Volver a ingresar el número de cuenta",
     "businessReceiveFunds": "Para que los negocios asociados reciban fondos,",
     "payoutsToBankAccounts": "realiza pagos a la cuenta bancaria.",
-     "Daily": "Diario",
+    "Daily": "Diario",
     "createAccount": "Crear una cuenta",
     "registerBusiness": "Registrar negocio",
     "platforms": "Plataformas",
@@ -600,5 +600,8 @@
     "distanceRatePerMile": "Tarifa por milla ",
     "durationRatePerMinute": "Tarifa por minuto ",
     "pickupincentive": "Incentivo por recogida",
-    "dropoffincentive": "Incentivo por entrega"
+    "dropoffincentive": "Incentivo por entrega",
+    "unitedStates": "Estados Unidos",
+    "dominicanRepublic": "República Dominicana",
+    "panama": "Panamá"
 }
