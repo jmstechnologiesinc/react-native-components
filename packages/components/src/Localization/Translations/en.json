@@ -95,6 +95,8 @@
         "customer": {
             "selfCancelled": "There was an error processing your order. Please try again later."
         },
+        "callTheVendor": "Call the vendor",
+        "callTheCustomer": "Call the customer",
         "fulfillmentAddress": "Delivery Address",
         "rejectNewOrder": "Are you sure you want to reject OID:",
         "cancelOrder": "Are you sure you want to cancel OID:",
@@ -322,9 +324,11 @@
     "bankAccountNumber": "Bank Account Number",
     "re-enterAccountNumber": "Re-enter Account Number",
     "businessReceiveFunds": "For business associated to receive funds,",
-    "payoutsToBankAccount.": "makes payouts to bank account.",
+    "payoutsToBankAccounts": "makes payouts to bank account.",
+    "Daily": "Daily",
     "createAccount": "Create an account",
     "registerBusiness": "Register Business",
+    "platforms": "Platforms",
     "rideAndShareApp": "Ride & Sharing",
     "deliveryApp": "Delivery",
     "getStarted": "Get Started",
