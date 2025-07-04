@@ -6,9 +6,9 @@ import { Config } from '../Config'
 MapboxGL.setAccessToken(Config.MAPBOX_ACCESS_TOKEN);
 MapboxGL.setTelemetryEnabled(false);
 
-const MapboxGLWrapper = ({style, children, ...props }) => 
-  <MapboxGL.MapView style={[{ flex: 1 }, style]} 
-    styleURL={MapboxGL.StyleURL.Street} 
+const MapboxGLWrapper = ({ style, children, ...props }) =>
+  <MapboxGL.MapView style={[{ flex: 1 }, style]}
+    styleURL={MapboxGL.StyleURL.Street}
     zoomEnabled={true}
     compassEnabled={false}
     logoEnabled={false}
@@ -18,15 +18,20 @@ const MapboxGLWrapper = ({style, children, ...props }) =>
     {children}
   </MapboxGL.MapView>
 
-const MapboxGLWrapperCamera= ({
+const MapboxGLWrapperCamera = ({
   ...props
 }) => <MapboxGL.Camera {...props} />;
 
-const MapboxGLWrapperUserLocation = () => 
-  <MapboxGL.UserLocation 
-    animated={true} 
-    androidRenderMode="gps" 
-    showsUserHeadingIndicator={true} />
+const MapboxGLWrapperUserLocation = ({
+  animated = true,
+  isAndroidRenderMode = true,
+  showsUserHeadingIndicator = true
+}) =>
+  <MapboxGL.UserLocation
+    animated={animated}
+    {...(isAndroidRenderMode && { androidRenderMode: 'gps' })}
+    showsUserHeadingIndicator={showsUserHeadingIndicator}
+  />
 
-export {MapboxGLWrapperUserLocation, MapboxGLWrapperCamera}
+export { MapboxGLWrapperUserLocation, MapboxGLWrapperCamera }
 export default MapboxGLWrapper

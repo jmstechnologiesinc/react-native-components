@@ -1,5 +1,5 @@
-import React, {forwardRef, useImperativeHandle, useRef } from 'react';
-import { Dimensions } from 'react-native';
+import React, { forwardRef, useImperativeHandle, useRef } from 'react';
+import { Dimensions, Platform } from 'react-native';
 import { useSharedValue, useDerivedValue } from 'react-native-reanimated';
 
 import AnimatedCrosshairsGpsIcon from './AnimatedCrosshairsGpsIcon';
@@ -36,31 +36,31 @@ const GorhomBottomSheetWrapper = forwardRef(({
     close: animatedBottomSheetRef.current.close,
     collapse: animatedBottomSheetRef.current.collapse,
     expand: animatedBottomSheetRef.current.expand,
-    getCurrentSnapIndex: () => animatedBottomSheetIndex.value, 
+    getCurrentSnapIndex: () => animatedBottomSheetIndex.value,
 
   }));
 
-  const getAnimatedPositionBeforeMiddleSnapPoint = (callback) => {
-    if(SCREEN_HEIGHT - crosshairsGpsIconAnimatedPosition.value < MIDDLE_SNAP_POINT) {
-      callback(SCREEN_HEIGHT - crosshairsGpsIconAnimatedPosition.value);
-    }
-  }
+ const getAnimatedPositionBeforeMiddleSnapPoint = (callback) => {
+  const position = SCREEN_HEIGHT - crosshairsGpsIconAnimatedPosition.value;
+  const breakPoint =  Platform.OS === 'ios' ? MIDDLE_SNAP_POINT : SCREEN_HEIGHT
+  if (position < breakPoint) callback(position);
+};
 
   const onchange = () => {
-    if(onAnimatedPositionChange) {
+    if (onAnimatedPositionChange) {
       getAnimatedPositionBeforeMiddleSnapPoint(onAnimatedPositionChange);
     }
   }
 
   const crosshairsGpsIconPress = () => {
-    if(onCrosshairsGpsPress) {
+    if (onCrosshairsGpsPress) {
       getAnimatedPositionBeforeMiddleSnapPoint(onCrosshairsGpsPress);
     }
   }
 
   return (
     <>
-     {isCrosshairsGpsIconVisible ? (
+      {isCrosshairsGpsIconVisible ? (
         <AnimatedCrosshairsGpsIcon
           animatedIndex={crosshairsGpsIconAnimatedIndex}
           animatedPosition={crosshairsGpsIconAnimatedPosition}
@@ -82,8 +82,8 @@ const GorhomBottomSheetWrapper = forwardRef(({
         enablePanDownToClose={true}
         footerComponent={footerComponent}
         onChange={onchange}
-        >
-          {children}
+      >
+        {children}
       </AnimatedBottomSheet>
     </>
   );
