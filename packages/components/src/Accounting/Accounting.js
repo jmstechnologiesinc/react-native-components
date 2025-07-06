@@ -4,7 +4,6 @@ import * as JMSList from '../List/List';
 import { calculatableAccoutingList } from '@jmstechnologiesinc/cart';
 import { localized } from '../Localization/Localization';
 
-
 const localizeWithParam = (title) => {
     const regex = /^(\w+)\((.+)\)$/;
     const match = title.match(regex);
@@ -15,7 +14,7 @@ const localizeWithParam = (title) => {
     } else {
         return localized(title);
     }
-}
+};
 const Accounting = ({ feeList }) => {
     if (!feeList?.length) {
         return null;
@@ -27,15 +26,19 @@ const Accounting = ({ feeList }) => {
         const styles =
             feeItem.id === 'total'
                 ? {
-                    titleVariant: 'headlineSmall',
-                    metaTitleVariant: 'labelLarge',
-                    titleStyle: { color: MD3LightTheme.colors.onSurfaceVariant },
-                    metaTitleStyle: { color: MD3LightTheme.colors.onSurface, lineHeight: MD3LightTheme.fonts.titleLarge.lineHeight, fontSize: MD3LightTheme.fonts.titleLarge.fontSize },
-                }
+                      titleVariant: 'headlineSmall',
+                      metaTitleVariant: 'labelLarge',
+                      titleStyle: { color: MD3LightTheme.colors.onSurfaceVariant },
+                      metaTitleStyle: {
+                          color: MD3LightTheme.colors.onSurface,
+                          lineHeight: MD3LightTheme.fonts.titleLarge.lineHeight,
+                          fontSize: MD3LightTheme.fonts.titleLarge.fontSize,
+                      },
+                  }
                 : {
-                    style: { paddingVertical: 0 },
-                    titleStyle: { color: MD3LightTheme.colors.onSurface },
-                };
+                      style: { paddingVertical: 0 },
+                      titleStyle: { color: MD3LightTheme.colors.onSurface },
+                  };
 
         results.push(
             <JMSList.Item
@@ -49,6 +52,6 @@ const Accounting = ({ feeList }) => {
     }
 
     return results;
-}
+};
 
 export default Accounting;

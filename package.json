@@ -13,11 +13,13 @@
     "storybook:android": "STORYBOOK_ENABLED=true react-native run-android",
     "storybook-generate": "sb-rn-get-stories --config-path .ondevice",
     "storybook:web": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\""
   },
   "dependencies": {
     "@dinero.js/currencies": "^2.0.0-alpha.14",
     "@gorhom/bottom-sheet": "^5.0.4",
+    "@jmstechnologiesinc/bottom-sheet": "^5.0.6",
     "@jmstechnologiesinc/cart": "^0.0.68",
     "@jmstechnologiesinc/commons": "^0.0.67",
     "@jmstechnologiesinc/driver": "^0.0.54",

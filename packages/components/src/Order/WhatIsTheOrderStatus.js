@@ -1,103 +1,112 @@
 import { DRIVER_STATUS } from '@jmstechnologiesinc/driver';
 import { DELIVERY_METHODS, PICKUP_METHODS, FULFILLMENT_METHODS } from '@jmstechnologiesinc/vendor';
 import { USER_ROLES } from '@jmstechnologiesinc/user';
-import { ITEM_TYPE} from '@jmstechnologiesinc/commons';
+import { ITEM_TYPE } from '@jmstechnologiesinc/commons';
 
 import { ORDER_STATUS, ORDER_STATUS_CANCELLED, ORDER_STATUS_PREPARING } from '@jmstechnologiesinc/order';
-import { localized  } from '../Localization/Localization';
+import { localized } from '../Localization/Localization';
 
-export const whatIsTheOrderStatus = ({
-    order,
-    role,
-    driverStatus,
-}) => {
-    if(!order) return null;
+export const whatIsTheOrderStatus = ({ order, role, driverStatus }) => {
+    if (!order) return null;
 
     if (role === USER_ROLES.customer) {
         if (order.status === ORDER_STATUS.completed) {
             return {
                 formattedTripStatus: null,
-                buttons: [{
-                    title: localized('order.receipt'),
-                    value: ITEM_TYPE.print,
-                }]
-            }
+                buttons: [
+                    {
+                        title: localized('order.receipt'),
+                        value: ITEM_TYPE.print,
+                    },
+                ],
+            };
         } else if (ORDER_STATUS_CANCELLED(order.status) === true) {
-            if (order.status === ORDER_STATUS.noDriverFound) {} 
-            else if (order.status === ORDER_STATUS.vendorRejected) {} 
-            else if (order.status === ORDER_STATUS.vendorCancelled) {} 
-            else if (order.status === ORDER_STATUS.selfCancelled) {} 
-            else if (order.status === ORDER_STATUS.customerCancelled) {}
+            if (order.status === ORDER_STATUS.noDriverFound) {
+            } else if (order.status === ORDER_STATUS.vendorRejected) {
+            } else if (order.status === ORDER_STATUS.vendorCancelled) {
+            } else if (order.status === ORDER_STATUS.selfCancelled) {
+            } else if (order.status === ORDER_STATUS.customerCancelled) {
+            }
 
             return {
-              formattedTripStatus: null,
-              buttons: [{
-                title: localized('order.receipt'),
-                value: ITEM_TYPE.print,
-              }]
-          }
+                formattedTripStatus: null,
+                buttons: [
+                    {
+                        title: localized('order.receipt'),
+                        value: ITEM_TYPE.print,
+                    },
+                ],
+            };
         } else if (order.status === ORDER_STATUS.placed) {
             if (order.fulfillmentMethod === FULFILLMENT_METHODS.pickup) {
                 return {
                     formattedTripStatus: localized('contactingTheVendor'),
-                    buttons: [{
-                        title: localized('global.cancel'),
-                        value: ORDER_STATUS.customerCancelled,
-                    }],
-                    items: [{
-                        formattedValue: localized(order.pickupMethod),
-                        value: order.pickupMethod,
-                        type: ITEM_TYPE.takeout,
-                    }]
-                }
+                    buttons: [
+                        {
+                            title: localized('global.cancel'),
+                            value: ORDER_STATUS.customerCancelled,
+                        },
+                    ],
+                    items: [
+                        {
+                            formattedValue: localized(order.pickupMethod),
+                            value: order.pickupMethod,
+                            type: ITEM_TYPE.takeout,
+                        },
+                    ],
+                };
             } else {
                 return {
                     formattedTripStatus: localized('contactingTheVendor'),
-                    buttons: [{
-                        title: localized('global.cancel'),
-                        value: ORDER_STATUS.customerCancelled,
-                    }],
-                    items: []
-                }
+                    buttons: [
+                        {
+                            title: localized('global.cancel'),
+                            value: ORDER_STATUS.customerCancelled,
+                        },
+                    ],
+                    items: [],
+                };
             }
         } else if (order.deliveryMethod === DELIVERY_METHODS.marketPlace) {
-            const buttons = [{
-                title: localized('global.cancel'),
-                value: ORDER_STATUS.customerCancelled,
-            }];
+            const buttons = [
+                {
+                    title: localized('global.cancel'),
+                    value: ORDER_STATUS.customerCancelled,
+                },
+            ];
             if (ORDER_STATUS_PREPARING(order.status)) {
                 if (order.status === ORDER_STATUS.driverPending) {
                     return {
                         formattedTripStatus: localized('order.driverPending'),
-                        buttons
-                    }
+                        buttons,
+                    };
                 } else if (order.status === ORDER_STATUS.driverAccepted) {
                     return {
                         formattedTripStatus: localized('order.driverAccepted'),
-                        buttons
-                    }
+                        buttons,
+                    };
                 } else {
                     return {
                         formattedTripStatus: localized('order.lookingForDriver'),
-                        buttons
-                    }
+                        buttons,
+                    };
                 }
             } else if (order.status === ORDER_STATUS.shipped) {
                 return {
                     formattedTripStatus: localized('order.headingToPickup'),
-                    buttons
-                } 
+                    buttons,
+                };
             } else if (order.status === ORDER_STATUS.inTransit) {
                 if (driverStatus === DRIVER_STATUS.arrived) {
                     return {
                         formattedTripStatus: localized('order.customerArrived'),
-                        buttons
-                    } 
+                        buttons,
+                    };
                 } else {
                     return {
                         formattedTripStatus: localized('order.headingToDropOff'),
-                        buttons
-                    } 
+                        buttons,
+                    };
                 }
             }
         } else if (order.deliveryMethod === DELIVERY_METHODS.ownStaff) {
@@ -105,82 +114,100 @@ export const whatIsTheOrderStatus = ({
                 if (order.status === ORDER_STATUS.driverPending) {
                     return {
                         formattedTripStatus: localized('order.driverPending'),
-                        buttons: [{
-                            title: localized('global.cancel'),
-                            value: ORDER_STATUS.customerCancelled,
-                        }]
-                    }
+                        buttons: [
+                            {
+                                title: localized('global.cancel'),
+                                value: ORDER_STATUS.customerCancelled,
+                            },
+                        ],
+                    };
                 } else if (order.status === ORDER_STATUS.driverAccepted) {
                     return {
                         formattedTripStatus: localized('order.driverAccepted'),
-                        buttons: [{
-                            title: localized('global.cancel'),
-                            value: ORDER_STATUS.customerCancelled,
-                        }]
-                    }
+                        buttons: [
+                            {
+                                title: localized('global.cancel'),
+                                value: ORDER_STATUS.customerCancelled,
+                            },
+                        ],
+                    };
                 } else if (order.status === ORDER_STATUS.driverRejected) {
                     return {
                         formattedTripStatus: localized('order.lookingForDriver'),
-                        buttons: [{
-                            title: localized('global.cancel'),
-                            value: ORDER_STATUS.customerCancelled,
-                        }]
-                    }
+                        buttons: [
+                            {
+                                title: localized('global.cancel'),
+                                value: ORDER_STATUS.customerCancelled,
+                            },
+                        ],
+                    };
                 }
             } else if (order.status === ORDER_STATUS.shipped) {
                 if (!order.driver?.formattedName) {
                     return {
                         formattedTripStatus: localized('order.vendorOwnStaffDeliveryContact'),
-                        buttons: [{
-                            title: localized('global.cancel'),
-                            value: ORDER_STATUS.customerCancelled,
-                        }]
-                    }
+                        buttons: [
+                            {
+                                title: localized('global.cancel'),
+                                value: ORDER_STATUS.customerCancelled,
+                            },
+                        ],
+                    };
                 } else {
                     return {
                         formattedTripStatus: localized('order.headingToPickup'),
-                        buttons: [{
-                            title: localized('global.cancel'),
-                            value: ORDER_STATUS.customerCancelled,
-                        }]
-                    }
+                        buttons: [
+                            {
+                                title: localized('global.cancel'),
+                                value: ORDER_STATUS.customerCancelled,
+                            },
+                        ],
+                    };
                 }
             } else if (order.status === ORDER_STATUS.inTransit) {
                 if (!order.driver?.formattedName) {
                     if (driverStatus === DRIVER_STATUS.arrived) {
                         return {
                             formattedTripStatus: `${localized('order.arrived')} ${localized('order.meetOutside')}`,
-                            buttons: [{
-                                title: localized('global.cancel'),
-                                value: ORDER_STATUS.customerCancelled,
-                            }]
-                        }
+                            buttons: [
+                                {
+                                    title: localized('global.cancel'),
+                                    value: ORDER_STATUS.customerCancelled,
+                                },
+                            ],
+                        };
                     } else {
                         return {
                             formattedTripStatus: localized('order.vendorOwnStaffDeliveryContact'),
-                            buttons: [{
-                                title: localized('global.cancel'),
-                                value: ORDER_STATUS.customerCancelled,
-                            }]
-                        }
+                            buttons: [
+                                {
+                                    title: localized('global.cancel'),
+                                    value: ORDER_STATUS.customerCancelled,
+                                },
+                            ],
+                        };
                     }
                 } else {
                     if (driverStatus === DRIVER_STATUS.arrived) {
                         return {
                             formattedTripStatus: `${localized('order.arrived')} ${localized('order.meetOutside')}`,
-                            buttons: [{
-                                title: localized('global.cancel'),
-                                value: ORDER_STATUS.customerCancelled,
-                            }]
-                        }
+                            buttons: [
+                                {
+                                    title: localized('global.cancel'),
+                                    value: ORDER_STATUS.customerCancelled,
+                                },
+                            ],
+                        };
                     } else {
                         return {
                             formattedTripStatus: localized('order.headingToDropOff'),
-                            buttons: [{
-                                title: localized('global.cancel'),
-                                value: ORDER_STATUS.customerCancelled,
-                            }]
-                        }
+                            buttons: [
+                                {
+                                    title: localized('global.cancel'),
+                                    value: ORDER_STATUS.customerCancelled,
+                                },
+                            ],
+                        };
                     }
                 }
             }
@@ -188,39 +215,49 @@ export const whatIsTheOrderStatus = ({
             if (order.status === ORDER_STATUS.vendorAccepted || order.status === ORDER_STATUS.driverRejected) {
                 return {
                     formattedTripStatus: localized('order.lookingForDriver'),
-                    buttons: [{
-                        title: localized('global.cancel'),
-                        value: ORDER_STATUS.customerCancelled,
-                    }]
-                }
+                    buttons: [
+                        {
+                            title: localized('global.cancel'),
+                            value: ORDER_STATUS.customerCancelled,
+                        },
+                    ],
+                };
             }
         } else if (order.pickupMethod === PICKUP_METHODS.customerPickup) {
             if (order.status === ORDER_STATUS.vendorAccepted) {
                 return {
                     formattedTripStatus: localized('order.preparingPickup'),
-                    items: [{
-                        formattedValue: localized(order.pickupMethod),
-                        value: order.pickupMethod,
-                        type: ITEM_TYPE.takeout,
-                    }],
-                    buttons: [{
-                        title: localized('global.cancel'),
-                        value: ORDER_STATUS.customerCancelled,
-                    }]
-                }
+                    items: [
+                        {
+                            formattedValue: localized(order.pickupMethod),
+                            value: order.pickupMethod,
+                            type: ITEM_TYPE.takeout,
+                        },
+                    ],
+                    buttons: [
+                        {
+                            title: localized('global.cancel'),
+                            value: ORDER_STATUS.customerCancelled,
+                        },
+                    ],
+                };
             } else if (order.status === ORDER_STATUS.readyforPickup) {
                 return {
                     formattedTripStatus: localized('order.readyForPickup'),
-                    buttons: [{
-                        title: localized('global.cancel'),
-                        value: ORDER_STATUS.customerCancelled,
-                    }],
-                    items: [{
-                        formattedValue: localized(order.pickupMethod),
-                        value: order.pickupMethod,
-                        type: ITEM_TYPE.takeout,
-                    }]
-                }
+                    buttons: [
+                        {
+                            title: localized('global.cancel'),
+                            value: ORDER_STATUS.customerCancelled,
+                        },
+                    ],
+                    items: [
+                        {
+                            formattedValue: localized(order.pickupMethod),
+                            value: order.pickupMethod,
+                            type: ITEM_TYPE.takeout,
+                        },
+                    ],
+                };
             }
         }
     } else if (role === USER_ROLES.vendor) {
@@ -229,11 +266,11 @@ export const whatIsTheOrderStatus = ({
             if (order.status === ORDER_STATUS.noDriverFound) {
                 return {
                     formattedTripStatus: localized('order.noDriverFound'),
-                }
+                };
             } else if (order.status === ORDER_STATUS.selfCancelled) {
                 return {
                     formattedTripStatus: localized('order.vendor.selfCancelled'),
-                }
+                };
             }
         } else if (order.status === ORDER_STATUS.placed) {
             return {
@@ -248,18 +285,29 @@ export const whatIsTheOrderStatus = ({
                         value: ORDER_STATUS.vendorAccepted,
                     },
                 ],
-                items: [{
-                    formattedValue: order.fulfillmentMethod === FULFILLMENT_METHODS.delivery ? order.deliveryMethod : localized(order.pickupMethod),
-                    value: order.fulfillmentMethod === FULFILLMENT_METHODS.delivery ? order.deliveryMethod : order.pickupMethod,
-                    type: order.fulfillmentMethod === FULFILLMENT_METHODS.delivery ? ITEM_TYPE.driver : ITEM_TYPE.takeout,
-                }]
-            }
+                items: [
+                    {
+                        formattedValue:
+                            order.fulfillmentMethod === FULFILLMENT_METHODS.delivery
+                                ? order.deliveryMethod
+                                : localized(order.pickupMethod),
+                        value:
+                            order.fulfillmentMethod === FULFILLMENT_METHODS.delivery
+                                ? order.deliveryMethod
+                                : order.pickupMethod,
+                        type:
+                            order.fulfillmentMethod === FULFILLMENT_METHODS.delivery
+                                ? ITEM_TYPE.driver
+                                : ITEM_TYPE.takeout,
+                    },
+                ],
+            };
         } else if (order.deliveryMethod === DELIVERY_METHODS.marketPlace) {
             if (ORDER_STATUS_PREPARING(order.status)) {
                 if (order.status === ORDER_STATUS.driverPending) {
                     return {
                         formattedTripStatus: localized('order.driverPending'),
-                        buttons:[
+                        buttons: [
                             {
                                 title: localized('global.cancel'),
                                 value: ORDER_STATUS.vendorCancelled,
@@ -269,12 +317,14 @@ export const whatIsTheOrderStatus = ({
                                 value: ITEM_TYPE.print,
                             },
                         ],
-                        items: [{
-                            formattedValue: order.deliveryMethod,
-                            value: order.deliveryMethod,
-                            type: ITEM_TYPE.driver,
-                        }]
-                    }
+                        items: [
+                            {
+                                formattedValue: order.deliveryMethod,
+                                value: order.deliveryMethod,
+                                type: ITEM_TYPE.driver,
+                            },
+                        ],
+                    };
                 } else if (order.status === ORDER_STATUS.driverAccepted) {
                     return {
                         formattedTripStatus: localized('order.driverAccepted'),
@@ -288,12 +338,14 @@ export const whatIsTheOrderStatus = ({
                                 value: ITEM_TYPE.print,
                             },
                         ],
-                        items: [{
-                            formattedValue: order.deliveryMethod,
-                            value: order.deliveryMethod,
-                            type: ITEM_TYPE.driver,
-                        }]
-                    }
+                        items: [
+                            {
+                                formattedValue: order.deliveryMethod,
+                                value: order.deliveryMethod,
+                                type: ITEM_TYPE.driver,
+                            },
+                        ],
+                    };
                 } else if (order.status === ORDER_STATUS.driverRejected) {
                     return {
                         formattedTripStatus: localized('order.lookingForAnotherDriver'),
@@ -307,12 +359,14 @@ export const whatIsTheOrderStatus = ({
                                 value: ITEM_TYPE.print,
                             },
                         ],
-                        items: [{
-                            formattedValue: order.deliveryMethod,
-                            value: order.deliveryMethod,
-                            type: ITEM_TYPE.driver,
-                        }]
-                    }
+                        items: [
+                            {
+                                formattedValue: order.deliveryMethod,
+                                value: order.deliveryMethod,
+                                type: ITEM_TYPE.driver,
+                            },
+                        ],
+                    };
                 }
             } else if (order.status === ORDER_STATUS.shipped) {
                 return {
@@ -327,16 +381,18 @@ export const whatIsTheOrderStatus = ({
                             value: ITEM_TYPE.print,
                         },
                     ],
-                    items: [{
-                        formattedValue: order.deliveryMethod,
-                        value: order.deliveryMethod,
-                        type: ITEM_TYPE.driver,
-                    }]
-                }
+                    items: [
+                        {
+                            formattedValue: order.deliveryMethod,
+                            value: order.deliveryMethod,
+                            type: ITEM_TYPE.driver,
+                        },
+                    ],
+                };
             } else if (order.status === ORDER_STATUS.inTransit) {
                 let formattedTripStatus;
                 if (driverStatus === DRIVER_STATUS.arrived) {
-                    formattedTripStatus =localized('order.arrived');
+                    formattedTripStatus = localized('order.arrived');
                 } else {
                     formattedTripStatus = localized('order.headingToDropOff');
                 }
@@ -348,35 +404,41 @@ export const whatIsTheOrderStatus = ({
                             value: ITEM_TYPE.print,
                         },
                     ],
-                    items: [{
-                        formattedValue: order.deliveryMethod,
-                        value: order.deliveryMethod,
-                        type: ITEM_TYPE.driver,
-                    }]
-                }
+                    items: [
+                        {
+                            formattedValue: order.deliveryMethod,
+                            value: order.deliveryMethod,
+                            type: ITEM_TYPE.driver,
+                        },
+                    ],
+                };
             }
         } else if (order.deliveryMethod === DELIVERY_METHODS.ownStaff) {
-
             if (ORDER_STATUS_PREPARING(order.status) === true) {
-                let formattedTripStatus, items = [];
+                let formattedTripStatus,
+                    items = [];
                 if (order.status === ORDER_STATUS.driverPending) {
                     formattedTripStatus = localized('order.staffPending');
                 } else if (order.status === ORDER_STATUS.driverAccepted) {
-                    formattedTripStatus = localized('order.driverAccepted')
+                    formattedTripStatus = localized('order.driverAccepted');
                 } else if (order.status === ORDER_STATUS.driverRejected) {
                     formattedTripStatus = localized('order.staffReassigning');
-                    items=[{
-                        formattedValue: order.deliveryMethod,
-                        value: order.deliveryMethod,
-                        type: ITEM_TYPE.driver,
-                    }];
+                    items = [
+                        {
+                            formattedValue: order.deliveryMethod,
+                            value: order.deliveryMethod,
+                            type: ITEM_TYPE.driver,
+                        },
+                    ];
                 } else {
                     formattedTripStatus = localized('order.lookingForStaff');
-                    items =[{
-                        formattedValue: order.deliveryMethod,
-                        value: order.deliveryMethod,
-                        type: ITEM_TYPE.driver,
-                    }];
+                    items = [
+                        {
+                            formattedValue: order.deliveryMethod,
+                            value: order.deliveryMethod,
+                            type: ITEM_TYPE.driver,
+                        },
+                    ];
                 }
                 return {
                     formattedTripStatus,
@@ -391,8 +453,8 @@ export const whatIsTheOrderStatus = ({
                             value: ITEM_TYPE.print,
                         },
                     ],
-                    items
-                }
+                    items,
+                };
             } else if (order.status === ORDER_STATUS.shipped) {
                 if (!order.driver?.formattedName) {
                     return {
@@ -418,12 +480,12 @@ export const whatIsTheOrderStatus = ({
                                 type: ITEM_TYPE.driver,
                             },
                             {
-                              formattedValue: localized('order.needAttention'),
-                              value: null,
-                              type: ITEM_TYPE.needAttention,
-                            }
-                        ]
-                    }
+                                formattedValue: localized('order.needAttention'),
+                                value: null,
+                                type: ITEM_TYPE.needAttention,
+                            },
+                        ],
+                    };
                 } else {
                     return {
                         formattedTripStatus: localized('order.headingToPickup'),
@@ -432,26 +494,29 @@ export const whatIsTheOrderStatus = ({
                                 title: localized('global.cancel'),
                                 value: ORDER_STATUS.vendorCancelled,
                             },
-    
+
                             {
                                 title: localized('order.receipt'),
                                 value: ITEM_TYPE.print,
                             },
-                        ]
-                    }
+                        ],
+                    };
                 }
             } else if (order.status === ORDER_STATUS.inTransit) {
                 if (!order.driver?.formattedName) {
                     return {
-                        formattedTripStatus: driverStatus === DRIVER_STATUS.arrived ? 
-                        `${localized('order.arrived')} ${localized('order.markAsCompleteOnDelivery')}` :
-                        `${localized('order.vendorInTransit')} ${localized(
-                            'order.markAsCompleteOnDelivery'
-                        )}`,
-                        buttons: [{
-                            title: localized('order.Completed'),
-                            value: ORDER_STATUS.completed,
-                        }],
+                        formattedTripStatus:
+                            driverStatus === DRIVER_STATUS.arrived
+                                ? `${localized('order.arrived')} ${localized('order.markAsCompleteOnDelivery')}`
+                                : `${localized('order.vendorInTransit')} ${localized(
+                                      'order.markAsCompleteOnDelivery'
+                                  )}`,
+                        buttons: [
+                            {
+                                title: localized('order.Completed'),
+                                value: ORDER_STATUS.completed,
+                            },
+                        ],
                         items: [
                             {
                                 formattedValue: order.deliveryMethod,
@@ -462,30 +527,29 @@ export const whatIsTheOrderStatus = ({
                                 formattedValue: localized('order.needAttention'),
                                 value: null,
                                 type: ITEM_TYPE.needAttention,
-                            }
-                        ]
-                    }
+                            },
+                        ],
+                    };
                 } else {
                     if (driverStatus === DRIVER_STATUS.arrived) {
                         return {
-                            formattedTripStatus: localized('order.arrived')
-                        }
+                            formattedTripStatus: localized('order.arrived'),
+                        };
                     } else {
                         return {
-                            formattedTripStatus: localized('order.headingToDropOff')
-                        }
+                            formattedTripStatus: localized('order.headingToDropOff'),
+                        };
                     }
                 }
             }
         } else if (order.deliveryMethod === DELIVERY_METHODS.flexible) {
-
             let formattedTripStatus;
             if (order.status === ORDER_STATUS.vendorAccepted) {
                 formattedTripStatus = localized('order.lookingForDriver');
             } else if (order.status === ORDER_STATUS.driverRejected) {
                 formattedTripStatus = localized('order.lookingForAnotherDriver');
             }
-          
+
             return {
                 formattedTripStatus,
                 buttons: [
@@ -503,9 +567,9 @@ export const whatIsTheOrderStatus = ({
                         formattedValue: order.deliveryMethod,
                         value: order.deliveryMethod,
                         type: ITEM_TYPE.driver,
-                    }
-                ]
-            }
+                    },
+                ],
+            };
         } else if (order.pickupMethod === PICKUP_METHODS.customerPickup) {
             if (order.status === ORDER_STATUS.vendorAccepted) {
                 return {
@@ -534,9 +598,9 @@ export const whatIsTheOrderStatus = ({
                             formattedValue: localized('order.needAttention'),
                             value: null,
                             type: ITEM_TYPE.needAttention,
-                        }
-                    ]
-                }
+                        },
+                    ],
+                };
             } else if (order.status === ORDER_STATUS.readyforPickup) {
                 return {
                     formattedTripStatus: localized('order.vendorReadyforPickup'),
@@ -564,10 +628,10 @@ export const whatIsTheOrderStatus = ({
                             formattedValue: localized('order.needAttention'),
                             value: null,
                             type: ITEM_TYPE.needAttention,
-                        }
-                    ]
-                }
+                        },
+                    ],
+                };
             }
         }
     }
-}
+};

@@ -1,18 +1,18 @@
 import React, { useRef } from 'react';
 
-import { FlatList, Animated,View } from 'react-native';
+import { FlatList, Animated, View } from 'react-native';
 
 const { dinero, toDecimal } = require('dinero.js');
 import I18n from 'i18n-js';
 
-import { List, MD3Colors,Divider } from '@jmstechnologiesinc/react-native-paper';
+import { List, MD3Colors, Divider } from '@jmstechnologiesinc/react-native-paper';
 import {
     dynamicFormInitializeGroup,
     dynamicFormToggleCheckRadioValue,
     dynamicFormValidateGroup,
 } from '@jmstechnologiesinc/commons';
 import DynamicFormSwitch from './DynamicFormSwitch';
-import {localized} from '../Localization/Localization'
+import { localized } from '../Localization/Localization';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const animatedValue = new Animated.Value(0);
@@ -128,11 +128,17 @@ const DynamicForm = ({
             <List.Accordion
                 title={item.title}
                 description={initialState[item.id]?.formattedQuantity || item.formattedQuantity}
-                descriptionStyle={{ ...((initialState[item.id] || item)?.isValid ? null : { color: MD3Colors.error50 }) }}
+                descriptionStyle={{
+                    ...((initialState[item.id] || item)?.isValid ? null : { color: MD3Colors.error50 }),
+                }}
             >
                 {item.data?.map((data) => {
                     const value = Boolean(getValue(data));
-                    const isMaxSelection = validateMaxSelection(value, initialState[item.id]?.quantity, item.maxQuantity);
+                    const isMaxSelection = validateMaxSelection(
+                        value,
+                        initialState[item.id]?.quantity,
+                        item.maxQuantity
+                    );
                     const isDisabled = data.isDisabled || isOutofStock || isMaxSelection;
 
                     return (

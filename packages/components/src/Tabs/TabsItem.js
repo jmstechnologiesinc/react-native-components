@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {  MD3LightTheme, Text, TouchableRipple } from '@jmstechnologiesinc/react-native-paper';
+import { MD3LightTheme, Text, TouchableRipple } from '@jmstechnologiesinc/react-native-paper';
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 
 const TabsItem = ({ title, isSelected, onPress, style }) => (

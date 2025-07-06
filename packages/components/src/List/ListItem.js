@@ -28,71 +28,73 @@ const ListItem = ({
 }) => {
     const renderTitle = titleVariant
         ? ({ selectable, titleEllipsizeMode, color }) => (
-            <Text
-                selectable={selectable}
-                ellipsizeMode={titleEllipsizeMode}
-                numberOfLines={titleNumberOfLines}
-                variant={titleVariant}
-                style={[{ color }, titleStyle]}
-            >
-                {title}
-            </Text>
-        )
+              <Text
+                  selectable={selectable}
+                  ellipsizeMode={titleEllipsizeMode}
+                  numberOfLines={titleNumberOfLines}
+                  variant={titleVariant}
+                  style={[{ color }, titleStyle]}
+              >
+                  {title}
+              </Text>
+          )
         : title;
 
     const renderDescription = Array.isArray(description)
         ? ({ selectable, ellipsizeMode, color: descriptionColor, fontSize }) => (
-            <>
-                {description.map((item, index) => (
-                    <Text
-                        selectable={selectable}
-                        numberOfLines={index === 0 ? descriptionNumberOfLines : 0}
-                        ellipsizeMode={ellipsizeMode}
-                        variant={descriptionVariant && index === 0 && descriptionVariant}
-                        style={{
-                            color: descriptionColor,
-                            ...(index === 0 && descriptionVariant ? null : { fontSize }),
-                            ...(index === 0 ? descriptionStyle : styles.additionalPadding),
-                        }}
-                    >
-                        {item}
-                    </Text>
-                ))}
-                {chips?.length > 0 ? (
-                    <ScrollView
-                        showsVerticalScrollIndicator={false}
-                        showsHorizontalScrollIndicator={false}
-                        horizontal
-                        style={[styles.chips, styles.additionalPadding]}
-                    >
-                        {chips}
-                    </ScrollView>
-                ) : null}
-            </>
-        )
+              <>
+                  {description.map((item, index) => (
+                      <Text
+                          selectable={selectable}
+                          numberOfLines={index === 0 ? descriptionNumberOfLines : 0}
+                          ellipsizeMode={ellipsizeMode}
+                          variant={descriptionVariant && index === 0 && descriptionVariant}
+                          style={{
+                              color: descriptionColor,
+                              ...(index === 0 && descriptionVariant ? null : { fontSize }),
+                              ...(index === 0 ? descriptionStyle : styles.additionalPadding),
+                          }}
+                      >
+                          {item}
+                      </Text>
+                  ))}
+                  {chips?.length > 0 ? (
+                      <ScrollView
+                          showsVerticalScrollIndicator={false}
+                          showsHorizontalScrollIndicator={false}
+                          horizontal
+                          style={[styles.chips, styles.additionalPadding]}
+                      >
+                          {chips}
+                      </ScrollView>
+                  ) : null}
+              </>
+          )
         : description;
 
-
-    const renderLeft = photo ? (props) => (
-        <>
-            {left?.(props)}
-            <List.Image style={props.style} source={{ uri: photo,lqipUri: photoLqip }} />
-        </>
-    ) : left;
-
-    const renderRight = metaTitle || metaQuantity
+    const renderLeft = photo
         ? (props) => (
-            <>
-                <JMSList.MetaBadged
-                    title={metaTitle}
-                    quantity={metaQuantity}
-                    titleVariant={metaTitleVariant}
-                    titleStyle={[{ color: props.color }, metaTitleStyle]}
-                />
-                {right?.(props)}
-            </>
-        )
-        : right;
+              <>
+                  {left?.(props)}
+                  <List.Image style={props.style} source={{ uri: photo, lqipUri: photoLqip }} />
+              </>
+          )
+        : left;
+
+    const renderRight =
+        metaTitle || metaQuantity
+            ? (props) => (
+                  <>
+                      <JMSList.MetaBadged
+                          title={metaTitle}
+                          quantity={metaQuantity}
+                          titleVariant={metaTitleVariant}
+                          titleStyle={[{ color: props.color }, metaTitleStyle]}
+                      />
+                      {right?.(props)}
+                  </>
+              )
+            : right;
 
     return (
         <List.Item

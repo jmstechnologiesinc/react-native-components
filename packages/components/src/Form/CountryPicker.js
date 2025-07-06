@@ -26,17 +26,17 @@ const CountryPicker = forwardRef(({ data, onSelect }, ref) => {
                 height: actionSheetHeight,
             }}
         >
-            
-                {data?.map((item) => (
-                    <List.Item
-                        key={item.key}
-                        title={item.label}
-                        description={item.dialCode}
-                        onPress={() => onSelect(item)}
-                        left={(props) => <List.Image {...props} variant="flag" source={item.image} defaultImageComponent={true} />}
-                    />
-                ))}
-         
+            {data?.map((item) => (
+                <List.Item
+                    key={item.key}
+                    title={item.label}
+                    description={item.dialCode}
+                    onPress={() => onSelect(item)}
+                    left={(props) => (
+                        <List.Image {...props} variant="flag" source={item.image} defaultImageComponent={true} />
+                    )}
+                />
+            ))}
         </ActionSheet>
     );
 });

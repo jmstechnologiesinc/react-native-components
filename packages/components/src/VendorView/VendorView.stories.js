@@ -28,47 +28,51 @@ const Industries = [
 
 export const Description = () => (
     <StickyHeader
-        listHeaderComponent={(
+        listHeaderComponent={
             <VendorView
                 title={mockData[1].title}
                 formatteFulfillmentMethod={`${mockData[0].formattedFulfillmentMethod} - ${mockData[0].formattedHitDistance}`}
                 formattedAddress={mockData[1].location.formattedAddress}
                 photos={photos}
                 description={mockData[1].description}
+                formattedErrors={false}
             />
-        )}
+        }
     />
 );
 
 export const Banner = () => (
     <StickyHeader
-        listHeaderComponent={<VendorView
-            title={mockData[1].title}
-            formatteFulfillmentMethod={`${mockData[0].formattedFulfillmentMethod} - ${mockData[0].formattedHitDistance}`}
-            formattedAddress={mockData[1].location.formattedAddress}
-            photos={photos}
-            bannerMessages={[
-                'Use your Uber account to order delivery from Terra Luna Cafe in Lawrence. Browse the menu, view popular items, and track your order.'
-            ]}
-        />}
+        listHeaderComponent={
+            <VendorView
+                title={mockData[1].title}
+                formatteFulfillmentMethod={`${mockData[0].formattedFulfillmentMethod} - ${mockData[0].formattedHitDistance}`}
+                formattedAddress={mockData[1].location.formattedAddress}
+                photos={photos}
+                formattedErrors={[mockData[1].formattedFulfillmentMethods.description]}
+            />
+        }
     />
 );
 
 export const StickyProductList = () => (
     <StickyHeader
-        listHeaderComponent={<VendorView
-            title={mockData[1].title}
-            industryTitle="Industries"
-            fulfillmentMethodTitle="Filfillment Methods"
-            formatteFulfillmentMethod={`${mockData[0].formattedFulfillmentMethod} - ${mockData[0].formattedHitDistance}`}
-            formattedAddress={mockData[1].location.formattedAddress}
-            photos={photos}
-            fulfillmentMethodOptions={ToggleButtonMockData.subLabelButtons}
-            industryList={Industries}
-            industryFilter={'Liquor'}
-            isMultiProducts={true}
-            catalogFilter={0}
-            selectedFulfillmentMethod="pickup"
-        />}
+        listHeaderComponent={
+            <VendorView
+                title={mockData[1].title}
+                industryTitle="Industries"
+                fulfillmentMethodTitle="Filfillment Methods"
+                formatteFulfillmentMethod={`${mockData[0].formattedFulfillmentMethod} - ${mockData[0].formattedHitDistance}`}
+                formattedAddress={mockData[1].location.formattedAddress}
+                photos={photos}
+                fulfillmentMethodOptions={ToggleButtonMockData.subLabelButtons}
+                industryList={Industries}
+                industryFilter={'Liquor'}
+                isMultiProducts={true}
+                catalogFilter={0}
+                selectedFulfillmentMethod="pickup"
+                formattedErrors={false}
+            />
+        }
     />
 );

@@ -41,35 +41,34 @@ const closeRow = (index) => {
 };
 
 const Swipeable = ({ children, onSwipeableRightOpen, index, isRemoveable = true, handleSwipeChange }) =>
-
-    Platform.OS === 'web' ?
+    Platform.OS === 'web' ? (
         <RNSwipeable
             friction={2}
             leftThreshold={80}
             rightThreshold={41}
             renderRightActions={() => (isRemoveable ? rightSwipeActions(onSwipeableRightOpen) : null)}
             onSwipeableOpen={() => {
-                handleSwipeChange(true)
-                closeRow(index)
+                handleSwipeChange(true);
+                closeRow(index);
             }}
             ref={(ref) => (row[index] = ref)}
             onSwipeableWillOpen={() => handleSwipeChange(false)}
-
         >
             <View style={{ backgroundColor: MD3LightTheme.colors.background, flex: 1 }}>{children}</View>
         </RNSwipeable>
-        :
+    ) : (
         <RNSwipeable
             friction={2}
             leftThreshold={80}
             rightThreshold={41}
             renderRightActions={() => (isRemoveable ? rightSwipeActions(onSwipeableRightOpen) : null)}
             onSwipeableOpen={() => {
-                closeRow(index)
+                closeRow(index);
             }}
             ref={(ref) => (row[index] = ref)}
         >
             <View style={{ backgroundColor: MD3LightTheme.colors.background, flex: 1 }}>{children}</View>
         </RNSwipeable>
+    );
 
 export default Swipeable;

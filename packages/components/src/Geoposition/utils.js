@@ -50,23 +50,23 @@ export const checkAndAskForPermission = async () => {
 export const gpsLocation = () =>
     Platform.OS === 'web'
         ? new Promise(async (resolve) => {
-            navigator.geolocation.getCurrentPosition(
-                (location) => {
-                    resolve(location);
-                },
-                (error) => {
-                    resolve(error);
-                }
-            );
-        })
+              navigator.geolocation.getCurrentPosition(
+                  (location) => {
+                      resolve(location);
+                  },
+                  (error) => {
+                      resolve(error);
+                  }
+              );
+          })
         : new Promise(async (resolve) => {
-            Geolocation.getCurrentPosition(
-                (location) => {
-                    resolve(location);
-                },
-                (error) => {
-                    resolve(error);
-                },
-                { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-            );
-        });
+              Geolocation.getCurrentPosition(
+                  (location) => {
+                      resolve(location);
+                  },
+                  (error) => {
+                      resolve(error);
+                  },
+                  { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+              );
+          });

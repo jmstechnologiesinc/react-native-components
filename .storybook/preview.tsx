@@ -1,5 +1,6 @@
 import type {Preview} from '@storybook/react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import './preview.css';
 
 const preview: Preview = {
   parameters: {

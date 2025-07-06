@@ -1,0 +1,11 @@
+@font-face {
+  font-family: 'MaterialCommunityIcons';
+  src: url('../public/fonts/MaterialCommunityIcons.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('../public/fonts/FontAwesome.ttf') format('truetype');
+}
+
+/* Repite para cada set que uses */

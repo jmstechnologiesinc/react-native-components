@@ -8,17 +8,13 @@ import VendorListItem from './VendorListItem';
 const keyExtractor = (item) => `vendor-list-${item.id}`;
 const Separator = () => <View style={{ marginBottom: MD3LightTheme.spacing.x2 }} />;
 
-const VendorList = ({ sections, onPress, withPaddingHorizontal,  ...props }) => (
+const VendorList = ({ sections, onPress, withPaddingHorizontal, ...props }) => (
     <SectionList
         {...props}
         sections={sections}
         keyExtractor={keyExtractor}
         renderItem={({ item }) => (
-            <VendorListItem
-                item={item}
-                withPaddingHorizontal={withPaddingHorizontal}
-                onPress={onPress}
-            />
+            <VendorListItem item={item} withPaddingHorizontal={withPaddingHorizontal} onPress={onPress} />
         )}
         stickySectionHeadersEnabled={false}
         showsVerticalScrollIndicator={false}

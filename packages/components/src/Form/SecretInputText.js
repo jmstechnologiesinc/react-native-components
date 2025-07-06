@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { TextInput } from '@jmstechnologiesinc/react-native-paper';
 
-
-const SecretInputText =({ label, value, onChangeText, disabled, mode }) => {
+const SecretInputText = ({ label, value, onChangeText, disabled, mode }) => {
     const [isTextSecureEntry, setIsTextSecureEntry] = useState(true);
 
     return (
@@ -18,12 +17,11 @@ const SecretInputText =({ label, value, onChangeText, disabled, mode }) => {
                     <TextInput.Icon
                         icon={isTextSecureEntry ? 'eye' : 'eye-off'}
                         onPress={() => setIsTextSecureEntry(!isTextSecureEntry)}
-                        />
+                    />
                 ) : null
             }
         />
-    )
-}
+    );
+};
 
-
-export default SecretInputText
+export default SecretInputText;

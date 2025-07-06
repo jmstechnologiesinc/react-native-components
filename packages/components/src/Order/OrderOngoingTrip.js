@@ -10,24 +10,25 @@ const OrderOngoingTrip = ({
     formattedDriverName,
     formattedTripStatus,
     formattedVehicleValue,
-    items=[]
+    items = [],
 }) => {
-    return (isLoading ? (
-            <JMSList.Item
-                title={formattedTripStatus}
-                description={[]}
-                titleNumberOfLines={0}
-                descriptionNumberOfLines={0}
-                chips={items.map(JMSList.Chip)} /> 
-        ) : (
-            <OrderDriverAvatar
-                photo={driverPhoto}
-                formattedDriverName={formattedDriverName}
-                formattedTripStatus={formattedTripStatus}
-                formattedVehicleValue={formattedVehicleValue}
-                chips={items.map(JMSList.Chip)} />
-        )
-    )
-}
+    return isLoading ? (
+        <JMSList.Item
+            title={formattedTripStatus}
+            description={[]}
+            titleNumberOfLines={0}
+            descriptionNumberOfLines={0}
+            chips={items.map(JMSList.Chip)}
+        />
+    ) : (
+        <OrderDriverAvatar
+            photo={driverPhoto}
+            formattedDriverName={formattedDriverName}
+            formattedTripStatus={formattedTripStatus}
+            formattedVehicleValue={formattedVehicleValue}
+            chips={items.map(JMSList.Chip)}
+        />
+    );
+};
 
 export default OrderOngoingTrip;

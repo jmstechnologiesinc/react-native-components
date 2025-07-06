@@ -1,88 +1,38 @@
 [
     {
-        "id": "1AcokVeq5fO68QfNrjdg",
-        "availableFulfillmentMethod": "flexible",
-        "deliveryMethod": "Marketplace",
-        "pickupMethod": "Customer Pickup",
-        "title": "Vaka Restaurant",
-        "photos": ["https://ik.imagekit.io/sog7th7xvupr/o/vendors%2FAHwW%2Bi2vQAKFUcuRPJUq0Q%3A0.jpeg?alt=media&token=ce6576d6-5aec-4a3f-91e4-ef7032f6e5eb"],
-        "phoneNumber": 123444,
-        "industries": [
-            "Restaurant"
-        ],
-        "currency": "USD",
-        "location": {
-            "geopoint": {
-                "latitude": 42.7074861,
-                "longitude": -71.1645932
-            },
-            "timeZone": "America/New_York",
-            "formattedAddress": "337 Essex St, Lawrence, MA 01840",
-            "countryCode": "us",
-            "geohash": "drt6uq24v"
-        },
-        "fulfillmentMethod": "flexible",
-        "formattedFulfillmentMethod": "Delivery and Pickup",
-        "hitMetadata": {
-            "distance": 0.1311003123882462,
-            "bearing": -62.09373292259195
-        },
-        "formattedHitDistance": "0.1 mi",
-        "industryAvailability": {
-            "delivery": {
-                "formattedIndustry": "Restaurant",
-                "options": [
-                    {
-                        "title": "Restaurant",
-                        "id": "Restaurant"
-                    }
-                ]
-            },
-            "pickup": {
-                "formattedIndustry": "Restaurant",
-                "options": [
-                    {
-                        "title": "Restaurant",
-                        "id": "Restaurant"
-                    }
-                ]
-            }
-        }
-    },
-    {
-        "id": "13kd3okVeq5fO68QfNrjdg",
-        "availableFulfillmentMethod": "delivery",
-        "deliveryMethod": "Marketplace",
         "description": "Use your Uber account to order delivery from Terra Luna Cafe in Lawrence. Browse the menu, view popular items, and track your order.",
-        "title": "Terra Luna Cafe",
-        "photos": ["https://bloximages.chicago2.vip.townnews.com/eagletribune.com/content/tncms/assets/v3/editorial/4/32/4321af47-264d-52a4-a43a-edf8ffb5e23c/5b3c151c584a9.image.jpg"],
-        "industries": [
-            "Restaurant"
-        ],
-        "currency": "USD",
-        "location": {
-            "geopoint": {
-                "latitude": 42.7079724,
-                "longitude": -71.1592911
-            },
-            "timeZone": "America/New_York",
-            "formattedAddress": "225 Essex St, Lawrence, MA 01840",
-            "countryCode": "us",
-            "geohash": "drt6uwxru"
-        },
-        "fulfillmentMethod": "delivery",
+        "deliveryMethod": "Marketplace",
         "formattedFulfillmentMethod": "Delivery",
-        "hitMetadata": {
-            "distance": 0.3377143252399741,
-            "bearing": 70.01195036357848
+        "fulfillmentMethod": "delivery",
+        "approvedFulfilmentMethod": "flexible",
+        "availableFulfillmentMethod": "delivery",
+        "title": "Terra Luna Cafe",
+        "location": {
+            "geohash": "drt6uwxru",
+            "countryCode": "us",
+            "formattedAddress": "225 Essex St, Lawrence, MA 01840",
+            "latitude": 42.70797,
+            "longitude": -71.159286,
+            "timeZone": "America/New_York"
         },
-        "formattedHitDistance": "0.2 mi",
+        "approvedDeliveryMethods": ["Marketplace", "Own Staff"],
+        "approvedPickupMethods": ["CustomerPickup"],
+        "id": "13kd3okVeq5fO68QfNrjdg",
+        "phoneNumber": "9787477989",
+        "photos": ["vendors/13kd3okVeq5fO68QfNrjdg/13kd3okVeq5fO68QfNrjdg.png"],
+        "industries": ["Restaurant"],
+        "currency": "USD",
+        "partneshipStatus": "Active",
+        "hitMetadata": {
+            "distance": 0.9406195377957086
+        },
+        "formattedHitDistance": "0.9 mi",
         "industryAvailability": {
             "delivery": {
-                "formattedIndustry": "Restaurant",
+                "formattedIndustry": "industry.restaurant",
                 "options": [
                     {
-                        "title": "Restaurant",
+                        "title": "industry.restaurant",
                         "id": "Restaurant"
                     }
                 ]
@@ -91,52 +41,190 @@
         }
     },
     {
-        "id": "e54a3551-1d83-457f-99f2-7cdeec4ff263",
-        "availableFulfillmentMethod": "flexible",
-        "deliveryMethod": "Marketplace",
-        "description": "Use your Uber account to order delivery from McDonald's® (50 BROADWAY) in Lawrence. Browse the menu, view popular items, and track your order.",
+        "id": "1AcokVeq5fO68QfNrjdg",
+        "approvedPickupMethods": ["CustomerPickup"],
+        "phoneNumber": "9786557278",
         "pickupMethod": "Customer Pickup",
-        "title": "McDonald's® (50 BROADWAY)",
-        "photos": ["https://images-na.ssl-images-amazon.com/images/G/01/gc/designs/livepreview/amazon_dkblue_noto_email_v2016_us-main._CB468775337_.png"],
-        "content": "This spot is among the 3 most popular Fast Food takeout spots in all of Lawrence. Of the 192 things on the menu at this late night go-to, the McChicken is one of the most ordered and the Big Mac and the Piece McNuggets are two of the items most commonly ordered together.",
-        "phoneNumber": "+19786854728",
-        "industries": [
-            "Restaurant"
-        ],
-        "currency": "USD",
-        "location": {
-            "geopoint": {
-                "latitude": 42.705038,
-                "longitude": -71.1687219
-            },
-            "timeZone": "America/New_York",
-            "formattedAddress": "50 Broadway, Lawrence, MA 01840",
-            "countryCode": "us",
-            "geohash": "drt6uw0wb"
+        "approvedDeliveryMethods": ["Marketplace", "Own Staff"],
+        "deliveryMethod": "Marketplace",
+        "payment": {
+            "stripeId": "acct_1NH9K2PkFDS99R09"
         },
-        "fulfillmentMethod": "flexible",
+        "preferences": {
+            "isOrderAutoConfirmed": true
+        },
         "formattedFulfillmentMethod": "Delivery and Pickup",
-        "hitMetadata": {
-            "distance": 0.49986840651361375,
-            "bearing": -114.94826330055017
+        "fulfillmentMethod": "flexible",
+        "approvedFulfilmentMethod": "flexible",
+        "availableFulfillmentMethod": "flexible",
+        "title": "Vaka Restaurant",
+        "location": {
+            "geohash": "drt6uwtn4",
+            "countryCode": "us",
+            "formattedAddress": "337 Essex St, Lawrence, MA 01840",
+            "latitude": 42.70766,
+            "longitude": -71.16244,
+            "timeZone": "America/New_York"
         },
-        "formattedHitDistance": "0.3 mi",
+        "industries": ["Restaurant"],
+        "currency": "USD",
+        "photos": ["vendors/1AcokVeq5fO68QfNrjdg/47379325.jpeg"],
+        "partneshipStatus": "Active",
+        "hitMetadata": {
+            "distance": 0.9672437083510582
+        },
+        "formattedHitDistance": "1 mi",
         "industryAvailability": {
             "delivery": {
-                "formattedIndustry": "Restaurant",
+                "formattedIndustry": "industry.restaurant",
                 "options": [
                     {
-                        "title": "Restaurant",
+                        "title": "industry.restaurant",
                         "id": "Restaurant"
                     }
                 ]
             },
             "pickup": {
-                "formattedIndustry": "Restaurant",
+                "formattedIndustry": "industry.restaurant",
                 "options": [
                     {
-                        "title": "Restaurant",
+                        "title": "industry.restaurant",
                         "id": "Restaurant"
+                    }
+                ]
+            }
+        },
+        "formattedFulfillmentMethods": {
+            "availableFulfillmentMethodFilter": "pickup",
+            "description": "No nearby drivers found for delivery. You can pickup your order or can try again later.",
+            "options": [
+                {
+                    "value": "pickup",
+                    "description": "1.3 mis · $0.00",
+                    "title": "Pick up"
+                }
+            ],
+            "formattedFulfillmentMethod": "Pick up",
+            "selectedIndex": 0,
+            "available": "pickup"
+        }
+    },
+    {
+        "currency": "USD",
+        "industries": ["Restaurant"],
+        "content": "This spot is among the 3 most popular Fast Food takeout spots in all of Lawrence. Of the 192 things on the menu at this late night go-to, the McChicken is one of the most ordered and the Big Mac and the Piece McNuggets are two of the items most commonly ordered together.",
+        "fulfillmentMethod": "flexible",
+        "payment": {
+            "stripeId": "acct_1NE331PceMkczuRi"
+        },
+        "description": "Use your Uber account to order delivery from McDonald's® (50 BROADWAY) in Lawrence. Browse the menu, view popular items, and track your order.",
+        "deliveryMethod": "Marketplace",
+        "id": "e54a3551-1d83-457f-99f2-7cdeec4ff263",
+        "approvedPickupMethods": ["CustomerPickup"],
+        "phoneNumber": "+19786854728",
+        "formattedFulfillmentMethod": "Delivery and Pickup",
+        "approvedFulfilmentMethod": "flexible",
+        "availableFulfillmentMethod": "flexible",
+        "title": "McDonald's® (50 BROADWAY)",
+        "approvedDeliveryMethods": ["Marketplace", "Own Staff"],
+        "pickupMethod": "Customer Pickup",
+        "location": {
+            "geohash": "drt6uw0wb",
+            "countryCode": "us",
+            "formattedAddress": "50 Broadway, Lawrence, MA 01840",
+            "latitude": 42.70503,
+            "longitude": -71.16872,
+            "timeZone": "America/New_York"
+        },
+        "photos": ["vendors/e54a3551-1d83-457f-99f2-7cdeec4ff263/97e6648b3593c29cb4a6335f976e6d84.jpeg"],
+        "partneshipStatus": "Active",
+        "hitMetadata": {
+            "distance": 0.9867932837898103
+        },
+        "formattedHitDistance": "1 mi",
+        "industryAvailability": {
+            "delivery": {
+                "formattedIndustry": "industry.restaurant",
+                "options": [
+                    {
+                        "title": "industry.restaurant",
+                        "id": "Restaurant"
+                    }
+                ]
+            },
+            "pickup": {
+                "formattedIndustry": "industry.restaurant",
+                "options": [
+                    {
+                        "title": "industry.restaurant",
+                        "id": "Restaurant"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "id": "HzW0GYE5RSFlMoHeybSc",
+        "approvedPickupMethods": ["Customer Pickup"],
+        "createdAt": {
+            "_seconds": 1715199177,
+            "_nanoseconds": 8000000
+        },
+        "website": "https://fernandezbrothersliquorslawrence.com",
+        "partneshipStatus": "Active",
+        "deliveryMethod": "Marketplace",
+        "payment": {
+            "stripeId": "acct_1PEGrFBUuqGmLK2f"
+        },
+        "formattedFulfillmentMethod": "Delivery & Pickup",
+        "approvedFulfilmentMethod": "flexible",
+        "availableFulfillmentMethod": "flexible",
+        "title": "Fernandez Brother Liquor IV",
+        "fulfillmentMethod": "flexible",
+        "approvedDeliveryMethods": ["Marketplace"],
+        "pickupMethod": "Customer Pickup",
+        "location": {
+            "geohash": "drt6uz3zr",
+            "line1": "Newbury Street",
+            "state": "MA",
+            "countryCode": "us",
+            "formattedAddress": "128 Newbury St, Lawrence, MA 01841, USA",
+            "placeId": "ChIJoTGZzgcH44kRbiaSqqNlgEk",
+            "postalCode": "01841",
+            "id": "ce089865-9fd0-4cdb-8f11-45198257589d",
+            "longitude": -71.15573320000001,
+            "latitude": 42.7120022,
+            "city": "Lawrence"
+        },
+        "industries": ["Liquor"],
+        "createdByUserId": "4pAb2MjUCNXxqbC1cxmw6qYPBw93",
+        "providedData": {
+            "website": "https://fernandezbrothersliquorslawrence.com",
+            "location": "128 Newbury St, Lawrence, MA 01841",
+            "industries": ["Liquor"],
+            "title": "Fernandez Brother Liquor IV",
+            "line2": ""
+        },
+        "hitMetadata": {
+            "distance": 1.1979702767221807
+        },
+        "formattedHitDistance": "1.2 mis",
+        "industryAvailability": {
+            "delivery": {
+                "formattedIndustry": "industry.liquor",
+                "options": [
+                    {
+                        "title": "industry.liquor",
+                        "id": "Liquor"
+                    }
+                ]
+            },
+            "pickup": {
+                "formattedIndustry": "industry.liquor",
+                "options": [
+                    {
+                        "title": "industry.liquor",
+                        "id": "Liquor"
                     }
                 ]
             }

@@ -5,11 +5,11 @@ import { View, StyleSheet, Dimensions } from 'react-native';
 const { width: SCREEN_WIDTH } = Dimensions.get('screen');
 
 const BlurredHandle = () => {
-  // hooks
-//const { colors } = useShowcaseTheme();
+    // hooks
+    //const { colors } = useShowcaseTheme();
 
-  // styles
-/*   const indicatorStyle = useMemo(
+    // styles
+    /*   const indicatorStyle = useMemo(
     () => [
       styles.indicator,
       {
@@ -19,26 +19,22 @@ const BlurredHandle = () => {
     [colors.secondaryText]
   ); */
 
-  // render
-  return (
-    <View style={styles.container}>
-      {/* <View style={indicatorStyle} /> */}
-    </View>
-  );
+    // render
+    return <View style={styles.container}>{/* <View style={indicatorStyle} /> */}</View>;
 };
 
 export const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 16,
-    paddingVertical: 5,
-  },
-  indicator: {
-    alignSelf: 'center',
-    width: (8 * SCREEN_WIDTH) / 100,
-    height: 5,
-    borderRadius: 4,
-    backgroundColor: 'rgba(0, 0, 0, 0.2)',
-  },
+    container: {
+        paddingHorizontal: 16,
+        paddingVertical: 5,
+    },
+    indicator: {
+        alignSelf: 'center',
+        width: (8 * SCREEN_WIDTH) / 100,
+        height: 5,
+        borderRadius: 4,
+        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    },
 });
 
 export default BlurredHandle;

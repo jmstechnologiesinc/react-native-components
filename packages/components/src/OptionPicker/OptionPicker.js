@@ -1,9 +1,6 @@
-import NestedOptionPicker from "./NestedOptionPicker";
-import OptionPickerActionSheet from "./OptionPickerActionSheet"
+import NestedOptionPicker from './NestedOptionPicker';
+import OptionPickerActionSheet from './OptionPickerActionSheet';
 
-export default Object.assign(
-    NestedOptionPicker,
-    {
-        ActionSheet: OptionPickerActionSheet,
-    }
-)
+export default Object.assign(NestedOptionPicker, {
+    ActionSheet: OptionPickerActionSheet,
+});

@@ -5,12 +5,7 @@ import ScreenWrapper from '../ScreenWrapper';
 import { localized } from '../Localization/Localization';
 import ChipList from '../ChipList/ChipList';
 
-const TipsFilter = ({
-    options,
-    description,
-    selectedTipsPercentIndex,
-    onTipsPercentPress,
-}) => {
+const TipsFilter = ({ options, description, selectedTipsPercentIndex, onTipsPercentPress }) => {
     return options?.length ? (
         <>
             <Divider style={{ marginTop: MD3LightTheme.spacing.x2 }} />

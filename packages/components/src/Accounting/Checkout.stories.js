@@ -2,10 +2,10 @@ import React from 'react';
 
 import Accounting from './Accounting';
 
-import mockData from "./mockData.json"
+import mockData from './mockData.json';
 
 export default {
-  title: 'packages/Checkout',
+    title: 'packages/Checkout',
 };
 
-export const Fees = () => <Accounting feeList={mockData} />
+export const Fees = () => <Accounting feeList={mockData} />;

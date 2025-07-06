@@ -1,10 +1,6 @@
 import { USER_ROLES } from '@jmstechnologiesinc/user';
 
-import {
-    ORDER_STATUS,
-    ORDER_STATUS_CANCELLED,
-    ORDER_STATUS_PREPARING,
-} from '@jmstechnologiesinc/order';
+import { ORDER_STATUS, ORDER_STATUS_CANCELLED, ORDER_STATUS_PREPARING } from '@jmstechnologiesinc/order';
 import { localized } from '../Localization/Localization';
 
 export const ORDER_LIST_STATUS = {
@@ -109,10 +105,10 @@ export const orderListStatus = (status, role) => {
 export const humanizeOrderStatus = (status) => {
     if (ORDER_STATUS_PREPARING(status) || status === ORDER_LIST_STATUS.shipped) {
         return ORDER_LIST_STATUS.preparing;
-    } 
+    }
 
     return status;
-}
+};
 
 export const groupedOrderListToSectionList = (groupedOrderList, role) => {
     if (!role) {

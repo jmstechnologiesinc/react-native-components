@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Text } from '@jmstechnologiesinc/react-native-paper'
+import React, { useEffect, useState } from 'react';
+import { Button, Text } from '@jmstechnologiesinc/react-native-paper';
 
-import FormPhoneNumber from './FormPhoneNumber'
-import EmailPassword from './FormEmailPassword'
-import ScreenWrapper from '../ScreenWrapper'
-import { localized } from '../Localization/Localization'
+import FormPhoneNumber from './FormPhoneNumber';
+import EmailPassword from './FormEmailPassword';
+import ScreenWrapper from '../ScreenWrapper';
+import { localized } from '../Localization/Localization';
 
 export const LOGIN_OPTIONS = {
-    PHONE: "PHONE",
-    EMAIL: "EMAIL"
-}
+    PHONE: 'PHONE',
+    EMAIL: 'EMAIL',
+};
 
 const EmailOrPhoneSwitcher = ({
     signUpTitle,
@@ -31,63 +31,69 @@ const EmailOrPhoneSwitcher = ({
     onResendCodePress,
     onConfirmCodePress,
     inputActionHandler,
-    onFailure
+    onFailure,
 }) => {
     const [selectedLogin, setSelectedLogin] = useState(initialLoginOption);
 
     useEffect(() => {
         setSelectedLogin(initialLoginOption);
-    }, [initialLoginOption])
+    }, [initialLoginOption]);
 
-    return <>
-        {selectedLogin === LOGIN_OPTIONS.PHONE ? (
-            <FormPhoneNumber
-                isVerificationCodeVisible={isVerificationCodeVisible}
-                isVereficationCodeLoading={isVereficationCodeLoading}
-                showPhoneNumberValidationError={false}
-                isLoading={isLoading}
-                vereficationCodeError={vereficationCodeError}
-                onPhoneNumberLoginPress={onPhoneNumberLoginPress}
-                onDismiss={onDismiss}
-                onResendCodePress={onResendCodePress}
-                onConfirmCodePress={onConfirmCodePress}
-                onFailure={onFailure}
-            />
-        ) : (
-            <EmailPassword
-                loginTitle={localized('logIn')}
-                signUpTitle={signUpTitle}
-                isLoading={isLoading}
-                email={email}
-                password={password}
-                showLoginButton
-                showSignupButton
-                showConfirmPasswordInput={showConfirmPasswordInput}
-                showResetPassword={showResetPassword}
-                onLoginPress={onEmailPasswordLoginPress}
-                onSignupPress={onSignupPress}
-                onPasswordReset={onForgotPasswordPress}
-                inputActionHandler={inputActionHandler}
-            />
-        )}
+    return (
+        <>
+            {selectedLogin === LOGIN_OPTIONS.PHONE ? (
+                <FormPhoneNumber
+                    isVerificationCodeVisible={isVerificationCodeVisible}
+                    isVereficationCodeLoading={isVereficationCodeLoading}
+                    showPhoneNumberValidationError={false}
+                    isLoading={isLoading}
+                    vereficationCodeError={vereficationCodeError}
+                    onPhoneNumberLoginPress={onPhoneNumberLoginPress}
+                    onDismiss={onDismiss}
+                    onResendCodePress={onResendCodePress}
+                    onConfirmCodePress={onConfirmCodePress}
+                    onFailure={onFailure}
+                />
+            ) : (
+                <EmailPassword
+                    loginTitle={localized('logIn')}
+                    signUpTitle={signUpTitle}
+                    isLoading={isLoading}
+                    email={email}
+                    password={password}
+                    showLoginButton
+                    showSignupButton
+                    showConfirmPasswordInput={showConfirmPasswordInput}
+                    showResetPassword={showResetPassword}
+                    onLoginPress={onEmailPasswordLoginPress}
+                    onSignupPress={onSignupPress}
+                    onPasswordReset={onForgotPasswordPress}
+                    inputActionHandler={inputActionHandler}
+                />
+            )}
 
-        {isSwitcherEnable ? (
-            <>
-                <ScreenWrapper.Section>
-                    <Text style={{ textAlign: 'center' }}>OR</Text>
-                </ScreenWrapper.Section>
-                <ScreenWrapper.Section>
-                    <Button
-                        mode="contained-tonal"
-                        icon={selectedLogin === LOGIN_OPTIONS.PHONE ?"email-outline" : "cellphone"}
-                        onPress={() => setSelectedLogin(selectedLogin === LOGIN_OPTIONS.PHONE ? LOGIN_OPTIONS.EMAIL : LOGIN_OPTIONS.PHONE)}
-                    >
-                        {localized(selectedLogin === LOGIN_OPTIONS.PHONE ? 'continueEmail' : 'continuePhoneNumber')}
-                    </Button>
-                </ScreenWrapper.Section>
-            </>
-        ) : null}
-    </>
-}
+            {isSwitcherEnable ? (
+                <>
+                    <ScreenWrapper.Section>
+                        <Text style={{ textAlign: 'center' }}>OR</Text>
+                    </ScreenWrapper.Section>
+                    <ScreenWrapper.Section>
+                        <Button
+                            mode="contained-tonal"
+                            icon={selectedLogin === LOGIN_OPTIONS.PHONE ? 'email-outline' : 'cellphone'}
+                            onPress={() =>
+                                setSelectedLogin(
+                                    selectedLogin === LOGIN_OPTIONS.PHONE ? LOGIN_OPTIONS.EMAIL : LOGIN_OPTIONS.PHONE
+                                )
+                            }
+                        >
+                            {localized(selectedLogin === LOGIN_OPTIONS.PHONE ? 'continueEmail' : 'continuePhoneNumber')}
+                        </Button>
+                    </ScreenWrapper.Section>
+                </>
+            ) : null}
+        </>
+    );
+};
 
-export default EmailOrPhoneSwitcher
+export default EmailOrPhoneSwitcher;

@@ -5,11 +5,11 @@ import { AppLifecycle } from 'react-native-applifecycle';
 import { checkAndAskForPermission, gpsLocation } from '.';
 import { Banner, List } from '@jmstechnologiesinc/react-native-paper';
 
-import { localized } from '../Localization/Localization'
-import ScreenWrapper from '../ScreenWrapper/ScreenWrapper'
-import AutoCompleteInput from '../AutoCompleteInput'
+import { localized } from '../Localization/Localization';
+import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
+import AutoCompleteInput from '../AutoCompleteInput';
 
-import {LocationListItem } from '../LocationListItem/LocationListItem';
+import { LocationListItem } from '../LocationListItem/LocationListItem';
 
 import RecentLocations from './RecentLocations';
 import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
@@ -43,7 +43,7 @@ const Autocomplete = ({
     onMapPicker,
     predefinedPlaces = true,
     isShowMapPicker = false,
-    withScrollView= false
+    withScrollView = false,
 }) => {
     const [isLocationPermissionDenied, setPermissions] = useState(false);
     const [isOriginFocused, setIsOriginFocused] = useState(false);
@@ -90,38 +90,37 @@ const Autocomplete = ({
     const onDropoffAutoCompleteInputPress = (data) => processAutoCompleteInput(data, onDropoffLocationPress);
 
     const onRecentLocationPressWrapper = (data) => {
-        onRecentLocationPress(data)
+        onRecentLocationPress(data);
         Keyboard.dismiss();
-    }
+    };
 
     const onCallMapPicker = () => {
-        onMapPicker(isOriginFocused ? 'originLocation' : 'dropoffLocation')
+        onMapPicker(isOriginFocused ? 'originLocation' : 'dropoffLocation');
         setIsOriginFocused(false);
-        Keyboard.dismiss()
-    }
+        Keyboard.dismiss();
+    };
 
-  
     return (
         <>
             <ScreenWrapper withScrollView={withScrollView} keyboardShouldPersistTaps={'handled'}>
-            {isLocationPermissionDenied === true ? (
-               <>
-                    <Banner
-                        visible={true}
-                        icon={MATERIAL_ICONS.location}
-                        actions={[
-                            {
-                                label: localized('goToSettings'),
-                                onPress: onAskForPermission,
-                            },
-                        ]}
-                    >
-                        {localized('appRequiresGeolocation')}
-                    </Banner>
-                    <ScreenWrapper.Section />
-               </>
-            ) : null}
-                <ScreenWrapper.Container >
+                {isLocationPermissionDenied === true ? (
+                    <>
+                        <Banner
+                            visible={true}
+                            icon={MATERIAL_ICONS.location}
+                            actions={[
+                                {
+                                    label: localized('goToSettings'),
+                                    onPress: onAskForPermission,
+                                },
+                            ]}
+                        >
+                            {localized('appRequiresGeolocation')}
+                        </Banner>
+                        <ScreenWrapper.Section />
+                    </>
+                ) : null}
+                <ScreenWrapper.Container>
                     <AutoCompleteInput
                         title={originAutoCompleteInputTitle}
                         icon={originAutoCompleteInputIcon}
@@ -137,8 +136,9 @@ const Autocomplete = ({
                             setIsOriginFocused(true);
                         }}
                         onBlur={() => {
-                            setIsOriginFocused(false)
-                        }} />
+                            setIsOriginFocused(false);
+                        }}
+                    />
 
                     {isDropoffLocationInputVisible && !isOriginFocused ? (
                         <AutoCompleteInput
@@ -154,11 +154,12 @@ const Autocomplete = ({
                             onCallMapPicker={onCallMapPicker}
                             onPress={onDropoffAutoCompleteInputPress}
                             onFocus={() => {
-                                setIsDestinationFocused(true)
+                                setIsDestinationFocused(true);
                             }}
                             onBlur={() => {
-                                setIsDestinationFocused(false)
-                            }} />
+                                setIsDestinationFocused(false);
+                            }}
+                        />
                     ) : null}
                 </ScreenWrapper.Container>
 
@@ -176,9 +177,10 @@ const Autocomplete = ({
                 {isRecentLocationVisible && isFocused === false && recentLocations?.length > 0 ? (
                     <RecentLocations
                         title={recentLocationTitle}
-                        locations={recentLocations.filter(recent => recent.id !== currentLocation?.id)}
+                        locations={recentLocations.filter((recent) => recent.id !== currentLocation?.id)}
                         variant={recentLocationVariant}
-                        onPress={onRecentLocationPressWrapper} />
+                        onPress={onRecentLocationPressWrapper}
+                    />
                 ) : null}
             </ScreenWrapper>
         </>

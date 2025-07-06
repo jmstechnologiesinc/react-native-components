@@ -19,7 +19,7 @@ const FormVehicleInfo = ({
 }) => {
     return (
         <>
-           {/*  <List.Item
+            {/*  <List.Item
                 title={localized('active')}
                 disabled={active}
                 right={() => (

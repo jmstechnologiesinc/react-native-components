@@ -11,7 +11,7 @@ export const LOCATION_LIST_ITEM = {
     locationHistory: 'locationHistory',
     destinationSuggestion: 'destinationSuggestion',
     hailLocation: 'hailLocation',
-    mapMarkerCheckOutline: 'mapMarkerCheckOutline'
+    mapMarkerCheckOutline: 'mapMarkerCheckOutline',
 };
 
 export const LOCATION_LIST_ITEM_MAPPING = {
@@ -23,7 +23,7 @@ export const LOCATION_LIST_ITEM_MAPPING = {
     [LOCATION_LIST_ITEM.hailLocation]: 'hail',
     [LOCATION_LIST_ITEM.mapMarkerCheckOutline]: 'map-marker-outline',
 };
- 
+
 export const interpunctLocationListItemDescription = ({ floorNumber, buildingName, note }) =>
     interpunct([floorNumber, buildingName, note]);
 
@@ -32,22 +32,16 @@ export const LocationListItem = ({
     description,
     variant,
     iconColor,
-    titleNumberOfLines=0,
-    descriptionNumberOfLines=1,
-    onPress
+    titleNumberOfLines = 0,
+    descriptionNumberOfLines = 1,
+    onPress,
 }) => (
     <List.Item
         title={title}
         description={description}
         left={
             variant
-                ? (props) => (
-                    <List.Icon
-                        {...props}
-                        icon={LOCATION_LIST_ITEM_MAPPING[variant]}
-                        color={iconColor}
-                    />
-                )
+                ? (props) => <List.Icon {...props} icon={LOCATION_LIST_ITEM_MAPPING[variant]} color={iconColor} />
                 : null
         }
         right={onPress ? (props) => <List.Icon {...props} icon={MATERIAL_ICONS.chevron} /> : null}
@@ -56,5 +50,3 @@ export const LocationListItem = ({
         onPress={onPress}
     />
 );
-
-

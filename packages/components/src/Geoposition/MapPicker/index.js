@@ -1,11 +1,11 @@
-import { View, Text, Dimensions, StyleSheet } from 'react-native'
-import React from 'react'
+import { View, Text, Dimensions, StyleSheet } from 'react-native';
+import React from 'react';
 import MapboxGL from '@rnmapbox/maps';
 import { Appbar, IconButton, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AddressSelectionSheet from './AddressSelectionSheet';
-import { Config } from '../../Config'
+import { Config } from '../../Config';
 
 const MapPicker = ({
     mapRef,
@@ -19,7 +19,7 @@ const MapPicker = ({
     currentMapAdress,
     findUserLocation,
     centerMapOnUserLocation,
-    onBackPress
+    onBackPress,
 }) => {
     const { height } = Dimensions.get('window');
     const insets = useSafeAreaInsets();
@@ -83,8 +83,8 @@ const MapPicker = ({
                 <Appbar.BackAction mode="contained" onPress={onBackPress} />
             </View>
         </>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     map: {
@@ -103,4 +103,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default MapPicker
+export default MapPicker;

@@ -5,11 +5,10 @@ import { Card, Text, MD3LightTheme } from '@jmstechnologiesinc/react-native-pape
 import { VENDOR_INDUSTRIES_MAPPING } from '@jmstechnologiesinc/vendor';
 import { interpunct } from '@jmstechnologiesinc/commons';
 import { sectionPaddings } from '../ScreenWrapper/ScreenWrapperSection';
-import { imageKitCard,imageKitCardLqip } from '../utils';
+import { imageKitCard, imageKitCardLqip } from '../utils';
 import { localized } from '../Localization/Localization';
 
 const VendorListItem = ({ item, withPaddingHorizontal, onPress }) => {
-    
     return (
         <Card
             style={{
@@ -18,10 +17,12 @@ const VendorListItem = ({ item, withPaddingHorizontal, onPress }) => {
             }}
             onPress={() => onPress(item)}
         >
-            <Card.Cover source={{
-                lqipUri: imageKitCardLqip(item.photos),
-                uri: imageKitCard(item.photos),
-            }} />
+            <Card.Cover
+                source={{
+                    lqipUri: imageKitCardLqip(item.photos),
+                    uri: imageKitCard(item.photos),
+                }}
+            />
             <Card.Title
                 title={item.title}
                 subtitle={interpunct([localized(item.formattedFulfillmentMethod), item.formattedHitDistance])}
@@ -38,7 +39,7 @@ const VendorListItem = ({ item, withPaddingHorizontal, onPress }) => {
                 </Card.Content>
             ) : null}
         </Card>
-    )
-}
+    );
+};
 
 export default VendorListItem;

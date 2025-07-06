@@ -3,31 +3,31 @@ import { StyleSheet, View } from 'react-native';
 //import { BlurView } from 'expo-blur';
 
 const BlurredBackground = () => {
-  return (
-    <View style={styles.container}>
-     {/*  <BlurView
+    return (
+        <View style={styles.container}>
+            {/*  <BlurView
         tint="systemThickMaterialDark"
         blurReductionFactor={1}
         experimentalBlurMethod="dimezisBlurView"
         intensity={100}
         style={styles.blurView}
       /> */}
-    </View>
-  );
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
-  blurView: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  container: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'red',
+    blurView: {
+        ...StyleSheet.absoluteFillObject,
+    },
+    container: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'red',
 
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    overflow: 'hidden',
-  },
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+        overflow: 'hidden',
+    },
 });
 
 export default BlurredBackground;
