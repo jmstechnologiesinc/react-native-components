@@ -1,6 +1,7 @@
 /** @type{import("@storybook/react-webpack5").StorybookConfig} */
 module.exports = {
   stories: [
+    '../packages/components/src/ApplicationScreenshots/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/List/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/VendorView/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/ScreenWrapper/*.stories.?(ts|tsx|js|jsx)',
