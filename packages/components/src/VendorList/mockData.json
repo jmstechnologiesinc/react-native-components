@@ -19,7 +19,7 @@
         "approvedPickupMethods": ["CustomerPickup"],
         "id": "13kd3okVeq5fO68QfNrjdg",
         "phoneNumber": "9787477989",
-        "photos": ["vendors/13kd3okVeq5fO68QfNrjdg/13kd3okVeq5fO68QfNrjdg.png"],
+        "photos": ["https://cdn.pixabay.com/photo/2014/05/03/14/21/meals-337073_1280.jpg"],
         "industries": ["Restaurant"],
         "currency": "USD",
         "partneshipStatus": "Active",
@@ -68,7 +68,7 @@
         },
         "industries": ["Restaurant"],
         "currency": "USD",
-        "photos": ["vendors/1AcokVeq5fO68QfNrjdg/47379325.jpeg"],
+        "photos": ["https://cdn.pixabay.com/photo/2015/04/08/13/13/food-712665_1280.jpg"],
         "partneshipStatus": "Active",
         "hitMetadata": {
             "distance": 0.9672437083510582
@@ -136,7 +136,7 @@
             "longitude": -71.16872,
             "timeZone": "America/New_York"
         },
-        "photos": ["vendors/e54a3551-1d83-457f-99f2-7cdeec4ff263/97e6648b3593c29cb4a6335f976e6d84.jpeg"],
+        "photos": ["https://cdn.pixabay.com/photo/2020/06/24/22/08/spicy-5337836_1280.jpg"],
         "partneshipStatus": "Active",
         "hitMetadata": {
             "distance": 0.9867932837898103
@@ -172,6 +172,7 @@
         },
         "website": "https://fernandezbrothersliquorslawrence.com",
         "partneshipStatus": "Active",
+        "photos": ["https://cdn.pixabay.com/photo/2017/02/12/16/38/scotch-2060499_1280.jpg"],
         "deliveryMethod": "Marketplace",
         "payment": {
             "stripeId": "acct_1PEGrFBUuqGmLK2f"

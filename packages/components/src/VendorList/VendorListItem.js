@@ -3,12 +3,16 @@ import React from 'react';
 import { Card, Text, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
 import { VENDOR_INDUSTRIES_MAPPING } from '@jmstechnologiesinc/vendor';
-import { interpunct } from '@jmstechnologiesinc/commons';
+import { interpunct, getMainPhoto } from '@jmstechnologiesinc/commons';
 import { sectionPaddings } from '../ScreenWrapper/ScreenWrapperSection';
-import { imageKitCard, imageKitCardLqip } from '../utils';
+import { imageKitCard, imageKitCardLqip, isPublicUrl } from '../utils';
 import { localized } from '../Localization/Localization';
 
 const VendorListItem = ({ item, withPaddingHorizontal, onPress }) => {
+    
+    const mainPhoto = getMainPhoto(item.photos);
+    const isPublic = isPublicUrl(mainPhoto);
+
     return (
         <Card
             style={{
@@ -19,10 +23,11 @@ const VendorListItem = ({ item, withPaddingHorizontal, onPress }) => {
         >
             <Card.Cover
                 source={{
-                    lqipUri: imageKitCardLqip(item.photos),
-                    uri: imageKitCard(item.photos),
+                    lqipUri: isPublic ? mainPhoto : imageKitCardLqip(item.photos),
+                    uri: isPublic ? mainPhoto : imageKitCard(item.photos),
                 }}
             />
+
             <Card.Title
                 title={item.title}
                 subtitle={interpunct([localized(item.formattedFulfillmentMethod), item.formattedHitDistance])}

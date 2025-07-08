@@ -29,14 +29,13 @@ export const List = ({ onPress }) => (
 );
 
 export const Scrollable = () => (
-    <TabsScrollable data={mockData} onTabsItemLayout={() => {}} onTabsItemLayout={() => {}} onPress={() => {}} />
+    <TabsScrollable data={mockData} onTabsItemLayout={() => {}} onPress={() => {}} />
 );
 
 export const ScrollableTitle = () => (
     <TabsScrollable
         title="Main Menu"
         data={mockData}
-        onTabsItemLayout={() => {}}
         onTabsItemLayout={() => {}}
         onPress={() => {}}
     />

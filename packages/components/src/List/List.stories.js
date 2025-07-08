@@ -1,4 +1,3 @@
-import { List } from '@jmstechnologiesinc/react-native-paper';
 import React from 'react';
 import { View } from 'react-native';
 
@@ -11,10 +10,10 @@ export default {
 const photo = 'https://d1ralsognjng37.cloudfront.net/9d1e795c-5329-4d96-bdb1-bbf95db0433c.jpeg';
 
 export const Image = () => (
-    <List.Item
+    <JMSList.Item
         title="Headline"
         description="Supporting text"
-        left={(props) => <List.Image variant="video" style={props.style} source={photo} />}
+        photo={photo}
     />
 );
 
