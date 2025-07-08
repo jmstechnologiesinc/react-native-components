@@ -16,7 +16,7 @@
         "vendor": {
             "id": "e54a3551-1d83-457f-99f2-7cdeec4ff263",
             "title": "McDonald's® (50 BROADWAY)",
-            "photos": ["vendors/e54a3551-1d83-457f-99f2-7cdeec4ff263/97e6648b3593c29cb4a6335f976e6d84.jpeg"],
+            "photos": ["https://cdn.pixabay.com/photo/2022/11/10/02/35/burger-7581817_1280.jpg"],
             "location": {
                 "formattedAddress": "50 Broadway, Lawrence, MA 01840"
             }
@@ -72,7 +72,7 @@
             {
                 "catalogId": "KPx0gQc7MBiA2HQcPUks",
                 "photos": [
-                    "vendors/e54a3551-1d83-457f-99f2-7cdeec4ff263/products/14ada38f-8578-4243-95ee-e179c6ba3904.jpg"
+                    "https://cdn.pixabay.com/photo/2017/10/16/09/00/sushi-2856545_1280.jpg"
                 ],
                 "catalogCategoryJoinId": "vFhy8af1P24KuvCsLd2X",
                 "attributeGroupInitialState": {},
@@ -291,7 +291,7 @@
                 "fulfillmentMethod": "flexible",
                 "position": 1,
                 "categoryId": "iofu68Voj929O6tzJ94Q",
-                "photo": "vendors/e54a3551-1d83-457f-99f2-7cdeec4ff263/products/af9e2605-ccf0-4941-a0e3-5dd6a69c0476.jpg",
+                "photo": "https://cdn.pixabay.com/photo/2022/11/10/02/35/burger-7581817_1280.jpg",
                 "id": "PLmzjnBHflGMbEfz6qw9",
                 "cartId": "a3a74edc-ce9f-4467-af81-7ce1dec51649",
                 "status": "added",
@@ -321,7 +321,7 @@
         "vendor": {
             "id": "1AcokVeq5fO68QfNrjdg",
             "title": "Vaka Restaurant",
-            "photos": ["vendors/1AcokVeq5fO68QfNrjdg/47379325.jpeg"],
+            "photos": ["https://cdn.pixabay.com/photo/2017/10/16/09/00/sushi-2856545_1280.jpg"],
             "location": {
                 "formattedAddress": "337 Essex St, Lawrence, MA 01840"
             }
