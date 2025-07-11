@@ -4,7 +4,7 @@ import { FlatList, View } from 'react-native';
 
 import CartListItem from './CartListItem';
 
-const keyExtractor = productItem => productItem.key || productItem.id;
+const keyExtractor = (productItem) => productItem.key || productItem.id;
 
 const CartList = ({
     title,
@@ -40,7 +40,8 @@ const CartList = ({
                         onAdd={onAdd}
                         onDelete={onDelete}
                         onEdit={onEdit}
-                        onCheckout={onCheckout} />
+                        onCheckout={onCheckout}
+                    />
                 )}
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}

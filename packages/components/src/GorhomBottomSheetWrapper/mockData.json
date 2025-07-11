@@ -1,0 +1,122 @@
+{
+    "author": {
+        "formattedName": "First Name .L",
+        "firstName": "First Name",
+        "pushToken": "cHvIuGuDM0i9vm2S8s8FxE:APA91bHRBoKf84sT4cq7O488psfuedtS8zugFp0fi3H4oUrhLEYllEoZ6QBEfngz58J0bI1UH3fkq0EgZFgbGZUa0qjFWVepcX0mJf5K9jPYG_g9sy6CJjbDm_Eno5gGFzVE7RwwwI-A",
+        "id": "FQdAerDfgzNhbhaTzz5NOfvEcCC2",
+        "phoneNumber": "9787712261",
+        "photo": null,
+        "lastName": "Last Name"
+    },
+    "tipsFilter": null,
+    "cart": {
+        "title": "Choose a Ride",
+        "selectedItem": {
+            "token": "86bf9a11-ec05-47e2-9089-adb2165d7a7e",
+            "driver": {
+                "id": "3QumEUy2gGg1jsv2jVSQGr2EIb82",
+                "longitude": -71.161819,
+                "formattedValue": "41 minutes · 30.3 miles",
+                "latitude": 42.708492
+            },
+            "costs": {
+                "total": {
+                    "label": "total",
+                    "formattedValue": "$34.25",
+                    "id": "total",
+                    "amount": {
+                        "scale": 2,
+                        "amount": 3425,
+                        "currency": {
+                            "code": "USD",
+                            "exponent": 2,
+                            "base": 10
+                        }
+                    }
+                }
+            },
+            "eta": {
+                "formattedValue": "1 hour 26 minutes · 62.1 miles"
+            }
+        },
+        "products": [
+            {
+                "token": null,
+                "name": "Daxir Premium",
+                "description": null,
+                "data": [
+                    {
+                        "eta": {
+                            "formattedValue": "1 hour 26 minutes · 62.1 miles"
+                        },
+                        "costs": {
+                            "total": {
+                                "amount": {
+                                    "currency": {
+                                        "base": 10,
+                                        "exponent": 2,
+                                        "code": "USD"
+                                    },
+                                    "amount": 3425,
+                                    "scale": 2
+                                },
+                                "id": "total",
+                                "formattedValue": "$34.25",
+                                "label": "total"
+                            }
+                        },
+                        "driver": {
+                            "latitude": 42.708492,
+                            "formattedValue": "41 minutes · 30.3 miles",
+                            "longitude": -71.161819,
+                            "id": "3QumEUy2gGg1jsv2jVSQGr2EIb82"
+                        },
+                        "token": "86bf9a11-ec05-47e2-9089-adb2165d7a7e"
+                    },
+                    {
+                        "eta": {
+                            "formattedValue": "1 hour 26 minutes · 62.1 miles"
+                        },
+                        "costs": {
+                            "total": {
+                                "amount": {
+                                    "currency": {
+                                        "base": 10,
+                                        "exponent": 2,
+                                        "code": "USD"
+                                    },
+                                    "amount": 3425,
+                                    "scale": 2
+                                },
+                                "id": "total",
+                                "formattedValue": "$34.25",
+                                "label": "total"
+                            }
+                        },
+                        "driver": {
+                            "latitude": 42.708492,
+                            "formattedValue": "41 minutes · 30.3 miles",
+                            "longitude": -71.161819,
+                            "id": "eRvJbus7xt8Vu2epx7ttmd0ZFiPd"
+                        },
+                        "token": "4427cb3d-3b3c-4250-b696-6e4c23cebe7a"
+                    }
+                ]
+            }
+        ],
+        "vehiclePoints": [
+            {
+                "token": "86bf9a11-ec05-47e2-9089-adb2165d7a7e",
+                "formattedValue": "1 hour 26 minutes · 62.1 miles",
+                "longitude": -71.161819,
+                "latitude": 42.708492
+            },
+            {
+                "token": "4427cb3d-3b3c-4250-b696-6e4c23cebe7a",
+                "formattedValue": "1 hour 26 minutes · 62.1 miles",
+                "longitude": -71.161819,
+                "latitude": 42.708492
+            }
+        ]
+    }
+}

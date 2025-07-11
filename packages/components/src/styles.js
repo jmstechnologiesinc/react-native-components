@@ -18,7 +18,7 @@ const styles = {
         shadowOpacity: 0.3,
         shadowRadius: 4,
         shadowOffset: { height: 2, width: 2 },
-    } 
+    },
 };
 
 export default styles;

@@ -29,7 +29,7 @@ function OptionPickerActionSheet({
     onShowActionSheetPress,
     chipListOptionTitle,
     onPress,
-    onNavigation = false
+    onNavigation = false,
 }) {
     const actionSheetRef = useRef();
     const insets = useSafeAreaInsets();
@@ -63,11 +63,11 @@ function OptionPickerActionSheet({
 
     const showActionSheet = () => {
         if (options?.length === 0 && onNavigation) {
-            onNavigation()
+            onNavigation();
         } else {
-            setSelectedOptions(preSelectedOptions)
-            onShowActionSheetPress?.()
-            actionSheetRef.current.show()
+            setSelectedOptions(preSelectedOptions);
+            onShowActionSheetPress?.();
+            actionSheetRef.current.show();
         }
     };
 
@@ -79,7 +79,9 @@ function OptionPickerActionSheet({
             <ScreenWrapper.Section title={chipListTitle} titleStyle={titleStyle}>
                 <ChipList
                     isDisabled={isDisabled}
-                    options={preSelectedOptions.map(option => chipListOptionTitle ? chipListOptionTitle(option) : option.title)}
+                    options={preSelectedOptions.map((option) =>
+                        chipListOptionTitle ? chipListOptionTitle(option) : option.title
+                    )}
                     onPress={showActionSheet}
                     onClose={isChipRemoveable ? handleRemoveChip : null}
                     chipStyle={{ marginBottom: MD3LightTheme.spacing.x2 }}
@@ -90,7 +92,11 @@ function OptionPickerActionSheet({
                     onPress={showActionSheet}
                     style={[{ marginLeft: 0 }, buttonWrapperStyle]}
                 />
-                {helpText ? <HelperText style={helperTextStyle} padding='none'>{helpText}</HelperText> : null}
+                {helpText ? (
+                    <HelperText style={helperTextStyle} padding="none">
+                        {helpText}
+                    </HelperText>
+                ) : null}
             </ScreenWrapper.Section>
 
             <ActionSheet
@@ -103,7 +109,8 @@ function OptionPickerActionSheet({
                 containerStyle={{
                     paddingBottom: insets.bottom,
                     height: actionSheetHeight,
-                }}>
+                }}
+            >
                 {options?.length ? (
                     <FlatList
                         data={options}

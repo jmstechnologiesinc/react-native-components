@@ -9,7 +9,7 @@ class ImagePickerAPI {
         descriptionPermissionCamera,
         descriptionPermissionPhotos,
         cancelPermission,
-        settingPermission
+        settingPermission,
     }) {
         this.titlePermissionCamera = titlePermissionCamera;
         this.titlePermissionPhotos = titlePermissionPhotos;
@@ -80,7 +80,14 @@ class ImagePickerAPI {
     chooseFromLibrary() {
         return new Promise((resolve) => {
             checkAndAskForPermissionMediaLibrary()
-                .then(() => launchImageLibrary({ mediaType: 'photo', quality: 1, includeBase64: true, allowsMultipleSelection: true }))
+                .then(() =>
+                    launchImageLibrary({
+                        mediaType: 'photo',
+                        quality: 1,
+                        includeBase64: true,
+                        allowsMultipleSelection: true,
+                    })
+                )
                 .then((response) => {
                     if (response.didCancel) {
                         console.log('User cancelled image picker');

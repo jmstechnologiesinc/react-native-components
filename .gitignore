@@ -60,3 +60,5 @@ buck-out/
 /ios/Pods/
 /vendor/bundle/
 /packages/components/lib
+
+*.cache

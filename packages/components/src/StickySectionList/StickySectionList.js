@@ -8,8 +8,6 @@ import * as Tabs from '../Tabs/Tabs';
 
 import sectionListGetItemLayout from './getItemLayout';
 
-
-
 const AnimatedSectionList = Animated.createAnimatedComponent(NativeSectionList);
 
 const StickyList = ({
@@ -45,7 +43,9 @@ const StickyList = ({
                         key={`sticky-section-${item.id}`}
                         title={item.title}
                         isSelected={currentIndex === index}
-                        style={{ backgroundColor: itemSeparator(index, sections.length) ? MD3LightTheme.spacing.x4 : null }}
+                        style={{
+                            backgroundColor: itemSeparator(index, sections.length) ? MD3LightTheme.spacing.x4 : null,
+                        }}
                         onPress={() => {
                             setCurrentIdex(index);
                             blockUpdateIndexRef.current = Platform.OS == 'web' ? false : true;
@@ -83,20 +83,20 @@ const StickyList = ({
                     useNativeDriver: true,
                     listener: onContentOffsetYScroll
                         ? (event) => {
-                            if (
-                                event.nativeEvent.contentOffset.y > contentOffsetY &&
-                                contentOffsetYRangeRef.current === false
-                            ) {
-                                onContentOffsetYScroll(event.nativeEvent.contentOffset.y);
-                                contentOffsetYRangeRef.current = true;
-                            } else if (
-                                event.nativeEvent.contentOffset.y < contentOffsetY &&
-                                contentOffsetYRangeRef.current === true
-                            ) {
-                                onContentOffsetYScroll(event.nativeEvent.contentOffset.y);
-                                contentOffsetYRangeRef.current = false;
-                            }
-                        }
+                              if (
+                                  event.nativeEvent.contentOffset.y > contentOffsetY &&
+                                  contentOffsetYRangeRef.current === false
+                              ) {
+                                  onContentOffsetYScroll(event.nativeEvent.contentOffset.y);
+                                  contentOffsetYRangeRef.current = true;
+                              } else if (
+                                  event.nativeEvent.contentOffset.y < contentOffsetY &&
+                                  contentOffsetYRangeRef.current === true
+                              ) {
+                                  onContentOffsetYScroll(event.nativeEvent.contentOffset.y);
+                                  contentOffsetYRangeRef.current = false;
+                              }
+                          }
                         : null,
                 })}
                 onMomentumScrollEnd={() => (blockUpdateIndexRef.current = false)}

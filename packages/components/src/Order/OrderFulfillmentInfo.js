@@ -1,22 +1,15 @@
 import React from 'react';
 
-import { List} from '@jmstechnologiesinc/react-native-paper';
+import { List } from '@jmstechnologiesinc/react-native-paper';
 
 import { USER_ROLES } from '@jmstechnologiesinc/user';
-import {  FULFILLMENT_METHODS } from '@jmstechnologiesinc/vendor';
-import {
-    ORDER_STATUS,
-    orderStatusTime,
-} from '@jmstechnologiesinc/order';
+import { FULFILLMENT_METHODS } from '@jmstechnologiesinc/vendor';
+import { ORDER_STATUS, orderStatusTime } from '@jmstechnologiesinc/order';
 
 import { MATERIAL_ICONS, LOGISTICS_PLATFORMS, firestoreTimestampToDate } from '@jmstechnologiesinc/commons';
 import { localized } from '@jmstechnologiesinc/react-native-components';
 
-const OrderFulfillmentInfo = ({
-    order,
-    role,
-    platform,
-}) => {
+const OrderFulfillmentInfo = ({ order, role, platform }) => {
     if (!order?.id || !USER_ROLES[role]) {
         return null;
     }
@@ -43,20 +36,20 @@ const OrderFulfillmentInfo = ({
             key: 'status-date',
             title: firestoreTimestampToDate(order[orderStatusTime(ORDER_STATUS.driverAccepted)])?.toLocaleString(),
             icon: MATERIAL_ICONS.calendar,
-            description: localized("order.acceptedTime"),
+            description: localized('order.acceptedTime'),
         });
         if (platform === LOGISTICS_PLATFORMS.rideshare) {
             fulfilmentDetails.push({
                 key: 'origin-location',
                 title: order.originLocation.formattedAddress,
                 icon: 'hail',
-                description: localized('trip.originLocation')
+                description: localized('trip.originLocation'),
             });
             fulfilmentDetails.push({
                 key: 'drop-off-location',
                 title: order.fulfillmentAddress.formattedAddress,
                 icon: 'home-map-marker',
-                description: localized('trip.dropoffLocation')
+                description: localized('trip.dropoffLocation'),
             });
         } else {
             fulfilmentDetails.push({
@@ -64,7 +57,9 @@ const OrderFulfillmentInfo = ({
                 title: order.fulfillmentAddress.formattedAddress,
                 icon: 'home-map-marker',
                 description:
-                    order.fulfillmentMethod === FULFILLMENT_METHODS.delivery ? localized('order.fulfillmentAddress') : localized('order.pickupAddress'),
+                    order.fulfillmentMethod === FULFILLMENT_METHODS.delivery
+                        ? localized('order.fulfillmentAddress')
+                        : localized('order.pickupAddress'),
             });
             fulfilmentDetails.push({
                 key: 'vendor-phoneNumber',
@@ -73,7 +68,6 @@ const OrderFulfillmentInfo = ({
                 description: localized('order.vendor.phone'),
             });
         }
-
     }
 
     if (role === USER_ROLES.customer) {
@@ -82,13 +76,13 @@ const OrderFulfillmentInfo = ({
                 key: 'origin-location',
                 title: order.originLocation.formattedAddress,
                 icon: 'hail',
-                description: localized('trip.originLocation')
+                description: localized('trip.originLocation'),
             });
             fulfilmentDetails.push({
                 key: 'drop-off-location',
                 title: order.fulfillmentAddress.formattedAddress,
                 icon: 'home-map-marker',
-                description: localized('trip.dropoffLocation')
+                description: localized('trip.dropoffLocation'),
             });
         } else {
             fulfilmentDetails.push({
@@ -96,7 +90,9 @@ const OrderFulfillmentInfo = ({
                 title: order.fulfillmentAddress.formattedAddress,
                 icon: 'home-map-marker',
                 description:
-                    order.fulfillmentMethod === FULFILLMENT_METHODS.delivery ? localized('order.fulfillmentAddress') : localized('order.pickupAddress'),
+                    order.fulfillmentMethod === FULFILLMENT_METHODS.delivery
+                        ? localized('order.fulfillmentAddress')
+                        : localized('order.pickupAddress'),
             });
             fulfilmentDetails.push({
                 key: 'vendor-phoneNumber',
@@ -138,14 +134,16 @@ const OrderFulfillmentInfo = ({
         }
     }
 
-    return (fulfilmentDetails.length > 0 ? (
+    return fulfilmentDetails.length > 0 ? (
         <List.Section
             title={
-                platform === LOGISTICS_PLATFORMS.rideshare ?
-                    localized('trip.details') :
-                    order.fulfillmentMethod === FULFILLMENT_METHODS.delivery
-                        ? localized('order.deliveryDetails')
-                        : localized('order.pickupDetails')}>
+                platform === LOGISTICS_PLATFORMS.rideshare
+                    ? localized('trip.details')
+                    : order.fulfillmentMethod === FULFILLMENT_METHODS.delivery
+                    ? localized('order.deliveryDetails')
+                    : localized('order.pickupDetails')
+            }
+        >
             {fulfilmentDetails.map((item) => (
                 <List.Item
                     key={item.key}
@@ -153,10 +151,11 @@ const OrderFulfillmentInfo = ({
                     description={item.description}
                     titleNumberOfLines={0}
                     descriptionNumberOfLines={0}
-                    left={(props) => <List.Icon {...props} icon={item.icon} />} />
+                    left={(props) => <List.Icon {...props} icon={item.icon} />}
+                />
             ))}
         </List.Section>
-    ) : null);
+    ) : null;
 };
 
 export default OrderFulfillmentInfo;

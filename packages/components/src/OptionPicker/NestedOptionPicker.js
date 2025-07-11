@@ -3,13 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { List, Checkbox, RadioButton } from '@jmstechnologiesinc/react-native-paper';
 import { imageKitListImage } from '../utils';
 
-function NestedOptionPicker({
-    isDisabled,
-    option,
-    selectedOptions = [],
-    multiple = true,
-    onOptionPress,
-}) {
+function NestedOptionPicker({ isDisabled, option, selectedOptions = [], multiple = true, onOptionPress }) {
     const isOptionSelected = (id) => selectedOptions.some((opt) => opt.id === id);
 
     const renderNestedOption = (option, margin = 0) => (
@@ -23,7 +17,9 @@ function NestedOptionPicker({
                 onPress={() => onOptionPress(option)}
                 left={
                     option.photo
-                        ? (props) => <List.Image style={props.style} source={{ uri: imageKitListImage(option.photo) }} />
+                        ? (props) => (
+                              <List.Image style={props.style} source={{ uri: imageKitListImage(option.photo) }} />
+                          )
                         : null
                 }
                 right={() =>

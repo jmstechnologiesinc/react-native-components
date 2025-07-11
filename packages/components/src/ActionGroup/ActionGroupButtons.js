@@ -33,8 +33,8 @@ const ActionGroupButtons = ({ buttons, isLoading, isStretched = false, style, on
                                     button.variant
                                         ? button.variant
                                         : isPrimaryButton(buttons.length, index)
-                                            ? 'primary'
-                                            : 'secondary'
+                                        ? 'primary'
+                                        : 'secondary'
                                 }
                                 label={button.title}
                                 onPress={() => onPress?.(button)}
@@ -52,8 +52,8 @@ const ActionGroupButtons = ({ buttons, isLoading, isStretched = false, style, on
                                     button.mode
                                         ? button.mode
                                         : isPrimaryButton(buttons.length, index)
-                                            ? 'contained'
-                                            : 'outlined'
+                                        ? 'contained'
+                                        : 'outlined'
                                 }
                                 icon={button.icon}
                                 onPress={() => onPress?.(button)}

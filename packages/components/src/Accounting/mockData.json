@@ -1,158 +1,158 @@
 [
-  {
-    "amount": {
-      "create": {},
-      "calculator": {
-        "decrement": {},
-        "zero": {},
-        "modulo": {},
-        "subtract": {},
-        "add": {},
-        "compare": {},
-        "power": {},
-        "multiply": {},
-        "integerDivide": {},
-        "increment": {}
-      },
-      "formatter": {
-        "toNumber": {},
-        "toString": {}
-      },
-      "toJSON": {}
+    {
+        "amount": {
+            "create": {},
+            "calculator": {
+                "decrement": {},
+                "zero": {},
+                "modulo": {},
+                "subtract": {},
+                "add": {},
+                "compare": {},
+                "power": {},
+                "multiply": {},
+                "integerDivide": {},
+                "increment": {}
+            },
+            "formatter": {
+                "toNumber": {},
+                "toString": {}
+            },
+            "toJSON": {}
+        },
+        "id": "total",
+        "description": null,
+        "formattedValue": "$11.02",
+        "label": "total"
     },
-    "id": "total",
-    "description": null,
-    "formattedValue": "$11.02",
-    "label": "total"
-  },
-  {
-    "amount": {
-      "create": {},
-      "calculator": {
-        "decrement": {},
-        "zero": {},
-        "modulo": {},
-        "subtract": {},
-        "add": {},
-        "compare": {},
-        "power": {},
-        "multiply": {},
-        "integerDivide": {},
-        "increment": {}
-      },
-      "formatter": {
-        "toNumber": {},
-        "toString": {}
-      },
-      "toJSON": {}
+    {
+        "amount": {
+            "create": {},
+            "calculator": {
+                "decrement": {},
+                "zero": {},
+                "modulo": {},
+                "subtract": {},
+                "add": {},
+                "compare": {},
+                "power": {},
+                "multiply": {},
+                "integerDivide": {},
+                "increment": {}
+            },
+            "formatter": {
+                "toNumber": {},
+                "toString": {}
+            },
+            "toJSON": {}
+        },
+        "id": "subTotal",
+        "description": null,
+        "formattedValue": "$10.00",
+        "label": "subTotal"
     },
-    "id": "subTotal",
-    "description": null,
-    "formattedValue": "$10.00",
-    "label": "subTotal"
-  },
-  {
-    "amount": {
-      "create": {},
-      "calculator": {
-        "decrement": {},
-        "zero": {},
-        "modulo": {},
-        "subtract": {},
-        "add": {},
-        "compare": {},
-        "power": {},
-        "multiply": {},
-        "integerDivide": {},
-        "increment": {}
-      },
-      "formatter": {
-        "toNumber": {},
-        "toString": {}
-      },
-      "toJSON": {}
+    {
+        "amount": {
+            "create": {},
+            "calculator": {
+                "decrement": {},
+                "zero": {},
+                "modulo": {},
+                "subtract": {},
+                "add": {},
+                "compare": {},
+                "power": {},
+                "multiply": {},
+                "integerDivide": {},
+                "increment": {}
+            },
+            "formatter": {
+                "toNumber": {},
+                "toString": {}
+            },
+            "toJSON": {}
+        },
+        "id": "platformFee",
+        "description": null,
+        "formattedValue": "$0.00",
+        "label": "platformCommission(0%)"
     },
-    "id": "platformFee",
-    "description": null,
-    "formattedValue": "$0.00",
-    "label": "platformCommission(0%)"
-  },
-  {
-    "amount": {
-      "create": {},
-      "calculator": {
-        "decrement": {},
-        "zero": {},
-        "modulo": {},
-        "subtract": {},
-        "add": {},
-        "compare": {},
-        "power": {},
-        "multiply": {},
-        "integerDivide": {},
-        "increment": {}
-      },
-      "formatter": {
-        "toNumber": {},
-        "toString": {}
-      },
-      "toJSON": {}
+    {
+        "amount": {
+            "create": {},
+            "calculator": {
+                "decrement": {},
+                "zero": {},
+                "modulo": {},
+                "subtract": {},
+                "add": {},
+                "compare": {},
+                "power": {},
+                "multiply": {},
+                "integerDivide": {},
+                "increment": {}
+            },
+            "formatter": {
+                "toNumber": {},
+                "toString": {}
+            },
+            "toJSON": {}
+        },
+        "id": "deliveryCost",
+        "description": null,
+        "formattedValue": "$0.49",
+        "label": "deliveryCost"
     },
-    "id": "deliveryCost",
-    "description": null,
-    "formattedValue": "$0.49",
-    "label": "deliveryCost"
-  },
-  {
-    "amount": {
-      "create": {},
-      "calculator": {
-        "decrement": {},
-        "zero": {},
-        "modulo": {},
-        "subtract": {},
-        "add": {},
-        "compare": {},
-        "power": {},
-        "multiply": {},
-        "integerDivide": {},
-        "increment": {}
-      },
-      "formatter": {
-        "toNumber": {},
-        "toString": {}
-      },
-      "toJSON": {}
+    {
+        "amount": {
+            "create": {},
+            "calculator": {
+                "decrement": {},
+                "zero": {},
+                "modulo": {},
+                "subtract": {},
+                "add": {},
+                "compare": {},
+                "power": {},
+                "multiply": {},
+                "integerDivide": {},
+                "increment": {}
+            },
+            "formatter": {
+                "toNumber": {},
+                "toString": {}
+            },
+            "toJSON": {}
+        },
+        "id": "tips",
+        "description": null,
+        "formattedValue": "$0.53",
+        "label": "tips"
     },
-    "id": "tips",
-    "description": null,
-    "formattedValue": "$0.53",
-    "label": "tips"
-  },
-  {
-    "amount": {
-      "create": {},
-      "calculator": {
-        "decrement": {},
-        "zero": {},
-        "modulo": {},
-        "subtract": {},
-        "add": {},
-        "compare": {},
-        "power": {},
-        "multiply": {},
-        "integerDivide": {},
-        "increment": {}
-      },
-      "formatter": {
-        "toNumber": {},
-        "toString": {}
-      },
-      "toJSON": {}
-    },
-    "id": "taxes",
-    "description": null,
-    "formattedValue": "$0.00",
-    "label": "taxes"
-  }
+    {
+        "amount": {
+            "create": {},
+            "calculator": {
+                "decrement": {},
+                "zero": {},
+                "modulo": {},
+                "subtract": {},
+                "add": {},
+                "compare": {},
+                "power": {},
+                "multiply": {},
+                "integerDivide": {},
+                "increment": {}
+            },
+            "formatter": {
+                "toNumber": {},
+                "toString": {}
+            },
+            "toJSON": {}
+        },
+        "id": "taxes",
+        "description": null,
+        "formattedValue": "$0.00",
+        "label": "taxes"
+    }
 ]

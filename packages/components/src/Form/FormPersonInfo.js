@@ -1,20 +1,20 @@
 import React from 'react';
 
-import { TextInput,HelperText } from '@jmstechnologiesinc/react-native-paper';
+import { TextInput, HelperText } from '@jmstechnologiesinc/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import { localized } from '../Localization/Localization';
 
-const FormPersonInfo = ({ 
-    firstName, 
-    lastName, 
-    phoneNumber, 
-    email, 
-    isDisabled, 
-    showFirstNameValidationError=true,
-    showLastNameValidationError=true,
+const FormPersonInfo = ({
+    firstName,
+    lastName,
+    phoneNumber,
+    email,
+    isDisabled,
+    showFirstNameValidationError = true,
+    showLastNameValidationError = true,
     showPhoneInput = true,
     showEmailInput = true,
-    inputActionHandler, 
+    inputActionHandler,
 }) => {
     return (
         <>
@@ -27,7 +27,7 @@ const FormPersonInfo = ({
                     disabled={isDisabled}
                     onChangeText={(text) => inputActionHandler('firstName', text)}
                 />
-                {showFirstNameValidationError && !firstName ?  (
+                {showFirstNameValidationError && !firstName ? (
                     <HelperText type="error" padding="none" visible={true}>
                         {localized('firstNameIsRequired')}
                     </HelperText>
@@ -52,14 +52,14 @@ const FormPersonInfo = ({
             {showEmailInput ? (
                 <ScreenWrapper.Section>
                     <TextInput
-                        mode='outlined'
+                        mode="outlined"
                         label={localized('email')}
                         value={email}
                         onChangeText={(email) => inputActionHandler('email', email)}
                     />
                 </ScreenWrapper.Section>
             ) : null}
-                
+
             {showPhoneInput ? (
                 <ScreenWrapper.Section>
                     <TextInput
@@ -68,7 +68,8 @@ const FormPersonInfo = ({
                         value={phoneNumber}
                         disabled={isDisabled}
                         keyboardType="numeric"
-                        onChangeText={(text) => inputActionHandler('phoneNumber', text)} />
+                        onChangeText={(text) => inputActionHandler('phoneNumber', text)}
+                    />
                 </ScreenWrapper.Section>
             ) : null}
         </>

@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import QuantityButton from './QuantityButton';
 
-
 import { IconButton, Text } from '@jmstechnologiesinc/react-native-paper';
 
 export default {

@@ -5,7 +5,7 @@ import { Button, HelperText, MD3LightTheme } from '@jmstechnologiesinc/react-nat
 
 import { PhoneInput } from '@jmstechnologiesinc/react-native-phone-input';
 
-import { localized } from '../Localization/Localization'
+import { localized } from '../Localization/Localization';
 import FormVerificationCode from './FormVerificationCode';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import CountryPicker from './CountryPicker';
@@ -26,7 +26,7 @@ const FormPhoneNumber = ({
     onChangeText,
     onResendCodePress,
     onConfirmCodePress,
-    onFailure
+    onFailure,
 }) => {
     const phoneRef = useRef();
     const actionSheetRef = useRef();
@@ -55,15 +55,14 @@ const FormPhoneNumber = ({
             onFailure({
                 title: 'pleaseTryagain',
                 description: 'pleaseValidPhoneNumber',
-                buttonTitle: 'OK'
-            })
-
+                buttonTitle: 'OK',
+            });
         }
     };
 
     const resendVerificationCode = () => {
         onResendCodePress(phoneRef.current.getValue());
-    }
+    };
 
     return (
         <>
@@ -74,26 +73,24 @@ const FormPhoneNumber = ({
                             ref={phoneRef}
                             mode={mode}
                             error={showPhoneNumberValidationError && !value}
-                            initialCountry='us'
+                            initialCountry="us"
                             initialValue={value}
                             onChangePhoneNumber={onChangeText}
-                            onPressFlag={onFlagPress} />
+                            onPressFlag={onFlagPress}
+                        />
                         {showPhoneNumberValidationError && !value ? (
                             <HelperText type="error" padding="none" visible={true}>
                                 {localized('phoneNumberIsRequired')}
                             </HelperText>
                         ) : null}
-                        <View id='recaptcha' />
+                        <View id="recaptcha" />
                     </>
                 ) : null}
             </ScreenWrapper.Section>
 
             {showSubmitButton ? (
                 <ScreenWrapper.Section>
-                    <Button mode='contained'
-                        onPress={onPress}
-                        loading={isLoading}
-                        disabled={isLoading}>
+                    <Button mode="contained" onPress={onPress} loading={isLoading} disabled={isLoading}>
                         {localized('logIn')}
                     </Button>
                 </ScreenWrapper.Section>
@@ -114,11 +111,7 @@ const FormPhoneNumber = ({
                 onConfirmCodePress={onConfirmCodePress}
             />
 
-            <CountryPicker
-                ref={actionSheetRef}
-                data={countriesPickerData}
-                onSelect={selectCountry}
-            />
+            <CountryPicker ref={actionSheetRef} data={countriesPickerData} onSelect={selectCountry} />
         </>
     );
 };

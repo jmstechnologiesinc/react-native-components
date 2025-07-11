@@ -1,19 +1,12 @@
 import React from 'react';
 
-import { Banner, MD3LightTheme,List } from '@jmstechnologiesinc/react-native-paper';
+import { Banner, MD3LightTheme, List } from '@jmstechnologiesinc/react-native-paper';
 
 import * as JMSList from '../List/List';
 import PhotoGallery from '../PhotoGallery/PhotoGallery';
 import { localized } from '../Localization/Localization';
 
-const ProductView = ({
-    title,
-    photos,
-    description,
-    formattedPrice,
-    isOutofStock,
-    fulfillmentMethodErrorMessage,
-}) => {
+const ProductView = ({ title, photos, description, formattedPrice, isOutofStock, fulfillmentMethodErrorMessage }) => {
     const message = [];
     const descriptionList = [formattedPrice];
 
@@ -38,7 +31,7 @@ const ProductView = ({
             ) : null}
 
             <PhotoGallery photos={photos} />
-            
+
             <JMSList.Item
                 title={title}
                 description={descriptionList}

@@ -10,7 +10,6 @@ const WINDOW_HEIGHT = Dimensions.get('window').height;
 
 const CountryPicker = forwardRef(({ data, onSelect }, ref) => {
     const insets = useSafeAreaInsets();
-    const scrollHandlers = useScrollHandlers('scrollview-1', ref);
     const HEADER_HEIGHT = useHeaderHeight();
     const actionSheetHeight = Platform.OS === 'ios' ? WINDOW_HEIGHT - HEADER_HEIGHT : null;
 
@@ -27,17 +26,17 @@ const CountryPicker = forwardRef(({ data, onSelect }, ref) => {
                 height: actionSheetHeight,
             }}
         >
-            <ScrollView {...scrollHandlers}>
-                {data?.map((item) => (
-                    <List.Item
-                        key={item.key}
-                        title={item.label}
-                        description={item.dialCode}
-                        onPress={() => onSelect(item)}
-                        left={(props) => <List.Image {...props} variant="flag" source={item.image} defaultImageComponent={true} />}
-                    />
-                ))}
-            </ScrollView>
+            {data?.map((item) => (
+                <List.Item
+                    key={item.key}
+                    title={item.label}
+                    description={item.dialCode}
+                    onPress={() => onSelect(item)}
+                    left={(props) => (
+                        <List.Image {...props} variant="flag" source={item.image} defaultImageComponent={true} />
+                    )}
+                />
+            ))}
         </ActionSheet>
     );
 });

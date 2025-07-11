@@ -13,14 +13,14 @@ const FormEmailPassword = ({
     email,
     password,
     passwordConfirm,
-    isLoading=false,
+    isLoading = false,
     isEmailDisabled = false,
     isPasswordDisabled = false,
     showConfirmPasswordInput = true,
     showPasswordInput = true,
     showResetPassword = false,
-    showLoginButton=false,
-    showSignupButton=false,
+    showLoginButton = false,
+    showSignupButton = false,
     mode,
     resetPasswordStyle,
     onLoginPress,
@@ -65,13 +65,8 @@ const FormEmailPassword = ({
             )}
 
             {showLoginButton ? (
-                <ScreenWrapper.Section >
-                    <Button
-                        mode="contained"
-                        loading={isLoading}
-                        disabled={isLoading}
-                        onPress={onLoginPress}
-                    >
+                <ScreenWrapper.Section>
+                    <Button mode="contained" loading={isLoading} disabled={isLoading} onPress={onLoginPress}>
                         {localized(loginTitle)}
                     </Button>
                 </ScreenWrapper.Section>
@@ -79,21 +74,15 @@ const FormEmailPassword = ({
 
             {showSignupButton ? (
                 <ScreenWrapper.Section>
-                    <Button
-                        mode="outlined"
-                        onPress={onSignupPress}
-                    >
+                    <Button mode="outlined" onPress={onSignupPress}>
                         {localized(signUpTitle)}
-                </Button>
+                    </Button>
                 </ScreenWrapper.Section>
             ) : null}
 
             {showResetPassword && (
                 <ScreenWrapper.Section>
-                    <Button 
-                        mode="text" 
-                        style={resetPasswordStyle}
-                        onPress={onPasswordReset}>
+                    <Button mode="text" style={resetPasswordStyle} onPress={onPasswordReset}>
                         {localized('resetPassword')}
                     </Button>
                 </ScreenWrapper.Section>

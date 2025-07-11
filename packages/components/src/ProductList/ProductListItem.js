@@ -1,9 +1,8 @@
-
 // material design value
 
 // List subheaders:  48dp
 
-// One line:  56dp 
+// One line:  56dp
 // Two line:  72dp
 // Three line: 88dp
 
@@ -11,7 +10,6 @@
 
 // custom option
 // height: 100
-
 
 import React from 'react';
 
@@ -52,15 +50,15 @@ const ProductListItem = ({
             title={title}
             description={descriptionList}
             {...(photo && {
-                photo:isPublicUrl(photo) ? photo : imageKitListImage(photo),
-                photoLqip:isPublicUrl(photo) ? photo : imageKitListImagelqip(photo),
+                photo: isPublicUrl(photo) ? photo : imageKitListImage(photo),
+                photoLqip: isPublicUrl(photo) ? photo : imageKitListImagelqip(photo),
             })}
             metaTitle={formattedPrice}
             metaQuantity={cartQuantity}
             onPress={onPress}
             titleNumberOfLines={0}
             left={left}
-           // style={{ height: setDynamicSize }}
+            // style={{ height: setDynamicSize }}
         />
     );
 };

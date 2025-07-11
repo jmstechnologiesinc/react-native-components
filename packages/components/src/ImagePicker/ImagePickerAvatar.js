@@ -70,11 +70,15 @@ const Avatar = ({
     };
 
     const OPTIONS = [
-        ...(Platform.OS !== 'web' ? [{
-            title: localized('takePhoto'),
-            value: IMAGE_PICKER_ACTIONS.launchCamera,
-            icon: 'camera'
-        }] : []),
+        ...(Platform.OS !== 'web'
+            ? [
+                  {
+                      title: localized('takePhoto'),
+                      value: IMAGE_PICKER_ACTIONS.launchCamera,
+                      icon: 'camera',
+                  },
+              ]
+            : []),
         {
             title: localized('chooseFromLibrary'),
             value: IMAGE_PICKER_ACTIONS.launchImageLibrary,

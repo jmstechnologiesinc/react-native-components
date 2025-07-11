@@ -7,7 +7,7 @@ import { localized } from '../Localization/Localization';
 import { handleDateOfBirhtChange } from './utils';
 import SecretInputText from './SecretInputText';
 
-import { Config } from '../Config'
+import { Config } from '../Config';
 
 const FormDriverInfo = ({ licenseNumer, ssn, inputActionHandler }) => {
     const [dateOfBirth, setDateOfBirth] = useState('');

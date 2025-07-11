@@ -1,4 +1,3 @@
-import { List } from '@jmstechnologiesinc/react-native-paper';
 import React from 'react';
 import { View } from 'react-native';
 
@@ -8,19 +7,18 @@ export default {
     title: 'packages/List',
 };
 
-const photo =
-    'https://d1ralsognjng37.cloudfront.net/9d1e795c-5329-4d96-bdb1-bbf95db0433c.jpeg';
+const photo = 'https://d1ralsognjng37.cloudfront.net/9d1e795c-5329-4d96-bdb1-bbf95db0433c.jpeg';
 
 export const Image = () => (
-    <List.Item
+    <JMSList.Item
         title="Headline"
         description="Supporting text"
-        left={(props) => <List.Image variant="video" style={props.style} source={photo} />}
+        photo={photo}
     />
 );
 
 export const OneLineImage = () => (
-    <JMSList.Item photo={photo} title="NinjaFongo Churrasco (skirt steak)" metaTitle={34.45} onPress={() => { }} />
+    <JMSList.Item photo={photo} title="NinjaFongo Churrasco (skirt steak)" metaTitle={34.45} onPress={() => {}} />
 );
 
 export const TwoLinesImage = () => (
@@ -29,7 +27,7 @@ export const TwoLinesImage = () => (
         title="NinjaFongo Churrasco (skirt steak)"
         description="Chicken tempura, cream cheese, maduro, guacamole, and chicken teriyaki."
         metaTitle={34.45}
-        onPress={() => { }}
+        onPress={() => {}}
     />
 );
 
@@ -40,12 +38,12 @@ export const TwoLinesImageQuanity = () => (
         description="Chicken tempura, cream cheese, maduro, guacamole, and chicken teriyaki."
         metaTitle={34.45}
         metaQuantity={3}
-        onPress={() => { }}
+        onPress={() => {}}
     />
 );
 
 export const OneLineItem = () => (
-    <JMSList.Item title="NinjaFongo Churrasco (skirt steak)" metaTitle={34.45} onPress={() => { }} />
+    <JMSList.Item title="NinjaFongo Churrasco (skirt steak)" metaTitle={34.45} onPress={() => {}} />
 );
 
 export const TwoLinesItem = () => (
@@ -53,7 +51,7 @@ export const TwoLinesItem = () => (
         title="NinjaFongo Churrasco (skirt steak)"
         description="Chicken tempura, cream cheese, maduro, guacamole, and chicken teriyaki."
         metaTitle={34.45}
-        onPress={() => { }}
+        onPress={() => {}}
     />
 );
 
@@ -63,6 +61,6 @@ export const TwoLinesItemQuantity = () => (
         description="Chicken tempura, cream cheese, maduro, guacamole, and chicken teriyaki."
         metaTitle={34.45}
         metaQuantity={3}
-        onPress={() => { }}
+        onPress={() => {}}
     />
 );

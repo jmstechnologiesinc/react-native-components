@@ -7,7 +7,7 @@ import { CART_ITEM_TYPE } from '@jmstechnologiesinc/cart';
 
 import CartListProductItem from './CartListProductItem';
 import ScreenWrapper from '../ScreenWrapper';
-import { imageKitAvatar, itemSeparator } from '../utils';
+import { imageKitAvatar, isPublicUrl, itemSeparator } from '../utils';
 import SwipeToDelete from '../SwipeToDelete/SwipeToDelete';
 import { Item as JMSItem } from '../List/List';
 import ButtonWrapper from '../ButtonWrapper/ButtonWrapper';
@@ -25,11 +25,10 @@ const CartListItem = ({
     onEdit,
     onCheckout,
     renderTips,
-
 }) => {
     const { vendor, type, description, isValid, data: productList, cartIndustryId } = item;
 
-    const [isSwiped, SetIsSwiped] = useState(true)
+    const [isSwiped, SetIsSwiped] = useState(true);
 
     if (type === CART_ITEM_TYPE.emptyItem) {
         return null;
@@ -55,62 +54,70 @@ const CartListItem = ({
         return null;
     }
 
+    const mainPhoto = getMainPhoto(vendor.photos)
+
     return (
         <>
-            
-    <List.Section title={localized(title)}>
-    <JMSItem
-                title={vendor.title}
-                description={description}
-                descriptionStyle={isValid === false ? { color: MD3Colors.error50 } : null}
-                titleNumberOfLines={0}
-                descriptionNumberOfLines={0}
-                left={(props) => (
-                    <Avatar.Image style={props.style} source={{ uri: imageKitAvatar(getMainPhoto(vendor.photos)) }} />
-                )}
-            />
-        </List.Section>
-        <List.Section>
-
-            {
-                Platform.OS === 'web' ? productList?.map((product, index) => (
-                    <SwipeToDelete
-                        key={`swipeable-${index}`}
-                        onSwipeableRightOpen={() => onDelete(vendor.id, product.cartId, cartIndustryId)}
-                        handleSwipeChange={SetIsSwiped}
-                    >
-                        <CartListProductItem
-                            key={`cart-list-product-item-${index}`}
-                            data={product}
-                            onEdit={() => isSwiped ? onEdit(product, item.vendor, cartIndustryId) : null}
-                            descriptionNumberOfLines={1}
-                            showProductDescription={showProductDescription}
-                            interpunctAttributeGroup={false}
+            <List.Section title={localized(title)}>
+                <JMSItem
+                    title={vendor.title}
+                    description={description}
+                    descriptionStyle={isValid === false ? { color: MD3Colors.error50 } : null}
+                    titleNumberOfLines={0}
+                    descriptionNumberOfLines={0}
+                    left={(props) => (
+                        <Avatar.Image
+                            style={props.style}
+                            source={{
+                                uri: isPublicUrl(mainPhoto)
+                                    ?  mainPhoto
+                                    : imageKitAvatar(mainPhoto),
+                            }}
                         />
-                        {itemSeparator(index, productList.length) ? <Divider horizontalInset key={`cart-list-item-divider-${index}`} /> : null}
-                    </SwipeToDelete>
-                )) : productList?.map((product, index) => (
-                    <SwipeToDelete
-                        key={`swipeable-${index}`}
-                        onSwipeableRightOpen={() => onDelete(vendor.id, product.cartId, cartIndustryId)}
-                    >
-                        <CartListProductItem
-                            key={`cart-list-product-item-${index}`}
-                            data={product}
-                            onEdit={() => onEdit(product, item.vendor, cartIndustryId)}
-                            descriptionNumberOfLines={1}
-                            showProductDescription={showProductDescription}
-                            interpunctAttributeGroup={false}
-                        />
-                        {itemSeparator(index, productList.length) ? <Divider horizontalInset key={`cart-list-item-divider-${index}`} /> : null}
-                    </SwipeToDelete>
-                ))
-            }
-
-</List.Section>
-<ButtonWrapper
-                    title={addTitle}
-                    onPress={() => onAdd(item.vendor, cartIndustryId)} />
+                    )}
+                />
+            </List.Section>
+            <List.Section>
+                {Platform.OS === 'web'
+                    ? productList?.map((product, index) => (
+                          <SwipeToDelete
+                              key={`swipeable-${index}`}
+                              onSwipeableRightOpen={() => onDelete(vendor.id, product.cartId, cartIndustryId)}
+                              handleSwipeChange={SetIsSwiped}
+                          >
+                              <CartListProductItem
+                                  key={`cart-list-product-item-${index}`}
+                                  data={product}
+                                  onEdit={() => (isSwiped ? onEdit(product, item.vendor, cartIndustryId) : null)}
+                                  descriptionNumberOfLines={1}
+                                  showProductDescription={showProductDescription}
+                                  interpunctAttributeGroup={false}
+                              />
+                              {itemSeparator(index, productList.length) ? (
+                                  <Divider horizontalInset key={`cart-list-item-divider-${index}`} />
+                              ) : null}
+                          </SwipeToDelete>
+                      ))
+                    : productList?.map((product, index) => (
+                          <SwipeToDelete
+                              key={`swipeable-${index}`}
+                              onSwipeableRightOpen={() => onDelete(vendor.id, product.cartId, cartIndustryId)}
+                          >
+                              <CartListProductItem
+                                  key={`cart-list-product-item-${index}`}
+                                  data={product}
+                                  onEdit={() => onEdit(product, item.vendor, cartIndustryId)}
+                                  descriptionNumberOfLines={1}
+                                  showProductDescription={showProductDescription}
+                                  interpunctAttributeGroup={false}
+                              />
+                              {itemSeparator(index, productList.length) ? (
+                                  <Divider horizontalInset key={`cart-list-item-divider-${index}`} />
+                              ) : null}
+                          </SwipeToDelete>
+                      ))}
+            </List.Section>
+            <ButtonWrapper title={addTitle} onPress={() => onAdd(item.vendor, cartIndustryId)} />
 
             {renderTips ? renderTips(item) : null}
         </>
