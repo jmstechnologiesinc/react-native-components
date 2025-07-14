@@ -57,7 +57,6 @@ If you’re looking for a specific component, please select its link from the li
 | [Vendor List](https://github.com/jmstechnologiesinc/react-native-components/tree/main/packages/components/src/VendorList) | [![View demo](https://img.shields.io/badge/View%20demo-brightgreen?style=for-the-badge&logo=play&logoColor=white)](https://react-native-components-e19ee.web.app/?path=/docs/packages-vendorlist--docs) |
 
 
-
 ## 📦 Installation
 
 ```bash
@@ -97,22 +96,18 @@ import {
 ## 🤝 Contributing
 
 1. Fork: `git clone https://github.com/jmstechnologiesinc/react-native-components.git`
-2. Branch: `git checkout -b feature/YourFeature`
-3. Commit: `git commit -m "Add new component"`
-4. Push: `git push origin feature/YourFeature`
+2. Branch: `git checkout -b feature/your-feature-branch`
+3. Commit: `git commit -m "initial commit"`
+4. Push: `git push origin feature/your-feature-branch`
 5. PR: Open a pull request.
-
-Follow code style and run `npm run build` before submitting.
 
 ## Contributors
 <table>
   <tr>
-    <td align="center"><a href="https://twitter.com/@satya164">
-      <img src="https://avatars2.githubusercontent.com/u/1174278?v=4" width="100px;">
-      <br /><sub><b>Joel Maria</b></sub></a><br />
+    <td>
+      <img src="./public/assets/joel maria.PNG" width="100px;">
+      <br /><sub><b>Joel Maria</b></sub><br />
+      <sub>Founder - Jms Technologies, Inc</sub>
     </td>
   </tr>
 </table>
-    
-
-ISC © JMSTechnologies Inc.
