@@ -6,7 +6,7 @@
 </p>
 
 
-A curated collection of reusable React Native components and utilities tailored for rapid mobile app development.
+This library brings together proven components and utilities that powered the Daxir mobile application, now refined and open-sourced to accelerate development for the React Native community. Each component has been optimized for performance, accessibility, and real-world usage scenarios.
 
 ## 🔥 Features
 
@@ -104,5 +104,15 @@ import {
 
 Follow code style and run `npm run build` before submitting.
 
+## Contributors
+<table>
+  <tr>
+    <td align="center"><a href="https://twitter.com/@satya164">
+      <img src="https://avatars2.githubusercontent.com/u/1174278?v=4" width="100px;">
+      <br /><sub><b>Joel Maria</b></sub></a><br />
+    </td>
+  </tr>
+</table>
+    
 
 ISC © JMSTechnologies Inc.
