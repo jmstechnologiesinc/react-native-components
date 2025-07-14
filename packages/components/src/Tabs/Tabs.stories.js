@@ -28,15 +28,8 @@ export const List = ({ onPress }) => (
     </TabList>
 );
 
-export const Scrollable = () => (
-    <TabsScrollable data={mockData} onTabsItemLayout={() => {}} onPress={() => {}} />
-);
+export const Scrollable = () => <TabsScrollable data={mockData} onTabsItemLayout={() => {}} onPress={() => {}} />;
 
 export const ScrollableTitle = () => (
-    <TabsScrollable
-        title="Main Menu"
-        data={mockData}
-        onTabsItemLayout={() => {}}
-        onPress={() => {}}
-    />
+    <TabsScrollable title="Main Menu" data={mockData} onTabsItemLayout={() => {}} onPress={() => {}} />
 );

@@ -13,7 +13,6 @@ export default {
 
 const photos = 'https://cdn.pixabay.com/photo/2017/01/26/02/06/christmas-wallpaper-2009590_1280.jpg';
 
-
 const Industries = [
     'Restaurant',
     'Clothing',

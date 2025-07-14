@@ -54,7 +54,7 @@ const CartListItem = ({
         return null;
     }
 
-    const mainPhoto = getMainPhoto(vendor.photos)
+    const mainPhoto = getMainPhoto(vendor.photos);
 
     return (
         <>
@@ -69,9 +69,7 @@ const CartListItem = ({
                         <Avatar.Image
                             style={props.style}
                             source={{
-                                uri: isPublicUrl(mainPhoto)
-                                    ?  mainPhoto
-                                    : imageKitAvatar(mainPhoto),
+                                uri: isPublicUrl(mainPhoto) ? mainPhoto : imageKitAvatar(mainPhoto),
                             }}
                         />
                     )}

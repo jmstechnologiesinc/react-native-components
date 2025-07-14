@@ -9,7 +9,6 @@ import { imageKitCard, imageKitCardLqip, isPublicUrl } from '../utils';
 import { localized } from '../Localization/Localization';
 
 const VendorListItem = ({ item, withPaddingHorizontal, onPress }) => {
-    
     const mainPhoto = getMainPhoto(item.photos);
     const isPublic = isPublicUrl(mainPhoto);
 

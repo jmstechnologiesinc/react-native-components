@@ -71,9 +71,7 @@
             },
             {
                 "catalogId": "KPx0gQc7MBiA2HQcPUks",
-                "photos": [
-                    "https://cdn.pixabay.com/photo/2017/10/16/09/00/sushi-2856545_1280.jpg"
-                ],
+                "photos": ["https://cdn.pixabay.com/photo/2017/10/16/09/00/sushi-2856545_1280.jpg"],
                 "catalogCategoryJoinId": "vFhy8af1P24KuvCsLd2X",
                 "attributeGroupInitialState": {},
                 "barCodeNumber": null,

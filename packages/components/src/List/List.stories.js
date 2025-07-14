@@ -9,13 +9,7 @@ export default {
 
 const photo = 'https://d1ralsognjng37.cloudfront.net/9d1e795c-5329-4d96-bdb1-bbf95db0433c.jpeg';
 
-export const Image = () => (
-    <JMSList.Item
-        title="Headline"
-        description="Supporting text"
-        photo={photo}
-    />
-);
+export const Image = () => <JMSList.Item title="Headline" description="Supporting text" photo={photo} />;
 
 export const OneLineImage = () => (
     <JMSList.Item photo={photo} title="NinjaFongo Churrasco (skirt steak)" metaTitle={34.45} onPress={() => {}} />
