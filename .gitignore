@@ -62,3 +62,5 @@ buck-out/
 /packages/components/lib
 
 *.cache
+# Environment variables
+.env
