@@ -5,7 +5,7 @@ import BottomSheet, {
     BottomSheetModal,
     BottomSheetModalProvider,
     BottomSheetView,
-} from '@jmstechnologiesinc/bottom-sheet';
+} from '@gorhom/bottom-sheet';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import { Dimensions, Platform, StyleSheet } from 'react-native';

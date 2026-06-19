@@ -6,7 +6,7 @@ import { ActivityIndicator, MD3LightTheme } from '@jmstechnologiesinc/react-nati
 
 const TNActivityIndicator = ({ isLoading = true }) =>
     isLoading ? (
-        <View style={styles} collapsable={false} pointerEvents="box-none">
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: MD3LightTheme.colors.background, }} collapsable={false} pointerEvents="box-none">
             <ActivityIndicator size="large" />
         </View>
     ) : null;
@@ -16,6 +16,7 @@ const styles = {
     backgroundColor: MD3LightTheme.colors.background,
     justifyContent: 'center',
     zIndex: 1,
+    
 };
 
 export default TNActivityIndicator;

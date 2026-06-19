@@ -23,11 +23,9 @@
     "@jmstechnologiesinc/cart": "^0.0.68",
     "@jmstechnologiesinc/commons": "^0.0.67",
     "@jmstechnologiesinc/driver": "^0.0.54",
-    "@jmstechnologiesinc/material-bottom-tabs": "^0.0.4",
-    "@jmstechnologiesinc/material-tokens": "npm:@jmsstudiosinc/material-tokens@^0.0.16",
+    "@jmstechnologiesinc/material-bottom-tabs": "^0.0.5",
+ 
     "@jmstechnologiesinc/order": "^0.0.68",
-    "@jmstechnologiesinc/react-native-components": "^0.1.71",
-    "@jmstechnologiesinc/react-native-fast-image": "^8.6.32",
     "@jmstechnologiesinc/react-native-google-places-autocomplete": "^2.4.5",
     "@jmstechnologiesinc/react-native-image-blur-loading": "^1.2.3",
     "@jmstechnologiesinc/react-native-paper": "^5.12.5",

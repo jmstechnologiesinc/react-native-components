@@ -2,7 +2,7 @@ import React from 'react';
 
 import { View, Platform } from 'react-native';
 
-import RNSwipeable from 'react-native-gesture-handler/Swipeable';
+import RNSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import { MD3LightTheme, Text, TouchableRipple } from '@jmstechnologiesinc/react-native-paper';
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 import { localized } from '../Localization/Localization';

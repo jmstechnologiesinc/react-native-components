@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { StyleSheet, Text } from 'react-native';
-import { BottomSheetHandle, BottomSheetHandleProps } from '@jmstechnologiesinc/bottom-sheet';
+import { BottomSheetHandle, BottomSheetHandleProps } from '@gorhom/bottom-sheet';
 
 const HeaderHandleComponent = ({ children, ...rest }) => {
     return (
