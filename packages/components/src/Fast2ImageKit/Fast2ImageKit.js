@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { ImageBackground, Image } from 'react-native';
-import { TNActivityIndicator } from '../truly-native';
+import { ImageBackground } from 'react-native';
+
+import FastImage from '@d11/react-native-fast-image';
 
 const Fast2ImageKit = ({ src, showActivityIndicator = false, showImageBackground = false, ...rest }) => {
     const [isLoading, setIsLoading] = useState(true);
 
-    const renderImage = (
+    const renderFastImage = (
         <>
-            <Image
+            <FastImage
                 style={{ width: '100%', height: '100%' }}
                 {...rest}
                 source={src}
@@ -21,10 +22,10 @@ const Fast2ImageKit = ({ src, showActivityIndicator = false, showImageBackground
 
     return showImageBackground ? (
         <ImageBackground source={iconSet.imgDeafult} style={styles.ImageBackground}>
-            {renderImage}
+            {renderFastImage}
         </ImageBackground>
     ) : (
-        renderImage
+        renderFastImage
     );
 };
 

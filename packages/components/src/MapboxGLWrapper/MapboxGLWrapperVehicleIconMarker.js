@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import MapboxGL from '@rnmapbox/maps';
 
-const MapboxGLWrapperVehicleIconMarker = ({ id, title, longitude, latitude, rotation = 0 }) => {
+const MapboxGLWrapperVehicleIconMarker = ({ id = 'vehicle', title, longitude, latitude, rotation = 0 }) => {
     const shapeSourceRef = useRef(null);
     const symbolLayerRef = useRef(null);
 

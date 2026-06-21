@@ -14,6 +14,7 @@ const MapboxGLWrapperDrawTurnByTurnRoute = ({ route, destinationCoords, driverHe
             </MapboxGL.ShapeSource>
 
             <MapboxGLWrapper.VehicleIconMarker
+                id="tbt-driver-vehicle"
                 longitude={turnByTurnOriginLocation[0]}
                 latitude={turnByTurnOriginLocation[1]}
                 rotation={driverHeading}

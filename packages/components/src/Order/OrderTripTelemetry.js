@@ -3,16 +3,17 @@ import React from 'react';
 import { List } from '@jmstechnologiesinc/react-native-paper';
 import { localized } from '@jmstechnologiesinc/react-native-components';
 // import RNLocalize from 'react-native-localize';
+import * as RNLocalize from 'react-native-localize';
 import { translateUnit } from '@jmstechnologiesinc/commons';
 
-// const { languageCode: locale } = RNLocalize.getLocales()[0];
+const { languageCode: locale } = RNLocalize.getLocales()[0];
 
 const OrderTripTelemetry = ({ trajectory }) => {
     if (!trajectory) return null;
 
     return (
         <>
-            {/* <List.Section title={localized('trip.originLocation')}>
+            <List.Section title={localized('trip.originLocation')}>
                 <List.Item
                     title={translateUnit(trajectory.formattedPickupDistance, locale)}
                     description={localized('trip.pickupDistance.description')} // "Distance from your current location to pickup point"
@@ -43,7 +44,7 @@ const OrderTripTelemetry = ({ trajectory }) => {
                     title={translateUnit(trajectory.formattedTotalDuration, locale)}
                     description={localized('trip.totalDuration.description')} // "Total estimated trip time including pickup and delivery"
                 />
-            </List.Section> */}
+            </List.Section>
         </>
     );
 };
