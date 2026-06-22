@@ -18,13 +18,11 @@
   },
   "dependencies": {
     "@dinero.js/currencies": "^2.0.0-alpha.14",
-    "@gorhom/bottom-sheet": "^5.0.4",
-    "@jmstechnologiesinc/bottom-sheet": "^5.0.6",
+    "@jmstechnologiesinc/bottom-sheet": "5.2.16",
     "@jmstechnologiesinc/cart": "^0.0.68",
     "@jmstechnologiesinc/commons": "^0.0.67",
     "@jmstechnologiesinc/driver": "^0.0.54",
     "@jmstechnologiesinc/material-bottom-tabs": "^0.0.5",
- 
     "@jmstechnologiesinc/order": "^0.0.68",
     "@jmstechnologiesinc/react-native-google-places-autocomplete": "^2.4.5",
     "@jmstechnologiesinc/react-native-image-blur-loading": "^1.2.3",

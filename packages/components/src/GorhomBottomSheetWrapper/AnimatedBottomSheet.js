@@ -1,5 +1,5 @@
 import React, { forwardRef, useCallback, useMemo } from 'react';
-import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetBackdrop } from '@jmstechnologiesinc/bottom-sheet';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import { Dimensions, Platform, StyleSheet } from 'react-native';
