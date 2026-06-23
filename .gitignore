@@ -64,3 +64,5 @@ buck-out/
 *.cache
 # Environment variables
 .env
+
+.npmrc
