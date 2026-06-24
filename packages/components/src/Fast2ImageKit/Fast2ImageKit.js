@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { ImageBackground } from 'react-native';
-
-import FastImage from '@d11/react-native-fast-image';
+import { Image, ImageBackground } from 'react-native';
+import { TNActivityIndicator } from '../truly-native';
 
 const Fast2ImageKit = ({ src, showActivityIndicator = false, showImageBackground = false, ...rest }) => {
     const [isLoading, setIsLoading] = useState(true);
 
     const renderFastImage = (
         <>
-            <FastImage
+            <Image
                 style={{ width: '100%', height: '100%' }}
                 {...rest}
                 source={src}
