@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { View, Platform } from 'react-native';
+import { View } from 'react-native';
 
 import RNSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import { MD3LightTheme, Text, TouchableRipple } from '@jmstechnologiesinc/react-native-paper';
@@ -40,35 +40,21 @@ const closeRow = (index) => {
     prevOpenedRow = row[index];
 };
 
-const Swipeable = ({ children, onSwipeableRightOpen, index, isRemoveable = true, handleSwipeChange }) =>
-    Platform.OS === 'web' ? (
-        <RNSwipeable
-            friction={2}
-            leftThreshold={80}
-            rightThreshold={41}
-            renderRightActions={() => (isRemoveable ? rightSwipeActions(onSwipeableRightOpen) : null)}
-            onSwipeableOpen={() => {
-                handleSwipeChange(true);
-                closeRow(index);
-            }}
-            ref={(ref) => (row[index] = ref)}
-            onSwipeableWillOpen={() => handleSwipeChange(false)}
-        >
-            <View style={{ backgroundColor: MD3LightTheme.colors.background, flex: 1 }}>{children}</View>
-        </RNSwipeable>
-    ) : (
-        <RNSwipeable
-            friction={2}
-            leftThreshold={80}
-            rightThreshold={41}
-            renderRightActions={() => (isRemoveable ? rightSwipeActions(onSwipeableRightOpen) : null)}
-            onSwipeableOpen={() => {
-                closeRow(index);
-            }}
-            ref={(ref) => (row[index] = ref)}
-        >
-            <View style={{ backgroundColor: MD3LightTheme.colors.background, flex: 1 }}>{children}</View>
-        </RNSwipeable>
-    );
+const Swipeable = ({ children, onSwipeableRightOpen, index, isRemoveable = true, handleSwipeChange }) => (
+    <RNSwipeable
+        friction={2}
+        leftThreshold={80}
+        rightThreshold={41}
+        renderRightActions={() => (isRemoveable ? rightSwipeActions(onSwipeableRightOpen) : null)}
+        onSwipeableWillOpen={() => handleSwipeChange?.(false)}
+        onSwipeableOpen={() => {
+            handleSwipeChange?.(true);
+            closeRow(index);
+        }}
+        ref={(ref) => (row[index] = ref)}
+    >
+        <View style={{ backgroundColor: MD3LightTheme.colors.background, flex: 1 }}>{children}</View>
+    </RNSwipeable>
+);
 
 export default Swipeable;

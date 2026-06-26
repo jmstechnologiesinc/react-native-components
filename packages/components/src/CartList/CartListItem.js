@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 
-import { View, Platform } from 'react-native';
+import { View } from 'react-native';
 
 import { Text, Button, List, MD3LightTheme, Divider, Avatar, MD3Colors } from '@jmstechnologiesinc/react-native-paper';
 import { CART_ITEM_TYPE } from '@jmstechnologiesinc/cart';
@@ -28,7 +28,10 @@ const CartListItem = ({
 }) => {
     const { vendor, type, description, isValid, data: productList, cartIndustryId } = item;
 
-    const [isSwiped, SetIsSwiped] = useState(true);
+    // Se mantiene en true mientras no haya un swipe en curso. Al empezar a deslizar se
+    // pone en false para que el onPress que se dispara al soltar el gesto no ejecute onEdit.
+    // Usamos ref (lectura sincrona) en vez de estado para evitar leer un valor obsoleto del closure.
+    const isSwipedRef = useRef(true);
 
     if (type === CART_ITEM_TYPE.emptyItem) {
         return null;
@@ -78,44 +81,25 @@ const CartListItem = ({
                 />
             </List.Section>
             <List.Section>
-                {Platform.OS === 'web'
-                    ? productList?.map((product, index) => (
-                          <SwipeToDelete
-                              key={`swipeable-${index}`}
-                              onSwipeableRightOpen={() => onDelete(vendor.id, product.cartId, cartIndustryId)}
-                              handleSwipeChange={SetIsSwiped}
-                          >
-                              <CartListProductItem
-                                  key={`cart-list-product-item-${index}`}
-                                  data={product}
-                                  onEdit={() => (isSwiped ? onEdit(product, item.vendor, cartIndustryId) : null)}
-                                  descriptionNumberOfLines={1}
-                                  showProductDescription={showProductDescription}
-                                  interpunctAttributeGroup={false}
-                              />
-                              {itemSeparator(index, productList.length) ? (
-                                  <Divider horizontalInset key={`cart-list-item-divider-${index}`} />
-                              ) : null}
-                          </SwipeToDelete>
-                      ))
-                    : productList?.map((product, index) => (
-                          <SwipeToDelete
-                              key={`swipeable-${index}`}
-                              onSwipeableRightOpen={() => onDelete(vendor.id, product.cartId, cartIndustryId)}
-                          >
-                              <CartListProductItem
-                                  key={`cart-list-product-item-${index}`}
-                                  data={product}
-                                  onEdit={() => onEdit(product, item.vendor, cartIndustryId)}
-                                  descriptionNumberOfLines={1}
-                                  showProductDescription={showProductDescription}
-                                  interpunctAttributeGroup={false}
-                              />
-                              {itemSeparator(index, productList.length) ? (
-                                  <Divider horizontalInset key={`cart-list-item-divider-${index}`} />
-                              ) : null}
-                          </SwipeToDelete>
-                      ))}
+                {productList?.map((product, index) => (
+                    <SwipeToDelete
+                        key={`swipeable-${index}`}
+                        onSwipeableRightOpen={() => onDelete(vendor.id, product.cartId, cartIndustryId)}
+                        handleSwipeChange={(value) => (isSwipedRef.current = value)}
+                    >
+                        <CartListProductItem
+                            key={`cart-list-product-item-${index}`}
+                            data={product}
+                            onEdit={() => (isSwipedRef.current ? onEdit(product, item.vendor, cartIndustryId) : null)}
+                            descriptionNumberOfLines={1}
+                            showProductDescription={showProductDescription}
+                            interpunctAttributeGroup={false}
+                        />
+                        {itemSeparator(index, productList.length) ? (
+                            <Divider horizontalInset key={`cart-list-item-divider-${index}`} />
+                        ) : null}
+                    </SwipeToDelete>
+                ))}
             </List.Section>
             <ButtonWrapper title={addTitle} onPress={() => onAdd(item.vendor, cartIndustryId)} />
 
