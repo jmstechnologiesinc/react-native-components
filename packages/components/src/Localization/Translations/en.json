@@ -603,5 +603,26 @@
     "dropoffincentive": "Drop-off Incentive",
     "unitedStates": "United States",
     "dominicanRepublic": "Dominican Republic",
-    "panama": "Panama"
+    "panama": "Panama",
+    "printer": {
+        "setupDescription": "Discover a nearby Epson TM printer, print a test receipt to confirm it, and save it to print order invoices.",
+        "currentPrinter": "Current printer",
+        "available": "Available printers",
+        "discover": "Discover printers",
+        "printTest": "Print test",
+        "save": "Save printer",
+        "remove": "Remove printer",
+        "noneFound": "No printers found",
+        "saved": "Printer saved",
+        "removed": "Printer removed",
+        "testSent": "Test receipt sent",
+        "selectPrinter": "Select printer",
+        "searching": "Searching for printer…",
+        "printing": "Sending to printer…",
+        "notConfigured": "No printer configured. Set one up to print invoices.",
+        "configure": "Set up printer",
+        "discoveryError": "Couldn't search for printers",
+        "printError": "Couldn't print",
+        "saveError": "Couldn't save the printer"
+    }
 }

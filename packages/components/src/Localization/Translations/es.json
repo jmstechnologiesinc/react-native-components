@@ -603,5 +603,26 @@
     "dropoffincentive": "Incentivo por entrega",
     "unitedStates": "Estados Unidos",
     "dominicanRepublic": "República Dominicana",
-    "panama": "Panamá"
+    "panama": "Panamá",
+    "printer": {
+        "setupDescription": "Busca una impresora Epson TM cercana, imprime un ticket de prueba para confirmarla y guárdala para imprimir las facturas de los pedidos.",
+        "currentPrinter": "Impresora actual",
+        "available": "Impresoras disponibles",
+        "discover": "Buscar impresoras",
+        "printTest": "Imprimir prueba",
+        "save": "Guardar impresora",
+        "remove": "Quitar impresora",
+        "noneFound": "No se encontraron impresoras",
+        "saved": "Impresora guardada",
+        "removed": "Impresora eliminada",
+        "testSent": "Ticket de prueba enviado",
+        "selectPrinter": "Seleccionar impresora",
+        "searching": "Buscando impresora…",
+        "printing": "Enviando a la impresora…",
+        "notConfigured": "No hay impresora configurada. Configura una para imprimir facturas.",
+        "configure": "Configurar impresora",
+        "discoveryError": "No se pudo buscar impresoras",
+        "printError": "No se pudo imprimir",
+        "saveError": "No se pudo guardar la impresora"
+    }
 }
