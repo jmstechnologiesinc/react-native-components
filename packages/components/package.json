@@ -30,8 +30,13 @@
     },
     "peerDependencies": {
         "@jmstechnologiesinc/react-native-paper": "*",
+        "@react-navigation/elements": "*",
         "react": "*",
-        "react-native": "*"
+        "react-native": "*",
+        "react-native-gesture-handler": "*",
+        "react-native-keyboard-controller": "*",
+        "react-native-reanimated": "*",
+        "react-native-vector-icons": "*"
     },
     "gitHead": "c0657171ebb0b0f23097c3e16ca35bfa0bda83ec"
 }
