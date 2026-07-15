@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Dimensions, Platform, FlatList } from 'react-native';
+import { Dimensions, Platform, FlatList, StatusBar } from 'react-native';
 import { Button, HelperText, List, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import ActionSheet from 'react-native-actions-sheet';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -11,8 +11,14 @@ import { useHeaderHeight } from '@react-navigation/elements';
 import { TNActivityIndicator } from '../truly-native';
 import ButtonWrapper from '../ButtonWrapper/ButtonWrapper';
 import ChipList from '../ChipList/ChipList';
+import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 
 const WINDOW_HEIGHT = Dimensions.get('window').height;
+
+const APPROX_STATUSBAR_HEIGHT = Platform.select({
+    android: StatusBar.currentHeight + MD3LightTheme.spacing.x5 ?? 0,
+    ios: 0,
+});
 
 function OptionPickerActionSheet({
     isDisabled,
@@ -72,7 +78,8 @@ function OptionPickerActionSheet({
     };
 
     const hideActionSheet = () => actionSheetRef.current.hide();
-    const actionSheetHeight = Platform.OS === 'ios' ? WINDOW_HEIGHT - HEADER_HEIGHT : null;
+    const actionSheetHeight =
+        Platform.OS === 'ios' ? WINDOW_HEIGHT - HEADER_HEIGHT : WINDOW_HEIGHT - insets.top - APPROX_STATUSBAR_HEIGHT;
 
     return (
         <>
@@ -101,7 +108,7 @@ function OptionPickerActionSheet({
 
             <ActionSheet
                 ref={actionSheetRef}
-                statusBarTranslucent={true}
+                statusBarTranslucent={false}
                 drawUnderStatusBar={false}
                 springOffset={50}
                 defaultOverlayOpacity={0.3}
@@ -132,7 +139,11 @@ function OptionPickerActionSheet({
                 <Button
                     mode="outlined"
                     uppercase
-                    style={[JMSStyles.button, JMSStyles.buttonWithInset]}
+                    style={[
+                        JMSStyles.button,
+                        JMSStyles.buttonWithInset,
+                        { marginBottom: moderateScale(APPROX_STATUSBAR_HEIGHT) },
+                    ]}
                     disabled={isDisabled}
                     onPress={handlePickButtonPress}
                 >
