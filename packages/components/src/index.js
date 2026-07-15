@@ -108,3 +108,5 @@ export {
     isSameUser,
     toReplyMessage,
 } from './Chat';
+
+export { CentrifugeProvider, useCentrifuge, useCentrifugeSubscription } from './Centrifuge';

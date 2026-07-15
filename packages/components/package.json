@@ -31,6 +31,7 @@
     "peerDependencies": {
         "@jmstechnologiesinc/react-native-paper": "*",
         "@react-navigation/elements": "*",
+        "centrifuge": "*",
         "react": "*",
         "react-native": "*",
         "react-native-gesture-handler": "*",
