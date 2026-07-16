@@ -80,3 +80,33 @@ export {
 } from './Geoposition';
 
 export { whatIsTheOrderStatus } from './Order/WhatIsTheOrderStatus';
+
+export { default as Chat } from './Chat';
+export {
+    useChat,
+    useStreamingMessages,
+    AttachmentSheet,
+    Avatar as ChatAvatar,
+    Bubble,
+    ChatEmpty,
+    Composer,
+    ImageViewer,
+    LoadEarlierMessages,
+    MessageList,
+    MessageText,
+    QuickReplies,
+    Reactions,
+    ReactionPicker,
+    ReplyPreview,
+    StreamingCursor,
+    TypingIndicator,
+    DEFAULT_EMOJIS,
+    toggleReaction,
+    generateMessageId,
+    isSameAuthor,
+    isSameDay,
+    isSameUser,
+    toReplyMessage,
+} from './Chat';
+
+export { CentrifugeProvider, useCentrifuge, useCentrifugeSubscription } from './Centrifuge';
