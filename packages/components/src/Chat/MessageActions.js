@@ -7,10 +7,11 @@ import { Divider, List, MD3LightTheme, Modal, Portal, useTheme } from '@jmstechn
 import { ReactionPicker } from './Reactions';
 
 /**
- * Hoja de acciones al mantener pulsado un mensaje: fila de emojis arriba (si las reacciones
- * están activadas) y lista de acciones debajo. Equivale al ActionSheet + ReactionPicker de la
- * librería (que usa @expo/react-native-action-sheet y react-native-emoji-chooser, dependencias
- * que esta app no tiene); aquí va con Portal + Modal de Paper, que ya usamos en todas partes.
+ * Long-press actions sheet: emoji row on top (when reactions are enabled) and the action
+ * list below. Equivalent of the library's ActionSheet + ReactionPicker (which use
+ * @expo/react-native-action-sheet and react-native-emoji-chooser, dependencies this package
+ * does not have); here it is Paper's Portal + Modal, already used everywhere. The container
+ * uses MD3's "extra large" shape, the dialogs' one.
  *
  * actions: [{ title, icon, onPress(message) }]
  */
@@ -63,7 +64,6 @@ const { spacing, roundness } = MD3LightTheme;
 const styles = StyleSheet.create({
     container: {
         marginHorizontal: spacing.x6,
-        // Forma "extra large" de MD3, la de los diálogos.
         borderRadius: roundness * 7,
         overflow: 'hidden',
     },

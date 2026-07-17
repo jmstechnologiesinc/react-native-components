@@ -15,24 +15,39 @@ import TypingIndicator from './TypingIndicator';
 import { isSameAuthor, isSameDay, isSameUser } from './models';
 
 /**
- * Equivalente al MessagesContainer de la librería, con sus mismas props:
+ * Equivalent of the library's MessagesContainer with the same props:
  * { messages, user, isInverted, isUsernameVisible, isUserAvatarVisible, isTyping, listProps,
  *   loadEarlierMessagesProps, isScrollToBottomEnabled, reply, onQuickReply,
  *   renderMessage, renderBubble, renderAvatar, renderDay, renderSystemMessage,
  *   renderChatEmpty, renderTypingIndicator,
  *   onPressMessage, onLongPressMessage, onPressAvatar, onLongPressAvatar }
  *
- * ⚠️ INVARIANTES. No tocar sin releer por qué:
+ * ⚠️ INVARIANTS — do not touch without re-reading why:
  *
- * 1. La FlatList es la del core de React Native. Ni Animated.createAnimatedComponent, ni la
- *    de react-native-gesture-handler. La librería usa una lista animada por Reanimated y eso
- *    es lo que hace abortar a Yoga en RN 0.85 (YogaLayoutableShadowNode.cpp:709) en cuanto el
- *    contenedor cambia de tamaño al abrir el teclado.
- * 2. Reanimated solo puede animar transform/opacity dentro de esta lista. Nunca height,
- *    padding ni bottom: eso re-mide la lista y reproduce el mismo crash. Por eso el botón de
- *    scroll-to-bottom y el TypingIndicator usan el Animated del core sobre opacity/transform.
- * 3. El teclado se esquiva a nivel de PANTALLA (FormInputsScreenWrapper), nunca con un
- *    KeyboardAvoidingView envolviendo esta lista.
+ * 1. The FlatList is React Native core's. Not Animated.createAnimatedComponent, not the
+ *    gesture-handler one. The library uses a Reanimated-animated list, and that is what
+ *    makes Yoga abort on RN 0.85 (YogaLayoutableShadowNode.cpp:709) as soon as the container
+ *    resizes when the keyboard opens.
+ * 2. Reanimated may only animate transform/opacity inside this list. Never height, padding
+ *    or bottom: that re-measures the list and reproduces the same crash. That is why the
+ *    scroll-to-bottom button and the TypingIndicator use core Animated over opacity/transform,
+ *    and the scroll handler is a plain one (no useAnimatedScrollHandler — it would tie the
+ *    list to Reanimated).
+ * 3. The keyboard is avoided at SCREEN level (ChatScreenWrapper), never with a
+ *    KeyboardAvoidingView wrapping this list.
+ *
+ * Layout notes (inverted list):
+ * - "Previous in time" is the next index; offset 0 is the visual bottom. The list header
+ *   renders at the bottom (typing indicator) and the footer at the top (earlier messages
+ *   and their spinner).
+ * - Only the last message of a same-author run shows the username and avatar.
+ * - The day separator is static: the library's floating animated header wrote shared values
+ *   from cell onLayout; it does not exist here.
+ * - The empty state's counter-inversion is injected by VirtualizedList via `style` when it
+ *   clones the element (and differs per platform) — see ChatEmpty.
+ * - The swipe-to-reply action lives BEHIND the bubble in a transparent row: its opacity is
+ *   tied to the gesture, or the icon would always show through the gap the bubble leaves.
+ *   Reanimated there only animates opacity, which is safe.
  */
 
 const DEFAULT_SWIPE = { isEnabled: false, direction: 'left' };
@@ -78,17 +93,12 @@ const SwipeAction = ({ progress, color }) => {
     );
 };
 
-/** Swipe para responder. Reanimated aquí solo anima opacity/transform: es seguro. */
 const SwipeToReply = ({ swipe, onSwipe, currentMessage, children }) => {
     const theme = useTheme();
     const swipeableRef = useRef(null);
 
     const renderAction = useCallback(
-        (progress) => (
-            // La acción vive DETRÁS de la burbuja, y la fila es transparente: sin esta opacidad
-            // ligada al gesto, el icono se vería siempre a través del hueco que deja la burbuja.
-            <SwipeAction progress={progress} color={theme.colors.primary} />
-        ),
+        (progress) => <SwipeAction progress={progress} color={theme.colors.primary} />,
         [theme.colors.primary]
     );
 
@@ -114,7 +124,6 @@ const SwipeToReply = ({ swipe, onSwipe, currentMessage, children }) => {
     );
 };
 
-/** Solo anima opacity, y con el Animated del core. Ver invariante 2. */
 const ScrollToBottom = ({ isVisible, onPress }) => {
     const opacity = useRef(new Animated.Value(0)).current;
 
@@ -176,12 +185,10 @@ const MessageList = (props) => {
 
     const renderItem = useCallback(
         ({ item: currentMessage, index }) => {
-            // En una lista invertida, el "anterior en el tiempo" es el índice siguiente.
             const olderMessage = messages[index + 1];
             const newerMessage = messages[index - 1];
 
             const position = isSameUser(currentMessage, user) ? 'right' : 'left';
-            // Solo el último de una tanda del mismo autor muestra nombre y avatar.
             const isFirstOfGroup = !isSameAuthor(currentMessage, newerMessage);
 
             const bubbleProps = {
@@ -198,8 +205,6 @@ const MessageList = (props) => {
                 ...props.bubbleProps,
             };
 
-            // Separador de día: estático. La cabecera flotante animada de la librería es la
-            // que escribía shared values desde el onLayout de las celdas; aquí no existe.
             const dayFragment = !isSameDay(currentMessage, olderMessage)
                 ? renderDay?.({ currentMessage }) ?? <Day currentMessage={currentMessage} />
                 : null;
@@ -275,14 +280,12 @@ const MessageList = (props) => {
         }
     }, [loadEarlierMessagesProps]);
 
-    // Handler de scroll normal (nada de useAnimatedScrollHandler: eso ata la lista a Reanimated).
     const onScroll = useCallback(
         (event) => {
             if (!isScrollToBottomEnabled) {
                 return;
             }
             const { y } = event.nativeEvent.contentOffset;
-            // Lista invertida: el "abajo del todo" es offset 0.
             setIsScrollToBottomVisible(y > SCROLL_TO_BOTTOM_OFFSET);
             listProps?.onScroll?.(event);
         },
@@ -293,8 +296,6 @@ const MessageList = (props) => {
         listRef.current?.scrollToOffset({ offset: 0, animated: true });
     }, []);
 
-    // En la lista invertida el header se pinta abajo (donde va el "escribiendo…") y el footer
-    // arriba (donde van los mensajes antiguos y su spinner).
     const ListHeaderComponent = useMemo(
         () => renderTypingIndicator?.() ?? <TypingIndicator isTyping={isTyping} />,
         [isTyping, renderTypingIndicator]
@@ -308,10 +309,7 @@ const MessageList = (props) => {
         [loadEarlierMessagesProps, renderLoadEarlier]
     );
 
-    const ListEmptyComponent = useMemo(
-        () => renderChatEmpty?.() ?? <ChatEmpty isInverted={isInverted} />,
-        [renderChatEmpty, isInverted]
-    );
+    const ListEmptyComponent = useMemo(() => renderChatEmpty?.() ?? <ChatEmpty />, [renderChatEmpty]);
 
     return (
         <View style={styles.container}>

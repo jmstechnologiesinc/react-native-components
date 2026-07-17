@@ -5,11 +5,11 @@ import { Image, Pressable, StyleSheet } from 'react-native';
 import { IconButton, MD3Colors, MD3LightTheme, Modal, Portal, useTheme } from '@jmstechnologiesinc/react-native-paper';
 
 /**
- * Visor a pantalla completa al pulsar la imagen de un mensaje.
+ * Full-screen viewer for a message image.
  *
- * El fondo es el `scrim` del tema (el mismo negro con el que Paper oscurece detrás de un
- * diálogo) y el icono va en neutral100 de la paleta de referencia: sobre el scrim hace falta
- * blanco en los dos temas, así que aquí no vale onSurface, que se invierte con el tema.
+ * The backdrop is the theme `scrim` (the same black Paper dims behind a dialog) and the
+ * close icon uses neutral100 from the reference palette: over the scrim it must be white in
+ * both themes, so onSurface — which flips with the theme — is not an option.
  */
 const ImageViewer = ({ uri, onDismiss }) => {
     const theme = useTheme();

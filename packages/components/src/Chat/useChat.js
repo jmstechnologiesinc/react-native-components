@@ -3,21 +3,25 @@ import { useCallback, useState } from 'react';
 import { generateMessageId } from './models';
 
 /**
- * Los mensajes van en orden descendente (el más nuevo primero), porque la lista es
- * invertida: el índice 0 se pinta abajo del todo.
+ * Local message state helpers.
+ *
+ * Messages are kept in descending order (newest first) because the list is inverted: index 0
+ * renders at the very bottom. `append` adds new messages, `prepend` adds earlier ones (top of
+ * the screen), and `updateLast` patches the most recent one — useful for streaming and for
+ * confirming a send. The hook's `send` is a shortcut for <Chat/>'s onSend: it fills in _id,
+ * createdAt and user when missing.
  */
+
 export const append = (messages = [], newMessages = []) => {
     const list = Array.isArray(newMessages) ? newMessages : [newMessages];
     return [...list, ...messages];
 };
 
-/** Mensajes antiguos: van al final del array (arriba del todo en pantalla). */
 export const prepend = (messages = [], earlierMessages = []) => {
     const list = Array.isArray(earlierMessages) ? earlierMessages : [earlierMessages];
     return [...messages, ...list];
 };
 
-/** Sustituye el mensaje más reciente. Útil para streaming y para confirmar un envío. */
 export const updateLast = (messages = [], update) => {
     if (!messages.length) {
         return messages;
@@ -42,7 +46,6 @@ const useChat = ({ initialMessages = [], user } = {}) => {
         setMessages((previous) => updateLast(previous, update));
     }, []);
 
-    /** Atajo para el onSend del <Chat/>: rellena _id, createdAt y user si faltan. */
     const send = useCallback(
         (message) => {
             appendMessages({

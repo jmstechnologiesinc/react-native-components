@@ -5,12 +5,14 @@ import { Animated, Easing, StyleSheet, View } from 'react-native';
 import { MD3LightTheme, Surface, useTheme } from '@jmstechnologiesinc/react-native-paper';
 
 /**
- * Los tres puntitos de "está escribiendo".
+ * The three "is typing" dots.
  *
- * ⚠️ Anima SOLO translateY (transform), y se monta/desmonta según isTyping en vez de animar
- * su altura. La librería anima `height` con Reanimated, y animar layout dentro del árbol de
- * la lista es justo lo que rompe el ownership de Yoga en RN 0.85. Usamos el Animated del core
- * con useNativeDriver: ni siquiera toca el hilo de JS.
+ * ⚠️ Animates ONLY translateY (transform), and mounts/unmounts on isTyping instead of
+ * animating its height. The library animates `height` with Reanimated, and animating layout
+ * inside the list tree is exactly what breaks Yoga's ownership on RN 0.85. Core Animated with
+ * useNativeDriver does not even touch the JS thread.
+ *
+ * The bubble mirrors a received message's container shape and color (see Bubble.js).
  */
 const Dot = ({ delay }) => {
     const theme = useTheme();
@@ -72,7 +74,6 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         marginVertical: spacing.x1,
     },
-    // Misma forma y mismo color de contenedor que una burbuja recibida (ver Bubble.js).
     bubble: {
         flexDirection: 'row',
         alignItems: 'center',

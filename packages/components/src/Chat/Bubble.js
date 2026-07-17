@@ -12,24 +12,29 @@ import StreamingCursor from './StreamingCursor';
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 
 /**
- * BubbleProps, con la misma firma que la librería:
+ * BubbleProps, same signature as the library:
  * { currentMessage, previousMessage, nextMessage, user, position, isUsernameVisible,
  *   renderMessageText, renderMessageImage, renderTime, renderCustomView,
  *   onPress, onLongPress }
  *
- * `position` es 'left' (el otro) o 'right' (yo), y lo calcula MessageList.
+ * `position` is 'left' (the other side) or 'right' (me), computed by MessageList.
+ *
+ * Notes:
+ * - Time is de-emphasized through the type scale (labelSmall), not by lowering opacity: in
+ *   MD3 emphasis is carried by color role and type, and an alpha over an "on…" color eats
+ *   the container's minimum contrast.
+ * - Ticks is one icon with three states: pending, sent, received.
+ * - The streaming cursor renders inline with the text, right after the last word.
+ * - spacing and roundness do not change between light and dark themes: they are read from
+ *   the token, not useTheme(), so StyleSheet.create stays static. Colors do use useTheme().
  */
 
-// La hora se atenúa con la escala tipográfica (labelSmall), no bajando la opacidad: en MD3 el
-// énfasis lo llevan el rol de color y el tipo, y un alpha sobre el color "on…" se come el
-// contraste mínimo del contenedor.
 const Time = ({ currentMessage, color }) => (
     <Text variant="labelSmall" style={{ color }}>
         {new Date(currentMessage.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
     </Text>
 );
 
-/** Un icono con tres estados: pendiente, enviado, recibido. */
 const Ticks = ({ currentMessage, color }) => {
     if (currentMessage.received) {
         return <MaterialCommunityIcons name="check-all" size={moderateScale(14)} color={color} />;
@@ -173,8 +178,6 @@ const Bubble = (props) => {
     );
 };
 
-// spacing y roundness no cambian entre el tema claro y el oscuro: se leen del token, no del
-// useTheme(), para que StyleSheet.create siga siendo estático. Los colores sí van por useTheme().
 const { spacing, roundness } = MD3LightTheme;
 
 const styles = StyleSheet.create({
@@ -186,7 +189,6 @@ const styles = StyleSheet.create({
         paddingVertical: spacing.x2,
         borderRadius: roundness * moderateScale(4),
     },
-    // El cursor de streaming va en línea con el texto, pegado a la última palabra.
     text: {
         flexDirection: 'row',
         alignItems: 'flex-end',

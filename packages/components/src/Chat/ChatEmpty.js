@@ -7,14 +7,22 @@ import { MD3LightTheme, Text, useTheme } from '@jmstechnologiesinc/react-native-
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 
 /**
- * Estado vacío. Va dentro de la FlatList (ListEmptyComponent), que está invertida: por eso
- * lleva scaleY: -1, para no salir del revés.
+ * Empty state. Rendered inside the inverted FlatList (ListEmptyComponent).
+ *
+ * The counter-inversion is NOT done here. VirtualizedList clones this element injecting its
+ * platform's exact transform into `style` — and it differs: iOS inverts with {scaleY: -1} but
+ * Android with {scale: -1}, both axes. An own scaleY: -1 on top canceled out on iOS and left
+ * a net {scaleX: -1} on Android: the "no messages yet" label rendered mirrored. Just apply
+ * the incoming `style`.
+ *
+ * The icon is dimmed by color (onSurfaceVariant), not opacity — color is what de-emphasizes
+ * in MD3.
  */
-const ChatEmpty = ({ isInverted = true, label = 'Aún no hay mensajes' }) => {
+const ChatEmpty = ({ label = 'Aún no hay mensajes', style }) => {
     const theme = useTheme();
 
     return (
-        <View style={[styles.container, isInverted && styles.inverted]}>
+        <View style={[styles.container, style]}>
             <MaterialCommunityIcons
                 name="message-outline"
                 size={(moderateScale(40))}
@@ -37,10 +45,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingVertical: spacing.x12,
     },
-    inverted: {
-        transform: [{ scaleY: -1 }],
-    },
-    // Sin opacity: quien atenúa en MD3 es el color (onSurfaceVariant), no la transparencia.
     icon: {
         marginBottom: spacing.x2,
     },

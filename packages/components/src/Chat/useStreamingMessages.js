@@ -4,17 +4,18 @@ import { append as appendMessages, updateLast } from './useChat';
 import { generateMessageId } from './models';
 
 /**
- * Equivalente a useStreamingMessages de la librería: respuestas que llegan token a token.
+ * Equivalent of the library's useStreamingMessages: replies that arrive token by token.
  *
  *   const { messages, append, startStream, isStreaming, stop } = useStreamingMessages({ initialMessages });
  *
- *   const stream = startStream({ user: BOT });
- *   stream.push('Hola');       // va concatenando en el último mensaje
- *   stream.done();             // cierra el mensaje
- *   stream.signal.aborted      // true si el usuario pulsó Stop
+ *   const stream = startStream({ user: BOT }); // appends an empty message; `streaming` paints the cursor
+ *   stream.push('Hola');       // concatenates into the last message
+ *   stream.done();             // closes the message
+ *   stream.signal.aborted      // true if the user pressed Stop
  *
- * Los tokens se acumulan en un buffer y se vuelcan una vez por frame: si el modelo escupe
- * 200 tokens/s no provocamos 200 renders.
+ * Tokens accumulate in a buffer flushed once per frame: a model spitting 200 tokens/s does
+ * not cause 200 renders. `stop` flushes whatever remains in the buffer and removes the
+ * typing cursor.
  */
 const useStreamingMessages = ({ initialMessages = [] } = {}) => {
     const [messages, setMessages] = useState(initialMessages);
@@ -46,7 +47,6 @@ const useStreamingMessages = ({ initialMessages = [] } = {}) => {
             cancelAnimationFrame(frameRef.current);
             frameRef.current = null;
         }
-        // Vuelca lo que quedara en el buffer y quita el cursor de "escribiendo".
         const chunk = bufferRef.current;
         bufferRef.current = '';
         setMessages((previous) =>
@@ -62,7 +62,6 @@ const useStreamingMessages = ({ initialMessages = [] } = {}) => {
             bufferRef.current = '';
             setIsStreaming(true);
 
-            // Mensaje vacío que se irá rellenando; `streaming` pinta el cursor.
             append({
                 _id: generateMessageId(),
                 text: '',
@@ -79,7 +78,6 @@ const useStreamingMessages = ({ initialMessages = [] } = {}) => {
                         return;
                     }
                     bufferRef.current += token;
-                    // Un solo render por frame, por muchos tokens que lleguen.
                     if (frameRef.current == null) {
                         frameRef.current = requestAnimationFrame(flush);
                     }

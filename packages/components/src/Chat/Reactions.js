@@ -5,17 +5,21 @@ import { StyleSheet, View } from 'react-native';
 import { MD3LightTheme, Surface, Text, TouchableRipple, useTheme } from '@jmstechnologiesinc/react-native-paper';
 
 /**
- * Reacciones emoji. En el mensaje viven como:
+ * Emoji reactions. Stored on the message as:
  *   message.reactions = [{ emoji: '👍', userIds: [1, 2] }]
  *
- * Dos piezas:
- *  - ReactionPicker: la fila de emojis que sale al mantener pulsado un mensaje.
- *  - Reactions: las burbujitas con el recuento debajo del mensaje.
+ * Two pieces:
+ *  - ReactionPicker: the emoji row shown when long-pressing a message. No Surface of its
+ *    own — it lives inside the MessageActions sheet and inherits its elevation color.
+ *  - Reactions: the little counters under the message, slightly overlapping the bubble's
+ *    bottom edge like any chat.
+ *
+ * toggleReaction adds/removes the user's reaction and returns the new array; a reaction
+ * nobody holds anymore disappears.
  */
 
 export const DEFAULT_EMOJIS = ['👍', '❤️', '😂', '😮', '😢', '🙏'];
 
-/** Añade o quita la reacción del usuario. Devuelve el nuevo array de reactions. */
 export const toggleReaction = (reactions = [], emoji, userId) => {
     const existing = reactions.find((reaction) => reaction.emoji === emoji);
 
@@ -28,13 +32,11 @@ export const toggleReaction = (reactions = [], emoji, userId) => {
         ? existing.userIds.filter((id) => id !== userId)
         : [...existing.userIds, userId];
 
-    // Si nadie la mantiene, la reacción desaparece.
     return reactions
         .map((reaction) => (reaction.emoji === emoji ? { ...reaction, userIds } : reaction))
         .filter((reaction) => reaction.userIds.length > 0);
 };
 
-// Sin Surface propia: vive dentro de la hoja de MessageActions y hereda su color de elevación.
 export const ReactionPicker = ({ emojis = DEFAULT_EMOJIS, onSelect }) => (
     <View style={styles.picker}>
         {emojis.map((emoji) => (
@@ -110,13 +112,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         gap: spacing.x1,
-        // Se solapan ligeramente con el borde inferior de la burbuja, como en cualquier chat.
         marginTop: -spacing.x2,
         marginBottom: spacing.x1,
     },
     reaction: {
         borderRadius: roundness * 2,
-        // El ripple de TouchableRipple se recorta contra este radio.
         overflow: 'hidden',
     },
     reactionContent: {

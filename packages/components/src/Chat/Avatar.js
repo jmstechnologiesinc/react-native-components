@@ -8,15 +8,16 @@ import {
     TouchableRipple,
 } from '@jmstechnologiesinc/react-native-paper';
 
+/**
+ * Library AvatarProps: { currentMessage, position, onPressAvatar, onLongPressAvatar }.
+ * Painted left of the bubble, only for the other side's messages. When the message groups
+ * with the previous one by the same author, the slot is reserved (`isVisible: false`) so the
+ * bubbles stay aligned.
+ */
+
 const { spacing } = MD3LightTheme;
 const SIZE = spacing.x7;
 
-/**
- * AvatarProps de la librería: { currentMessage, position, onPressAvatar, onLongPressAvatar }.
- * Se pinta a la izquierda de la burbuja y solo para los mensajes del otro.
- * Cuando el mensaje se agrupa con el anterior del mismo autor se reserva el hueco
- * (`isVisible: false`) para que las burbujas queden alineadas.
- */
 const Avatar = ({ currentMessage, isVisible = true, onPressAvatar, onLongPressAvatar }) => {
     if (!isVisible) {
         return <View style={styles.placeholder} />;

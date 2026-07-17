@@ -3,9 +3,9 @@ import React, { useEffect, useRef } from 'react';
 import { Animated, StyleSheet } from 'react-native';
 
 /**
- * El cursor parpadeante que sigue al texto mientras se está recibiendo (message.streaming).
- * Anima solo opacity, con el Animated del core y useNativeDriver: nunca layout. Ver los
- * INVARIANTES de MessageList.js.
+ * The blinking cursor that follows the text while it streams in (message.streaming).
+ * Animates only opacity, with core Animated and useNativeDriver — never layout. See the
+ * INVARIANTS in MessageList.js.
  */
 const StreamingCursor = ({ color }) => {
     const opacity = useRef(new Animated.Value(1)).current;
