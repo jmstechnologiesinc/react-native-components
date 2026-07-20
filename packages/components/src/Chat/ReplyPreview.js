@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { IconButton, MD3LightTheme, Text, useTheme } from '@jmstechnologiesinc/react-native-paper';
 
-/** Quote of the message being replied to, shown above the composer. */
+/** Cita del mensaje al que se está respondiendo, encima del composer. */
 const ReplyPreview = ({ replyMessage, onClear, label }) => {
     const theme = useTheme();
 

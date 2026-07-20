@@ -39,6 +39,8 @@
     "customer": "Customer",
     "vendor": "Business",
     "chat": "Chat",
+    "startConversation": "Start the conversation",
+    "photoMessage": "Photo",
     "chatThreadClosed": "This conversation is closed.",
     "chatDriverAssigned": "A driver has been assigned to your order.",
     "chatOrderReady": "The order is ready for pickup.",

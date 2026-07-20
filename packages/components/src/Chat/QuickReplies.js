@@ -5,14 +5,12 @@ import { StyleSheet, View } from 'react-native';
 import { Button, Chip, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
 /**
- * Library QuickRepliesProps: { currentMessage, onQuickReply, nextMessage, quickReplyStyle,
- * quickReplyTextStyle, quickReplyContainerStyle, sendLabel }.
+ * QuickRepliesProps de la librería: { currentMessage, onQuickReply, nextMessage,
+ * quickReplyStyle, quickReplyTextStyle, quickReplyContainerStyle, sendLabel }.
  *
  * message.quickReplies = { type: 'radio' | 'checkbox', values: [{ title, value }], keepIt }
- *  - radio: pressing an option sends immediately.
- *  - checkbox: several options get selected and confirmed with the send button.
- *
- * Once answered, the options disappear unless the message asks to keep them (keepIt).
+ *  - radio: al pulsar una opción se envía al momento.
+ *  - checkbox: se seleccionan varias y se confirman con el botón de enviar.
  */
 const QuickReplies = ({
     currentMessage,
@@ -52,6 +50,7 @@ const QuickReplies = ({
         return null;
     }
 
+    // Una vez contestado, las opciones desaparecen salvo que el mensaje pida conservarlas.
     if (nextMessage?._id && !quickReplies.keepIt) {
         return null;
     }

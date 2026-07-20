@@ -7,19 +7,14 @@ import { IconButton, MD3LightTheme, TextInput, useTheme } from '@jmstechnologies
 import ReplyPreview from './ReplyPreview';
 
 /**
- * The library's InputToolbar + Composer + Send + Actions in a single component with the same
- * props:
+ * Equivalente al InputToolbar + Composer + Send + Actions de la librería, en un solo
+ * componente y con sus mismas props:
  * { text, onTextChanged, onSend, textInputProps, placeholder, isSendButtonAlwaysVisible,
  *   replyMessage, onClearReply, renderReplyPreview, renderComposer, renderSend, renderActions,
  *   onPressActionButton }
  *
- * Notes:
- * - The TextInput is Paper's (a regular host component). Growing while typing is safe as
- *   long as the message list is not a Reanimated component: see MessageList.
- * - Paper identifies input adornments by element type: the right adornment must be a direct
- *   TextInput.Icon, not a component wrapping one.
- * - While a streaming reply is arriving, Send becomes Stop.
- * - The input caps at ~five lines (maxHeight); past that the TextInput itself scrolls.
+ * El TextInput es el de Paper (componente host normal). Que crezca al escribir es seguro
+ * mientras la lista de mensajes no sea un componente de Reanimated: ver MessageList.
  */
 
 const Actions = ({ onPressActionButton }) => (
@@ -76,6 +71,9 @@ const Composer = (props) => {
                         multiline
                         onSubmitEditing={canSend ? onSend : undefined}
                         returnKeyType="send"
+                        // Paper identifica los adornos por el tipo del elemento: tiene que ser
+                        // un TextInput.Icon directo, no un componente que lo envuelva.
+                        // Mientras llega una respuesta en streaming, Enviar se vuelve Stop.
                         right={
                             renderSend?.(props) ??
                             (isStreaming ? (
@@ -107,6 +105,7 @@ const styles = StyleSheet.create({
     container: {
         paddingHorizontal: spacing.x2,
         paddingTop: spacing.x2,
+        paddingBottom: spacing.x2,
         borderTopWidth: StyleSheet.hairlineWidth,
     },
     row: {
@@ -115,6 +114,7 @@ const styles = StyleSheet.create({
     },
     input: {
         flex: 1,
+        // Unas cinco líneas: a partir de ahí el propio TextInput scrollea.
         maxHeight: 120,
     },
 });

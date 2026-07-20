@@ -1,17 +1,14 @@
 /**
- * Message shape — the same one @kesha-antonov/react-native-chat uses, so data and callbacks
- * stay interchangeable if we can ever go back to the library (today its Reanimated-animated
- * virtualized list breaks Yoga on RN 0.85).
- *
- * Helpers: isSameAuthor groups consecutive messages by the same author (no repeated avatar
- * or name); toReplyMessage builds the compact quote out of a full message.
+ * Forma de los mensajes. Es la misma que usa @kesha-antonov/react-native-chat, para que
+ * los datos y los callbacks sean intercambiables si algún día podemos volver a la librería
+ * (hoy no: su lista virtualizada animada con Reanimated revienta Yoga en RN 0.85).
  *
  * @typedef {Object} User
  * @property {string|number} _id
  * @property {string} [name]
  * @property {string} [avatar] URL
  *
- * @typedef {Object} ReplyMessage Compact quote of the message being replied to.
+ * @typedef {Object} ReplyMessage Cita compacta del mensaje al que se responde.
  * @property {string|number} _id
  * @property {string} text
  * @property {User} user
@@ -22,15 +19,16 @@
  * @property {Date|number} createdAt
  * @property {User} user
  * @property {string} [image] URL
- * @property {boolean} [system] System message: centered, no bubble
- * @property {boolean} [pending] Being sent
- * @property {boolean} [sent] Delivered to the server
- * @property {boolean} [received] Seen by the recipient
+ * @property {boolean} [system] Mensaje de sistema, centrado y sin burbuja
+ * @property {boolean} [pending] Enviándose
+ * @property {boolean} [sent] Entregado al servidor
+ * @property {boolean} [received] Recibido por el destinatario
  * @property {ReplyMessage} [replyMessage]
  */
 
 export const isSameUser = (message, user) => !!message?.user && !!user && message.user._id === user._id;
 
+/** Dos mensajes consecutivos del mismo autor se agrupan (sin repetir avatar ni nombre). */
 export const isSameAuthor = (message, other) => !!message && !!other && message.user?._id === other.user?._id;
 
 export const isSameDay = (message, other) => {
@@ -44,6 +42,7 @@ export const isSameDay = (message, other) => {
     );
 };
 
+/** Cita compacta a partir del mensaje completo. */
 export const toReplyMessage = (message) =>
     message ? { _id: message._id, text: message.text, user: message.user } : undefined;
 

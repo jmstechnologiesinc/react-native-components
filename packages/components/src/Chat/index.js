@@ -10,20 +10,20 @@ import { append, prepend, updateLast } from './useChat';
 import { generateMessageId, toReplyMessage } from './models';
 
 /**
- * <Chat/> — adaptation of @kesha-antonov/react-native-chat with the same API, mounted on the
- * only inverted-list + keyboard combination that does not crash on RN 0.85 (see the
- * INVARIANTS in MessageList.js and ChatScreenWrapper.js).
+ * <Chat/> — adaptación de @kesha-antonov/react-native-chat con su misma API, pero montado
+ * sobre la única combinación de lista invertida + teclado que no crashea en RN 0.85
+ * (ver los INVARIANTES en MessageList.js y ChatScreenWrapper.js).
  *
- * Props (library-compatible subset):
+ * Props (subconjunto compatible con la librería):
  *   messages, user, onSend, text, onTextChanged, isTyping, isUsernameVisible,
  *   isUserAvatarVisible, isInverted, isScrollToBottomEnabled, listProps,
  *   loadEarlierMessagesProps: { isAvailable, isLoading, isInfiniteScrollEnabled, onPress }
  *   reply: { swipe: { isEnabled, direction }, onPress }
- *   actions: [{ title, icon, onPress(message) }] — sheet shown on message long-press
- *   isAttachmentEnabled — shows the composer "+" button (camera / gallery)
- *   reactions: { isEnabled, emojis } + onReact(message, emoji) — long-press reactions
- *   isStreaming + onStopStreaming — Send becomes Stop (see useStreamingMessages)
- *   onAttach(asset) — receives the picker asset; without it, sends as image: asset.uri
+ *   actions: [{ title, icon, onPress(message) }] — hoja al mantener pulsado un mensaje
+ *   isAttachmentEnabled — muestra el botón "+" del composer (cámara / galería)
+ *   reactions: { isEnabled, emojis } + onReact(message, emoji) — reacciones al mantener pulsado
+ *   isStreaming + onStopStreaming — el botón Enviar se convierte en Stop (ver useStreamingMessages)
+ *   onAttach(asset) — recibe el asset del picker; si no se pasa, se envía como image: asset.uri
  *   onQuickReply, onPressActionButton, onPressMessage, onLongPressMessage,
  *   onPressAvatar, onLongPressAvatar, onPressLink
  *   render*: renderMessage, renderBubble, renderAvatar, renderDay, renderSystemMessage,
@@ -32,22 +32,12 @@ import { generateMessageId, toReplyMessage } from './models';
  *            renderTime, renderCustomView, renderQuickReplies, renderComposer, renderSend,
  *            renderActions, renderReplyPreview
  *
- * Notes:
- * - Every send funnels through one point: the composer, quick replies and replies alike.
- *   Answering quick replies sends, by default, a message with the chosen titles.
- * - Long-press opens the actions sheet; with reactions enabled it always opens (there are
- *   emojis to show), with a single action and no reactions it fires that action directly.
- *   Pressing an existing reaction toggles it: state lives outside — the screen updates
- *   `message.reactions` with the toggleReaction helper.
- * - A picked photo sends as a message with `image`. If the screen passes `onAttach`, it
- *   gets the whole asset (uri, base64, type…) to upload the file and decide when and how to
- *   send — what you want in production.
- * - Visible strings go through `labels` instead of localized(), so the consuming app does
- *   not need the chat keys in its translations. Pass them already translated if needed.
- * - The keyboard is handled by ChatScreenWrapper (screen-level KeyboardAvoidingView). Do NOT
- *   wrap <Chat/> in another KeyboardAvoidingView: it re-measures the list and the crash is back.
- * - renderChatFooter renders between the list and the composer (action bars, notices…).
- * - Static helpers mirror the library: Chat.append(messages, newMessages), prepend, updateLast.
+ * Los textos visibles van por `labels` en vez de por localized(), para no depender de que la
+ * app consumidora tenga las claves del chat en sus traducciones. Pásalos ya traducidos desde
+ * la pantalla si los necesitas en varios idiomas.
+ *
+ * El teclado lo gestiona ChatScreenWrapper (KeyboardAvoidingView a nivel de pantalla).
+ * NO envuelvas <Chat/> en otro KeyboardAvoidingView: eso re-mide la lista y vuelve el crash.
  */
 
 const DEFAULT_LABELS = {
@@ -99,6 +89,7 @@ const Chat = ({
         [isTextControlled, onTextChanged]
     );
 
+    /** Único punto de envío: el composer, las quick replies y el reply pasan por aquí. */
     const send = useCallback(
         (message) => {
             onSend?.([
@@ -136,6 +127,7 @@ const Chat = ({
         [props.reply]
     );
 
+    /** Por defecto, contestar a unas quick replies envía un mensaje con los títulos elegidos. */
     const handleQuickReply = useCallback(
         (replies) => {
             if (!replies?.length) {
@@ -150,6 +142,11 @@ const Chat = ({
         [onQuickReply, send]
     );
 
+    /**
+     * Al elegir una foto se envía como mensaje con `image`. Si la pantalla pasa `onAttach`,
+     * se le cede el asset entero (uri, base64, tipo…) para que suba el fichero y decida
+     * cuándo y cómo mandarlo; es lo que querrás en producción.
+     */
     const handlePickAttachment = useCallback(
         (asset) => {
             if (onAttach) {
@@ -174,6 +171,7 @@ const Chat = ({
         [props.reply, isReplyEnabled, handleReply]
     );
 
+    // Mantener pulsado abre la hoja de acciones. Si no hay acciones extra, responde directo.
     const messageActions = useMemo(() => {
         const replyAction = isReplyEnabled
             ? [{ title: labels.reply, icon: 'reply', onPress: handleReply }]
@@ -187,6 +185,7 @@ const Chat = ({
                 props.onLongPressMessage(message);
                 return;
             }
+            // Con reacciones activas la hoja siempre se abre (hay emojis que mostrar).
             if (reactions?.isEnabled || messageActions.length > 1) {
                 setActionsMessage(message);
                 return;
@@ -196,6 +195,11 @@ const Chat = ({
         [props.onLongPressMessage, messageActions, reactions]
     );
 
+    /**
+     * Pulsar una reacción existente la quita (o la añade, si no eras de los que reaccionaron).
+     * El estado vive fuera: le pasamos a la pantalla el mensaje y el emoji, y ella actualiza
+     * `message.reactions` con el helper toggleReaction.
+     */
     const handleReact = useCallback(
         (message, emoji) => {
             onReact?.(message, emoji);
@@ -216,6 +220,7 @@ const Chat = ({
                 onPressReaction={handleReact}
             />
 
+            {/* Hueco entre la lista y el composer: barras de acciones, avisos, etc. */}
             {props.renderChatFooter?.()}
 
             <Composer
@@ -255,6 +260,7 @@ const Chat = ({
     );
 };
 
+// Mismos helpers estáticos que la librería: Chat.append(messages, newMessages).
 Chat.append = append;
 Chat.prepend = prepend;
 Chat.updateLast = updateLast;

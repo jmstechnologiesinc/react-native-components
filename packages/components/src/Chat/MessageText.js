@@ -5,14 +5,13 @@ import { Linking, StyleSheet } from 'react-native';
 import { Text } from '@jmstechnologiesinc/react-native-paper';
 
 /**
- * Library MessageTextProps: { currentMessage, color, linkStyle, onPressLink }.
+ * MessageTextProps de la librería: { currentMessage, color, linkStyle, onPressLink }.
  *
- * Detects URLs, emails and phone numbers and makes them pressable with Linking. The library
- * uses its own parser + libphonenumber-js; a single regex is enough here and adds no
- * dependencies. One pass, order matters: email before URL, so the dot doesn't split it.
- * matchAll does not mutate the regex lastIndex between calls, unlike exec in a loop.
+ * Detecta URLs, emails y teléfonos y los hace pulsables con Linking. La librería usa un
+ * parser propio + libphonenumber-js; aquí basta una regex y no añade dependencias.
  */
 
+// Un solo paso: el orden importa (el email antes que la URL, para no partirlo por el punto).
 const PATTERN = /(\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}\b)|((?:https?:\/\/|www\.)[^\s]+)|(\+?\d[\d\s().-]{7,}\d)/gi;
 
 const linkFor = (token) => {
@@ -29,6 +28,7 @@ const parse = (text) => {
     const parts = [];
     let lastIndex = 0;
 
+    // matchAll no muta el lastIndex de la regex entre llamadas, a diferencia de exec en bucle.
     for (const match of text.matchAll(PATTERN)) {
         if (match.index > lastIndex) {
             parts.push({ text: text.slice(lastIndex, match.index) });

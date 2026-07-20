@@ -5,9 +5,10 @@ import { StyleSheet, View } from 'react-native';
 import { ActivityIndicator, Button, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
 /**
- * The library's LoadEarlierMessages: the "load more" button at the top of the history. It
- * only shows when infinite scroll is off (isInfiniteScrollEnabled !== true); when on, the
- * load is triggered by onEndReached and the spinner alone is enough here.
+ * LoadEarlierMessages de la librería: el botón de "cargar más" que se pinta al principio del
+ * historial. Solo aparece cuando el scroll infinito está desactivado
+ * (loadEarlierMessagesProps.isInfiniteScrollEnabled !== true); si está activo, la carga la
+ * dispara onEndReached y aquí basta con el spinner.
  *
  * loadEarlierMessagesProps: { isAvailable, isLoading, isInfiniteScrollEnabled, onPress }
  */

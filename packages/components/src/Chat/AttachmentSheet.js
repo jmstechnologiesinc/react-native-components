@@ -9,13 +9,10 @@ import { localized } from '../Localization/Localization';
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 
 /**
- * Attachment sheet: camera or gallery. Equivalent of the library's `Actions` + ActionSheet.
+ * Hoja de adjuntos: cámara o galería. Equivale al `Actions` + ActionSheet de la librería.
  *
- * Uses the package's ImagePickerAPI (same as ProfileForm or ProductItemFormScreen): it
- * already handles permissions and returns the react-native-image-picker asset. The picker is
- * a native screen, so it only opens once the modal is already dismissing — otherwise they
- * compete for the presentation on iOS. The container uses MD3's "extra large" shape, the
- * dialogs' one.
+ * Usa el ImagePickerAPI del paquete de componentes (el mismo que ProfileForm o
+ * ProductItemFormScreen): ya resuelve permisos y devuelve el asset de react-native-image-picker.
  */
 const AttachmentSheet = ({ isVisible, onDismiss, onPick, labels }) => {
     const theme = useTheme();
@@ -64,6 +61,8 @@ const AttachmentSheet = ({ isVisible, onDismiss, onPick, labels }) => {
                             left={(props) => <List.Icon {...props} icon={option.icon} />}
                             onPress={() => {
                                 onDismiss();
+                                // El picker es una pantalla nativa: solo se abre cuando el modal
+                                // ya se está cerrando, si no compiten por la presentación en iOS.
                                 setTimeout(() => {
                                     option.pick().then((asset) => {
                                         if (asset?.uri) {
@@ -85,6 +84,7 @@ const { spacing, roundness } = MD3LightTheme;
 const styles = StyleSheet.create({
     container: {
         marginHorizontal: spacing.x6,
+        // Forma "extra large" de MD3, la de los diálogos.
         borderRadius: roundness * moderateScale(7),
         overflow: 'hidden',
     },

@@ -39,6 +39,8 @@
     "customer": "Cliente",
     "vendor": "Negocio",
     "chat": "Chat",
+    "startConversation": "Inicia la conversación",
+    "photoMessage": "Foto",
     "chatThreadClosed": "Esta conversación está cerrada.",
     "chatDriverAssigned": "Se ha asignado un repartidor a tu pedido.",
     "chatOrderReady": "El pedido está listo para recoger.",
