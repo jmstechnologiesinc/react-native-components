@@ -8,7 +8,13 @@ import { Centrifuge } from 'centrifuge';
 import { MapboxGLWrapper } from '@jmstechnologiesinc/react-native-components';
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 
-const OrderMapboxGLMonitoring = ({ orderId, destination }) => {
+// `getToken` is an async () => string the host app must provide. fleet-management
+// now runs Centrifugo with client.insecure=false, so a tokenless connection is
+// rejected. The token is minted by the Firebase callable
+// `realtime-centrifugoConnectionToken`; the SDK also calls getToken again to
+// refresh before expiry. This component stays firebase-agnostic -- the app wires
+// the actual call (see CustomerApp usage).
+const OrderMapboxGLMonitoring = ({ orderId, destination, getToken }) => {
     const subscriptionRef = useRef();
 
     const [driverLocation, setDriverLocation] = useState();
@@ -17,7 +23,8 @@ const OrderMapboxGLMonitoring = ({ orderId, destination }) => {
         if (!orderId) return null;
 
         const centrifugeClientRef = new Centrifuge(
-            `ws://${Config.FLEET_MANAGEMENT_CENTRIFUGO_HOST}:${Config.FLEET_MANAGEMENT_CENTRIFUGO_PORT}/connection/websocket`
+            `ws://${Config.FLEET_MANAGEMENT_CENTRIFUGO_HOST}:${Config.FLEET_MANAGEMENT_CENTRIFUGO_PORT}/connection/websocket`,
+            getToken ? { getToken } : undefined
         );
 
         centrifugeClientRef
@@ -34,7 +41,13 @@ const OrderMapboxGLMonitoring = ({ orderId, destination }) => {
         const subcriptionState = centrifugeClientRef.getSubscription(pubnubEtaChannelName(orderId));
 
         if (subcriptionState === null) {
-            subscriptionRef.current = centrifugeClientRef.newSubscription(pubnubEtaChannelName(orderId));
+            // delta: 'fossil' -- fleet-management enables fossil delta
+            // compression on eta.* channels, so successive near-identical GPS
+            // updates arrive as diffs (~10x less bandwidth). The SDK falls back
+            // to full payloads automatically if the server hasn't got it on.
+            subscriptionRef.current = centrifugeClientRef.newSubscription(pubnubEtaChannelName(orderId), {
+                delta: 'fossil',
+            });
 
             subscriptionRef.current
                 .on('publication', function (ctx) {
