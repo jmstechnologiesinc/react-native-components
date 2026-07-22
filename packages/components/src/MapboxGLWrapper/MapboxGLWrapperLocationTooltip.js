@@ -5,9 +5,16 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import { MD3LightTheme, Text, TouchableRipple } from '@jmstechnologiesinc/react-native-paper';
 
-const MapboxGLWrapperLocationTooltip = ({ latitude, longitude, title, onPress }) => {
+const MapboxGLWrapperLocationTooltip = ({
+    latitude,
+    longitude,
+    title,
+    onPress,
+    id = 'marker',
+    anchor = { x: 0.5, y: 1.6 },
+}) => {
     return latitude && longitude ? (
-        <MapboxGL.MarkerView id="marker" coordinate={[longitude, latitude]} anchor={{ x: 0.5, y: 1.6 }}>
+        <MapboxGL.MarkerView id={id} coordinate={[longitude, latitude]} anchor={anchor}>
             <TouchableRipple onPress={onPress}>
                 <View style={styles.markerContainer}>
                     <Text variant="titleMedium">{title?.length > 20 ? `${title.substring(0, 20)}...` : title}</Text>

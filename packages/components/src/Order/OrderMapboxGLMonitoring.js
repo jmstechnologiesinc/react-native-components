@@ -8,6 +8,8 @@ import { Centrifuge } from 'centrifuge';
 import { MapboxGLWrapper } from '@jmstechnologiesinc/react-native-components';
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 
+import { useSmoothDriverLocation } from './useSmoothDriverLocation';
+
 // `getToken` is an async () => string the host app must provide. fleet-management
 // now runs Centrifugo with client.insecure=false, so a tokenless connection is
 // rejected. The token is minted by the Firebase callable
@@ -17,7 +19,10 @@ import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 const OrderMapboxGLMonitoring = ({ orderId, destination, getToken }) => {
     const subscriptionRef = useRef();
 
-    const [driverLocation, setDriverLocation] = useState();
+    // Raw target from Centrifugo (updates ~every 4s). The animator glides the
+    // rendered position between targets so the marker never teleports.
+    const [driverTarget, setDriverTarget] = useState();
+    const driverLocation = useSmoothDriverLocation(driverTarget);
 
     useEffect(() => {
         if (!orderId) return null;
@@ -51,9 +56,10 @@ const OrderMapboxGLMonitoring = ({ orderId, destination, getToken }) => {
 
             subscriptionRef.current
                 .on('publication', function (ctx) {
-                    setDriverLocation({
+                    setDriverTarget({
                         latitude: ctx.data.latitude,
                         longitude: ctx.data.longitude,
+                        heading: ctx.data.heading,
                         formattedAddress: ctx.data.formattedEta,
                     });
                 })
