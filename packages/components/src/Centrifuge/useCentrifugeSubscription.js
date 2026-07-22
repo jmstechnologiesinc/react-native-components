@@ -3,15 +3,15 @@ import { useEffect, useRef } from 'react';
 import { useCentrifuge } from './CentrifugeProvider';
 
 /**
- * Escucha un canal mientras el componente esté montado.
+ * Listens to a channel for as long as the component is mounted.
  *
- * Los callbacks se guardan en refs a propósito. Si entraran como dependencias del
- * efecto, un `onPublication` recreado en cada render (que es lo normal: casi siempre
- * es una arrow function en el cuerpo del componente) desuscribiría y volvería a
- * suscribir el canal en cada render. El efecto solo depende del canal.
+ * The callbacks are kept in refs on purpose. As effect dependencies, an `onPublication`
+ * rebuilt on every render — which is the normal case, since it is almost always an arrow
+ * function in the component body — would unsubscribe and resubscribe the channel on every
+ * render. The effect depends on the channel and nothing else.
  *
- * Devuelve `false` si no hay CentrifugeProvider montado, para que el consumidor pueda
- * decidir qué hacer (el mapa, por ejemplo, cae a su cliente propio de siempre).
+ * Returns `false` when no CentrifugeProvider is mounted, so the consumer can decide what to
+ * do (the map, for one, falls back to the standalone client it has always used).
  */
 const useCentrifugeSubscription = (
     channel,

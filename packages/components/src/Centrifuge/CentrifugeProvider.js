@@ -3,41 +3,61 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useR
 import { Centrifuge } from 'centrifuge';
 
 /**
- * El único socket de Centrifugo de la app.
+ * The app's only Centrifugo socket.
  *
- * Antes cada consumidor abría el suyo: OrderMapboxGLMonitoring creaba un cliente
- * dentro de su propio useEffect. Con el chat serían dos sockets abiertos a la vez
- * sobre la misma pantalla de pedido, cada uno con su reconexión y su backoff. Aquí
- * hay uno solo, y los canales se cuentan por referencias: dos pantallas pueden
- * escuchar el mismo canal y la suscripción real solo se cierra cuando se va la
- * última.
+ * Every consumer used to open its own: OrderMapboxGLMonitoring built a client inside its own
+ * useEffect. With the chat that would be two sockets open over the same order screen, each with
+ * its own reconnection and backoff. There is one here, and channels are reference-counted: two
+ * screens can listen to the same channel and the real subscription only closes when the last
+ * one leaves.
  *
- * El provider no sabe nada de pedidos ni de chat. Solo sabe conectar, suscribir y
- * pedir tokens cuando se los dan:
+ * The provider knows nothing about orders or chat. It knows how to connect, subscribe, publish
+ * and ask for tokens when it is given a way to:
  *
- *   getToken            token de CONEXIÓN — "soy este usuario". Si no se pasa, la
- *                       conexión es anónima (el modo inseguro de desarrollo que el
- *                       mapa usa hoy).
+ *   getToken            CONNECTION token — "I am this user". Without it the connection is
+ *                       anonymous (the insecure development mode the map still uses).
  *   subscribe(channel, { getToken })
- *                       token de SUSCRIPCIÓN — "puedo escuchar este canal". El
- *                       namespace `chat` de Centrifugo lo exige; el del mapa no.
+ *                       SUBSCRIPTION token — "I may listen to this channel". Centrifugo's
+ *                       `chat` namespace demands one; the map's does not.
+ *   publish(channel, data)
+ *                       Sends on an already-subscribed channel without going through the
+ *                       server. Ephemeral signals only (typing…): nothing sent this way is
+ *                       persisted or validated. It returns false when the channel is not
+ *                       subscribed, because the subscription is what proved membership to
+ *                       Centrifugo in the first place — there is no publishing blind into a
+ *                       channel you are not listening to, and there should not be.
+ *                       Receivers must not treat what a client publishes as equal to what the
+ *                       server publishes: Centrifugo stamps client publications with the
+ *                       identity from their connection token (`info` on the publication
+ *                       context) and leaves server ones unstamped, and a receiver that ignores
+ *                       that difference is letting a channel peer invent messages for it.
  *
- * Los dos tokens los mintea fastify y los sirven los callables de Firebase, que es
- * donde vive la autorización. Aquí solo se transportan.
+ * Both tokens are minted by fastify and served by Firebase callables, which is where the
+ * authorization lives. They are only transported here.
+ *
+ * Four details that are not free to change:
+ *  · `getToken` is read through a ref rather than listed as a dependency. It is almost always an
+ *    arrow function in the app's body, so a new identity on every render would rebuild the client
+ *    and drop every live subscription under it.
+ *  · Both `error` handlers exist because Centrifugo fails quietly. A connection token the server
+ *    rejects leaves the client retrying with backoff forever; a channel that never subscribes —
+ *    expired token, unknown channel, permission denied — simply says nothing at all, and the
+ *    screen looks fine because the messages it already loaded are still there. Without these
+ *    there is no way to tell "nobody has written" from "I am not listening".
+ *  · `subscribed` is dispatched to every listener on the channel, not just the first. It fires
+ *    again on each reconnect, and the chat's replay hangs off it.
+ *  · The socket is released once the last channel goes, rather than left open draining battery.
  */
 const CentrifugeContext = createContext(null);
 
-/** El socket compartido, o null si no hay provider montado por encima. */
+/** The shared socket, or null when no provider is mounted above. */
 export const useCentrifuge = () => useContext(CentrifugeContext);
 
 const CentrifugeProvider = ({ url, getToken, children }) => {
     const clientRef = useRef(null);
-    /** canal -> { subscription, listeners:Set } */
+    /** channel -> { subscription, listeners:Set } */
     const channelsRef = useRef(new Map());
 
-    // El token se lee por referencia y no por dependencia: si cambiara la identidad
-    // de la función (un callback recreado en cada render de la app) y con ella el
-    // cliente, se caerían todas las suscripciones vivas por debajo.
     const getTokenRef = useRef(getToken);
     getTokenRef.current = getToken;
 
@@ -48,10 +68,7 @@ const CentrifugeProvider = ({ url, getToken, children }) => {
                 getTokenRef.current ? { getToken: (ctx) => getTokenRef.current(ctx) } : undefined
             );
 
-            // El socket también falla en silencio: si el token de conexión no vale, el
-            // cliente reintenta con backoff eternamente y las suscripciones se quedan
-            // colgadas sin que nadie se entere.
-            client.on('error', (ctx) => console.warn('centrifuge: socket en error', ctx.error));
+            client.on('error', (ctx) => console.warn('centrifuge: socket error', ctx.error));
 
             clientRef.current = client;
         }
@@ -83,9 +100,6 @@ const CentrifugeProvider = ({ url, getToken, children }) => {
                 entry = { subscription, listeners: new Set() };
                 channels.set(channel, entry);
 
-                // Se reparte a todos los oyentes del canal, no solo al primero: el
-                // `subscribed` vuelve a dispararse en cada reconexión, y es de lo que
-                // cuelga el replay del chat (pedir lo que se perdió mientras no había red).
                 subscription
                     .on('publication', (ctx) => {
                         entry.listeners.forEach((current) => current.onPublication?.(ctx.data, ctx));
@@ -93,13 +107,8 @@ const CentrifugeProvider = ({ url, getToken, children }) => {
                     .on('subscribed', (ctx) => {
                         entry.listeners.forEach((current) => current.onSubscribed?.(ctx));
                     })
-                    // Un canal que no llega a suscribirse —token caducado, canal que no
-                    // existe, permiso denegado— se queda callado para siempre: no hay
-                    // publicaciones, no hay error, no hay nada. La pantalla parece
-                    // funcionar porque los mensajes que ya cargó siguen ahí. Sin esto no
-                    // hay forma de distinguir "no ha escrito nadie" de "no estoy escuchando".
                     .on('error', (ctx) => {
-                        console.warn('centrifuge: canal en error', channel, ctx.error);
+                        console.warn('centrifuge: channel error', channel, ctx.error);
                         entry.listeners.forEach((current) => current.onError?.(ctx.error, ctx));
                     })
                     .subscribe();
@@ -107,7 +116,6 @@ const CentrifugeProvider = ({ url, getToken, children }) => {
 
             entry.listeners.add(listener);
 
-            // `connect()` es idempotente: si ya está conectado o conectando, no hace nada.
             client.connect();
 
             return () => {
@@ -122,8 +130,6 @@ const CentrifugeProvider = ({ url, getToken, children }) => {
                 client.removeSubscription(entry.subscription);
                 channels.delete(channel);
 
-                // Sin canales no hay nada que escuchar: se suelta el socket en vez de
-                // dejarlo abierto consumiendo batería.
                 if (channels.size === 0) {
                     client.disconnect();
                 }
@@ -145,7 +151,21 @@ const CentrifugeProvider = ({ url, getToken, children }) => {
         []
     );
 
-    const value = useMemo(() => ({ subscribe }), [subscribe]);
+    const publish = useCallback((channel, data) => {
+        const entry = channelsRef.current.get(channel);
+
+        if (!entry) {
+            return false;
+        }
+
+        entry.subscription.publish(data).catch((error) => {
+            console.warn('centrifuge: could not publish on', channel, error);
+        });
+
+        return true;
+    }, []);
+
+    const value = useMemo(() => ({ subscribe, publish }), [subscribe, publish]);
 
     return <CentrifugeContext.Provider value={value}>{children}</CentrifugeContext.Provider>;
 };
