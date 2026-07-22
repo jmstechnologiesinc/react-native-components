@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { List } from '@jmstechnologiesinc/react-native-paper';
+import { Badge, List } from '@jmstechnologiesinc/react-native-paper';
 
 import { USER_ROLES } from '@jmstechnologiesinc/user';
 import { FULFILLMENT_METHODS } from '@jmstechnologiesinc/vendor';
@@ -9,12 +9,25 @@ import { ORDER_STATUS, orderStatusTime } from '@jmstechnologiesinc/order';
 import { MATERIAL_ICONS, LOGISTICS_PLATFORMS, firestoreTimestampToDate } from '@jmstechnologiesinc/commons';
 import { localized } from '@jmstechnologiesinc/react-native-components';
 
-const OrderFulfillmentInfo = ({ order, role, platform }) => {
+const OrderFulfillmentInfo = ({ order, role, platform, chatThreads = [] }) => {
     if (!order?.id || !USER_ROLES[role]) {
         return null;
     }
 
     const fulfilmentDetails = [];
+
+    const pushChatThreads = () =>
+        chatThreads.forEach((thread) => {
+            fulfilmentDetails.push({
+                key: `chat-${thread.key}`,
+                title: thread.title,
+                icon: MATERIAL_ICONS.message,
+                description: thread.description,
+                descriptionNumberOfLines: 1,
+                badge: thread.badge,
+                onPress: thread.onPress,
+            });
+        });
 
     if (order.note === true) {
         fulfilmentDetails.push({
@@ -68,6 +81,8 @@ const OrderFulfillmentInfo = ({ order, role, platform }) => {
                 description: localized('order.vendor.phone'),
             });
         }
+
+        pushChatThreads();
     }
 
     if (role === USER_ROLES.customer) {
@@ -102,6 +117,8 @@ const OrderFulfillmentInfo = ({ order, role, platform }) => {
             });
         }
 
+        pushChatThreads();
+
         fulfilmentDetails.push({
             key: 'payment-method',
             title: order.payment.formattedPaymentMethod,
@@ -132,6 +149,8 @@ const OrderFulfillmentInfo = ({ order, role, platform }) => {
                 icon: MATERIAL_ICONS.location,
             });
         }
+
+        pushChatThreads();
     }
 
     return fulfilmentDetails.length > 0 ? (
@@ -150,8 +169,16 @@ const OrderFulfillmentInfo = ({ order, role, platform }) => {
                     title={item.title}
                     description={item.description}
                     titleNumberOfLines={0}
-                    descriptionNumberOfLines={0}
+                    descriptionNumberOfLines={item.descriptionNumberOfLines ?? 0}
                     left={(props) => <List.Icon {...props} icon={item.icon} />}
+                    right={(props) =>
+                        item.badge ? (
+                            <Badge {...props} visible>
+                                {item.badge}
+                            </Badge>
+                        ) : null
+                    }
+                    onPress={item.onPress}
                 />
             ))}
         </List.Section>
