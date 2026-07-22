@@ -25,7 +25,7 @@ const OrderMapboxGLMonitoring = ({ orderId, destination, getToken }) => {
     const driverLocation = useSmoothDriverLocation(driverTarget);
 
     useEffect(() => {
-        if (!orderId) return null;
+        if (!orderId) return undefined;
 
         // Scheme comes from env so environments can differ: production/dev use
         // wss:// through the GKE Ingress front-door (rt.<env-domain>, port 443,
@@ -84,6 +84,12 @@ const OrderMapboxGLMonitoring = ({ orderId, destination, getToken }) => {
         return () => {
             subscriptionRef.current?.unsubscribe?.();
             subscriptionRef.current?.removeAllListeners?.();
+            subscriptionRef.current = null;
+            // Tear the connection down with the screen. Without this the
+            // WebSocket outlives the order view (battery + a zombie server
+            // connection), and revisiting the screen stacks a second client.
+            centrifugeClientRef.removeAllListeners();
+            centrifugeClientRef.disconnect();
         };
     }, [orderId]);
 
