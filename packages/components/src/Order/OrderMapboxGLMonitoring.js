@@ -27,20 +27,27 @@ const OrderMapboxGLMonitoring = ({ orderId, destination, getToken }) => {
     useEffect(() => {
         if (!orderId) return null;
 
+        // Scheme comes from env so environments can differ: production/dev use
+        // wss:// through the GKE Ingress front-door (rt.<env-domain>, port 443,
+        // managed TLS cert); bare local stacks keep the ws:// default.
+        const scheme = Config.FLEET_MANAGEMENT_CENTRIFUGO_SCHEME || 'ws';
         const centrifugeClientRef = new Centrifuge(
-            `ws://${Config.FLEET_MANAGEMENT_CENTRIFUGO_HOST}:${Config.FLEET_MANAGEMENT_CENTRIFUGO_PORT}/connection/websocket`,
+            `${scheme}://${Config.FLEET_MANAGEMENT_CENTRIFUGO_HOST}:${Config.FLEET_MANAGEMENT_CENTRIFUGO_PORT}/connection/websocket`,
             getToken ? { getToken } : undefined
         );
 
         centrifugeClientRef
+            .on('connecting', function (ctx) {
+                console.log('centrifugo connecting:', JSON.stringify(ctx));
+            })
             .on('connected', function (ctx) {
-                console.log(`centrifugo client connected:`, ctx);
+                console.log('centrifugo connected, client:', ctx.client);
             })
             .on('disconnected', function (ctx) {
-                console.log(`centrifugo client connected:`, ctx);
+                console.log('centrifugo disconnected:', JSON.stringify(ctx));
             })
             .on('error', function (ctx) {
-                console.log('centrifugo client error:', ctx);
+                console.log('centrifugo error:', JSON.stringify(ctx));
             });
 
         const subcriptionState = centrifugeClientRef.getSubscription(pubnubEtaChannelName(orderId));
