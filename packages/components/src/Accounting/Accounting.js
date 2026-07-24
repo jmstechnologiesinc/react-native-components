@@ -6,7 +6,7 @@ import { localized } from '../Localization/Localization';
 
 const localizeWithParam = (title) => {
     const regex = /^(\w+)\((.+)\)$/;
-    const match = title.match(regex);
+    const match = title?.match(regex);
     if (match) {
         const key = match[1];
         const param = match[2];
