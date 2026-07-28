@@ -97,6 +97,7 @@ const Autocomplete = ({
     const onCallMapPicker = () => {
         onMapPicker(isOriginFocused ? 'originLocation' : 'dropoffLocation');
         setIsOriginFocused(false);
+        setIsDestinationFocused(false);
         Keyboard.dismiss();
     };
 
