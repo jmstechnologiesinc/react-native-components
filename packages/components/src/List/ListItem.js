@@ -45,6 +45,7 @@ const ListItem = ({
               <>
                   {description.map((item, index) => (
                       <Text
+                          key={`description-${index}`}
                           selectable={selectable}
                           numberOfLines={index === 0 ? descriptionNumberOfLines : 0}
                           ellipsizeMode={ellipsizeMode}
