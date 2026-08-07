@@ -74,8 +74,10 @@ export default ({
             case 'ROW':
                 const rowIndex = elementPointer.index;
                 const isData = data[sectionIndex].data[rowIndex];
+                // Same estimate the offset accumulator above uses, and the same one
+                // ProductListItem sizes itself with
                 const setDynamicSize =
-                    isData.description === undefined && isData.photo === null ? moderateScale(90) : moderateScale(100);
+                    isData.description === undefined && isData.photo === null ? moderateScale(56) : moderateScale(100);
 
                 const getItemHeight = () => setDynamicSize;
 
