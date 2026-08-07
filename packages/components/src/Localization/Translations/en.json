@@ -232,7 +232,7 @@
     "enableStockManagementHelpText": "Display stock availability on product pages, providing transparency to customers about the availability of items.",
     "shoppingModes": "Shopping Modes",
     "placeOrder": "PLACE ORDER",
-    "carts": "Carts",
+    "carts": "Cart",
     "review": "Review",
     "placingOrder": "Placing Order...",
     "orderProcessingError": "An error occured while proccesing your order.",
