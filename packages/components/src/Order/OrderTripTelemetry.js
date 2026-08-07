@@ -2,7 +2,8 @@ import React from 'react';
 
 import { List } from '@jmstechnologiesinc/react-native-paper';
 import { localized } from '@jmstechnologiesinc/react-native-components';
-import RNLocalize from 'react-native-localize';
+// import RNLocalize from 'react-native-localize';
+import * as RNLocalize from 'react-native-localize';
 import { translateUnit } from '@jmstechnologiesinc/commons';
 
 const { languageCode: locale } = RNLocalize.getLocales()[0];

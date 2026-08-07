@@ -30,8 +30,7 @@ const isAVIFSupported = () => {
     if (Platform.OS === 'ios') {
         return Platform.Version >= 16 ? true : false;
     } else if (Platform.OS === 'android') {
-        const androidVersion = Platform.constants['Release'];
-        return androidVersion >= 14 ? true : false;
+        return   false;
     }
     return true;
 };
