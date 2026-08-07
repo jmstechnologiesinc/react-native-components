@@ -5,7 +5,8 @@ import Config from 'react-native-config';
 import { pubnubEtaChannelName } from '@jmstechnologiesinc/commons';
 
 import { Centrifuge } from 'centrifuge';
-import { MapboxGLWrapper } from '@jmstechnologiesinc/react-native-components';
+import { MapboxGLWrapper, localized } from '@jmstechnologiesinc/react-native-components';
+import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 
 import { useSmoothDriverLocation } from './useSmoothDriverLocation';
@@ -26,6 +27,7 @@ import { useSmoothDriverLocation } from './useSmoothDriverLocation';
 // retrying forever.
 const OrderMapboxGLMonitoring = ({ orderId, destination, getToken, getSubscriptionToken }) => {
     const subscriptionRef = useRef();
+    const routeMonitoringRef = useRef(null);
 
     // Raw target from Centrifugo (updates ~every 4s). The animator glides the
     // rendered position between targets so the marker never teleports.
@@ -98,6 +100,34 @@ const OrderMapboxGLMonitoring = ({ orderId, destination, getToken, getSubscripti
                 })
                 .on('subscribed', function (ctx) {
                     console.log('centrifugo channel subscribed:', ctx);
+                    // Seed from channel history so the marker appears with the
+                    // driver's last-known position immediately, instead of
+                    // waiting up to one publish interval (~4s) for the next
+                    // live fix. Requires history_size/history_ttl on the eta.*
+                    // namespace AND history permission for the subscriber
+                    // (allow_history_for_subscriber or a token capability) in
+                    // fleet-management's Centrifugo config; without them the
+                    // call rejects and we keep the wait-for-live behaviour.
+                    subscriptionRef.current
+                        ?.history({ limit: 1, reverse: true })
+                        .then((res) => {
+                            const last = res.publications?.[0];
+                            if (!last) return;
+                            // A live publication can race ahead of this reply
+                            // (and 'subscribed' re-fires on reconnect); live is
+                            // always fresher, so never overwrite it with history.
+                            setDriverTarget((current) =>
+                                current ?? {
+                                    latitude: last.data.latitude,
+                                    longitude: last.data.longitude,
+                                    heading: last.data.heading,
+                                    formattedAddress: last.data.formattedEta,
+                                }
+                            );
+                        })
+                        .catch((err) => {
+                            console.log('centrifugo history seed skipped:', err?.message || err);
+                        });
                 })
                 .on('unsubscribed', function (ctx) {
                     console.log(`centrifugo channel unsubscribed: ${ctx.code}, ${ctx.reason}`);
@@ -121,24 +151,41 @@ const OrderMapboxGLMonitoring = ({ orderId, destination, getToken, getSubscripti
         };
     }, [orderId]);
 
+    // Uber/DoorDash-style waiting state: the map shows real context (the
+    // destination pin) from the first frame, no spinner. DriverRouteMonitoring
+    // stays mounted the whole time so ONE camera instance frames the
+    // destination alone and then grows its bounds to include the driver on the
+    // first fix -- a declarative prop update. (Swapping in a separate
+    // waiting-state camera and remounting on the first fix loses the Mapbox
+    // camera hand-off and left the driver off-screen until follow mode kicked
+    // in.) Until that first fix the destination tooltip reads "locating
+    // driver" instead of the address; the history seed above makes that window
+    // near-instant when the server allows history reads.
     return (
-        <MapboxGLWrapper style={{ height: moderateScale(300) }}>
-            {driverLocation ? (
-                <MapboxGLWrapper.DriverRouteMonitoring originLocation={driverLocation} dropoffLocation={destination} />
-            ) : (
-                <>
-                    <MapboxGLWrapper.BoundingBoxCamera coordinates={[[destination.longitude, destination.latitude]]} />
-                    <MapboxGLWrapper.PointAnnotationMaterialIcon
-                        id="destination"
-                        coordinate={[destination.longitude, destination.latitude]}
-                    />
-                    <MapboxGLWrapper.LocationTooltip
-                        title={destination.formattedAddress}
-                        longitude={destination.longitude}
-                        latitude={destination.latitude}
-                    />
-                </>
-            )}
+        <MapboxGLWrapper
+            style={{ height: moderateScale(300) }}
+            // The route monitor's overview->follow phases are event-driven; the
+            // MapView lives here, so its lifecycle feeds the monitor through
+            // its handle (events through the handle, state flows down).
+            onMapIdle={() => routeMonitoringRef.current?.onMapIdle()}
+            onCameraChanged={(state) => routeMonitoringRef.current?.onCameraChanged(state)}
+        >
+            <MapboxGLWrapper.DriverRouteMonitoring
+                ref={routeMonitoringRef}
+                originLocation={driverLocation}
+                dropoffLocation={{
+                    ...destination,
+                    formattedAddress: driverLocation
+                        ? destination.formattedAddress
+                        : localized('trip.locatingDriver'),
+                }}
+            />
+            {/* A pan hands the camera to the user and blocks auto-follow;
+                this recentre is the deliberate way back to tracking. */}
+            <MapboxGLWrapper.ResetToInitialPositionIcon
+                altitude={MD3LightTheme.spacing.x2}
+                onPress={() => routeMonitoringRef.current?.resetCamera()}
+            />
         </MapboxGLWrapper>
     );
 };

@@ -8,8 +8,6 @@ import MapboxGLWrapper from './MapboxGLWrapper';
 // Uber-style follow camera: locked on the car at a close driving zoom.
 const FOLLOW_ZOOM = 16;
 const FOLLOW_ANIMATION_MS = 250;
-// On open, show an overview (driver + destination) this long, then lock to follow.
-const OVERVIEW_MS = 3500;
 // Re-request the route from the Directions API ONLY when necessary: no route yet,
 // or the driver has strayed this far from the fetched one (off-route / big jump).
 // Normal progress ALONG the route needs zero requests -- the remaining line is
@@ -47,10 +45,11 @@ const lineFeatureCollection = (coordinates) => ({
     features: [{ type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates } }],
 });
 
-// `autoFollow` is the Uber-style behaviour: frame driver + destination for
-// OVERVIEW_MS, then lock the camera onto the car. That is right for live trip
-// tracking, but wrong for a screen where the user is still COMPARING drivers —
-// there the destination must stay on screen, so those callers pass false.
+// `autoFollow` is the Uber-style behaviour: frame driver + destination until
+// that overview has settled on screen (map idle) and the driver moves again,
+// then lock the camera onto the car. That is right for live trip tracking,
+// but wrong for a screen where the user is still COMPARING drivers — there
+// the destination must stay on screen, so those callers pass false.
 const MapboxGLWrapperDriverRouteMonitoring = forwardRef(({ originLocation, dropoffLocation, onLocationPress, autoFollow = true }, ref) => {
     // Full route geometry, fetched ONLY when necessary (see the effect below).
     const [route, setRoute] = useState([]);
@@ -69,19 +68,50 @@ const MapboxGLWrapperDriverRouteMonitoring = forwardRef(({ originLocation, dropo
 
     // Camera phase: overview (driver + destination framed), then — when the
     // caller wants Uber-style behaviour — lock onto the car. `overviewNonce`
-    // re-arms the overview: bumping it drops out of follow AND restarts the
-    // countdown, so a recentre during a live trip resumes following afterwards
-    // (permanently killing follow mode would silently change the screen's
-    // behaviour for the rest of the session).
+    // re-arms the overview: bumping it drops out of follow AND resets the
+    // settle/gesture latches below, so a recentre during a live trip resumes
+    // following afterwards (permanently killing follow mode would silently
+    // change the screen's behaviour for the rest of the session).
     const [following, setFollowing] = useState(false);
     const [overviewNonce, setOverviewNonce] = useState(0);
+    // True while a user gesture owns the camera: render NO camera component,
+    // so neither overview nor follow fights the user's pan. An explicit
+    // recentre (resetCamera) is the only way back.
+    const [cameraFree, setCameraFree] = useState(false);
 
+    // Origin counts only with finite coordinates -- some callers pass a
+    // placeholder object with undefined lat/lng while no driver is selected
+    // (CheckoutScreen), which must not reach the camera/marker as NaN.
+    const hasOrigin =
+        Boolean(originLocation) &&
+        Number.isFinite(originLocation.latitude) &&
+        Number.isFinite(originLocation.longitude);
+
+    // Overview -> follow is event-driven, no wall-clock timers: follow engages
+    // only once the overview framing has actually settled on screen (map idle,
+    // recorded through the handle below) AND the driver has moved again. A
+    // ref, not state: settling is an edge event consumed by the movement
+    // effect and must not re-render the map mid-animation.
+    const overviewSettledRef = useRef(false);
+
+    // (Re-)arm the overview whenever it re-frames: on gaining the first fix or
+    // on an explicit recentre (overviewNonce). Resetting the latches here
+    // keeps a pre-origin map idle or a stale gesture from leaking into the
+    // fresh overview.
     useEffect(() => {
         setFollowing(false);
-        if (!autoFollow) return undefined;
-        const timer = setTimeout(() => setFollowing(true), OVERVIEW_MS);
-        return () => clearTimeout(timer);
-    }, [autoFollow, overviewNonce]);
+        setCameraFree(false);
+        overviewSettledRef.current = false;
+    }, [autoFollow, hasOrigin, overviewNonce]);
+
+    // Engage follow on driver movement once the overview has settled. Keying
+    // on the position stream instead of a clock means a parked driver keeps
+    // the driver+destination overview (there is nothing to chase yet); a
+    // moving one is followed from their first post-overview fix.
+    useEffect(() => {
+        if (!autoFollow || !hasOrigin || cameraFree) return;
+        if (overviewSettledRef.current) setFollowing(true);
+    }, [originLocation?.latitude, originLocation?.longitude, autoFollow, hasOrigin, cameraFree]);
 
     const boundingBoxCameraRef = useRef(null);
 
@@ -106,11 +136,25 @@ const MapboxGLWrapperDriverRouteMonitoring = forwardRef(({ originLocation, dropo
                 setOverviewNonce((nonce) => nonce + 1);
                 boundingBoxCameraRef.current?.setCameraSnapPoint(nextSnapPoint);
             },
+            // Map lifecycle, forwarded by the host that owns the MapView (the
+            // events-through-the-handle side of the split above):
+            // - onMapIdle: the overview framing finished animating -> follow
+            //   may engage on the driver's next movement.
+            // - onCameraChanged: while a gesture is active the user owns the
+            //   camera -- release it entirely until an explicit recentre.
+            onMapIdle: () => {
+                overviewSettledRef.current = true;
+            },
+            onCameraChanged: (state) => {
+                if (!state?.gestures?.isGestureActive) return;
+                setFollowing(false);
+                setCameraFree(true);
+            },
         }),
         [cameraSnapPoint]
     );
 
-    const liveOrigin = originLocation ? [originLocation.longitude, originLocation.latitude] : null;
+    const liveOrigin = hasOrigin ? [originLocation.longitude, originLocation.latitude] : null;
     const destinationCoords =
         dropoffLocation &&
         Number.isFinite(dropoffLocation.longitude) &&
@@ -158,13 +202,11 @@ const MapboxGLWrapperDriverRouteMonitoring = forwardRef(({ originLocation, dropo
         return coords.length > 1 ? lineFeatureCollection(coords) : null;
     }, [route, nearestIndex]);
 
-    if (!originLocation) return null;
-
-    const markerHeading = Number.isFinite(originLocation.heading) ? originLocation.heading : 0;
+    const markerHeading = Number.isFinite(originLocation?.heading) ? originLocation.heading : 0;
 
     return (
         <>
-            {following ? (
+            {following && liveOrigin ? (
                 <MapboxGLWrapper.Camera
                     centerCoordinate={liveOrigin}
                     zoomLevel={FOLLOW_ZOOM}
@@ -180,11 +222,11 @@ const MapboxGLWrapperDriverRouteMonitoring = forwardRef(({ originLocation, dropo
                     animationMode="linearTo"
                     animationDuration={FOLLOW_ANIMATION_MS}
                 />
-            ) : (
+            ) : cameraFree ? null : (
                 <MapboxGLWrapper.BoundingBoxCamera
                     ref={boundingBoxCameraRef}
                     snapPoint={cameraSnapPoint}
-                    coordinates={[liveOrigin, ...(destinationCoords ? [destinationCoords] : [])]}
+                    coordinates={[...(liveOrigin ? [liveOrigin] : []), ...(destinationCoords ? [destinationCoords] : [])]}
                 />
             )}
 
@@ -202,14 +244,16 @@ const MapboxGLWrapperDriverRouteMonitoring = forwardRef(({ originLocation, dropo
                 </MapboxGL.ShapeSource>
             ) : null}
 
-            <MapboxGLWrapper.VehicleIconMarker
-                id="driver-vehicle"
-                longitude={liveOrigin[0]}
-                latitude={liveOrigin[1]}
-                rotation={markerHeading}
-            />
+            {liveOrigin ? (
+                <MapboxGLWrapper.VehicleIconMarker
+                    id="driver-vehicle"
+                    longitude={liveOrigin[0]}
+                    latitude={liveOrigin[1]}
+                    rotation={markerHeading}
+                />
+            ) : null}
 
-            {originLocation?.formattedAddress ? (
+            {liveOrigin && originLocation?.formattedAddress ? (
                 <MapboxGLWrapper.LocationTooltip
                     id="driver-eta"
                     anchor={{ x: 0.5, y: 2.6 }}

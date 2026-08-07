@@ -61,6 +61,7 @@
     "helpTextStoreEmail": "El correo electrónico se mostrará públicamente.",
     "trip": {
         "searchDriver": "Buscar conductor",
+        "locatingDriver": "Buscando conductor…",
         "requestRide": "Solicitar viaje",
         "details": "Detalles del viaje",
         "originLocation": "Punto de recogida",
