@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 
 import Config from 'react-native-config';
 import MapboxGL from '@rnmapbox/maps';
@@ -47,18 +47,68 @@ const lineFeatureCollection = (coordinates) => ({
     features: [{ type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates } }],
 });
 
-const MapboxGLWrapperDriverRouteMonitoring = forwardRef(({ originLocation, dropoffLocation, onLocationPress }, ref) => {
+// `autoFollow` is the Uber-style behaviour: frame driver + destination for
+// OVERVIEW_MS, then lock the camera onto the car. That is right for live trip
+// tracking, but wrong for a screen where the user is still COMPARING drivers —
+// there the destination must stay on screen, so those callers pass false.
+const MapboxGLWrapperDriverRouteMonitoring = forwardRef(({ originLocation, dropoffLocation, onLocationPress, autoFollow = true }, ref) => {
     // Full route geometry, fetched ONLY when necessary (see the effect below).
     const [route, setRoute] = useState([]);
     const fetchingRef = useRef(false);
 
-    // Camera phase: overview (driver + destination framed) on open, then lock
-    // into the follow so both are visible before it zooms in.
+    // How much of the map is covered from the bottom by the caller's bottom
+    // sheet. BOTH camera phases have to honour it, or the driver and the
+    // destination are framed into a strip the sheet is sitting on top of.
+    //
+    // Regression note: before the follow-camera split this component rendered
+    // `<BoundingBoxCamera ref={ref} .../>`, so the caller's ref WAS the
+    // camera's. The split dropped `ref={ref}` and left `forwardRef` in place,
+    // which silently turned every caller's setCameraSnapPoint into a no-op —
+    // and a TypeError for callers that did not null-check.
+    const [cameraSnapPoint, setCameraSnapPoint] = useState(0);
+
+    // Camera phase: overview (driver + destination framed), then — when the
+    // caller wants Uber-style behaviour — lock onto the car. `overviewNonce`
+    // re-arms the overview: bumping it drops out of follow AND restarts the
+    // countdown, so a recentre during a live trip resumes following afterwards
+    // (permanently killing follow mode would silently change the screen's
+    // behaviour for the rest of the session).
     const [following, setFollowing] = useState(false);
+    const [overviewNonce, setOverviewNonce] = useState(0);
+
     useEffect(() => {
+        setFollowing(false);
+        if (!autoFollow) return undefined;
         const timer = setTimeout(() => setFollowing(true), OVERVIEW_MS);
         return () => clearTimeout(timer);
-    }, []);
+    }, [autoFollow, overviewNonce]);
+
+    const boundingBoxCameraRef = useRef(null);
+
+    // State flows down, events go through the handle — the split React
+    // reserves refs for (scrollTo, focus, camera moves):
+    //   - setCameraSnapPoint is continuous sheet-position STATE; it reaches
+    //     both cameras declaratively (the `snapPoint` prop / follow padding).
+    //   - resetCamera is a one-shot EVENT, and it cannot be modelled as
+    //     props: after the user pans the map away, `bounds` and `snapPoint`
+    //     are unchanged, so no re-render will ever move the camera back —
+    //     only the camera's own imperative API re-frames in that case.
+    // While `following`, the bounding-box camera is unmounted (ref null, the
+    // `?.` no-ops) and the nonce-driven remount does the framing instead.
+    useImperativeHandle(
+        ref,
+        () => ({
+            setCameraSnapPoint: (snapPoint) =>
+                setCameraSnapPoint(Number.isFinite(snapPoint) ? snapPoint : 0),
+            resetCamera: (snapPoint) => {
+                const nextSnapPoint = Number.isFinite(snapPoint) ? snapPoint : cameraSnapPoint;
+                setCameraSnapPoint(nextSnapPoint);
+                setOverviewNonce((nonce) => nonce + 1);
+                boundingBoxCameraRef.current?.setCameraSnapPoint(nextSnapPoint);
+            },
+        }),
+        [cameraSnapPoint]
+    );
 
     const liveOrigin = originLocation ? [originLocation.longitude, originLocation.latitude] : null;
     const destinationCoords =
@@ -118,11 +168,22 @@ const MapboxGLWrapperDriverRouteMonitoring = forwardRef(({ originLocation, dropo
                 <MapboxGLWrapper.Camera
                     centerCoordinate={liveOrigin}
                     zoomLevel={FOLLOW_ZOOM}
+                    // Without this the follow camera centres the car in the FULL
+                    // map viewport, i.e. behind the bottom sheet. Padding the
+                    // covered strip lifts it into the visible part.
+                    padding={{
+                        paddingTop: 0,
+                        paddingRight: 0,
+                        paddingLeft: 0,
+                        paddingBottom: cameraSnapPoint,
+                    }}
                     animationMode="linearTo"
                     animationDuration={FOLLOW_ANIMATION_MS}
                 />
             ) : (
                 <MapboxGLWrapper.BoundingBoxCamera
+                    ref={boundingBoxCameraRef}
+                    snapPoint={cameraSnapPoint}
                     coordinates={[liveOrigin, ...(destinationCoords ? [destinationCoords] : [])]}
                 />
             )}

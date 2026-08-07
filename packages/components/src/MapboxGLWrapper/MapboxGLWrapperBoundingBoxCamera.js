@@ -52,7 +52,11 @@ const calculateZoomLevel = (boundingBox) => {
 
 const { height } = Dimensions.get('window');
 
-const MapboxGLWrapperBoundingBoxCamera = forwardRef(({ coordinates = [], zoomLevel = 12, ...props }, ref) => {
+// `snapPoint` is how much of the map is covered from the bottom (a bottom
+// sheet, typically). Declarative equivalent of the imperative
+// `setCameraSnapPoint` below: prefer the prop — it survives remounts and needs
+// no ref timing. The imperative method stays for existing ref-based callers.
+const MapboxGLWrapperBoundingBoxCamera = forwardRef(({ coordinates = [], zoomLevel = 12, snapPoint = 0, ...props }, ref) => {
     const mapCameraRef = useRef(null);
     const insets = useSafeAreaInsets();
 
@@ -91,7 +95,7 @@ const MapboxGLWrapperBoundingBoxCamera = forwardRef(({ coordinates = [], zoomLev
                 paddingTop: top + MD3LightTheme.spacing.x8,
                 paddingRight: right + MD3LightTheme.spacing.x15,
                 paddingLeft: left + MD3LightTheme.spacing.x15,
-                paddingBottom: MD3LightTheme.spacing.x15,
+                paddingBottom: snapPoint > 0 ? snapPoint + MD3LightTheme.spacing.x8 : MD3LightTheme.spacing.x15,
             }}
             animationMode="flyTo"
             animationDuration={250}

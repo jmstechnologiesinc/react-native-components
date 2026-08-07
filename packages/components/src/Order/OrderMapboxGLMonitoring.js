@@ -34,6 +34,12 @@ const OrderMapboxGLMonitoring = ({ orderId, destination, getToken, getSubscripti
 
     useEffect(() => {
         if (!orderId) return undefined;
+        // TEMPORARY DIAGNOSTIC (CENTRIFUGO-LIFECYCLE) -- remove once the
+        // ~5s reconnect loop is understood. The server sees this client
+        // authenticate and subscribe, then a CLEAN client-side teardown
+        // 5.1s later, which means this effect's cleanup is running.
+        const _cfLife = Date.now();
+        console.log('[CENTRIFUGO-LIFECYCLE] MOUNT effect, orderId=', orderId);
 
         // Scheme comes from env so environments can differ: production/dev use
         // wss:// through the GKE Ingress front-door (rt.<env-domain>, port 443,
@@ -65,6 +71,17 @@ const OrderMapboxGLMonitoring = ({ orderId, destination, getToken, getSubscripti
             // compression on eta.* channels, so successive near-identical GPS
             // updates arrive as diffs (~10x less bandwidth). The SDK falls back
             // to full payloads automatically if the server hasn't got it on.
+            //
+            // HARD DEPENDENCY: centrifuge-js decodes deltas in its JSON codec
+            // via `new TextEncoder()` / `new TextDecoder()` (applyDeltaIfNeeded),
+            // and React Native does NOT define those globals. Every host app
+            // MUST import a polyfill before this component mounts -- CustomerApp
+            // does it on the first line of index.js (`fast-text-encoding`).
+            // Without it the subscription connects and then delivers NOTHING:
+            // the publication handler throws, while the channel still shows a
+            // subscriber and the server reports no publish errors. If the driver
+            // marker ever stops moving on a healthy connection, check that
+            // polyfill first.
             subscriptionRef.current = centrifugeClientRef.newSubscription(pubnubEtaChannelName(orderId), {
                 delta: 'fossil',
                 ...(getSubscriptionToken ? { getToken: getSubscriptionToken } : {}),
@@ -91,6 +108,8 @@ const OrderMapboxGLMonitoring = ({ orderId, destination, getToken, getSubscripti
         }
 
         return () => {
+            console.log('[CENTRIFUGO-LIFECYCLE] CLEANUP tras',
+                ((Date.now() - _cfLife) / 1000).toFixed(1), 's — orderId=', orderId);
             subscriptionRef.current?.unsubscribe?.();
             subscriptionRef.current?.removeAllListeners?.();
             subscriptionRef.current = null;
