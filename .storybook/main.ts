@@ -15,6 +15,7 @@ module.exports = {
     '../packages/components/src/DynamicForm/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/Earnings/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/IndustryList/*.stories.?(ts|tsx|js|jsx)',
+    '../packages/components/src/MenuScheduleForm/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/PhotoGallery/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/ProductList/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/ProductView/*.stories.?(ts|tsx|js|jsx)',
