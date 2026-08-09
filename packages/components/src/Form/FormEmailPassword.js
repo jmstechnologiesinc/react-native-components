@@ -16,6 +16,7 @@ const FormEmailPassword = ({
     isLoading = false,
     isEmailDisabled = false,
     isPasswordDisabled = false,
+    isPasswordButtonLoading = false,
     showConfirmPasswordInput = true,
     showPasswordInput = true,
     showResetPassword = false,
@@ -82,7 +83,7 @@ const FormEmailPassword = ({
 
             {showResetPassword && (
                 <ScreenWrapper.Section>
-                    <Button mode="text" style={resetPasswordStyle} onPress={onPasswordReset}>
+                    <Button mode="text" loading={isPasswordButtonLoading} style={resetPasswordStyle} onPress={onPasswordReset}>
                         {localized('resetPassword')}
                     </Button>
                 </ScreenWrapper.Section>

@@ -79,7 +79,7 @@ const EmailOrPhoneSwitcher = ({
                     </ScreenWrapper.Section>
                     <ScreenWrapper.Section>
                         <Button
-                            mode="contained-tonal"
+                            mode="outlined"
                             icon={selectedLogin === LOGIN_OPTIONS.PHONE ? 'email-outline' : 'cellphone'}
                             onPress={() =>
                                 setSelectedLogin(
