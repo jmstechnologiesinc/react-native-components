@@ -37,6 +37,7 @@ const FormVehicleInfo = ({
                         label={localized('make')}
                         value={make}
                         disabled={isDisabled}
+                        autoCapitalize="words"
                         onChangeText={(text) => inputActionHandler('make', text)}
                     />
                 </ScreenWrapper.Section>
@@ -46,6 +47,7 @@ const FormVehicleInfo = ({
                         label={localized('model')}
                         value={model}
                         disabled={isDisabled}
+                        autoCapitalize="words"
                         onChangeText={(text) => inputActionHandler('model', text)}
                     />
                 </ScreenWrapper.Section>
@@ -55,6 +57,7 @@ const FormVehicleInfo = ({
                         label={localized('color')}
                         value={color}
                         disabled={isDisabled}
+                        autoCapitalize="words"
                         onChangeText={(text) => inputActionHandler('color', text)}
                     />
                 </ScreenWrapper.Section>
@@ -75,7 +78,8 @@ const FormVehicleInfo = ({
                         label={localized('licensePlateNumber')}
                         value={licensePlateNumber}
                         disabled={isDisabled}
-                        keyboardType="numeric"
+                        autoCapitalize="characters"
+                        autoCorrect={false}
                         onChangeText={(text) => inputActionHandler('licensePlateNumber', text)}
                     />
                 </ScreenWrapper.Section>

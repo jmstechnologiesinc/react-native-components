@@ -103,6 +103,7 @@ const FormBusinessInfo = ({
                         label={localized('storeName')}
                         value={storeTitle}
                         disabled={isDisabled}
+                        autoCapitalize="words"
                         onChangeText={(text) => inputActionHandler('title', text)}
                     />
                 </ScreenWrapper.Section>
@@ -121,6 +122,7 @@ const FormBusinessInfo = ({
                         label={localized('storeAddress')}
                         value={location}
                         disabled={isDisabled}
+                        autoCapitalize="words"
                         onChangeText={(text) => inputActionHandler('location', text)}
                     />
                 </ScreenWrapper.Section>
@@ -130,6 +132,8 @@ const FormBusinessInfo = ({
                         label={localized('floorSuite')}
                         value={line2}
                         disabled={isDisabled}
+                        autoCapitalize="characters"
+                        autoCorrect={false}
                         onChangeText={(text) => inputActionHandler('line2', text)}
                     />
                 </ScreenWrapper.Section>
@@ -141,6 +145,7 @@ const FormBusinessInfo = ({
                             label={localized('phoneNumber')}
                             value={phoneNumber}
                             disabled={isDisabled}
+                            keyboardType="numeric"
                             onChangeText={(text) => inputActionHandler('phoneNumber', text)}
                         />
                         <HelperText>{localized('helpTextStorePhoneNumber')}</HelperText>
@@ -153,6 +158,10 @@ const FormBusinessInfo = ({
                             label={localized('email')}
                             value={email}
                             disabled={isDisabled}
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            keyboardType="email-address"
+                            textContentType="emailAddress"
                             onChangeText={(text) => inputActionHandler('email', text)}
                         />
                         <HelperText>{localized('helpTextStoreEmail')}</HelperText>
@@ -165,6 +174,9 @@ const FormBusinessInfo = ({
                             label={localized('website')}
                             value={website}
                             disabled={isDisabled}
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            keyboardType="url"
                             onChangeText={(text) => inputActionHandler('website', text)}
                         />
                         <HelperText>{localized('noWebsiteEnterSocialMedia')}</HelperText>
