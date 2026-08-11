@@ -63,6 +63,7 @@ export { default as TNEmptyStateView } from './truly-native/TNEmptyStateView';
 
 export { LAYOUT_MODE } from './consts';
 export { localized, setI18nConfig } from './Localization/Localization';
+export { localizedAuthError } from './Localization/authErrors';
 
 export { default as TipsFilter } from './TipsFilter/TipsFilter';
 export { default as CheckoutSummary } from './CheckoutSummary/CheckoutSummary';
