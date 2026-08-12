@@ -642,7 +642,6 @@
     "pleaseValidPhoneNumber": "Please enter a valid phone number",
     "resendCode": "You did not receive it? Resend code",
     "verifyYourEmailAddress": "To complete your registration on Daxir, please verify your email address.",
-    "verification": "Verification",
     "confirmationEmailAddress": "We have sent a confirmation email to your email address. Please check your inbox and follow the instructions to complete the verification process",
     "failedSendVerificationEmail": "The verification email sending has failed. We apologize for any inconvenience.",
     "emailVerified": "Your email address has been verified.",
