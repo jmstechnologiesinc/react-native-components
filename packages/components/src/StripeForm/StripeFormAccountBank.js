@@ -18,6 +18,7 @@ const StripeFormAccountBank = ({
                     mode="outlined"
                     label={localized('accountHolder')}
                     value={accountHolder}
+                    autoCapitalize="words"
                     onChangeText={(text) => inputActionHandler('accountHolder', text)}
                 />
             </ScreenWrapper.Section>
@@ -26,6 +27,9 @@ const StripeFormAccountBank = ({
                     mode="outlined"
                     label={localized('routingNumber')}
                     value={routingNumber}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    keyboardType="number-pad"
                     onChangeText={(text) => inputActionHandler('routingNumber', text)}
                 />
             </ScreenWrapper.Section>
@@ -34,6 +38,9 @@ const StripeFormAccountBank = ({
                     mode="outlined"
                     label={localized('bankAccountNumber')}
                     value={bankAccountNumber}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    keyboardType="number-pad"
                     onChangeText={(text) => inputActionHandler('bankAccountNumber', text)}
                 />
             </ScreenWrapper.Section>
@@ -42,6 +49,9 @@ const StripeFormAccountBank = ({
                     mode="outlined"
                     label={localized('re-enterAccountNumber')}
                     value={reenterAccountNumber}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    keyboardType="number-pad"
                     onChangeText={(text) => inputActionHandler('reenterAccountNumber', text)}
                 />
             </ScreenWrapper.Section>

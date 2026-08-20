@@ -13,6 +13,8 @@ const DriverInstructionForm = ({ state, onChange }) => (
                 mode="outlined"
                 label={localized('floor#')}
                 value={state.floorNumber}
+                autoCapitalize="characters"
+                autoCorrect={false}
                 onChangeText={(text) => onChange('floorNumber', text)}
             />
         </ScreenWrapper.Section>
@@ -21,6 +23,7 @@ const DriverInstructionForm = ({ state, onChange }) => (
                 mode="outlined"
                 label={localized('buildingBusinessName')}
                 value={state.buildingName}
+                autoCapitalize="words"
                 onChangeText={(text) => onChange('buildingName', text)}
             />
         </ScreenWrapper.Section>

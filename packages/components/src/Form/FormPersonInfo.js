@@ -25,6 +25,7 @@ const FormPersonInfo = ({
                     label={localized('firstName')}
                     value={firstName}
                     disabled={isDisabled}
+                    autoCapitalize="words"
                     onChangeText={(text) => inputActionHandler('firstName', text)}
                 />
                 {showFirstNameValidationError && !firstName ? (
@@ -40,6 +41,7 @@ const FormPersonInfo = ({
                     label={localized('lastName')}
                     value={lastName}
                     disabled={isDisabled}
+                    autoCapitalize="words"
                     onChangeText={(text) => inputActionHandler('lastName', text)}
                 />
                 {showLastNameValidationError && !lastName ? (
@@ -55,6 +57,10 @@ const FormPersonInfo = ({
                         mode="outlined"
                         label={localized('email')}
                         value={email}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        keyboardType="email-address"
+                        textContentType="emailAddress"
                         onChangeText={(email) => inputActionHandler('email', email)}
                     />
                 </ScreenWrapper.Section>

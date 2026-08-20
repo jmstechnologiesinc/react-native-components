@@ -36,6 +36,10 @@ const FormEmailPassword = ({
                     mode={mode}
                     label={localized('email')}
                     value={email}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    keyboardType="email-address"
+                    textContentType="emailAddress"
                     onChangeText={(email) => inputActionHandler('email', email)}
                     disabled={isEmailDisabled}
                 />

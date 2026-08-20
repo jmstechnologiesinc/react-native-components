@@ -45,6 +45,8 @@ const AutoCompleteInput = ({
                 onPress={onPress}
                 onClear={onClear}
                 textInputProps={{
+                    autoCapitalize: 'none',
+                    autoCorrect: false,
                     onFocus: () => {
                         onFocus?.();
                     },
