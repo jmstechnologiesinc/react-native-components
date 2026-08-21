@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import { GooglePlacesAutocomplete } from '@jmstechnologiesinc/react-native-google-places-autocomplete';
 import ScreenWrapper from '../ScreenWrapper';
 import { localized } from '../Localization/Localization';
@@ -25,20 +25,28 @@ const AutoCompleteInput = ({
         ref.current.setAddressText(value);
     }, [value]);
 
+    // Must keep a stable identity: GooglePlacesAutocomplete wipes its result rows in an effect
+    // keyed on this prop. A new array literal per render made every parent re-render clear the
+    // suggestions -- on web the blur that a row's mousedown causes re-renders the parent before
+    // mouseup, so the row unmounted mid-click and the address could never be selected.
+    const memoizedPredefinedPlaces = useMemo(
+        () =>
+            locationPermissionStatus || !predefinedPlaces
+                ? []
+                : [
+                      {
+                          description: localized('useGPSLocation'),
+                          isPredefinedPlace: true,
+                      },
+                  ],
+        [locationPermissionStatus, predefinedPlaces]
+    );
+
     return (
         <ScreenWrapper.Section title={localized(title)}>
             <GooglePlacesAutocomplete
                 ref={ref}
-                predefinedPlaces={
-                    locationPermissionStatus || !predefinedPlaces
-                        ? []
-                        : [
-                              {
-                                  description: localized('useGPSLocation'),
-                                  isPredefinedPlace: true,
-                              },
-                          ]
-                }
+                predefinedPlaces={memoizedPredefinedPlaces}
                 predefinedPlacesAlwaysVisible
                 icon={icon}
                 placeholder={placeholder}
