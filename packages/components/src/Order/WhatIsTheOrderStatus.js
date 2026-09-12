@@ -6,6 +6,65 @@ import { ITEM_TYPE } from '@jmstechnologiesinc/commons';
 import { ORDER_STATUS, ORDER_STATUS_CANCELLED, ORDER_STATUS_PREPARING } from '@jmstechnologiesinc/order';
 import { localized } from '../Localization/Localization';
 
+// U4 (ADR-0014) + deferred dispatch (ADR-0016): a DELIVERY order the vendor
+// accepted rests in `Vendor Accepted` until the promised preparation time
+// (minus the cell's lead) or until the vendor marks it ready — the `ready`
+// intent, which the app exposed only under customer pickup, advances the
+// dispatch. Before ADR-0016 the status left `Vendor Accepted` in the same
+// write that accepted it, so no vendor branch ever named it and the screen
+// rendered no buttons at all; `Ready for Pickup` on a delivery is the same
+// gap: the vendor said ready, the dispatch is being requested.
+const vendorPreparingDelivery = (order) => ({
+    formattedTripStatus: localized('order.readyForDeliveryReminder'),
+    buttons: [
+        {
+            title: localized('global.cancel'),
+            value: ORDER_STATUS.vendorCancelled,
+        },
+        {
+            title: localized('order.receipt'),
+            value: ITEM_TYPE.print,
+        },
+        {
+            title: localized('order.ready'),
+            value: ORDER_STATUS.readyforPickup,
+        },
+    ],
+    items: [
+        {
+            formattedValue: order.deliveryMethod,
+            value: order.deliveryMethod,
+            type: ITEM_TYPE.driver,
+        },
+        {
+            formattedValue: localized('order.needAttention'),
+            value: null,
+            type: ITEM_TYPE.needAttention,
+        },
+    ],
+});
+
+const vendorReadyAwaitingDispatch = (order, formattedTripStatus) => ({
+    formattedTripStatus,
+    buttons: [
+        {
+            title: localized('global.cancel'),
+            value: ORDER_STATUS.vendorCancelled,
+        },
+        {
+            title: localized('order.receipt'),
+            value: ITEM_TYPE.print,
+        },
+    ],
+    items: [
+        {
+            formattedValue: order.deliveryMethod,
+            value: order.deliveryMethod,
+            type: ITEM_TYPE.driver,
+        },
+    ],
+});
+
 export const whatIsTheOrderStatus = ({ order, role, driverStatus }) => {
     if (!order) return null;
 
@@ -303,7 +362,11 @@ export const whatIsTheOrderStatus = ({ order, role, driverStatus }) => {
                 ],
             };
         } else if (order.deliveryMethod === DELIVERY_METHODS.marketPlace) {
-            if (ORDER_STATUS_PREPARING(order.status)) {
+            if (order.status === ORDER_STATUS.vendorAccepted) {
+                return vendorPreparingDelivery(order);
+            } else if (order.status === ORDER_STATUS.readyforPickup) {
+                return vendorReadyAwaitingDispatch(order, localized('order.lookingForDriver'));
+            } else if (ORDER_STATUS_PREPARING(order.status)) {
                 if (order.status === ORDER_STATUS.driverPending) {
                     return {
                         formattedTripStatus: localized('order.driverPending'),
@@ -414,7 +477,11 @@ export const whatIsTheOrderStatus = ({ order, role, driverStatus }) => {
                 };
             }
         } else if (order.deliveryMethod === DELIVERY_METHODS.ownStaff) {
-            if (ORDER_STATUS_PREPARING(order.status) === true) {
+            if (order.status === ORDER_STATUS.vendorAccepted) {
+                return vendorPreparingDelivery(order);
+            } else if (order.status === ORDER_STATUS.readyforPickup) {
+                return vendorReadyAwaitingDispatch(order, localized('order.lookingForStaff'));
+            } else if (ORDER_STATUS_PREPARING(order.status) === true) {
                 let formattedTripStatus,
                     items = [];
                 if (order.status === ORDER_STATUS.driverPending) {
@@ -543,10 +610,13 @@ export const whatIsTheOrderStatus = ({ order, role, driverStatus }) => {
                 }
             }
         } else if (order.deliveryMethod === DELIVERY_METHODS.flexible) {
-            let formattedTripStatus;
             if (order.status === ORDER_STATUS.vendorAccepted) {
-                formattedTripStatus = localized('order.lookingForDriver');
-            } else if (order.status === ORDER_STATUS.driverRejected) {
+                return vendorPreparingDelivery(order);
+            } else if (order.status === ORDER_STATUS.readyforPickup) {
+                return vendorReadyAwaitingDispatch(order, localized('order.lookingForDriver'));
+            }
+            let formattedTripStatus;
+            if (order.status === ORDER_STATUS.driverRejected) {
                 formattedTripStatus = localized('order.lookingForAnotherDriver');
             }
 

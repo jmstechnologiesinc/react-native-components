@@ -198,6 +198,8 @@
         "preparingPickup": "El vendedor esta preparando el pedido. Te enviaremo una notificacion cuando este listo para ser recojido.",
         "readyForPickup": "Por favor, dirígete hacia el vendedor para recoger tu pedido.",
         "readyForPickupReminder": "Marcar como listo para ser recogido cuando esté preparado para notificar al cliente.",
+        "readyForDeliveryReminder": "Marcar como listo cuando el pedido esté preparado. El conductor se despacha a la hora prometida, o antes si lo marcas listo.",
+        "ready": "Listo",
         "vendorReadyforPickup": "Se informó al cliente que el pedido está listo para ser recogido.",
         "staffPending": "Se asignó el pedido a un conductor del personal. Esperando a que el conductor lo confirme.",
         "driverPending": "El pedido se asignó a un conductor. Esperando a que el conductor lo confirme.",

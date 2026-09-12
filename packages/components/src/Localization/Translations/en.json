@@ -198,6 +198,8 @@
         "readyForPickup": "Please go to the vendor to pick up your order.",
         "preparingPickup": "The vendor is preparing your order. We will send you a notification when it is ready for pick up.",
         "readyForPickupReminder": "Mark as ready for pickup when prepared to notify the customer.",
+        "readyForDeliveryReminder": "Mark as ready when the order is prepared. A driver is dispatched at the promised time, or sooner if you mark it ready.",
+        "ready": "Ready",
         "vendorReadyforPickup": "Customer was informed the order is ready for pickup.",
         "staffPending": "Order was assigned to a staff driver. Waiting for the driver to confirm it.",
         "driverPending": "The order was assigned to a driver. Waiting for the driver to confirm it.",
