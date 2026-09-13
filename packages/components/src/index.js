@@ -30,7 +30,18 @@ export {
     rangeLabelKeyOf,
 } from './Earnings';
 export { default as TouchableRippleWrapper } from './TouchableRippleWrapper/TouchableRippleWrapper';
-export { orderListStatus, groupedOrderListToSectionList, ORDER_LIST_STATUS } from './Order/utils';
+export {
+    orderListStatus,
+    groupedOrderListToSectionList,
+    orderListSectionTitle,
+    ORDER_LIST_STATUS,
+    ORDER_LIST_GROUPS,
+    ORDER_LIST_FILTERS,
+    ORDER_LIST_BUCKETS,
+} from './Order/utils';
+// ADR-0017 §5.4 — the view model the `Order/` components paint. `describeOrder`
+// answers in keys; this is where they become text, in the app's locale.
+export { orderViewModel, fromDescriptor, statusLabel } from './Order/viewModel';
 export { default as IndustryList } from './IndustryList/IndustryList';
 export { default as QuantityButton } from './QuantityButton/QuantityButton';
 export { default as ScreenWrapper } from './ScreenWrapper';
@@ -63,6 +74,7 @@ export { default as TNEmptyStateView } from './truly-native/TNEmptyStateView';
 
 export { LAYOUT_MODE } from './consts';
 export { localized, setI18nConfig } from './Localization/Localization';
+export { formatDateTime, formatTime, formatRelativeTime } from './Localization/format';
 export { localizedAuthError } from './Localization/authErrors';
 
 export { default as TipsFilter } from './TipsFilter/TipsFilter';
