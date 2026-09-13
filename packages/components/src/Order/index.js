@@ -9,6 +9,7 @@ import OrderTripTelemetry from './OrderTripTelemetry';
 import OrderQuickOverView from './OrderQuickOverView';
 import OrderSectionList from './OrderSectionList';
 export { formatQuickOrderViewDescription } from './OrderQuickOverView';
+export { orderViewModel, fromDescriptor, statusLabel } from './viewModel';
 
 export default Object.assign(
     {},

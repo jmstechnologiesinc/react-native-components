@@ -4,10 +4,13 @@ import { List } from '@jmstechnologiesinc/react-native-paper';
 
 import { USER_ROLES } from '@jmstechnologiesinc/user';
 import { FULFILLMENT_METHODS } from '@jmstechnologiesinc/vendor';
-import { ORDER_STATUS, orderStatusTime } from '@jmstechnologiesinc/order';
 
 import { MATERIAL_ICONS, LOGISTICS_PLATFORMS, firestoreTimestampToDate } from '@jmstechnologiesinc/commons';
 import { localized } from '@jmstechnologiesinc/react-native-components';
+
+import { formatDateTime } from '../Localization/format';
+import { ORDER_TIME_FIELDS } from './documentFields';
+
 
 const OrderFulfillmentInfo = ({ order, role, platform }) => {
     if (!order?.id || !USER_ROLES[role]) {
@@ -27,14 +30,14 @@ const OrderFulfillmentInfo = ({ order, role, platform }) => {
     if (role === USER_ROLES.customer || role === USER_ROLES.vendor) {
         fulfilmentDetails.push({
             key: 'status-date',
-            title: firestoreTimestampToDate(order[orderStatusTime(ORDER_STATUS.placed)])?.toLocaleString(),
+            title: formatDateTime(firestoreTimestampToDate(order[ORDER_TIME_FIELDS.placed])),
             icon: MATERIAL_ICONS.calendar,
             description: localized('order.placedTime'),
         });
     } else if (role === USER_ROLES.driver) {
         fulfilmentDetails.push({
             key: 'status-date',
-            title: firestoreTimestampToDate(order[orderStatusTime(ORDER_STATUS.driverAccepted)])?.toLocaleString(),
+            title: formatDateTime(firestoreTimestampToDate(order[ORDER_TIME_FIELDS.driverAccepted])),
             icon: MATERIAL_ICONS.calendar,
             description: localized('order.acceptedTime'),
         });

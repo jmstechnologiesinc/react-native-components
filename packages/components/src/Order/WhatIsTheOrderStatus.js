@@ -65,6 +65,37 @@ const vendorReadyAwaitingDispatch = (order, formattedTripStatus) => ({
     ],
 });
 
+/**
+ * @deprecated since 0.2.0 — use `describeOrder` from
+ * `@jmstechnologiesinc/order-narration`, or `orderViewModel` from
+ * `./viewModel`, which localizes its descriptor for these components.
+ *
+ * THIS FUNCTION IS THE THING THE SLICE REPLACES, and it is kept for exactly
+ * one release (D-51, owner's decision of 2026-09-12: «convive UNA release y se
+ * retira en C6»). Nothing new may call it.
+ *
+ * Why it is going: it is 707 lines and 46 returns that answer «what does this
+ * order say» by comparing against the 15 legacy Title Case strings the server
+ * retired at U8 — 77 `ORDER_STATUS.<legacy>` references in 76 lines, measured
+ * 2026-09-13 — and it cannot be asked whether it is complete. It has no driver
+ * branch (the driver's trip view gets `undefined` and shows no actions), it
+ * dispatches on `deliveryMethod`, which a ride does not have (so a
+ * ride-hailing customer cannot cancel an accepted trip), roughly ten paths
+ * return `undefined`, and five `if` bodies are empty. Every status added since
+ * has reopened the same hole: `confirmed` on a delivery order left the vendor
+ * with no buttons at all until 0.1.82 patched this table by hand.
+ *
+ * Its replacement is declared rather than written: 165 cells, every one final,
+ * N/A with a reason, or PENDING with the gate that holds it — so a missing
+ * case is a failing test instead of a blank screen.
+ *
+ * DO NOT make `orderViewModel` fall back to this function when `describeOrder`
+ * answers `null`. That null is deliberate — the capability has not reached C5
+ * and its semantics are not fixed (ADR-0017's amendment) — and a fallback
+ * would keep the legacy vocabulary alive indefinitely, which is precisely what
+ * C6 exists to end. The honest degradation is the canonical label
+ * (`order.status.<canonical>`), and `viewModel.js` already does that.
+ */
 export const whatIsTheOrderStatus = ({ order, role, driverStatus }) => {
     if (!order) return null;
 
