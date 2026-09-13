@@ -1,6 +1,6 @@
 {
     "name": "@jmstechnologiesinc/react-native-components",
-    "version": "0.1.82",
+    "version": "0.2.0",
     "description": "> TODO: description",
     "author": "yerloveraaa <yerloveraaa@gmail.com>",
     "homepage": "https://github.com/jmstechnologiesinc/react-native-components#readme",
@@ -29,6 +29,8 @@
         "rimraf": "^3.0.2"
     },
     "peerDependencies": {
+        "@jmstechnologiesinc/order": "^0.1.3",
+        "@jmstechnologiesinc/order-narration": "^0.0.1",
         "@jmstechnologiesinc/react-native-paper": "*",
         "react": "*",
         "react-native": "*"
