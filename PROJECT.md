@@ -8,7 +8,7 @@ it goes here.
 ## What this is — two things in one repo
 
 1. **The published library**: `packages/components/` → **`@jmstechnologiesinc/react-native-components`**
-   (currently `0.1.79`, ISC, published to npm from GitHub). This is the real product.
+   (currently `0.2.0`, ISC, published to npm from GitHub). This is the real product.
 2. **A Storybook harness** at the repo root (`package.json` name `react_native_storybook_starter`,
    `private: true`). A throwaway React Native app whose only job is to render the library's stories,
    on-device and on web. It is **not** shipped and **not** the thing you are editing when asked to
@@ -90,7 +90,8 @@ separated). Comments in **English** (§5).
 
 ## Sibling `@jmstechnologiesinc/*` packages
 
-`commons`, `user`, `vendor`, `driver`, `order`, `cart`, `react-native-paper`,
+`commons`, `user`, `vendor`, `driver`, `order` (**≥ 0.1.3**: the canonical vocabulary and
+`canonicalOf` live there), `order-narration`, `cart`, `react-native-paper`,
 `material-bottom-tabs`, `bottom-sheet`, `react-native-size-matters`, `react-native-phone-input`,
 `react-native-google-places-autocomplete`, `react-native-image-blur-loading`.
 
@@ -106,8 +107,46 @@ key when the translation is missing** — so a missing string fails silently and
 screen. Always add to `en.json` **and** `es.json`. `localized.cache.clear()` inside `setI18nConfig`
 is why a language change actually takes effect; don't remove it.
 
-`Localization.web.js` is the web twin. Several modules have `.web.js` counterparts — if you change a
-module that has one, check whether the twin needs the same change.
+Since **0.2.0** (ADR-0017 §5.4, §6):
+
+- **Both locales are always installed**, with `fallbacks: true` and `defaultLocale: 'en'`. A key
+  present in `en` and missing from `es` renders the English string, not the raw key.
+- **A missing key is detected through the API** (`defaultValue` + a sentinel), not by searching the
+  rendered text for the substring `missing`. A legitimate translation containing that word used to
+  be reported absent.
+- **The memo key leads with `i18n.locale`**, so the first render after a language change is correct
+  even without clearing the cache.
+- **`Localization/catalog.js`** is the seam with `@jmstechnologiesinc/order-narration`. That
+  catalogue is **flat, with dotted keys, by design** — the same file is read by the server's `i18n`
+  — and it is looked up by **exact match**, never merged into the nested tree: a headline key is a
+  prefix of its own `.detail`, so as a tree one of the two silently destroys the other. It reaches
+  the i18n library as `defaultValue`, which both libraries interpolate exactly like a translation.
+- **`Localization/format.js`** is `Intl` (`formatDateTime`, `formatTime`, `formatRelativeTime`) in
+  the **app's** locale. Never `toLocaleString()`: that is the device's locale, which is a different
+  thing and visibly wrong when the two differ.
+
+`Localization.web.js` is the web twin, and as of 0.2.0 it really is one: same loader, same `%{}`
+placeholder syntax (i18next's default `{{}}` would have shown narration placeholders raw), same
+answer for an absent key, same `en` fallback. Several modules have `.web.js` counterparts — if you
+change a module that has one, check whether the twin needs the same change.
+
+## Order narration (0.2.0)
+
+`Order/` no longer reads order statuses. `@jmstechnologiesinc/order-narration` owns the vocabulary
+and answers in **keys and parameters**; `Order/viewModel.js` is the one place those become text, and
+the components take the result and paint it.
+
+- `orderViewModel({ order, actor })` → `{ headline, detail, statusLabel, chips, actions, eta,
+  progress, severity, narrated }`. `actions` carry `tone` and `icon`, so no component parses a
+  button's value to decide how it looks.
+- **When the narration has nothing to say it returns `narrated: false` and no sentence, and that is
+  deliberate.** 32 of the 165 cells are pending their capability's C5 (plan §20.8). **Do not add a
+  fallback to `whatIsTheOrderStatus`** — that keeps the legacy vocabulary alive forever, which is
+  what C6 exists to end. The honest degradation is `statusLabel`, complete for all eleven canonical
+  members.
+- `whatIsTheOrderStatus` is **`@deprecated` and lives exactly one release** (D-51). Nothing new may
+  call it. `Order/__tests__/d50.test.js` keeps every legacy reference contained inside it and fails
+  if one appears anywhere else — or if that file stops being the legacy table.
 
 ## Storybook
 
