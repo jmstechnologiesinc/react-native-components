@@ -118,10 +118,23 @@ describe('orderViewModel — a capability whose C5 closed produces a sentence', 
 });
 
 describe('orderViewModel — a capability whose C5 has NOT closed stays silent', () => {
-    // The assignment axis: pending until its C5 (plan §20.8). If this test
-    // ever fails because a sentence appeared, the matrix grew a row before its
-    // capability crossed — which is the thing ADR-0017's amendment forbids.
-    const pending = [C.awaitingDriver, C.driverAssigned, C.driverEnroute, C.inTransit];
+    // The custody: pending until its C5 (plan §20.8; D-9 decided, the cut
+    // live, its E-3 waiting). If this test ever fails because a sentence
+    // appeared, the matrix grew a row before its capability crossed — which is
+    // the thing ADR-0017's amendment forbids. The assignment axis left this
+    // list when its C5 closed (M92) and its 24 cells were written (M93,
+    // order-narration 0.0.1): it is asserted FINAL below for the same reason.
+    const pending = [C.inTransit];
+
+    it.each([C.awaitingDriver, C.driverAssigned, C.driverEnroute])(
+        '%s: final since M92/M93 — a sentence, from the matrix',
+        (status) => {
+            expect(MATRIX.DM[status].customer.state).toBe(CELL_STATE.final);
+            const model = orderViewModel({ order: marketplaceOrder(status), actor: 'customer' });
+            expect(model.narrated).toBe(true);
+            expect(typeof model.headline).toBe('string');
+        }
+    );
 
     it.each(pending)('%s: no sentence, no actions', (status) => {
         const model = orderViewModel({ order: marketplaceOrder(status), actor: 'customer' });
