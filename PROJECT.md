@@ -141,11 +141,12 @@ the components take the result and paint it.
   button's value to decide how it looks.
 - **When the narration has nothing to say it returns `narrated: false` and no sentence, and that is
   deliberate.** 32 of the 165 cells are still written as pending in `order-narration`'s matrix, but
-  **24 of those 32 were unblocked on 2026-09-13 (checkpoint M92)** when the assignment axis
-  declared C5: `awaiting_driver`, `driver_assigned` and `driver_enroute`, eight narrated cells each.
-  Writing them is its own slice in the `order-narration` package, and until it lands the honest
-  degradation below stays in force for them. The 8 that remain genuinely pending are `in_transit`'s,
-  and they wait on decision D-9, not on work (plan §20.8). **Do not add a
+  **24 of those 32 were written on 2026-09-14 (checkpoint M93, `order-narration` unpublished)**
+  after the assignment axis declared C5 at M92: `awaiting_driver`, `driver_assigned` and
+  `driver_enroute`, 21 final cells and 3 N/A by judgement (the driver at `awaiting_driver`, who by
+  construction holds no order there). The matrix now pins 83 final / 8 pending / 74 N/A. The 8 that
+  remain pending are `in_transit`'s, and they wait on decision D-9, not on work (plan §20.8). This
+  package sees none of it until `order-narration` is published. **Do not add a
   fallback to `whatIsTheOrderStatus`** — that keeps the legacy vocabulary alive forever, which is
   what C6 exists to end. The honest degradation is `statusLabel`, complete for all eleven canonical
   members.
