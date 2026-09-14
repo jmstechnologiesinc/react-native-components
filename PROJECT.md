@@ -151,7 +151,9 @@ the components take the result and paint it.
   what C6 exists to end. The honest degradation is `statusLabel`, complete for all eleven canonical
   members.
 - `whatIsTheOrderStatus` is **`@deprecated` and lives exactly one release** (D-51). Nothing new may
-  call it. `Order/__tests__/d50.test.js` keeps every legacy reference contained inside it and fails
+  call it. **`CustomerApp` stopped calling it at M94 (2026-09-14, `f2c68862`, N2c)**: all eight order
+  screens go through `orderViewModel` and the buttons carry intents; the app links this package by
+  `file:` until 0.2.0 is published, then `^0.2.0`. `Order/__tests__/d50.test.js` keeps every legacy reference contained inside it and fails
   if one appears anywhere else — or if that file stops being the legacy table.
 
 ## Storybook
