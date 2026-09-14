@@ -4,11 +4,11 @@
 const fs = require('fs');
 const { cells, CELL_STATE, NARRATED_ACTORS } = require('@jmstechnologiesinc/order-narration');
 
-const { finalCells, render, storyName, OUT } = require('../../../scripts/genOrderCellStories');
+const { finalCells, render, format, storyName, OUT } = require('../../../scripts/genOrderCellStories');
 
 describe('Order/OrderCells.stories.js — one story per final cell, generated', () => {
     it('is in sync with the matrix on disk', () => {
-        expect(fs.readFileSync(OUT, 'utf8')).toBe(render(finalCells()));
+        expect(fs.readFileSync(OUT, 'utf8')).toBe(format(render(finalCells())));
     });
     it('covers exactly the final cells (83 today: 11 statuses × 5 verticals × 3 actors minus pending and N/A)', () => {
         const finals = cells().filter(({ cell }) => cell.state === CELL_STATE.final);

@@ -21,11 +21,36 @@ export default {
 // reads (platform, fulfillmentMethod, vendor.deliveryMethod) plus the driver
 // that tells DOc from DOv.
 const VERTICAL_FIXTURE = {
-    DM: { platform: 'shopping', fulfillmentMethod: 'delivery', vendor: { title: 'Casa Nostra', deliveryMethod: 'Marketplace' }, driver: { formattedName: 'Ana Ruiz', id: 'drv-1' } },
-    DOc: { platform: 'shopping', fulfillmentMethod: 'delivery', vendor: { title: 'Casa Nostra', deliveryMethod: 'Own Staff' }, driver: { formattedName: 'Ana Ruiz', id: 'drv-1' } },
-    DOv: { platform: 'shopping', fulfillmentMethod: 'delivery', vendor: { title: 'Casa Nostra', deliveryMethod: 'Own Staff' }, driver: null },
-    PU: { platform: 'shopping', fulfillmentMethod: 'pickup', vendor: { title: 'Casa Nostra', deliveryMethod: 'Marketplace' }, driver: null },
-    RH: { platform: 'rideshare', fulfillmentMethod: 'delivery', vendor: null, driver: { formattedName: 'Ana Ruiz', id: 'drv-1' } },
+    DM: {
+        platform: 'shopping',
+        fulfillmentMethod: 'delivery',
+        vendor: { title: 'Casa Nostra', deliveryMethod: 'Marketplace' },
+        driver: { formattedName: 'Ana Ruiz', id: 'drv-1' },
+    },
+    DOc: {
+        platform: 'shopping',
+        fulfillmentMethod: 'delivery',
+        vendor: { title: 'Casa Nostra', deliveryMethod: 'Own Staff' },
+        driver: { formattedName: 'Ana Ruiz', id: 'drv-1' },
+    },
+    DOv: {
+        platform: 'shopping',
+        fulfillmentMethod: 'delivery',
+        vendor: { title: 'Casa Nostra', deliveryMethod: 'Own Staff' },
+        driver: null,
+    },
+    PU: {
+        platform: 'shopping',
+        fulfillmentMethod: 'pickup',
+        vendor: { title: 'Casa Nostra', deliveryMethod: 'Marketplace' },
+        driver: null,
+    },
+    RH: {
+        platform: 'rideshare',
+        fulfillmentMethod: 'delivery',
+        vendor: null,
+        driver: { formattedName: 'Ana Ruiz', id: 'drv-1' },
+    },
 };
 
 const order = (vertical, status) => ({

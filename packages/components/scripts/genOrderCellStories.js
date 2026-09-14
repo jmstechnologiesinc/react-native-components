@@ -92,7 +92,12 @@ const Cell = ({ vertical, status, actor }) => {
     return `${header}\n${stories}\n`;
 };
 
-const expected = render(finalCells());
+// Prettier 2 (synchronous) over the output, with the repository's config, so
+// the generated file and `prettier --check` agree byte for byte.
+const prettier = require('prettier');
+const format = (code) => prettier.format(code, { ...(prettier.resolveConfig.sync(OUT) || {}), filepath: OUT });
+
+const expected = format(render(finalCells()));
 if (process.argv.includes('--check')) {
     const onDisk = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8') : '';
     if (onDisk !== expected) {
@@ -107,4 +112,4 @@ if (process.argv.includes('--check')) {
     console.log(`wrote ${path.relative(process.cwd(), OUT)}: ${finalCells().length} stories`);
 }
 
-module.exports = { finalCells, render, storyName, OUT };
+module.exports = { finalCells, render, format, storyName, OUT };
