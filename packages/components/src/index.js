@@ -101,4 +101,3 @@ export {
     MapPicker,
 } from './Geoposition';
 
-export { whatIsTheOrderStatus } from './Order/WhatIsTheOrderStatus';

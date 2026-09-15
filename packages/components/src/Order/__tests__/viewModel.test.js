@@ -12,7 +12,7 @@ jest.mock('react-native-localize', () => ({
     findBestLanguageTag: jest.fn(() => ({ languageTag: 'en', isRTL: false })),
 }));
 
-import { CANONICAL_ORDER_STATUS as C, ORDER_STATUS } from '@jmstechnologiesinc/order';
+import { CANONICAL_ORDER_STATUS as C } from '@jmstechnologiesinc/order';
 import { INTENTS, TONES, MATRIX, CELL_STATE } from '@jmstechnologiesinc/order-narration';
 
 import { setI18nConfig } from '../../Localization/Localization';
@@ -39,11 +39,6 @@ describe('statusLabel — the label family is complete for the eleven members', 
         const label = statusLabel(status);
         expect(label).toBeTruthy();
         expect(label).not.toBe(`order.status.${status}`);
-    });
-
-    it('accepts a legacy value at the gate and answers the canonical label', () => {
-        expect(statusLabel(ORDER_STATUS.vendorAccepted)).toBe(statusLabel(C.confirmed));
-        expect(statusLabel(ORDER_STATUS.driverPending)).toBe(statusLabel(C.awaitingDriver));
     });
 
     it('answers null for something that is not a status at all', () => {
@@ -87,12 +82,10 @@ describe('orderViewModel — a capability whose C5 closed produces a sentence', 
         expect(byIntent[INTENTS.vendorAccept].icon).toBeNull();
     });
 
-    it('takes the legacy spelling at the gate — `canonicalOf` runs there and only there', () => {
+    it('`canonicalOf` runs at the gate and only there — a canonical member is its own stage', () => {
         const canonical = orderViewModel({ order: marketplaceOrder(C.placed), actor: 'customer' });
-        const legacy = orderViewModel({ order: marketplaceOrder(ORDER_STATUS.placed), actor: 'customer' });
-
-        expect(legacy.headline).toBe(canonical.headline);
-        expect(legacy.stage).toBe(C.placed);
+        expect(canonical.stage).toBe(C.placed);
+        expect(canonical.headline).toBeTruthy();
     });
 
     it('chooses the variant from the facts, not from a second status', () => {
@@ -118,16 +111,17 @@ describe('orderViewModel — a capability whose C5 closed produces a sentence', 
 });
 
 describe('orderViewModel — a capability whose C5 has NOT closed stays silent', () => {
-    // The custody: pending until its C5 (plan §20.8; D-9 decided, the cut
-    // live, its E-3 waiting). If this test ever fails because a sentence
-    // appeared, the matrix grew a row before its capability crossed — which is
-    // the thing ADR-0017's amendment forbids. The assignment axis left this
-    // list when its C5 closed (M92) and its 24 cells were written (M93,
-    // order-narration 0.0.1): it is asserted FINAL below for the same reason.
-    const pending = [C.inTransit];
+    // If this test ever fails because a sentence appeared for a pending
+    // capability, the matrix grew a row before its capability crossed — which
+    // is the thing ADR-0017's amendment forbids. The assignment axis left the
+    // pending list when its C5 closed (M92) and its 24 cells were written
+    // (M93, order-narration 0.0.1); the custody left it at M95 (E-3 deliver
+    // PASS, order-narration 0.0.2: 93 final, 0 pending). Nothing is pending
+    // today; the silent path is still exercised below with a stage the
+    // narration cannot name.
 
-    it.each([C.awaitingDriver, C.driverAssigned, C.driverEnroute])(
-        '%s: final since M92/M93 — a sentence, from the matrix',
+    it.each([C.awaitingDriver, C.driverAssigned, C.driverEnroute, C.inTransit])(
+        '%s: final since M92/M93/M95 — a sentence, from the matrix',
         (status) => {
             expect(MATRIX.DM[status].customer.state).toBe(CELL_STATE.final);
             const model = orderViewModel({ order: marketplaceOrder(status), actor: 'customer' });
@@ -136,21 +130,17 @@ describe('orderViewModel — a capability whose C5 has NOT closed stays silent',
         }
     );
 
-    it.each(pending)('%s: no sentence, no actions', (status) => {
-        const model = orderViewModel({ order: marketplaceOrder(status), actor: 'customer' });
-
-        expect(MATRIX.DM[status].customer.state).toBe(CELL_STATE.pending);
+    it('a stage the narration cannot name is silent: no sentence, no actions', () => {
+        const model = orderViewModel({ order: marketplaceOrder('Expired'), actor: 'customer' });
         expect(model.narrated).toBe(false);
         expect(model.headline).toBeNull();
-        expect(model.detail).toBeNull();
         expect(model.actions).toEqual([]);
     });
 
-    it.each(pending)('%s: the LABEL still exists — a chip is always painted', (status) => {
-        const model = orderViewModel({ order: marketplaceOrder(status), actor: 'customer' });
-
-        expect(model.stage).toBe(status);
-        expect(model.statusLabel).toBe(statusLabel(status));
+    it('the LABEL always exists for a canonical member — a chip is always painted', () => {
+        const model = orderViewModel({ order: marketplaceOrder(C.inTransit), actor: 'customer' });
+        expect(model.stage).toBe(C.inTransit);
+        expect(model.statusLabel).toBe(statusLabel(C.inTransit));
         expect(model.statusLabel).toBeTruthy();
         expect(model.chips).toHaveLength(1);
     });

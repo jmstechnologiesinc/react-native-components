@@ -24,11 +24,10 @@ import { EN, ES } from '@jmstechnologiesinc/order-narration';
 const ORDER_DIR = path.join(__dirname, '..');
 const LOCALIZATION_DIR = path.join(__dirname, '..', '..', 'Localization');
 
-// The ONE file allowed to hold the legacy vocabulary, with the reason and the
-// gate that removes it. Anything else is a defect.
-const QUARANTINE = {
-    'WhatIsTheOrderStatus.js': 'deprecated at 0.2.0, retired at C6 (D-51: it lives exactly one release)',
-};
+// C6 (M96): the quarantine is EMPTY. `whatIsTheOrderStatus` lived exactly one
+// release (deprecated at 0.2.0, D-51) and is gone with 0.3.0; no file in this
+// package may hold the legacy vocabulary.
+const QUARANTINE = {};
 
 const sourceFiles = (dir) =>
     fs

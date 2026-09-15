@@ -1,8 +1,6 @@
 import React from 'react';
 
 import { MD3Colors } from '@jmstechnologiesinc/react-native-paper';
-import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
-import { ORDER_ACTIONS, ORDER_STATUS_CANCELLED } from '@jmstechnologiesinc/order';
 import { TONES } from '@jmstechnologiesinc/order-narration';
 import { ActionGroup, ScreenWrapper } from '@jmstechnologiesinc/react-native-components';
 
@@ -34,23 +32,6 @@ const styleForTone = (tone) => {
     }
 };
 
-/* DEPRECATED, and it lives exactly one release (D-51).
- *
- * The old `buttons` shape — `[{ title, value }]`, where `value` is a status or
- * an `ITEM_TYPE` — is still what `whatIsTheOrderStatus` produces, and the app
- * still calls it until N2c. Until then this keeps the old inference, unchanged
- * and quarantined, so the behaviour of a consumer that has not migrated does
- * not change at all. It goes with `whatIsTheOrderStatus` at C6. */
-const fromLegacyButton = (button) => {
-    if (ORDER_STATUS_CANCELLED(button.value)) {
-        return { ...button, mode: 'text', compact: true, textColor: MD3Colors.error50, contentStyle: { flexGrow: 2 } };
-    }
-    if (button.value === ORDER_ACTIONS.print) {
-        return { ...button, icon: MATERIAL_ICONS.printer, mode: 'text', contentStyle: { flexGrow: 2 } };
-    }
-    return { ...button, compact: false, contentStyle: { flexGrow: 3 } };
-};
-
 const fromAction = (action) => ({
     ...action,
     // `value` is what `onPress` has always carried to the caller. It is the
@@ -60,8 +41,11 @@ const fromAction = (action) => ({
     ...styleForTone(action.tone),
 });
 
-const OrderTransitionButtons = ({ actions, buttons = [], onPress }) => {
-    const rendered = actions ? actions.map(fromAction) : buttons?.map(fromLegacyButton);
+// C6 (M96): the legacy `buttons` shape (`[{ title, value }]`, a status or an
+// ITEM_TYPE as `value`) went with `whatIsTheOrderStatus`; only the narration's
+// actions reach this component.
+const OrderTransitionButtons = ({ actions, onPress }) => {
+    const rendered = actions?.map(fromAction);
 
     return rendered?.length > 0 ? (
         <ScreenWrapper.Container>

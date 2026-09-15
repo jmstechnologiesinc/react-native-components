@@ -5,7 +5,7 @@ jest.mock('react-native-localize', () => ({
 }));
 
 import { USER_ROLES } from '@jmstechnologiesinc/user';
-import { CANONICAL_ORDER_STATUS as C, ORDER_STATUS, orderStatusTime } from '@jmstechnologiesinc/order';
+import { CANONICAL_ORDER_STATUS as C } from '@jmstechnologiesinc/order';
 import { PROGRESS_RAIL, TERMINAL_STATES } from '@jmstechnologiesinc/order-narration';
 
 import { setI18nConfig, localized } from '../../Localization/Localization';
@@ -105,14 +105,10 @@ describe('orderListStatus — canonical in, canonical out, legacy normalized at 
         expect(orderListStatus(C.driverEnroute, USER_ROLES.driver)).toBe(C.driverEnroute);
     });
 
-    it('answers the same for a legacy value and its canonical member', () => {
+    it('passes a value outside the canon through untouched — it is no bucket and no member (C6: the legacy spelling is not a status)', () => {
         for (const role of ROLES) {
-            expect(orderListStatus(ORDER_STATUS.vendorAccepted, role)).toBe(orderListStatus(C.confirmed, role));
-            expect(orderListStatus(ORDER_STATUS.shipped, role)).toBe(orderListStatus(C.driverEnroute, role));
-            expect(orderListStatus(ORDER_STATUS.customerCancelled, role)).toBe(orderListStatus(C.cancelled, role));
-            // `Driver Rejected` is absorbed into `awaiting_driver` (canon §15)
-            // and still reaches this table from the app's `rejectByDriver`.
-            expect(orderListStatus(ORDER_STATUS.driverRejected, role)).toBe(orderListStatus(C.awaitingDriver, role));
+            expect(orderListStatus('Expired', role)).toBe('Expired');
+            expect(Object.values(ORDER_LIST_STATUS)).not.toContain('Expired');
         }
     });
 });
@@ -154,18 +150,12 @@ describe('groupedOrderListToSectionList — titles at call time, in the role\'s 
     });
 });
 
-// The order document's two timestamp FIELDS keep their legacy-derived names
-// (D-12: persisted documents are never rewritten). This pins the spelling
-// against the function that used to produce it, so the two cannot drift while
-// both exist — and shows why the call had to go: handed a CANONICAL status,
-// `orderStatusTime` answers `undefinedTime`.
+// The order document's two timestamp FIELDS are the data model, not the
+// vocabulary (D-12: persisted documents are never rewritten; C6 retired the
+// vocabulary and kept the keys). Pinned as literals: the shared package names
+// the same keys by the canon (`ORDER_STATUS_TIME_KEY`, 0.2.0).
 describe('ORDER_TIME_FIELDS — the data model, not the vocabulary', () => {
-    it('spells exactly what `orderStatusTime` spells for the legacy value', () => {
-        expect(ORDER_TIME_FIELDS.placed).toBe(orderStatusTime(ORDER_STATUS.placed));
-        expect(ORDER_TIME_FIELDS.driverAccepted).toBe(orderStatusTime(ORDER_STATUS.driverAccepted));
-    });
-
-    it('and is why the call could not simply be handed a canonical status', () => {
-        expect(orderStatusTime(C.placed)).toBe('undefinedTime');
+    it('spells the persisted keys', () => {
+        expect(ORDER_TIME_FIELDS).toEqual({ placed: 'placedTime', driverAccepted: 'driverAcceptedTime' });
     });
 });

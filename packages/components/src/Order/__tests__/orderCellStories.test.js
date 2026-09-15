@@ -10,10 +10,10 @@ describe('Order/OrderCells.stories.js — one story per final cell, generated', 
     it('is in sync with the matrix on disk', () => {
         expect(fs.readFileSync(OUT, 'utf8')).toBe(format(render(finalCells())));
     });
-    it('covers exactly the final cells (83 today: 11 statuses × 5 verticals × 3 actors minus pending and N/A)', () => {
+    it('covers exactly the final cells (93 since order-narration 0.0.2: 11 statuses × 5 verticals × 3 actors minus N/A, nothing pending)', () => {
         const finals = cells().filter(({ cell }) => cell.state === CELL_STATE.final);
         expect(finalCells()).toHaveLength(finals.length);
-        expect(finals.length).toBe(83);
+        expect(finals.length).toBe(93);
         const names = finalCells().map(storyName);
         expect(new Set(names).size).toBe(names.length);
         for (const { actor } of finalCells()) expect(NARRATED_ACTORS).toContain(actor);
