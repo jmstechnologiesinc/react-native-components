@@ -17,3 +17,12 @@ jest.mock('react-native-config', () => ({ __esModule: true, default: {}, Config:
 jest.mock('react-native-localize', () => ({
     findBestLanguageTag: () => ({ languageTag: 'en', isRTL: false }),
 }));
+
+// Same story again, one layer deeper: the barrel reaches
+// `OptionPickerActionSheet.js` -> `react-native-actions-sheet` ->
+// `react-native-gesture-handler`, which resolves `RNGestureHandlerModule`
+// through `TurboModuleRegistry.getEnforcing` at import time and throws in any
+// environment without the native binary. The library publishes its own jest
+// setup for exactly this; using it keeps the mock surface the library's
+// responsibility instead of a hand-written stub that drifts from it.
+require('react-native-gesture-handler/jestSetup');
