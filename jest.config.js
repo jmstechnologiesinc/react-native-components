@@ -6,7 +6,13 @@ module.exports = {
   // too, so every result was reported twice and a stale `lib/` reported
   // failures for code that no longer existed in `src/`. Never edit `lib`, and
   // do not test it either.
-  setupFiles: ['<rootDir>/jest.setup.js'],
+  // `@rnmapbox/maps` throws AT IMPORT if its native module is absent
+  // («native code not available»), so transpiling it is not enough and never
+  // was: the barrel could not load under Jest at all. The fix is not a mock of
+  // our own invention -- the library PUBLISHES this setup file and maintains
+  // it, so what the tests see is the surface its author declares, not one this
+  // repository guessed. It must run before `jest.setup.js`.
+  setupFiles: ['@rnmapbox/maps/setup-jest', '<rootDir>/jest.setup.js'],
 
   testPathIgnorePatterns: ['/node_modules/', '/packages/components/lib/'],
 
@@ -17,7 +23,7 @@ module.exports = {
   // so anything importing them failed to parse — which is why the library's
   // own barrel test («needs tests») had never actually loaded the barrel.
   transformIgnorePatterns: [
-    'node_modules/(?!(?:.pnpm/)?((jest-)?react-native|@react-native(-community)?|@jmstechnologiesinc|react-native-config|react-native-actions-sheet|react-native-image-picker|react-native-draggable-flatlist|react-native-reanimated|@react-navigation|dinero\\.js|@dinero\\.js)/)',
+    'node_modules/(?!(?:.pnpm/)?((jest-)?react-native|@react-native(-community)?|@jmstechnologiesinc|react-native-config|react-native-actions-sheet|react-native-image-picker|react-native-draggable-flatlist|react-native-reanimated|@react-navigation|dinero\\.js|@dinero\\.js|@rnmapbox|react-native-vector-icons|react-native-permissions|react-native-geolocation-service)/)',
   ],
 
   // Several modules in the library import the library BY ITS PUBLISHED NAME
