@@ -17,7 +17,7 @@ module.exports = {
   // so anything importing them failed to parse — which is why the library's
   // own barrel test («needs tests») had never actually loaded the barrel.
   transformIgnorePatterns: [
-    'node_modules/(?!(?:.pnpm/)?((jest-)?react-native|@react-native(-community)?|@jmstechnologiesinc|react-native-config|react-native-actions-sheet|react-native-image-picker|react-native-draggable-flatlist|react-native-reanimated|@react-navigation)/)',
+    'node_modules/(?!(?:.pnpm/)?((jest-)?react-native|@react-native(-community)?|@jmstechnologiesinc|react-native-config|react-native-actions-sheet|react-native-image-picker|react-native-draggable-flatlist|react-native-reanimated|@react-navigation|dinero\\.js|@dinero\\.js)/)',
   ],
 
   // Several modules in the library import the library BY ITS PUBLISHED NAME

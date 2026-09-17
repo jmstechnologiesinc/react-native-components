@@ -14,8 +14,18 @@ jest.mock('react-native-config', () => ({ __esModule: true, default: {}, Config:
 // `Localization.js` imports it, so the barrel does too. The device language is
 // the device's; `en` is the library's own fallback and the only answer that
 // does not depend on whose machine the suite runs on.
+// `getLocales` is mocked for the same reason and with the same answer:
+// `OrderTripTelemetry.js` calls it AT IMPORT TIME
+// (`const { languageCode } = RNLocalize.getLocales()[0]`), so a mock carrying
+// only `findBestLanguageTag` keeps the barrel out exactly as the native module
+// did. It returns the same `en` as the rest of this file: the device language
+// belongs to the device, and a suite depending on it would be asserting about
+// whoever's machine runs it.
 jest.mock('react-native-localize', () => ({
     findBestLanguageTag: () => ({ languageTag: 'en', isRTL: false }),
+    getLocales: () => [{
+        countryCode: 'US', languageTag: 'en-US', languageCode: 'en', isRTL: false,
+    }],
 }));
 
 // Same story again, one layer deeper: the barrel reaches
@@ -46,3 +56,4 @@ jest.mock('react-native-permissions', () => ({
     },
     request: () => Promise.resolve('granted'),
 }));
+
