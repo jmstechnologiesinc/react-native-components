@@ -26,3 +26,23 @@ jest.mock('react-native-localize', () => ({
 // setup for exactly this; using it keeps the mock surface the library's
 // responsibility instead of a hand-written stub that drifts from it.
 require('react-native-gesture-handler/jestSetup');
+
+// Same story once more, and this one is a NATIVE module with no published
+// mock: `react-native-permissions` resolves `RNPermissions` through
+// `TurboModuleRegistry.getEnforcing` at import time. `ImagePickerAPI.js`
+// imports it, `ImagePicker.js` imports that, and the barrel imports THAT — so
+// this was the last thing standing between the barrel and its own test.
+//
+// The surface the library uses is exactly `{ PERMISSIONS, request }`, so that
+// is all this stands in for. `request` answering `granted` is NOT a claim that
+// the user granted anything: it is the only answer that does not turn a
+// permission dialog — which no test environment can show — into a failure, and
+// no suite asserts on it. A test that needs to exercise a DENIED path should
+// mock `request` itself, where the denial is the point.
+jest.mock('react-native-permissions', () => ({
+    PERMISSIONS: {
+        IOS: { CAMERA: 'ios.permission.CAMERA', PHOTO_LIBRARY: 'ios.permission.PHOTO_LIBRARY' },
+        ANDROID: { CAMERA: 'android.permission.CAMERA', READ_MEDIA_IMAGES: 'android.permission.READ_MEDIA_IMAGES' },
+    },
+    request: () => Promise.resolve('granted'),
+}));
