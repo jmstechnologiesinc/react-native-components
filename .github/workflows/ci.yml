@@ -1,0 +1,50 @@
+name: CI
+
+# EL REPO NO TENIA CHECKS, y es una biblioteca PUBLICADA: una rotura aqui no se
+# nota en este repositorio, se nota en la aplicacion despues de publicar, y para
+# entonces ya viaja dentro de un `npm ci` ajeno. `roadmap-active-work.md` lo
+# lleva como C-5 junto a la aplicacion y los paquetes compartidos; los paquetes
+# ganaron su puerta primero, por el mismo argumento.
+#
+# DELIBERADAMENTE FUERA: publicar. Publicar es una decision del dueno, con su
+# version y su momento; esto solo dice si lo que hay esta sano.
+#
+# `lib/` NO se prueba: es salida de build (`npm run build` es un `cp -r src/*
+# lib`) y la config de jest ya lo excluye. Probarlo reportaria cada resultado
+# dos veces y, cuando `lib` esta rancio, fallos de codigo que ya no existe.
+
+on:
+  pull_request:
+  push:
+    branches: [main, feature/order-narration-components-0.2.0]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  suites:
+    name: suites (ratchet)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # El registro privado necesita credencial: se usa el secreto del
+      # repositorio y NO se imprime.
+      - name: install
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm ci --no-audit --no-fund || npm install --no-audit --no-fund
+
+      # No «verde o rojo»: el barril lleva sin cargar desde siempre y su ultimo
+      # eslabon espera una decision del dueno. Se exige «no peor que la lista».
+      - name: suites (ratchet)
+        run: ./scripts/ci/suite-ratchet.sh

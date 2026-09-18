@@ -1,0 +1,28 @@
+# Suites de la biblioteca que ya fallaban, registradas para que CI pueda
+# bloquear roturas NUEVAS sin estar permanentemente en rojo.
+#
+# ES UN RATCHET, NO UN PERMISO. `scripts/ci/suite-ratchet.sh` falla si falla una
+# suite que NO está aquí, y avisa para que borres una línea cuando la listada
+# vuelva a pasar. LA LISTA EXISTE PARA ENCOGER.
+#
+# Medido el 2026-09-17: `npx jest --ci` da 8 suites verdes y 1 roja, 131
+# pruebas, todas las que llegan a declararse.
+
+# --- A-3, el barril ---------------------------------------------------------
+#
+# El barril NUNCA ha cargado bajo Jest, así que su prueba —la que dice «needs
+# tests»— lleva desde siempre sin probar nada. Es una cadena de bloqueos, y el
+# 2026-09-17 avanzó de `src/index.js:86` a `:95`:
+#
+#   dinero.js               transpilado (M104)
+#   getLocales              mock de localize (M104)
+#   @rnmapbox/maps          su propio `setup-jest.js`, el que publica su autor
+#   react-native-vector-icons, react-native-permissions   transpilados
+#
+# EL ESLABÓN QUE QUEDA: `react-native-geolocation-service` construye un
+# `NativeEventEmitter` AL IMPORTARSE y revienta sin su módulo nativo, y ese
+# paquete NO publica setup ni mock. El siguiente paso es inventar uno, y qué ve
+# la suite al preguntar por la posición es una decisión sobre la superficie de
+# prueba de esta biblioteca — el `CLAUDE.md` de este repositorio dice que eso se
+# pregunta, no se adivina. Espera la palabra del dueño.
+packages/components/__tests__/components.test.js
