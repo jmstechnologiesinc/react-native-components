@@ -25,4 +25,11 @@
 # la suite al preguntar por la posición es una decisión sobre la superficie de
 # prueba de esta biblioteca — el `CLAUDE.md` de este repositorio dice que eso se
 # pregunta, no se adivina. Espera la palabra del dueño.
-packages/components/__tests__/components.test.js
+# VACIA desde el 2026-09-19: el barril carga y su prueba dice algo.
+#
+# Lo que la llenaba era `components.test.js`, y no porque nadie la hubiera
+# escrito: NO PODIA CORRER. El barril arrastraba dos bibliotecas que construyen
+# codigo nativo al importarse. Se cerro por partes -- el `setup-jest` que
+# publica @rnmapbox/maps, transpilar los paquetes hermanos que publican ESM, y
+# EXCLUIR la biblioteca de posicion (A-3) con un stub que LANZA en vez de
+# simular una posicion que nadie decidio.

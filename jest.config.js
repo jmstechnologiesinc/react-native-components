@@ -23,7 +23,7 @@ module.exports = {
   // so anything importing them failed to parse — which is why the library's
   // own barrel test («needs tests») had never actually loaded the barrel.
   transformIgnorePatterns: [
-    'node_modules/(?!(?:.pnpm/)?((jest-)?react-native|@react-native(-community)?|@jmstechnologiesinc|react-native-config|react-native-actions-sheet|react-native-image-picker|react-native-draggable-flatlist|react-native-reanimated|@react-navigation|dinero\\.js|@dinero\\.js|@rnmapbox|react-native-vector-icons|react-native-permissions|react-native-geolocation-service)/)',
+    'node_modules/(?!(?:.pnpm/)?((jest-)?react-native|@react-native(-community)?|@jmstechnologiesinc|react-native-config|react-native-actions-sheet|react-native-image-picker|react-native-draggable-flatlist|react-native-reanimated|@react-navigation|dinero\\.js|@dinero\\.js|@rnmapbox|react-native-vector-icons|react-native-permissions|react-native-geolocation-service|react-native-applifecycle)/)',
   ],
 
   // Several modules in the library import the library BY ITS PUBLISHED NAME
@@ -32,6 +32,13 @@ module.exports = {
   // nowhere inside this repo — so any suite reaching one of those files failed
   // to resolve. Point the name at the source it is published from.
   moduleNameMapper: {
+    // A-3 (2026-09-19): la biblioteca de posición construye un
+    // `NativeEventEmitter` AL IMPORTARSE y tumba el barril entero fuera de un
+    // dispositivo. La decisión fue EXCLUIRLA de la suite, no doblarla: el stub
+    // lanza con su razón en cada método, así que el barril carga y nada puede
+    // depender en silencio de una posición inventada. El porqué, entero, está
+    // en el propio stub.
+    '^react-native-geolocation-service$': '<rootDir>/test/stubs/geolocation-excluded.js',
     '^@jmstechnologiesinc/react-native-components/lib/(.*)$': '<rootDir>/packages/components/src/$1',
     '^@jmstechnologiesinc/react-native-components$': '<rootDir>/packages/components/src/index.js',
   },
