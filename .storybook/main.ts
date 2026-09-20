@@ -37,7 +37,15 @@ module.exports = {
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
-    '@storybook/addon-react-native-web',
+    {
+      name: '@storybook/addon-react-native-web',
+      options: {
+        // Published with raw JSX (`main` is the source file). Metro transpiles
+        // it in the app; webpack needs to be told. Same idea as jest.config.js's
+        // `transformIgnorePatterns` for `@jmstechnologiesinc/*`.
+        modulesToTranspile: ['@jmstechnologiesinc/react-native-google-places-autocomplete'],
+      },
+    },
     '@storybook/addon-webpack5-compiler-babel',
   ],
   framework: {
@@ -57,6 +65,8 @@ module.exports = {
     // any of them could not build. Same mapping as `jest.config.js`.
     config.resolve.alias = {
       ...config.resolve.alias,
+      // Native-only module; see the stub for why.
+      'react-native-config': path.resolve(__dirname, 'react-native-config.web.js'),
       '@jmstechnologiesinc/react-native-components/lib': path.resolve(
         __dirname,
         '../packages/components/src',

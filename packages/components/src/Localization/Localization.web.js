@@ -38,8 +38,12 @@ i18n.use(LanguageDetector)
             suffix: '}',
         },
 
-        // The key itself, exactly as the native twin answers.
-        parseMissingKeyHandler: (key) => key,
+        // The key itself, exactly as the native twin answers — but only when
+        // there is no `defaultValue`: i18next calls this handler with
+        // `(key, defaultValue)` for EVERY miss, so a handler that returns
+        // `key` alone discards the narration text `localized` passes as the
+        // default, and every narration string rendered as its own key.
+        parseMissingKeyHandler: (key, defaultValue) => defaultValue ?? key,
 
         react: {
             useSuspense: false,
@@ -55,3 +59,11 @@ export const localized = (key, config = {}) =>
     i18n.t(key, { ...config, defaultValue: narrationText(key, i18n.language) ?? key });
 
 export default i18n;
+
+// The native twin configures `i18n-js` on demand — the app and the stories
+// call this before rendering. Here i18next is configured once, above, at
+// import time, so the call has nothing left to do; it exists so both twins
+// expose the same surface and a module that imports it resolves on the web
+// too (webpack picks `.web.js` first, and a missing export is `undefined`
+// there — `setI18nConfig is not a function` took down every Order story).
+export const setI18nConfig = () => {};
