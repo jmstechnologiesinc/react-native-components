@@ -46,3 +46,18 @@ export const CollapsedWithHeader = () => (
         renderHeader={() => <FAB icon="plus" accessibilityLabel="New" onPress={() => {}} />}
     />
 );
+
+// MD3 navigation rail: destinations evenly spaced under the header group, the container labelled as
+// navigation, each destination with its own testID (and `aria-current="page"` on the web).
+export const Rail = () => (
+    <SideNav
+        variant="rail"
+        accessibilityRole="navigation"
+        accessibilityLabel="Main"
+        testID="rail"
+        menuItems={menuItems.map((item, index) => ({ ...item, key: `item-${index}`, testID: `rail-item-${index}` }))}
+        selectedKey="item-0"
+        renderHeader={() => <FAB icon="plus" accessibilityLabel="New" onPress={() => {}} />}
+        onPress={() => {}}
+    />
+);

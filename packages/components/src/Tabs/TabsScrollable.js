@@ -11,6 +11,8 @@ import * as Tabs from './Tabs';
 // narrower pane was as wide as the whole window. The window width now follows
 // `Dimensions`, and the scroll maths use the width the bar was actually laid
 // out at. `style` lets a host size the bar to its container instead.
+// `accessibilityRole` (default `tablist`, `null` for none), `accessibilityLabel` and `testID` go to the
+// `Tabs.List` inside, which carries the tab semantics and the web keyboard navigation.
 export default class TabsScrollable extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -103,7 +105,12 @@ export default class TabsScrollable extends React.PureComponent {
                 horizontal
             >
                 <View onLayout={this.onTabsContainerLayout}>
-                    <Tabs.List style={this.props.tabsListStyle}>
+                    <Tabs.List
+                        style={this.props.tabsListStyle}
+                        accessibilityRole={this.props.accessibilityRole}
+                        accessibilityLabel={this.props.accessibilityLabel}
+                        testID={this.props.testID}
+                    >
                         {React.Children.toArray(this.props.children).map((child, index) => (
                             <View key={`scrollable-${child.key}`} onLayout={this.onTabsItemLayout(index)}>
                                 {child}

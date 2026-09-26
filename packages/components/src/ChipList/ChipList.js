@@ -15,7 +15,13 @@ const ChipList = ({
     listSectionStyle,
     style,
 }) => (
-    <Tabs.Scrollable currentIndex={currentIndex} listSectionStyle={listSectionStyle} style={style}>
+    // Chips are not tabs: no `tablist` role and no tab keyboard navigation on the row.
+    <Tabs.Scrollable
+        currentIndex={currentIndex}
+        listSectionStyle={listSectionStyle}
+        style={style}
+        accessibilityRole={null}
+    >
         {options.map((item, index) => (
             <Chip
                 key={item?.toString()}

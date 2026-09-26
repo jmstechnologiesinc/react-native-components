@@ -237,6 +237,39 @@ strip of RN `Image`s, each labelled «Photo i of n» (`global.photoOf`); `global
 blank; `title` defaults to `photos` (`null` hides it); `highlighted` adds the «Changed» line. testIDs:
 `<testID>` (the strip), `<testID>.photo.<i>`, `<testID>.empty`; `testID` defaults to `photo-gallery`.
 
+Accessibility and MD3 fidelity for the console shell (OPEN-ITEMS #12-#14 of `admin-web/docs/OPEN-ITEMS.md`),
+additive — the app's rendering is pinned by `packages/components/__tests__/legacyRendering.test.js`, which
+re-renders the existing consumers' props (CustomerApp's `drawerSideNav` and `InventoryManagerScreen`,
+`StickySectionList`, `ChipList`) and compares them with the trees captured before the change
+(`__tests__/__fixtures__/legacyTrees.json`): SideNav and ChipList are byte-identical; tabs gain only
+`accessibilityRole` and `accessibilityState.selected`. Recapture the fixture only for a deliberate change.
+
+- **`src/accessibility.js`** — `accessibilityProps({ role, label, selected, checked, disabled, current })`.
+  react-native-web 0.21 ignores `accessibilityState` and warns on `accessibilityRole`/`accessibilityLabel`,
+  so on the web it returns `role`, `aria-label`, `aria-selected`/`aria-checked`/`aria-disabled`/
+  `aria-current` (plus `accessibilityState`, which RNW drops silently); on native, the `accessibility*`
+  props. Use it in any component that sets a state a screen reader must hear. It is internal (not exported).
+- **`SideNav`** — `variant: 'drawer' (default) | 'rail'`. The drawer keeps the 56dp gap under the first
+  collapsed destination (the app sets it apart); `rail` is the MD3 navigation rail, destinations evenly spaced
+  by Paper's 12dp. Items take `testID` and `accessibilityLabel` (on the destination button; on
+  `Drawer.Item`, `testID` lands on its outer view — Paper's limit). The container takes
+  `accessibilityRole` (`"navigation"` for a rail), `accessibilityLabel` and `testID`. Paper's items accept
+  no `aria-*` for their button, so on the web SideNav marks each item wrapper `data-side-nav-item` and sets
+  `aria-current="page"` on the selected button's DOM node after every render.
+- **`Tabs`** — `Tabs.List` is `accessibilityRole="tablist"` (+ `accessibilityLabel`, `testID`) by default;
+  `accessibilityRole={null}` opts out (`ChipList` does: chips are not tabs). `Tabs.Scrollable` forwards the
+  three to its list. `Tabs.Item` is a `tab` with `accessibilityState.selected` (`aria-selected` on the web),
+  takes `accessibilityLabel`, `testID` and `disabled` (`aria-disabled`). On the web: roving tabindex (only
+  the selected tab — or the first, when none is — is a Tab stop), and the list handles Left/Right (wrapping,
+  mirrored under `dir="rtl"`), Home and End by focusing the tab and clicking it (automatic activation; a
+  disabled tab is skipped). `Tabs.Item variant="primary"` is the MD3 primary tab: 48dp, `titleSmall`, a 3dp
+  indicator with rounded top corners as wide as the label, no layout shift. Without `variant` the original
+  look stays (2dp full-width underline, the selected tab 2dp taller): the app's tab bars keep it; changing it
+  is a product decision, not a fix.
+- Tests under Jest run React Native's Pressable, which folds `aria-*` into `accessibilityState` before the
+  host node: assert web ARIA on the props handed to Paper's `TouchableRipple`, and DOM syncs by giving the
+  mocked View instance a `querySelectorAll` (see `SideNav.test.js`, `Tabs.test.js`).
+
 ## Storybook
 
 Two separate configs, both reading stories from `packages/components/src`:

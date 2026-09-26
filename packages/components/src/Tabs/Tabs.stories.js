@@ -33,3 +33,21 @@ export const Scrollable = () => <TabsScrollable data={mockData} onTabsItemLayout
 export const ScrollableTitle = () => (
     <TabsScrollable title="Main Menu" data={mockData} onTabsItemLayout={() => {}} onPress={() => {}} />
 );
+
+// MD3 primary tabs: 48dp, a 3dp indicator under the label. On the web: Left/Right/Home/End move the selection.
+export const PrimaryList = () => {
+    const [selected, setSelected] = React.useState(0);
+    return (
+        <TabList accessibilityLabel="Sections">
+            {mockData.map((item, index) => (
+                <TabsItem
+                    key={item.title}
+                    variant="primary"
+                    title={item.title}
+                    isSelected={selected === index}
+                    onPress={() => setSelected(index)}
+                />
+            ))}
+        </TabList>
+    );
+};
