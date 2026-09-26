@@ -142,3 +142,17 @@ export const BusinessInfoHighlighted = () => (
         inputActionHandler={() => {}}
     />
 );
+
+// The driver's answers as a reviewer sees them: read-only (no disclosure, the
+// secrets masked), a changed field marked and a server error under its field.
+export const DriverInfoReadOnly = () => (
+    <AuthForm.DriverInfo
+        licenseNumer="D1234567"
+        dateOfBirth="01/02/90"
+        ssn="123456789"
+        readOnly
+        highlightFields={['dateofBirth']}
+        errors={[{ field: 'licenseNumer', code: 'expired', message: 'The license has expired' }]}
+        inputActionHandler={() => {}}
+    />
+);

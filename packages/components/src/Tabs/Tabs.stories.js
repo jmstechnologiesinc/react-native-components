@@ -13,6 +13,7 @@ const mockData = [
 import TabsItem from './TabsItem';
 import TabList from './TabsList';
 import TabsScrollable from './TabsScrollable';
+import TabsBar from './TabsBar';
 
 export default {
     title: 'packages/Tabs',
@@ -49,5 +50,22 @@ export const PrimaryList = () => {
                 />
             ))}
         </TabList>
+    );
+};
+
+// `Tabs.Bar`: the same primary tabs with a value/label API, as wide as their container (a pane).
+export const Bar = () => {
+    const [value, setValue] = React.useState('documents');
+    return (
+        <TabsBar
+            tabs={[
+                { value: 'summary', label: 'Summary' },
+                { value: 'documents', label: 'Documents' },
+                { value: 'history', label: 'History', disabled: true },
+            ]}
+            value={value}
+            onChange={setValue}
+            accessibilityLabel="Sections"
+        />
     );
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import { View } from 'react-native';
 
 import { HelperText, TextInput, useTheme } from '@jmstechnologiesinc/react-native-paper';
 
@@ -36,6 +37,40 @@ export const FieldErrorText = ({ field, errors }) =>
             {error.message || error.code}
         </HelperText>
     ));
+
+/** Every server error of a list, one error line each (`message`, else the raw
+ *  `code`): the errors a form does not render (a field it has no input for, a
+ *  form-level code), or a whole list shown outside a form. `exclude` leaves out
+ *  the fields whose errors already sit under their inputs; `fieldLabel(field)`
+ *  prefixes a line with the field's name («Plate: mismatch»). Renders nothing
+ *  when no error remains. testIDs: `<testID>`, `<testID>.<field>` (`form` for
+ *  an error without a field); default `field-errors`. */
+export const FieldErrorList = ({ errors, exclude, fieldLabel, testID = 'field-errors' }) => {
+    const excluded = Array.isArray(exclude) ? exclude : [];
+    const shown = Array.isArray(errors) ? errors.filter((error) => error && !excluded.includes(error.field)) : [];
+    if (!shown.length) {
+        return null;
+    }
+    return (
+        <View testID={testID}>
+            {shown.map((error, index) => {
+                const text = error.message || error.code;
+                const label = error.field && fieldLabel ? fieldLabel(error.field) : null;
+                return (
+                    <HelperText
+                        key={`${error.field}.${error.code}.${index}`}
+                        type="error"
+                        padding="none"
+                        visible={true}
+                        testID={`${testID}.${error.field || 'form'}`}
+                    >
+                        {label ? `${label}: ${text}` : text}
+                    </HelperText>
+                );
+            })}
+        </View>
+    );
+};
 
 /** An input of a form that can be highlighted or carry server errors: the
  *  outline in `primary` and the «Changed» line under it; the input's `error`

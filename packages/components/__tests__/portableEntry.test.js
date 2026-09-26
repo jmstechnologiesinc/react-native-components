@@ -133,6 +133,8 @@ describe('the portable entry (C-35)', () => {
         expect(files).not.toContain('index.js');
         // The display-only gallery is portable; the picker namespace is not.
         expect(files).toContain('ImagePicker/PhotoGalleryDisplay.js');
+        expect(files).toContain('ImagePicker/AvatarDisplay.js');
+        expect(files).not.toContain('ImagePicker/ImagePickerAvatar.js');
         expect(files).not.toContain('ImagePicker/ImagePicker.js');
         expect(files).not.toContain('ImagePicker/PhotoGallery.js');
     });
@@ -175,11 +177,63 @@ describe('the portable entry (C-35)', () => {
             'Timeline',
             'ButtonWrapper',
             'PhotoGalleryDisplay',
+            // The console's generic UI, moved here (0.4.0-dev).
+            'LAYOUT',
+            'PANE',
+            'SIZE_CLASS',
+            'SUPPORTING_MODE',
+            'paneMetrics',
+            'sizeClassOf',
+            'tokenScale',
+            'useWindowSizeClass',
+            'paneArrangement',
+            'usePaneContext',
+            'PaneLayout',
+            'Pane',
+            'PaneHeader',
+            'PaneFooter',
+            'SideSheet',
+            'BottomSheet',
+            'SheetHeader',
+            'NavigationRail',
+            'SectionCard',
+            'KeyValueList',
+            'ListRow',
+            'iconSlot',
+            'nodeSlot',
+            'MutedText',
+            'EmptyState',
+            'LoadingState',
+            'ErrorState',
+            'SnackbarProvider',
+            'useSnackbar',
+            'DataTableView',
+            'SORT_DIRECTION',
+            'sortRows',
+            'CodeBlock',
+            'NoteField',
+            'RadioGroupField',
+            'CheckboxListField',
+            'FilterChips',
+            'StatusBanner',
+            'AvatarDisplay',
+            'ChangedHelperText',
+            'FieldErrorText',
+            'FieldErrorList',
+            'useNow',
+            'valueText',
+            'formatCalendarDate',
+            'parseCalendarDate',
+            'formatDateInput',
+            'parseDateInput',
+            'parseDay',
+            'isBlankDay',
         ];
         expect(expected.filter((name) => portable[name] === undefined)).toEqual([]);
         expect(Object.keys(portable.Form).sort()).toEqual(
-            ['BusinessInfo', 'EmailPassword', 'PersonInfo', 'SecretInputText', 'VehicleInfo'].sort()
+            ['BusinessInfo', 'DriverInfo', 'EmailPassword', 'PersonInfo', 'SecretInputText', 'VehicleInfo'].sort()
         );
         expect(typeof portable.ScreenWrapper.Section).toBe('function');
+        expect(typeof portable.Tabs.Bar).toBe('function');
     });
 });

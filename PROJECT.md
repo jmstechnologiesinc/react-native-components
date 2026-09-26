@@ -179,10 +179,10 @@ the components take the result and paint it.
 (`CustomerApp/admin-web`) and the presentational views it borrows from the app. It re-exports only
 modules that load on react-native-web **without stubs**: List, ScreenWrapper, ChipList, Tabs,
 SegmentedButtonGroup, ActionGroup, SideNav, TouchableRippleWrapper, TN*, `ButtonWrapper`,
-`PhotoGalleryDisplay`, `styles`, `LAYOUT_MODE`, a `Form` subset (PersonInfo, VehicleInfo, BusinessInfo,
-EmailPassword, SecretInputText), `StripeForm.AccountBank`, Localization (`localized`, `setI18nConfig`,
-`registerFlatCatalog`, `currentLocale`, `merge`), the formatters, the Order and Partner view models and the
-K-22 components. `ImagePicker` is **not** portable (picker, permissions, draggable list): a web host shows
+`PhotoGalleryDisplay`, `AvatarDisplay`, `styles`, `LAYOUT_MODE`, a `Form` subset (PersonInfo, VehicleInfo,
+BusinessInfo, DriverInfo, EmailPassword, SecretInputText), `StripeForm.AccountBank`, Localization (`localized`,
+`setI18nConfig`, `registerFlatCatalog`, `currentLocale`, `merge`), the formatters, the Order and Partner view
+models, the K-22 components and the generic web-host UI (next section). `ImagePicker` is **not** portable (picker, permissions, draggable list): a web host shows
 photos with `PhotoGalleryDisplay` and the app injects the picker.
 
 - `packages/components/__tests__/portableEntry.test.js` walks its static import graph the way a web
@@ -270,6 +270,114 @@ re-renders the existing consumers' props (CustomerApp's `drawerSideNav` and `Inv
 - Tests under Jest run React Native's Pressable, which folds `aria-*` into `accessibilityState` before the
   host node: assert web ARIA on the props handed to Paper's `TouchableRipple`, and DOM syncs by giving the
   mocked View instance a `querySelectorAll` (see `SideNav.test.js`, `Tabs.test.js`).
+
+## Generic UI for web hosts — 0.4.0-dev
+
+The partner console's generic UI (`CustomerApp/admin-web/src/ui`) lives here now, for the console and the
+AdminApp port alike. Every piece is in the barrel **and** `portable.js`, one folder per component, JS, themed
+through `useTheme()` (a host theme's roles apply) and built on Paper components **as they are**: no hand-made
+copy of a Paper component, even to work around a web accessibility quirk — those are recorded below as Paper
+fork items. Labels come by props, with `global.*` defaults of this library's catalogue (never `partner.*`).
+Nothing here is used by the customer/vendor/driver apps; the one app component touched, `Form.DriverInfo`,
+renders its old tree without the new props (`legacyRendering.test.js`).
+
+**Metrics are theme tokens.** The hosts keep Paper's size scaling on the web (no identity shim), so a raw
+360px pane would look shrunken next to Paper components 1.16× their MD3 size. `Layout/metrics.js`:
+`paneMetrics(theme)` / `usePaneMetrics()` → `{ rail: x20, margin: x6, spacer: x6, fixedPane: x20 × 4.5,
+paneRadius: roundness × 4, sideSheetWidth, sideSheetRadius, bottomSheetMaxWidth: x20 × 8, bottomSheetRadius:
+roundness × 7, dragHandle: { x8, x1 } }` (80/24/24/360/16/640/28/32×4 with an identity scale).
+`tokenScale(theme)` = `spacing.x1 / 4`; `useWindowSizeClass()` → `{ sizeClass, width, height, scale }` reads
+the class from `width / scale` (MD3 breakpoints `sizeClassOf`: compact <600, medium, expanded ≥840, large
+≥1200, extraLarge ≥1600), so a window must be as much wider as the panes are. Identical to MD3 at scale 1.
+
+Layout (`src/Layout/`, `index.js` re-exports):
+- `paneArrangement(layout, sizeClass, activePane?)` → `{ panes, single, supporting }`: the collapse table
+  (`LAYOUT` L3/L2A/L2B, `PANE`, `SUPPORTING_MODE`; compact collapses like medium; L3 on medium keeps the
+  supporting pane as a side sheet).
+- `PaneLayout({ layout, list, detail, primary, supporting, activePane, onBack, supportingOpen,
+  onToggleSupporting, supportingLabel, testID='pane-layout' })` — slot testIDs `<testID>-<pane>`, sheet
+  `<testID>-supporting-sheet`; an empty slot takes no room; `usePaneContext()` →
+  `{ role, inSheet, onBack, onShowSupporting, onCloseSheet, supportingMode }`.
+- `Pane({ children, accessibilityLabel, style, testID })` — `region`; flat inside a sheet.
+- `PaneHeader({ title, subtitle, onBack, actions:[{icon, label, onPress, disabled, testID}], trailing,
+  backLabel, showSupportingLabel, closeLabel, testID='pane-header' })` on Paper `Appbar`; adds back
+  (`<testID>-back`), show-supporting (`<testID>-show-supporting`) and close (`<testID>-close`) from the layout.
+- `PaneFooter({ caption, actions:[{key, label, icon, onPress, primary, tone:'primary'|'danger', disabled}],
+  busy, testID='pane-footer' })` on `ActionGroup.Buttons`; `footerButtons(actions, colors)` is its emphasis rule
+  (at most one contained; never an adverse action by default).
+- `SideSheet` / `BottomSheet({ visible, onDismiss, title, accessibilityLabel, closeLabel, children, testID })` —
+  Paper `Portal` + `Surface`, scrim `<testID>-scrim` (pointer only, `aria-hidden`), `SheetHeader({ title, onClose,
+  closeLabel, testID })` when titled, BottomSheet handle `<testID>-handle`. Web: `role="dialog"`, `aria-modal`,
+  `useModalFocus`. Android: the back button dismisses. Sizes come from the window, not percentages: on iOS
+  Paper's `Surface` moves `top/right/bottom/left` to an outer shadow layer and nests the surface two layers in,
+  where a percentage or a stretch has nothing to resolve against (the side sheet gets the window's height there).
+- `NavigationRail({ items:[{key, label, icon, badge, accessibilityLabel}], activeKey, onSelect, fab:{icon, label,
+  onPress, loading, disabled}, menu:{icon, label, onPress}, accessibilityLabel, testID='rail' })` — `SideNav
+  variant="rail"` + Paper `FAB` (`flat`, `tertiary`), on `elevation.level3`, `paneMetrics.rail` wide.
+
+Data display and feedback:
+- `SectionCard({ title, subtitle, trailing, children, style, testID })` — Paper `Card mode="outlined"` +
+  `Card.Title` (`titleMedium`/`bodySmall`, trailing in `right`) + `Card.Content`; 16dp gap under it.
+- `KeyValueList({ items:[{key, label, value}], testID })` — rows `<testID>-<key>`; absent value → `—`.
+- `ListRow({ title, description, details, icon, iconColor, trailing, onPress, selected, accessibilityLabel,
+  inset=true, rounded, titleNumberOfLines, descriptionNumberOfLines, testID, children })` — **always** Paper
+  `List.Item`; `iconSlot(icon, color?)`, `nodeSlot(node)` are its slot helpers.
+- `MutedText({ children, variant='bodyMedium', numberOfLines, style, testID })`.
+- `EmptyState({ title, description, actionLabel, actionIcon, onAction })`, `LoadingState({ label })`,
+  `ErrorState({ title, description, onRetry, retryLabel })` on `TNEmptyStateView` / `TNActivityIndicator`.
+- `SnackbarProvider({ children, testID='snackbar' })` / `useSnackbar()` → `{ show(message, {action, duration})
+  → id, dismiss() }`: Paper `Snackbar` in a `Portal`, one at a time, queued, no redux.
+- `DataTableView({ columns:[{key, title, numeric, sortable, flex, render, sortValue}], rows, rowKey, sort,
+  defaultSort, onSortChange, sortMode:'client'|'server', onRowPress, selectedKey, hasMore, loadingMore,
+  onLoadMore, emptyLabel, loadMoreLabel, sortByLabel, accessibilityLabel, testID='data-table' })` on Paper
+  `DataTable`; `sortRows`, `nextSort`, `SORT_DIRECTION`, `SORT_MODE`.
+- `CodeBlock({ value, accessibilityLabel, testID })` (`codeText`), monospace per platform.
+- `StatusBanner({ message, tone='info', icon, actions, visible=true, style, testID })` — Paper `Banner` in the
+  tone's container (`tones.js`), text/icon/actions in its `onContainer` (a `ThemeProvider` around the Banner).
+
+Fields: `NoteField({ label, value, onChangeText, helper, error, required, multiline=true, numberOfLines,
+disabled, testID })`; `RadioGroupField({ label, options:[{value, label, disabled}], value, onChange, disabled,
+error, testID })` (Paper `RadioButton.Item`); `CheckboxListField({ label, options, values, onChange, disabled,
+error, testID })` (Paper `Checkbox.Item`, leading, Android style); `FilterChips({ options:[{value, label}], value,
+onChange, compact=true, disabled, accessibilityLabel, testID })` on `ChipList` (replaces the admin prototype's
+`PartnerStatusFilterChips`; labels arrive localized). Tabs: `Tabs.Bar({ tabs:[{value, label, disabled,
+accessibilityLabel}], value, onChange, accessibilityLabel, style, testID='tabs' })` — `Tabs.Scrollable` +
+`Tabs.Item variant="primary"` with a value/label API, sized to its container (`width: 100%`, `flexGrow: 0`).
+
+Form pieces: `ChangedHelperText`, `FieldErrorText` and the new `FieldErrorList({ errors, exclude, fieldLabel,
+testID='field-errors' })` (every error one line; `<testID>.<field>`, `form` when field-less) are exported from
+`Form/FormField.js`. `Form.DriverInfo` takes `readOnly` (locks every field and drops the applicant-facing
+background-check disclosure; the secrets stay masked), `highlightFields`, `errors` (names `licenseNumer`,
+`dateofBirth`, `ssn`) and `dateOfBirth` (seeds the date field). `AvatarDisplay({ photo, icon='account', size,
+accessibilityLabel, highlighted, testID='avatar' })` (`ImagePicker/AvatarDisplay.js`) is the display counterpart
+of `ImagePicker.Avatar`, as `PhotoGalleryDisplay` is of `PhotoGallery`.
+
+Utilities: `useNow(intervalMs=60000)`; `valueText(value)` / `EMPTY_VALUE`; `DateInput/`: `formatDateInput`,
+`parseDateInput` (instants typed in local time, `{ withTime }`), `formatCalendarDate`, `parseCalendarDate`
+(`YYYY-MM-DD` kept as the string, never through a time zone), `parseDay`, `isBlankDay`, `DATE_PATTERN`,
+`DATE_TIME_PATTERN`.
+
+Catalogue keys added (en + es): `global.back`, `global.close`, `global.showSidePanel`, `global.navigation`,
+`global.loading`, `global.somethingWentWrong`, `global.retry`, `global.loadMore`, `global.sortBy`
+(`%{column}`), `global.profilePhoto`, `global.noProfilePhoto`.
+
+**Paper fork web a11y items** (fix in `@jmstechnologiesinc/react-native-paper`, not here — the components above
+use Paper as it is and inherit these on the web):
+- **Disabled press wrappers render `aria-disabled="true"`.** `Card` (always wraps its content in a
+  `TouchableWithoutFeedback` with `disabled={!onPress}`), `List.Item` (its `TouchableRipple`), `DataTable.Row`,
+  `DataTable.Title` (no `onPress`), `Chip` (no `onPress`) and `Appbar.Content` wrap content in a press target
+  that is disabled when not pressable; react-native-web renders it `aria-disabled="true"`, so every control
+  inside is announced dimmed (and automation refuses to act on it). Affects `SectionCard`, a non-pressable
+  `ListRow`, `DataTableView` without `onRowPress`, `PaneHeader`'s title. The fork should render the wrapper (or
+  its `disabled`) only with a press handler.
+- **`accessibilityState` never reaches the DOM.** react-native-web 0.21 ignores it and the fork passes no
+  `aria-*` twin: `RadioButton.Item`/`Checkbox.Item` (checked), `Chip` (selected: `FilterChips`),
+  `SegmentedButtons` and `DataTable.Row` selection are silent to a screen reader. RNC's own components use
+  `accessibility.js`; `ListRow` and `DataTableView` pass `aria-current`/`aria-selected` themselves.
+- **`Modal` subscribes `BackHandler` on the web.** Every `Dialog` open logs react-native-web's «BackHandler is
+  not supported on web»; it should skip the subscription on the web (the sheets here use `useModalFocus` there
+  and `BackHandler` only on Android).
+- **`Appbar.Content` drops `subtitle` under MD3** (`PaneHeader` draws it).
 
 ## Storybook
 

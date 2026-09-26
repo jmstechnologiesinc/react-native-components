@@ -5,6 +5,8 @@ import renderer, { act } from 'react-test-renderer';
 import { MD3LightTheme, Provider } from '@jmstechnologiesinc/react-native-paper';
 
 import ChipList from '../src/ChipList/ChipList';
+import FormDriverInfo from '../src/Form/FormDriverInfo';
+import { setI18nConfig } from '../src/Localization/Localization';
 import SideNav from '../src/SideNav/SideNav';
 import * as Tabs from '../src/Tabs/Tabs';
 
@@ -67,6 +69,11 @@ const LEGACY_CASES = {
     ),
     'Tabs.Item without onPress': () => <Tabs.Item title="Selected" isSelected />,
     ChipList: () => <ChipList options={['All', 'Open', 'Closed']} currentIndex={1} onPress={() => {}} />,
+    // The driver onboarding form as the app renders it, captured before `readOnly`, `highlightFields` and
+    // `errors` were added (C-25): without them it must be the same tree.
+    'Form.DriverInfo (driver onboarding)': () => (
+        <FormDriverInfo licenseNumer="D1234567" ssn="123456789" inputActionHandler={() => {}} />
+    ),
 };
 
 const LEGACY_TREES = require('./__fixtures__/legacyTrees.json');
@@ -87,9 +94,13 @@ const IDENTICAL = [
     'SideNav drawer, collapsed (landscape)',
     'SideNav collapsed with a header',
     'ChipList',
+    'Form.DriverInfo (driver onboarding)',
 ];
 
 jest.useFakeTimers();
+
+// The form's labels come from the catalogue, as when its tree was captured.
+beforeAll(() => setI18nConfig());
 
 const renderJSON = (element) => {
     let tree;

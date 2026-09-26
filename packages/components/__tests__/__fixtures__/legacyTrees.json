@@ -2743,5 +2743,1201 @@
     ]
    }
   ]
+ },
+ "Form.DriverInfo (driver onboarding)": {
+  "type": "RNCSafeAreaProvider",
+  "props": {
+   "style": [
+    {
+     "flex": 1
+    },
+    null
+   ]
+  },
+  "children": [
+   {
+    "type": "View",
+    "props": {
+     "style": {
+      "flex": 1
+     },
+     "collapsable": false,
+     "pointerEvents": "box-none"
+    },
+    "children": [
+     {
+      "type": "View",
+      "props": {
+       "style": [
+        {
+         "paddingTop": 12.571428571428571,
+         "paddingBottom": 12.571428571428571
+        },
+        [
+         {
+          "flex": null
+         },
+         null
+        ]
+       ]
+      },
+      "children": [
+       {
+        "type": "Text",
+        "props": {
+         "style": [
+          {
+           "color": "rgb(31, 27, 22)"
+          },
+          {
+           "textAlign": "left"
+          },
+          [
+           {
+            "textAlign": "left"
+           },
+           {
+            "color": "rgba(31, 27, 22, 0.87)",
+            "writingDirection": "ltr"
+           },
+           [
+            {
+             "fontSize": 22,
+             "lineHeight": 31.428571428571427,
+             "marginVertical": 3.142857142857143,
+             "letterSpacing": 0.39285714285714285
+            },
+            null
+           ]
+          ]
+         ]
+        },
+        "children": [
+         "Before granting new drivers to access the platform, undefined uses Checkr as its third-party provider to run secure background checks to ensure safety and security of all members of its platform."
+        ]
+       }
+      ]
+     },
+     {
+      "type": "View",
+      "props": {
+       "style": [
+        {
+         "paddingTop": 12.571428571428571,
+         "paddingBottom": 12.571428571428571
+        },
+        [
+         {
+          "flex": null
+         },
+         null
+        ]
+       ]
+      },
+      "children": [
+       {
+        "type": "View",
+        "props": {
+         "style": {}
+        },
+        "children": [
+         {
+          "type": "View",
+          "props": {
+           "testID": "text-input-outline",
+           "pointerEvents": "none",
+           "style": [
+            {
+             "position": "absolute",
+             "left": 0,
+             "right": 0,
+             "top": 9.428571428571429,
+             "bottom": 0
+            },
+            false,
+            {
+             "backgroundColor": "rgb(255, 251, 255)",
+             "borderRadius": 6.285714285714286,
+             "borderWidth": 1,
+             "borderColor": "rgb(130, 117, 104)"
+            },
+            null
+           ]
+          },
+          "children": null
+         },
+         {
+          "type": "View",
+          "props": {
+           "style": [
+            {
+             "paddingBottom": 0
+            },
+            {
+             "paddingTop": 12.571428571428571,
+             "minHeight": 88
+            }
+           ]
+          },
+          "children": [
+           {
+            "type": "View",
+            "props": {
+             "pointerEvents": "none",
+             "style": {
+              "position": "absolute",
+              "left": 0,
+              "right": 0,
+              "top": 0,
+              "bottom": 0,
+              "zIndex": 3,
+              "width": 750,
+              "opacity": 0,
+              "transform": [
+               {
+                "translateX": 4.7142857142857135
+               }
+              ]
+             },
+             "collapsable": false
+            },
+            "children": [
+             {
+              "type": "View",
+              "props": {
+               "pointerEvents": "none",
+               "style": {
+                "position": "absolute",
+                "left": 15.714285714285714,
+                "right": 0,
+                "top": 9.428571428571429,
+                "bottom": 6.285714285714286,
+                "width": 18.857142857142858,
+                "backgroundColor": "rgb(255, 251, 255)",
+                "maxHeight": 2.0952380952380953,
+                "transform": [
+                 {
+                  "translateX": -4.7142857142857135
+                 }
+                ],
+                "opacity": 1
+               },
+               "collapsable": false
+              },
+              "children": null
+             },
+             {
+              "type": "Text",
+              "props": {
+               "testID": "text-input-outlined-label-background",
+               "numberOfLines": 1,
+               "maxFontSizeMultiplier": 1.5,
+               "style": {
+                "textAlign": "left",
+                "fontFamily": "System",
+                "letterSpacing": 0.2357142857142857,
+                "fontSize": 25.142857142857142,
+                "color": "transparent",
+                "writingDirection": "ltr",
+                "position": "absolute",
+                "left": 12.571428571428571,
+                "paddingHorizontal": 0,
+                "opacity": 1,
+                "transform": [
+                 {
+                  "translateX": 0
+                 },
+                 {
+                  "translateY": -40.57142857142857
+                 },
+                 {
+                  "scale": 0.75
+                 },
+                 {
+                  "scaleY": 0.2
+                 }
+                ],
+                "top": 51,
+                "width": -25.142857142857142,
+                "backgroundColor": "rgb(255, 251, 255)"
+               },
+               "collapsable": false
+              },
+              "children": null
+             },
+             {
+              "type": "Text",
+              "props": {
+               "numberOfLines": 1,
+               "maxFontSizeMultiplier": 1.5,
+               "testID": "text-input-outlined-label-active",
+               "style": {
+                "fontFamily": "System",
+                "fontSize": 25.142857142857142,
+                "letterSpacing": 0.2357142857142857,
+                "color": "rgb(133, 84, 0)",
+                "textAlign": "left",
+                "writingDirection": "ltr",
+                "position": "absolute",
+                "left": 0,
+                "paddingHorizontal": 25.142857142857142,
+                "top": 50,
+                "maxWidth": 139.85714285714286,
+                "opacity": 0,
+                "transform": [
+                 {
+                  "translateX": 0
+                 },
+                 {
+                  "translateY": -40.57142857142857
+                 },
+                 {
+                  "scale": 0.75
+                 }
+                ]
+               },
+               "collapsable": false
+              },
+              "children": [
+               "Driver license number"
+              ]
+             },
+             {
+              "type": "Text",
+              "props": {
+               "numberOfLines": 1,
+               "maxFontSizeMultiplier": 1.5,
+               "testID": "text-input-outlined-label-inactive",
+               "style": {
+                "fontFamily": "System",
+                "fontSize": 25.142857142857142,
+                "letterSpacing": 0.2357142857142857,
+                "color": "rgb(80, 69, 57)",
+                "textAlign": "left",
+                "writingDirection": "ltr",
+                "position": "absolute",
+                "left": 0,
+                "paddingHorizontal": 25.142857142857142,
+                "top": 50,
+                "maxWidth": 139.85714285714286,
+                "opacity": 0,
+                "transform": [
+                 {
+                  "translateX": 0
+                 },
+                 {
+                  "translateY": -40.57142857142857
+                 },
+                 {
+                  "scale": 0.75
+                 }
+                ]
+               },
+               "collapsable": false
+              },
+              "children": [
+               "Driver license number"
+              ]
+             }
+            ]
+           },
+           {
+            "type": "TextInput",
+            "props": {
+             "value": "D1234567",
+             "secureTextEntry": true,
+             "autoCapitalize": "none",
+             "autoCorrect": false,
+             "maxFontSizeMultiplier": 1.5,
+             "placeholder": " ",
+             "editable": true,
+             "selectionColor": "rgb(133, 84, 0)",
+             "cursorColor": "rgb(133, 84, 0)",
+             "placeholderTextColor": "rgb(80, 69, 57)",
+             "underlineColorAndroid": "transparent",
+             "multiline": false,
+             "style": [
+              {
+               "margin": 0
+              },
+              {
+               "height": 75.42857142857143
+              },
+              {
+               "paddingTop": 0,
+               "paddingBottom": 0
+              },
+              {
+               "fontFamily": "System",
+               "letterSpacing": 0.2357142857142857,
+               "fontSize": 25.142857142857142,
+               "color": "rgb(31, 27, 22)",
+               "textAlignVertical": "center",
+               "textAlign": "left",
+               "paddingHorizontal": 25.142857142857142,
+               "minWidth": 102.14285714285714
+              },
+              false,
+              {
+               "marginRight": 88,
+               "paddingRight": 0
+              },
+              null
+             ],
+             "testID": "text-input-outlined"
+            },
+            "children": null
+           }
+          ]
+         },
+         {
+          "type": "View",
+          "props": {
+           "style": [
+            {
+             "position": "absolute",
+             "width": 37.714285714285715,
+             "height": 37.714285714285715,
+             "justifyContent": "center",
+             "alignItems": "center"
+            },
+            {
+             "top": 29.857142857142858,
+             "right": 25.142857142857142
+            }
+           ]
+          },
+          "children": [
+           {
+            "type": "View",
+            "props": {
+             "style": {
+              "shadowColor": "#000",
+              "shadowOpacity": 0,
+              "shadowOffset": {
+               "width": 0,
+               "height": 0
+              },
+              "shadowRadius": 0
+             },
+             "collapsable": false
+            },
+            "children": [
+             {
+              "type": "View",
+              "props": {
+               "style": {
+                "shadowColor": "#000",
+                "shadowOpacity": 0,
+                "shadowOffset": {
+                 "width": 0,
+                 "height": 0
+                },
+                "shadowRadius": 0
+               },
+               "collapsable": false
+              },
+              "children": [
+               {
+                "type": "View",
+                "props": {
+                 "style": {
+                  "width": 62.85714285714286,
+                  "height": 62.85714285714286,
+                  "overflow": "hidden",
+                  "margin": 0,
+                  "elevation": 0,
+                  "borderWidth": 0,
+                  "borderRadius": 31.42857142857143,
+                  "borderColor": "rgb(130, 117, 104)"
+                 },
+                 "collapsable": false
+                },
+                "children": [
+                 {
+                  "type": "View",
+                  "props": {
+                   "centered": true,
+                   "accessibilityTraits": "button",
+                   "accessibilityComponentType": "button",
+                   "accessibilityRole": "button",
+                   "testID": "right-icon-adornment",
+                   "accessible": true,
+                   "accessibilityState": {
+                    "disabled": false
+                   },
+                   "focusable": true,
+                   "accessibilityValue": {},
+                   "hitSlop": {
+                    "top": 6,
+                    "left": 6,
+                    "bottom": 6,
+                    "right": 6
+                   },
+                   "style": [
+                    {
+                     "overflow": "hidden"
+                    },
+                    false,
+                    {
+                     "flexGrow": 1,
+                     "justifyContent": "center",
+                     "alignItems": "center"
+                    }
+                   ],
+                   "collapsable": false
+                  },
+                  "children": [
+                   {
+                    "type": "Text",
+                    "props": {
+                     "selectable": false,
+                     "allowFontScaling": false,
+                     "pointerEvents": "none",
+                     "accessibilityElementsHidden": true,
+                     "importantForAccessibility": "no-hide-descendants",
+                     "style": [
+                      {
+                       "fontSize": 37.714285714285715,
+                       "color": "rgb(80, 69, 57)"
+                      },
+                      [
+                       {
+                        "transform": [
+                         {
+                          "scaleX": 1
+                         }
+                        ],
+                        "lineHeight": 37.714285714285715
+                       },
+                       {
+                        "backgroundColor": "transparent"
+                       }
+                      ],
+                      {
+                       "fontFamily": "Material Design Icons",
+                       "fontWeight": "normal",
+                       "fontStyle": "normal"
+                      },
+                      {}
+                     ]
+                    },
+                    "children": [
+                     "󰈈"
+                    ]
+                   }
+                  ]
+                 }
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "type": "View",
+      "props": {
+       "style": [
+        {
+         "paddingTop": 12.571428571428571,
+         "paddingBottom": 12.571428571428571
+        },
+        [
+         {
+          "flex": null
+         },
+         null
+        ]
+       ]
+      },
+      "children": [
+       {
+        "type": "View",
+        "props": {
+         "style": {}
+        },
+        "children": [
+         {
+          "type": "View",
+          "props": {
+           "testID": "text-input-outline",
+           "pointerEvents": "none",
+           "style": [
+            {
+             "position": "absolute",
+             "left": 0,
+             "right": 0,
+             "top": 9.428571428571429,
+             "bottom": 0
+            },
+            false,
+            {
+             "backgroundColor": "rgb(255, 251, 255)",
+             "borderRadius": 6.285714285714286,
+             "borderWidth": 1,
+             "borderColor": "rgb(130, 117, 104)"
+            },
+            null
+           ]
+          },
+          "children": null
+         },
+         {
+          "type": "View",
+          "props": {
+           "style": [
+            {
+             "paddingBottom": 0
+            },
+            {
+             "paddingTop": 12.571428571428571,
+             "minHeight": 88
+            }
+           ]
+          },
+          "children": [
+           {
+            "type": "View",
+            "props": {
+             "pointerEvents": "none",
+             "style": {
+              "position": "absolute",
+              "left": 0,
+              "right": 0,
+              "top": 0,
+              "bottom": 0,
+              "zIndex": 3,
+              "width": 750,
+              "opacity": 1,
+              "transform": [
+               {
+                "translateX": 0
+               }
+              ]
+             },
+             "collapsable": false
+            },
+            "children": [
+             {
+              "type": "View",
+              "props": {
+               "pointerEvents": "none",
+               "style": {
+                "position": "absolute",
+                "left": 15.714285714285714,
+                "right": 0,
+                "top": 9.428571428571429,
+                "bottom": 6.285714285714286,
+                "width": 18.857142857142858,
+                "backgroundColor": "rgb(255, 251, 255)",
+                "maxHeight": 2.0952380952380953,
+                "transform": [
+                 {
+                  "translateX": 0
+                 }
+                ],
+                "opacity": -0.6666666666666667
+               },
+               "collapsable": false
+              },
+              "children": null
+             },
+             {
+              "type": "Text",
+              "props": {
+               "testID": "text-input-outlined-label-background",
+               "numberOfLines": 1,
+               "maxFontSizeMultiplier": 1.5,
+               "style": {
+                "textAlign": "left",
+                "fontFamily": "System",
+                "letterSpacing": 0.2357142857142857,
+                "fontSize": 25.142857142857142,
+                "color": "transparent",
+                "writingDirection": "ltr",
+                "position": "absolute",
+                "left": 12.571428571428571,
+                "paddingHorizontal": 0,
+                "opacity": -0.6666666666666667,
+                "transform": [
+                 {
+                  "translateX": 0
+                 },
+                 {
+                  "translateY": 0
+                 },
+                 {
+                  "scale": 1
+                 },
+                 {
+                  "scaleY": 1
+                 }
+                ],
+                "top": 51,
+                "width": -25.142857142857142,
+                "backgroundColor": "rgb(255, 251, 255)"
+               },
+               "collapsable": false
+              },
+              "children": null
+             },
+             {
+              "type": "Text",
+              "props": {
+               "numberOfLines": 1,
+               "maxFontSizeMultiplier": 1.5,
+               "testID": "text-input-outlined-label-active",
+               "style": {
+                "fontFamily": "System",
+                "fontSize": 25.142857142857142,
+                "letterSpacing": 0.2357142857142857,
+                "color": "rgb(133, 84, 0)",
+                "textAlign": "left",
+                "writingDirection": "ltr",
+                "position": "absolute",
+                "left": 0,
+                "paddingHorizontal": 25.142857142857142,
+                "top": 50,
+                "maxWidth": 114.71428571428571,
+                "opacity": 0,
+                "transform": [
+                 {
+                  "translateX": 0
+                 },
+                 {
+                  "translateY": 0
+                 },
+                 {
+                  "scale": 1
+                 }
+                ]
+               },
+               "collapsable": false
+              },
+              "children": [
+               "Date of birth"
+              ]
+             },
+             {
+              "type": "Text",
+              "props": {
+               "numberOfLines": 1,
+               "maxFontSizeMultiplier": 1.5,
+               "testID": "text-input-outlined-label-inactive",
+               "style": {
+                "fontFamily": "System",
+                "fontSize": 25.142857142857142,
+                "letterSpacing": 0.2357142857142857,
+                "color": "rgb(80, 69, 57)",
+                "textAlign": "left",
+                "writingDirection": "ltr",
+                "position": "absolute",
+                "left": 0,
+                "paddingHorizontal": 25.142857142857142,
+                "top": 50,
+                "maxWidth": 114.71428571428571,
+                "opacity": 0,
+                "transform": [
+                 {
+                  "translateX": 0
+                 },
+                 {
+                  "translateY": 0
+                 },
+                 {
+                  "scale": 1
+                 }
+                ]
+               },
+               "collapsable": false
+              },
+              "children": [
+               "Date of birth"
+              ]
+             }
+            ]
+           },
+           {
+            "type": "TextInput",
+            "props": {
+             "placeholder": " ",
+             "value": "",
+             "keyboardType": "numeric",
+             "maxLength": 10,
+             "maxFontSizeMultiplier": 1.5,
+             "editable": true,
+             "selectionColor": "rgb(133, 84, 0)",
+             "cursorColor": "rgb(133, 84, 0)",
+             "placeholderTextColor": "rgb(80, 69, 57)",
+             "underlineColorAndroid": "transparent",
+             "multiline": false,
+             "style": [
+              {
+               "margin": 0
+              },
+              {
+               "height": 75.42857142857143
+              },
+              {
+               "paddingTop": 0,
+               "paddingBottom": 0
+              },
+              {
+               "fontFamily": "System",
+               "letterSpacing": 0.2357142857142857,
+               "fontSize": 25.142857142857142,
+               "color": "rgb(31, 27, 22)",
+               "textAlignVertical": "center",
+               "textAlign": "left",
+               "paddingHorizontal": 25.142857142857142,
+               "minWidth": 102.14285714285714
+              },
+              false,
+              [
+               {}
+              ],
+              null
+             ],
+             "testID": "text-input-outlined"
+            },
+            "children": null
+           }
+          ]
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "type": "View",
+      "props": {
+       "style": [
+        {
+         "paddingTop": 12.571428571428571,
+         "paddingBottom": 12.571428571428571
+        },
+        [
+         {
+          "flex": null
+         },
+         null
+        ]
+       ]
+      },
+      "children": [
+       {
+        "type": "View",
+        "props": {
+         "style": {}
+        },
+        "children": [
+         {
+          "type": "View",
+          "props": {
+           "testID": "text-input-outline",
+           "pointerEvents": "none",
+           "style": [
+            {
+             "position": "absolute",
+             "left": 0,
+             "right": 0,
+             "top": 9.428571428571429,
+             "bottom": 0
+            },
+            false,
+            {
+             "backgroundColor": "rgb(255, 251, 255)",
+             "borderRadius": 6.285714285714286,
+             "borderWidth": 1,
+             "borderColor": "rgb(130, 117, 104)"
+            },
+            null
+           ]
+          },
+          "children": null
+         },
+         {
+          "type": "View",
+          "props": {
+           "style": [
+            {
+             "paddingBottom": 0
+            },
+            {
+             "paddingTop": 12.571428571428571,
+             "minHeight": 88
+            }
+           ]
+          },
+          "children": [
+           {
+            "type": "View",
+            "props": {
+             "pointerEvents": "none",
+             "style": {
+              "position": "absolute",
+              "left": 0,
+              "right": 0,
+              "top": 0,
+              "bottom": 0,
+              "zIndex": 3,
+              "width": 750,
+              "opacity": 0,
+              "transform": [
+               {
+                "translateX": 4.7142857142857135
+               }
+              ]
+             },
+             "collapsable": false
+            },
+            "children": [
+             {
+              "type": "View",
+              "props": {
+               "pointerEvents": "none",
+               "style": {
+                "position": "absolute",
+                "left": 15.714285714285714,
+                "right": 0,
+                "top": 9.428571428571429,
+                "bottom": 6.285714285714286,
+                "width": 18.857142857142858,
+                "backgroundColor": "rgb(255, 251, 255)",
+                "maxHeight": 2.0952380952380953,
+                "transform": [
+                 {
+                  "translateX": -4.7142857142857135
+                 }
+                ],
+                "opacity": 1
+               },
+               "collapsable": false
+              },
+              "children": null
+             },
+             {
+              "type": "Text",
+              "props": {
+               "testID": "text-input-outlined-label-background",
+               "numberOfLines": 1,
+               "maxFontSizeMultiplier": 1.5,
+               "style": {
+                "textAlign": "left",
+                "fontFamily": "System",
+                "letterSpacing": 0.2357142857142857,
+                "fontSize": 25.142857142857142,
+                "color": "transparent",
+                "writingDirection": "ltr",
+                "position": "absolute",
+                "left": 12.571428571428571,
+                "paddingHorizontal": 0,
+                "opacity": 1,
+                "transform": [
+                 {
+                  "translateX": 0
+                 },
+                 {
+                  "translateY": -40.57142857142857
+                 },
+                 {
+                  "scale": 0.75
+                 },
+                 {
+                  "scaleY": 0.2
+                 }
+                ],
+                "top": 51,
+                "width": -25.142857142857142,
+                "backgroundColor": "rgb(255, 251, 255)"
+               },
+               "collapsable": false
+              },
+              "children": null
+             },
+             {
+              "type": "Text",
+              "props": {
+               "numberOfLines": 1,
+               "maxFontSizeMultiplier": 1.5,
+               "testID": "text-input-outlined-label-active",
+               "style": {
+                "fontFamily": "System",
+                "fontSize": 25.142857142857142,
+                "letterSpacing": 0.2357142857142857,
+                "color": "rgb(133, 84, 0)",
+                "textAlign": "left",
+                "writingDirection": "ltr",
+                "position": "absolute",
+                "left": 0,
+                "paddingHorizontal": 25.142857142857142,
+                "top": 50,
+                "maxWidth": 139.85714285714286,
+                "opacity": 0,
+                "transform": [
+                 {
+                  "translateX": 0
+                 },
+                 {
+                  "translateY": -40.57142857142857
+                 },
+                 {
+                  "scale": 0.75
+                 }
+                ]
+               },
+               "collapsable": false
+              },
+              "children": [
+               "Social security number"
+              ]
+             },
+             {
+              "type": "Text",
+              "props": {
+               "numberOfLines": 1,
+               "maxFontSizeMultiplier": 1.5,
+               "testID": "text-input-outlined-label-inactive",
+               "style": {
+                "fontFamily": "System",
+                "fontSize": 25.142857142857142,
+                "letterSpacing": 0.2357142857142857,
+                "color": "rgb(80, 69, 57)",
+                "textAlign": "left",
+                "writingDirection": "ltr",
+                "position": "absolute",
+                "left": 0,
+                "paddingHorizontal": 25.142857142857142,
+                "top": 50,
+                "maxWidth": 139.85714285714286,
+                "opacity": 0,
+                "transform": [
+                 {
+                  "translateX": 0
+                 },
+                 {
+                  "translateY": -40.57142857142857
+                 },
+                 {
+                  "scale": 0.75
+                 }
+                ]
+               },
+               "collapsable": false
+              },
+              "children": [
+               "Social security number"
+              ]
+             }
+            ]
+           },
+           {
+            "type": "TextInput",
+            "props": {
+             "value": "123456789",
+             "secureTextEntry": true,
+             "autoCapitalize": "none",
+             "autoCorrect": false,
+             "maxFontSizeMultiplier": 1.5,
+             "placeholder": " ",
+             "editable": true,
+             "selectionColor": "rgb(133, 84, 0)",
+             "cursorColor": "rgb(133, 84, 0)",
+             "placeholderTextColor": "rgb(80, 69, 57)",
+             "underlineColorAndroid": "transparent",
+             "multiline": false,
+             "style": [
+              {
+               "margin": 0
+              },
+              {
+               "height": 75.42857142857143
+              },
+              {
+               "paddingTop": 0,
+               "paddingBottom": 0
+              },
+              {
+               "fontFamily": "System",
+               "letterSpacing": 0.2357142857142857,
+               "fontSize": 25.142857142857142,
+               "color": "rgb(31, 27, 22)",
+               "textAlignVertical": "center",
+               "textAlign": "left",
+               "paddingHorizontal": 25.142857142857142,
+               "minWidth": 102.14285714285714
+              },
+              false,
+              {
+               "marginRight": 88,
+               "paddingRight": 0
+              },
+              null
+             ],
+             "testID": "text-input-outlined"
+            },
+            "children": null
+           }
+          ]
+         },
+         {
+          "type": "View",
+          "props": {
+           "style": [
+            {
+             "position": "absolute",
+             "width": 37.714285714285715,
+             "height": 37.714285714285715,
+             "justifyContent": "center",
+             "alignItems": "center"
+            },
+            {
+             "top": 29.857142857142858,
+             "right": 25.142857142857142
+            }
+           ]
+          },
+          "children": [
+           {
+            "type": "View",
+            "props": {
+             "style": {
+              "shadowColor": "#000",
+              "shadowOpacity": 0,
+              "shadowOffset": {
+               "width": 0,
+               "height": 0
+              },
+              "shadowRadius": 0
+             },
+             "collapsable": false
+            },
+            "children": [
+             {
+              "type": "View",
+              "props": {
+               "style": {
+                "shadowColor": "#000",
+                "shadowOpacity": 0,
+                "shadowOffset": {
+                 "width": 0,
+                 "height": 0
+                },
+                "shadowRadius": 0
+               },
+               "collapsable": false
+              },
+              "children": [
+               {
+                "type": "View",
+                "props": {
+                 "style": {
+                  "width": 62.85714285714286,
+                  "height": 62.85714285714286,
+                  "overflow": "hidden",
+                  "margin": 0,
+                  "elevation": 0,
+                  "borderWidth": 0,
+                  "borderRadius": 31.42857142857143,
+                  "borderColor": "rgb(130, 117, 104)"
+                 },
+                 "collapsable": false
+                },
+                "children": [
+                 {
+                  "type": "View",
+                  "props": {
+                   "centered": true,
+                   "accessibilityTraits": "button",
+                   "accessibilityComponentType": "button",
+                   "accessibilityRole": "button",
+                   "testID": "right-icon-adornment",
+                   "accessible": true,
+                   "accessibilityState": {
+                    "disabled": false
+                   },
+                   "focusable": true,
+                   "accessibilityValue": {},
+                   "hitSlop": {
+                    "top": 6,
+                    "left": 6,
+                    "bottom": 6,
+                    "right": 6
+                   },
+                   "style": [
+                    {
+                     "overflow": "hidden"
+                    },
+                    false,
+                    {
+                     "flexGrow": 1,
+                     "justifyContent": "center",
+                     "alignItems": "center"
+                    }
+                   ],
+                   "collapsable": false
+                  },
+                  "children": [
+                   {
+                    "type": "Text",
+                    "props": {
+                     "selectable": false,
+                     "allowFontScaling": false,
+                     "pointerEvents": "none",
+                     "accessibilityElementsHidden": true,
+                     "importantForAccessibility": "no-hide-descendants",
+                     "style": [
+                      {
+                       "fontSize": 37.714285714285715,
+                       "color": "rgb(80, 69, 57)"
+                      },
+                      [
+                       {
+                        "transform": [
+                         {
+                          "scaleX": 1
+                         }
+                        ],
+                        "lineHeight": 37.714285714285715
+                       },
+                       {
+                        "backgroundColor": "transparent"
+                       }
+                      ],
+                      {
+                       "fontFamily": "Material Design Icons",
+                       "fontWeight": "normal",
+                       "fontStyle": "normal"
+                      },
+                      {}
+                     ]
+                    },
+                    "children": [
+                     "󰈈"
+                    ]
+                   }
+                  ]
+                 }
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   }
+  ]
  }
 }

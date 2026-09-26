@@ -19,17 +19,20 @@ import * as PartnerViewModel from './Partner/viewModel';
 import FormPersonInfo from './Form/FormPersonInfo';
 import FormVehicleInfo from './Form/FormVehicleInfo';
 import FormBusinessInfo from './Form/FormBusinessInfo';
+import FormDriverInfo from './Form/FormDriverInfo';
 import FormEmailPassword from './Form/FormEmailPassword';
 import SecretInputText from './Form/SecretInputText';
 import StripeFormAccountBank from './StripeForm/StripeFormAccountBank';
 
-// The forms the web needs (canon §17.4, §17.6). `Form.PhoneNumber` stays in
-// the barrel because its phone-input library imports this package's barrel
-// back; the others are not used by any partner view.
+// The forms the web needs (canon §17.4, §17.6); `DriverInfo` shows a driver's
+// answers read-only in the admin app. `Form.PhoneNumber` stays in the barrel
+// because its phone-input library imports this package's barrel back; the
+// others are not used by any partner view.
 const Form = Object.freeze({
     PersonInfo: FormPersonInfo,
     VehicleInfo: FormVehicleInfo,
     BusinessInfo: FormBusinessInfo,
+    DriverInfo: FormDriverInfo,
     EmailPassword: FormEmailPassword,
     SecretInputText,
 });
@@ -73,3 +76,60 @@ export { default as DecisionDialog } from './DecisionDialog/DecisionDialog';
 export { useModalFocus } from './useModalFocus';
 export { default as Timeline } from './Timeline/Timeline';
 export { STATUS_TONES, toneColors } from './tones';
+
+// The generic UI of a web host (the partner console, the admin app), moved
+// here from the console: the MD3 pane system, data display and feedback,
+// fields and utilities. Portable, themed through `useTheme()`, labels by props
+// with `global.*` defaults. Also served by `portable.js`.
+export {
+    BOTTOM_SHEET_MAX_HEIGHT,
+    LAYOUT,
+    PANE,
+    SIZE_CLASS,
+    SIZE_CLASS_BREAKPOINTS,
+    SUPPORTING_MODE,
+    paneMetrics,
+    sizeClassOf,
+    tokenScale,
+    usePaneMetrics,
+    useWindowSizeClass,
+    paneArrangement,
+    usePaneContext,
+    PaneLayout,
+    Pane,
+    PaneHeader,
+    PaneFooter,
+    footerButtons,
+    SideSheet,
+    BottomSheet,
+    SheetHeader,
+    NavigationRail,
+} from './Layout';
+export { default as SectionCard } from './SectionCard/SectionCard';
+export { default as KeyValueList } from './KeyValueList/KeyValueList';
+export { default as ListRow } from './ListRow/ListRow';
+export { iconSlot, nodeSlot } from './ListRow/listSlots';
+export { default as MutedText } from './MutedText/MutedText';
+export { EmptyState, LoadingState, ErrorState } from './States/States';
+export { SnackbarProvider, useSnackbar } from './Snackbar/Snackbar';
+export { default as DataTableView, SORT_DIRECTION, SORT_MODE, sortRows, nextSort } from './DataTableView/DataTableView';
+export { default as CodeBlock, codeText } from './CodeBlock/CodeBlock';
+export { default as NoteField } from './NoteField/NoteField';
+export { default as RadioGroupField } from './RadioGroupField/RadioGroupField';
+export { default as CheckboxListField } from './CheckboxListField/CheckboxListField';
+export { default as FilterChips } from './FilterChips/FilterChips';
+export { default as StatusBanner } from './StatusBanner/StatusBanner';
+export { default as AvatarDisplay } from './ImagePicker/AvatarDisplay';
+export { ChangedHelperText, FieldErrorText, FieldErrorList } from './Form/FormField';
+export { useNow } from './useNow';
+export { valueText, EMPTY_VALUE } from './valueText';
+export {
+    DATE_PATTERN,
+    DATE_TIME_PATTERN,
+    formatCalendarDate,
+    formatDateInput,
+    parseCalendarDate,
+    parseDateInput,
+    isBlankDay,
+    parseDay,
+} from './DateInput';
