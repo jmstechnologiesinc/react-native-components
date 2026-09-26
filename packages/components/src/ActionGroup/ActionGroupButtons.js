@@ -17,6 +17,8 @@ const ActionGroupButtons = ({ buttons, isLoading, isStretched = false, style, on
             {buttons.map((button, index) => {
                 return (
                     <View
+                        // Buttons are a short static list; a host-provided `key` wins when it reorders them.
+                        key={button.key ?? index}
                         style={[
                             {
                                 ...(isStretched ? { flex: 1 } : null),
