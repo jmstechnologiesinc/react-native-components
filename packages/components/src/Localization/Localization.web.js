@@ -4,7 +4,7 @@ import { initReactI18next } from 'react-i18next';
 
 import enTranslation from './Translations/en.json';
 import esTranslation from './Translations/es.json';
-import { narrationText, FALLBACK_LOCALE } from './catalog';
+import { addFlatCatalog, catalogText, FALLBACK_LOCALE } from './catalog';
 
 // ADR-0017 §5.4 — the web twin, made a twin.
 //
@@ -56,9 +56,29 @@ i18n.use(LanguageDetector)
 // `defaultValue` is applied LAST on purpose: it is this module's answer, not
 // a caller's option to override.
 export const localized = (key, config = {}) =>
-    i18n.t(key, { ...config, defaultValue: narrationText(key, i18n.language) ?? key });
+    i18n.t(key, { ...config, defaultValue: catalogText(key, currentLocale()) ?? key });
 
 export default i18n;
+
+/**
+ * The language i18next actually answers in. `language` is what the detector
+ * read (`es-ES`); `resolvedLanguage` is the supported one it resolved to
+ * (`es`), which is the one the catalogues are keyed by.
+ */
+export const currentLocale = () => i18n.resolvedLanguage || i18n.language || FALLBACK_LOCALE;
+
+/**
+ * Registers a flat `{ en: { key: text }, es: { … } }` catalogue, exactly as the
+ * native twin does. It is ALSO added to i18next as a resource bundle, so a host
+ * reading the same keys through `react-i18next` (`useTranslation`) gets the
+ * same text; i18next resolves flat dotted keys by itself.
+ */
+export const registerFlatCatalog = (catalog) => {
+    addFlatCatalog(catalog);
+    for (const [locale, entries] of Object.entries(catalog || {})) {
+        i18n.addResourceBundle(locale, 'translation', entries, true, true);
+    }
+};
 
 // The native twin configures `i18n-js` on demand — the app and the stories
 // call this before rendering. Here i18next is configured once, above, at

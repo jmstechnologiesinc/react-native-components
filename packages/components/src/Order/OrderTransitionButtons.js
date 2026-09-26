@@ -2,7 +2,8 @@ import React from 'react';
 
 import { MD3Colors } from '@jmstechnologiesinc/react-native-paper';
 import { TONES } from '@jmstechnologiesinc/order-narration';
-import { ActionGroup, ScreenWrapper } from '@jmstechnologiesinc/react-native-components';
+import * as ActionGroup from '../ActionGroup/ActionGroup';
+import ScreenWrapper from '../ScreenWrapper';
 
 // ADR-0017 §5.4 — the buttons stop reading the status.
 //

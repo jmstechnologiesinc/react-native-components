@@ -1,13 +1,14 @@
 import React, { useRef, useMemo, useCallback } from 'react';
 
 import BottomSheet, { BottomSheetFooter } from '@jmstechnologiesinc/bottom-sheet';
-import { localized, LocationListItem, LOCATION_LIST_ITEM } from '@jmstechnologiesinc/react-native-components';
+import { localized } from '../../Localization/Localization';
+import { LocationListItem, LOCATION_LIST_ITEM } from '../../LocationListItem/LocationListItem';
 
 import { MD3LightTheme, ProgressBar, Button } from '@jmstechnologiesinc/react-native-paper';
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { styles as JMSStyles } from '@jmstechnologiesinc/react-native-components';
+import JMSStyles from '../../styles';
 
 const AddressSelectionSheet = ({ currentMapAdress, onSaveLocation, isLoading, buttonWithBottomInset = true }) => {
     const sheetRef = useRef(null);

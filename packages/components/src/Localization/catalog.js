@@ -48,6 +48,33 @@ const NARRATION = Object.freeze({
 export const narrationText = (key, locale) =>
     NARRATION[locale]?.[key] ?? NARRATION[FALLBACK_LOCALE]?.[key] ?? null;
 
+// C-25 — FLAT CATALOGUES THE HOST REGISTERS (`registerFlatCatalog`).
+//
+// The partner catalogue belongs to `@jmstechnologiesinc/partner` (canon R2),
+// not to this package, and it has the narration's shape: flat, dotted, with
+// values that are themselves dotted (`partner.disabled_reason.rejected.fraud`).
+// So it is served through the same seam, by exact match, and for the same
+// reasons given above. It is also NOT written into `i18n.translations`: the
+// native `setI18nConfig` replaces that object wholesale on every language
+// change, and a registration that vanished on the first change would be a
+// defect nobody sees in English.
+const REGISTERED = {};
+
+/** `{ en: { key: text }, es: { … } }`, merged over earlier registrations. */
+export const addFlatCatalog = (catalog) => {
+    for (const [locale, entries] of Object.entries(catalog || {})) {
+        REGISTERED[locale] = { ...REGISTERED[locale], ...entries };
+    }
+};
+
+/**
+ * The text of a key from a flat catalogue — a registered one first, then the
+ * narration — with the `es -> en` chain applied, or `null` when no flat
+ * catalogue owns the key.
+ */
+export const catalogText = (key, locale) =>
+    REGISTERED[locale]?.[key] ?? REGISTERED[FALLBACK_LOCALE]?.[key] ?? narrationText(key, locale);
+
 /** Deep merge, `extra` winning at the leaves — the shape the library's own
  *  nested catalogues have, and the same semantics the app uses to add its
  *  strings on top (`installAppTranslations`). */

@@ -7,7 +7,7 @@ import { PhoneInput } from '@jmstechnologiesinc/react-native-phone-input';
 
 import { localized } from '../Localization/Localization';
 import FormVerificationCode from './FormVerificationCode';
-import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
+import ScreenWrapper from '../ScreenWrapper';
 import CountryPicker from './CountryPicker';
 
 const FormPhoneNumber = ({

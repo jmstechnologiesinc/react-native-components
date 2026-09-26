@@ -19,7 +19,8 @@ jest.mock('react-native-localize', () => ({
 
 import * as RNLocalize from 'react-native-localize';
 
-import { localized, setI18nConfig } from '../Localization';
+import { localized, setI18nConfig, registerFlatCatalog, currentLocale } from '../Localization';
+import { formatDateTime } from '../format';
 import { narrationText, merge, SUPPORTED_LOCALES, FALLBACK_LOCALE } from '../catalog';
 
 const useLocale = (tag) => {
@@ -131,5 +132,64 @@ describe('localized — the memo carries the locale (§2.2 defect 3)', () => {
         // correct rather than stale.
         i18n.locale = 'en';
         expect(localized('probe.word')).toBe('Driver');
+    });
+});
+
+describe('registerFlatCatalog — a host catalogue, flat and dotted (C-25)', () => {
+    const PARTNER_LIKE = {
+        en: {
+            'probe.flat.status.active': 'Active',
+            'probe.flat.reason.rejected.fraud': 'Fraud',
+            'probe.flat.greet': 'Hello %{name}',
+            'probe.flat.onlyEn': 'Only in English',
+        },
+        es: {
+            'probe.flat.status.active': 'Activo',
+            'probe.flat.reason.rejected.fraud': 'Fraude',
+            'probe.flat.greet': 'Hola %{name}',
+        },
+    };
+
+    it('answers a key looked up BEFORE the registration once it is registered', () => {
+        // The memo cached the miss as the key itself; registering clears it.
+        expect(localized('probe.flat.status.active')).toBe('probe.flat.status.active');
+        registerFlatCatalog(PARTNER_LIKE);
+        expect(localized('probe.flat.status.active')).toBe('Activo');
+    });
+
+    it('resolves a key whose VALUE is itself dotted, by exact match', () => {
+        registerFlatCatalog(PARTNER_LIKE);
+        expect(localized('probe.flat.reason.rejected.fraud')).toBe('Fraude');
+    });
+
+    it('interpolates %{name} and falls back es -> en', () => {
+        registerFlatCatalog(PARTNER_LIKE);
+        expect(localized('probe.flat.greet', { name: 'Marcos' })).toBe('Hola Marcos');
+        expect(localized('probe.flat.onlyEn')).toBe('Only in English');
+    });
+
+    it('survives a language change, which replaces i18n.translations wholesale', () => {
+        registerFlatCatalog(PARTNER_LIKE);
+        useLocale('en');
+        expect(localized('probe.flat.status.active')).toBe('Active');
+        useLocale('es');
+        expect(localized('probe.flat.status.active')).toBe('Activo');
+    });
+});
+
+describe('format.js — the locale is the app\'s, read from the active twin', () => {
+    const INSTANT = Date.UTC(2026, 8, 26, 15, 30);
+    const LONG_DATE = { dateStyle: 'long', timeZone: 'UTC' };
+
+    it('formats in the app language', () => {
+        expect(currentLocale()).toBe('es');
+        expect(formatDateTime(INSTANT, LONG_DATE)).toBe('26 de septiembre de 2026');
+        useLocale('en');
+        expect(formatDateTime(INSTANT, LONG_DATE)).toBe('September 26, 2026');
+    });
+
+    it('answers null for an absent instant instead of «Invalid Date»', () => {
+        expect(formatDateTime(undefined)).toBeNull();
+        expect(formatDateTime('not a date')).toBeNull();
     });
 });

@@ -1,14 +1,15 @@
 import React from 'react';
 
-import { TextInput, HelperText, Divider, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
+import { HelperText, Divider, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
 import { VENDOR_INDUSTRIES_MAPPING, VENDOR_INDUSTRIES } from '@jmstechnologiesinc/vendor';
 
-import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
+import ScreenWrapper from '../ScreenWrapper';
 import { localized } from '../Localization/Localization';
 import OptionPickerActionSheet from '../OptionPicker/OptionPickerActionSheet';
 
 import SecretInputText from './SecretInputText';
+import FormField, { ChangedHelperText, isHighlighted } from './FormField';
 
 export const INDUSTRY_LIST = [
     {
@@ -78,6 +79,8 @@ export const INDUSTRY_LIST = [
 
 const FormBusinessInfo = ({
     isDisabled,
+    readOnly = false,
+    highlightFields,
     title = localized('businessDetails'),
     description,
     storeTitle,
@@ -94,44 +97,50 @@ const FormBusinessInfo = ({
     inputActionHandler,
     industries,
 }) => {
+    const disabled = Boolean(isDisabled || readOnly);
+
     return (
         <>
             <ScreenWrapper.Container>
                 <ScreenWrapper.Section title={title}>
-                    <TextInput
+                    <FormField
                         mode="outlined"
+                        highlighted={isHighlighted(highlightFields, 'title')}
+                        disabled={disabled}
                         label={localized('storeName')}
                         value={storeTitle}
-                        disabled={isDisabled}
                         autoCapitalize="words"
                         onChangeText={(text) => inputActionHandler('title', text)}
                     />
                 </ScreenWrapper.Section>
                 <ScreenWrapper.Section>
-                    <TextInput
+                    <FormField
                         mode="outlined"
+                        highlighted={isHighlighted(highlightFields, 'description')}
+                        disabled={disabled}
                         label={localized('storeHighlightsDescription')}
                         value={description}
-                        disabled={isDisabled}
                         onChangeText={(text) => inputActionHandler('description', text)}
                     />
                 </ScreenWrapper.Section>
                 <ScreenWrapper.Section>
-                    <TextInput
+                    <FormField
                         mode="outlined"
+                        highlighted={isHighlighted(highlightFields, 'location')}
+                        disabled={disabled}
                         label={localized('storeAddress')}
                         value={location}
-                        disabled={isDisabled}
                         autoCapitalize="words"
                         onChangeText={(text) => inputActionHandler('location', text)}
                     />
                 </ScreenWrapper.Section>
                 <ScreenWrapper.Section>
-                    <TextInput
+                    <FormField
                         mode="outlined"
+                        highlighted={isHighlighted(highlightFields, 'line2')}
+                        disabled={disabled}
                         label={localized('floorSuite')}
                         value={line2}
-                        disabled={isDisabled}
                         autoCapitalize="characters"
                         autoCorrect={false}
                         onChangeText={(text) => inputActionHandler('line2', text)}
@@ -140,11 +149,12 @@ const FormBusinessInfo = ({
 
                 {showPhoneNumber ? (
                     <ScreenWrapper.Section>
-                        <TextInput
+                        <FormField
                             mode="outlined"
+                            highlighted={isHighlighted(highlightFields, 'phoneNumber')}
+                            disabled={disabled}
                             label={localized('phoneNumber')}
                             value={phoneNumber}
-                            disabled={isDisabled}
                             keyboardType="numeric"
                             onChangeText={(text) => inputActionHandler('phoneNumber', text)}
                         />
@@ -153,11 +163,12 @@ const FormBusinessInfo = ({
                 ) : null}
                 {showEmail ? (
                     <ScreenWrapper.Section>
-                        <TextInput
+                        <FormField
                             mode="outlined"
+                            highlighted={isHighlighted(highlightFields, 'email')}
+                            disabled={disabled}
                             label={localized('email')}
                             value={email}
-                            disabled={isDisabled}
                             autoCapitalize="none"
                             autoCorrect={false}
                             keyboardType="email-address"
@@ -169,11 +180,12 @@ const FormBusinessInfo = ({
                 ) : null}
                 {showWebsite ? (
                     <ScreenWrapper.Section>
-                        <TextInput
+                        <FormField
                             mode="outlined"
+                            highlighted={isHighlighted(highlightFields, 'website')}
+                            disabled={disabled}
                             label={localized('website')}
                             value={website}
-                            disabled={isDisabled}
                             autoCapitalize="none"
                             autoCorrect={false}
                             keyboardType="url"
@@ -184,11 +196,13 @@ const FormBusinessInfo = ({
                 ) : null}
                 {showTIN ? (
                     <ScreenWrapper.Section>
-                        <SecretInputText
+                        <FormField
+                            input={SecretInputText}
                             mode="outlined"
+                            highlighted={isHighlighted(highlightFields, 'tin')}
+                            disabled={disabled}
                             label={localized('taxIdentificationNumber')}
                             value={tin}
-                            disabled={isDisabled}
                             onChangeText={(text) => inputActionHandler('tin', text)}
                         />
                         <HelperText>{localized('helpTextTaxIdentificationNumber')}</HelperText>
@@ -199,7 +213,7 @@ const FormBusinessInfo = ({
             <Divider style={{ marginTop: MD3LightTheme.spacing.x1 }} />
             <ScreenWrapper.Container>
                 <OptionPickerActionSheet
-                    isDisabled={isDisabled}
+                    isDisabled={disabled}
                     chipListTitle={localized('Industries')}
                     addButtonTitle={localized('pick')}
                     helpText={localized('helpTextIndustries')}
@@ -213,6 +227,7 @@ const FormBusinessInfo = ({
                     })}
                     onPress={(selectedOptions) => inputActionHandler('industries', selectedOptions)}
                 />
+                <ChangedHelperText visible={isHighlighted(highlightFields, 'industries')} />
             </ScreenWrapper.Container>
         </>
     );

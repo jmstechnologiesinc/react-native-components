@@ -6,7 +6,7 @@ import { checkAndAskForPermission, gpsLocation } from '.';
 import { Banner, List } from '@jmstechnologiesinc/react-native-paper';
 
 import { localized } from '../Localization/Localization';
-import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
+import ScreenWrapper from '../ScreenWrapper';
 import AutoCompleteInput from '../AutoCompleteInput';
 
 import { LocationListItem } from '../LocationListItem/LocationListItem';

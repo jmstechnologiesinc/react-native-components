@@ -3,7 +3,8 @@ import React from 'react';
 import { Divider, List } from '@jmstechnologiesinc/react-native-paper';
 import { plurulize } from '@jmstechnologiesinc/commons';
 import { LOCATION_LIST_ITEM, LocationListItem } from '../LocationListItem/LocationListItem';
-import { localized, itemSeparator } from '@jmstechnologiesinc/react-native-components';
+import { localized } from '../Localization/Localization';
+import { itemSeparator } from '../utils';
 
 const RecentLocations = ({
     title = localized('savedAddresses'),

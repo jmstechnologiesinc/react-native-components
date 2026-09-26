@@ -8,7 +8,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ImagePickerAPI from './ImagePickerAPI';
 import { localized } from '../Localization/Localization';
 
-import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
+import ScreenWrapper from '../ScreenWrapper';
 import ButtonWrapper from '../ButtonWrapper/ButtonWrapper';
 import { Platform } from 'react-native';
 

@@ -35,4 +35,9 @@ const Config = {
             : ENV.CORS_PROXY_DISPATCHER_APP,
 };
 
+/** Merges the host's values over the ones read from the environment. A native
+ *  app never needs it; it exists so both twins expose the same surface (see
+ *  `Config.web.js`). */
+export const configureComponents = (values = {}) => Object.assign(Config, values);
+
 export { Config };

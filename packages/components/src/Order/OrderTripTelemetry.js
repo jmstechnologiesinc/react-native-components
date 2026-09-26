@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { List } from '@jmstechnologiesinc/react-native-paper';
-import { localized } from '@jmstechnologiesinc/react-native-components';
+import { localized } from '../Localization/Localization';
 // import RNLocalize from 'react-native-localize';
 import * as RNLocalize from 'react-native-localize';
 import { translateUnit } from '@jmstechnologiesinc/commons';

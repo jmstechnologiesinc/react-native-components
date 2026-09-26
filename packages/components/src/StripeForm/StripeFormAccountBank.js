@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { TextInput } from '@jmstechnologiesinc/react-native-paper';
-import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
+import ScreenWrapper from '../ScreenWrapper';
 import { localized } from '../Localization/Localization';
 
 const StripeFormAccountBank = ({

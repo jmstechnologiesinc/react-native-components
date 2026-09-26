@@ -14,13 +14,18 @@ module.exports = {
     '../packages/components/src/ActionGroup/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/CartList/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/ChipList/*.stories.?(ts|tsx|js|jsx)',
+    '../packages/components/src/DecisionDialog/*.stories.?(ts|tsx|js|jsx)',
+    '../packages/components/src/DocumentViewer/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/DynamicForm/*.stories.?(ts|tsx|js|jsx)',
+    // C-35: the forms the partner console reuses (C-25 readOnly/highlightFields).
+    '../packages/components/src/Form/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/Earnings/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/IndustryList/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/MenuScheduleForm/*.stories.?(ts|tsx|js|jsx)',
     // ADR-0017 §7 rebanada 2 — `Order/` had no stories at all. This list is
     // hand-maintained (PROJECT.md: «the step most easily forgotten»).
     '../packages/components/src/Order/*.stories.?(ts|tsx|js|jsx)',
+    '../packages/components/src/Partner/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/PhotoGallery/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/ProductList/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/ProductView/*.stories.?(ts|tsx|js|jsx)',
@@ -30,6 +35,7 @@ module.exports = {
     '../packages/components/src/StickySectionList/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/SwipeToDelete/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/Tabs/*.stories.?(ts|tsx|js|jsx)',
+    '../packages/components/src/Timeline/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/TouchableRippleWrapper/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/VendorList/*.stories.?(ts|tsx|js|jsx)',
   ],

@@ -6,10 +6,11 @@ import * as Form from './Form/Form';
 import * as StripeForm from './StripeForm/StripeForm';
 
 import * as ImagePicker from './ImagePicker/ImagePicker';
+import * as PartnerViewModel from './Partner/viewModel';
 
 export { default as styles } from './styles';
 
-export { List, ImagePicker, Tabs, ProductList, ActionGroup, Form, StripeForm };
+export { List, ImagePicker, Tabs, ProductList, ActionGroup, Form, StripeForm, PartnerViewModel };
 
 export { default as VendorList } from './VendorList/VendorList';
 export { default as SegmentedButtonGroup } from './SegmentedButtonGroup/SegmentedButtonGroup';
@@ -73,9 +74,18 @@ export { default as TNActivityIndicator } from './truly-native/TNActivityIndicat
 export { default as TNEmptyStateView } from './truly-native/TNEmptyStateView';
 
 export { LAYOUT_MODE } from './consts';
-export { localized, setI18nConfig } from './Localization/Localization';
+export { configureComponents } from './Config';
+export { localized, setI18nConfig, registerFlatCatalog, currentLocale } from './Localization/Localization';
+export { merge } from './Localization/catalog';
 export { formatDateTime, formatTime, formatRelativeTime } from './Localization/format';
 export { localizedAuthError } from './Localization/authErrors';
+
+// K-22 — also served by `portable.js`, the entry a web host imports.
+export { default as StatusChip, SlaChip } from './Partner/StatusChip';
+export { default as DocumentViewer } from './DocumentViewer/DocumentViewer';
+export { default as DecisionDialog } from './DecisionDialog/DecisionDialog';
+export { default as Timeline } from './Timeline/Timeline';
+export { STATUS_TONES, toneColors } from './tones';
 
 export { default as TipsFilter } from './TipsFilter/TipsFilter';
 export { default as CheckoutSummary } from './CheckoutSummary/CheckoutSummary';

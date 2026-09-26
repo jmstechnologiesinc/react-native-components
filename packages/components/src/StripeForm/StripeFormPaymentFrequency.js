@@ -1,7 +1,7 @@
 import React from 'react';
 import { List } from '@jmstechnologiesinc/react-native-paper';
 import * as JMSList from '../List/List';
-import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
+import ScreenWrapper from '../ScreenWrapper';
 
 const StripeFormPaymentFrequency = ({ options, inputActionHandler, selectedInterval }) => (
     <ScreenWrapper.Section>

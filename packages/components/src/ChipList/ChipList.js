@@ -13,8 +13,9 @@ const ChipList = ({
     isDisabled,
     chipStyle,
     listSectionStyle,
+    style,
 }) => (
-    <Tabs.Scrollable currentIndex={currentIndex} listSectionStyle={listSectionStyle}>
+    <Tabs.Scrollable currentIndex={currentIndex} listSectionStyle={listSectionStyle} style={style}>
         {options.map((item, index) => (
             <Chip
                 key={item?.toString()}

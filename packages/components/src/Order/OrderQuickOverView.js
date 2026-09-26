@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Card, List, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
-import { localized } from '@jmstechnologiesinc/react-native-components';
+import { localized } from '../Localization/Localization';
 
 import { interpunct, MATERIAL_ICONS, plurulize } from '@jmstechnologiesinc/commons';
 import { formatOrderID } from '@jmstechnologiesinc/order';

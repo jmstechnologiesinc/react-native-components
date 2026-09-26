@@ -2,7 +2,7 @@ import memoize from 'lodash.memoize';
 import i18n from 'i18n-js';
 import * as RNLocalize from 'react-native-localize';
 
-import { narrationText, SUPPORTED_LOCALES, FALLBACK_LOCALE } from './catalog';
+import { addFlatCatalog, catalogText, SUPPORTED_LOCALES, FALLBACK_LOCALE } from './catalog';
 
 // ADR-0017 §5.4 and §6 — the native half of the language system.
 //
@@ -54,7 +54,7 @@ export const localized = memoize(
         // (see `catalog.js`); `i18n-js` interpolates a `defaultValue` exactly
         // as it interpolates a translation, so the placeholders, the locale
         // and the chain behave identically either way.
-        const value = i18n.t(key, { ...config, defaultValue: narrationText(key, i18n.locale) ?? ABSENT });
+        const value = i18n.t(key, { ...config, defaultValue: catalogText(key, i18n.locale) ?? ABSENT });
         // The key itself, as before: a screen showing `order.receipt` is a
         // visible bug report, and the app's merge layer relies on it.
         return value === ABSENT ? key : value;
@@ -73,4 +73,18 @@ export const setI18nConfig = () => {
     i18n.defaultLocale = FALLBACK_LOCALE;
     i18n.fallbacks = true;
     i18n.locale = languageTag;
+};
+
+/** The app's locale, the one `localized` answers in (`format.js` reads it). */
+export const currentLocale = () => i18n.locale || FALLBACK_LOCALE;
+
+/**
+ * Registers a flat `{ en: { key: text }, es: { … } }` catalogue (the partner
+ * catalogue, canon R2). `%{}` placeholders interpolate like any translation.
+ * The memo is cleared because a key looked up before the registration is
+ * cached as its own name.
+ */
+export const registerFlatCatalog = (catalog) => {
+    addFlatCatalog(catalog);
+    localized.cache.clear();
 };

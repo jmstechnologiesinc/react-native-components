@@ -2,7 +2,7 @@ import React from 'react';
 import ImagePicker from './ImagePickerAvatar';
 import { localized } from '../Localization/Localization';
 import DraggablePhotoGallery from '../PhotoGallery/DraggablePhotoGallery';
-import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
+import ScreenWrapper from '../ScreenWrapper';
 import { HelperText } from '@jmstechnologiesinc/react-native-paper';
 
 const PhotoGallery = ({ photos, onChange, isDisabled }) => (

@@ -6,7 +6,7 @@ import { USER_ROLES } from '@jmstechnologiesinc/user';
 import { FULFILLMENT_METHODS } from '@jmstechnologiesinc/vendor';
 
 import { MATERIAL_ICONS, LOGISTICS_PLATFORMS, firestoreTimestampToDate } from '@jmstechnologiesinc/commons';
-import { localized } from '@jmstechnologiesinc/react-native-components';
+import { localized } from '../Localization/Localization';
 
 import { formatDateTime } from '../Localization/format';
 import { ORDER_TIME_FIELDS } from './documentFields';

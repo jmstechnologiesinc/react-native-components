@@ -5,7 +5,8 @@ import Config from 'react-native-config';
 import { pubnubEtaChannelName } from '@jmstechnologiesinc/commons';
 
 import { Centrifuge } from 'centrifuge';
-import { MapboxGLWrapper, localized } from '@jmstechnologiesinc/react-native-components';
+import MapboxGLWrapper from '../MapboxGLWrapper';
+import { localized } from '../Localization/Localization';
 import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 

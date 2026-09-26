@@ -3,7 +3,10 @@ import React from 'react';
 import { SectionList } from 'react-native';
 
 import { Divider, List, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
-import { LAYOUT_MODE, ScreenWrapper, TNEmptyStateView, localized } from '@jmstechnologiesinc/react-native-components';
+import { LAYOUT_MODE } from '../consts';
+import ScreenWrapper from '../ScreenWrapper';
+import TNEmptyStateView from '../truly-native/TNEmptyStateView';
+import { localized } from '../Localization/Localization';
 
 import { USER_ROLES } from '@jmstechnologiesinc/user';
 

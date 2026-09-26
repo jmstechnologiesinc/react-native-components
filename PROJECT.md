@@ -8,7 +8,8 @@ it goes here.
 ## What this is — two things in one repo
 
 1. **The published library**: `packages/components/` → **`@jmstechnologiesinc/react-native-components`**
-   (currently `0.2.0`, ISC, published to npm from GitHub). This is the real product.
+   (`0.4.0` in the source, **0.4.0-dev: not published yet**; `0.3.1` is the last published version; ISC,
+   published to the GitHub registry). This is the real product.
 2. **A Storybook harness** at the repo root (`package.json` name `react_native_storybook_starter`,
    `private: true`). A throwaway React Native app whose only job is to render the library's stories,
    on-device and on web. It is **not** shipped and **not** the thing you are editing when asked to
@@ -35,10 +36,12 @@ change would break a consumer, stop and ask (§9).
 ```
 packages/components/src/
   index.js          THE public API — the single barrel. Nothing is public unless exported here.
+  portable.js       the web-safe subset of the barrel (C-35), for web hosts — see "Portable entry"
   styles.js         shared style objects built from MD3LightTheme tokens
+  tones.js          status tones (success/warning/danger/neutral/info) -> theme roles + icons
   consts.js         shared constants (LAYOUT_MODE, …)
   utils.js          shared helpers (ImageKit URL builders, action sheets, deep linking, …)
-  Config.js
+  Config.js         env values (react-native-config / dotenv); Config.web.js is the runtime-configured twin
   <ComponentName>/  one folder per component
     <ComponentName>.js         the component
     <ComponentName>.stories.js its Storybook story
@@ -55,7 +58,9 @@ Bigger features are folders with an `index.js` and internal sub-components + hoo
 
 1. `packages/components/src/<Name>/<Name>.js`
 2. `packages/components/src/<Name>/<Name>.stories.js`
-3. Export it from `packages/components/src/index.js` — otherwise it does not exist for consumers.
+3. Export it from `packages/components/src/index.js` — otherwise it does not exist for consumers. If it
+   loads on the web without native modules, export it from `portable.js` too (the guard test will tell you
+   if it does not).
 4. Add the folder's glob to `.storybook/main.ts` (see "Storybook" below — the web config is a
    hand-maintained list, not a glob over `src/**`).
 5. Any user-facing string goes into **both** `Translations/en.json` and `es.json` via `localized()`.
@@ -125,6 +130,18 @@ Since **0.2.0** (ADR-0017 §5.4, §6):
   the **app's** locale. Never `toLocaleString()`: that is the device's locale, which is a different
   thing and visibly wrong when the two differ.
 
+Since **0.4.0** (C-25):
+
+- **`registerFlatCatalog({ en: {key: text}, es: {…} })`** registers a host's flat catalogue — the
+  `partner.*` catalogue, which belongs to `@jmstechnologiesinc/partner` (canon R2) and must **never** be
+  added to `Translations/*.json`. It is served through the same exact-match seam as the narration
+  (`catalog.js`), so dotted values (`partner.disabled_reason.rejected.fraud`) work and a registration
+  survives `setI18nConfig`, which replaces `i18n.translations` wholesale. On the web it is also added to
+  i18next as a resource bundle, so `react-i18next` readers see it. `%{}` interpolates as everywhere.
+- **`currentLocale()`** is exported by both twins; `format.js` reads it. It used to read `i18n-js`
+  directly, so on the web every date was formatted in `en`.
+- `merge` (deep merge of nested catalogues) is exported from the barrel and the portable entry.
+
 `Localization.web.js` is the web twin, and as of 0.2.0 it really is one: same loader, same `%{}`
 placeholder syntax (i18next's default `{{}}` would have shown narration placeholders raw), same
 answer for an absent key, same `en` fallback. Several modules have `.web.js` counterparts — if you
@@ -155,6 +172,45 @@ the components take the result and paint it.
   screens go through `orderViewModel` and the buttons carry intents; the app links this package by
   `file:` until 0.2.0 is published, then `^0.2.0`. `Order/__tests__/d50.test.js` keeps every legacy reference contained inside it and fails
   if one appears anywhere else — or if that file stops being the legacy table.
+
+## Portable entry (C-35) and partner components (K-22) — 0.4.0-dev
+
+`src/portable.js` (published as `lib/portable`) is what a **web host** imports: the partner console
+(`CustomerApp/admin-web`) and the presentational views it borrows from the app. It re-exports only
+modules that load on react-native-web **without stubs**: List, ScreenWrapper, ChipList, Tabs,
+SegmentedButtonGroup, ActionGroup, SideNav, TouchableRippleWrapper, TN*, `styles`, `LAYOUT_MODE`, a
+`Form` subset (PersonInfo, VehicleInfo, BusinessInfo, EmailPassword, SecretInputText),
+`StripeForm.AccountBank`, Localization (`localized`, `setI18nConfig`, `registerFlatCatalog`,
+`currentLocale`, `merge`), the formatters, the Order and Partner view models and the K-22 components.
+
+- `packages/components/__tests__/portableEntry.test.js` walks its static import graph the way a web
+  bundler does (`.web.js` first) and fails if a native-only module becomes reachable (react-native-config,
+  dotenv, localize, image picker, action sheet, permissions, geolocation, gesture handler, reanimated,
+  draggable list, mapbox, bottom sheets, centrifuge) — or the package's own name, which drags the barrel in.
+- **`Config.web.js`**: on the web the host calls `configureComponents({ IMAGEKIT_URL, … })` once before
+  rendering. Native `Config.js` exports the same function (merge, no behaviour change).
+- **Never import this package by its published name from inside it**, and import `../ScreenWrapper`
+  (the index that attaches `.Section`/`.Container`), not `../ScreenWrapper/ScreenWrapper`.
+- `OptionPicker/OptionSheet.js` is the native action sheet; `OptionSheet.web.js` is a Paper modal with the
+  same `show()`/`hide()` ref, which is what lets `Form.BusinessInfo` load on the web.
+- `lib/*` deep imports keep working; there is deliberately no `exports` map yet.
+
+K-22 components (APIs frozen in `CustomerApp/admin-web/docs/ARCHITECTURE.md` §5), RN primitives + Paper,
+themed through `useTheme()` so a host's theme applies:
+
+- `Partner/StatusChip` (+ `SlaChip`) — label and tone from `Partner/viewModel`.
+- `DocumentViewer` — default image renderer (RN `Image`); the host injects `renderDocument` /
+  `renderZoom` (on the web: `react-pdf`, `react-zoom-pan-pinch`, which live **only** in admin-web).
+- `DecisionDialog` — Paper `Dialog` in a `Portal` (the host needs Paper's `Provider`).
+- `Timeline` — `history` and `steps`.
+- `Partner/viewModel.js` (barrel/portable: `PartnerViewModel`, because `statusLabel` is the Order one):
+  builds `partner.<group>.<value>` keys and resolves them with `localized`; a missing key renders the raw
+  value. It lists no vocabulary: the values come from `@jmstechnologiesinc/partner`.
+
+Forms (C-25): `Form.PersonInfo`, `Form.VehicleInfo` and `Form.BusinessInfo` take `readOnly` (alias of
+`isDisabled`, but it also locks PersonInfo's email, which `isDisabled` never did) and
+`highlightFields: string[]` (the names the form reports to `inputActionHandler`), which outlines the field
+in `primary` and adds a «Changed» helper line (the line is what survives on a disabled input).
 
 ## Storybook
 
@@ -189,10 +245,14 @@ consumers must have this package inside their Metro/Babel transform path. Conseq
   ships the previous version's code.
 - Adding syntax that Metro/Babel in the consumer can't handle breaks consumers at bundle time, not
   here. Test a real change against `CustomerApp` when in doubt.
-- `peerDependencies` (`react`, `react-native`, `@jmstechnologiesinc/react-native-paper`,
-  `@react-navigation/elements`, `centrifuge`, `react-native-gesture-handler`,
-  `react-native-keyboard-controller`, `react-native-reanimated`, `react-native-vector-icons`) are the
-  contract with the host app. **A new runtime dependency is an architectural change — ask first (§9)**;
+- `peerDependencies` are the contract with the host app. `package.json` declares `react`, `react-native`,
+  `@jmstechnologiesinc/react-native-paper`, `@react-navigation/elements`, `@jmstechnologiesinc/order` and
+  `@jmstechnologiesinc/order-narration`. The barrel additionally expects the host to provide what the app
+  already has (`centrifuge`, `react-native-gesture-handler`, `react-native-reanimated`,
+  `react-native-vector-icons`, …); the portable entry needs only `react-native-safe-area-context`,
+  `react-native-vector-icons`, `color`, `@jmstechnologiesinc/commons`/`vendor`/`react-native-size-matters` and, on
+  the web, `i18next`, `i18next-browser-languagedetector` and `react-i18next`. Declaring them exactly is
+  still open (C-35). **A new runtime dependency is an architectural change — ask first (§9)**;
   it must either be a peer the app already has, or be justified as a real dependency.
 
 ## Commands (§8)
@@ -220,10 +280,10 @@ in `CustomerApp`.
 
 ## Tests
 
-Jest with the `react-native` preset. Coverage is thin — `packages/components/__tests__/components.test.js`
-and `Localization/__tests__/Localization.test.js`, plus the root `__tests__/App.test.tsx`. New tests
-go next to the code in a `__tests__/` folder. In practice **the story is the primary verification**
-for visual components; write one that exercises the states you changed.
+Jest with the `react-native` preset. New tests go next to the code in a `__tests__/` folder. Render tests
+use `react-test-renderer` inside Paper's `Provider`, with fake timers and an unmount after each test (Paper
+animates on timers); assert on the HOST node of a `testID` (what a screen reader reads). The story is
+still the component's documentation; write one that exercises the states you changed.
 
 ## Gotchas
 

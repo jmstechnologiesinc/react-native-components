@@ -1,6 +1,4 @@
-import i18n from 'i18n-js';
-
-import { FALLBACK_LOCALE } from './catalog';
+import { currentLocale } from './Localization';
 
 // ADR-0017 §6.2 — «Formato local con `Intl`».
 //
@@ -9,13 +7,12 @@ import { FALLBACK_LOCALE } from './catalog';
 // locales and the gap is visible: a user whose phone is in English and whose
 // app is in Spanish was reading Spanish prose with English dates. `Intl` is in
 // Hermes on RN 0.75+, so this needs no library — only the app's locale, which
-// `i18n.locale` holds.
+// the active twin reports (`currentLocale`). Reading `i18n-js` here made the
+// web always format in `en`: on the web that library is never configured.
 //
 // Every formatter answers `null` for an absent or unparseable instant instead
 // of «Invalid Date», because a screen can render nothing but cannot render a
 // lie.
-
-const localeTag = () => i18n.locale || FALLBACK_LOCALE;
 
 const asDate = (value) => {
     if (!value) return null;
@@ -26,7 +23,7 @@ const asDate = (value) => {
 /** Date and time in the app's locale — the replacement for `toLocaleString()`. */
 export const formatDateTime = (value, options = { dateStyle: 'medium', timeStyle: 'short' }) => {
     const date = asDate(value);
-    return date ? new Intl.DateTimeFormat(localeTag(), options).format(date) : null;
+    return date ? new Intl.DateTimeFormat(currentLocale(), options).format(date) : null;
 };
 
 /** Just the clock time: «6:42 p. m.» / «6:42 PM». What an ETA reads as. */
@@ -45,7 +42,7 @@ export const formatRelativeTime = (value, now = Date.now()) => {
     if (!date) return null;
 
     const seconds = Math.round((date.getTime() - now) / 1000);
-    const formatter = new Intl.RelativeTimeFormat(localeTag(), { numeric: 'auto', style: 'short' });
+    const formatter = new Intl.RelativeTimeFormat(currentLocale(), { numeric: 'auto', style: 'short' });
     const absolute = Math.abs(seconds);
 
     if (absolute < 60) return formatter.format(seconds, 'second');

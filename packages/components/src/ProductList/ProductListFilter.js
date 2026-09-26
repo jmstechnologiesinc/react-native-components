@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
+import ScreenWrapper from '../ScreenWrapper';
 import IndustryList from '../IndustryList/IndustryList';
 import SegmentedButtonGroup from '../SegmentedButtonGroup/SegmentedButtonGroup';
 import { Divider, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';

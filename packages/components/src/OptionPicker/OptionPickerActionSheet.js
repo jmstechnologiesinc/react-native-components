@@ -1,13 +1,13 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { Dimensions, Platform, FlatList, StatusBar } from 'react-native';
 import { Button, HelperText, List, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
-import ActionSheet from 'react-native-actions-sheet';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import JMSStyles from '../styles';
-import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
+import ScreenWrapper from '../ScreenWrapper';
 import NestedOptionPicker from './NestedOptionPicker';
+import OptionSheet from './OptionSheet';
 import { localized } from '../Localization/Localization';
-import { useHeaderHeight } from '@react-navigation/elements';
+import { HeaderHeightContext } from '@react-navigation/elements';
 import { TNActivityIndicator } from '../truly-native';
 import ButtonWrapper from '../ButtonWrapper/ButtonWrapper';
 import ChipList from '../ChipList/ChipList';
@@ -39,7 +39,9 @@ function OptionPickerActionSheet({
 }) {
     const actionSheetRef = useRef();
     const insets = useSafeAreaInsets();
-    const HEADER_HEIGHT = useHeaderHeight();
+    // `useHeaderHeight()` throws outside a navigator with a header, which took
+    // down every form embedding this picker in a plain view (C-25).
+    const HEADER_HEIGHT = useContext(HeaderHeightContext) ?? 0;
 
     const [selectedOptions, setSelectedOptions] = useState(preSelectedOptions);
 
@@ -106,7 +108,7 @@ function OptionPickerActionSheet({
                 ) : null}
             </ScreenWrapper.Section>
 
-            <ActionSheet
+            <OptionSheet
                 ref={actionSheetRef}
                 statusBarTranslucent={false}
                 drawUnderStatusBar={false}
@@ -149,7 +151,7 @@ function OptionPickerActionSheet({
                 >
                     {localized('pick')}
                 </Button>
-            </ActionSheet>
+            </OptionSheet>
         </>
     );
 }

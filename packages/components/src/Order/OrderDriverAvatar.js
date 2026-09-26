@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { List as JMSList, imageKitAvatar } from '@jmstechnologiesinc/react-native-components';
+import * as JMSList from '../List/List';
+import { imageKitAvatar } from '../utils';
 
 import { Avatar } from '@jmstechnologiesinc/react-native-paper';
 

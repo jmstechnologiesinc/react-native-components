@@ -1,8 +1,10 @@
 import React from 'react';
 
-import { TextInput, HelperText } from '@jmstechnologiesinc/react-native-paper';
-import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
+import { HelperText } from '@jmstechnologiesinc/react-native-paper';
+import ScreenWrapper from '../ScreenWrapper';
 import { localized } from '../Localization/Localization';
+
+import FormField, { isHighlighted } from './FormField';
 
 const FormPersonInfo = ({
     firstName,
@@ -10,21 +12,26 @@ const FormPersonInfo = ({
     phoneNumber,
     email,
     isDisabled,
+    readOnly = false,
+    highlightFields,
     showFirstNameValidationError = true,
     showLastNameValidationError = true,
     showPhoneInput = true,
     showEmailInput = true,
     inputActionHandler,
 }) => {
+    const disabled = Boolean(isDisabled || readOnly);
+
     return (
         <>
             <ScreenWrapper.Section title={localized('contactDetails')}>
-                <TextInput
+                <FormField
                     mode="outlined"
+                    highlighted={isHighlighted(highlightFields, 'firstName')}
+                    disabled={disabled}
                     error={showFirstNameValidationError && !firstName}
                     label={localized('firstName')}
                     value={firstName}
-                    disabled={isDisabled}
                     autoCapitalize="words"
                     onChangeText={(text) => inputActionHandler('firstName', text)}
                 />
@@ -35,12 +42,13 @@ const FormPersonInfo = ({
                 ) : null}
             </ScreenWrapper.Section>
             <ScreenWrapper.Section>
-                <TextInput
+                <FormField
                     mode="outlined"
+                    highlighted={isHighlighted(highlightFields, 'lastName')}
+                    disabled={disabled}
                     error={showLastNameValidationError && !lastName}
                     label={localized('lastName')}
                     value={lastName}
-                    disabled={isDisabled}
                     autoCapitalize="words"
                     onChangeText={(text) => inputActionHandler('lastName', text)}
                 />
@@ -53,8 +61,12 @@ const FormPersonInfo = ({
 
             {showEmailInput ? (
                 <ScreenWrapper.Section>
-                    <TextInput
+                    <FormField
                         mode="outlined"
+                        highlighted={isHighlighted(highlightFields, 'email')}
+                        // The email has never followed `isDisabled`, and the app relies on
+                        // that; only the new `readOnly` locks it.
+                        disabled={readOnly}
                         label={localized('email')}
                         value={email}
                         autoCapitalize="none"
@@ -68,11 +80,12 @@ const FormPersonInfo = ({
 
             {showPhoneInput ? (
                 <ScreenWrapper.Section>
-                    <TextInput
+                    <FormField
                         mode="outlined"
+                        highlighted={isHighlighted(highlightFields, 'phoneNumber')}
+                        disabled={disabled}
                         label={localized('phoneNumber')}
                         value={phoneNumber}
-                        disabled={isDisabled}
                         keyboardType="numeric"
                         onChangeText={(text) => inputActionHandler('phoneNumber', text)}
                     />

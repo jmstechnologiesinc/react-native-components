@@ -105,3 +105,40 @@ export const AuthFormCarInfo = () => (
 );
 
 export const PhoneNumber = () => <AuthForm.PhoneNumber phoneNumber={state.password} inputActionHandler={() => {}} />;
+
+// C-25 — how the partner console shows a partner's data: nothing editable, and
+// the fields a pending change touches marked as changed.
+export const PersonInfoReadOnlyHighlighted = () => (
+    <AuthForm.PersonInfo
+        firstName={state.firstName}
+        lastName={state.lastName}
+        email={state.email}
+        phoneNumber={state.phoneNumber}
+        readOnly
+        highlightFields={['lastName', 'phoneNumber']}
+        inputActionHandler={() => {}}
+    />
+);
+
+export const VehicleInfoReadOnlyHighlighted = () => (
+    <AuthForm.VehicleInfo
+        make={state.make}
+        model={state.model}
+        color={state.color}
+        year={String(state.year)}
+        licensePlateNumber="ABC-1234"
+        readOnly
+        highlightFields={['color', 'licensePlateNumber']}
+        inputActionHandler={() => {}}
+    />
+);
+
+export const BusinessInfoHighlighted = () => (
+    <AuthForm.BusinessInfo
+        storeTitle={state.storeTitle}
+        location={state.storeAddress}
+        industries={[]}
+        highlightFields={['title', 'industries']}
+        inputActionHandler={() => {}}
+    />
+);

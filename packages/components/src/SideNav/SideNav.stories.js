@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { FAB } from '@jmstechnologiesinc/react-native-paper';
+
 import SideNav from './SideNav';
 
 const menuItems = [
@@ -36,3 +38,11 @@ export const Expanded = () => {
 export const ExpandedSelected = () => {
     return <SideNav isExpanded menuItems={menuItems} selectedIndex={1} />;
 };
+
+export const CollapsedWithHeader = () => (
+    <SideNav
+        menuItems={menuItems.map((item, index) => ({ ...item, key: `item-${index}` }))}
+        selectedKey="item-1"
+        renderHeader={() => <FAB icon="plus" accessibilityLabel="New" onPress={() => {}} />}
+    />
+);

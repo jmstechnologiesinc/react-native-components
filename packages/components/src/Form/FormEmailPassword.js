@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { TextInput, Button, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
-import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
+import ScreenWrapper from '../ScreenWrapper';
 import { localized } from '../Localization/Localization';
 
 import SecretInputText from './SecretInputText';

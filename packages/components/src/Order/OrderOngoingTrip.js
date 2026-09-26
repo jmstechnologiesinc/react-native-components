@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { List as JMSList } from '@jmstechnologiesinc/react-native-components';
+import * as JMSList from '../List/List';
 
-import OrderDriverAvatar from '@jmstechnologiesinc/react-native-components/lib/Order/OrderDriverAvatar';
+import OrderDriverAvatar from './OrderDriverAvatar';
 
 // ADR-0017 §5.4 — the other half of the single `chips` contract.
 //

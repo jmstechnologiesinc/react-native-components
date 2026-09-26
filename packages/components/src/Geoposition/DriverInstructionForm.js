@@ -3,7 +3,8 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 
 import { TextInput } from '@jmstechnologiesinc/react-native-paper';
-import { localized, ScreenWrapper } from '@jmstechnologiesinc/react-native-components';
+import { localized } from '../Localization/Localization';
+import ScreenWrapper from '../ScreenWrapper';
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 
 const DriverInstructionForm = ({ state, onChange }) => (

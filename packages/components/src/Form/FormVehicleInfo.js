@@ -1,9 +1,11 @@
 import React from 'react';
 
-import { TextInput, Switch, List } from '@jmstechnologiesinc/react-native-paper';
+import { Switch, List } from '@jmstechnologiesinc/react-native-paper';
 
-import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
+import ScreenWrapper from '../ScreenWrapper';
 import { localized } from '../Localization/Localization';
+
+import FormField, { isHighlighted } from './FormField';
 
 const FormVehicleInfo = ({
     selected,
@@ -16,7 +18,11 @@ const FormVehicleInfo = ({
     licensePlateNumber,
     inputActionHandler,
     isDisabled,
+    readOnly = false,
+    highlightFields,
 }) => {
+    const disabled = Boolean(isDisabled || readOnly);
+
     return (
         <>
             {/*  <List.Item
@@ -32,52 +38,57 @@ const FormVehicleInfo = ({
             /> */}
             <ScreenWrapper.Container>
                 <ScreenWrapper.Section title={title}>
-                    <TextInput
+                    <FormField
                         mode="outlined"
+                        highlighted={isHighlighted(highlightFields, 'make')}
+                        disabled={disabled}
                         label={localized('make')}
                         value={make}
-                        disabled={isDisabled}
                         autoCapitalize="words"
                         onChangeText={(text) => inputActionHandler('make', text)}
                     />
                 </ScreenWrapper.Section>
                 <ScreenWrapper.Section>
-                    <TextInput
+                    <FormField
                         mode="outlined"
+                        highlighted={isHighlighted(highlightFields, 'model')}
+                        disabled={disabled}
                         label={localized('model')}
                         value={model}
-                        disabled={isDisabled}
                         autoCapitalize="words"
                         onChangeText={(text) => inputActionHandler('model', text)}
                     />
                 </ScreenWrapper.Section>
                 <ScreenWrapper.Section>
-                    <TextInput
+                    <FormField
                         mode="outlined"
+                        highlighted={isHighlighted(highlightFields, 'color')}
+                        disabled={disabled}
                         label={localized('color')}
                         value={color}
-                        disabled={isDisabled}
                         autoCapitalize="words"
                         onChangeText={(text) => inputActionHandler('color', text)}
                     />
                 </ScreenWrapper.Section>
 
                 <ScreenWrapper.Section>
-                    <TextInput
+                    <FormField
                         mode="outlined"
+                        highlighted={isHighlighted(highlightFields, 'year')}
+                        disabled={disabled}
                         label={localized('year')}
                         value={year}
-                        disabled={isDisabled}
                         keyboardType="numeric"
                         onChangeText={(text) => inputActionHandler('year', text)}
                     />
                 </ScreenWrapper.Section>
                 <ScreenWrapper.Section>
-                    <TextInput
+                    <FormField
                         mode="outlined"
+                        highlighted={isHighlighted(highlightFields, 'licensePlateNumber')}
+                        disabled={disabled}
                         label={localized('licensePlateNumber')}
                         value={licensePlateNumber}
-                        disabled={isDisabled}
                         autoCapitalize="characters"
                         autoCorrect={false}
                         onChangeText={(text) => inputActionHandler('licensePlateNumber', text)}

@@ -12,7 +12,7 @@ import SwipeToDelete from '../SwipeToDelete/SwipeToDelete';
 import { Item as JMSItem } from '../List/List';
 import ButtonWrapper from '../ButtonWrapper/ButtonWrapper';
 import { getMainPhoto } from '@jmstechnologiesinc/commons';
-import { localized } from '@jmstechnologiesinc/react-native-components/lib/Localization/Localization';
+import { localized } from '../Localization/Localization';
 
 const CartListItem = ({
     title,
