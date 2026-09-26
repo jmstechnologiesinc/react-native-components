@@ -206,8 +206,19 @@ themed through `useTheme()` so a host's theme applies:
 - `DecisionDialog` — Paper `Dialog` in a `Portal` (the host needs Paper's `Provider`).
 - `Timeline` — `history` and `steps`.
 - `Partner/viewModel.js` (barrel/portable: `PartnerViewModel`, because `statusLabel` is the Order one):
-  builds `partner.<group>.<value>` keys and resolves them with `localized`; a missing key renders the raw
-  value. It lists no vocabulary: the values come from `@jmstechnologiesinc/partner`.
+  the key is the package's `statusLabelKey(group, value)` resolved with `localized`; a value outside the
+  vocabulary, or a key the registered catalogue lacks, renders the raw value. Each kind's group is read
+  from the package's `LABEL_GROUPS` (never spelled here). `TONE_BY_KIND` and `INTENT_PRESENTATION` stay
+  here (presentation with one consumer: request #6 was declined) but are keyed by the package constants
+  (`[REQUIREMENT_BUCKET.PAST_DUE]: danger`). `requirement_cause` is a label-only kind (`LABEL_ONLY_KINDS`).
+- Canon R1 is two tests. `Partner/__tests__/viewModelCompleteness.test.js` walks every value of each
+  coloured group and every `STAFF_INTENT` from the package and fails on one without a tone or a
+  presentation. `packages/components/__tests__/noLocalRedefinition.test.js` collects the package's
+  vocabulary and fails on a literal or plain object key equal to a value, or a `partner.*` literal, in
+  `src/Partner/**`, `DecisionDialog`, `DocumentViewer`, `Timeline` and `tones.js` (tests and stories
+  excluded). It does not scan the rest of `src/`: `active`, `pending`, `car`, `web` are also Order and
+  platform words there. A new partner component joins its `SCOPE`.
+- Stories register the package catalogue (`registerFlatCatalog({ en: EN, es: ES })`), as a host does.
 
 Forms (C-25): `Form.PersonInfo`, `Form.VehicleInfo` and `Form.BusinessInfo` take `readOnly` (alias of
 `isDisabled`, but it also locks PersonInfo's email, which `isDisabled` never did) and
@@ -260,8 +271,13 @@ consumers must have this package inside their Metro/Babel transform path. Conseq
 - Adding syntax that Metro/Babel in the consumer can't handle breaks consumers at bundle time, not
   here. Test a real change against `CustomerApp` when in doubt.
 - `peerDependencies` are the contract with the host app. `package.json` declares `react`, `react-native`,
-  `@jmstechnologiesinc/react-native-paper`, `@react-navigation/elements`, `@jmstechnologiesinc/order` and
-  `@jmstechnologiesinc/order-narration`. The barrel additionally expects the host to provide what the app
+  `@jmstechnologiesinc/react-native-paper`, `@react-navigation/elements`, `@jmstechnologiesinc/order`,
+  `@jmstechnologiesinc/order-narration` and `@jmstechnologiesinc/partner` — the last pinned **exactly**
+  (`0.1.0`, canon R4; also a devDependency), because the view model and its tests read its vocabulary, and
+  both the barrel and the portable entry import `Partner/viewModel`. The harness links the main checkout's
+  root `node_modules`, which does not carry it; in a worktree it is unpacked into
+  `packages/components/node_modules` (`npm pack @jmstechnologiesinc/partner@0.1.0` + extract), where Jest
+  resolves it with no `moduleNameMapper`. The barrel additionally expects the host to provide what the app
   already has (`centrifuge`, `react-native-gesture-handler`, `react-native-reanimated`,
   `react-native-vector-icons`, …); the portable entry needs only `react-native-safe-area-context`,
   `react-native-vector-icons`, `color`, `@jmstechnologiesinc/commons`/`vendor`/`react-native-size-matters` and, on

@@ -34,9 +34,10 @@ const ToneChip = ({ tone, icon, label, compact, testID }) => {
 
 /**
  * The status of a partner entity, labelled and toned by `Partner/viewModel`.
- * `kind`: `partnership | verification | requirement_bucket | screening_report |
- * screening_result | adjudication | task_status`. `label` overrides the
- * catalogue's.
+ * `kind`: `partnership | verification | requirement_bucket | requirement_cause |
+ * screening_report | screening_result | adjudication | task_status`
+ * (`requirement_cause` is label-only, so always neutral). `label` overrides
+ * the catalogue's.
  */
 const StatusChip = ({ kind, value, label, compact, testID }) => {
     const tone = statusTone(kind, value);

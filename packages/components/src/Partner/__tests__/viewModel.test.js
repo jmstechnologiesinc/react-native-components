@@ -53,6 +53,7 @@ describe('statusLabel — the key is partner.<group>.<value>', () => {
                 'adjudication',
                 'partnership',
                 'requirement_bucket',
+                'requirement_cause',
                 'screening_report',
                 'screening_result',
                 'task_status',
