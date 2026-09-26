@@ -23,6 +23,7 @@ import FormDriverInfo from './Form/FormDriverInfo';
 import FormEmailPassword from './Form/FormEmailPassword';
 import SecretInputText from './Form/SecretInputText';
 import StripeFormAccountBank from './StripeForm/StripeFormAccountBank';
+import StripeFormPaymentFrequency from './StripeForm/StripeFormPaymentFrequency';
 
 // The forms the web needs (canon §17.4, §17.6); `DriverInfo` shows a driver's
 // answers read-only in the admin app. `Form.PhoneNumber` stays in the barrel
@@ -37,8 +38,11 @@ const Form = Object.freeze({
     SecretInputText,
 });
 
+// `PaymentFrequency` shows a payout interval (read-only in the console's
+// payouts section).
 const StripeForm = Object.freeze({
     AccountBank: StripeFormAccountBank,
+    PaymentFrequency: StripeFormPaymentFrequency,
 });
 
 export { List, Tabs, ActionGroup, Form, StripeForm, PartnerViewModel };
@@ -133,3 +137,16 @@ export {
     isBlankDay,
     parseDay,
 } from './DateInput';
+
+// The account projection's views (Payouts, Addresses; ACCOUNT-PROJECTION.md):
+// the balance breakdown and the address rows the app already draws. Paper and
+// the catalogue only. `RecentLocations` comes from its own file, never from the
+// `Geoposition` index, which reaches the native map picker and geolocation.
+export { default as Accounting } from './Accounting/Accounting';
+export {
+    LOCATION_LIST_ITEM,
+    LOCATION_LIST_ITEM_MAPPING,
+    interpunctLocationListItemDescription,
+    LocationListItem,
+} from './LocationListItem/LocationListItem';
+export { default as RecentLocations } from './Geoposition/RecentLocations';

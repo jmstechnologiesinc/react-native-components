@@ -850,5 +850,22 @@
     "reasonRequiredHint": "Suspend / Reject / Deactivate need a reason.",
     "viewFile": "View file",
     "noDocumentReviews": "There are no documents to show.",
-    "noPartnerStatusHistory": "This partner has no recorded status changes yet."
+    "noPartnerStatusHistory": "This partner has no recorded status changes yet.",
+    "accountView": {
+        "emailVerified": "Verified",
+        "emailNotVerified": "Not verified",
+        "noBankAccount": "No bank account",
+        "payoutHold": "Payouts are on hold",
+        "payoutHoldUntil": "Payouts are on hold until %{date}",
+        "paymentMethods": "Payment methods",
+        "noPaymentMethods": "No payment methods",
+        "cardExpires": "Expires %{month}/%{year}",
+        "defaultPaymentMethod": "Default",
+        "rideOrigins": "Ride pickups",
+        "rideDropoffs": "Ride drop-offs",
+        "noAddresses": "No addresses",
+        "zipcode": "ZIP code",
+        "revealedNotice": "Shown in full. The reveal is recorded in the audit log.",
+        "noMenus": "No menus"
+    }
 }

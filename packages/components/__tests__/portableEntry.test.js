@@ -137,6 +137,10 @@ describe('the portable entry (C-35)', () => {
         expect(files).not.toContain('ImagePicker/ImagePickerAvatar.js');
         expect(files).not.toContain('ImagePicker/ImagePicker.js');
         expect(files).not.toContain('ImagePicker/PhotoGallery.js');
+        // The address rows are portable; the map picker and geolocation behind the Geoposition index are not.
+        expect(files).toContain('Geoposition/RecentLocations.js');
+        expect(files).not.toContain('Geoposition/index.js');
+        expect(files).not.toContain('Geoposition/MapPicker/index.js');
     });
 
     it('loads under Jest and serves what the web host imports', () => {
@@ -228,11 +232,19 @@ describe('the portable entry (C-35)', () => {
             'parseDateInput',
             'parseDay',
             'isBlankDay',
+            // The account projection's views (Payouts, Addresses).
+            'Accounting',
+            'LOCATION_LIST_ITEM',
+            'LOCATION_LIST_ITEM_MAPPING',
+            'interpunctLocationListItemDescription',
+            'LocationListItem',
+            'RecentLocations',
         ];
         expect(expected.filter((name) => portable[name] === undefined)).toEqual([]);
         expect(Object.keys(portable.Form).sort()).toEqual(
             ['BusinessInfo', 'DriverInfo', 'EmailPassword', 'PersonInfo', 'SecretInputText', 'VehicleInfo'].sort()
         );
+        expect(Object.keys(portable.StripeForm).sort()).toEqual(['AccountBank', 'PaymentFrequency']);
         expect(typeof portable.ScreenWrapper.Section).toBe('function');
         expect(typeof portable.Tabs.Bar).toBe('function');
     });

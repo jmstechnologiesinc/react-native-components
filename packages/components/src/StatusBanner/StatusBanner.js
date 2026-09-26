@@ -12,7 +12,11 @@ import { STATUS_TONES, TONE_ICONS, toneColors } from '../tones';
  * never rests on colour alone. Paper announces the message (`alert`, polite live region) and animates it
  * in and out with `visible`.
  *
- * @param {{message: React.ReactNode, tone?: string, icon?: string|null, actions?: Array<{label: string,
+ * `tone={null}` is the UNTONED banner: the host theme's own Paper `Banner`, exactly as a screen that renders
+ * `<Banner>` itself draws it (no container colour, Paper's elevation, only the icon it is given). It lets a
+ * mobile screen that always used a plain banner render through a shared view without changing its look.
+ *
+ * @param {{message: React.ReactNode, tone?: string|null, icon?: string|null, actions?: Array<{label: string,
  *     onPress: () => void, disabled?: boolean}>, visible?: boolean, style?: any, testID?: string}} props
  *     `tone` defaults to `info`; `icon={null}` draws none
  */
@@ -28,6 +32,14 @@ const StatusBanner = ({ message, tone = STATUS_TONES.info, icon, actions = [], v
         }),
         [theme, colors.onContainer]
     );
+    if (tone === null) {
+        return (
+            <Banner visible={visible} icon={icon ?? undefined} actions={actions} style={style} testID={testID}>
+                {message}
+            </Banner>
+        );
+    }
+
     const iconSource = icon === undefined ? TONE_ICONS[tone] ?? TONE_ICONS[STATUS_TONES.neutral] : icon;
 
     return (

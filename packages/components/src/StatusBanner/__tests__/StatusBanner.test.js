@@ -75,4 +75,26 @@ describe('StatusBanner', () => {
         mounted.push(tree);
         expect(StyleSheet.flatten(tree.root.findByType(Banner).props.style).backgroundColor).toBe('#B8F397');
     });
+
+    it('tone={null} is the host theme’s own Banner: no container colour, Paper’s elevation, only the given icon', () => {
+        const onPress = jest.fn();
+        const plain = render(
+            <Banner visible icon="alert-outline" actions={[{ label: 'Undo', onPress }]}>
+                Deactivated
+            </Banner>
+        );
+        const untoned = render(
+            <StatusBanner
+                tone={null}
+                icon="alert-outline"
+                message="Deactivated"
+                actions={[{ label: 'Undo', onPress }]}
+            />
+        );
+        // Same tree, handlers aside (each render makes its own closures).
+        expect(textOf(untoned)).toBe(textOf(plain));
+        expect(
+            render(<StatusBanner tone={null} message="No icon" />).root.findByType(Banner).props.icon
+        ).toBeUndefined();
+    });
 });

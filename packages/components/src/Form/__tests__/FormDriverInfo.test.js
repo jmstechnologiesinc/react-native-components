@@ -84,4 +84,27 @@ describe('Form.DriverInfo', () => {
         act(() => inputWithValue(tree, 'D1234567').props.onChangeText('D7654321'));
         expect(inputActionHandler).toHaveBeenCalledWith('licenseNumer', 'D7654321');
     });
+
+    it('drops the SSN field with showSsn={false} and shows a server-masked licence as it arrives', () => {
+        const tree = render(
+            <DriverInfo
+                licenseNumer="•••• 4567"
+                dateOfBirth="1990 · 35–44"
+                readOnly
+                showSsn={false}
+                secureLicenseNumber={false}
+            />
+        );
+        expect(textOf(tree)).not.toContain('socialSecurityNumber');
+        expect(tree.root.findAll((node) => node.type === 'TextInput')).toHaveLength(2);
+        expect(inputWithValue(tree, '•••• 4567').props.secureTextEntry).toBe(false);
+        expect(inputWithValue(tree, '•••• 4567').props.editable).toBe(false);
+        expect(inputWithValue(tree, '1990 · 35–44')).toBeDefined();
+    });
+
+    it('keeps the licence secure and the SSN field by default', () => {
+        const tree = render(<DriverInfo {...DRIVER} />);
+        expect(inputWithValue(tree, 'D1234567').props.secureTextEntry).toBe(true);
+        expect(tree.root.findAll((node) => node.type === 'TextInput')).toHaveLength(3);
+    });
 });

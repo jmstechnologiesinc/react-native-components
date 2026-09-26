@@ -850,5 +850,22 @@
     "reasonRequiredHint": "Suspender, rechazar o desactivar requiere un motivo.",
     "viewFile": "Ver archivo",
     "noDocumentReviews": "No hay documentos para mostrar.",
-    "noPartnerStatusHistory": "Este socio aún no tiene cambios de estado registrados."
+    "noPartnerStatusHistory": "Este socio aún no tiene cambios de estado registrados.",
+    "accountView": {
+        "emailVerified": "Verificado",
+        "emailNotVerified": "Sin verificar",
+        "noBankAccount": "Sin cuenta bancaria",
+        "payoutHold": "Los pagos están retenidos",
+        "payoutHoldUntil": "Los pagos están retenidos hasta el %{date}",
+        "paymentMethods": "Métodos de pago",
+        "noPaymentMethods": "Sin métodos de pago",
+        "cardExpires": "Vence %{month}/%{year}",
+        "defaultPaymentMethod": "Predeterminado",
+        "rideOrigins": "Recogidas de viajes",
+        "rideDropoffs": "Destinos de viajes",
+        "noAddresses": "Sin direcciones",
+        "zipcode": "Código postal",
+        "revealedNotice": "Se muestra completo. La consulta queda registrada en la auditoría.",
+        "noMenus": "Sin menús"
+    }
 }

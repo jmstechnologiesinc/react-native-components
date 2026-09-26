@@ -19,6 +19,12 @@ import { Config } from '../Config';
 // which is addressed to the applicant, not to whoever reviews the answers. The
 // secrets stay masked: a disabled input offers no «show» toggle. `dateOfBirth`
 // seeds the date field (it keeps its own state while typed into, as before).
+//
+// Additive, for a reader that must never see more than it is given (canon
+// §9.14): `showSsn={false}` drops the SSN field altogether (the console never
+// shows it, K-18), and `secureLicenseNumber={false}` shows the licence value as
+// it arrives — a server-masked `•••• 1234` whose last four a secure entry would
+// hide again.
 const FormDriverInfo = ({
     licenseNumer,
     ssn,
@@ -27,6 +33,8 @@ const FormDriverInfo = ({
     readOnly = false,
     highlightFields,
     errors,
+    showSsn = true,
+    secureLicenseNumber = true,
 }) => {
     const [dateOfBirth, setDateOfBirth] = useState(initialDateOfBirth ?? '');
     const locked = readOnly ? { disabled: true } : null;
@@ -53,6 +61,7 @@ const FormDriverInfo = ({
                     label={localized('driverLicenseNumber')}
                     value={licenseNumer}
                     onChangeText={(text) => inputActionHandler('licenseNumer', text)}
+                    {...(secureLicenseNumber ? null : { secureTextEntry: false })}
                     {...locked}
                 />
             </ScreenWrapper.Section>
@@ -74,19 +83,21 @@ const FormDriverInfo = ({
                     {...locked}
                 />
             </ScreenWrapper.Section>
-            <ScreenWrapper.Section>
-                <FormField
-                    input={SecretInputText}
-                    field="ssn"
-                    errors={errors}
-                    highlighted={isHighlighted(highlightFields, 'ssn')}
-                    mode="outlined"
-                    label={localized('socialSecurityNumber')}
-                    value={ssn}
-                    onChangeText={(text) => inputActionHandler('ssn', text)}
-                    {...locked}
-                />
-            </ScreenWrapper.Section>
+            {showSsn ? (
+                <ScreenWrapper.Section>
+                    <FormField
+                        input={SecretInputText}
+                        field="ssn"
+                        errors={errors}
+                        highlighted={isHighlighted(highlightFields, 'ssn')}
+                        mode="outlined"
+                        label={localized('socialSecurityNumber')}
+                        value={ssn}
+                        onChangeText={(text) => inputActionHandler('ssn', text)}
+                        {...locked}
+                    />
+                </ScreenWrapper.Section>
+            ) : null}
         </>
     );
 };

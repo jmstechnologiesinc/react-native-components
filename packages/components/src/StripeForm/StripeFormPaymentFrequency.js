@@ -3,7 +3,9 @@ import { List } from '@jmstechnologiesinc/react-native-paper';
 import * as JMSList from '../List/List';
 import ScreenWrapper from '../ScreenWrapper';
 
-const StripeFormPaymentFrequency = ({ options, inputActionHandler, selectedInterval }) => (
+// `readOnly` (additive): every option disabled and `inputActionHandler` never
+// called — the payout interval shown, not chosen (the partner console).
+const StripeFormPaymentFrequency = ({ options, inputActionHandler, selectedInterval, readOnly = false }) => (
     <ScreenWrapper.Section>
         <List.Section>
             {options?.map(({ title, interval, description, disabled }, index) => (
@@ -11,10 +13,12 @@ const StripeFormPaymentFrequency = ({ options, inputActionHandler, selectedInter
                     key={index}
                     title={title}
                     description={description}
-                    isDisabled={disabled}
+                    isDisabled={readOnly || disabled}
                     isChecked={selectedInterval === interval}
                     onPress={() => {
-                        inputActionHandler('interval', interval);
+                        if (!readOnly) {
+                            inputActionHandler('interval', interval);
+                        }
                     }}
                 />
             ))}
