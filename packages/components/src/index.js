@@ -51,6 +51,8 @@ export { default as SwipeToDelete } from './SwipeToDelete/SwipeToDelete';
 export { default as SideNav } from './SideNav/SideNav';
 export { default as Swipeable } from './SwipeToDelete/SwipeToDelete';
 export { default as ButtonWrapper } from './ButtonWrapper/ButtonWrapper';
+// C-35 — the display-only gallery (resolved URIs, no picker); also in `portable.js`.
+export { default as PhotoGalleryDisplay } from './ImagePicker/PhotoGalleryDisplay';
 export {
     makeLinkingCall,
     itemSeparator,

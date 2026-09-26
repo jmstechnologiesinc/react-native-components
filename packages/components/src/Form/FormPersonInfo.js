@@ -14,6 +14,7 @@ const FormPersonInfo = ({
     isDisabled,
     readOnly = false,
     highlightFields,
+    errors,
     showFirstNameValidationError = true,
     showLastNameValidationError = true,
     showPhoneInput = true,
@@ -27,6 +28,8 @@ const FormPersonInfo = ({
             <ScreenWrapper.Section title={localized('contactDetails')}>
                 <FormField
                     mode="outlined"
+                    field="firstName"
+                    errors={errors}
                     highlighted={isHighlighted(highlightFields, 'firstName')}
                     disabled={disabled}
                     error={showFirstNameValidationError && !firstName}
@@ -44,6 +47,8 @@ const FormPersonInfo = ({
             <ScreenWrapper.Section>
                 <FormField
                     mode="outlined"
+                    field="lastName"
+                    errors={errors}
                     highlighted={isHighlighted(highlightFields, 'lastName')}
                     disabled={disabled}
                     error={showLastNameValidationError && !lastName}
@@ -63,6 +68,8 @@ const FormPersonInfo = ({
                 <ScreenWrapper.Section>
                     <FormField
                         mode="outlined"
+                        field="email"
+                        errors={errors}
                         highlighted={isHighlighted(highlightFields, 'email')}
                         // The email has never followed `isDisabled`, and the app relies on
                         // that; only the new `readOnly` locks it.
@@ -82,6 +89,8 @@ const FormPersonInfo = ({
                 <ScreenWrapper.Section>
                     <FormField
                         mode="outlined"
+                        field="phoneNumber"
+                        errors={errors}
                         highlighted={isHighlighted(highlightFields, 'phoneNumber')}
                         disabled={disabled}
                         label={localized('phoneNumber')}

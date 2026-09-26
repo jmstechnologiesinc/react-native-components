@@ -51,6 +51,11 @@ export { default as SideNav } from './SideNav/SideNav';
 export { default as TouchableRippleWrapper } from './TouchableRippleWrapper/TouchableRippleWrapper';
 export { default as TNActivityIndicator } from './truly-native/TNActivityIndicator';
 export { default as TNEmptyStateView } from './truly-native/TNEmptyStateView';
+// Paper only: the app's «add» text button.
+export { default as ButtonWrapper } from './ButtonWrapper/ButtonWrapper';
+// The photos of a gallery, display only. `ImagePicker` itself (picker,
+// permissions, draggable list) stays native: the host injects it.
+export { default as PhotoGalleryDisplay } from './ImagePicker/PhotoGalleryDisplay';
 
 export { localized, setI18nConfig, registerFlatCatalog, currentLocale } from './Localization/Localization';
 export { merge } from './Localization/catalog';

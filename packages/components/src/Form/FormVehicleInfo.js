@@ -20,6 +20,7 @@ const FormVehicleInfo = ({
     isDisabled,
     readOnly = false,
     highlightFields,
+    errors,
 }) => {
     const disabled = Boolean(isDisabled || readOnly);
 
@@ -40,6 +41,8 @@ const FormVehicleInfo = ({
                 <ScreenWrapper.Section title={title}>
                     <FormField
                         mode="outlined"
+                        field="make"
+                        errors={errors}
                         highlighted={isHighlighted(highlightFields, 'make')}
                         disabled={disabled}
                         label={localized('make')}
@@ -51,6 +54,8 @@ const FormVehicleInfo = ({
                 <ScreenWrapper.Section>
                     <FormField
                         mode="outlined"
+                        field="model"
+                        errors={errors}
                         highlighted={isHighlighted(highlightFields, 'model')}
                         disabled={disabled}
                         label={localized('model')}
@@ -62,6 +67,8 @@ const FormVehicleInfo = ({
                 <ScreenWrapper.Section>
                     <FormField
                         mode="outlined"
+                        field="color"
+                        errors={errors}
                         highlighted={isHighlighted(highlightFields, 'color')}
                         disabled={disabled}
                         label={localized('color')}
@@ -74,6 +81,8 @@ const FormVehicleInfo = ({
                 <ScreenWrapper.Section>
                     <FormField
                         mode="outlined"
+                        field="year"
+                        errors={errors}
                         highlighted={isHighlighted(highlightFields, 'year')}
                         disabled={disabled}
                         label={localized('year')}
@@ -85,6 +94,8 @@ const FormVehicleInfo = ({
                 <ScreenWrapper.Section>
                     <FormField
                         mode="outlined"
+                        field="licensePlateNumber"
+                        errors={errors}
                         highlighted={isHighlighted(highlightFields, 'licensePlateNumber')}
                         disabled={disabled}
                         label={localized('licensePlateNumber')}

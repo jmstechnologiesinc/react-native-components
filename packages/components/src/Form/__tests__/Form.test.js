@@ -149,3 +149,81 @@ describe('Form.BusinessInfo', () => {
         expect(changedCount(tree)).toBe(3);
     });
 });
+
+// K-32 — per-field server errors: `errors: [{ field, code, message? }]`, by
+// the names the form reports to `inputActionHandler`.
+const hostOf = (tree, testID) =>
+    tree.root.findAll((node) => typeof node.type === 'string' && node.props.testID === testID);
+
+const textOf = (node) => JSON.stringify(node.props.children);
+
+// Whether the Paper input holding a value is in its error state.
+const inError = (tree, value) =>
+    tree.root.findAll((node) => node.props.value === value && node.props.error === true).length > 0;
+
+describe('server errors on the forms', () => {
+    it('shows the message under its field and puts only that input in error', () => {
+        const tree = render(
+            <Form.PersonInfo
+                {...PERSON}
+                readOnly
+                errors={[{ field: 'lastName', code: 'invalid_format', message: 'Use the legal name' }]}
+            />
+        );
+        const lines = hostOf(tree, 'error.lastName');
+        expect(lines).toHaveLength(1);
+        expect(textOf(lines[0])).toContain('Use the legal name');
+        expect(inError(tree, 'Santos')).toBe(true);
+        expect(inError(tree, 'Jose')).toBe(false);
+        expect(hostOf(tree, 'error.firstName')).toHaveLength(0);
+    });
+
+    it('falls back to the code when the host resolved no message', () => {
+        const tree = render(
+            <Form.VehicleInfo {...VEHICLE} errors={[{ field: 'licensePlateNumber', code: 'mismatch' }]} />
+        );
+        expect(textOf(hostOf(tree, 'error.licensePlateNumber')[0])).toContain('mismatch');
+        expect(inError(tree, 'ABC123')).toBe(true);
+    });
+
+    it('shows one line per error of a field', () => {
+        const tree = render(
+            <Form.BusinessInfo
+                {...BUSINESS}
+                errors={[
+                    { field: 'title', code: 'too_short' },
+                    { field: 'title', code: 'reserved' },
+                    { field: 'tin', code: 'invalid' },
+                    { field: 'industries', code: 'required' },
+                ]}
+            />
+        );
+        expect(hostOf(tree, 'error.title')).toHaveLength(2);
+        expect(hostOf(tree, 'error.tin')).toHaveLength(1);
+        expect(hostOf(tree, 'error.industries')).toHaveLength(1);
+        expect(inError(tree, 'Casa Nostra')).toBe(true);
+        expect(inError(tree, '12-3456789')).toBe(true);
+        expect(inError(tree, 'Pasta')).toBe(false);
+    });
+
+    it('ignores errors of fields the form does not render', () => {
+        const tree = render(
+            <Form.PersonInfo {...PERSON} showEmailInput={false} errors={[{ field: 'email', code: 'taken' }]} />
+        );
+        expect(hostOf(tree, 'error.email')).toHaveLength(0);
+    });
+
+    it('keeps the form’s own required message next to a server error', () => {
+        const tree = render(
+            <Form.PersonInfo {...PERSON} firstName="" errors={[{ field: 'firstName', code: 'blocked_name' }]} />
+        );
+        expect(hostOf(tree, 'error.firstName')).toHaveLength(1);
+        expect(JSON.stringify(tree.toJSON())).toContain('blocked_name');
+    });
+
+    it('renders no error line without the prop', () => {
+        const tree = render(<Form.BusinessInfo {...BUSINESS} />);
+        expect(JSON.stringify(tree.toJSON())).not.toMatch(/"error\./);
+        expect(inError(tree, 'Casa Nostra')).toBe(false);
+    });
+});

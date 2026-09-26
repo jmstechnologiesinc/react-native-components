@@ -178,10 +178,12 @@ the components take the result and paint it.
 `src/portable.js` (published as `lib/portable`) is what a **web host** imports: the partner console
 (`CustomerApp/admin-web`) and the presentational views it borrows from the app. It re-exports only
 modules that load on react-native-web **without stubs**: List, ScreenWrapper, ChipList, Tabs,
-SegmentedButtonGroup, ActionGroup, SideNav, TouchableRippleWrapper, TN*, `styles`, `LAYOUT_MODE`, a
-`Form` subset (PersonInfo, VehicleInfo, BusinessInfo, EmailPassword, SecretInputText),
-`StripeForm.AccountBank`, Localization (`localized`, `setI18nConfig`, `registerFlatCatalog`,
-`currentLocale`, `merge`), the formatters, the Order and Partner view models and the K-22 components.
+SegmentedButtonGroup, ActionGroup, SideNav, TouchableRippleWrapper, TN*, `ButtonWrapper`,
+`PhotoGalleryDisplay`, `styles`, `LAYOUT_MODE`, a `Form` subset (PersonInfo, VehicleInfo, BusinessInfo,
+EmailPassword, SecretInputText), `StripeForm.AccountBank`, Localization (`localized`, `setI18nConfig`,
+`registerFlatCatalog`, `currentLocale`, `merge`), the formatters, the Order and Partner view models and the
+K-22 components. `ImagePicker` is **not** portable (picker, permissions, draggable list): a web host shows
+photos with `PhotoGalleryDisplay` and the app injects the picker.
 
 - `packages/components/__tests__/portableEntry.test.js` walks its static import graph the way a web
   bundler does (`.web.js` first) and fails if a native-only module becomes reachable (react-native-config,
@@ -211,6 +213,18 @@ Forms (C-25): `Form.PersonInfo`, `Form.VehicleInfo` and `Form.BusinessInfo` take
 `isDisabled`, but it also locks PersonInfo's email, which `isDisabled` never did) and
 `highlightFields: string[]` (the names the form reports to `inputActionHandler`), which outlines the field
 in `primary` and adds a «Changed» helper line (the line is what survives on a disabled input).
+They also take `errors: Array<{ field, code, message? }>` — server field errors (K-32), keyed by the same
+names. Each error of a rendered field puts its input in Paper's `error` state and adds one
+`HelperText type="error"` under it (`testID="error.<field>"`) showing `message`, or the raw `code` when the
+host resolved none; BusinessInfo's `industries` gets its line under the picker. Errors of fields the form
+does not render are ignored, and the forms' own required messages are unchanged. All of it lives in
+`Form/FormField.js` (`errorsOf`, `FieldErrorText`, the `field`/`errors` props of `FormField`).
+
+`PhotoGalleryDisplay({ photoUrls, title?, emptyLabel?, highlighted?, size?, testID? })`
+(`ImagePicker/PhotoGalleryDisplay.js`, barrel and portable): **resolved** URIs, never rewritten; a horizontal
+strip of RN `Image`s, each labelled «Photo i of n» (`global.photoOf`); `global.noPhotos` when empty or all
+blank; `title` defaults to `photos` (`null` hides it); `highlighted` adds the «Changed» line. testIDs:
+`<testID>` (the strip), `<testID>.photo.<i>`, `<testID>.empty`; `testID` defaults to `photo-gallery`.
 
 ## Storybook
 

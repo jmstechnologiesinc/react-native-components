@@ -131,6 +131,10 @@ describe('the portable entry (C-35)', () => {
         expect(files).not.toContain('Config.js');
         expect(files).not.toContain('Localization/Localization.js');
         expect(files).not.toContain('index.js');
+        // The display-only gallery is portable; the picker namespace is not.
+        expect(files).toContain('ImagePicker/PhotoGalleryDisplay.js');
+        expect(files).not.toContain('ImagePicker/ImagePicker.js');
+        expect(files).not.toContain('ImagePicker/PhotoGallery.js');
     });
 
     it('loads under Jest and serves what the web host imports', () => {
@@ -167,6 +171,8 @@ describe('the portable entry (C-35)', () => {
             'DocumentViewer',
             'DecisionDialog',
             'Timeline',
+            'ButtonWrapper',
+            'PhotoGalleryDisplay',
         ];
         expect(expected.filter((name) => portable[name] === undefined)).toEqual([]);
         expect(Object.keys(portable.Form).sort()).toEqual(

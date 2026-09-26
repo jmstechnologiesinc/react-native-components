@@ -254,7 +254,9 @@
         "stepOf": "Paso %{step} de %{count}",
         "stepDone": "Completado",
         "stepCurrent": "En curso",
-        "stepUpcoming": "Sin empezar"
+        "stepUpcoming": "Sin empezar",
+        "photoOf": "Foto %{index} de %{count}",
+        "noPhotos": "Sin fotos"
     },
     "noLocation": "Sin ubicación",
     "taxCode": "Código fiscal",

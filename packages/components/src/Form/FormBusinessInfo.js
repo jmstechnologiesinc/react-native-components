@@ -9,7 +9,7 @@ import { localized } from '../Localization/Localization';
 import OptionPickerActionSheet from '../OptionPicker/OptionPickerActionSheet';
 
 import SecretInputText from './SecretInputText';
-import FormField, { ChangedHelperText, isHighlighted } from './FormField';
+import FormField, { ChangedHelperText, FieldErrorText, isHighlighted } from './FormField';
 
 export const INDUSTRY_LIST = [
     {
@@ -81,6 +81,7 @@ const FormBusinessInfo = ({
     isDisabled,
     readOnly = false,
     highlightFields,
+    errors,
     title = localized('businessDetails'),
     description,
     storeTitle,
@@ -105,6 +106,8 @@ const FormBusinessInfo = ({
                 <ScreenWrapper.Section title={title}>
                     <FormField
                         mode="outlined"
+                        field="title"
+                        errors={errors}
                         highlighted={isHighlighted(highlightFields, 'title')}
                         disabled={disabled}
                         label={localized('storeName')}
@@ -116,6 +119,8 @@ const FormBusinessInfo = ({
                 <ScreenWrapper.Section>
                     <FormField
                         mode="outlined"
+                        field="description"
+                        errors={errors}
                         highlighted={isHighlighted(highlightFields, 'description')}
                         disabled={disabled}
                         label={localized('storeHighlightsDescription')}
@@ -126,6 +131,8 @@ const FormBusinessInfo = ({
                 <ScreenWrapper.Section>
                     <FormField
                         mode="outlined"
+                        field="location"
+                        errors={errors}
                         highlighted={isHighlighted(highlightFields, 'location')}
                         disabled={disabled}
                         label={localized('storeAddress')}
@@ -137,6 +144,8 @@ const FormBusinessInfo = ({
                 <ScreenWrapper.Section>
                     <FormField
                         mode="outlined"
+                        field="line2"
+                        errors={errors}
                         highlighted={isHighlighted(highlightFields, 'line2')}
                         disabled={disabled}
                         label={localized('floorSuite')}
@@ -151,6 +160,8 @@ const FormBusinessInfo = ({
                     <ScreenWrapper.Section>
                         <FormField
                             mode="outlined"
+                            field="phoneNumber"
+                            errors={errors}
                             highlighted={isHighlighted(highlightFields, 'phoneNumber')}
                             disabled={disabled}
                             label={localized('phoneNumber')}
@@ -165,6 +176,8 @@ const FormBusinessInfo = ({
                     <ScreenWrapper.Section>
                         <FormField
                             mode="outlined"
+                            field="email"
+                            errors={errors}
                             highlighted={isHighlighted(highlightFields, 'email')}
                             disabled={disabled}
                             label={localized('email')}
@@ -182,6 +195,8 @@ const FormBusinessInfo = ({
                     <ScreenWrapper.Section>
                         <FormField
                             mode="outlined"
+                            field="website"
+                            errors={errors}
                             highlighted={isHighlighted(highlightFields, 'website')}
                             disabled={disabled}
                             label={localized('website')}
@@ -199,6 +214,8 @@ const FormBusinessInfo = ({
                         <FormField
                             input={SecretInputText}
                             mode="outlined"
+                            field="tin"
+                            errors={errors}
                             highlighted={isHighlighted(highlightFields, 'tin')}
                             disabled={disabled}
                             label={localized('taxIdentificationNumber')}
@@ -228,6 +245,7 @@ const FormBusinessInfo = ({
                     onPress={(selectedOptions) => inputActionHandler('industries', selectedOptions)}
                 />
                 <ChangedHelperText visible={isHighlighted(highlightFields, 'industries')} />
+                <FieldErrorText field="industries" errors={errors} />
             </ScreenWrapper.Container>
         </>
     );
