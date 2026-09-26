@@ -203,6 +203,7 @@ themed through `useTheme()` so a host's theme applies:
 - `Partner/StatusChip` (+ `SlaChip`) — label and tone from `Partner/viewModel`.
 - `DocumentViewer` — default image renderer (RN `Image`); the host injects `renderDocument` /
   `renderZoom` (on the web: `react-pdf`, `react-zoom-pan-pinch`, which live **only** in admin-web).
+  `onError({source, error})` reports an image the default renderer could not load (a lapsed signed URL).
 - `DecisionDialog` — Paper `Dialog` in a `Portal` (the host needs Paper's `Provider`).
 - `Timeline` — `history` and `steps`.
 - `Partner/viewModel.js` (barrel/portable: `PartnerViewModel`, because `statusLabel` is the Order one):

@@ -61,6 +61,12 @@ const Message = ({ icon, text, theme }) => (
  * `zoom`, `rotation`, `page` and `side` are controlled when given and kept by
  * the viewer otherwise; the `on*` callbacks report every change either way.
  * `sides` is `[{ value, label }]` (front / back). `page` is 1-based.
+ *
+ * `onError({ source, error })` is called when the default image renderer
+ * cannot load `source` (RN `Image` `onError`; `error` is the platform's
+ * message, or the event when it has none) — a signed URL that lapsed, say, so
+ * the host can fetch a fresh one. A host that injects `renderDocument` reports
+ * its own failures.
  */
 const DocumentViewer = ({
     source,
@@ -78,6 +84,7 @@ const DocumentViewer = ({
     renderZoom,
     footer,
     emptyLabel,
+    onError,
     testID,
 }) => {
     const theme = useTheme();
@@ -103,6 +110,7 @@ const DocumentViewer = ({
             resizeMode="contain"
             accessibilityRole="image"
             accessibilityLabel={localized('global.document')}
+            onError={onError ? (event) => onError({ source, error: event?.nativeEvent?.error ?? event }) : undefined}
             style={[
                 styles.image,
                 {

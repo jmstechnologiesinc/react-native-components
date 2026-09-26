@@ -177,6 +177,28 @@ describe('DocumentViewer — injection points', () => {
         expect(control(tree, 'rotate').props.accessibilityState.disabled).toBe(true);
     });
 
+    it('reports an image that fails to load through onError, with its source', () => {
+        const onError = jest.fn();
+        const tree = render(<DocumentViewer source={IMAGE} onError={onError} testID="viewer" />);
+        const image = tree.root.findAll(
+            (node) => node.props.testID === 'viewer-image' && typeof node.props.onError === 'function'
+        )[0];
+
+        act(() => image.props.onError({ nativeEvent: { error: 'HTTP 403' } }));
+        expect(onError).toHaveBeenCalledWith({ source: IMAGE, error: 'HTTP 403' });
+
+        const event = { nativeEvent: {} };
+        act(() => image.props.onError(event));
+        expect(onError).toHaveBeenLastCalledWith({ source: IMAGE, error: event });
+    });
+
+    it('sets no image onError without a handler', () => {
+        const tree = render(<DocumentViewer source={IMAGE} testID="viewer" />);
+        const images = tree.root.findAll((node) => node.props.testID === 'viewer-image');
+        expect(images.length).toBeGreaterThan(0);
+        images.forEach((node) => expect(node.props.onError).toBeUndefined());
+    });
+
     it('renders the footer', () => {
         const tree = render(<DocumentViewer source={IMAGE} footer={<Text>uploaded yesterday</Text>} />);
         expect(JSON.stringify(tree.toJSON())).toContain('uploaded yesterday');
