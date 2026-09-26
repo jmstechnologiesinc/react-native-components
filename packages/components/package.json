@@ -25,14 +25,14 @@
         "url": "https://github.com/jmstechnologiesinc/react-native-components/issues"
     },
     "devDependencies": {
-        "@jmstechnologiesinc/partner": "0.1.0",
+        "@jmstechnologiesinc/partner": "0.1.1",
         "prettier": "^2.5.1",
         "rimraf": "^3.0.2"
     },
     "peerDependencies": {
         "@jmstechnologiesinc/order": "^0.2.0",
         "@jmstechnologiesinc/order-narration": "^0.0.2",
-        "@jmstechnologiesinc/partner": "0.1.0",
+        "@jmstechnologiesinc/partner": "0.1.1",
         "@jmstechnologiesinc/react-native-paper": "*",
         "@react-navigation/elements": "*",
         "react": "*",

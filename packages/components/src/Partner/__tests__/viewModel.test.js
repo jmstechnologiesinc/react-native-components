@@ -10,6 +10,8 @@ import { setI18nConfig, registerFlatCatalog } from '../../Localization/Localizat
 import {
     STATUS_KIND_GROUP,
     detailsCodeLabel,
+    factLabel,
+    fieldErrorLabel,
     intentAction,
     reasonLabel,
     requirementLabel,
@@ -27,6 +29,10 @@ beforeAll(() => {
             'partner.details_code.document_expired': 'The document has expired',
             'partner.disabled_reason.rejected.fraud': 'Fraud',
             'partner.intent.verify': 'Verify',
+            'partner.fact.document_verified': 'Document verified',
+            'partner.field_error_code.vin_check_digit': 'The VIN check digit does not match',
+            'partner.rule_error_code.golden_mismatch': 'A test case gave a different result',
+            'partner.refusal.effective_at_too_soon': 'The effective date is too soon',
         },
         es: {
             'partner.status.active': 'Activo',
@@ -35,6 +41,10 @@ beforeAll(() => {
             'partner.details_code.document_expired': 'El documento está vencido',
             'partner.disabled_reason.rejected.fraud': 'Fraude',
             'partner.intent.verify': 'Verificar',
+            'partner.fact.document_verified': 'Documento verificado',
+            'partner.field_error_code.vin_check_digit': 'El dígito de control del VIN no coincide',
+            'partner.rule_error_code.golden_mismatch': 'Un caso de prueba dio un resultado distinto',
+            'partner.refusal.effective_at_too_soon': 'La fecha de entrada en vigor es demasiado cercana',
         },
     });
 });
@@ -51,9 +61,12 @@ describe('statusLabel — the key is partner.<group>.<value>', () => {
         expect(Object.keys(STATUS_KIND_GROUP).sort()).toEqual(
             [
                 'adjudication',
+                'fact',
+                'field_error',
                 'partnership',
                 'requirement_bucket',
                 'requirement_cause',
+                'rule_error',
                 'screening_report',
                 'screening_result',
                 'task_status',
@@ -164,5 +177,30 @@ describe('intentAction — what a staff button needs, never whether it exists', 
             icon: null,
             confirm: true,
         });
+    });
+});
+
+describe('facts and field errors (partner 0.1.1, requests #14 and #20)', () => {
+    it('titles a fact from the catalogue, else shows it raw', () => {
+        expect(factLabel('document_verified')).toBe('Documento verificado');
+        expect(factLabel('some_future_fact')).toBe('some_future_fact');
+        expect(factLabel(null)).toBeNull();
+    });
+
+    it('labels a field error by its field code, then its rule code, then the refusal it explains', () => {
+        expect(fieldErrorLabel('vin_check_digit')).toBe('El dígito de control del VIN no coincide');
+        expect(fieldErrorLabel('golden_mismatch')).toBe('Un caso de prueba dio un resultado distinto');
+        expect(fieldErrorLabel('effective_at_too_soon')).toBe('La fecha de entrada en vigor es demasiado cercana');
+    });
+
+    it('leaves a ZEN diagnostic and an unknown code raw, for the host to word', () => {
+        expect(fieldErrorLabel('zen.invalid_edge')).toBe('zen.invalid_edge');
+        expect(fieldErrorLabel('something_new')).toBe('something_new');
+        expect(fieldErrorLabel('')).toBeNull();
+    });
+
+    it('never colours them', () => {
+        expect(statusTone('fact', 'document_verified')).toBe('neutral');
+        expect(statusTone('field_error', 'vin_check_digit')).toBe('neutral');
     });
 });

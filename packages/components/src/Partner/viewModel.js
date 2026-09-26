@@ -5,12 +5,16 @@ import {
     CHECKR_REPORT_STATUS,
     DETAILS_CODE,
     DISABLED_REASON,
+    FIELD_ERROR_CODE,
     LABEL_GROUPS,
+    PARTNER_FACT,
     PARTNERSHIP_STATUS,
+    REFUSAL_REASON,
     REQUIREMENT_BUCKET,
     REQUIREMENT_CAUSE,
     REQUIREMENT_KEYS,
     REVIEW_TASK_STATUS,
+    RULE_ERROR_CODE,
     STAFF_INTENT,
     VERIFICATION_STATUS,
     statusLabelKey,
@@ -48,8 +52,9 @@ const groupOf = (vocabulary) => {
     return entry ? entry[0] : null;
 };
 
-/** The `StatusChip` kinds (ARCHITECTURE §5) and the package vocabulary each
- *  one shows. The kind names are this package's API; the values are not. */
+/** The kinds this view model labels (the `StatusChip` kinds of ARCHITECTURE
+ *  §5, and the label-only kinds below) and the package vocabulary each one
+ *  shows. The kind names are this package's API; the values are not. */
 const KIND_VOCABULARY = Object.freeze({
     partnership: PARTNERSHIP_STATUS,
     verification: VERIFICATION_STATUS,
@@ -59,6 +64,11 @@ const KIND_VOCABULARY = Object.freeze({
     screening_result: CHECKR_REPORT_RESULT,
     adjudication: CHECKR_REPORT_ADJUDICATION,
     task_status: REVIEW_TASK_STATUS,
+    // Partner 0.1.1: the §7.8 facts (request #14) title a history entry, and
+    // the §8.1 field-error codes (request #20) explain a refused field.
+    fact: PARTNER_FACT,
+    field_error: FIELD_ERROR_CODE,
+    rule_error: RULE_ERROR_CODE,
 });
 
 /** Each kind -> the `LABEL_GROUPS` group it is labelled from. */
@@ -71,6 +81,7 @@ const GROUP = Object.freeze({
     detailsCode: groupOf(DETAILS_CODE),
     disabledReason: groupOf(DISABLED_REASON),
     intent: groupOf(STAFF_INTENT),
+    refusal: groupOf(REFUSAL_REASON),
 });
 
 const { success, warning, danger, neutral, info } = STATUS_TONES;
@@ -84,9 +95,12 @@ const { success, warning, danger, neutral, info } = STATUS_TONES;
  * - info: onboarding, an open or assigned task, a completed report (its result carries the outcome);
  * - neutral: currently_due, a closed task, a canceled report, and anything unknown.
  *
- * `requirement_cause` is a LABEL-ONLY kind: the checklist tones a requirement
- * by its bucket and shows the cause as text, so it has no row here (see
- * `LABEL_ONLY_KINDS`).
+ * `requirement_cause`, `fact`, `field_error` and `rule_error` are LABEL-ONLY
+ * kinds, so they have no row here (see `LABEL_ONLY_KINDS`): the checklist
+ * tones a requirement by its bucket and shows the cause as text; a history
+ * entry is titled by its fact and toned by its host (the fact alone does not
+ * say whether it went well for the partner); an error is an error, already
+ * painted in the error colour where it is shown.
  */
 export const TONE_BY_KIND = Object.freeze({
     partnership: Object.freeze({
@@ -131,7 +145,7 @@ export const TONE_BY_KIND = Object.freeze({
 });
 
 /** The kinds that are labelled but never coloured (their tone is `neutral`). */
-export const LABEL_ONLY_KINDS = Object.freeze(['requirement_cause']);
+export const LABEL_ONLY_KINDS = Object.freeze(['requirement_cause', 'fact', 'field_error', 'rule_error']);
 
 /** Button tone (the `DecisionDialog` `confirmTone`) and icon of each staff
  *  intent. An adverse intent is `danger` and asks for confirmation. */
@@ -150,14 +164,21 @@ const has = (table, key) => Object.prototype.hasOwnProperty.call(table, key);
 
 const isAbsent = (value) => value === null || value === undefined || value === '';
 
+/** The registered catalogue's text of `partner.<group>.<value>`, or null when
+ *  the package does not know the value or the catalogue lacks the key. */
+const catalogText = (group, value) => {
+    const key = typeof group === 'string' ? statusLabelKey(group, String(value)) : null;
+    if (!key) return null;
+    const text = localized(key);
+    return text === key ? null : text;
+};
+
 /** `fallback` unless the package knows `partner.<group>.<value>` AND the
  *  registered catalogue carries it. */
 const labelOf = (group, value, fallback = value) => {
     if (isAbsent(value)) return null;
-    const key = typeof group === 'string' ? statusLabelKey(group, String(value)) : null;
-    if (!key) return String(fallback);
-    const text = localized(key);
-    return text === key ? String(fallback) : text;
+    const text = catalogText(group, value);
+    return text === null ? String(fallback) : text;
 };
 
 /** The label of a status value of a `StatusChip` kind. An unknown kind is
@@ -186,6 +207,26 @@ export const detailsCodeLabel = (code) => labelOf(GROUP.detailsCode, code);
 /** The label of a `disabled_reason` (canon §7.2); the values are dotted, and
  *  the flat catalogue resolves them by exact match. */
 export const reasonLabel = (reason) => labelOf(GROUP.disabledReason, reason);
+
+/** The title of a §7.8 fact (`case.timeline[].event`, request #14). */
+export const factLabel = (fact) => statusLabel('fact', fact);
+
+/**
+ * The label of the `code` of a §8.1 field error `{field, code}` (requests #20
+ * and #24): a `FIELD_ERROR_CODE`, else a `RULE_ERROR_CODE`, else the
+ * `REFUSAL_REASON` the error explains, else the raw code. A ZEN diagnostic
+ * (`zen.<code>`) is ZEN's vocabulary, not the package's: it has no catalogue
+ * key and comes back raw, for the host to word generically.
+ */
+export const fieldErrorLabel = (code) => {
+    if (isAbsent(code)) return null;
+    const groups = [STATUS_KIND_GROUP.field_error, STATUS_KIND_GROUP.rule_error, GROUP.refusal];
+    for (const group of groups) {
+        const text = catalogText(group, code);
+        if (text !== null) return text;
+    }
+    return String(code);
+};
 
 /**
  * A staff intent from `presentation.allowedIntents.staff` -> what its button

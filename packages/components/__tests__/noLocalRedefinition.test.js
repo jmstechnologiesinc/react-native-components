@@ -114,6 +114,10 @@ describe('R1 — no partner value is spelled outside @jmstechnologiesinc/partner
         expect(VOCABULARY.size).toBeGreaterThan(100);
         expect(VOCABULARY.get(partner.REQUIREMENT_BUCKET.PAST_DUE)).toContain('REQUIREMENT_BUCKET');
         expect(VOCABULARY.has(partner.STAFF_INTENT.PRE_ADVERSE_ACTION)).toBe(true);
+        // Partner 0.1.1's groups are collected the same way, with nothing listed here.
+        expect(VOCABULARY.get(partner.PARTNER_FACT.DOCUMENT_VERIFIED)).toContain('LABEL_GROUPS.fact');
+        expect(VOCABULARY.get(partner.FIELD_ERROR_CODE.VIN_CHECK_DIGIT)).toContain('FIELD_ERROR_CODE');
+        expect(VOCABULARY.get(partner.RULE_ERROR_CODE.GOLDEN_MISMATCH)).toContain('LABEL_GROUPS.rule_error_code');
     });
 
     it('scans the partner surface', () => {

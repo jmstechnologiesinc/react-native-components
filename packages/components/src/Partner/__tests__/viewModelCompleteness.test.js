@@ -95,6 +95,25 @@ describe('with the package catalogue registered, every kind value is text', () =
         expect(statusLabel(kind, value)).toBe(label);
     });
 
+    // Every group the package labels, the ones partner 0.1.1 added included (`fact`, `field_error_code`,
+    // `rule_error_code`): each value is text in both locales, and `statusLabel` reaches it by the group's name.
+    const groupCases = Object.entries(LABEL_GROUPS).flatMap(([group, values]) =>
+        Object.values(values).map((value) => [group, value])
+    );
+
+    it('walks every group of the package', () => {
+        expect(Object.keys(LABEL_GROUPS)).toEqual(
+            expect.arrayContaining(['fact', 'field_error_code', 'rule_error_code'])
+        );
+    });
+
+    it.each(groupCases)('%s / %s is text in en and es', (group, value) => {
+        const key = statusLabelKey(group, value);
+        expect(EN[key]).toEqual(expect.any(String));
+        expect(ES[key]).toEqual(expect.any(String));
+        expect(statusLabel(group, value)).toBe(ES[key]);
+    });
+
     it.each(Object.values(STAFF_INTENT))('intent %s is titled by the catalogue', (intent) => {
         const [intentGroup] = Object.entries(LABEL_GROUPS).find(([, values]) => values === STAFF_INTENT);
         const label = ES[statusLabelKey(intentGroup, intent)];
