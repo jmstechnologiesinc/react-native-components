@@ -65,7 +65,11 @@ export { orderViewModel, fromDescriptor, statusLabel } from './Order/viewModel';
 
 // K-22
 export { default as StatusChip, SlaChip } from './Partner/StatusChip';
-export { default as DocumentViewer } from './DocumentViewer/DocumentViewer';
+export { default as DocumentViewer, ZOOM } from './DocumentViewer/DocumentViewer';
 export { default as DecisionDialog } from './DecisionDialog/DecisionDialog';
+// The web keyboard contract of a modal surface (focus in, Tab trap, Esc,
+// focus back to the opener); DecisionDialog uses it, and a host's own sheets
+// and dialogs share it. A no-op off the web.
+export { useModalFocus } from './useModalFocus';
 export { default as Timeline } from './Timeline/Timeline';
 export { STATUS_TONES, toneColors } from './tones';
