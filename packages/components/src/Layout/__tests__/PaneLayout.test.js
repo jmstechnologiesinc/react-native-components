@@ -20,10 +20,10 @@ const INITIAL_WINDOW = Dimensions.get('window');
 const SCALE = tokenScale(MD3LightTheme);
 const METRICS = paneMetrics(MD3LightTheme);
 
-/** Sets the window to `dp` MD3 dp wide in the theme's scale (a class boundary is a class boundary). */
-const setWindow = (dp) =>
+/** Sets the window to `width` raw pixels: MD3 breakpoints are dp, and a web dp is a CSS pixel. */
+const setWindow = (width) =>
     act(() => {
-        Dimensions.set({ window: { ...INITIAL_WINDOW, width: dp * SCALE, height: 1000 * SCALE } });
+        Dimensions.set({ window: { ...INITIAL_WINDOW, width, height: 1000 } });
     });
 
 const mounted = [];
@@ -88,12 +88,11 @@ describe('PaneLayout', () => {
         expect(hostOf(tree, 'header-Detail-show-supporting')).toBeUndefined();
     });
 
-    it('reads the class from the width in the theme’s dp: 1700 raw pixels are not XL at this scale', () => {
-        act(() => {
-            Dimensions.set({ window: { ...INITIAL_WINDOW, width: 1700 } });
-        });
+    it('reads the class from the raw window width, whatever the token scale: 1700 pixels are XL', () => {
+        setWindow(1700);
         const tree = render(<PaneLayout {...L3} />);
-        expect(inlinePanes(tree)).toEqual(SCALE > 1700 / 1600 ? ['list', 'detail'] : ['list', 'detail', 'supporting']);
+        expect(SCALE).toBeGreaterThan(0);
+        expect(inlinePanes(tree)).toEqual(['list', 'detail', 'supporting']);
     });
 
     it('L3 at large: supporting becomes a SideSheet opened from the detail header', () => {
