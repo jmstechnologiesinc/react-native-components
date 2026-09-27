@@ -331,8 +331,10 @@ Data display and feedback:
 - `DataTableView({ columns:[{key, title, numeric, sortable, flex, render, sortValue}], rows, rowKey, sort,
   defaultSort, onSortChange, sortMode:'client'|'server', onRowPress, selectedKey, hasMore, loadingMore,
   onLoadMore, emptyLabel, loadMoreLabel, sortByLabel, accessibilityLabel, testID='data-table' })` on Paper
-  `DataTable`; `sortRows`, `nextSort`, `SORT_DIRECTION`, `SORT_MODE`. A sortable title's name carries its direction
-  (`global.sortedAscending`/`sortedDescending`); no `table` role until the fork gives Paper's rows and cells theirs.
+  `DataTable`; `sortRows`, `nextSort`, `SORT_DIRECTION`, `SORT_MODE`. `accessibilityLabel` names the table
+  (`aria-label` on Paper's `DataTable`); the `table`/`row`/`columnheader`/`cell` roles and a sortable title's
+  `aria-sort` are the Paper fork's (branch `web-a11y`, to publish as 5.12.12; CustomerApp OPEN-ITEMS #46), so a
+  sortable title's button is named by its title alone.
 - `CodeBlock({ value, accessibilityLabel, testID })` (`codeText`), monospace per platform.
 - `StatusBanner({ message, tone='info', icon, actions, visible=true, style, testID })` — Paper `Banner` in the
   tone's container (`tones.js`), text/icon/actions in its `onContainer` (a `ThemeProvider` around the Banner).
@@ -360,10 +362,11 @@ Utilities: `useNow(intervalMs=60000)`; `valueText(value)` / `EMPTY_VALUE`; `Date
 
 Catalogue keys added (en + es): `global.back`, `global.close`, `global.showSidePanel`, `global.navigation`,
 `global.loading`, `global.somethingWentWrong`, `global.retry`, `global.loadMore`, `global.sortBy`
-(`%{column}`), `global.sortedAscending`, `global.sortedDescending`, `global.profilePhoto`, `global.noProfilePhoto`.
+(`%{column}`), `global.profilePhoto`, `global.noProfilePhoto`.
 
-**Paper fork web a11y items** (fix in `@jmstechnologiesinc/react-native-paper`, not here — the components above
-use Paper as it is and inherit these on the web):
+**Paper fork web a11y items** (fixed in `@jmstechnologiesinc/react-native-paper`, not here, on the fork's branch
+`web-a11y`, unpublished: CustomerApp OPEN-ITEMS #46. The components above use Paper as it is and inherit these on
+the web until the fork's 5.12.12 is published):
 - **Disabled press wrappers render `aria-disabled="true"`.** `Card` (always wraps its content in a
   `TouchableWithoutFeedback` with `disabled={!onPress}`), `List.Item` (its `TouchableRipple`), `DataTable.Row`,
   `DataTable.Title` (no `onPress`), `Chip` (no `onPress`) and `Appbar.Content` wrap content in a press target

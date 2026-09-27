@@ -90,11 +90,10 @@ describe('sortRows', () => {
 });
 
 describe('DataTableView', () => {
-    it('is a named block of Paper DataTable titles, rows and cells, with no table role Paper cannot fill', () => {
+    it('is a Paper DataTable (the table on the web) named by accessibilityLabel', () => {
         const tree = render(table({ accessibilityLabel: 'Screenings' }));
-        const root = hostOf(tree, 'data-table');
-        expect(root.props.role).toBeUndefined();
-        expect(root.props['aria-label']).toBe('Screenings');
+        expect(hostOf(tree, 'data-table').props['aria-label']).toBeUndefined();
+        expect(tree.root.findByType(DataTable).props['aria-label']).toBe('Screenings');
         expect(tree.root.findAllByType(DataTable.Title)).toHaveLength(3);
         expect(tree.root.findAllByType(DataTable.Cell)).toHaveLength(9);
     });
@@ -108,11 +107,12 @@ describe('DataTableView', () => {
         act(() => titleOf(tree, 'name').props.onPress());
         expect(rowOrder(tree)).toEqual(['b', 'c', 'a']);
         expect(titleOf(tree, 'name').props.sortDirection).toBe('ascending');
-        expect(titleOf(tree, 'name').props.accessibilityLabel).toBe('Sort by Name, sorted ascending');
+        // The direction is the column header's (`aria-sort`, Paper on the web), not part of the button's name.
+        expect(titleOf(tree, 'name').props.accessibilityLabel).toBe('Sort by Name');
 
         act(() => titleOf(tree, 'name').props.onPress());
         expect(rowOrder(tree)).toEqual(['a', 'c', 'b']);
-        expect(titleOf(tree, 'name').props.accessibilityLabel).toBe('Sort by Name, sorted descending');
+        expect(titleOf(tree, 'name').props.sortDirection).toBe('descending');
     });
 
     it('reports the next sort and shows the rows as given when the server sorts', () => {
