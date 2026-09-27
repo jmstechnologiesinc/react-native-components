@@ -23,6 +23,11 @@ export const SORT_DIRECTION = Object.freeze({ ASCENDING: 'ascending', DESCENDING
 
 export const SORT_MODE = Object.freeze({ CLIENT: 'client', SERVER: 'server' });
 
+const SORTED_LABEL_KEY = Object.freeze({
+    [SORT_DIRECTION.ASCENDING]: 'global.sortedAscending',
+    [SORT_DIRECTION.DESCENDING]: 'global.sortedDescending',
+});
+
 const isBlank = (value) => value === undefined || value === null || value === '';
 
 const compareValues = (a, b) => {
@@ -66,10 +71,14 @@ export const nextSort = (sort, key) =>
  *
  * - Sort is controlled with `sort` + `onSortChange`, or kept here from `defaultSort`. `sortMode="client"`
  *   sorts the rows here (`sortRows`); `"server"` shows them as given (the server ordered them).
- * - `hasMore`/`loadingMore`/`onLoadMore` map onto an infinite query (`hasNextPage`,
- *   `isFetchingNextPage`, `fetchNextPage`); the button is disabled and spinning while loading.
+ * - `hasMore`/`loadingMore`/`onLoadMore` are the host's cursor: whether another page exists, whether it
+ *   is being read, and reading it; the button is disabled and spinning while loading.
  * - `onRowPress` makes rows pressable; `selectedKey` paints that row `secondaryContainer` and marks it
  *   `aria-selected`. A blank cell shows an em dash. `emptyLabel` shows under the header without rows.
+ * - A sortable column's title is a button named «Sort by <title>», plus its direction while it sorts
+ *   («…, sorted ascending»). The wrapper carries no `table` role: Paper's rows and cells expose no
+ *   row/cell roles on the web, and a table without them misleads a screen reader (the fork's item,
+ *   OPEN-ITEMS «DataTable roles»).
  *
  * @param {{columns: DataColumn[], rows: object[], rowKey: string | ((row: object) => string),
  *     sort?: ?DataSort, defaultSort?: ?DataSort, onSortChange?: (sort: DataSort) => void,
@@ -104,7 +113,10 @@ const DataTableView = ({
     const activeSort = sort === undefined ? ownSort : sort;
     const keyOf = typeof rowKey === 'function' ? rowKey : (row) => row[rowKey];
     const shown = sortMode === SORT_MODE.CLIENT ? sortRows(rows, activeSort, columns) : rows;
-    const sortLabel = (title) => (sortByLabel ? sortByLabel(title) : localized('global.sortBy', { column: title }));
+    const sortLabel = (title, direction) => {
+        const label = sortByLabel ? sortByLabel(title) : localized('global.sortBy', { column: title });
+        return direction ? `${label}, ${localized(SORTED_LABEL_KEY[direction])}` : label;
+    };
 
     const onSort = (key) => {
         const next = nextSort(activeSort, key);
@@ -113,7 +125,7 @@ const DataTableView = ({
     };
 
     return (
-        <View role="table" aria-label={accessibilityLabel} testID={testID}>
+        <View aria-label={accessibilityLabel} testID={testID}>
             <DataTable>
                 <DataTable.Header>
                     {columns.map((column) => {
@@ -126,7 +138,7 @@ const DataTableView = ({
                                 onPress={column.sortable ? () => onSort(column.key) : undefined}
                                 style={column.flex ? { flex: column.flex } : undefined}
                                 accessibilityRole={column.sortable ? 'button' : undefined}
-                                accessibilityLabel={column.sortable ? sortLabel(column.title) : undefined}
+                                accessibilityLabel={column.sortable ? sortLabel(column.title, sorted) : undefined}
                                 testID={`${testID}-title-${column.key}`}
                             >
                                 {column.title}

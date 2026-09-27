@@ -16,8 +16,9 @@ import { Config } from '../Config';
 // before (pinned by `__tests__/legacyRendering.test.js`).
 //
 // `readOnly` locks every field and drops the background-check disclosure,
-// which is addressed to the applicant, not to whoever reviews the answers. The
-// secrets stay masked: a disabled input offers no «show» toggle. `dateOfBirth`
+// which is addressed to the applicant, not to whoever reviews the answers, and
+// the date field's entry aids (placeholder, keypad, length), which describe
+// typing. The secrets stay masked: a disabled input offers no «show» toggle. `dateOfBirth`
 // seeds the date field (it keeps its own state while typed into, as before).
 //
 // Additive, for a reader that must never see more than it is given (canon
@@ -73,10 +74,9 @@ const FormDriverInfo = ({
                     highlighted={isHighlighted(highlightFields, 'dateofBirth')}
                     mode="outlined"
                     label={localized('dateBirth')}
-                    placeholder="MM/DD/YY"
+                    {...(readOnly ? null : { placeholder: 'MM/DD/YY' })}
                     value={readOnly && initialDateOfBirth !== undefined ? initialDateOfBirth : dateOfBirth}
-                    keyboardType="numeric"
-                    maxLength={10}
+                    {...(readOnly ? null : { keyboardType: 'numeric', maxLength: 10 })}
                     onChangeText={(text) =>
                         handleDateOfBirhtChange(text, inputActionHandler, setDateOfBirth, dateOfBirth)
                     }

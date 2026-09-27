@@ -9,7 +9,8 @@ import renderer, { act } from 'react-test-renderer';
 import { Drawer, FAB, MD3LightTheme, Provider } from '@jmstechnologiesinc/react-native-paper';
 
 import { setI18nConfig } from '../../Localization/Localization';
-import { NavigationRail, PaneFooter, footerButtons, paneMetrics } from '..';
+import { PaneFooter, footerButtons, paneMetrics } from '..';
+import NavigationRail from '../NavigationRail';
 
 jest.useFakeTimers();
 

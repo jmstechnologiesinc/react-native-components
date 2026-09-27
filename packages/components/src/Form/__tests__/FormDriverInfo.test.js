@@ -43,6 +43,9 @@ const textOf = (tree) => JSON.stringify(tree.toJSON());
 // without them is pinned by `__tests__/legacyRendering.test.js`.
 const DRIVER = { licenseNumer: 'D1234567', ssn: '123456789', inputActionHandler: () => {} };
 
+/** The props the form gives its date field. */
+const dateField = (tree) => tree.root.findAll((node) => node.props.field === 'dateofBirth')[0].props;
+
 const inputWithValue = (tree, value) =>
     tree.root.findAll((node) => node.type === 'TextInput' && node.props.value === value)[0];
 
@@ -62,6 +65,14 @@ describe('Form.DriverInfo', () => {
         }
         // The secrets stay masked: a disabled input offers no «show» toggle.
         expect(inputWithValue(tree, '123456789').props.secureTextEntry).toBe(true);
+        // The date's entry aids describe typing: a locked field is given none.
+        const date = dateField(tree);
+        expect(['placeholder', 'keyboardType', 'maxLength'].filter((prop) => prop in date)).toEqual([]);
+    });
+
+    it('keeps the date field’s entry aids while editable', () => {
+        const date = dateField(render(<DriverInfo {...DRIVER} />));
+        expect([date.placeholder, date.keyboardType, date.maxLength]).toEqual(['MM/DD/YY', 'numeric', 10]);
     });
 
     it('marks the highlighted fields and shows the server errors under theirs', () => {

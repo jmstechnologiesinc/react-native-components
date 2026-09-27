@@ -185,6 +185,73 @@ describe('PaneLayout', () => {
         expect(hostOf(tree, 'pane-layout-supporting-sheet')).toBeDefined();
     });
 
+    describe('collapses to what fits its own width (a host rail beside it, the token scale)', () => {
+        // The console's theme: Paper scales its tokens by the window the page loaded in, 1.157 at 1440 × 900.
+        const CONSOLE_SCALE = 1.157;
+        const CONSOLE_THEME = {
+            ...MD3LightTheme,
+            spacing: Object.fromEntries(
+                Object.entries(MD3LightTheme.spacing).map(([key, value]) => [key, (value / SCALE) * CONSOLE_SCALE])
+            ),
+        };
+        const CONSOLE = paneMetrics(CONSOLE_THEME);
+        const renderInConsole = (element) => {
+            let tree;
+            act(() => {
+                tree = renderer.create(<Provider theme={CONSOLE_THEME}>{element}</Provider>);
+            });
+            mounted.push(tree);
+            return tree;
+        };
+        /** The layout measured `width` wide, as react-native-web reports it once laid out. */
+        const measure = (tree, width) =>
+            act(() => hostOf(tree, 'pane-layout').props.onLayout({ nativeEvent: { layout: { width, height: 900 } } }));
+        /** The flexible pane's width with the list beside it, in a layout `width` wide. */
+        const detailWidth = (width) => width - 2 * CONSOLE.margin - CONSOLE.spacer - CONSOLE.fixedPane;
+
+        it('at 840 beside the rail the detail would be narrower than the list: one pane at a time', () => {
+            setWindow(840);
+            const tree = renderInConsole(<PaneLayout {...L2A} activePane={PANE.DETAIL} onBack={jest.fn()} />);
+            // The window's class alone (expanded) would show two panes.
+            expect(inlinePanes(tree)).toEqual(['list', 'detail']);
+            const width = 840 - CONSOLE.rail;
+            expect(detailWidth(width)).toBeLessThan(CONSOLE.fixedPane);
+
+            measure(tree, width);
+            expect(inlinePanes(tree)).toEqual(['detail']);
+            expect(labelOf(tree, 'header-Detail-back')).toBe('Back');
+        });
+
+        it('at 840 L2B keeps the primary pane and opens supporting in a bottom sheet', () => {
+            setWindow(840);
+            const tree = renderInConsole(<PaneLayout {...L2B} />);
+            measure(tree, 840 - CONSOLE.rail);
+            expect(inlinePanes(tree)).toEqual(['primary']);
+            expect(hostOf(tree, 'header-Primary-show-supporting')).toBeDefined();
+        });
+
+        it('at 1024 beside the rail both panes fit, the detail at least as wide as the list', () => {
+            setWindow(1024);
+            const tree = renderInConsole(<PaneLayout {...L2A} />);
+            const width = 1024 - CONSOLE.rail;
+            expect(detailWidth(width)).toBeGreaterThanOrEqual(CONSOLE.fixedPane);
+
+            measure(tree, width);
+            expect(inlinePanes(tree)).toEqual(['list', 'detail']);
+            expect(widthOf(tree, 'list')).toBe(CONSOLE.fixedPane);
+        });
+
+        it('an XL window whose layout is too narrow for three panes keeps two and a side sheet', () => {
+            setWindow(1700);
+            const tree = renderInConsole(<PaneLayout {...L3} />);
+            expect(inlinePanes(tree)).toEqual(['list', 'detail', 'supporting']);
+
+            measure(tree, 1100);
+            expect(inlinePanes(tree)).toEqual(['list', 'detail']);
+            expect(hostOf(tree, 'header-Detail-show-supporting')).toBeDefined();
+        });
+    });
+
     it('follows a live window resize from XL to medium and back', () => {
         setWindow(1700);
         const tree = render(<PaneLayout {...L3} />);

@@ -133,7 +133,6 @@ describe('the portable entry (C-35)', () => {
         expect(files).not.toContain('index.js');
         // The display-only gallery is portable; the picker namespace is not.
         expect(files).toContain('ImagePicker/PhotoGalleryDisplay.js');
-        expect(files).toContain('ImagePicker/AvatarDisplay.js');
         expect(files).not.toContain('ImagePicker/ImagePickerAvatar.js');
         expect(files).not.toContain('ImagePicker/ImagePicker.js');
         expect(files).not.toContain('ImagePicker/PhotoGallery.js');
@@ -196,10 +195,7 @@ describe('the portable entry (C-35)', () => {
             'Pane',
             'PaneHeader',
             'PaneFooter',
-            'SideSheet',
             'BottomSheet',
-            'SheetHeader',
-            'NavigationRail',
             'SectionCard',
             'KeyValueList',
             'ListRow',
@@ -209,18 +205,14 @@ describe('the portable entry (C-35)', () => {
             'EmptyState',
             'LoadingState',
             'ErrorState',
-            'SnackbarProvider',
-            'useSnackbar',
             'DataTableView',
             'SORT_DIRECTION',
             'sortRows',
             'CodeBlock',
             'NoteField',
-            'RadioGroupField',
             'CheckboxListField',
             'FilterChips',
             'StatusBanner',
-            'AvatarDisplay',
             'ChangedHelperText',
             'FieldErrorText',
             'FieldErrorList',
@@ -241,6 +233,18 @@ describe('the portable entry (C-35)', () => {
             'RecentLocations',
         ];
         expect(expected.filter((name) => portable[name] === undefined)).toEqual([]);
+        // Not public: nothing used them (the rail is `SideNav variant="rail"`, the app's snackbar is its own) or they
+        // are the scaffold's own pieces (the side sheet and the sheets' header).
+        const retired = [
+            'SideSheet',
+            'SheetHeader',
+            'NavigationRail',
+            'SnackbarProvider',
+            'useSnackbar',
+            'RadioGroupField',
+            'AvatarDisplay',
+        ];
+        expect(retired.filter((name) => portable[name] !== undefined)).toEqual([]);
         expect(Object.keys(portable.Form).sort()).toEqual(
             ['BusinessInfo', 'DriverInfo', 'EmailPassword', 'PersonInfo', 'SecretInputText', 'VehicleInfo'].sort()
         );

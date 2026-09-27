@@ -6,7 +6,7 @@ import { useTheme } from '@jmstechnologiesinc/react-native-paper';
 import BottomSheet from './BottomSheet';
 import { LAYOUT, PANE, SUPPORTING_MODE, paneMetrics } from './metrics';
 import { PaneContext } from './PaneContext';
-import { paneArrangement } from './paneArrangement';
+import { fittingArrangement, paneArrangement } from './paneArrangement';
 import SideSheet from './SideSheet';
 import { useWindowSizeClass } from './useWindowSizeClass';
 
@@ -14,7 +14,10 @@ const FIXED_WIDTH_PANES = new Set([PANE.LIST, PANE.SUPPORTING]);
 
 /**
  * The MD3 pane scaffold a screen declares: `L3` (list · detail · supporting), `L2A` (list · detail) or
- * `L2B` (primary · supporting), collapsing per window size class (`paneArrangement`).
+ * `L2B` (primary · supporting), collapsing per window size class (`paneArrangement`) and, within it, to what
+ * fits its own measured width (`fittingArrangement`: a flexible pane is never narrower than a fixed one, so a
+ * host's rail beside the layout and the token scale are accounted for). Until it is measured, the window's class
+ * alone decides.
  *
  * - Single-pane windows show `activePane` (list | detail); the detail pane's `PaneHeader` gets a back
  *   arrow that calls `onBack`.
@@ -48,7 +51,12 @@ const PaneLayout = ({
 }) => {
     const metrics = paneMetrics(useTheme());
     const { sizeClass } = useWindowSizeClass();
-    const arrangement = paneArrangement(layout, sizeClass, activePane);
+    const [measuredWidth, setMeasuredWidth] = useState(null);
+    const onLayout = useCallback((event) => setMeasuredWidth(event.nativeEvent.layout.width), []);
+    const arrangement =
+        measuredWidth === null
+            ? paneArrangement(layout, sizeClass, activePane)
+            : fittingArrangement(layout, sizeClass, activePane, measuredWidth, metrics);
     const [ownOpen, setOwnOpen] = useState(false);
     const open = supportingOpen ?? ownOpen;
     const setOpen = useCallback(
@@ -94,7 +102,7 @@ const PaneLayout = ({
     const panes = arrangement.panes.filter((role) => slots[role] !== undefined && slots[role] !== null);
 
     return (
-        <View style={[styles.window, { padding: metrics.margin }]} testID={testID}>
+        <View style={[styles.window, { padding: metrics.margin }]} onLayout={onLayout} testID={testID}>
             {panes.map((role, index) => (
                 <View
                     key={role}

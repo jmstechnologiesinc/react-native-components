@@ -179,7 +179,7 @@ the components take the result and paint it.
 (`CustomerApp/admin-web`) and the presentational views it borrows from the app. It re-exports only
 modules that load on react-native-web **without stubs**: List, ScreenWrapper, ChipList, Tabs,
 SegmentedButtonGroup, ActionGroup, SideNav, TouchableRippleWrapper, TN*, `ButtonWrapper`,
-`PhotoGalleryDisplay`, `AvatarDisplay`, `styles`, `LAYOUT_MODE`, a `Form` subset (PersonInfo, VehicleInfo,
+`PhotoGalleryDisplay`, `styles`, `LAYOUT_MODE`, a `Form` subset (PersonInfo, VehicleInfo,
 BusinessInfo, DriverInfo, EmailPassword, SecretInputText), `StripeForm.AccountBank`, Localization (`localized`,
 `setI18nConfig`, `registerFlatCatalog`, `currentLocale`, `merge`), the formatters, the Order and Partner view
 models, the K-22 components and the generic web-host UI (next section). `ImagePicker` is **not** portable (picker, permissions, draggable list): a web host shows
@@ -297,7 +297,10 @@ Layout (`src/Layout/`, `index.js` re-exports):
 - `PaneLayout({ layout, list, detail, primary, supporting, activePane, onBack, supportingOpen,
   onToggleSupporting, supportingLabel, testID='pane-layout' })` — slot testIDs `<testID>-<pane>`, sheet
   `<testID>-supporting-sheet`; an empty slot takes no room; `usePaneContext()` →
-  `{ role, inSheet, onBack, onShowSupporting, onCloseSheet, supportingMode }`.
+  `{ role, inSheet, onBack, onShowSupporting, onCloseSheet, supportingMode }`. Once laid out (`onLayout`) it keeps
+  only the panes its own width fits (`fittingArrangement`: every flexible pane at least as wide as a fixed one,
+  else the next narrower class's arrangement), so a host's rail beside it and the token scale count: at 840px
+  beside an 80dp rail L2A shows one pane at a time. Until measured, the window's class alone decides.
 - `Pane({ children, accessibilityLabel, style, testID })` — `region`; flat inside a sheet.
 - `PaneHeader({ title, subtitle, onBack, actions:[{icon, label, onPress, disabled, testID}], trailing,
   backLabel, showSupportingLabel, closeLabel, testID='pane-header' })` on Paper `Appbar`; adds back
@@ -305,15 +308,15 @@ Layout (`src/Layout/`, `index.js` re-exports):
 - `PaneFooter({ caption, actions:[{key, label, icon, onPress, primary, tone:'primary'|'danger', disabled}],
   busy, testID='pane-footer' })` on `ActionGroup.Buttons`; `footerButtons(actions, colors)` is its emphasis rule
   (at most one contained; never an adverse action by default).
-- `SideSheet` / `BottomSheet({ visible, onDismiss, title, accessibilityLabel, closeLabel, children, testID })` —
-  Paper `Portal` + `Surface`, scrim `<testID>-scrim` (pointer only, `aria-hidden`), `SheetHeader({ title, onClose,
-  closeLabel, testID })` when titled, BottomSheet handle `<testID>-handle`. Web: `role="dialog"`, `aria-modal`,
+- `BottomSheet({ visible, onDismiss, title, accessibilityLabel, closeLabel, children, testID })` (public) and the
+  scaffold's own `SideSheet` (same props; internal to `PaneLayout`, not exported) —
+  Paper `Portal` + `Surface`, scrim `<testID>-scrim` (pointer only, `aria-hidden`), the internal `SheetHeader`
+  when titled, BottomSheet handle `<testID>-handle`. Web: `role="dialog"`, `aria-modal`,
   `useModalFocus`. Android: the back button dismisses. Sizes come from the window, not percentages: on iOS
   Paper's `Surface` moves `top/right/bottom/left` to an outer shadow layer and nests the surface two layers in,
   where a percentage or a stretch has nothing to resolve against (the side sheet gets the window's height there).
-- `NavigationRail({ items:[{key, label, icon, badge, accessibilityLabel}], activeKey, onSelect, fab:{icon, label,
-  onPress, loading, disabled}, menu:{icon, label, onPress}, accessibilityLabel, testID='rail' })` — `SideNav
-  variant="rail"` + Paper `FAB` (`flat`, `tertiary`), on `elevation.level3`, `paneMetrics.rail` wide.
+- The navigation rail is `SideNav variant="rail"` (the host's `DrawerSideNav` passes it; a FAB goes in
+  `renderHeader`). `NavigationRail`, which duplicated it, is no longer exported.
 
 Data display and feedback:
 - `SectionCard({ title, subtitle, trailing, children, style, testID })` — Paper `Card mode="outlined"` +
@@ -325,19 +328,17 @@ Data display and feedback:
 - `MutedText({ children, variant='bodyMedium', numberOfLines, style, testID })`.
 - `EmptyState({ title, description, actionLabel, actionIcon, onAction })`, `LoadingState({ label })`,
   `ErrorState({ title, description, onRetry, retryLabel })` on `TNEmptyStateView` / `TNActivityIndicator`.
-- `SnackbarProvider({ children, testID='snackbar' })` / `useSnackbar()` → `{ show(message, {action, duration})
-  → id, dismiss() }`: Paper `Snackbar` in a `Portal`, one at a time, queued, no redux.
 - `DataTableView({ columns:[{key, title, numeric, sortable, flex, render, sortValue}], rows, rowKey, sort,
   defaultSort, onSortChange, sortMode:'client'|'server', onRowPress, selectedKey, hasMore, loadingMore,
   onLoadMore, emptyLabel, loadMoreLabel, sortByLabel, accessibilityLabel, testID='data-table' })` on Paper
-  `DataTable`; `sortRows`, `nextSort`, `SORT_DIRECTION`, `SORT_MODE`.
+  `DataTable`; `sortRows`, `nextSort`, `SORT_DIRECTION`, `SORT_MODE`. A sortable title's name carries its direction
+  (`global.sortedAscending`/`sortedDescending`); no `table` role until the fork gives Paper's rows and cells theirs.
 - `CodeBlock({ value, accessibilityLabel, testID })` (`codeText`), monospace per platform.
 - `StatusBanner({ message, tone='info', icon, actions, visible=true, style, testID })` — Paper `Banner` in the
   tone's container (`tones.js`), text/icon/actions in its `onContainer` (a `ThemeProvider` around the Banner).
 
 Fields: `NoteField({ label, value, onChangeText, helper, error, required, multiline=true, numberOfLines,
-disabled, testID })`; `RadioGroupField({ label, options:[{value, label, disabled}], value, onChange, disabled,
-error, testID })` (Paper `RadioButton.Item`); `CheckboxListField({ label, options, values, onChange, disabled,
+disabled, testID })`; `CheckboxListField({ label, options, values, onChange, disabled,
 error, testID })` (Paper `Checkbox.Item`, leading, Android style); `FilterChips({ options:[{value, label}], value,
 onChange, compact=true, disabled, accessibilityLabel, testID })` on `ChipList` (replaces the admin prototype's
 `PartnerStatusFilterChips`; labels arrive localized). Tabs: `Tabs.Bar({ tabs:[{value, label, disabled,
@@ -348,9 +349,9 @@ Form pieces: `ChangedHelperText`, `FieldErrorText` and the new `FieldErrorList({
 testID='field-errors' })` (every error one line; `<testID>.<field>`, `form` when field-less) are exported from
 `Form/FormField.js`. `Form.DriverInfo` takes `readOnly` (locks every field and drops the applicant-facing
 background-check disclosure; the secrets stay masked), `highlightFields`, `errors` (names `licenseNumer`,
-`dateofBirth`, `ssn`) and `dateOfBirth` (seeds the date field). `AvatarDisplay({ photo, icon='account', size,
-accessibilityLabel, highlighted, testID='avatar' })` (`ImagePicker/AvatarDisplay.js`) is the display counterpart
-of `ImagePicker.Avatar`, as `PhotoGalleryDisplay` is of `PhotoGallery`.
+`dateofBirth`, `ssn`) and `dateOfBirth` (seeds the date field); under `readOnly` the date field gets no entry aids
+(placeholder, keypad, length). `legacyTrees.capture.test.js` re-captures `__fixtures__/legacyTrees.json` cases from
+an old checkout (`CAPTURE_LEGACY_FROM`); the driver form's reproduces byte for byte from `partner-ui/k22` @ 7d46582.
 
 Utilities: `useNow(intervalMs=60000)`; `valueText(value)` / `EMPTY_VALUE`; `DateInput/`: `formatDateInput`,
 `parseDateInput` (instants typed in local time, `{ withTime }`), `formatCalendarDate`, `parseCalendarDate`
@@ -359,7 +360,7 @@ Utilities: `useNow(intervalMs=60000)`; `valueText(value)` / `EMPTY_VALUE`; `Date
 
 Catalogue keys added (en + es): `global.back`, `global.close`, `global.showSidePanel`, `global.navigation`,
 `global.loading`, `global.somethingWentWrong`, `global.retry`, `global.loadMore`, `global.sortBy`
-(`%{column}`), `global.profilePhoto`, `global.noProfilePhoto`.
+(`%{column}`), `global.sortedAscending`, `global.sortedDescending`, `global.profilePhoto`, `global.noProfilePhoto`.
 
 **Paper fork web a11y items** (fix in `@jmstechnologiesinc/react-native-paper`, not here — the components above
 use Paper as it is and inherit these on the web):

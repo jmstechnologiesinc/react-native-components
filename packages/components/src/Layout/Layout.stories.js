@@ -3,8 +3,10 @@ import { View } from 'react-native';
 
 import { MD3LightTheme, Provider, Text, useTheme } from '@jmstechnologiesinc/react-native-paper';
 
-import { LAYOUT, PANE, NavigationRail, Pane, PaneFooter, PaneHeader, PaneLayout, SideSheet, BottomSheet } from '.';
+import { LAYOUT, PANE, Pane, PaneFooter, PaneHeader, PaneLayout, BottomSheet } from '.';
+import SideSheet from './SideSheet';
 import ListRow from '../ListRow/ListRow';
+import SideNav from '../SideNav/SideNav';
 
 export default {
     title: 'packages/Layout',
@@ -20,7 +22,7 @@ const Window = ({ children }) => {
     );
 };
 
-const ITEMS = ['Queue', 'Partners', 'Rules', 'Audit'].map((label) => ({ key: label, label, icon: 'circle-outline' }));
+const ITEMS = ['Queue', 'Partners', 'Rules', 'Audit'].map((label) => ({ key: label, title: label, icon: 'circle-outline' }));
 
 const ListPane = ({ onOpen }) => (
     <Pane accessibilityLabel="Queue">
@@ -66,11 +68,12 @@ export const L3 = () => {
     return (
         <Provider>
             <Window>
-                <NavigationRail
-                    items={ITEMS}
-                    activeKey={active}
-                    onSelect={(item) => setActive(item.key)}
-                    fab={{ icon: 'inbox-arrow-down', label: 'Next task', onPress: () => {} }}
+                <SideNav
+                    variant="rail"
+                    menuItems={ITEMS}
+                    selectedKey={active}
+                    onPress={(item) => setActive(item.key)}
+                    accessibilityRole="navigation"
                     accessibilityLabel="Sections"
                 />
                 <PaneLayout

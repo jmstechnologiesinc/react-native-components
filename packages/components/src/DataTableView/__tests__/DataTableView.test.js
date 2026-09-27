@@ -90,10 +90,10 @@ describe('sortRows', () => {
 });
 
 describe('DataTableView', () => {
-    it('is a named table of Paper DataTable titles, rows and cells', () => {
+    it('is a named block of Paper DataTable titles, rows and cells, with no table role Paper cannot fill', () => {
         const tree = render(table({ accessibilityLabel: 'Screenings' }));
         const root = hostOf(tree, 'data-table');
-        expect(root.props.role).toBe('table');
+        expect(root.props.role).toBeUndefined();
         expect(root.props['aria-label']).toBe('Screenings');
         expect(tree.root.findAllByType(DataTable.Title)).toHaveLength(3);
         expect(tree.root.findAllByType(DataTable.Cell)).toHaveLength(9);
@@ -108,9 +108,11 @@ describe('DataTableView', () => {
         act(() => titleOf(tree, 'name').props.onPress());
         expect(rowOrder(tree)).toEqual(['b', 'c', 'a']);
         expect(titleOf(tree, 'name').props.sortDirection).toBe('ascending');
+        expect(titleOf(tree, 'name').props.accessibilityLabel).toBe('Sort by Name, sorted ascending');
 
         act(() => titleOf(tree, 'name').props.onPress());
         expect(rowOrder(tree)).toEqual(['a', 'c', 'b']);
+        expect(titleOf(tree, 'name').props.accessibilityLabel).toBe('Sort by Name, sorted descending');
     });
 
     it('reports the next sort and shows the rows as given when the server sorts', () => {

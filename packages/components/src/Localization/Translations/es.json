@@ -266,6 +266,8 @@
         "retry": "Reintentar",
         "loadMore": "Cargar más",
         "sortBy": "Ordenar por %{column}",
+        "sortedAscending": "orden ascendente",
+        "sortedDescending": "orden descendente",
         "profilePhoto": "Foto de perfil",
         "noProfilePhoto": "Sin foto de perfil"
     },

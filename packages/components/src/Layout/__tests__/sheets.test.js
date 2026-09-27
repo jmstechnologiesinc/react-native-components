@@ -9,7 +9,8 @@ import renderer, { act } from 'react-test-renderer';
 import { MD3LightTheme, Provider } from '@jmstechnologiesinc/react-native-paper';
 
 import { setI18nConfig } from '../../Localization/Localization';
-import { BOTTOM_SHEET_MAX_HEIGHT, BottomSheet, SideSheet, paneMetrics } from '..';
+import { BOTTOM_SHEET_MAX_HEIGHT, BottomSheet, paneMetrics } from '..';
+import SideSheet from '../SideSheet';
 
 // The two MD3 modal sheets: closed they render nothing; open, a labelled modal
 // dialog in a Portal with a scrim and (with a title) a close button. On the web

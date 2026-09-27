@@ -15,6 +15,8 @@ import * as Tabs from '../src/Tabs/Tabs';
 // captured from the code BEFORE the rail/tab accessibility and MD3 additions (0.4.0-dev, OPEN-ITEMS #12-#14)
 // into `__fixtures__/legacyTrees.json`. Rendering them again must give the same tree, except for the tab
 // semantics `withoutTabSemantics` removes — nothing else, and nothing at all for SideNav and ChipList.
+// `legacyTrees.capture.test.js` re-captures a case from the old source (Form.DriverInfo from `partner-ui/k22`
+// @ 7d46582 reproduces the fixture byte for byte).
 const APP_MENU = [
     { title: 'Active', icon: 'receipt', value: 'ActiveOrderRootStack', badge: 3 },
     { title: 'History', icon: 'history', value: 'HistoryOrderRootStack' },
