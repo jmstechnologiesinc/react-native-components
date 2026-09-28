@@ -83,7 +83,7 @@ export { formatDateTime, formatTime, formatRelativeTime } from './Localization/f
 export { localizedAuthError } from './Localization/authErrors';
 
 // K-22 — also served by `portable.js`, the entry a web host imports.
-export { default as StatusChip, SlaChip } from './Partner/StatusChip';
+export { default as StatusChip, SlaChip, LabelChip } from './Partner/StatusChip';
 export { default as DocumentViewer } from './DocumentViewer/DocumentViewer';
 export { default as DecisionDialog } from './DecisionDialog/DecisionDialog';
 export { default as Timeline } from './Timeline/Timeline';
@@ -117,6 +117,7 @@ export {
 export { default as SectionCard } from './SectionCard/SectionCard';
 export { default as KeyValueList } from './KeyValueList/KeyValueList';
 export { default as ListRow } from './ListRow/ListRow';
+export { default as ChipRow } from './ChipRow/ChipRow';
 export { iconSlot, nodeSlot } from './ListRow/listSlots';
 export { default as MutedText } from './MutedText/MutedText';
 export { EmptyState, LoadingState, ErrorState } from './States/States';

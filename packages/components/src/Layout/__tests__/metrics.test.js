@@ -40,6 +40,7 @@ describe('paneMetrics (the theme tokens, never raw pixels)', () => {
             bottomSheetMaxWidth: 640,
             bottomSheetRadius: 28,
             dragHandle: { width: 32, height: 4 },
+            documentStage: 560,
         });
     });
 

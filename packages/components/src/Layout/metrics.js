@@ -25,7 +25,9 @@ export const tokenScale = (theme) => theme.spacing.x1 / MD3_SPACING_UNIT;
  * - `paneRadius` 16 (MD3 shape «large», `roundness × 4`);
  * - `sideSheetWidth` 360 and `sideSheetRadius` 16;
  * - `bottomSheetMaxWidth` 640 (`x20 × 8`), `bottomSheetRadius` 28 (MD3 «extra large», `roundness × 7`);
- * - `dragHandle` 32 × 4 (`x8` × `x1`).
+ * - `dragHandle` 32 × 4 (`x8` × `x1`);
+ * - `documentStage` 560 (`x20 × 7`): the fixed height of a document viewer inside a scrolling pane, a
+ *   letter page at the fixed pane's width (360 × 11/8.5 ≈ 466) plus the viewer's own bar.
  *
  * @param {object} theme a Paper theme
  */
@@ -44,6 +46,7 @@ export const paneMetrics = (theme) => {
         bottomSheetMaxWidth: spacing.x20 * 8,
         bottomSheetRadius: roundness * 7,
         dragHandle: Object.freeze({ width: spacing.x8, height: spacing.x1 }),
+        documentStage: spacing.x20 * 7,
     });
 };
 

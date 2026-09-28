@@ -1,9 +1,9 @@
 import React from 'react';
 import renderer, { act } from 'react-test-renderer';
 
-import { MD3LightTheme, Provider } from '@jmstechnologiesinc/react-native-paper';
+import { Chip, MD3LightTheme, Provider } from '@jmstechnologiesinc/react-native-paper';
 
-import StatusChip, { SlaChip } from '../StatusChip';
+import StatusChip, { LabelChip, SlaChip } from '../StatusChip';
 
 // Paper animates on timers; fake ones, and unmounting after each test, keep
 // those animations from firing after the environment is torn down.
@@ -91,5 +91,37 @@ describe('SlaChip', () => {
         const container = hostOf(tree, 'sla-container');
         expect(JSON.stringify(container.props.style)).toContain(color);
         expect(chipOf(tree, 'sla').props.accessibilityLabel).toBe('Due in 2 h');
+    });
+});
+
+// The icon the Paper chip was given (the chip draws it itself).
+const iconOf = (tree) => tree.root.findByType(Chip).props.icon;
+
+describe('LabelChip', () => {
+    it('is a neutral, text-announced chip without an icon by default', () => {
+        const tree = render(<LabelChip label="Driver" testID="label" />);
+        const chip = chipOf(tree, 'label');
+        expect(chip.props.accessibilityRole).toBe('text');
+        expect(chip.props.accessibilityLabel).toBe('Driver');
+        expect(JSON.stringify(hostOf(tree, 'label-container').props.style)).toContain(
+            MD3LightTheme.colors.surfaceVariant
+        );
+        expect(iconOf(tree)).toBeUndefined();
+    });
+
+    it('carries the tone icon when toned, so the meaning never rests on colour alone', () => {
+        const tree = render(<LabelChip label="In force" tone="success" testID="label" />);
+        expect(JSON.stringify(hostOf(tree, 'label-container').props.style)).toContain(
+            MD3LightTheme.colors.tertiaryContainer
+        );
+        expect(iconOf(tree)).toBe('check-circle-outline');
+    });
+
+    it('takes the icon it is given, and an unknown tone as neutral', () => {
+        const tree = render(<LabelChip label="XL" tone="loud" icon="car-outline" testID="label" />);
+        expect(JSON.stringify(hostOf(tree, 'label-container').props.style)).toContain(
+            MD3LightTheme.colors.surfaceVariant
+        );
+        expect(iconOf(tree)).toBe('car-outline');
     });
 });

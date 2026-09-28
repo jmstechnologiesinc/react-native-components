@@ -15,7 +15,7 @@ import {
 import { MD3LightTheme, Text } from '@jmstechnologiesinc/react-native-paper';
 
 import { registerFlatCatalog } from '../Localization/Localization';
-import StatusChip, { SlaChip } from './StatusChip';
+import StatusChip, { LabelChip, SlaChip } from './StatusChip';
 import { STATUS_KIND_GROUP } from './viewModel';
 
 // The labels come from the `partner.*` catalogue, which belongs to
@@ -47,6 +47,16 @@ export const Compact = () => (
     <View style={row}>
         <StatusChip compact kind="screening_result" value={CHECKR_REPORT_RESULT.CLEAR} />
         <StatusChip compact kind="adjudication" value={CHECKR_REPORT_ADJUDICATION.POST_ADVERSE_ACTION} />
+    </View>
+);
+
+// Read-only labels no kind tones: neutral without an icon, toned with the tone's icon.
+export const Labels = () => (
+    <View style={row}>
+        <LabelChip compact label="Driver" />
+        <LabelChip compact label="Trip class: XL" icon="car-outline" />
+        <LabelChip compact label="In force" tone="success" />
+        <LabelChip compact label="Removed" tone="danger" icon="minus-circle-outline" />
     </View>
 );
 

@@ -52,6 +52,27 @@ const StatusChip = ({ kind, value, label, compact, testID }) => {
     );
 };
 
+/**
+ * A read-only label drawn as a chip (a role, a kind, a count, a mark): the same toned, text-announced
+ * chip as `StatusChip`, for a value no view-model kind tones. MD3 keeps chips for interactive content, so
+ * a console shows every static label through this one family and never through a pressable `Chip`.
+ * `tone` defaults to neutral; a toned label carries the tone's icon unless `icon` says otherwise, so the
+ * meaning never rests on colour alone. A neutral label has no icon unless given one.
+ */
+export const LabelChip = ({ label, tone = STATUS_TONES.neutral, icon, compact, testID }) => {
+    const known = Object.prototype.hasOwnProperty.call(TONE_ICONS, tone) ? tone : STATUS_TONES.neutral;
+    const defaultIcon = known === STATUS_TONES.neutral ? undefined : TONE_ICONS[known];
+    return (
+        <ToneChip
+            tone={known}
+            icon={icon === undefined ? defaultIcon : icon ?? undefined}
+            label={label}
+            compact={compact}
+            testID={testID}
+        />
+    );
+};
+
 const SLA = Object.freeze({
     on_time: { tone: STATUS_TONES.success, icon: 'clock-check-outline' },
     due_soon: { tone: STATUS_TONES.warning, icon: 'clock-outline' },

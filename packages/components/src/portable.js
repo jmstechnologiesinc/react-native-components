@@ -71,7 +71,7 @@ export { formatDateTime, formatTime, formatRelativeTime } from './Localization/f
 export { orderViewModel, fromDescriptor, statusLabel } from './Order/viewModel';
 
 // K-22
-export { default as StatusChip, SlaChip } from './Partner/StatusChip';
+export { default as StatusChip, SlaChip, LabelChip } from './Partner/StatusChip';
 export { default as DocumentViewer, ZOOM } from './DocumentViewer/DocumentViewer';
 export { default as DecisionDialog } from './DecisionDialog/DecisionDialog';
 // The web keyboard contract of a modal surface (focus in, Tab trap, Esc,
@@ -109,6 +109,7 @@ export {
 export { default as SectionCard } from './SectionCard/SectionCard';
 export { default as KeyValueList } from './KeyValueList/KeyValueList';
 export { default as ListRow } from './ListRow/ListRow';
+export { default as ChipRow } from './ChipRow/ChipRow';
 export { iconSlot, nodeSlot } from './ListRow/listSlots';
 export { default as MutedText } from './MutedText/MutedText';
 export { EmptyState, LoadingState, ErrorState } from './States/States';
