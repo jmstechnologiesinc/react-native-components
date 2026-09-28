@@ -2,7 +2,7 @@ import React from 'react';
 import { Platform, Text, View } from 'react-native';
 import renderer, { act } from 'react-test-renderer';
 
-import { Drawer, MD3LightTheme, Provider } from '@jmstechnologiesinc/react-native-paper';
+import { Divider, Drawer, MD3LightTheme, Provider } from '@jmstechnologiesinc/react-native-paper';
 
 import SideNav from '../SideNav';
 
@@ -96,6 +96,39 @@ describe('SideNav', () => {
             tree.root.findByProps({ testID: 'rail-queue', accessible: true }).props.accessibilityState
         ).toMatchObject({
             selected: false,
+        });
+    });
+
+    describe('sections (MD3 groups)', () => {
+        const GROUPED = [
+            { key: 'queue', title: 'Queue', icon: 'inbox-outline', section: 'Work' },
+            { key: 'partners', title: 'Partners', icon: 'account-box-outline', section: 'Partners' },
+            { key: 'drivers', title: 'Drivers', icon: 'steering', section: 'Accounts' },
+            { key: 'vendors', title: 'Vendors', icon: 'storefront-outline', section: 'Accounts' },
+            { key: 'settings', title: 'Settings', icon: 'cog-outline' },
+        ];
+
+        it('titles each labelled group as a Drawer.Section when expanded, in order, without dividing the last', () => {
+            const tree = render(<SideNav isExpanded menuItems={GROUPED} selectedKey="vendors" onPress={() => {}} />);
+            const sections = tree.root.findAll((node) => node.type === Drawer.Section);
+            expect(sections.map((node) => node.props.title)).toEqual(['Work', 'Partners', 'Accounts']);
+            expect(sections.map((node) => node.props.showDivider)).toEqual([true, true, true]);
+            // Every destination is still one Drawer.Item, in the given order, selected by key.
+            expect(activeOf(tree, Drawer.Item)).toEqual([false, false, false, true, false]);
+        });
+
+        it('separates the groups with a divider when collapsed, keeping every index', () => {
+            const tree = render(<SideNav variant="rail" menuItems={GROUPED} selectedIndex={2} onPress={() => {}} />);
+            const dividers = tree.root.findAll((node) => node.type === Divider);
+            // Work | Partners | Accounts | (no section): three dividers between four groups.
+            expect(dividers).toHaveLength(3);
+            expect(activeOf(tree, Drawer.CollapsedItem)).toEqual([false, false, true, false, false]);
+        });
+
+        it('draws no section and no divider when no item names one', () => {
+            const tree = render(<SideNav isExpanded menuItems={MENU} onPress={() => {}} />);
+            expect(tree.root.findAll((node) => node.type === Drawer.Section)).toHaveLength(0);
+            expect(tree.root.findAll((node) => node.type === Divider)).toHaveLength(0);
         });
     });
 
