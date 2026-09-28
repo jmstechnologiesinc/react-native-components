@@ -258,6 +258,7 @@
         "photoOf": "Foto %{index} de %{count}",
         "noPhotos": "Sin fotos",
         "back": "Atrás",
+        "backTo": "Volver a %{name}",
         "close": "Cerrar",
         "showSidePanel": "Mostrar panel lateral",
         "navigation": "Navegación",

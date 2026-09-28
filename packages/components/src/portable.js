@@ -100,6 +100,8 @@ export {
     paneArrangement,
     usePaneContext,
     PaneLayout,
+    ListDetail,
+    fitsListDetail,
     Pane,
     PaneHeader,
     PaneFooter,
