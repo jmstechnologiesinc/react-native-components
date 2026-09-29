@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
+import Svg, { Path, Text as SvgText } from 'react-native-svg';
 
 import { Text, useTheme } from '@jmstechnologiesinc/react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -8,29 +9,35 @@ import { LabelChip } from '../Partner/StatusChip';
 import ListRow from '../ListRow/ListRow';
 import { localized } from '../Localization/Localization';
 
+import { stateFlowLayout } from './stateFlowLayout';
+
 /**
  * A state machine drawn from data, for a reader that must see where an entity is and how it can move: the states as
- * nodes on a grid the host lays out (`row`, `column`), a connector between two neighbouring nodes that an edge joins
- * (its arrow says the direction; both ways, a two-headed arrow), then every transition as a list row — its event, the
+ * nodes on a grid the host lays out (`row`, `column`), every edge drawn in SVG (`react-native-svg`) with its arrow and
+ * its event's label (arcs between states of a row, above going right and below going left, one lane per parallel
+ * edge; a straight line between neighbours of a column; `stateFlowLayout`), an edge the host emphasises in the
+ * theme's primary colour (`taken`, solid; `available`, dashed), then every transition as a list row — its event, the
  * states it joins, what it needs, and a chip of what the host knows of it (it happened, it is allowed now). The
  * component decides nothing: which state is current, which were reached and which transitions happened or are allowed
- * are the host's (the server's) answers.
+ * are the host's (the server's) answers. The drawing's height does not depend on the width, so measuring it moves
+ * nothing below.
  *
- * Responsive: where the measured width cannot give each column a node of `spacing.x20 + spacing.x10` (120dp) and
- * its connector, the grid is drawn transposed (the host's rows become columns: the way through reads down), and a
- * transition's chip goes under its text instead of beside it (MD3 lists: trailing content never squeezes the
- * headline).
+ * Responsive without a jump: the drawing's height never depends on the width, and where the measured width cannot
+ * give each node `spacing.x20 + spacing.x10` (120dp) the drawing keeps that width and scrolls sideways in place (a
+ * transposed drawing would change the height once measured, moving everything below). A transition's chip sits under
+ * its text at every width (MD3 lists: supporting content; a trailing chip squeezes the headline on a narrow width,
+ * and moving it there would change the row's height).
  *
  * Accessibility: the diagram is a named list of states, the current one announced as the current step
- * (`aria-current="step"`, WAI-ARIA), a reached or final state said as such; the connectors are decoration (the
+ * (`aria-current="step"`, WAI-ARIA), a reached or final state said as such; the drawn edges are decoration (the
  * transitions list says the same in words). MD3: nodes are outlined containers on the theme's roles, the current one
  * on `secondaryContainer`; spacing on the theme's tokens.
  *
  * @param {{nodes: Array<{id: string, label: string, row: number, column: number, terminal?: boolean}>,
  *     edges: Array<{id: string, from: string, to: string, label: string, description?: string, icon?: string,
- *     status?: {label: string, tone?: string}}>, current?: string, reached?: string[], accessibilityLabel: string,
+ *     emphasis?: 'taken' | 'available', status?: {label: string, tone?: string}}>, current?: string, reached?: string[], accessibilityLabel: string,
  *     transitionsLabel: string, testID?: string}} props testIDs `<testID>`, `<testID>-node-<id>`,
- *     `<testID>-edge-<id>`, `<testID>-transitions`
+ *     `<testID>-edge-<id>` (the transition's row), `<testID>-arc-<id>` (its drawing), `<testID>-transitions`
  */
 const StateFlow = ({
     nodes,
@@ -42,52 +49,29 @@ const StateFlow = ({
     testID = 'state-flow',
 }) => {
     const theme = useTheme();
-    const { colors, spacing } = theme;
-    const [width, setWidth] = useState(null);
-    const hostColumns = Math.max(0, ...nodes.map((node) => node.column)) + 1;
-    const needed = hostColumns * (spacing.x20 + spacing.x10) + (hostColumns - 1) * spacing.x10;
-    const compact = width !== null && width < needed;
-    // The grid as drawn: the host's, or transposed on a narrow width.
-    const placed = nodes.map((node) => (compact ? { ...node, row: node.column, column: node.row } : node));
-    const rows = Math.max(0, ...placed.map((node) => node.row)) + 1;
-    const columns = Math.max(0, ...placed.map((node) => node.column)) + 1;
-    const at = (row, column) => placed.find((node) => node.row === row && node.column === column) ?? null;
+    const { colors, fonts, spacing } = theme;
+    const [measured, setMeasured] = useState(null);
+    // Until the drawing is measured, the window's width stands in, so the states are drawn (and announced) from the
+    // first render; the height never depends on the width, so the measurement moves nothing below.
+    const window = useWindowDimensions();
+    const available = measured ?? window.width;
+    const labelFont = fonts.labelSmall;
+    const layout = stateFlowLayout({ nodes, edges, width: available, spacing, fontSize: labelFont.fontSize });
+    const scrolls = layout.width > available;
     const byId = Object.fromEntries(nodes.map((node) => [node.id, node]));
+    const emphasisOf = Object.fromEntries(edges.map((edge) => [edge.id, edge.emphasis]));
+    const labelOf = Object.fromEntries(edges.map((edge) => [edge.id, edge.label]));
 
-    // How two neighbours are joined: forward (a → b), back (b → a), both, or not at all.
-    const joined = (a, b) => {
-        if (!a || !b) return null;
-        const forward = edges.some((edge) => edge.from === a.id && edge.to === b.id);
-        const back = edges.some((edge) => edge.from === b.id && edge.to === a.id);
-        if (forward && back) return 'both';
-        if (forward) return 'forward';
-        return back ? 'back' : null;
-    };
-    const ARROW = {
-        horizontal: { forward: 'arrow-right', back: 'arrow-left', both: 'swap-horizontal' },
-        vertical: { forward: 'arrow-down', back: 'arrow-up', both: 'swap-vertical' },
-    };
-    const connector = (direction, join, key) => (
-        <View
-            key={key}
-            style={direction === 'horizontal' ? { width: spacing.x10 } : styles.cell}
-            accessibilityElementsHidden
-            importantForAccessibility="no-hide-descendants"
-            aria-hidden
-        >
-            {join ? (
-                <View style={styles.center}>
-                    <MaterialCommunityIcons
-                        name={ARROW[direction][join]}
-                        size={spacing.x6}
-                        color={colors.onSurfaceVariant}
-                    />
-                </View>
-            ) : null}
+    const stroke = (emphasis) => (emphasis ? colors.primary : colors.outline);
+    const statusChip = (status) => (
+        <View style={{ marginTop: spacing.x2 }}>
+            <LabelChip label={status.label} tone={status.tone} compact />
         </View>
     );
 
     const stateNode = (node) => {
+        const box = layout.boxes[node.id];
+        if (!box) return null;
         const isCurrent = node.id === current;
         const wasReached = !isCurrent && reached.includes(node.id);
         const said = [
@@ -108,14 +92,16 @@ const StateFlow = ({
                 accessible
                 accessibilityLabel={said}
                 style={[
-                    styles.cell,
                     styles.node,
                     {
+                        left: box.x,
+                        top: box.y,
+                        width: box.width,
+                        height: box.height,
                         borderRadius: theme.roundness * 2,
                         borderColor: isCurrent ? colors.secondaryContainer : colors.outlineVariant,
                         backgroundColor: isCurrent ? colors.secondaryContainer : colors.surface,
                         paddingHorizontal: spacing.x4,
-                        paddingVertical: spacing.x2,
                         gap: spacing.x2,
                     },
                 ]}
@@ -133,47 +119,68 @@ const StateFlow = ({
         );
     };
 
-    const statusChip = (status) => <LabelChip label={status.label} tone={status.tone} compact />;
-
-    const gridRows = [];
-    for (let row = 0; row < rows; row += 1) {
-        const cells = [];
-        for (let column = 0; column < columns; column += 1) {
-            const node = at(row, column);
-            cells.push(node ? stateNode(node) : <View key={`empty-${row}-${column}`} style={styles.cell} />);
-            if (column < columns - 1) {
-                cells.push(connector('horizontal', joined(node, at(row, column + 1)), `h-${row}-${column}`));
-            }
-        }
-        gridRows.push(
-            <View key={`row-${row}`} style={styles.row}>
-                {cells}
-            </View>
-        );
-        if (row < rows - 1) {
-            const links = [];
-            for (let column = 0; column < columns; column += 1) {
-                links.push(connector('vertical', joined(at(row, column), at(row + 1, column)), `v-${row}-${column}`));
-                if (column < columns - 1)
-                    links.push(<View key={`vs-${row}-${column}`} style={{ width: spacing.x10 }} />);
-            }
-            gridRows.push(
-                <View key={`links-${row}`} style={[styles.row, { height: spacing.x8 }]}>
-                    {links}
-                </View>
-            );
-        }
-    }
-
     return (
-        <View testID={testID} onLayout={(event) => setWidth(event.nativeEvent.layout.width)}>
+        <View testID={testID}>
             <View
-                role="list"
-                aria-label={accessibilityLabel}
-                style={{ paddingVertical: spacing.x2 }}
-                testID={`${testID}-${compact ? 'vertical' : 'horizontal'}`}
+                onLayout={(event) => setMeasured(event.nativeEvent.layout.width)}
+                style={{ height: layout.height }}
+                testID={`${testID}-drawing`}
             >
-                {gridRows}
+                <ScrollView
+                    horizontal
+                    scrollEnabled={scrolls}
+                    showsHorizontalScrollIndicator={scrolls}
+                    contentContainerStyle={{ width: layout.width, height: layout.height }}
+                    testID={`${testID}-${scrolls ? 'scrolls' : 'fits'}`}
+                >
+                    {layout.edges.length ? (
+                        <View
+                            style={StyleSheet.absoluteFill}
+                            pointerEvents="none"
+                            accessibilityElementsHidden
+                            importantForAccessibility="no-hide-descendants"
+                            aria-hidden
+                        >
+                            <Svg width={layout.width} height={layout.height}>
+                                {layout.edges.map((drawn) => {
+                                    const emphasis = emphasisOf[drawn.id];
+                                    const color = stroke(emphasis);
+                                    // MD3 outline weight: 1dp; an emphasised edge 2dp, dashed while it is only allowed.
+                                    const weight = emphasis ? 2 : 1;
+                                    return (
+                                        <React.Fragment key={drawn.id}>
+                                            <Path
+                                                d={drawn.path}
+                                                stroke={color}
+                                                strokeWidth={weight}
+                                                strokeDasharray={
+                                                    emphasis === 'available' ? `${spacing.x1} ${spacing.x1}` : undefined
+                                                }
+                                                fill="none"
+                                                testID={`${testID}-arc-${drawn.id}`}
+                                            />
+                                            <Path d={drawn.arrow} fill={color} />
+                                            <SvgText
+                                                x={drawn.label.x}
+                                                y={drawn.label.y}
+                                                textAnchor={drawn.label.anchor}
+                                                fontSize={labelFont.fontSize}
+                                                fontFamily={labelFont.fontFamily}
+                                                fontWeight={labelFont.fontWeight}
+                                                fill={emphasis ? colors.primary : colors.onSurfaceVariant}
+                                            >
+                                                {labelOf[drawn.id] ?? ''}
+                                            </SvgText>
+                                        </React.Fragment>
+                                    );
+                                })}
+                            </Svg>
+                        </View>
+                    ) : null}
+                    <View role="list" aria-label={accessibilityLabel} style={StyleSheet.absoluteFill}>
+                        {nodes.map(stateNode)}
+                    </View>
+                </ScrollView>
             </View>
             <View role="list" aria-label={transitionsLabel} testID={`${testID}-transitions`}>
                 {edges.map((edge) => (
@@ -188,12 +195,7 @@ const StateFlow = ({
                             .join(' · ')}
                         icon={edge.icon}
                         inset={false}
-                        trailing={edge.status && !compact ? statusChip(edge.status) : undefined}
-                        details={
-                            edge.status && compact ? (
-                                <View style={{ marginTop: spacing.x2 }}>{statusChip(edge.status)}</View>
-                            ) : undefined
-                        }
+                        details={edge.status ? statusChip(edge.status) : undefined}
                         testID={`${testID}-edge-${edge.id}`}
                     />
                 ))}
@@ -203,21 +205,9 @@ const StateFlow = ({
 };
 
 const styles = StyleSheet.create({
-    row: {
-        flexDirection: 'row',
-        alignItems: 'stretch',
-    },
-    cell: {
-        flex: 1,
-        minWidth: 0,
-    },
-    center: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    // MD3 outlined container: a 1dp outline.
+    // MD3 outlined container: a 1dp outline; placed where the layout puts it.
     node: {
+        position: 'absolute',
         flexDirection: 'row',
         alignItems: 'center',
         borderWidth: 1,
