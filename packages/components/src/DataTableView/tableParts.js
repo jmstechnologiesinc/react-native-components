@@ -40,6 +40,9 @@ export const TableHeader = ({ columns, sort, onSort, sortLabel, testID }) => (
  * One cell: text goes through Paper's `DataTable.Cell`, which sets it in one line; an element (a chip, a
  * link) goes in a `View` laid out like Paper's cell — Paper's cell wraps its children in a `Text`, and a
  * view inside a text breaks the layout on the web (Paper's own note: use a View for anything but text).
+ * The element sits in a box of its own, centred on the row like Paper's text: the chip family sets
+ * `alignSelf: flex-start` (so a chip never stretches down a column), which, as a direct child of the
+ * cell's row, would pin it to the top of the 48dp row instead.
  */
 const Cell = ({ column, content }) => {
     if (React.isValidElement(content)) {
@@ -48,7 +51,7 @@ const Cell = ({ column, content }) => {
                 {...(Platform.OS === 'web' ? { role: 'cell' } : {})}
                 style={[styles.cell, column.numeric && styles.numeric, column.flex ? { flex: column.flex } : null]}
             >
-                {content}
+                <View style={styles.element}>{content}</View>
             </View>
         );
     }
@@ -92,5 +95,9 @@ const styles = StyleSheet.create({
     },
     numeric: {
         justifyContent: 'flex-end',
+    },
+    // A box the size of its element (never the cell's width), so a numeric cell still ends at the trailing edge.
+    element: {
+        flexShrink: 1,
     },
 });

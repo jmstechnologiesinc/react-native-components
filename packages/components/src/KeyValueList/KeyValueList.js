@@ -10,7 +10,8 @@ const isBlank = (value) => value === undefined || value === null || value === ''
 /**
  * Label/value rows (a summary, an envelope): the label in `labelLarge` `onSurfaceVariant` on the leading
  * 40%, the value in `bodyMedium`, selectable. A value is shown as given — a string, a number or a node (a
- * chip, a link) — and an absent one as an em dash. A `list` of `listitem`s.
+ * chip, a link) — and an absent one as an em dash. A `list` of `listitem`s. The label sits on the value's
+ * first baseline, so it reads on the same line as a chip's label or a value's first line of text.
  *
  * @param {{items: Array<{key: string, label: string, value?: React.ReactNode}>, testID?: string}} props
  *     each row's testID is `<testID>-<key>` when `testID` is given
@@ -50,7 +51,7 @@ const KeyValueList = ({ items, testID }) => {
 const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
-        alignItems: 'flex-start',
+        alignItems: 'baseline',
     },
     label: {
         width: '40%',
