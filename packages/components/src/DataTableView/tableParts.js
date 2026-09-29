@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform, StyleSheet, View } from 'react-native';
 
 import { DataTable, useTheme } from '@jmstechnologiesinc/react-native-paper';
 
@@ -36,6 +37,29 @@ export const TableHeader = ({ columns, sort, onSort, sortLabel, testID }) => (
 );
 
 /**
+ * One cell: text goes through Paper's `DataTable.Cell`, which sets it in one line; an element (a chip, a
+ * link) goes in a `View` laid out like Paper's cell — Paper's cell wraps its children in a `Text`, and a
+ * view inside a text breaks the layout on the web (Paper's own note: use a View for anything but text).
+ */
+const Cell = ({ column, content }) => {
+    if (React.isValidElement(content)) {
+        return (
+            <View
+                {...(Platform.OS === 'web' ? { role: 'cell' } : {})}
+                style={[styles.cell, column.numeric && styles.numeric, column.flex ? { flex: column.flex } : null]}
+            >
+                {content}
+            </View>
+        );
+    }
+    return (
+        <DataTable.Cell numeric={column.numeric} style={column.flex ? { flex: column.flex } : undefined}>
+            {isBlank(content) ? EMPTY_VALUE : content}
+        </DataTable.Cell>
+    );
+};
+
+/**
  * One row of a data table: a cell per column (`render(row)`, else `row[key]`; a blank one shows an em dash),
  * pressable with `onPress`, painted `secondaryContainer` and `aria-selected` when `selected`.
  *
@@ -52,18 +76,21 @@ export const TableRow = ({ columns, row, selected = false, onPress, accessibilit
             aria-label={accessibilityLabel}
             testID={testID}
         >
-            {columns.map((column) => {
-                const content = column.render ? column.render(row) : row[column.key];
-                return (
-                    <DataTable.Cell
-                        key={column.key}
-                        numeric={column.numeric}
-                        style={column.flex ? { flex: column.flex } : undefined}
-                    >
-                        {isBlank(content) ? EMPTY_VALUE : content}
-                    </DataTable.Cell>
-                );
-            })}
+            {columns.map((column) => (
+                <Cell key={column.key} column={column} content={column.render ? column.render(row) : row[column.key]} />
+            ))}
         </DataTable.Row>
     );
 };
+
+// Paper's cell geometry (`DataTableCell`): a flexible row, centred vertically; a numeric one ends at the trailing edge.
+const styles = StyleSheet.create({
+    cell: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    numeric: {
+        justifyContent: 'flex-end',
+    },
+});

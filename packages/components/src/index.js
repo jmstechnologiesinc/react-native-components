@@ -105,6 +105,7 @@ export {
     PaneLayout,
     ListDetail,
     fitsListDetail,
+    Breadcrumbs,
     Pane,
     PaneHeader,
     PaneFooter,

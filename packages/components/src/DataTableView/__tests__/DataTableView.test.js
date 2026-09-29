@@ -6,7 +6,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import renderer, { act } from 'react-test-renderer';
 
-import { DataTable, MD3LightTheme, Provider } from '@jmstechnologiesinc/react-native-paper';
+import { Chip, DataTable, MD3LightTheme, Provider } from '@jmstechnologiesinc/react-native-paper';
 
 import { setI18nConfig } from '../../Localization/Localization';
 import DataTableView, { SORT_DIRECTION, nextSort, sortRows } from '../DataTableView';
@@ -162,5 +162,25 @@ describe('DataTableView', () => {
         expect(pressableOf(tree, 'data-table-load-more')).toBeUndefined();
         expect(hostOf(tree, 'data-table-empty')).toBeDefined();
         expect(textOf(tree)).toContain('No screenings');
+    });
+});
+
+describe('cells that hold an element', () => {
+    it('lays an element in a view cell, never inside the text of Paper’s cell', () => {
+        const columns = [
+            { key: 'name', title: 'Name' },
+            { key: 'state', title: 'State', render: () => <Chip testID="state-chip">Active</Chip> },
+        ];
+        const tree = render(<DataTableView columns={columns} rows={[{ id: 'a', name: 'Charlie' }]} rowKey="id" />);
+        const chip = tree.root.findAll((node) => node.props.testID === 'state-chip')[0];
+        // Walk up from the chip: a Paper `DataTable.Cell` (which wraps children in a Text) is never an ancestor.
+        let ancestor = chip.parent;
+        const ancestors = [];
+        while (ancestor) {
+            ancestors.push(ancestor.type);
+            ancestor = ancestor.parent;
+        }
+        expect(ancestors).not.toContain(DataTable.Cell);
+        expect(tree.root.findAllByType(DataTable.Cell)).toHaveLength(1);
     });
 });

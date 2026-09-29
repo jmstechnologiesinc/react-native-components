@@ -21,6 +21,7 @@ export { paneArrangement } from './paneArrangement';
 export { usePaneContext } from './PaneContext';
 export { default as PaneLayout } from './PaneLayout';
 export { default as ListDetail, fitsListDetail } from './ListDetail';
+export { default as Breadcrumbs } from './Breadcrumbs';
 export { default as Pane } from './Pane';
 export { default as PaneHeader } from './PaneHeader';
 export { default as PaneFooter, footerButtons } from './PaneFooter';

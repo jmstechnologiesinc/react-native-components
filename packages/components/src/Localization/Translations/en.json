@@ -259,6 +259,7 @@
         "noPhotos": "No photos",
         "back": "Back",
         "backTo": "Back to %{name}",
+        "breadcrumb": "Breadcrumb",
         "close": "Close",
         "showSidePanel": "Show side panel",
         "navigation": "Navigation",

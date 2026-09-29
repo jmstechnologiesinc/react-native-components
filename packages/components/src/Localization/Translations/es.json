@@ -259,6 +259,7 @@
         "noPhotos": "Sin fotos",
         "back": "Atrás",
         "backTo": "Volver a %{name}",
+        "breadcrumb": "Ruta de navegación",
         "close": "Cerrar",
         "showSidePanel": "Mostrar panel lateral",
         "navigation": "Navegación",
