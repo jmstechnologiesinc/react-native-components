@@ -82,8 +82,10 @@ export const SIZE_CLASS_BREAKPOINTS = Object.freeze([
  */
 export const sizeClassOf = (width) => SIZE_CLASS_BREAKPOINTS.find(([min]) => width >= min)?.[1] ?? SIZE_CLASS.COMPACT;
 
-/** The three layouts a screen may declare. */
+/** The layouts a screen may declare. */
 export const LAYOUT = Object.freeze({
+    /** primary alone, the window's width (a table, a feed) */
+    L1: 'L1',
     /** list 360 · detail flex · supporting 360 */
     L3: 'L3',
     /** list 360 · detail flex */

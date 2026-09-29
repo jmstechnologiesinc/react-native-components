@@ -71,6 +71,8 @@ describe('paneArrangement (the MD3 collapse table)', () => {
         [LAYOUT.L2B, SIZE_CLASS.EXPANDED, ['primary', 'supporting'], SUPPORTING_MODE.INLINE],
         [LAYOUT.L2B, SIZE_CLASS.MEDIUM, ['primary'], SUPPORTING_MODE.BOTTOM_SHEET],
         [LAYOUT.L2B, SIZE_CLASS.COMPACT, ['primary'], SUPPORTING_MODE.BOTTOM_SHEET],
+        [LAYOUT.L1, SIZE_CLASS.EXTRA_LARGE, ['primary'], SUPPORTING_MODE.NONE],
+        [LAYOUT.L1, SIZE_CLASS.COMPACT, ['primary'], SUPPORTING_MODE.NONE],
     ])('%s at %s → %j, supporting %s', (layout, sizeClass, panes, supporting) => {
         expect(paneArrangement(layout, sizeClass)).toEqual(expect.objectContaining({ panes, supporting }));
     });

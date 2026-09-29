@@ -17,6 +17,7 @@ const WIDE = new Set([SIZE_CLASS.EXPANDED, SIZE_CLASS.LARGE, SIZE_CLASS.EXTRA_LA
  * | L3  | list · detail · supporting | list · detail, supporting → SideSheet | list ⇄ detail, supporting → SideSheet |
  * | L2A | list · detail | list · detail | list ⇄ detail |
  * | L2B | primary · supporting | primary · supporting | primary, supporting → BottomSheet |
+ * | L1  | primary | primary | primary |
  *
  * @param {string} layout a LAYOUT
  * @param {string} sizeClass a SIZE_CLASS
@@ -43,6 +44,8 @@ export const paneArrangement = (layout, sizeClass, activePane = PANE.LIST) => {
             return wide
                 ? { panes: [PANE.LIST, PANE.DETAIL], single: false, supporting: SUPPORTING_MODE.NONE }
                 : { panes: single, single: true, supporting: SUPPORTING_MODE.NONE };
+        case LAYOUT.L1:
+            return { panes: [PANE.PRIMARY], single: false, supporting: SUPPORTING_MODE.NONE };
         case LAYOUT.L2B:
             return wide
                 ? { panes: [PANE.PRIMARY, PANE.SUPPORTING], single: false, supporting: SUPPORTING_MODE.INLINE }

@@ -4,7 +4,8 @@ import { StyleSheet, View } from 'react-native';
 import { Button, DataTable, Text, useTheme } from '@jmstechnologiesinc/react-native-paper';
 
 import { localized } from '../Localization/Localization';
-import { EMPTY_VALUE } from '../valueText';
+
+import { isBlank, TableHeader, TableRow } from './tableParts';
 
 /**
  * @typedef {object} DataColumn
@@ -22,8 +23,6 @@ import { EMPTY_VALUE } from '../valueText';
 export const SORT_DIRECTION = Object.freeze({ ASCENDING: 'ascending', DESCENDING: 'descending' });
 
 export const SORT_MODE = Object.freeze({ CLIENT: 'client', SERVER: 'server' });
-
-const isBlank = (value) => value === undefined || value === null || value === '';
 
 const compareValues = (a, b) => {
     if (isBlank(a) || isBlank(b)) return Number(isBlank(a)) - Number(isBlank(b));
@@ -118,49 +117,24 @@ const DataTableView = ({
     return (
         <View testID={testID}>
             <DataTable aria-label={accessibilityLabel}>
-                <DataTable.Header>
-                    {columns.map((column) => {
-                        const sorted = activeSort?.key === column.key ? activeSort.direction : undefined;
-                        return (
-                            <DataTable.Title
-                                key={column.key}
-                                numeric={column.numeric}
-                                sortDirection={column.sortable ? sorted : undefined}
-                                onPress={column.sortable ? () => onSort(column.key) : undefined}
-                                style={column.flex ? { flex: column.flex } : undefined}
-                                accessibilityRole={column.sortable ? 'button' : undefined}
-                                accessibilityLabel={column.sortable ? sortLabel(column.title) : undefined}
-                                testID={`${testID}-title-${column.key}`}
-                            >
-                                {column.title}
-                            </DataTable.Title>
-                        );
-                    })}
-                </DataTable.Header>
+                <TableHeader
+                    columns={columns}
+                    sort={activeSort}
+                    onSort={onSort}
+                    sortLabel={sortLabel}
+                    testID={testID}
+                />
                 {shown.map((row) => {
                     const key = keyOf(row);
-                    const selected = selectedKey !== undefined && key === selectedKey;
                     return (
-                        <DataTable.Row
+                        <TableRow
                             key={key}
+                            columns={columns}
+                            row={row}
+                            selected={selectedKey !== undefined && key === selectedKey}
                             onPress={onRowPress ? () => onRowPress(row) : undefined}
-                            style={selected ? { backgroundColor: colors.secondaryContainer } : undefined}
-                            aria-selected={selected}
                             testID={`${testID}-row-${key}`}
-                        >
-                            {columns.map((column) => {
-                                const content = column.render ? column.render(row) : row[column.key];
-                                return (
-                                    <DataTable.Cell
-                                        key={column.key}
-                                        numeric={column.numeric}
-                                        style={column.flex ? { flex: column.flex } : undefined}
-                                    >
-                                        {isBlank(content) ? EMPTY_VALUE : content}
-                                    </DataTable.Cell>
-                                );
-                            })}
-                        </DataTable.Row>
+                        />
                     );
                 })}
             </DataTable>

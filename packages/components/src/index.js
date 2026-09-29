@@ -119,6 +119,7 @@ export { iconSlot, nodeSlot } from './ListRow/listSlots';
 export { default as MutedText } from './MutedText/MutedText';
 export { EmptyState, LoadingState, ErrorState } from './States/States';
 export { default as DataTableView, SORT_DIRECTION, SORT_MODE, sortRows, nextSort } from './DataTableView/DataTableView';
+export { default as DataTableList } from './DataTableView/DataTableList';
 export { default as CodeBlock, codeText } from './CodeBlock/CodeBlock';
 export { default as NoteField } from './NoteField/NoteField';
 export { default as CheckboxListField } from './CheckboxListField/CheckboxListField';
