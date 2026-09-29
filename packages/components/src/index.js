@@ -82,6 +82,7 @@ export { default as StatusChip, SlaChip, LabelChip } from './Partner/StatusChip'
 export { default as DocumentViewer } from './DocumentViewer/DocumentViewer';
 export { default as DecisionDialog } from './DecisionDialog/DecisionDialog';
 export { default as Timeline } from './Timeline/Timeline';
+export { default as StateFlow } from './StateFlow/StateFlow';
 export { STATUS_TONES, toneColors } from './tones';
 
 // The generic UI of a web host (the partner console, the admin app), moved

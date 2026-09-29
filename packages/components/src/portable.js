@@ -79,6 +79,7 @@ export { default as DecisionDialog } from './DecisionDialog/DecisionDialog';
 // and dialogs share it. A no-op off the web.
 export { useModalFocus } from './useModalFocus';
 export { default as Timeline } from './Timeline/Timeline';
+export { default as StateFlow } from './StateFlow/StateFlow';
 export { STATUS_TONES, toneColors } from './tones';
 
 // The generic UI of a web host (the partner console, the admin app), moved
