@@ -7,9 +7,11 @@ import { localized } from '../Localization/Localization';
 
 /**
  * Where the person is (WAI-ARIA breadcrumb): the path from the section to the current page, as a `navigation`
- * landmark named «Breadcrumb» holding an ordered list; every ancestor is a text button (MD3's link affordance)
- * and the last item is the current page, announced `aria-current="page"` and not pressable. Placed before the
- * main content, in the top app bar. `items` are `{label, onPress?}`; an item without `onPress` is plain text.
+ * landmark named «Breadcrumb» holding an ordered list; every ancestor is a text button (MD3's link affordance,
+ * `primary` on the theme's surface) and the last item is the current page — the top app bar's title, `titleLarge`
+ * in `onSurface` — announced `aria-current="page"` and not pressable. Separators and plain ancestors sit in
+ * `onSurfaceVariant`. Every colour, type role and space is the theme's. Placed before the main content, in the
+ * top app bar. `items` are `{label, onPress?}`; an item without `onPress` is plain text.
  *
  * @param {{items: Array<{label: string, onPress?: () => void, testID?: string}>, accessibilityLabel?: string,
  *     style?: any, testID?: string}} props `accessibilityLabel` defaults to `global.breadcrumb`
@@ -28,28 +30,21 @@ const Breadcrumbs = ({ items, accessibilityLabel, style, testID = 'breadcrumbs' 
                                 <Text
                                     variant="titleMedium"
                                     aria-hidden
-                                    style={[styles.separator, { color: colors.onSurfaceVariant }]}
+                                    style={{ color: colors.onSurfaceVariant, marginHorizontal: spacing.x2 }}
                                 >
                                     ›
                                 </Text>
                             ) : null}
                             {item.onPress && !current ? (
-                                <Button
-                                    mode="text"
-                                    compact
-                                    onPress={item.onPress}
-                                    labelStyle={styles.link}
-                                    style={{ marginHorizontal: -spacing.x1 }}
-                                    testID={item.testID}
-                                >
+                                <Button mode="text" compact onPress={item.onPress} testID={item.testID}>
                                     {item.label}
                                 </Button>
                             ) : (
                                 <Text
-                                    variant="titleMedium"
+                                    variant={current ? 'titleLarge' : 'titleMedium'}
                                     numberOfLines={1}
                                     aria-current={current ? 'page' : undefined}
-                                    style={current ? { color: colors.onSurface } : { color: colors.onSurfaceVariant }}
+                                    style={{ color: current ? colors.onSurface : colors.onSurfaceVariant }}
                                     testID={item.testID}
                                 >
                                     {item.label}
@@ -72,13 +67,6 @@ const styles = StyleSheet.create({
     item: {
         flexDirection: 'row',
         alignItems: 'center',
-    },
-    separator: {
-        marginHorizontal: 6,
-    },
-    link: {
-        fontSize: 16,
-        lineHeight: 24,
     },
 });
 
