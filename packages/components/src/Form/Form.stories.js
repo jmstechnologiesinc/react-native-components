@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+import { EN, ES, VEHICLE_COLOR, VEHICLE_TYPE, statusLabelKey } from '@jmstechnologiesinc/partner';
 
 export default {
     title: 'packages/AuthForm',
@@ -129,6 +131,71 @@ export const VehicleInfoReadOnlyHighlighted = () => (
         licensePlateNumber="ABC-1234"
         readOnly
         highlightFields={['color', 'licensePlateNumber']}
+        inputActionHandler={() => {}}
+    />
+);
+
+// C-22 — the vehicle form with the catalogue, as the app's VehicleView feeds it: types and colors labelled from the
+// partner package's catalogue in each language, makes and models as a catalogue slice lists them.
+const vehicleCatalogIn = (texts) => {
+    const labelled = (group, vocabulary) =>
+        Object.values(vocabulary).map((value) => ({ value, label: texts[statusLabelKey(group, value)] ?? value }));
+    return {
+        vehicleTypes: labelled('vehicle_type', VEHICLE_TYPE),
+        colors: labelled('vehicle_color', VEHICLE_COLOR),
+        makes: [
+            { value: 'vpic:448', label: 'Toyota' },
+            { value: 'vpic:474', label: 'Honda' },
+        ],
+        models: [
+            { value: 'vpic:2469', label: 'Camry' },
+            { value: 'vpic:2208', label: 'Corolla' },
+        ],
+    };
+};
+
+const VehicleInfoWithCatalog = ({ texts }) => {
+    const [vehicle, setVehicle] = useState({
+        vehicleType: VEHICLE_TYPE.CAR,
+        year: '2021',
+        makeId: 'vpic:448',
+        make: 'Toyota',
+        modelId: 'vpic:2469',
+        model: 'Camry',
+        color: VEHICLE_COLOR.SIL,
+        licensePlateNumber: 'SMPL001',
+        licensePlateRegion: 'US-MA',
+    });
+    return (
+        <AuthForm.VehicleInfo
+            {...vehicle}
+            catalog={vehicleCatalogIn(texts)}
+            inputActionHandler={(field, value) => setVehicle((current) => ({ ...current, [field]: value }))}
+        />
+    );
+};
+
+export const VehicleInfoCatalogEn = () => <VehicleInfoWithCatalog texts={EN} />;
+
+export const VehicleInfoCatalogEs = () => <VehicleInfoWithCatalog texts={ES} />;
+
+// A pending change as the reviewer sees it: read-only, the changed fields marked, a server error under its field.
+export const VehicleInfoCatalogReadOnly = () => (
+    <AuthForm.VehicleInfo
+        vehicleType={VEHICLE_TYPE.CAR}
+        year="2021"
+        makeId="vpic:448"
+        make="Toyota"
+        modelId="vpic:2469"
+        model="Camry"
+        color={VEHICLE_COLOR.SIL}
+        licensePlateNumber="SMPL001"
+        licensePlateRegion="US-MA"
+        vin="0SAMPLE0VIN000001"
+        catalog={vehicleCatalogIn(EN)}
+        readOnly
+        highlightFields={['color', 'vin']}
+        errors={[{ field: 'vin', code: 'vin_check_digit', message: 'The VIN check digit does not match' }]}
         inputActionHandler={() => {}}
     />
 );

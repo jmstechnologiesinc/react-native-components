@@ -7,7 +7,8 @@
 //
 // It renders each case below with THAT source (its own catalogue included), exactly as the comparison renders the
 // current one, and writes the tree into the fixture. `Form.DriverInfo (driver onboarding)` was captured this way from
-// `partner-ui/k22` @ 7d46582 (the form before C-25's `readOnly`, `highlightFields` and `errors`).
+// `partner-ui/k22` @ 7d46582 (the form before C-25's `readOnly`, `highlightFields` and `errors`);
+// `Form.VehicleInfo (vehicle form)` from `admin-app` @ 516446e (the form before C-22's catalogue props).
 import fs from 'fs';
 import path from 'path';
 
@@ -19,11 +20,18 @@ import { MD3LightTheme, Provider } from '@jmstechnologiesinc/react-native-paper'
 const FROM = process.env.CAPTURE_LEGACY_FROM;
 const FIXTURE = path.join(__dirname, '__fixtures__', 'legacyTrees.json');
 
+// The vehicle form as the app fills it before the catalogue (C-22): free-text make, model and color.
+const LEGACY_VEHICLE = { make: 'Toyota', model: 'Camry', color: 'White', year: '2019', licensePlateNumber: 'ABC123' };
+
 // The cases this capture owns, rendered from the old source (`old(file)` requires a module of it).
 const CASES = {
     'Form.DriverInfo (driver onboarding)': (old) => {
         const FormDriverInfo = old('Form/FormDriverInfo').default;
         return <FormDriverInfo licenseNumer="D1234567" ssn="123456789" inputActionHandler={() => {}} />;
+    },
+    'Form.VehicleInfo (vehicle form)': (old) => {
+        const FormVehicleInfo = old('Form/FormVehicleInfo').default;
+        return <FormVehicleInfo {...LEGACY_VEHICLE} inputActionHandler={() => {}} />;
     },
 };
 

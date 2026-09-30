@@ -227,3 +227,127 @@ describe('server errors on the forms', () => {
         expect(inError(tree, 'Casa Nostra')).toBe(false);
     });
 });
+
+// C-22 — the vehicle form with the catalogue: its options come from the host, a pick reports the market field (and,
+// for a make or a model, its name as well), and without a catalogue slice make and model stay typed text.
+describe('Form.VehicleInfo with the catalogue', () => {
+    const CATALOG = {
+        vehicleTypes: [
+            { value: 'car', label: 'Car' },
+            { value: 'motorcycle', label: 'Motorcycle' },
+        ],
+        colors: [
+            { value: 'SIL', label: 'Silver' },
+            { value: 'BLK', label: 'Black' },
+        ],
+        makes: [
+            { value: 'vpic:448', label: 'Toyota' },
+            { value: 'vpic:474', label: 'Honda' },
+        ],
+        models: [{ value: 'vpic:2469', label: 'Camry' }],
+    };
+    const CATALOG_VEHICLE = {
+        vehicleType: 'car',
+        year: '2021',
+        makeId: 'vpic:448',
+        make: 'Toyota',
+        modelId: 'vpic:2469',
+        model: 'Camry',
+        color: 'SIL',
+        licensePlateNumber: 'SMPL001',
+        licensePlateRegion: 'US-MA',
+        vin: '0SAMPLE0VIN000001',
+    };
+
+    // Opens a select: its row is a Pressable, whose own `onPress` is the handle the test renderer offers.
+    const pressable = (tree, testID) =>
+        act(() =>
+            tree.root
+                .find((node) => typeof node.type !== 'string' && node.props.testID === testID && node.props.onPress)
+                .props.onPress()
+        );
+
+    it('shows each value by its option label, in the order of canon §9.15', () => {
+        const tree = render(<Form.VehicleInfo {...CATALOG_VEHICLE} catalog={CATALOG} inputActionHandler={() => {}} />);
+        const values = tree.root.findAll((node) => node.type === 'TextInput').map((node) => node.props.value);
+        expect(values).toEqual(['Car', '2021', 'Toyota', 'Camry', 'Silver', 'SMPL001', 'US-MA', '0SAMPLE0VIN000001']);
+    });
+
+    it('reports a make by its id and its name, and a color by its code', () => {
+        const reported = [];
+        const tree = render(
+            <Form.VehicleInfo
+                {...CATALOG_VEHICLE}
+                catalog={CATALOG}
+                inputActionHandler={(field, value) => reported.push([field, value])}
+            />
+        );
+        pressable(tree, 'vehicle.make');
+        act(() => tree.root.find((node) => node.props.testID === 'vehicle.make.vpic:474').props.onPress());
+        pressable(tree, 'vehicle.color');
+        act(() => tree.root.find((node) => node.props.testID === 'vehicle.color.BLK').props.onPress());
+        expect(reported).toEqual([
+            ['makeId', 'vpic:474'],
+            ['make', 'Honda'],
+            ['color', 'BLK'],
+        ]);
+    });
+
+    it('keeps make and model as typed text when the catalogue has no slice for them', () => {
+        const reported = [];
+        const tree = render(
+            <Form.VehicleInfo
+                {...CATALOG_VEHICLE}
+                makeId={undefined}
+                modelId={undefined}
+                make="Trek"
+                model="FX 2"
+                catalog={{ ...CATALOG, makes: [], models: [] }}
+                inputActionHandler={(field, value) => reported.push([field, value])}
+            />
+        );
+        act(() => inputWithValue(tree, 'Trek').props.onChangeText('Trek '));
+        expect(inputWithValue(tree, 'FX 2').props.editable).not.toBe(false);
+        expect(reported).toEqual([['make', 'Trek ']]);
+    });
+
+    it('shows a stored make the slice no longer lists by its name', () => {
+        const tree = render(
+            <Form.VehicleInfo
+                {...CATALOG_VEHICLE}
+                makeId="dx:retired"
+                make="Retired Make"
+                catalog={CATALOG}
+                inputActionHandler={() => {}}
+            />
+        );
+        expect(inputWithValue(tree, 'Retired Make')).toBeDefined();
+    });
+
+    it('locks every field and opens no menu under readOnly', () => {
+        const tree = render(
+            <Form.VehicleInfo {...CATALOG_VEHICLE} catalog={CATALOG} readOnly inputActionHandler={() => {}} />
+        );
+        for (const value of ['Car', '2021', 'Toyota', 'Camry', 'Silver', 'SMPL001', 'US-MA', '0SAMPLE0VIN000001']) {
+            expect(`${value}:${inputWithValue(tree, value).props.editable}`).toBe(`${value}:false`);
+        }
+        pressable(tree, 'vehicle.make');
+        expect(tree.root.findAll((node) => node.props.testID === 'vehicle.make.vpic:474')).toHaveLength(0);
+    });
+
+    it('marks the highlighted fields and puts a server error under its field', () => {
+        const tree = render(
+            <Form.VehicleInfo
+                {...CATALOG_VEHICLE}
+                catalog={CATALOG}
+                highlightFields={['color', 'vin']}
+                errors={[{ field: 'vin', code: 'vin_check_digit' }]}
+                inputActionHandler={() => {}}
+            />
+        );
+        expect(changedCount(tree)).toBe(2);
+        expect(outlinedInPrimary(tree, 'Silver')).toBe(true);
+        expect(hostOf(tree, 'error.vin')).toHaveLength(1);
+        expect(inError(tree, '0SAMPLE0VIN000001')).toBe(true);
+    });
+});

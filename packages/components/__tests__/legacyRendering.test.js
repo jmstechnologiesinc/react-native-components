@@ -6,6 +6,7 @@ import { MD3LightTheme, Provider } from '@jmstechnologiesinc/react-native-paper'
 
 import ChipList from '../src/ChipList/ChipList';
 import FormDriverInfo from '../src/Form/FormDriverInfo';
+import FormVehicleInfo from '../src/Form/FormVehicleInfo';
 import { setI18nConfig } from '../src/Localization/Localization';
 import SideNav from '../src/SideNav/SideNav';
 import * as Tabs from '../src/Tabs/Tabs';
@@ -76,6 +77,17 @@ const LEGACY_CASES = {
     'Form.DriverInfo (driver onboarding)': () => (
         <FormDriverInfo licenseNumer="D1234567" ssn="123456789" inputActionHandler={() => {}} />
     ),
+    // The vehicle form without the catalogue props (C-22): free-text make, model and color, as before them.
+    'Form.VehicleInfo (vehicle form)': () => (
+        <FormVehicleInfo
+            make="Toyota"
+            model="Camry"
+            color="White"
+            year="2019"
+            licensePlateNumber="ABC123"
+            inputActionHandler={() => {}}
+        />
+    ),
 };
 
 const LEGACY_TREES = require('./__fixtures__/legacyTrees.json');
@@ -97,6 +109,7 @@ const IDENTICAL = [
     'SideNav collapsed with a header',
     'ChipList',
     'Form.DriverInfo (driver onboarding)',
+    'Form.VehicleInfo (vehicle form)',
 ];
 
 jest.useFakeTimers();

@@ -232,6 +232,15 @@ host resolved none; BusinessInfo's `industries` gets its line under the picker. 
 does not render are ignored, and the forms' own required messages are unchanged. All of it lives in
 `Form/FormField.js` (`errorsOf`, `FieldErrorText`, the `field`/`errors` props of `FormField`).
 
+`Form.VehicleInfo` with the catalogue (C-22, additive, still 0.4.0): given `catalog: { vehicleTypes, colors,
+makes, models }` (each `Array<{ value, label }>`, labelled by the host) plus `vehicleType`, `makeId`,
+`modelId`, `licensePlateRegion` and `vin`, it renders the market schema in canon §9.15's order (type → year →
+make → model, color, plate, plate region, optional VIN) with `Form/FormSelectField.js` (an outlined input that
+opens a Paper `Menu`, portable). A make or model pick reports its id and its name (`makeId` + `make`); with no
+`makes`/`models` (no catalogue slice for that type and year) they stay typed text. Without `catalog` the form is
+the tree it always was, pinned by `legacyRendering.test.js` (`Form.VehicleInfo (vehicle form)`, captured from
+`admin-app` @ 516446e).
+
 `PhotoGalleryDisplay({ photoUrls, title?, emptyLabel?, highlighted?, size?, testID? })`
 (`ImagePicker/PhotoGalleryDisplay.js`, barrel and portable): **resolved** URIs, never rewritten; a horizontal
 strip of RN `Image`s, each labelled «Photo i of n» (`global.photoOf`); `global.noPhotos` when empty or all

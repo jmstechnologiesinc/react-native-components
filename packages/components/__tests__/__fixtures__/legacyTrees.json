@@ -3939,5 +3939,1412 @@
     ]
    }
   ]
+ },
+ "Form.VehicleInfo (vehicle form)": {
+  "type": "RNCSafeAreaProvider",
+  "props": {
+   "style": [
+    {
+     "flex": 1
+    },
+    null
+   ]
+  },
+  "children": [
+   {
+    "type": "View",
+    "props": {
+     "style": {
+      "flex": 1
+     },
+     "collapsable": false,
+     "pointerEvents": "box-none"
+    },
+    "children": [
+     {
+      "type": "View",
+      "props": {
+       "style": [
+        {
+         "paddingTop": 0,
+         "paddingBottom": 0,
+         "paddingLeft": 25.142857142857142,
+         "paddingRight": 25.142857142857142
+        },
+        null
+       ]
+      },
+      "children": [
+       {
+        "type": "View",
+        "props": {
+         "style": [
+          {
+           "paddingTop": 12.571428571428571,
+           "paddingBottom": 12.571428571428571
+          },
+          [
+           {
+            "flex": null
+           },
+           null
+          ]
+         ]
+        },
+        "children": [
+         {
+          "type": "View",
+          "props": {
+           "style": {}
+          },
+          "children": [
+           {
+            "type": "View",
+            "props": {
+             "testID": "text-input-outline",
+             "pointerEvents": "none",
+             "style": [
+              {
+               "position": "absolute",
+               "left": 0,
+               "right": 0,
+               "top": 9.428571428571429,
+               "bottom": 0
+              },
+              false,
+              {
+               "backgroundColor": "rgb(255, 251, 255)",
+               "borderRadius": 6.285714285714286,
+               "borderWidth": 1,
+               "borderColor": "rgb(130, 117, 104)"
+              },
+              null
+             ]
+            },
+            "children": null
+           },
+           {
+            "type": "View",
+            "props": {
+             "style": [
+              {
+               "paddingBottom": 0
+              },
+              {
+               "paddingTop": 12.571428571428571,
+               "minHeight": 88
+              }
+             ]
+            },
+            "children": [
+             {
+              "type": "View",
+              "props": {
+               "pointerEvents": "none",
+               "style": {
+                "position": "absolute",
+                "left": 0,
+                "right": 0,
+                "top": 0,
+                "bottom": 0,
+                "zIndex": 3,
+                "width": 750,
+                "opacity": 0,
+                "transform": [
+                 {
+                  "translateX": 4.7142857142857135
+                 }
+                ]
+               },
+               "collapsable": false
+              },
+              "children": [
+               {
+                "type": "View",
+                "props": {
+                 "pointerEvents": "none",
+                 "style": {
+                  "position": "absolute",
+                  "left": 15.714285714285714,
+                  "right": 0,
+                  "top": 9.428571428571429,
+                  "bottom": 6.285714285714286,
+                  "width": 18.857142857142858,
+                  "backgroundColor": "rgb(255, 251, 255)",
+                  "maxHeight": 2.0952380952380953,
+                  "transform": [
+                   {
+                    "translateX": -4.7142857142857135
+                   }
+                  ],
+                  "opacity": 1
+                 },
+                 "collapsable": false
+                },
+                "children": null
+               },
+               {
+                "type": "Text",
+                "props": {
+                 "testID": "text-input-outlined-label-background",
+                 "numberOfLines": 1,
+                 "maxFontSizeMultiplier": 1.5,
+                 "style": {
+                  "textAlign": "left",
+                  "fontFamily": "System",
+                  "letterSpacing": 0.2357142857142857,
+                  "fontSize": 25.142857142857142,
+                  "color": "transparent",
+                  "writingDirection": "ltr",
+                  "position": "absolute",
+                  "left": 12.571428571428571,
+                  "paddingHorizontal": 0,
+                  "opacity": 1,
+                  "transform": [
+                   {
+                    "translateX": 0
+                   },
+                   {
+                    "translateY": -40.57142857142857
+                   },
+                   {
+                    "scale": 0.75
+                   },
+                   {
+                    "scaleY": 0.2
+                   }
+                  ],
+                  "top": 51,
+                  "width": -25.142857142857142,
+                  "backgroundColor": "rgb(255, 251, 255)"
+                 },
+                 "collapsable": false
+                },
+                "children": null
+               },
+               {
+                "type": "Text",
+                "props": {
+                 "numberOfLines": 1,
+                 "maxFontSizeMultiplier": 1.5,
+                 "testID": "text-input-outlined-label-active",
+                 "style": {
+                  "fontFamily": "System",
+                  "fontSize": 25.142857142857142,
+                  "letterSpacing": 0.2357142857142857,
+                  "color": "rgb(133, 84, 0)",
+                  "textAlign": "left",
+                  "writingDirection": "ltr",
+                  "position": "absolute",
+                  "left": 0,
+                  "paddingHorizontal": 25.142857142857142,
+                  "top": 50,
+                  "maxWidth": 114.71428571428571,
+                  "opacity": 0,
+                  "transform": [
+                   {
+                    "translateX": 0
+                   },
+                   {
+                    "translateY": -40.57142857142857
+                   },
+                   {
+                    "scale": 0.75
+                   }
+                  ]
+                 },
+                 "collapsable": false
+                },
+                "children": [
+                 "Make"
+                ]
+               },
+               {
+                "type": "Text",
+                "props": {
+                 "numberOfLines": 1,
+                 "maxFontSizeMultiplier": 1.5,
+                 "testID": "text-input-outlined-label-inactive",
+                 "style": {
+                  "fontFamily": "System",
+                  "fontSize": 25.142857142857142,
+                  "letterSpacing": 0.2357142857142857,
+                  "color": "rgb(80, 69, 57)",
+                  "textAlign": "left",
+                  "writingDirection": "ltr",
+                  "position": "absolute",
+                  "left": 0,
+                  "paddingHorizontal": 25.142857142857142,
+                  "top": 50,
+                  "maxWidth": 114.71428571428571,
+                  "opacity": 0,
+                  "transform": [
+                   {
+                    "translateX": 0
+                   },
+                   {
+                    "translateY": -40.57142857142857
+                   },
+                   {
+                    "scale": 0.75
+                   }
+                  ]
+                 },
+                 "collapsable": false
+                },
+                "children": [
+                 "Make"
+                ]
+               }
+              ]
+             },
+             {
+              "type": "TextInput",
+              "props": {
+               "value": "Toyota",
+               "autoCapitalize": "words",
+               "maxFontSizeMultiplier": 1.5,
+               "placeholder": " ",
+               "editable": true,
+               "selectionColor": "rgb(133, 84, 0)",
+               "cursorColor": "rgb(133, 84, 0)",
+               "placeholderTextColor": "rgb(80, 69, 57)",
+               "underlineColorAndroid": "transparent",
+               "multiline": false,
+               "style": [
+                {
+                 "margin": 0
+                },
+                {
+                 "height": 75.42857142857143
+                },
+                {
+                 "paddingTop": 0,
+                 "paddingBottom": 0
+                },
+                {
+                 "fontFamily": "System",
+                 "letterSpacing": 0.2357142857142857,
+                 "fontSize": 25.142857142857142,
+                 "color": "rgb(31, 27, 22)",
+                 "textAlignVertical": "center",
+                 "textAlign": "left",
+                 "paddingHorizontal": 25.142857142857142,
+                 "minWidth": 102.14285714285714
+                },
+                false,
+                [
+                 {}
+                ],
+                null
+               ],
+               "testID": "text-input-outlined"
+              },
+              "children": null
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       {
+        "type": "View",
+        "props": {
+         "style": [
+          {
+           "paddingTop": 12.571428571428571,
+           "paddingBottom": 12.571428571428571
+          },
+          [
+           {
+            "flex": null
+           },
+           null
+          ]
+         ]
+        },
+        "children": [
+         {
+          "type": "View",
+          "props": {
+           "style": {}
+          },
+          "children": [
+           {
+            "type": "View",
+            "props": {
+             "testID": "text-input-outline",
+             "pointerEvents": "none",
+             "style": [
+              {
+               "position": "absolute",
+               "left": 0,
+               "right": 0,
+               "top": 9.428571428571429,
+               "bottom": 0
+              },
+              false,
+              {
+               "backgroundColor": "rgb(255, 251, 255)",
+               "borderRadius": 6.285714285714286,
+               "borderWidth": 1,
+               "borderColor": "rgb(130, 117, 104)"
+              },
+              null
+             ]
+            },
+            "children": null
+           },
+           {
+            "type": "View",
+            "props": {
+             "style": [
+              {
+               "paddingBottom": 0
+              },
+              {
+               "paddingTop": 12.571428571428571,
+               "minHeight": 88
+              }
+             ]
+            },
+            "children": [
+             {
+              "type": "View",
+              "props": {
+               "pointerEvents": "none",
+               "style": {
+                "position": "absolute",
+                "left": 0,
+                "right": 0,
+                "top": 0,
+                "bottom": 0,
+                "zIndex": 3,
+                "width": 750,
+                "opacity": 0,
+                "transform": [
+                 {
+                  "translateX": 4.7142857142857135
+                 }
+                ]
+               },
+               "collapsable": false
+              },
+              "children": [
+               {
+                "type": "View",
+                "props": {
+                 "pointerEvents": "none",
+                 "style": {
+                  "position": "absolute",
+                  "left": 15.714285714285714,
+                  "right": 0,
+                  "top": 9.428571428571429,
+                  "bottom": 6.285714285714286,
+                  "width": 18.857142857142858,
+                  "backgroundColor": "rgb(255, 251, 255)",
+                  "maxHeight": 2.0952380952380953,
+                  "transform": [
+                   {
+                    "translateX": -4.7142857142857135
+                   }
+                  ],
+                  "opacity": 1
+                 },
+                 "collapsable": false
+                },
+                "children": null
+               },
+               {
+                "type": "Text",
+                "props": {
+                 "testID": "text-input-outlined-label-background",
+                 "numberOfLines": 1,
+                 "maxFontSizeMultiplier": 1.5,
+                 "style": {
+                  "textAlign": "left",
+                  "fontFamily": "System",
+                  "letterSpacing": 0.2357142857142857,
+                  "fontSize": 25.142857142857142,
+                  "color": "transparent",
+                  "writingDirection": "ltr",
+                  "position": "absolute",
+                  "left": 12.571428571428571,
+                  "paddingHorizontal": 0,
+                  "opacity": 1,
+                  "transform": [
+                   {
+                    "translateX": 0
+                   },
+                   {
+                    "translateY": -40.57142857142857
+                   },
+                   {
+                    "scale": 0.75
+                   },
+                   {
+                    "scaleY": 0.2
+                   }
+                  ],
+                  "top": 51,
+                  "width": -25.142857142857142,
+                  "backgroundColor": "rgb(255, 251, 255)"
+                 },
+                 "collapsable": false
+                },
+                "children": null
+               },
+               {
+                "type": "Text",
+                "props": {
+                 "numberOfLines": 1,
+                 "maxFontSizeMultiplier": 1.5,
+                 "testID": "text-input-outlined-label-active",
+                 "style": {
+                  "fontFamily": "System",
+                  "fontSize": 25.142857142857142,
+                  "letterSpacing": 0.2357142857142857,
+                  "color": "rgb(133, 84, 0)",
+                  "textAlign": "left",
+                  "writingDirection": "ltr",
+                  "position": "absolute",
+                  "left": 0,
+                  "paddingHorizontal": 25.142857142857142,
+                  "top": 50,
+                  "maxWidth": 114.71428571428571,
+                  "opacity": 0,
+                  "transform": [
+                   {
+                    "translateX": 0
+                   },
+                   {
+                    "translateY": -40.57142857142857
+                   },
+                   {
+                    "scale": 0.75
+                   }
+                  ]
+                 },
+                 "collapsable": false
+                },
+                "children": [
+                 "Model"
+                ]
+               },
+               {
+                "type": "Text",
+                "props": {
+                 "numberOfLines": 1,
+                 "maxFontSizeMultiplier": 1.5,
+                 "testID": "text-input-outlined-label-inactive",
+                 "style": {
+                  "fontFamily": "System",
+                  "fontSize": 25.142857142857142,
+                  "letterSpacing": 0.2357142857142857,
+                  "color": "rgb(80, 69, 57)",
+                  "textAlign": "left",
+                  "writingDirection": "ltr",
+                  "position": "absolute",
+                  "left": 0,
+                  "paddingHorizontal": 25.142857142857142,
+                  "top": 50,
+                  "maxWidth": 114.71428571428571,
+                  "opacity": 0,
+                  "transform": [
+                   {
+                    "translateX": 0
+                   },
+                   {
+                    "translateY": -40.57142857142857
+                   },
+                   {
+                    "scale": 0.75
+                   }
+                  ]
+                 },
+                 "collapsable": false
+                },
+                "children": [
+                 "Model"
+                ]
+               }
+              ]
+             },
+             {
+              "type": "TextInput",
+              "props": {
+               "value": "Camry",
+               "autoCapitalize": "words",
+               "maxFontSizeMultiplier": 1.5,
+               "placeholder": " ",
+               "editable": true,
+               "selectionColor": "rgb(133, 84, 0)",
+               "cursorColor": "rgb(133, 84, 0)",
+               "placeholderTextColor": "rgb(80, 69, 57)",
+               "underlineColorAndroid": "transparent",
+               "multiline": false,
+               "style": [
+                {
+                 "margin": 0
+                },
+                {
+                 "height": 75.42857142857143
+                },
+                {
+                 "paddingTop": 0,
+                 "paddingBottom": 0
+                },
+                {
+                 "fontFamily": "System",
+                 "letterSpacing": 0.2357142857142857,
+                 "fontSize": 25.142857142857142,
+                 "color": "rgb(31, 27, 22)",
+                 "textAlignVertical": "center",
+                 "textAlign": "left",
+                 "paddingHorizontal": 25.142857142857142,
+                 "minWidth": 102.14285714285714
+                },
+                false,
+                [
+                 {}
+                ],
+                null
+               ],
+               "testID": "text-input-outlined"
+              },
+              "children": null
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       {
+        "type": "View",
+        "props": {
+         "style": [
+          {
+           "paddingTop": 12.571428571428571,
+           "paddingBottom": 12.571428571428571
+          },
+          [
+           {
+            "flex": null
+           },
+           null
+          ]
+         ]
+        },
+        "children": [
+         {
+          "type": "View",
+          "props": {
+           "style": {}
+          },
+          "children": [
+           {
+            "type": "View",
+            "props": {
+             "testID": "text-input-outline",
+             "pointerEvents": "none",
+             "style": [
+              {
+               "position": "absolute",
+               "left": 0,
+               "right": 0,
+               "top": 9.428571428571429,
+               "bottom": 0
+              },
+              false,
+              {
+               "backgroundColor": "rgb(255, 251, 255)",
+               "borderRadius": 6.285714285714286,
+               "borderWidth": 1,
+               "borderColor": "rgb(130, 117, 104)"
+              },
+              null
+             ]
+            },
+            "children": null
+           },
+           {
+            "type": "View",
+            "props": {
+             "style": [
+              {
+               "paddingBottom": 0
+              },
+              {
+               "paddingTop": 12.571428571428571,
+               "minHeight": 88
+              }
+             ]
+            },
+            "children": [
+             {
+              "type": "View",
+              "props": {
+               "pointerEvents": "none",
+               "style": {
+                "position": "absolute",
+                "left": 0,
+                "right": 0,
+                "top": 0,
+                "bottom": 0,
+                "zIndex": 3,
+                "width": 750,
+                "opacity": 0,
+                "transform": [
+                 {
+                  "translateX": 4.7142857142857135
+                 }
+                ]
+               },
+               "collapsable": false
+              },
+              "children": [
+               {
+                "type": "View",
+                "props": {
+                 "pointerEvents": "none",
+                 "style": {
+                  "position": "absolute",
+                  "left": 15.714285714285714,
+                  "right": 0,
+                  "top": 9.428571428571429,
+                  "bottom": 6.285714285714286,
+                  "width": 18.857142857142858,
+                  "backgroundColor": "rgb(255, 251, 255)",
+                  "maxHeight": 2.0952380952380953,
+                  "transform": [
+                   {
+                    "translateX": -4.7142857142857135
+                   }
+                  ],
+                  "opacity": 1
+                 },
+                 "collapsable": false
+                },
+                "children": null
+               },
+               {
+                "type": "Text",
+                "props": {
+                 "testID": "text-input-outlined-label-background",
+                 "numberOfLines": 1,
+                 "maxFontSizeMultiplier": 1.5,
+                 "style": {
+                  "textAlign": "left",
+                  "fontFamily": "System",
+                  "letterSpacing": 0.2357142857142857,
+                  "fontSize": 25.142857142857142,
+                  "color": "transparent",
+                  "writingDirection": "ltr",
+                  "position": "absolute",
+                  "left": 12.571428571428571,
+                  "paddingHorizontal": 0,
+                  "opacity": 1,
+                  "transform": [
+                   {
+                    "translateX": 0
+                   },
+                   {
+                    "translateY": -40.57142857142857
+                   },
+                   {
+                    "scale": 0.75
+                   },
+                   {
+                    "scaleY": 0.2
+                   }
+                  ],
+                  "top": 51,
+                  "width": -25.142857142857142,
+                  "backgroundColor": "rgb(255, 251, 255)"
+                 },
+                 "collapsable": false
+                },
+                "children": null
+               },
+               {
+                "type": "Text",
+                "props": {
+                 "numberOfLines": 1,
+                 "maxFontSizeMultiplier": 1.5,
+                 "testID": "text-input-outlined-label-active",
+                 "style": {
+                  "fontFamily": "System",
+                  "fontSize": 25.142857142857142,
+                  "letterSpacing": 0.2357142857142857,
+                  "color": "rgb(133, 84, 0)",
+                  "textAlign": "left",
+                  "writingDirection": "ltr",
+                  "position": "absolute",
+                  "left": 0,
+                  "paddingHorizontal": 25.142857142857142,
+                  "top": 50,
+                  "maxWidth": 114.71428571428571,
+                  "opacity": 0,
+                  "transform": [
+                   {
+                    "translateX": 0
+                   },
+                   {
+                    "translateY": -40.57142857142857
+                   },
+                   {
+                    "scale": 0.75
+                   }
+                  ]
+                 },
+                 "collapsable": false
+                },
+                "children": [
+                 "Color"
+                ]
+               },
+               {
+                "type": "Text",
+                "props": {
+                 "numberOfLines": 1,
+                 "maxFontSizeMultiplier": 1.5,
+                 "testID": "text-input-outlined-label-inactive",
+                 "style": {
+                  "fontFamily": "System",
+                  "fontSize": 25.142857142857142,
+                  "letterSpacing": 0.2357142857142857,
+                  "color": "rgb(80, 69, 57)",
+                  "textAlign": "left",
+                  "writingDirection": "ltr",
+                  "position": "absolute",
+                  "left": 0,
+                  "paddingHorizontal": 25.142857142857142,
+                  "top": 50,
+                  "maxWidth": 114.71428571428571,
+                  "opacity": 0,
+                  "transform": [
+                   {
+                    "translateX": 0
+                   },
+                   {
+                    "translateY": -40.57142857142857
+                   },
+                   {
+                    "scale": 0.75
+                   }
+                  ]
+                 },
+                 "collapsable": false
+                },
+                "children": [
+                 "Color"
+                ]
+               }
+              ]
+             },
+             {
+              "type": "TextInput",
+              "props": {
+               "value": "White",
+               "autoCapitalize": "words",
+               "maxFontSizeMultiplier": 1.5,
+               "placeholder": " ",
+               "editable": true,
+               "selectionColor": "rgb(133, 84, 0)",
+               "cursorColor": "rgb(133, 84, 0)",
+               "placeholderTextColor": "rgb(80, 69, 57)",
+               "underlineColorAndroid": "transparent",
+               "multiline": false,
+               "style": [
+                {
+                 "margin": 0
+                },
+                {
+                 "height": 75.42857142857143
+                },
+                {
+                 "paddingTop": 0,
+                 "paddingBottom": 0
+                },
+                {
+                 "fontFamily": "System",
+                 "letterSpacing": 0.2357142857142857,
+                 "fontSize": 25.142857142857142,
+                 "color": "rgb(31, 27, 22)",
+                 "textAlignVertical": "center",
+                 "textAlign": "left",
+                 "paddingHorizontal": 25.142857142857142,
+                 "minWidth": 102.14285714285714
+                },
+                false,
+                [
+                 {}
+                ],
+                null
+               ],
+               "testID": "text-input-outlined"
+              },
+              "children": null
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       {
+        "type": "View",
+        "props": {
+         "style": [
+          {
+           "paddingTop": 12.571428571428571,
+           "paddingBottom": 12.571428571428571
+          },
+          [
+           {
+            "flex": null
+           },
+           null
+          ]
+         ]
+        },
+        "children": [
+         {
+          "type": "View",
+          "props": {
+           "style": {}
+          },
+          "children": [
+           {
+            "type": "View",
+            "props": {
+             "testID": "text-input-outline",
+             "pointerEvents": "none",
+             "style": [
+              {
+               "position": "absolute",
+               "left": 0,
+               "right": 0,
+               "top": 9.428571428571429,
+               "bottom": 0
+              },
+              false,
+              {
+               "backgroundColor": "rgb(255, 251, 255)",
+               "borderRadius": 6.285714285714286,
+               "borderWidth": 1,
+               "borderColor": "rgb(130, 117, 104)"
+              },
+              null
+             ]
+            },
+            "children": null
+           },
+           {
+            "type": "View",
+            "props": {
+             "style": [
+              {
+               "paddingBottom": 0
+              },
+              {
+               "paddingTop": 12.571428571428571,
+               "minHeight": 88
+              }
+             ]
+            },
+            "children": [
+             {
+              "type": "View",
+              "props": {
+               "pointerEvents": "none",
+               "style": {
+                "position": "absolute",
+                "left": 0,
+                "right": 0,
+                "top": 0,
+                "bottom": 0,
+                "zIndex": 3,
+                "width": 750,
+                "opacity": 0,
+                "transform": [
+                 {
+                  "translateX": 4.7142857142857135
+                 }
+                ]
+               },
+               "collapsable": false
+              },
+              "children": [
+               {
+                "type": "View",
+                "props": {
+                 "pointerEvents": "none",
+                 "style": {
+                  "position": "absolute",
+                  "left": 15.714285714285714,
+                  "right": 0,
+                  "top": 9.428571428571429,
+                  "bottom": 6.285714285714286,
+                  "width": 18.857142857142858,
+                  "backgroundColor": "rgb(255, 251, 255)",
+                  "maxHeight": 2.0952380952380953,
+                  "transform": [
+                   {
+                    "translateX": -4.7142857142857135
+                   }
+                  ],
+                  "opacity": 1
+                 },
+                 "collapsable": false
+                },
+                "children": null
+               },
+               {
+                "type": "Text",
+                "props": {
+                 "testID": "text-input-outlined-label-background",
+                 "numberOfLines": 1,
+                 "maxFontSizeMultiplier": 1.5,
+                 "style": {
+                  "textAlign": "left",
+                  "fontFamily": "System",
+                  "letterSpacing": 0.2357142857142857,
+                  "fontSize": 25.142857142857142,
+                  "color": "transparent",
+                  "writingDirection": "ltr",
+                  "position": "absolute",
+                  "left": 12.571428571428571,
+                  "paddingHorizontal": 0,
+                  "opacity": 1,
+                  "transform": [
+                   {
+                    "translateX": 0
+                   },
+                   {
+                    "translateY": -40.57142857142857
+                   },
+                   {
+                    "scale": 0.75
+                   },
+                   {
+                    "scaleY": 0.2
+                   }
+                  ],
+                  "top": 51,
+                  "width": -25.142857142857142,
+                  "backgroundColor": "rgb(255, 251, 255)"
+                 },
+                 "collapsable": false
+                },
+                "children": null
+               },
+               {
+                "type": "Text",
+                "props": {
+                 "numberOfLines": 1,
+                 "maxFontSizeMultiplier": 1.5,
+                 "testID": "text-input-outlined-label-active",
+                 "style": {
+                  "fontFamily": "System",
+                  "fontSize": 25.142857142857142,
+                  "letterSpacing": 0.2357142857142857,
+                  "color": "rgb(133, 84, 0)",
+                  "textAlign": "left",
+                  "writingDirection": "ltr",
+                  "position": "absolute",
+                  "left": 0,
+                  "paddingHorizontal": 25.142857142857142,
+                  "top": 50,
+                  "maxWidth": 114.71428571428571,
+                  "opacity": 0,
+                  "transform": [
+                   {
+                    "translateX": 0
+                   },
+                   {
+                    "translateY": -40.57142857142857
+                   },
+                   {
+                    "scale": 0.75
+                   }
+                  ]
+                 },
+                 "collapsable": false
+                },
+                "children": [
+                 "Year"
+                ]
+               },
+               {
+                "type": "Text",
+                "props": {
+                 "numberOfLines": 1,
+                 "maxFontSizeMultiplier": 1.5,
+                 "testID": "text-input-outlined-label-inactive",
+                 "style": {
+                  "fontFamily": "System",
+                  "fontSize": 25.142857142857142,
+                  "letterSpacing": 0.2357142857142857,
+                  "color": "rgb(80, 69, 57)",
+                  "textAlign": "left",
+                  "writingDirection": "ltr",
+                  "position": "absolute",
+                  "left": 0,
+                  "paddingHorizontal": 25.142857142857142,
+                  "top": 50,
+                  "maxWidth": 114.71428571428571,
+                  "opacity": 0,
+                  "transform": [
+                   {
+                    "translateX": 0
+                   },
+                   {
+                    "translateY": -40.57142857142857
+                   },
+                   {
+                    "scale": 0.75
+                   }
+                  ]
+                 },
+                 "collapsable": false
+                },
+                "children": [
+                 "Year"
+                ]
+               }
+              ]
+             },
+             {
+              "type": "TextInput",
+              "props": {
+               "value": "2019",
+               "keyboardType": "numeric",
+               "maxFontSizeMultiplier": 1.5,
+               "placeholder": " ",
+               "editable": true,
+               "selectionColor": "rgb(133, 84, 0)",
+               "cursorColor": "rgb(133, 84, 0)",
+               "placeholderTextColor": "rgb(80, 69, 57)",
+               "underlineColorAndroid": "transparent",
+               "multiline": false,
+               "style": [
+                {
+                 "margin": 0
+                },
+                {
+                 "height": 75.42857142857143
+                },
+                {
+                 "paddingTop": 0,
+                 "paddingBottom": 0
+                },
+                {
+                 "fontFamily": "System",
+                 "letterSpacing": 0.2357142857142857,
+                 "fontSize": 25.142857142857142,
+                 "color": "rgb(31, 27, 22)",
+                 "textAlignVertical": "center",
+                 "textAlign": "left",
+                 "paddingHorizontal": 25.142857142857142,
+                 "minWidth": 102.14285714285714
+                },
+                false,
+                [
+                 {}
+                ],
+                null
+               ],
+               "testID": "text-input-outlined"
+              },
+              "children": null
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       {
+        "type": "View",
+        "props": {
+         "style": [
+          {
+           "paddingTop": 12.571428571428571,
+           "paddingBottom": 12.571428571428571
+          },
+          [
+           {
+            "flex": null
+           },
+           null
+          ]
+         ]
+        },
+        "children": [
+         {
+          "type": "View",
+          "props": {
+           "style": {}
+          },
+          "children": [
+           {
+            "type": "View",
+            "props": {
+             "testID": "text-input-outline",
+             "pointerEvents": "none",
+             "style": [
+              {
+               "position": "absolute",
+               "left": 0,
+               "right": 0,
+               "top": 9.428571428571429,
+               "bottom": 0
+              },
+              false,
+              {
+               "backgroundColor": "rgb(255, 251, 255)",
+               "borderRadius": 6.285714285714286,
+               "borderWidth": 1,
+               "borderColor": "rgb(130, 117, 104)"
+              },
+              null
+             ]
+            },
+            "children": null
+           },
+           {
+            "type": "View",
+            "props": {
+             "style": [
+              {
+               "paddingBottom": 0
+              },
+              {
+               "paddingTop": 12.571428571428571,
+               "minHeight": 88
+              }
+             ]
+            },
+            "children": [
+             {
+              "type": "View",
+              "props": {
+               "pointerEvents": "none",
+               "style": {
+                "position": "absolute",
+                "left": 0,
+                "right": 0,
+                "top": 0,
+                "bottom": 0,
+                "zIndex": 3,
+                "width": 750,
+                "opacity": 0,
+                "transform": [
+                 {
+                  "translateX": 4.7142857142857135
+                 }
+                ]
+               },
+               "collapsable": false
+              },
+              "children": [
+               {
+                "type": "View",
+                "props": {
+                 "pointerEvents": "none",
+                 "style": {
+                  "position": "absolute",
+                  "left": 15.714285714285714,
+                  "right": 0,
+                  "top": 9.428571428571429,
+                  "bottom": 6.285714285714286,
+                  "width": 18.857142857142858,
+                  "backgroundColor": "rgb(255, 251, 255)",
+                  "maxHeight": 2.0952380952380953,
+                  "transform": [
+                   {
+                    "translateX": -4.7142857142857135
+                   }
+                  ],
+                  "opacity": 1
+                 },
+                 "collapsable": false
+                },
+                "children": null
+               },
+               {
+                "type": "Text",
+                "props": {
+                 "testID": "text-input-outlined-label-background",
+                 "numberOfLines": 1,
+                 "maxFontSizeMultiplier": 1.5,
+                 "style": {
+                  "textAlign": "left",
+                  "fontFamily": "System",
+                  "letterSpacing": 0.2357142857142857,
+                  "fontSize": 25.142857142857142,
+                  "color": "transparent",
+                  "writingDirection": "ltr",
+                  "position": "absolute",
+                  "left": 12.571428571428571,
+                  "paddingHorizontal": 0,
+                  "opacity": 1,
+                  "transform": [
+                   {
+                    "translateX": 0
+                   },
+                   {
+                    "translateY": -40.57142857142857
+                   },
+                   {
+                    "scale": 0.75
+                   },
+                   {
+                    "scaleY": 0.2
+                   }
+                  ],
+                  "top": 51,
+                  "width": -25.142857142857142,
+                  "backgroundColor": "rgb(255, 251, 255)"
+                 },
+                 "collapsable": false
+                },
+                "children": null
+               },
+               {
+                "type": "Text",
+                "props": {
+                 "numberOfLines": 1,
+                 "maxFontSizeMultiplier": 1.5,
+                 "testID": "text-input-outlined-label-active",
+                 "style": {
+                  "fontFamily": "System",
+                  "fontSize": 25.142857142857142,
+                  "letterSpacing": 0.2357142857142857,
+                  "color": "rgb(133, 84, 0)",
+                  "textAlign": "left",
+                  "writingDirection": "ltr",
+                  "position": "absolute",
+                  "left": 0,
+                  "paddingHorizontal": 25.142857142857142,
+                  "top": 50,
+                  "maxWidth": 114.71428571428571,
+                  "opacity": 0,
+                  "transform": [
+                   {
+                    "translateX": 0
+                   },
+                   {
+                    "translateY": -40.57142857142857
+                   },
+                   {
+                    "scale": 0.75
+                   }
+                  ]
+                 },
+                 "collapsable": false
+                },
+                "children": [
+                 "License plate number"
+                ]
+               },
+               {
+                "type": "Text",
+                "props": {
+                 "numberOfLines": 1,
+                 "maxFontSizeMultiplier": 1.5,
+                 "testID": "text-input-outlined-label-inactive",
+                 "style": {
+                  "fontFamily": "System",
+                  "fontSize": 25.142857142857142,
+                  "letterSpacing": 0.2357142857142857,
+                  "color": "rgb(80, 69, 57)",
+                  "textAlign": "left",
+                  "writingDirection": "ltr",
+                  "position": "absolute",
+                  "left": 0,
+                  "paddingHorizontal": 25.142857142857142,
+                  "top": 50,
+                  "maxWidth": 114.71428571428571,
+                  "opacity": 0,
+                  "transform": [
+                   {
+                    "translateX": 0
+                   },
+                   {
+                    "translateY": -40.57142857142857
+                   },
+                   {
+                    "scale": 0.75
+                   }
+                  ]
+                 },
+                 "collapsable": false
+                },
+                "children": [
+                 "License plate number"
+                ]
+               }
+              ]
+             },
+             {
+              "type": "TextInput",
+              "props": {
+               "value": "ABC123",
+               "autoCapitalize": "characters",
+               "autoCorrect": false,
+               "maxFontSizeMultiplier": 1.5,
+               "placeholder": " ",
+               "editable": true,
+               "selectionColor": "rgb(133, 84, 0)",
+               "cursorColor": "rgb(133, 84, 0)",
+               "placeholderTextColor": "rgb(80, 69, 57)",
+               "underlineColorAndroid": "transparent",
+               "multiline": false,
+               "style": [
+                {
+                 "margin": 0
+                },
+                {
+                 "height": 75.42857142857143
+                },
+                {
+                 "paddingTop": 0,
+                 "paddingBottom": 0
+                },
+                {
+                 "fontFamily": "System",
+                 "letterSpacing": 0.2357142857142857,
+                 "fontSize": 25.142857142857142,
+                 "color": "rgb(31, 27, 22)",
+                 "textAlignVertical": "center",
+                 "textAlign": "left",
+                 "paddingHorizontal": 25.142857142857142,
+                 "minWidth": 102.14285714285714
+                },
+                false,
+                [
+                 {}
+                ],
+                null
+               ],
+               "testID": "text-input-outlined"
+              },
+              "children": null
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   }
+  ]
  }
 }
