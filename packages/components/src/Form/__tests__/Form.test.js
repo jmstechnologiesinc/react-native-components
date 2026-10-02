@@ -293,6 +293,25 @@ describe('Form.VehicleInfo with the catalogue', () => {
         ]);
     });
 
+    it('#62: picks the plate region from the regions the host hands, shown by its label', () => {
+        const plateRegions = [
+            { value: 'US-MA', label: 'Massachusetts (US-MA)' },
+            { value: 'DO', label: 'Dominican Republic (DO)' },
+        ];
+        const reported = [];
+        const tree = render(
+            <Form.VehicleInfo
+                {...CATALOG_VEHICLE}
+                catalog={{ ...CATALOG, plateRegions }}
+                inputActionHandler={(field, value) => reported.push([field, value])}
+            />
+        );
+        expect(inputWithValue(tree, 'Massachusetts (US-MA)')).toBeDefined();
+        pressable(tree, 'vehicle.licensePlateRegion');
+        act(() => tree.root.find((node) => node.props.testID === 'vehicle.licensePlateRegion.DO').props.onPress());
+        expect(reported).toEqual([['licensePlateRegion', 'DO']]);
+    });
+
     it('keeps make and model as typed text when the catalogue has no slice for them', () => {
         const reported = [];
         const tree = render(

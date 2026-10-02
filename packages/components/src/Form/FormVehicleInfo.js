@@ -20,8 +20,9 @@ const NUMERIC = Object.freeze({ keyboardType: 'numeric' });
  * and colors labelled from the partner package, the makes and models of the catalogue slice of the vehicle's type
  * and year. A type or year the catalogue has no slice for leaves make and model as typed text, as the server accepts
  * them then (it records the catalogue match, §9.8.6). A pick reports its value under the market name (`vehicleType`,
- * `color`); a make or a model reports its id and its name (`makeId` + `make`, `modelId` + `model`), because the
- * server keeps both.
+ * `color`, `licensePlateRegion`); a make or a model reports its id and its name (`makeId` + `make`, `modelId` +
+ * `model`), because the server keeps both. The plate region is picked from `catalog.plateRegions` (the regions that
+ * issue plates, contract request #62) when the host hands them, typed as an ISO code otherwise.
  */
 const FormVehicleInfo = ({
     title,
@@ -90,7 +91,11 @@ const FormVehicleInfo = ({
               namedField('model', 'modelId', modelId, model, catalog.models),
               selectField('color', color, catalog.colors, (option) => inputActionHandler('color', option.value)),
               textField('licensePlateNumber', 'licensePlateNumber', licensePlateNumber, CODE),
-              textField('licensePlateRegion', 'licensePlateRegion', licensePlateRegion, CODE),
+              catalog.plateRegions?.length
+                  ? selectField('licensePlateRegion', licensePlateRegion, catalog.plateRegions, (option) =>
+                        inputActionHandler('licensePlateRegion', option.value)
+                    )
+                  : textField('licensePlateRegion', 'licensePlateRegion', licensePlateRegion, CODE),
               textField('vin', 'vinOptional', vin, CODE),
           ]
         : [
