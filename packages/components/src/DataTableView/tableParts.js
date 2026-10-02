@@ -8,33 +8,46 @@ import { EMPTY_VALUE } from '../valueText';
 export const isBlank = (value) => value === undefined || value === null || value === '';
 
 /**
+ * A column's box: its `flex`, and — for a numeric column that another column follows — a trailing inset of
+ * `spacing.x4`. Paper sets no space between cells, so a right-aligned number (and its title) would otherwise touch the
+ * left-aligned text of the next column (MD3 data tables keep a gutter between columns).
+ */
+const columnStyle = (column, isLast, spacing) => [
+    column.flex ? { flex: column.flex } : null,
+    column.numeric && !isLast ? { paddingEnd: spacing.x4 } : null,
+];
+
+/**
  * The header row of a data table: one `DataTable.Title` per column; a sortable one is a button named
  * `sortLabel(title)` and says its direction (`aria-sort`).
  *
  * @param {{columns: import('./DataTableView').DataColumn[], sort?: ?import('./DataTableView').DataSort,
  *     onSort: (key: string) => void, sortLabel: (title: string) => string, testID: string}} props
  */
-export const TableHeader = ({ columns, sort, onSort, sortLabel, testID }) => (
-    <DataTable.Header>
-        {columns.map((column) => {
-            const sorted = sort?.key === column.key ? sort.direction : undefined;
-            return (
-                <DataTable.Title
-                    key={column.key}
-                    numeric={column.numeric}
-                    sortDirection={column.sortable ? sorted : undefined}
-                    onPress={column.sortable ? () => onSort(column.key) : undefined}
-                    style={column.flex ? { flex: column.flex } : undefined}
-                    accessibilityRole={column.sortable ? 'button' : undefined}
-                    accessibilityLabel={column.sortable ? sortLabel(column.title) : undefined}
-                    testID={`${testID}-title-${column.key}`}
-                >
-                    {column.title}
-                </DataTable.Title>
-            );
-        })}
-    </DataTable.Header>
-);
+export const TableHeader = ({ columns, sort, onSort, sortLabel, testID }) => {
+    const { spacing } = useTheme();
+    return (
+        <DataTable.Header>
+            {columns.map((column, index) => {
+                const sorted = sort?.key === column.key ? sort.direction : undefined;
+                return (
+                    <DataTable.Title
+                        key={column.key}
+                        numeric={column.numeric}
+                        sortDirection={column.sortable ? sorted : undefined}
+                        onPress={column.sortable ? () => onSort(column.key) : undefined}
+                        style={columnStyle(column, index === columns.length - 1, spacing)}
+                        accessibilityRole={column.sortable ? 'button' : undefined}
+                        accessibilityLabel={column.sortable ? sortLabel(column.title) : undefined}
+                        testID={`${testID}-title-${column.key}`}
+                    >
+                        {column.title}
+                    </DataTable.Title>
+                );
+            })}
+        </DataTable.Header>
+    );
+};
 
 /**
  * One cell: text goes through Paper's `DataTable.Cell`, which sets it in one line; an element (a chip, a
@@ -44,19 +57,21 @@ export const TableHeader = ({ columns, sort, onSort, sortLabel, testID }) => (
  * `alignSelf: flex-start` (so a chip never stretches down a column), which, as a direct child of the
  * cell's row, would pin it to the top of the 48dp row instead.
  */
-const Cell = ({ column, content }) => {
+const Cell = ({ column, content, isLast }) => {
+    const { spacing } = useTheme();
+    const style = columnStyle(column, isLast, spacing);
     if (React.isValidElement(content)) {
         return (
             <View
                 {...(Platform.OS === 'web' ? { role: 'cell' } : {})}
-                style={[styles.cell, column.numeric && styles.numeric, column.flex ? { flex: column.flex } : null]}
+                style={[styles.cell, column.numeric && styles.numeric, ...style]}
             >
                 <View style={styles.element}>{content}</View>
             </View>
         );
     }
     return (
-        <DataTable.Cell numeric={column.numeric} style={column.flex ? { flex: column.flex } : undefined}>
+        <DataTable.Cell numeric={column.numeric} style={style}>
             {isBlank(content) ? EMPTY_VALUE : content}
         </DataTable.Cell>
     );
@@ -79,8 +94,13 @@ export const TableRow = ({ columns, row, selected = false, onPress, accessibilit
             aria-label={accessibilityLabel}
             testID={testID}
         >
-            {columns.map((column) => (
-                <Cell key={column.key} column={column} content={column.render ? column.render(row) : row[column.key]} />
+            {columns.map((column, index) => (
+                <Cell
+                    key={column.key}
+                    column={column}
+                    content={column.render ? column.render(row) : row[column.key]}
+                    isLast={index === columns.length - 1}
+                />
             ))}
         </DataTable.Row>
     );

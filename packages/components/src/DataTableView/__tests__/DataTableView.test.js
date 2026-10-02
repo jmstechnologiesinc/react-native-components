@@ -166,6 +166,18 @@ describe('DataTableView', () => {
 });
 
 describe('cells that hold an element', () => {
+    it('keeps a gutter after a numeric column, in its title and its cells, but not at the table\'s end', () => {
+        const tree = render(table());
+        const paddingEnd = (node) => StyleSheet.flatten(node.props.style)?.paddingEnd;
+        const titles = tree.root.findAllByType(DataTable.Title);
+        expect(titles.map(paddingEnd)).toEqual([undefined, MD3LightTheme.spacing.x4, undefined]);
+        const cells = tree.root.findAllByType(DataTable.Cell).filter((cell) => cell.props.numeric);
+        expect(cells.length).toBeGreaterThan(0);
+        cells.forEach((cell) => expect(paddingEnd(cell)).toBe(MD3LightTheme.spacing.x4));
+        const last = render(<DataTableView columns={COLUMNS.slice(0, 2)} rows={ROWS} rowKey="id" />);
+        expect(last.root.findAllByType(DataTable.Title).map(paddingEnd)).toEqual([undefined, undefined]);
+    });
+
     it('lays an element in a view cell, never inside the text of Paper’s cell', () => {
         const columns = [
             { key: 'name', title: 'Name' },
