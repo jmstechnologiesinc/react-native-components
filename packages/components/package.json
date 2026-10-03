@@ -26,22 +26,22 @@
         "url": "https://github.com/jmstechnologiesinc/react-native-components/issues"
     },
     "devDependencies": {
-        "@jmstechnologiesinc/partner": "0.1.2",
+        "@jmstechnologiesinc/partner": "0.2.32",
         "prettier": "^2.5.1",
         "rimraf": "^3.0.2"
     },
     "peerDependencies": {
         "@jmstechnologiesinc/bottom-sheet": "^5.2.16",
         "@jmstechnologiesinc/cart": "^0.1.2",
-        "@jmstechnologiesinc/commons": "^0.1.2",
+        "@jmstechnologiesinc/commons": "^0.1.5",
         "@jmstechnologiesinc/order": "^0.2.0",
         "@jmstechnologiesinc/order-narration": "^0.0.2",
-        "@jmstechnologiesinc/partner": "0.1.2",
+        "@jmstechnologiesinc/partner": "0.2.32",
         "@jmstechnologiesinc/react-native-google-places-autocomplete": "^2.4.13",
         "@jmstechnologiesinc/react-native-image-blur-loading": "^1.2.5",
-        "@jmstechnologiesinc/react-native-paper": "*",
+        "@jmstechnologiesinc/react-native-paper": "^5.12.12",
         "@jmstechnologiesinc/react-native-phone-input": "^1.3.16",
-        "@jmstechnologiesinc/react-native-size-matters": "^0.4.3",
+        "@jmstechnologiesinc/react-native-size-matters": "^0.4.4",
         "@jmstechnologiesinc/user": "^0.1.2",
         "@jmstechnologiesinc/vendor": "^0.1.2",
         "@react-navigation/elements": "*",

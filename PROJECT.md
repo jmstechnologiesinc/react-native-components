@@ -428,21 +428,20 @@ consumers must have this package inside their Metro/Babel transform path. Conseq
 - `peerDependencies` are the contract with the host app. `package.json` declares `react`, `react-native`,
   `@jmstechnologiesinc/react-native-paper`, `@react-navigation/elements`, `@jmstechnologiesinc/order`,
   `@jmstechnologiesinc/order-narration` and `@jmstechnologiesinc/partner` — the last pinned **exactly**
-  (`0.1.0`, canon R4; also a devDependency), because the view model and its tests read its vocabulary, and
+  (canon R4; also a devDependency), because the view model and its tests read its vocabulary, and
   both the barrel and the portable entry import `Partner/viewModel`. The harness links the main checkout's
   root `node_modules`, which does not carry it; in a worktree it is unpacked into
-  `packages/components/node_modules` (`npm pack @jmstechnologiesinc/partner@0.1.0` + extract), where Jest
+  `packages/components/node_modules` (`npm pack @jmstechnologiesinc/partner@<the pin>` + extract), where Jest
   resolves it with no `moduleNameMapper`. The barrel additionally expects the host to provide what the app
   already has (`centrifuge`, `react-native-gesture-handler`, `react-native-reanimated`,
   `react-native-vector-icons`, …); the portable entry needs only `react-native-safe-area-context`,
   `react-native-vector-icons`, `color`, `@jmstechnologiesinc/commons`/`vendor`/`react-native-size-matters` and, on
   the web, `i18next`, `i18next-browser-languagedetector` and `react-i18next`. All of them are now declared
   as peers (C-35, 2026-10-03): every package `lib/` imports, at the range CustomerApp declares (so the main
-  host never conflicts). The commented-out `expo-blur` and `showcase-template` are not. The `partner` pin is
-  still the exact 0.1.2 above. Before 0.4.0 is published it must move, peer and devDependency together, to
-  the exact version the app installs (0.2.31 today, 0.2.32 after ADMIN-PANEL B-8). An exact 0.1.2 peer
-  conflicts with the app's install. `prepublishOnly` runs the build, so a publish never ships a stale
-  `lib/`. **A new runtime dependency is an architectural change — ask first (§9)**;
+  host never conflicts). The commented-out `expo-blur` and `showcase-template` are not. `partner` is pinned
+  exactly at **0.2.32**, peer and devDependency together, the version the app installs (ADMIN-PANEL B-8); the
+  harness carries it unpacked in `packages/components/node_modules`. `prepublishOnly` runs the build, so a
+  publish never ships a stale `lib/`. **A new runtime dependency is an architectural change — ask first (§9)**;
   it must either be a peer the app already has, or be justified as a real dependency.
 
 ## Commands (§8)

@@ -107,11 +107,20 @@ describe('with the package catalogue registered, every kind value is text', () =
         );
     });
 
+    // A TEMPLATE (`vehicle_check`'s `%{actual}` / `%{expected}`, the consent texts' `%{platform}`) is reached too,
+    // but a label call passes no values, and i18n-js 3 marks a missing placeholder in a way that nests when it
+    // repeats. So a template is checked up to its first placeholder: the catalogue's text, never the bare value.
+    const TEMPLATE = /%\{\w+\}/;
+
     it.each(groupCases)('%s / %s is text in en and es', (group, value) => {
         const key = statusLabelKey(group, value);
         expect(EN[key]).toEqual(expect.any(String));
         expect(ES[key]).toEqual(expect.any(String));
-        expect(statusLabel(group, value)).toBe(ES[key]);
+        if (TEMPLATE.test(ES[key])) {
+            expect(statusLabel(group, value).startsWith(ES[key].split(TEMPLATE)[0])).toBe(true);
+        } else {
+            expect(statusLabel(group, value)).toBe(ES[key]);
+        }
     });
 
     it.each(Object.values(STAFF_INTENT))('intent %s is titled by the catalogue', (intent) => {

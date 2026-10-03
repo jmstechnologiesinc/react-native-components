@@ -158,6 +158,11 @@ export const INTENT_PRESENTATION = Object.freeze({
     [STAFF_INTENT.PRE_ADVERSE_ACTION]: Object.freeze({ tone: 'danger', icon: MATERIAL_ICONS.alert }),
     [STAFF_INTENT.DEACTIVATE]: Object.freeze({ tone: 'danger', icon: 'account-off-outline' }),
     [STAFF_INTENT.REACTIVATE]: Object.freeze({ tone: 'primary', icon: 'account-reactivate-outline' }),
+    // Screening (§9.8.3): the reviewer records that the adverse-action notice reached the partner.
+    [STAFF_INTENT.RECORD_NOTICE_DELIVERY]: Object.freeze({ tone: 'primary', icon: 'email-check-outline' }),
+    // #53: an active driver's trip class; #56: the driver's registration sent to Fleet again.
+    [STAFF_INTENT.SET_TRIP_CLASS]: Object.freeze({ tone: 'primary', icon: 'swap-horizontal' }),
+    [STAFF_INTENT.SYNC_FLEET_REGISTRATION]: Object.freeze({ tone: 'primary', icon: 'sync' }),
 });
 
 const has = (table, key) => Object.prototype.hasOwnProperty.call(table, key);
