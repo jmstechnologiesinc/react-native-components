@@ -19,7 +19,8 @@
     },
     "scripts": {
         "build": "npm run clean && mkdir lib && cp -r src/* lib",
-        "clean": "rimraf lib"
+        "clean": "rimraf lib",
+        "prepublishOnly": "npm run build"
     },
     "bugs": {
         "url": "https://github.com/jmstechnologiesinc/react-native-components/issues"
@@ -30,13 +31,46 @@
         "rimraf": "^3.0.2"
     },
     "peerDependencies": {
+        "@jmstechnologiesinc/bottom-sheet": "^5.2.16",
+        "@jmstechnologiesinc/cart": "^0.1.2",
+        "@jmstechnologiesinc/commons": "^0.1.2",
         "@jmstechnologiesinc/order": "^0.2.0",
         "@jmstechnologiesinc/order-narration": "^0.0.2",
         "@jmstechnologiesinc/partner": "0.1.2",
+        "@jmstechnologiesinc/react-native-google-places-autocomplete": "^2.4.13",
+        "@jmstechnologiesinc/react-native-image-blur-loading": "^1.2.5",
         "@jmstechnologiesinc/react-native-paper": "*",
+        "@jmstechnologiesinc/react-native-phone-input": "^1.3.16",
+        "@jmstechnologiesinc/react-native-size-matters": "^0.4.3",
+        "@jmstechnologiesinc/user": "^0.1.2",
+        "@jmstechnologiesinc/vendor": "^0.1.2",
         "@react-navigation/elements": "*",
+        "@rnmapbox/maps": "^10.3.1",
+        "centrifuge": "^5.6.0",
+        "color": "^4.2.3",
+        "dinero.js": "^2.0.2",
+        "i18n-js": "^3.9.2",
+        "i18next": "^23.16.8",
+        "i18next-browser-languagedetector": "^8.2.1",
+        "lodash.memoize": "^4.1.2",
         "react": "*",
-        "react-native": "*"
+        "react-i18next": "^15.7.4",
+        "react-map-gl": "^8.1.2",
+        "react-native": "*",
+        "react-native-actions-sheet": "^10.1.2",
+        "react-native-applifecycle": "^1.0.0",
+        "react-native-config": "^1.6.1",
+        "react-native-dotenv": "^3.4.11",
+        "react-native-draggable-flatlist": "^4.0.3",
+        "react-native-geolocation-service": "^5.3.1",
+        "react-native-gesture-handler": "^3.0.1",
+        "react-native-image-picker": "^8.2.1",
+        "react-native-localize": "^3.7.0",
+        "react-native-permissions": "^5.5.3",
+        "react-native-reanimated": "^4.4.1",
+        "react-native-safe-area-context": "^5.8.0",
+        "react-native-svg": "^15.15.5",
+        "react-native-vector-icons": "^10.3.0"
     },
     "gitHead": "c0657171ebb0b0f23097c3e16ca35bfa0bda83ec"
 }
