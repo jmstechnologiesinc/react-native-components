@@ -1,6 +1,6 @@
 {
     "name": "@jmstechnologiesinc/react-native-components",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "description": "Biblioteca de componentes de interfaz compartida por las aplicaciones de Daxir.",
     "author": "yerloveraaa <yerloveraaa@gmail.com>",
     "homepage": "https://github.com/jmstechnologiesinc/react-native-components#readme",
@@ -25,16 +25,17 @@
         "url": "https://github.com/jmstechnologiesinc/react-native-components/issues"
     },
     "devDependencies": {
+        "@jmstechnologiesinc/order": "^0.6.0",
+        "@jmstechnologiesinc/order-narration": "^0.0.7",
         "prettier": "^2.5.1",
         "rimraf": "^3.0.2"
     },
     "peerDependencies": {
-        "@jmstechnologiesinc/order": "^0.2.0",
-        "@jmstechnologiesinc/order-narration": "^0.0.2",
+        "@jmstechnologiesinc/order": "^0.6.0",
+        "@jmstechnologiesinc/order-narration": "^0.0.7",
         "@jmstechnologiesinc/react-native-paper": "*",
         "@react-navigation/elements": "*",
         "react": "*",
         "react-native": "*"
-    },
-    "gitHead": "c0657171ebb0b0f23097c3e16ca35bfa0bda83ec"
+    }
 }
