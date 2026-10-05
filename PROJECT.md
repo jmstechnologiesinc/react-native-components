@@ -438,9 +438,9 @@ consumers must have this package inside their Metro/Babel transform path. Conseq
   `react-native-vector-icons`, `color`, `@jmstechnologiesinc/commons`/`vendor`/`react-native-size-matters` and, on
   the web, `i18next`, `i18next-browser-languagedetector` and `react-i18next`. All of them are now declared
   as peers (C-35, 2026-10-03): every package `lib/` imports, at the range CustomerApp declares (so the main
-  host never conflicts). The commented-out `expo-blur` and `showcase-template` are not. `partner` is pinned
-  exactly at **0.2.32**, peer and devDependency together, the version the app installs (ADMIN-PANEL B-8); the
-  harness carries it unpacked in `packages/components/node_modules`. `prepublishOnly` runs the build, so a
+  host never conflicts). The commented-out `expo-blur` and `showcase-template` are not. `partner` is a peer
+  at **^0.2.33** (0.4.3, owner 2026-10-04: an exact pin refused every contract patch the app installs, B-8) and a
+  devDependency at exactly 0.2.33; the harness carries it unpacked in `packages/components/node_modules`. `prepublishOnly` runs the build, so a
   publish never ships a stale `lib/`. **A new runtime dependency is an architectural change — ask first (§9)**;
   it must either be a peer the app already has, or be justified as a real dependency.
 
