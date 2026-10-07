@@ -92,6 +92,12 @@ const FormBusinessInfo = ({
     showEmail = true,
     showTIN = false,
     tin,
+    // P-3: the merchant's legal entity, shown with the tax id. `tinOnFile` is the stored tin as the server
+    // answers it (masked); `taxIdTypeLabel` names its kind (EIN, RNC, RUC).
+    legalName,
+    taxAddress,
+    taxIdTypeLabel,
+    tinOnFile,
     website,
     phoneNumber,
     email,
@@ -210,20 +216,58 @@ const FormBusinessInfo = ({
                     </ScreenWrapper.Section>
                 ) : null}
                 {showTIN ? (
-                    <ScreenWrapper.Section>
-                        <FormField
-                            input={SecretInputText}
-                            mode="outlined"
-                            field="tin"
-                            errors={errors}
-                            highlighted={isHighlighted(highlightFields, 'tin')}
-                            disabled={disabled}
-                            label={localized('taxIdentificationNumber')}
-                            value={tin}
-                            onChangeText={(text) => inputActionHandler('tin', text)}
-                        />
-                        <HelperText>{localized('helpTextTaxIdentificationNumber')}</HelperText>
-                    </ScreenWrapper.Section>
+                    <>
+                        <ScreenWrapper.Section>
+                            <FormField
+                                mode="outlined"
+                                field="legalName"
+                                errors={errors}
+                                highlighted={isHighlighted(highlightFields, 'legalName')}
+                                disabled={disabled}
+                                label={localized('legalBusinessName')}
+                                value={legalName}
+                                autoCapitalize="words"
+                                onChangeText={(text) => inputActionHandler('legalName', text)}
+                            />
+                            <HelperText>{localized('helpTextLegalBusinessName')}</HelperText>
+                        </ScreenWrapper.Section>
+                        <ScreenWrapper.Section>
+                            <FormField
+                                input={SecretInputText}
+                                mode="outlined"
+                                field="tin"
+                                errors={errors}
+                                highlighted={isHighlighted(highlightFields, 'tin')}
+                                disabled={disabled}
+                                label={
+                                    taxIdTypeLabel
+                                        ? `${localized('taxIdentificationNumber')} (${taxIdTypeLabel})`
+                                        : localized('taxIdentificationNumber')
+                                }
+                                value={tin}
+                                onChangeText={(text) => inputActionHandler('tin', text)}
+                            />
+                            <HelperText>
+                                {tinOnFile
+                                    ? localized('helpTextTaxIdentificationNumberOnFile', { tin: tinOnFile })
+                                    : localized('helpTextTaxIdentificationNumber')}
+                            </HelperText>
+                        </ScreenWrapper.Section>
+                        <ScreenWrapper.Section>
+                            <FormField
+                                mode="outlined"
+                                field="taxAddress"
+                                errors={errors}
+                                highlighted={isHighlighted(highlightFields, 'taxAddress')}
+                                disabled={disabled}
+                                label={localized('taxAddress')}
+                                value={taxAddress}
+                                autoCapitalize="words"
+                                onChangeText={(text) => inputActionHandler('taxAddress', text)}
+                            />
+                            <HelperText>{localized('helpTextTaxAddress')}</HelperText>
+                        </ScreenWrapper.Section>
+                    </>
                 ) : null}
             </ScreenWrapper.Container>
 

@@ -148,6 +148,37 @@ describe('Form.BusinessInfo', () => {
         const tree = render(<Form.BusinessInfo {...BUSINESS} highlightFields={['title', 'tin', 'industries']} />);
         expect(changedCount(tree)).toBe(3);
     });
+
+    // P-3: the merchant's legal entity rides with the tax id.
+    const LEGAL = { legalName: 'Casa Nostra LLC', taxAddress: '9 Elm St, Boston', taxIdTypeLabel: 'EIN' };
+
+    it('shows the legal name and tax address with the tax id, and reports each by its field', () => {
+        const changes = [];
+        const tree = render(
+            <Form.BusinessInfo {...BUSINESS} {...LEGAL} inputActionHandler={(field, value) => changes.push([field, value])} />
+        );
+        act(() => inputWithValue(tree, 'Casa Nostra LLC').props.onChangeText('Casa Nostra Inc'));
+        act(() => inputWithValue(tree, '9 Elm St, Boston').props.onChangeText('10 Elm St'));
+        expect(changes).toEqual([['legalName', 'Casa Nostra Inc'], ['taxAddress', '10 Elm St']]);
+        expect(JSON.stringify(tree.toJSON())).toContain('(EIN)');
+        const hidden = render(<Form.BusinessInfo {...BUSINESS} {...LEGAL} showTIN={false} />);
+        expect(hidden.root.findAll((node) => node.props.value === 'Casa Nostra LLC')).toHaveLength(0);
+    });
+
+    it('names the tax id on file (masked) instead of showing it', () => {
+        const tree = render(<Form.BusinessInfo {...BUSINESS} tin="" tinOnFile="•••••6789" />);
+        expect(JSON.stringify(tree.toJSON())).toContain('•••••6789');
+    });
+
+    it('locks the legal entity under readOnly and highlights it', () => {
+        const tree = render(
+            <Form.BusinessInfo {...BUSINESS} {...LEGAL} readOnly highlightFields={['legalName', 'taxAddress']} />
+        );
+        for (const value of ['Casa Nostra LLC', '9 Elm St, Boston']) {
+            expect(`${value}:${inputWithValue(tree, value).props.editable}`).toBe(`${value}:false`);
+        }
+        expect(changedCount(tree)).toBe(2);
+    });
 });
 
 // K-32 — per-field server errors: `errors: [{ field, code, message? }]`, by
