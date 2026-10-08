@@ -5,6 +5,13 @@ commands. `CLAUDE.md` is the generic, project-agnostic rules file and **lives he
 truth** — it is copied unchanged into the other repos. Do not add project-specific content to it;
 it goes here.
 
+## Where to work
+
+`feature/temporal-migration`, in this repository's main checkout (`~/daxir/react-native-components`), is the one
+source of truth (owner, 2026-10-07). Branch from it and merge back into it; keep no long-lived
+worktree.
+The authority is fleet-management `docs/canonical-trunk.md`.
+
 ## What this is — two things in one repo
 
 1. **The published library**: `packages/components/` → **`@jmstechnologiesinc/react-native-components`**
