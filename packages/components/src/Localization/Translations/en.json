@@ -447,6 +447,7 @@
     "vehicleType": "Vehicle type",
     "licensePlateRegion": "Plate state or country (e.g. US-MA or DO)",
     "vinOptional": "VIN (optional)",
+    "vehicleFlags": "What applies to this vehicle",
     "year": "Year",
     "model": "Model",
     "color": "Color",

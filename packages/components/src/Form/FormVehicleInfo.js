@@ -3,7 +3,8 @@ import React from 'react';
 import ScreenWrapper from '../ScreenWrapper';
 import { localized } from '../Localization/Localization';
 
-import FormField, { isHighlighted } from './FormField';
+import CheckboxListField from '../CheckboxListField/CheckboxListField';
+import FormField, { FieldErrorText, isHighlighted } from './FormField';
 import FormSelectField from './FormSelectField';
 
 // Input hints for each kind of field; none of them validates anything (K-32).
@@ -23,6 +24,10 @@ const NUMERIC = Object.freeze({ keyboardType: 'numeric' });
  * `color`, `licensePlateRegion`); a make or a model reports its id and its name (`makeId` + `make`, `modelId` +
  * `model`), because the server keeps both. The plate region is picked from `catalog.plateRegions` (the regions that
  * issue plates, contract request #62) when the host hands them, typed as an ISO code otherwise.
+ *
+ * With `catalog.flags` (C-d, contract request #77) the owner ticks what applies to the vehicle — a salvage or rebuilt
+ * title, a rental, commercial branding — from the options the host labels from the partner package's VEHICLE_FLAG;
+ * the form reports the whole list under `flags` (none ticked is `[]`, a declaration the server keeps).
  */
 const FormVehicleInfo = ({
     title,
@@ -42,6 +47,7 @@ const FormVehicleInfo = ({
     modelId,
     licensePlateRegion,
     vin,
+    flags,
 }) => {
     const disabled = Boolean(isDisabled || readOnly);
     const marked = (field) => ({ field, errors, highlighted: isHighlighted(highlightFields, field), disabled });
@@ -97,6 +103,21 @@ const FormVehicleInfo = ({
                     )
                   : textField('licensePlateRegion', 'licensePlateRegion', licensePlateRegion, CODE),
               textField('vin', 'vinOptional', vin, CODE),
+              ...(catalog.flags?.length
+                  ? [
+                        <>
+                            <CheckboxListField
+                                label={localized('vehicleFlags')}
+                                options={catalog.flags}
+                                values={flags ?? []}
+                                onChange={(next) => inputActionHandler('flags', next)}
+                                disabled={disabled}
+                                testID="vehicle.flags"
+                            />
+                            <FieldErrorText field="flags" errors={errors} />
+                        </>,
+                    ]
+                  : []),
           ]
         : [
               textField('make', 'make', make, WORDS),

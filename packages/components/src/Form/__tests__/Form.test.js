@@ -343,6 +343,39 @@ describe('Form.VehicleInfo with the catalogue', () => {
         expect(reported).toEqual([['licensePlateRegion', 'DO']]);
     });
 
+    it('C-d: ticks the flags the host hands, reports the whole list, and puts their error under them', () => {
+        const flags = [
+            { value: 'salvage_title', label: 'Salvage title' },
+            { value: 'commercial_branding', label: 'Commercial branding' },
+        ];
+        const reported = [];
+        const tree = render(
+            <Form.VehicleInfo
+                {...CATALOG_VEHICLE}
+                flags={['commercial_branding']}
+                catalog={{ ...CATALOG, flags }}
+                errors={[{ field: 'flags', code: 'vehicle_flags_invalid' }]}
+                inputActionHandler={(field, value) => reported.push([field, value])}
+            />
+        );
+        const tick = (value) =>
+            act(() =>
+                tree.root
+                    .find((node) => node.props.testID === `vehicle.flags-${value}` && node.props.onPress)
+                    .props.onPress()
+            );
+        tick('salvage_title');
+        tick('commercial_branding');
+        expect(reported).toEqual([
+            ['flags', ['commercial_branding', 'salvage_title']],
+            ['flags', []],
+        ]);
+        expect(hostOf(tree, 'error.flags')).toHaveLength(1);
+        // Without flags in the catalogue the form is as before.
+        const plain = render(<Form.VehicleInfo {...CATALOG_VEHICLE} catalog={CATALOG} inputActionHandler={() => {}} />);
+        expect(plain.root.findAll((node) => node.props.testID === 'vehicle.flags')).toHaveLength(0);
+    });
+
     it('keeps make and model as typed text when the catalogue has no slice for them', () => {
         const reported = [];
         const tree = render(
