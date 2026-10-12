@@ -304,6 +304,24 @@ describe('Form.VehicleInfo with the catalogue', () => {
         expect(values).toEqual(['Car', '2021', 'Toyota', 'Camry', 'Silver', 'SMPL001', 'US-MA', '0SAMPLE0VIN000001']);
     });
 
+    it('#91: with catalog.typeOnly the form is the vehicle type alone', () => {
+        const reported = [];
+        const tree = render(
+            <Form.VehicleInfo
+                {...CATALOG_VEHICLE}
+                vehicleType="motorcycle"
+                catalog={{ ...CATALOG, typeOnly: true, flags: [{ value: 'salvage_title', label: 'Salvage title' }] }}
+                inputActionHandler={(field, value) => reported.push([field, value])}
+            />
+        );
+        const values = tree.root.findAll((node) => node.type === 'TextInput').map((node) => node.props.value);
+        expect(values).toEqual(['Motorcycle']);
+        expect(tree.root.findAll((node) => node.props.testID === 'vehicle.flags')).toHaveLength(0);
+        pressable(tree, 'vehicle.vehicleType');
+        act(() => tree.root.find((node) => node.props.testID === 'vehicle.vehicleType.car').props.onPress());
+        expect(reported).toEqual([['vehicleType', 'car']]);
+    });
+
     it('reports a make by its id and its name, and a color by its code', () => {
         const reported = [];
         const tree = render(

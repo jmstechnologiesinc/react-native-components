@@ -28,6 +28,10 @@ const NUMERIC = Object.freeze({ keyboardType: 'numeric' });
  * With `catalog.flags` (C-d, contract request #77) the owner ticks what applies to the vehicle — a salvage or rebuilt
  * title, a rental, commercial branding — from the options the host labels from the partner package's VEHICLE_FLAG;
  * the form reports the whole list under `flags` (none ticked is `[]`, a declaration the server keeps).
+ *
+ * With `catalog.typeOnly` (contract request #91) the form is the vehicle type alone: the host says so for a vehicle
+ * declared by its type (the partner package's non-motor types — a bicycle, an e-bike, a stand-up e-scooter), which
+ * has no plate, make, model, year, colour, VIN or flags to ask.
  */
 const FormVehicleInfo = ({
     title,
@@ -126,10 +130,12 @@ const FormVehicleInfo = ({
               textField('year', 'year', year, NUMERIC),
               textField('licensePlateNumber', 'licensePlateNumber', licensePlateNumber, CODE),
           ];
+    // A vehicle declared by its type alone (#91): the type, the market form's first field, and nothing else.
+    const shown = catalog?.typeOnly ? fields.slice(0, 1) : fields;
 
     return (
         <ScreenWrapper.Container>
-            {fields.map((input, index) => (
+            {shown.map((input, index) => (
                 // The fields never reorder while mounted: the position is a stable key.
                 // eslint-disable-next-line react/no-array-index-key
                 <ScreenWrapper.Section key={index} title={index === 0 ? title : undefined}>
