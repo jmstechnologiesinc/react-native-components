@@ -163,6 +163,10 @@ export const INTENT_PRESENTATION = Object.freeze({
     // #53: an active driver's trip class; #56: the driver's registration sent to Fleet again.
     [STAFF_INTENT.SET_TRIP_CLASS]: Object.freeze({ tone: 'primary', icon: 'swap-horizontal' }),
     [STAFF_INTENT.SYNC_FLEET_REGISTRATION]: Object.freeze({ tone: 'primary', icon: 'sync' }),
+    // C-b (#86): the reviewer links a driver to a store's own deliveries, or ends the link — the driver stops
+    // receiving that store's orders, so ending it is adverse and asks for confirmation.
+    [STAFF_INTENT.LINK_MERCHANT_DRIVER]: Object.freeze({ tone: 'primary', icon: 'store-plus-outline' }),
+    [STAFF_INTENT.UNLINK_MERCHANT_DRIVER]: Object.freeze({ tone: 'danger', icon: 'store-remove-outline' }),
 });
 
 const has = (table, key) => Object.prototype.hasOwnProperty.call(table, key);
