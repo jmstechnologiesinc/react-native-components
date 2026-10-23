@@ -79,6 +79,7 @@ export { localizedAuthError } from './Localization/authErrors';
 
 // K-22 — also served by `portable.js`, the entry a web host imports.
 export { default as StatusChip, SlaChip, LabelChip } from './Partner/StatusChip';
+export { default as RuleClauseList } from './Partner/RuleClauseList';
 export { default as DocumentViewer } from './DocumentViewer/DocumentViewer';
 export { default as DecisionDialog } from './DecisionDialog/DecisionDialog';
 export { default as Timeline } from './Timeline/Timeline';

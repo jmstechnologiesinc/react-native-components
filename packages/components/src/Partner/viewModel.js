@@ -3,24 +3,34 @@ import {
     CHECKR_REPORT_ADJUDICATION,
     CHECKR_REPORT_RESULT,
     CHECKR_REPORT_STATUS,
+    CLAUSE_VALUE,
+    CONSENT_TYPE,
     DETAILS_CODE,
     DISABLED_REASON,
+    ENTITY_TYPE,
     FIELD_ERROR_CODE,
+    INTEGRATION_PROVIDER,
     LABEL_GROUPS,
+    LOCALES,
     PARTNER_FACT,
     PARTNERSHIP_STATUS,
     REFUSAL_REASON,
     REQUIREMENT_BUCKET,
     REQUIREMENT_CAUSE,
+    REQUIREMENT_EVIDENCE,
     REQUIREMENT_KEYS,
+    REVIEW_QUEUE,
     REVIEW_TASK_STATUS,
+    RULE_CLAUSE,
     RULE_ERROR_CODE,
+    RULE_REFERENCE_SUBJECT,
+    SCREENING_PACKAGE,
     STAFF_INTENT,
     VERIFICATION_STATUS,
     statusLabelKey,
 } from '@jmstechnologiesinc/partner';
 
-import { localized } from '../Localization/Localization';
+import { currentLocale, localized } from '../Localization/Localization';
 import { STATUS_TONES } from '../tones';
 
 // Canon §17.3 — THE PLACE WHERE PARTNER KEYS BECOME TEXT, as `Order/viewModel.js`
@@ -260,3 +270,166 @@ export const intentAction = (intent) => {
         confirm: presentation ? presentation.tone === 'danger' : true,
     };
 };
+
+/** How a clause's value is read (this package's own words, never on the wire). */
+export const CLAUSE_VALUE_KIND = Object.freeze({
+    RULE_TEXT: 'ruleText',
+    LABEL: 'label',
+    HOURS: 'hours',
+    DAYS: 'days',
+    MONTHS: 'months',
+    YES_NO: 'yesNo',
+    LAYERS: 'layers',
+    LEGAL_BASIS: 'legalBasis',
+    MARKET_REFERENCE: 'marketReference',
+});
+
+/**
+ * Request #105: each clause of a requirement's composed rule (the package's `requirementRule`), in the order a
+ * reader meets them — what it is, how it is met and reviewed, its life over time, the background check, the
+ * consent, who asks it, and why. `valueOf` reads the clause from the rule; `kind` how its value reads; `group` the
+ * catalogue group of a vocabulary value. Presentation, one consumer (request #6): the clauses are the package's,
+ * and viewModelCompleteness fails on one it adds until it is placed here.
+ */
+export const RULE_CLAUSE_PRESENTATION = Object.freeze([
+    { clause: RULE_CLAUSE.LABEL, kind: CLAUSE_VALUE_KIND.RULE_TEXT, valueOf: (rule) => rule.label },
+    { clause: RULE_CLAUSE.EXPLANATION, kind: CLAUSE_VALUE_KIND.RULE_TEXT, valueOf: (rule) => rule.explanation },
+    {
+        clause: RULE_CLAUSE.EVIDENCE,
+        kind: CLAUSE_VALUE_KIND.LABEL,
+        group: groupOf(REQUIREMENT_EVIDENCE),
+        valueOf: (rule) => rule.evidence,
+    },
+    {
+        clause: RULE_CLAUSE.SCOPE,
+        kind: CLAUSE_VALUE_KIND.LABEL,
+        group: groupOf(ENTITY_TYPE),
+        valueOf: (rule) => rule.scope,
+    },
+    {
+        clause: RULE_CLAUSE.REVIEW_QUEUE,
+        kind: CLAUSE_VALUE_KIND.LABEL,
+        group: groupOf(REVIEW_QUEUE),
+        valueOf: (rule) => rule.reviewQueue,
+    },
+    { clause: RULE_CLAUSE.REVIEW_SLA_HOURS, kind: CLAUSE_VALUE_KIND.HOURS, valueOf: (rule) => rule.reviewSlaHours },
+    {
+        clause: RULE_CLAUSE.ONBOARDING_WINDOW_DAYS,
+        kind: CLAUSE_VALUE_KIND.DAYS,
+        valueOf: (rule) => rule.onboardingWindowDays,
+    },
+    {
+        clause: RULE_CLAUSE.EXPIRY_NOTICE_DAYS,
+        kind: CLAUSE_VALUE_KIND.DAYS,
+        valueOf: (rule) => rule.expiry?.noticeDays,
+    },
+    { clause: RULE_CLAUSE.EXPIRY_GRACE_DAYS, kind: CLAUSE_VALUE_KIND.DAYS, valueOf: (rule) => rule.expiry?.graceDays },
+    {
+        clause: RULE_CLAUSE.RECHECK_EVERY_MONTHS,
+        kind: CLAUSE_VALUE_KIND.MONTHS,
+        valueOf: (rule) => rule.recheckEveryMonths,
+    },
+    {
+        clause: RULE_CLAUSE.SCREENING_PACKAGE,
+        kind: CLAUSE_VALUE_KIND.LABEL,
+        group: groupOf(SCREENING_PACKAGE),
+        valueOf: (rule) => rule.screening?.package,
+    },
+    {
+        clause: RULE_CLAUSE.SCREENING_CONTINUOUS,
+        kind: CLAUSE_VALUE_KIND.YES_NO,
+        valueOf: (rule) => rule.screening?.continuous,
+    },
+    {
+        clause: RULE_CLAUSE.SCREENING_PROVIDER,
+        kind: CLAUSE_VALUE_KIND.LABEL,
+        group: groupOf(INTEGRATION_PROVIDER),
+        valueOf: (rule) => rule.screening?.provider,
+    },
+    {
+        clause: RULE_CLAUSE.CONSENT_TYPE,
+        kind: CLAUSE_VALUE_KIND.LABEL,
+        group: groupOf(CONSENT_TYPE),
+        valueOf: (rule) => rule.consent?.type,
+    },
+    {
+        clause: RULE_CLAUSE.CONSENT_TEXT_APPROVED,
+        kind: CLAUSE_VALUE_KIND.YES_NO,
+        valueOf: (rule) => rule.consent?.textApproved,
+    },
+    { clause: RULE_CLAUSE.VIN_REQUIRED, kind: CLAUSE_VALUE_KIND.YES_NO, valueOf: (rule) => rule.vinRequired },
+    { clause: RULE_CLAUSE.LAYERS, kind: CLAUSE_VALUE_KIND.LAYERS, valueOf: (rule) => rule.layers },
+    { clause: RULE_CLAUSE.LEGAL_BASIS, kind: CLAUSE_VALUE_KIND.LEGAL_BASIS, valueOf: (rule) => rule.legalBasis },
+    {
+        clause: RULE_CLAUSE.REFERENCES,
+        kind: CLAUSE_VALUE_KIND.MARKET_REFERENCE,
+        valueOf: (rule) => rule.references,
+    },
+].map(Object.freeze));
+
+const CLAUSE = groupOf(RULE_CLAUSE);
+const CLAUSE_WORD = groupOf(CLAUSE_VALUE);
+const REFERENCE_SUBJECT = groupOf(RULE_REFERENCE_SUBJECT);
+// The jurisdictions that asked a requirement, general → specific (the order the server composes them in).
+const LAYER_SEPARATOR = ' › ';
+const PART_SEPARATOR = ' · ';
+const COUNT_WORD = Object.freeze({
+    [CLAUSE_VALUE_KIND.HOURS]: CLAUSE_VALUE.HOURS,
+    [CLAUSE_VALUE_KIND.DAYS]: CLAUSE_VALUE.DAYS,
+    [CLAUSE_VALUE_KIND.MONTHS]: CLAUSE_VALUE.MONTHS,
+});
+
+/** A rule's own text (`{en, es}`, written in the rules editor) in the reader's language, else the package's first. */
+export const ruleText = (text) => (text ? text[currentLocale().split('-')[0]] ?? text[LOCALES[0]] : null);
+
+/** «24 h», «30 días»: the catalogue's word for the count, or the bare count while no catalogue carries it. */
+const countText = (kind, count) => {
+    const key = statusLabelKey(CLAUSE_WORD, COUNT_WORD[kind]);
+    const text = localized(key, { count });
+    return text === key ? String(count) : text;
+};
+
+/** One clause's rows: one for a value, one per entry of a list (a norm, a market practice), none when absent. */
+const clauseRows = ({ clause, kind, group, valueOf }, rule, layerName) => {
+    const value = valueOf(rule);
+    if (isAbsent(value) || (Array.isArray(value) && value.length === 0)) return [];
+    const title = labelOf(CLAUSE, clause);
+    const row = (description) => [{ key: clause, title, description }];
+    switch (kind) {
+        case CLAUSE_VALUE_KIND.RULE_TEXT:
+            return row(ruleText(value));
+        case CLAUSE_VALUE_KIND.LABEL:
+            return row(labelOf(group, value));
+        case CLAUSE_VALUE_KIND.YES_NO:
+            return row(labelOf(CLAUSE_WORD, value ? CLAUSE_VALUE.YES : CLAUSE_VALUE.NO));
+        case CLAUSE_VALUE_KIND.LAYERS:
+            return row(value.map(layerName).join(LAYER_SEPARATOR));
+        case CLAUSE_VALUE_KIND.LEGAL_BASIS:
+            return value.map((basis, index) => ({
+                key: `${clause}.${index}`,
+                title,
+                description: [ruleText(basis.name), basis.citation].filter(Boolean).join(PART_SEPARATOR),
+                url: basis.url,
+            }));
+        case CLAUSE_VALUE_KIND.MARKET_REFERENCE:
+            return value.map((reference, index) => ({
+                key: `${clause}.${index}`,
+                title,
+                description: [ruleText(reference.title), labelOf(REFERENCE_SUBJECT, reference.supports)].join(
+                    PART_SEPARATOR
+                ),
+                url: reference.url,
+            }));
+        default:
+            return row(countText(kind, value));
+    }
+};
+
+/**
+ * Request #105: a requirement's composed rule as list rows `{ key, title, description, url? }`, one per clause the
+ * rule states (and one per norm or market practice), in RULE_CLAUSE_PRESENTATION's order: the title is the clause,
+ * the description its value. A clause the rule does not state is left out; a null rule (a partner evaluated before
+ * #105) has no rows. `layerName(layer)` names a jurisdiction; by default its id.
+ */
+export const ruleClauseRows = (rule, { layerName = (layer) => layer } = {}) =>
+    rule ? RULE_CLAUSE_PRESENTATION.flatMap((entry) => clauseRows(entry, rule, layerName)) : [];

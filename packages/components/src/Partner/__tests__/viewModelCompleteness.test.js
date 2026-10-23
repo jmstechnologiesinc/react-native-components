@@ -11,13 +11,15 @@ jest.mock('react-native-localize', () => ({
     findBestLanguageTag: jest.fn(() => ({ languageTag: 'es', isRTL: false })),
 }));
 
-import { EN, ES, LABEL_GROUPS, STAFF_INTENT, statusLabelKey } from '@jmstechnologiesinc/partner';
+import { EN, ES, LABEL_GROUPS, RULE_CLAUSE, STAFF_INTENT, statusLabelKey } from '@jmstechnologiesinc/partner';
 
 import { registerFlatCatalog, setI18nConfig } from '../../Localization/Localization';
 import { STATUS_TONES } from '../../tones';
 import {
+    CLAUSE_VALUE_KIND,
     INTENT_PRESENTATION,
     LABEL_ONLY_KINDS,
+    RULE_CLAUSE_PRESENTATION,
     STATUS_KIND_GROUP,
     TONE_BY_KIND,
     intentAction,
@@ -77,6 +79,20 @@ describe('every staff intent has a presentation', () => {
     it('presents nothing the package does not declare', () => {
         const intents = new Set(Object.values(STAFF_INTENT));
         expect(Object.keys(INTENT_PRESENTATION).filter((intent) => !intents.has(intent))).toEqual([]);
+    });
+});
+
+describe('#105: every clause of a requirement\'s rule is placed, once', () => {
+    it('the presentation lists exactly the package\'s clauses', () => {
+        const placed = RULE_CLAUSE_PRESENTATION.map((entry) => entry.clause);
+        expect([...placed].sort()).toEqual(Object.values(RULE_CLAUSE).sort());
+    });
+
+    it.each(RULE_CLAUSE_PRESENTATION.map((entry) => [entry.clause, entry]))('%s', (clause, entry) => {
+        expect(Object.values(CLAUSE_VALUE_KIND)).toContain(entry.kind);
+        expect(entry.valueOf).toEqual(expect.any(Function));
+        // A vocabulary value is labelled from a group the package declares.
+        expect(entry.kind === CLAUSE_VALUE_KIND.LABEL).toBe(has(LABEL_GROUPS, entry.group));
     });
 });
 

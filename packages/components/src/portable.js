@@ -72,6 +72,7 @@ export { orderViewModel, fromDescriptor, statusLabel } from './Order/viewModel';
 
 // K-22
 export { default as StatusChip, SlaChip, LabelChip } from './Partner/StatusChip';
+export { default as RuleClauseList } from './Partner/RuleClauseList';
 export { default as DocumentViewer, ZOOM } from './DocumentViewer/DocumentViewer';
 export { default as DecisionDialog } from './DecisionDialog/DecisionDialog';
 // The web keyboard contract of a modal surface (focus in, Tab trap, Esc,
