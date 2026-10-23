@@ -167,6 +167,12 @@ export const INTENT_PRESENTATION = Object.freeze({
     // receiving that store's orders, so ending it is adverse and asks for confirmation.
     [STAFF_INTENT.LINK_MERCHANT_DRIVER]: Object.freeze({ tone: 'primary', icon: 'store-plus-outline' }),
     [STAFF_INTENT.UNLINK_MERCHANT_DRIVER]: Object.freeze({ tone: 'danger', icon: 'store-remove-outline' }),
+    // #99 (J-1): staff keep the license date the driver declared when the MVR does not confirm it.
+    [STAFF_INTENT.KEEP_DECLARED_LICENSE_DATE]: Object.freeze({ tone: 'primary', icon: 'card-account-details-outline' }),
+    // #101 (J-6): staff ratify the chain the tree extended under the partner, or keep hers; neither takes work
+    // from her, so neither asks for confirmation.
+    [STAFF_INTENT.RATIFY_JURISDICTION]: Object.freeze({ tone: 'primary', icon: 'map-marker-check-outline' }),
+    [STAFF_INTENT.KEEP_JURISDICTION]: Object.freeze({ tone: 'primary', icon: 'map-marker-outline' }),
 });
 
 const has = (table, key) => Object.prototype.hasOwnProperty.call(table, key);
