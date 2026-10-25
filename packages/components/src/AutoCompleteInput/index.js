@@ -55,7 +55,9 @@ const AutoCompleteInput = ({
                     },
                 }}
                 query={{
-                    key: 'AIzaSyB7XFmNF8g4EPEKw7nT1purhTEtv-sJxEs',
+                    // The host's Places key (Config: react-native-config on the phone, configureComponents on the web),
+                    // never one written here: each environment restricts its own.
+                    key: Config.GOOGLE_GEO_CODER_PLACE_API,
                     components: 'country:us|country:pa|country:do',
                     types: 'geocode|establishment',
                 }}
