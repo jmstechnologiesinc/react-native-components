@@ -54,16 +54,12 @@ const AutoCompleteInput = ({
                         onBlur?.();
                     },
                 }}
+                // Places API (New) Autocomplete, on the phone and on the web alike: it answers browsers directly, so no
+                // proxy. The host's key (Config: react-native-config on the phone, configureComponents on the web),
+                // never one written here: each environment restricts its own.
                 query={{
-                    // The host's Places key (Config: react-native-config on the phone, configureComponents on the web),
-                    // never one written here: each environment restricts its own.
                     key: Config.GOOGLE_GEO_CODER_PLACE_API,
                     components: 'country:us|country:pa|country:do',
-                    types: 'geocode|establishment',
-                }}
-                requestUrl={{
-                    url: `${Config.CORS_PROXY_DISPATCHER_APP}`,
-                    useOnPlatform: 'web',
                 }}
                 listViewDisplayed="true"
                 returnKeyType="search"
