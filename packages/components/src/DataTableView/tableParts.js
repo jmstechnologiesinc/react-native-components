@@ -19,15 +19,16 @@ const columnStyle = (column, isLast, spacing) => [
 
 /**
  * The header row of a data table: one `DataTable.Title` per column; a sortable one is a button named
- * `sortLabel(title)` and says its direction (`aria-sort`).
+ * `sortLabel(title)` and says its direction (`aria-sort`). Titles are set in MD3's `titleSmall` (the M3 table's
+ * header type; Paper's own title is a 12dp label).
  *
  * @param {{columns: import('./DataTableView').DataColumn[], sort?: ?import('./DataTableView').DataSort,
- *     onSort: (key: string) => void, sortLabel: (title: string) => string, testID: string}} props
+ *     onSort: (key: string) => void, sortLabel: (title: string) => string, style?: any, testID: string}} props
  */
-export const TableHeader = ({ columns, sort, onSort, sortLabel, testID }) => {
-    const { spacing } = useTheme();
+export const TableHeader = ({ columns, sort, onSort, sortLabel, style, testID }) => {
+    const { spacing, fonts } = useTheme();
     return (
-        <DataTable.Header>
+        <DataTable.Header style={style}>
             {columns.map((column, index) => {
                 const sorted = sort?.key === column.key ? sort.direction : undefined;
                 return (
@@ -37,6 +38,7 @@ export const TableHeader = ({ columns, sort, onSort, sortLabel, testID }) => {
                         sortDirection={column.sortable ? sorted : undefined}
                         onPress={column.sortable ? () => onSort(column.key) : undefined}
                         style={columnStyle(column, index === columns.length - 1, spacing)}
+                        textStyle={fonts.titleSmall}
                         accessibilityRole={column.sortable ? 'button' : undefined}
                         accessibilityLabel={column.sortable ? sortLabel(column.title) : undefined}
                         testID={`${testID}-title-${column.key}`}
@@ -58,7 +60,7 @@ export const TableHeader = ({ columns, sort, onSort, sortLabel, testID }) => {
  * cell's row, would pin it to the top of the 48dp row instead.
  */
 const Cell = ({ column, content, isLast }) => {
-    const { spacing } = useTheme();
+    const { spacing, fonts } = useTheme();
     const style = columnStyle(column, isLast, spacing);
     if (React.isValidElement(content)) {
         return (
@@ -71,7 +73,8 @@ const Cell = ({ column, content, isLast }) => {
         );
     }
     return (
-        <DataTable.Cell numeric={column.numeric} style={style}>
+        // MD3's `bodyMedium`, the M3 table's row type (Paper's cell text has no type-scale role).
+        <DataTable.Cell numeric={column.numeric} style={style} textStyle={fonts.bodyMedium}>
             {isBlank(content) ? EMPTY_VALUE : content}
         </DataTable.Cell>
     );

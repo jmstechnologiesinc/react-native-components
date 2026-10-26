@@ -124,6 +124,8 @@ export { default as NoteField } from './NoteField/NoteField';
 export { default as CheckboxListField } from './CheckboxListField/CheckboxListField';
 export { default as FilterChips } from './FilterChips/FilterChips';
 export { default as StatusBanner } from './StatusBanner/StatusBanner';
+// A filter chip whose single choice opens in a menu (the partner directory's filters, 2026-10-09).
+export { default as MenuFilterChip } from './MenuFilterChip/MenuFilterChip';
 export { ChangedHelperText, FieldErrorText, FieldErrorList } from './Form/FormField';
 export { useNow } from './useNow';
 export { valueText, EMPTY_VALUE } from './valueText';

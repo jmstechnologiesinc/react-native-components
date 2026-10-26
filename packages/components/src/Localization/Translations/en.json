@@ -269,6 +269,8 @@
         "backTo": "Back to %{name}",
         "breadcrumb": "Breadcrumb",
         "close": "Close",
+        "filterValue": "%{label}: %{value}",
+        "chooseFilter": "Choose %{label}",
         "showSidePanel": "Show side panel",
         "navigation": "Navigation",
         "loading": "Loading",

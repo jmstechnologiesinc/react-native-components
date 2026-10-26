@@ -16,6 +16,7 @@ const CheckRadio = ({
     isChecked,
     onPress,
     variant = 'radio',
+    leftStyle,
     ...props
 }) => (
     <JMSList.Item
@@ -28,7 +29,7 @@ const CheckRadio = ({
         onPress={() => onPress?.(!isChecked)}
         left={(props) =>
             variant === 'radio' ? (
-                <View style={props.style}>
+                <View style={[props.style, leftStyle]}>
                     <RadioButton.Android
                         status={isChecked ? 'checked' : 'unchecked'}
                         disabled={isDisabled}
@@ -36,7 +37,7 @@ const CheckRadio = ({
                     />
                 </View>
             ) : (
-                <View style={props.style}>
+                <View style={[props.style, leftStyle]}>
                     <Checkbox.Android
                         status={isChecked ? 'checked' : 'unchecked'}
                         disabled={isDisabled}
