@@ -183,6 +183,8 @@ export const INTENT_PRESENTATION = Object.freeze({
     // from her, so neither asks for confirmation.
     [STAFF_INTENT.RATIFY_JURISDICTION]: Object.freeze({ tone: 'primary', icon: 'map-marker-check-outline' }),
     [STAFF_INTENT.KEEP_JURISDICTION]: Object.freeze({ tone: 'primary', icon: 'map-marker-outline' }),
+    // #115 (D1): staff assign a chain to a partner the tree did not place; it takes no work from her either.
+    [STAFF_INTENT.ASSIGN_JURISDICTION]: Object.freeze({ tone: 'primary', icon: 'map-marker-plus-outline' }),
 });
 
 const has = (table, key) => Object.prototype.hasOwnProperty.call(table, key);
