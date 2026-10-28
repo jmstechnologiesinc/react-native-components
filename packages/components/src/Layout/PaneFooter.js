@@ -46,8 +46,9 @@ export const footerButtons = (actions, colors) => {
 };
 
 /**
- * The action bar at the bottom of a pane: an optional caption on the leading side and the actions on the
- * trailing side, at most one of them contained. Built on `ActionGroup.Buttons`; `busy` shows every button
+ * The action bar at the bottom of a pane: an optional caption above the actions, which sit on the trailing
+ * side, at most one of them contained. The caption has its own line, as a `Banner`'s text does: beside the
+ * buttons a long one ran over them on wide panes. Built on `ActionGroup.Buttons`; `busy` shows every button
  * loading and disabled. The host decides which actions exist; the footer never does. Renders nothing
  * without a caption or actions.
  *
@@ -60,15 +61,16 @@ const PaneFooter = ({ caption, actions = [], busy = false, testID = 'pane-footer
     return (
         <View testID={testID}>
             <Divider />
-            <View style={[styles.row, { padding: spacing.x4 }]}>
+            <View style={{ padding: spacing.x4, gap: spacing.x2 }}>
                 {caption ? (
-                    <Text variant="bodySmall" style={[styles.caption, { color: colors.onSurfaceVariant }]}>
+                    <Text variant="bodySmall" style={{ color: colors.onSurfaceVariant }}>
                         {caption}
                     </Text>
                 ) : null}
                 <ActionGroup.Buttons
                     buttons={footerButtons(actions, colors)}
                     isLoading={busy}
+                    containerStyle={styles.actions}
                     onPress={(button) => button.run?.()}
                 />
             </View>
@@ -77,12 +79,9 @@ const PaneFooter = ({ caption, actions = [], busy = false, testID = 'pane-footer
 };
 
 const styles = StyleSheet.create({
-    row: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    caption: {
-        flex: 1,
+    // Under the caption, the row takes the height of its buttons, not a share of the pane.
+    actions: {
+        flex: 0,
     },
 });
 
