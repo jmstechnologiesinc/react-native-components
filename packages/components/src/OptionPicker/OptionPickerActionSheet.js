@@ -98,6 +98,8 @@ function OptionPickerActionSheet({
                     )}
                     onPress={readOnly ? null : showActionSheet}
                     onClose={isChipRemoveable && !readOnly ? handleRemoveChip : null}
+                    // A picked option shown, not a control: read as text, not as a button.
+                    chipAccessibilityRole={readOnly ? 'text' : undefined}
                     chipStyle={{ marginBottom: MD3LightTheme.spacing.x2 }}
                 />
                 {readOnly ? null : (
