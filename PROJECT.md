@@ -252,8 +252,6 @@ cases of `legacyRendering.test.js` (captured from `main` @ 556ccd4, `__fixtures_
   as an MD3 list item from the theme's tokens, so no disabled press wrapper reaches the host.
 - `OptionPickerActionSheet({ readOnly })` (BusinessInfo's industries): the picked options as plain chips, no
   «pick» button, nothing to remove or open.
-- On the web a non-pressable `ListRow` still carries the Paper fork's `aria-disabled` press wrapper (fork web
-  a11y items below), so the rows look enabled but may be announced dimmed until the fork's 5.12.12.
 They also take `errors: Array<{ field, code, message? }>` — server field errors (K-32), keyed by the same
 names. Each error of a rendered field puts its input in Paper's `error` state and adds one
 `HelperText type="error"` under it (`testID="error.<field>"`) showing `message`, or the raw `code` when the

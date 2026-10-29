@@ -21,9 +21,9 @@ const APPROX_STATUSBAR_HEIGHT = Platform.select({
 });
 
 /**
- * `readOnly` (additive; the partner console) shows the picked options as chips read as text: nothing to pick,
+ * `readOnly` (additive; the partner console) shows the picked options as plain chips: nothing to pick,
  * remove or open — no «pick» button, no option sheet, and no help text, which tells whoever picks how to
- * pick — and nothing greyed out. With `isDisabled` as well, the chips are disabled.
+ * pick. With `isDisabled` as well, the chips are disabled.
  */
 function OptionPickerActionSheet({
     isDisabled,
