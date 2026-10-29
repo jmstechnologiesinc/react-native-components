@@ -5,9 +5,11 @@ jest.mock('react-native-localize', () => ({
 import React from 'react';
 import renderer, { act } from 'react-test-renderer';
 
-import { MD3LightTheme, Provider, RadioButton } from '@jmstechnologiesinc/react-native-paper';
+import { List, MD3LightTheme, Provider, RadioButton } from '@jmstechnologiesinc/react-native-paper';
 
 import CheckRadio from '../../List/CheckRadio';
+import ListRow from '../../ListRow/ListRow';
+import { setI18nConfig } from '../../Localization/Localization';
 import PaymentFrequency from '../StripeFormPaymentFrequency';
 
 jest.useFakeTimers();
@@ -27,6 +29,8 @@ afterEach(() => {
         jest.runOnlyPendingTimers();
     });
 });
+
+beforeAll(() => setI18nConfig());
 
 const OPTIONS = [
     { interval: 'daily', title: 'Daily' },
@@ -50,24 +54,47 @@ describe('StripeForm.PaymentFrequency', () => {
         expect(inputActionHandler).toHaveBeenCalledWith('interval', 'daily');
     });
 
-    it('readOnly: every option disabled and nothing reported', () => {
+    it('without readOnly: the radios, the selected one checked', () => {
+        const tree = render(
+            <PaymentFrequency options={OPTIONS} selectedInterval="weekly" inputActionHandler={() => {}} />
+        );
+        expect(tree.root.findAllByType(RadioButton.Android).map((radio) => radio.props.status)).toEqual([
+            'unchecked',
+            'checked',
+            'unchecked',
+        ]);
+        expect(tree.root.findAllByType(ListRow)).toHaveLength(0);
+    });
+
+    // Alta y consola plan 2.9: the payout interval shown, not chosen — rows with a check, no greyed radios.
+    it('readOnly: every option a row in a named list, a check on the selected one, nothing to press or report', () => {
         const inputActionHandler = jest.fn();
         const tree = render(
             <PaymentFrequency
                 options={OPTIONS}
                 selectedInterval="weekly"
                 readOnly
+                accessibilityLabel="Payout frequency"
                 inputActionHandler={inputActionHandler}
             />
         );
-        const rows = tree.root.findAllByType(CheckRadio);
-        expect(rows.every((row) => row.props.isDisabled === true)).toBe(true);
-        expect(tree.root.findAllByType(RadioButton.Android).map((radio) => radio.props.status)).toEqual([
-            'unchecked',
-            'checked',
-            'unchecked',
+        expect(tree.root.findAllByType(CheckRadio)).toHaveLength(0);
+        expect(tree.root.findAllByType(RadioButton.Android)).toHaveLength(0);
+        const list = tree.root.find((node) => typeof node.type === 'string' && node.props.role === 'list');
+        expect(list.props['aria-label']).toBe('Payout frequency');
+        const rows = tree.root.findAllByType(ListRow);
+        expect(rows.map((row) => [row.props.title, row.props.description, Boolean(row.props.trailing)])).toEqual([
+            ['Daily', undefined, false],
+            ['Weekly', 'Every Monday', true],
+            ['Instant', undefined, false],
         ]);
-        act(() => rows[0].props.onPress());
+        expect(rows[1].findAllByType(List.Icon)[0].props.icon).toBe('check');
+        expect(rows.map((row) => row.props.accessibilityLabel)).toEqual([
+            undefined,
+            'Weekly, Every Monday, selected',
+            undefined,
+        ]);
+        expect(rows.every((row) => row.props.onPress === undefined)).toBe(true);
         expect(inputActionHandler).not.toHaveBeenCalled();
     });
 });
