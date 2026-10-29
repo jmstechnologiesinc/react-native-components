@@ -81,8 +81,10 @@ export const FieldErrorList = ({ errors, exclude, fieldLabel, testID = 'field-er
  *
  *  `readOnly` shows the value without letting it change: the input gets
  *  `editable={false}`, which Paper draws in its enabled colours, never focuses
- *  and outlines as asked, and react-native-web renders as a `readonly` input
- *  (focusable and selectable, announced as read-only). It is not `disabled`,
+ *  and outlines as asked, and `readOnly`, the platform's own prop, which Paper
+ *  hands to the native input (React Native and react-native-web render a
+ *  `readonly` input: focusable and selectable, announced as read-only) and a
+ *  custom `input` such as `SecretInputText` reads. It is not `disabled`,
  *  which says the control is unavailable and greys it out; a field can be
  *  both, and then it is disabled. */
 const FormField = ({
@@ -100,7 +102,7 @@ const FormField = ({
         <>
             <Input
                 {...props}
-                {...(readOnly && { editable: false })}
+                {...(readOnly && { editable: false, readOnly: true })}
                 {...((error || hasServerError) && { error: true })}
                 {...(highlighted && {
                     outlineColor: theme.colors.primary,

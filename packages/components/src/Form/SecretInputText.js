@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { TextInput } from '@jmstechnologiesinc/react-native-paper';
 
-// The «show» toggle is an entry aid: it is offered only while the secret can be
-// typed. A disabled or read-only (`editable={false}`) input keeps it masked.
-const SecretInputText = ({ label, value, onChangeText, disabled, mode, ...rest }) => {
+// The «show» toggle is an entry aid for whoever types the secret: a disabled
+// input never offered it, and `readOnly` (optional; the partner console, through
+// `FormField`) shows the secret read-only — `editable={false}` and `readOnly` on
+// the input — and masked, with no toggle. `editable={false}` alone keeps the
+// toggle, as it always had.
+const SecretInputText = ({ label, value, onChangeText, disabled, readOnly = false, mode, ...rest }) => {
     const [isTextSecureEntry, setIsTextSecureEntry] = useState(true);
-    const canReveal = !disabled && rest.editable !== false;
+    const canReveal = !disabled && !readOnly;
 
     return (
         <TextInput
@@ -20,6 +23,7 @@ const SecretInputText = ({ label, value, onChangeText, disabled, mode, ...rest }
             autoCapitalize="none"
             autoCorrect={false}
             {...rest}
+            {...(readOnly && { editable: false, readOnly: true })}
             right={
                 canReveal ? (
                     <TextInput.Icon

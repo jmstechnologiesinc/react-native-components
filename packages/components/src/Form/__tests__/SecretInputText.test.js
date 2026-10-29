@@ -52,12 +52,24 @@ describe('SecretInputText', () => {
         expect(nativeInput(tree).props.secureTextEntry).toBe(true);
     });
 
+    it('keeps the toggle with editable={false} alone, as before (review LO-3)', () => {
+        const tree = render(<SecretInputText mode="outlined" label="SSN" value={SECRET} editable={false} />);
+        expect(toggles(tree)).toHaveLength(1);
+        expect(nativeInput(tree).props.readOnly).toBeUndefined();
+    });
+
+    it('offers none under readOnly: the input is read-only on the host, masked and not disabled', () => {
+        const tree = render(<SecretInputText mode="outlined" label="SSN" value={SECRET} readOnly />);
+        expect(toggles(tree)).toHaveLength(0);
+        expect(nativeInput(tree).props).toMatchObject({ secureTextEntry: true, editable: false, readOnly: true });
+    });
+
     it('offers none on a read-only field: the secret stays masked and is not disabled', () => {
         const tree = render(
             <FormField input={SecretInputText} mode="outlined" label="SSN" value={SECRET} readOnly highlighted />
         );
         expect(toggles(tree)).toHaveLength(0);
-        expect(nativeInput(tree).props).toMatchObject({ secureTextEntry: true, editable: false });
+        expect(nativeInput(tree).props).toMatchObject({ secureTextEntry: true, editable: false, readOnly: true });
         expect(tree.root.findAllByType(SecretInputText)[0].props.disabled).toBeUndefined();
     });
 });

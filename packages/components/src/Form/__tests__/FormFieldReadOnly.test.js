@@ -42,9 +42,13 @@ const field = (props) => render(<FormField mode="outlined" label="Plate" value="
 // Alta y consola plan 2.5 (audit F6): a read-only field is shown, not disabled.
 describe('FormField readOnly', () => {
     it('takes no input but keeps the enabled colours', () => {
-        const drawn = drawnInput(field({ readOnly: true }), 'SMPL001');
+        const tree = field({ readOnly: true });
+        const drawn = drawnInput(tree, 'SMPL001');
         expect(drawn.editable).toBe(false);
         expect(drawn.textColor).toBe(colors.onSurface);
+        // The platform's own read-only prop reaches the native input too (DOM `readonly` on the web).
+        const input = tree.root.find((node) => node.type === 'TextInput' && node.props.value === 'SMPL001');
+        expect(input.props.readOnly).toBe(true);
         expect(drawn.outlineColor).toBe(colors.outline);
     });
 

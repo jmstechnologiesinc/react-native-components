@@ -128,6 +128,11 @@ export const appPathCases = (load) => {
             const CheckboxListField = component('CheckboxListField/CheckboxListField');
             return <CheckboxListField label="Items" options={CHECKBOX_OPTIONS} values={['photo']} disabled />;
         },
+        // `editable={false}` is an existing TextInput prop: alone it keeps the «show» toggle (review LO-3).
+        'app path: SecretInputText (editable={false})': () => {
+            const SecretInputText = component('Form/SecretInputText');
+            return <SecretInputText mode="outlined" label="SSN" value="123456789" editable={false} />;
+        },
         'app path: StripeForm.PaymentFrequency (payout frequency screen)': () => {
             const PaymentFrequency = component('StripeForm/StripeFormPaymentFrequency');
             return <PaymentFrequency options={FREQUENCIES} selectedInterval="weekly" inputActionHandler={noop} />;
