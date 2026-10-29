@@ -20,8 +20,13 @@ const APPROX_STATUSBAR_HEIGHT = Platform.select({
     ios: 0,
 });
 
+/**
+ * `readOnly` (additive; the partner console) shows the picked options as plain chips: nothing to pick, remove
+ * or open, and nothing greyed out. With `isDisabled` as well, the chips are disabled.
+ */
 function OptionPickerActionSheet({
     isDisabled,
+    readOnly = false,
     isChipRemoveable = true,
     options = [],
     preSelectedOptions = [],
@@ -91,16 +96,18 @@ function OptionPickerActionSheet({
                     options={preSelectedOptions.map((option) =>
                         chipListOptionTitle ? chipListOptionTitle(option) : option.title
                     )}
-                    onPress={showActionSheet}
-                    onClose={isChipRemoveable ? handleRemoveChip : null}
+                    onPress={readOnly ? null : showActionSheet}
+                    onClose={isChipRemoveable && !readOnly ? handleRemoveChip : null}
                     chipStyle={{ marginBottom: MD3LightTheme.spacing.x2 }}
                 />
-                <ButtonWrapper
-                    title={addButtonTitle}
-                    isDisabled={isDisabled}
-                    onPress={showActionSheet}
-                    style={[{ marginLeft: 0 }, buttonWrapperStyle]}
-                />
+                {readOnly ? null : (
+                    <ButtonWrapper
+                        title={addButtonTitle}
+                        isDisabled={isDisabled}
+                        onPress={showActionSheet}
+                        style={[{ marginLeft: 0 }, buttonWrapperStyle]}
+                    />
+                )}
                 {helpText ? (
                     <HelperText style={helperTextStyle} padding="none">
                         {helpText}

@@ -4,8 +4,10 @@
 import React from 'react';
 import renderer, { act } from 'react-test-renderer';
 
-import { MD3LightTheme, Provider } from '@jmstechnologiesinc/react-native-paper';
+import { Chip, MD3LightTheme, Provider, TextInput } from '@jmstechnologiesinc/react-native-paper';
 
+import ButtonWrapper from '../../ButtonWrapper/ButtonWrapper';
+import ChipList from '../../ChipList/ChipList';
 import { setI18nConfig } from '../../Localization/Localization';
 // Each form by its own module, as the portable entry exposes them: `Form.js`
 // also carries `PhoneNumber`, whose phone-input library imports this package's
@@ -163,11 +165,44 @@ describe('Form.BusinessInfo', () => {
         expect(() => render(<Form.BusinessInfo {...BUSINESS} />)).not.toThrow();
     });
 
-    it('locks every field under readOnly, the secret one included', () => {
+    const values = ['Casa Nostra', 'Pasta', '1 Main St', 'Suite 2', '6175550100', '12-3456789'];
+    const industries = [{ id: 'Restaurant', title: 'Restaurant' }];
+
+    it('shows every field read-only under readOnly, the secret one masked with no «show» toggle', () => {
         const tree = render(<Form.BusinessInfo {...BUSINESS} readOnly />);
-        for (const value of ['Casa Nostra', 'Pasta', '1 Main St', 'Suite 2', '6175550100', '12-3456789']) {
-            expect(`${value}:${inputWithValue(tree, value).props.editable}`).toBe(`${value}:false`);
-        }
+        expect(drawnAs(tree, values)).toEqual(readOnlyLines(values));
+        expect(inputWithValue(tree, '12-3456789').props.secureTextEntry).toBe(true);
+        expect(tree.root.findAllByType(TextInput.Icon)).toHaveLength(0);
+    });
+
+    it('greys out every field under isDisabled, as before', () => {
+        expect(drawnAs(render(<Form.BusinessInfo {...BUSINESS} isDisabled />), values)).toEqual(disabledLines(values));
+    });
+
+    it('shows the industries as plain chips under readOnly: nothing to pick, remove or open, nothing greyed out', () => {
+        const tree = render(<Form.BusinessInfo {...BUSINESS} industries={industries} readOnly />);
+        expect(tree.root.findAllByType(ButtonWrapper)).toHaveLength(0);
+        expect(tree.root.findByType(ChipList).props).toMatchObject({ onPress: null, onClose: null, isDisabled: false });
+        expect(tree.root.findAllByType(Chip).map((chip) => chip.props.disabled)).toEqual([false]);
+    });
+
+    it('keeps the industries picker as it was under isDisabled and while editable', () => {
+        const disabled = render(<Form.BusinessInfo {...BUSINESS} industries={industries} isDisabled />);
+        expect(disabled.root.findByType(ButtonWrapper).props.isDisabled).toBe(true);
+        expect(disabled.root.findByType(ChipList).props.isDisabled).toBe(true);
+        const editable = render(<Form.BusinessInfo {...BUSINESS} industries={industries} />);
+        expect(editable.root.findByType(ButtonWrapper).props.isDisabled).toBe(false);
+        expect(typeof editable.root.findByType(ChipList).props.onClose).toBe('function');
+    });
+
+    it('keeps the «changed» outline and its line on a read-only form, the industries’ line too', () => {
+        const tree = render(
+            <Form.BusinessInfo {...BUSINESS} readOnly highlightFields={['title', 'tin', 'industries']} />
+        );
+        expect(changedCount(tree)).toBe(3);
+        expect(drawnInput(tree, 'Casa Nostra').outlineColor).toBe(colors.primary);
+        expect(drawnInput(tree, '12-3456789').outlineColor).toBe(colors.primary);
+        expect(drawnInput(tree, 'Pasta').outlineColor).toBe(colors.outline);
     });
 
     it('marks highlighted fields, industries included', () => {
@@ -196,13 +231,13 @@ describe('Form.BusinessInfo', () => {
         expect(JSON.stringify(tree.toJSON())).toContain('•••••6789');
     });
 
-    it('locks the legal entity under readOnly and highlights it', () => {
+    it('shows the legal entity read-only under readOnly and highlights it', () => {
         const tree = render(
             <Form.BusinessInfo {...BUSINESS} {...LEGAL} readOnly highlightFields={['legalName', 'taxAddress']} />
         );
-        for (const value of ['Casa Nostra LLC', '9 Elm St, Boston']) {
-            expect(`${value}:${inputWithValue(tree, value).props.editable}`).toBe(`${value}:false`);
-        }
+        const legal = ['Casa Nostra LLC', '9 Elm St, Boston'];
+        expect(drawnAs(tree, legal)).toEqual(readOnlyLines(legal));
+        expect(legal.map((value) => drawnInput(tree, value).outlineColor)).toEqual([colors.primary, colors.primary]);
         expect(changedCount(tree)).toBe(2);
     });
 });
