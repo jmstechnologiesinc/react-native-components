@@ -13,10 +13,13 @@ import FormField from './FormField';
  * `displayValue` is shown when `value` is not among the options (a stored make the current catalogue slice no
  * longer lists), so a vehicle is never shown blank for it.
  *
+ * `readOnly` shows the picked label as a read-only field (`FormField`'s `readOnly`): no menu to open, no dropdown
+ * icon, not a button, in the enabled colours. `disabled` keeps the greyed field that opens nothing.
+ *
  * @param {{label: string, value?: string, displayValue?: string, options: Array<{value: string, label: string}>,
- *     onSelect: (option: {value: string, label: string}) => void, disabled?: boolean, highlighted?: boolean,
- *     field?: string, errors?: Array<{field: string, code: string, message?: string}>, testID?: string}} props
- *     option testIDs `<testID>.<value>`
+ *     onSelect: (option: {value: string, label: string}) => void, disabled?: boolean, readOnly?: boolean,
+ *     highlighted?: boolean, field?: string, errors?: Array<{field: string, code: string, message?: string}>,
+ *     testID?: string}} props option testIDs `<testID>.<value>`; under `readOnly` `testID` is the input's
  */
 const FormSelectField = ({
     label,
@@ -25,6 +28,7 @@ const FormSelectField = ({
     options,
     onSelect,
     disabled = false,
+    readOnly = false,
     highlighted = false,
     field,
     errors,
@@ -32,6 +36,23 @@ const FormSelectField = ({
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const selected = options.find((option) => option.value === value);
+    const shown = selected?.label ?? displayValue ?? '';
+
+    if (readOnly) {
+        return (
+            <FormField
+                mode="outlined"
+                field={field}
+                errors={errors}
+                highlighted={highlighted}
+                disabled={disabled}
+                readOnly
+                label={label}
+                value={shown}
+                testID={testID}
+            />
+        );
+    }
 
     const choose = (option) => {
         setIsOpen(false);
@@ -61,7 +82,7 @@ const FormSelectField = ({
                             disabled={disabled}
                             editable={false}
                             label={label}
-                            value={selected?.label ?? displayValue ?? ''}
+                            value={shown}
                             right={disabled ? undefined : <TextInput.Icon icon="menu-down" />}
                         />
                     </View>
