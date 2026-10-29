@@ -244,7 +244,8 @@ cases of `legacyRendering.test.js` (captured from `main` @ 556ccd4, `__fixtures_
   `testID` lands on the input. `SecretInputText` offers its «show» toggle only while editable (not disabled, not
   `editable={false}`), so a read-only secret stays masked.
 - `CheckboxListField({ readOnly })`, `StripeForm.PaymentFrequency({ readOnly, accessibilityLabel })`: every
-  option a `ListRow/CheckedRow` in a `list` (named by `label` / `accessibilityLabel`), the chosen ones with a
+  option a `ListRow/CheckedRow` in a `list` (the checkbox list's `group` carries `label`; the frequencies' list
+  is named by `accessibilityLabel`, which a host showing them read-only passes), the chosen ones with a
   trailing check and announced «…, selected» (catalogue `selected`); nothing pressable or greyed out. Row
   testIDs: `<testID>-<value>` for the checkbox list, none for the frequencies. `CheckedRow` is not a Paper
   `List.Item` on purpose: it is a `listitem` read as one element (as `StateFlow` reads its states), laid out

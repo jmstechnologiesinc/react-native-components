@@ -10,6 +10,10 @@ import ScreenWrapper from '../ScreenWrapper';
 // the selected one with a check and announced «<title>, <description>,
 // selected»; nothing is pressable or greyed out and `inputActionHandler` is
 // never called. Without it, the radios the app has always had.
+//
+// The component has no title of its own, so a host showing it read-only passes
+// `accessibilityLabel` (the title it shows above, e.g. «Payout frequency»);
+// without it the list has no accessible name.
 const StripeFormPaymentFrequency = ({
     options,
     inputActionHandler,

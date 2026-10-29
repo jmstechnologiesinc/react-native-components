@@ -90,7 +90,7 @@ describe('CheckboxListField', () => {
             tree.root.findAll((node) => typeof node.type === 'string' && node.props.role === 'listitem');
         const hosts = (tree) => tree.root.findAll((node) => typeof node.type === 'string');
 
-        it('shows every option as a listitem, read as one element, in a list; no checkbox', () => {
+        it('shows every option as a listitem, read as one element, in a list inside the named group; no checkbox', () => {
             const tree = readOnly();
             expect(tree.root.findAllByType(Checkbox.Item)).toHaveLength(0);
             expect(hostRows(tree).map((row) => [row.props.testID, row.props.accessible])).toEqual([
@@ -99,8 +99,9 @@ describe('CheckboxListField', () => {
                 ['checkbox-list-name', true],
             ]);
             const list = tree.root.find((node) => typeof node.type === 'string' && node.props.role === 'list');
-            expect(list.props['aria-label']).toBe('Items');
-            expect(hostOf(tree, 'checkbox-list').props.role).toBe('group');
+            // Named once, by the group (review LO-2).
+            expect(list.props['aria-label']).toBeUndefined();
+            expect(hostOf(tree, 'checkbox-list').props).toMatchObject({ role: 'group', 'aria-label': 'Items' });
         });
 
         it('checks the chosen options and announces them as selected', () => {

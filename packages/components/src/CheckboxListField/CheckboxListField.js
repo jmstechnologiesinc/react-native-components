@@ -11,9 +11,9 @@ import CheckedRow from '../ListRow/CheckedRow';
  * gets the next list (in the order ticked). `disabled` greys the checkboxes out; `error` is shown under
  * them.
  *
- * `readOnly` shows the choice instead of asking it: every option as a `CheckedRow` in a `list` named
- * `label`, the chosen ones with a check and announced «<label>, selected», nothing pressable and
- * nothing greyed out. With `disabled` as well, the field is disabled (as a form field is).
+ * `readOnly` shows the choice instead of asking it: every option as a `CheckedRow` in a `list` inside
+ * the same `group` named `label`, the chosen ones with a check and announced «<label>, selected»,
+ * nothing pressable and nothing greyed out. With `disabled` as well, the field is disabled (as a form field is).
  *
  * On the web the items' checked state does not reach the DOM (see PROJECT.md, Paper fork web a11y items).
  *
@@ -45,7 +45,8 @@ const CheckboxListField = ({
                 </Text>
             ) : null}
             {readOnly && !disabled ? (
-                <View role="list" aria-label={label}>
+                // The group already carries `label`; naming the list too would announce it twice.
+                <View role="list">
                     {options.map((option) => (
                         <CheckedRow
                             key={option.value}
