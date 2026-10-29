@@ -138,19 +138,23 @@ describe('Form.PersonInfo', () => {
 });
 
 describe('Form.VehicleInfo', () => {
-    it('locks every field under readOnly, as under isDisabled', () => {
-        for (const props of [{ readOnly: true }, { isDisabled: true }]) {
-            const tree = render(<Form.VehicleInfo {...VEHICLE} {...props} />);
-            for (const value of ['Toyota', 'Camry', 'White', '2019', 'ABC123']) {
-                expect(inputWithValue(tree, value).props.editable).toBe(false);
-            }
-        }
+    const values = ['Toyota', 'Camry', 'White', '2019', 'ABC123'];
+
+    it('shows every field read-only under readOnly, and greys them out under isDisabled, as before', () => {
+        expect(drawnAs(render(<Form.VehicleInfo {...VEHICLE} readOnly />), values)).toEqual(readOnlyLines(values));
+        expect(drawnAs(render(<Form.VehicleInfo {...VEHICLE} isDisabled />), values)).toEqual(disabledLines(values));
     });
 
     it('marks the highlighted fields', () => {
         const tree = render(<Form.VehicleInfo {...VEHICLE} highlightFields={['licensePlateNumber']} />);
         expect(changedCount(tree)).toBe(1);
         expect(outlinedInPrimary(tree, 'ABC123')).toBe(true);
+    });
+
+    it('keeps the «changed» outline and its line on a read-only form', () => {
+        const tree = render(<Form.VehicleInfo {...VEHICLE} readOnly highlightFields={['licensePlateNumber']} />);
+        expect(changedCount(tree)).toBe(1);
+        expect(drawnInput(tree, 'ABC123').outlineColor).toBe(colors.primary);
     });
 });
 
@@ -447,15 +451,48 @@ describe('Form.VehicleInfo with the catalogue', () => {
         expect(inputWithValue(tree, 'Retired Make')).toBeDefined();
     });
 
-    it('locks every field and opens no menu under readOnly', () => {
+    const CATALOG_VALUES = ['Car', '2021', 'Toyota', 'Camry', 'Silver', 'SMPL001', 'US-MA', '0SAMPLE0VIN000001'];
+
+    it('shows every field read-only and offers no menu under readOnly', () => {
         const tree = render(
             <Form.VehicleInfo {...CATALOG_VEHICLE} catalog={CATALOG} readOnly inputActionHandler={() => {}} />
         );
-        for (const value of ['Car', '2021', 'Toyota', 'Camry', 'Silver', 'SMPL001', 'US-MA', '0SAMPLE0VIN000001']) {
-            expect(`${value}:${inputWithValue(tree, value).props.editable}`).toBe(`${value}:false`);
-        }
+        expect(drawnAs(tree, CATALOG_VALUES)).toEqual(readOnlyLines(CATALOG_VALUES));
+        // No select is a button to open: nothing in the form answers a press.
+        expect(tree.root.findAll((node) => node.props.accessibilityRole === 'button')).toHaveLength(0);
+        expect(tree.root.findAll((node) => node.props.testID === 'vehicle.make.vpic:474')).toHaveLength(0);
+    });
+
+    it('greys out every field and opens no menu under isDisabled, as before', () => {
+        const tree = render(
+            <Form.VehicleInfo {...CATALOG_VEHICLE} catalog={CATALOG} isDisabled inputActionHandler={() => {}} />
+        );
+        expect(drawnAs(tree, CATALOG_VALUES)).toEqual(disabledLines(CATALOG_VALUES));
         pressable(tree, 'vehicle.make');
         expect(tree.root.findAll((node) => node.props.testID === 'vehicle.make.vpic:474')).toHaveLength(0);
+    });
+
+    it('under readOnly shows the flags as rows, the declared ones checked, and keeps the «changed» outlines', () => {
+        const flags = [
+            { value: 'salvage_title', label: 'Salvage title' },
+            { value: 'commercial_branding', label: 'Commercial branding' },
+        ];
+        const tree = render(
+            <Form.VehicleInfo
+                {...CATALOG_VEHICLE}
+                flags={['commercial_branding']}
+                catalog={{ ...CATALOG, flags }}
+                readOnly
+                highlightFields={['color', 'make']}
+                inputActionHandler={() => {}}
+            />
+        );
+        const flagRow = (value) => tree.root.findAll((node) => node.props.testID === `vehicle.flags-${value}`)[0].props;
+        expect(flagRow('salvage_title')).toMatchObject({ title: 'Salvage title', trailing: null });
+        expect(flagRow('commercial_branding').accessibilityLabel).toBe('Commercial branding, selected');
+        expect(changedCount(tree)).toBe(2);
+        expect(drawnInput(tree, 'Silver').outlineColor).toBe(colors.primary);
+        expect(drawnInput(tree, 'Toyota').outlineColor).toBe(colors.primary);
     });
 
     it('marks the highlighted fields and puts a server error under its field', () => {
