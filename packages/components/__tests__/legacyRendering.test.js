@@ -11,6 +11,8 @@ import { setI18nConfig } from '../src/Localization/Localization';
 import SideNav from '../src/SideNav/SideNav';
 import * as Tabs from '../src/Tabs/Tabs';
 
+import { appPathCases } from './__fixtures__/appPathCases';
+
 // The props the existing (mobile) consumers pass today — CustomerApp's `drawerSideNav` and
 // `InventoryManagerScreen`, and this library's `StickySectionList` and `ChipList`. Their rendered trees were
 // captured from the code BEFORE the rail/tab accessibility and MD3 additions (0.4.0-dev, OPEN-ITEMS #12-#14)
@@ -88,6 +90,9 @@ const LEGACY_CASES = {
             inputActionHandler={() => {}}
         />
     ),
+    // The app's editable and `isDisabled` paths of the components the console's read-only fix touches, captured
+    // from `main` @ 556ccd4 (before it): the fix changes only the `readOnly` path, so these are the same tree.
+    ...appPathCases((file) => require(`../src/${file}`)),
 };
 
 const LEGACY_TREES = require('./__fixtures__/legacyTrees.json');
@@ -110,6 +115,7 @@ const IDENTICAL = [
     'ChipList',
     'Form.DriverInfo (driver onboarding)',
     'Form.VehicleInfo (vehicle form)',
+    ...Object.keys(appPathCases(() => null)),
 ];
 
 jest.useFakeTimers();

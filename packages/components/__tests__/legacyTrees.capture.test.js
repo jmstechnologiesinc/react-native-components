@@ -8,7 +8,9 @@
 // It renders each case below with THAT source (its own catalogue included), exactly as the comparison renders the
 // current one, and writes the tree into the fixture. `Form.DriverInfo (driver onboarding)` was captured this way from
 // `partner-ui/k22` @ 7d46582 (the form before C-25's `readOnly`, `highlightFields` and `errors`);
-// `Form.VehicleInfo (vehicle form)` from `admin-app` @ 516446e (the form before C-22's catalogue props).
+// `Form.VehicleInfo (vehicle form)` from `admin-app` @ 516446e (the form before C-22's catalogue props). The
+// `app path: …` cases (`__fixtures__/appPathCases.js`) from `main` @ 556ccd4, the code before the console's read-only
+// fix (alta y consola plan, phase 2), captured alone with `-t 'app path'`.
 import fs from 'fs';
 import path from 'path';
 
@@ -16,6 +18,8 @@ import React from 'react';
 import renderer, { act } from 'react-test-renderer';
 
 import { MD3LightTheme, Provider } from '@jmstechnologiesinc/react-native-paper';
+
+import { appPathCases } from './__fixtures__/appPathCases';
 
 const FROM = process.env.CAPTURE_LEGACY_FROM;
 const FIXTURE = path.join(__dirname, '__fixtures__', 'legacyTrees.json');
@@ -33,6 +37,9 @@ const CASES = {
         const FormVehicleInfo = old('Form/FormVehicleInfo').default;
         return <FormVehicleInfo {...LEGACY_VEHICLE} inputActionHandler={() => {}} />;
     },
+    ...Object.fromEntries(
+        Object.keys(appPathCases(() => null)).map((name) => [name, (old) => appPathCases(old)[name]()])
+    ),
 };
 
 jest.useFakeTimers();
