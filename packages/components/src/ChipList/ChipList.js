@@ -11,8 +11,6 @@ const ChipList = ({
     onPress,
     onClose,
     isDisabled,
-    // Optional: the chips' role when they only show values (`text`, a read-only picker); Paper's `button` otherwise.
-    chipAccessibilityRole,
     chipStyle,
     listSectionStyle,
     style,
@@ -38,7 +36,6 @@ const ChipList = ({
                     onClose={onClose ? () => onClose(index) : null}
                     style={[index !== 0 && { marginLeft: spacing.x2 }, chipStyle]}
                     disabled={isDisabled}
-                    accessibilityRole={chipAccessibilityRole}
                 >
                     {item}
                 </Chip>

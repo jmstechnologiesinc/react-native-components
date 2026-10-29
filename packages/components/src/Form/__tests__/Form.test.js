@@ -2,10 +2,9 @@
 // console reuses, and the header-height crash that kept `BusinessInfo` out of
 // any screen without a navigator.
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import renderer, { act } from 'react-test-renderer';
 
-import { MD3LightTheme, Provider, TextInput } from '@jmstechnologiesinc/react-native-paper';
+import { Chip, MD3LightTheme, Provider, TextInput } from '@jmstechnologiesinc/react-native-paper';
 
 import ButtonWrapper from '../../ButtonWrapper/ButtonWrapper';
 import ChipList from '../../ChipList/ChipList';
@@ -181,17 +180,11 @@ describe('Form.BusinessInfo', () => {
         expect(drawnAs(render(<Form.BusinessInfo {...BUSINESS} isDisabled />), values)).toEqual(disabledLines(values));
     });
 
-    it('shows the industries as text chips under readOnly: nothing to pick, remove or open, nothing greyed out', () => {
+    it('shows the industries as plain chips under readOnly: nothing to pick, remove or open, nothing greyed out', () => {
         const tree = render(<Form.BusinessInfo {...BUSINESS} industries={industries} readOnly />);
-        // The host nodes, as a screen reader meets them (review MD-1).
-        const chips = hostOf(tree, 'chip');
-        expect(chips.map((chip) => chip.props.accessibilityRole)).toEqual(['text']);
-        const buttons = tree.root.findAll(
-            (node) => typeof node.type === 'string' && node.props.accessibilityRole === 'button'
-        );
-        expect(buttons.map((node) => node.props.accessibilityLabel ?? node.props.testID)).toEqual([]);
-        const label = tree.root.find((node) => node.type === 'Text' && node.props.children === 'Restaurant');
-        expect(StyleSheet.flatten(label.props.style).color).not.toBe(colors.onSurfaceDisabled);
+        expect(tree.root.findAllByType(ButtonWrapper)).toHaveLength(0);
+        expect(tree.root.findByType(ChipList).props).toMatchObject({ onPress: null, onClose: null, isDisabled: false });
+        expect(tree.root.findAllByType(Chip).map((chip) => chip.props.disabled)).toEqual([false]);
         // No help on how to pick, and no sheet to pick from (review LO-4).
         expect(JSON.stringify(tree.toJSON())).not.toContain(localized('helpTextIndustries'));
         expect(tree.root.findAllByType(OptionSheet)).toHaveLength(0);
