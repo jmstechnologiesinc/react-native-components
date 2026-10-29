@@ -11,6 +11,7 @@ import ButtonWrapper from '../../ButtonWrapper/ButtonWrapper';
 import ChipList from '../../ChipList/ChipList';
 import { localized, setI18nConfig } from '../../Localization/Localization';
 import OptionSheet from '../../OptionPicker/OptionSheet';
+import { EMPTY_VALUE } from '../../valueText';
 // Each form by its own module, as the portable entry exposes them: `Form.js`
 // also carries `PhoneNumber`, whose phone-input library imports this package's
 // whole barrel back.
@@ -181,23 +182,43 @@ describe('Form.BusinessInfo', () => {
         expect(drawnAs(render(<Form.BusinessInfo {...BUSINESS} isDisabled />), values)).toEqual(disabledLines(values));
     });
 
-    it('shows the industries as text chips under readOnly: nothing to pick, remove or open, nothing greyed out', () => {
+    it('shows the industries as rows of a list named by its title under readOnly: no chip, nothing disabled', () => {
         const tree = render(<Form.BusinessInfo {...BUSINESS} industries={industries} readOnly />);
         // The host nodes, as a screen reader meets them (review MD-1).
-        const chips = hostOf(tree, 'chip');
-        expect(chips.map((chip) => chip.props.accessibilityRole)).toEqual(['text']);
-        const buttons = tree.root.findAll(
-            (node) => typeof node.type === 'string' && node.props.accessibilityRole === 'button'
+        expect(hostOf(tree, 'chip')).toHaveLength(0);
+        const list = tree.root.findAll(
+            (node) => typeof node.type === 'string' && node.props.role === 'list' && node.props['aria-label']
         );
-        expect(buttons.map((node) => node.props.accessibilityLabel ?? node.props.testID)).toEqual([]);
+        expect(list.map((node) => node.props['aria-label'])).toEqual([localized('Industries')]);
+        const rows = list[0].findAll((node) => typeof node.type === 'string' && node.props.role === 'listitem');
+        expect(rows.map((row) => [row.props.accessible, row.props.accessibilityLabel])).toEqual([[true, 'Restaurant']]);
+        // Nothing in the picker is a control or announced disabled, on native (accessibilityState) or the web.
+        const industriesSection = list[0].parent;
+        const controls = industriesSection.findAll(
+            (node) =>
+                typeof node.type === 'string' &&
+                (node.props.accessibilityRole === 'button' ||
+                    node.props.role === 'button' ||
+                    node.props.accessibilityState?.disabled ||
+                    node.props['aria-disabled'])
+        );
+        expect(controls.map((node) => node.type)).toEqual([]);
         const label = tree.root.find((node) => node.type === 'Text' && node.props.children === 'Restaurant');
-        expect(StyleSheet.flatten(label.props.style).color).not.toBe(colors.onSurfaceDisabled);
+        expect(StyleSheet.flatten(label.props.style).color).toBe(colors.onSurface);
         // No help on how to pick, and no sheet to pick from (review LO-4).
         expect(JSON.stringify(tree.toJSON())).not.toContain(localized('helpTextIndustries'));
         expect(tree.root.findAllByType(OptionSheet)).toHaveLength(0);
         const editable = render(<Form.BusinessInfo {...BUSINESS} industries={industries} />);
         expect(JSON.stringify(editable.toJSON())).toContain(localized('helpTextIndustries'));
         expect(editable.root.findAllByType(OptionSheet)).toHaveLength(1);
+    });
+
+    it('shows the library’s empty value under readOnly when no industry is picked', () => {
+        const tree = render(<Form.BusinessInfo {...BUSINESS} industries={[]} readOnly />);
+        const lists = tree.root.findAll((node) => typeof node.type === 'string' && node.props.role === 'list');
+        expect(lists).toHaveLength(0);
+        const empty = tree.root.findAll((node) => node.type === 'Text' && node.props.children === EMPTY_VALUE);
+        expect(empty).toHaveLength(1);
     });
 
     it('keeps the industries picker as it was under isDisabled and while editable', () => {

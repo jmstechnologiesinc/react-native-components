@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from 'react';
-import { Dimensions, Platform, FlatList, StatusBar } from 'react-native';
+import { Dimensions, Platform, FlatList, StatusBar, View } from 'react-native';
 import { Button, HelperText, List, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import JMSStyles from '../styles';
@@ -11,6 +11,9 @@ import { HeaderHeightContext } from '@react-navigation/elements';
 import { TNActivityIndicator } from '../truly-native';
 import ButtonWrapper from '../ButtonWrapper/ButtonWrapper';
 import ChipList from '../ChipList/ChipList';
+import CheckedRow from '../ListRow/CheckedRow';
+import MutedText from '../MutedText/MutedText';
+import { EMPTY_VALUE } from '../valueText';
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 
 const WINDOW_HEIGHT = Dimensions.get('window').height;
@@ -21,9 +24,11 @@ const APPROX_STATUSBAR_HEIGHT = Platform.select({
 });
 
 /**
- * `readOnly` (additive; the partner console) shows the picked options as chips read as text: nothing to pick,
- * remove or open — no «pick» button, no option sheet, and no help text, which tells whoever picks how to
- * pick — and nothing greyed out. With `isDisabled` as well it is the disabled picker, exactly.
+ * `readOnly` (additive; the partner console) shows the picked options as content, not controls: one
+ * `CheckedRow` each in a `list` named `chipListTitle` (Paper chips without `onPress` are announced disabled,
+ * on native and on the web), or the library's empty value (`EMPTY_VALUE`) when none is picked. Nothing to
+ * pick, remove or open — no «pick» button, no option sheet, and no help text, which tells whoever picks how
+ * to pick — and nothing greyed out. With `isDisabled` as well it is the disabled picker, exactly.
  */
 function OptionPickerActionSheet({
     isDisabled,
@@ -94,17 +99,33 @@ function OptionPickerActionSheet({
     return (
         <>
             <ScreenWrapper.Section title={chipListTitle} titleStyle={titleStyle}>
-                <ChipList
-                    isDisabled={isDisabled}
-                    options={preSelectedOptions.map((option) =>
-                        chipListOptionTitle ? chipListOptionTitle(option) : option.title
-                    )}
-                    onPress={readOnly ? null : showActionSheet}
-                    onClose={isChipRemoveable && !readOnly ? handleRemoveChip : null}
-                    // A picked option shown, not a control: read as text, not as a button.
-                    chipAccessibilityRole={readOnly ? 'text' : undefined}
-                    chipStyle={{ marginBottom: MD3LightTheme.spacing.x2 }}
-                />
+                {readOnly ? (
+                    preSelectedOptions.length ? (
+                        // Every row is a picked option, so none carries a check: the list's name says what they are.
+                        <View role="list" aria-label={chipListTitle}>
+                            {preSelectedOptions.map((option, index) => (
+                                <CheckedRow
+                                    // The id, with the position for a pick listed twice (picks never reorder while shown).
+                                    key={`${option.id}.${index}`}
+                                    title={chipListOptionTitle ? chipListOptionTitle(option) : option.title}
+                                    titleNumberOfLines={0}
+                                />
+                            ))}
+                        </View>
+                    ) : (
+                        <MutedText>{EMPTY_VALUE}</MutedText>
+                    )
+                ) : (
+                    <ChipList
+                        isDisabled={isDisabled}
+                        options={preSelectedOptions.map((option) =>
+                            chipListOptionTitle ? chipListOptionTitle(option) : option.title
+                        )}
+                        onPress={showActionSheet}
+                        onClose={isChipRemoveable ? handleRemoveChip : null}
+                        chipStyle={{ marginBottom: MD3LightTheme.spacing.x2 }}
+                    />
+                )}
                 {readOnly ? null : (
                     <ButtonWrapper
                         title={addButtonTitle}

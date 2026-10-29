@@ -251,12 +251,9 @@ cases of `legacyRendering.test.js` (captured from `main` @ 556ccd4, `__fixtures_
   testIDs: `<testID>-<value>` for the checkbox list, none for the frequencies. `CheckedRow` is not a Paper
   `List.Item` on purpose: it is a `listitem` read as one element (as `StateFlow` reads its states), laid out
   as an MD3 list item from the theme's tokens, so no disabled press wrapper reaches the host.
-- `OptionPickerActionSheet({ readOnly })` (BusinessInfo's industries): the picked options as plain chips, no
-  «pick» button, nothing to remove or open.
-- The read-only industry chips take `ChipList`'s optional `chipAccessibilityRole="text"` (default: Paper's
-  `button`), so they are not announced as buttons. Paper's `Chip` still wraps them in a press target disabled
-  without `onPress`, so their host keeps `accessibilityState.disabled` on native and `aria-disabled` on the web
-  (fork item «Disabled press wrappers» below): that remainder is the fork's to fix, not patched here.
+- `OptionPickerActionSheet({ readOnly })` (BusinessInfo's industries): the picked options as `CheckedRow`s (no
+  check: every row is a pick) in a `list` named `chipListTitle`, `EMPTY_VALUE` when none is picked; no Paper
+  `Chip` (one without `onPress` is announced disabled), no «pick» button, no help text, no option sheet.
 They also take `errors: Array<{ field, code, message? }>` — server field errors (K-32), keyed by the same
 names. Each error of a rendered field puts its input in Paper's `error` state and adds one
 `HelperText type="error"` under it (`testID="error.<field>"`) showing `message`, or the raw `code` when the
@@ -416,9 +413,9 @@ the web until the fork's 5.12.12 is published):
   the web react-native-web renders it `aria-disabled="true"`, so every control inside is announced dimmed (and
   automation refuses to act on it). Affects `SectionCard`, a non-pressable `ListRow` (`StateFlow`'s transitions,
   `RuleClauseList`'s rows without a link), `DataTableView` without `onRowPress`, `PaneHeader`'s title, and a
-  `Chip` without `onPress` (`LabelChip`/`StatusChip`, the read-only industry chips). The fork should render the
-  wrapper (or its `disabled`) only with a press handler. The read-only choices avoid it with `CheckedRow`, which
-  is not a `List.Item`.
+  `Chip` without `onPress` (`LabelChip`/`StatusChip`). The fork should render the wrapper (or its `disabled`)
+  only with a press handler. The read-only choices and picks avoid it with `CheckedRow`, which is neither a
+  `List.Item` nor a `Chip`.
 - **`accessibilityState` never reaches the DOM.** react-native-web 0.21 ignores it and the fork passes no
   `aria-*` twin: `RadioButton.Item`/`Checkbox.Item` (checked), `Chip` (selected: `FilterChips`),
   `SegmentedButtons` and `DataTable.Row` selection are silent to a screen reader. RNC's own components use
