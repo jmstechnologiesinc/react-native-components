@@ -244,9 +244,11 @@ cases of `legacyRendering.test.js` (captured from `main` @ 556ccd4, `__fixtures_
   `testID` lands on the input. `SecretInputText` offers its «show» toggle only while editable (not disabled, not
   `editable={false}`), so a read-only secret stays masked.
 - `CheckboxListField({ readOnly })`, `StripeForm.PaymentFrequency({ readOnly, accessibilityLabel })`: every
-  option a `ListRow` in a `list` (named by `label` / `accessibilityLabel`), the chosen ones with a trailing
-  check and announced «…, selected» (catalogue `selected`); nothing pressable or greyed out. Row testIDs:
-  `<testID>-<value>` for the checkbox list, none for the frequencies.
+  option a `ListRow/CheckedRow` in a `list` (named by `label` / `accessibilityLabel`), the chosen ones with a
+  trailing check and announced «…, selected» (catalogue `selected`); nothing pressable or greyed out. Row
+  testIDs: `<testID>-<value>` for the checkbox list, none for the frequencies. `CheckedRow` is not a Paper
+  `List.Item` on purpose: it is a `listitem` read as one element (as `StateFlow` reads its states), laid out
+  as an MD3 list item from the theme's tokens, so no disabled press wrapper reaches the host.
 - `OptionPickerActionSheet({ readOnly })` (BusinessInfo's industries): the picked options as plain chips, no
   «pick» button, nothing to remove or open.
 - On the web a non-pressable `ListRow` still carries the Paper fork's `aria-disabled` press wrapper (fork web
@@ -376,7 +378,7 @@ Data display and feedback:
 
 Fields: `NoteField({ label, value, onChangeText, helper, error, required, multiline=true, numberOfLines,
 disabled, testID })`; `CheckboxListField({ label, options, values, onChange, disabled, readOnly,
-error, testID })` (Paper `Checkbox.Item`, leading, Android style; `ListRow`s with a check under `readOnly`); `FilterChips({ options:[{value, label}], value,
+error, testID })` (Paper `Checkbox.Item`, leading, Android style; `CheckedRow`s under `readOnly`); `FilterChips({ options:[{value, label}], value,
 onChange, compact=true, disabled, accessibilityLabel, testID })` on `ChipList` (replaces the admin prototype's
 `PartnerStatusFilterChips`; labels arrive localized). Tabs: `Tabs.Bar({ tabs:[{value, label, disabled,
 accessibilityLabel}], value, onChange, accessibilityLabel, style, testID='tabs' })` — `Tabs.Scrollable` +

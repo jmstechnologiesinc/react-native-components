@@ -8,7 +8,6 @@ import renderer, { act } from 'react-test-renderer';
 import { List, MD3LightTheme, Provider, RadioButton } from '@jmstechnologiesinc/react-native-paper';
 
 import CheckRadio from '../../List/CheckRadio';
-import ListRow from '../../ListRow/ListRow';
 import { setI18nConfig } from '../../Localization/Localization';
 import PaymentFrequency from '../StripeFormPaymentFrequency';
 
@@ -31,6 +30,9 @@ afterEach(() => {
 });
 
 beforeAll(() => setI18nConfig());
+
+const listItems = (tree) =>
+    tree.root.findAll((node) => typeof node.type === 'string' && node.props.role === 'listitem');
 
 const OPTIONS = [
     { interval: 'daily', title: 'Daily' },
@@ -63,7 +65,7 @@ describe('StripeForm.PaymentFrequency', () => {
             'checked',
             'unchecked',
         ]);
-        expect(tree.root.findAllByType(ListRow)).toHaveLength(0);
+        expect(listItems(tree)).toHaveLength(0);
     });
 
     // Alta y consola plan 2.9: the payout interval shown, not chosen — rows with a check, no greyed radios.
@@ -82,19 +84,30 @@ describe('StripeForm.PaymentFrequency', () => {
         expect(tree.root.findAllByType(RadioButton.Android)).toHaveLength(0);
         const list = tree.root.find((node) => typeof node.type === 'string' && node.props.role === 'list');
         expect(list.props['aria-label']).toBe('Payout frequency');
-        const rows = tree.root.findAllByType(ListRow);
-        expect(rows.map((row) => [row.props.title, row.props.description, Boolean(row.props.trailing)])).toEqual([
-            ['Daily', undefined, false],
-            ['Weekly', 'Every Monday', true],
-            ['Instant', undefined, false],
+        // The host rows, as a screen reader meets them (review MD-1): one element each, the selected one so named.
+        const rows = listItems(tree);
+        expect(rows.map((row) => [row.props.accessible, row.props.accessibilityLabel])).toEqual([
+            [true, 'Daily'],
+            [true, 'Weekly, Every Monday, selected'],
+            [true, 'Instant'],
         ]);
-        expect(rows[1].findAllByType(List.Icon)[0].props.icon).toBe('check');
-        expect(rows.map((row) => row.props.accessibilityLabel)).toEqual([
-            undefined,
-            'Weekly, Every Monday, selected',
-            undefined,
+        expect(rows.map((row) => row.findAllByType(List.Icon).map((icon) => icon.props.icon))).toEqual([
+            [],
+            ['check'],
+            [],
         ]);
-        expect(rows.every((row) => row.props.onPress === undefined)).toBe(true);
+        // No control, and nothing announced disabled — the unavailable `instant` included.
+        const controls = tree.root.findAll(
+            (node) =>
+                typeof node.type === 'string' &&
+                (node.props.onClick ||
+                    node.props.onResponderRelease ||
+                    node.props.accessibilityRole === 'button' ||
+                    node.props.role === 'button' ||
+                    node.props.accessibilityState?.disabled ||
+                    node.props['aria-disabled'])
+        );
+        expect(controls.map((node) => node.type)).toEqual([]);
         expect(inputActionHandler).not.toHaveBeenCalled();
     });
 });
