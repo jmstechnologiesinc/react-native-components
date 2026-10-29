@@ -136,6 +136,13 @@ describe('CheckboxListField', () => {
             );
         });
 
+        it('shows each label whole, never truncated (review MD-2)', () => {
+            const long = 'The expiry date printed on the document has passed and no renewal was uploaded';
+            const tree = readOnly({ options: [{ value: 'expiry', label: long }] });
+            const title = tree.root.find((node) => node.type === 'Text' && node.props.children === long);
+            expect(title.props.numberOfLines).toBe(0);
+        });
+
         it('keeps its error line', () => {
             expect(textOf(readOnly({ error: 'Pick at least one' }))).toContain('Pick at least one');
         });

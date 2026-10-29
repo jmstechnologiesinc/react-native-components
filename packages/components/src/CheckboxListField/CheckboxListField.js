@@ -51,6 +51,8 @@ const CheckboxListField = ({
                             key={option.value}
                             title={option.label}
                             checked={selected.has(option.value)}
+                            // An option's label is read whole, as its checkbox showed it.
+                            titleNumberOfLines={0}
                             testID={`${testID}-${option.value}`}
                         />
                     ))}
