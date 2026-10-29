@@ -5,9 +5,11 @@
 //   ln -s <repo>/node_modules <dir>/node_modules
 //   CAPTURE_LEGACY_FROM=<dir>/packages/components/src npx jest --no-cache packages/components/__tests__/legacyTrees.capture
 //
-// `--no-cache` is not optional: `transform-inline-environment-variables` (babel.config.js) writes the variable's value
-// into the transformed file, and Jest's transform cache does not key on it, so a cached capture would keep running —
-// and rewriting the fixture — in every later suite run, with the variable unset.
+// `--no-cache` is not optional: two plugins of babel.config.js, `transform-inline-environment-variables` and
+// `react-native-dotenv` (which inlines every `process.env.X` and takes no exclusion for it), write the variable's
+// value into the transformed file, and Jest's transform cache does not key on it, so a cached capture would keep
+// running — and rewriting the fixture — in every later suite run, with the variable unset. After a capture run
+// without it, `npx jest --clearCache`.
 //
 // It renders each case below with THAT source (its own catalogue included), exactly as the comparison renders the
 // current one, and writes the tree into the fixture. `Form.DriverInfo (driver onboarding)` was captured this way from
