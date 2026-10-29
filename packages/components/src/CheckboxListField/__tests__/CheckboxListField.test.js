@@ -3,11 +3,13 @@ jest.mock('react-native-localize', () => ({
 }));
 
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import renderer, { act } from 'react-test-renderer';
 
-import { Checkbox, MD3LightTheme, Provider } from '@jmstechnologiesinc/react-native-paper';
+import { Checkbox, List, MD3LightTheme, Provider } from '@jmstechnologiesinc/react-native-paper';
 
 import { setI18nConfig } from '../../Localization/Localization';
+import ListRow from '../../ListRow/ListRow';
 import CheckboxListField from '../CheckboxListField';
 
 jest.useFakeTimers();
@@ -72,11 +74,66 @@ describe('CheckboxListField', () => {
         expect(onChange).toHaveBeenLastCalledWith([]);
     });
 
-    it('shows a read-only list and its error', () => {
+    it('shows a disabled list and its error', () => {
         const tree = render(
             <CheckboxListField options={OPTIONS} values={[]} onChange={() => {}} disabled error="Pick at least one" />
         );
         expect(tree.root.findAllByType(Checkbox.Item).every((item) => item.props.disabled)).toBe(true);
         expect(textOf(tree)).toContain('Pick at least one');
+    });
+
+    // Alta y consola plan 2.8: the choice shown, not asked — rows with a check, nothing greyed out.
+    describe('readOnly', () => {
+        const readOnly = (props) =>
+            render(<CheckboxListField label="Items" options={OPTIONS} values={['expiry']} readOnly {...props} />);
+
+        it('shows every option as a row in a list named by the label, no checkbox', () => {
+            const tree = readOnly();
+            expect(tree.root.findAllByType(Checkbox.Item)).toHaveLength(0);
+            const rows = tree.root.findAllByType(ListRow);
+            expect(rows.map((row) => [row.props.title, row.props.testID])).toEqual([
+                ['Photo', 'checkbox-list-photo'],
+                ['Expiry date', 'checkbox-list-expiry'],
+                ['Name', 'checkbox-list-name'],
+            ]);
+            const list = tree.root.find((node) => typeof node.type === 'string' && node.props.role === 'list');
+            expect(list.props['aria-label']).toBe('Items');
+            expect(hostOf(tree, 'checkbox-list').props.role).toBe('group');
+        });
+
+        it('checks the chosen options and announces them as selected', () => {
+            const rows = readOnly({ values: ['expiry', 'name'] }).root.findAllByType(ListRow);
+            expect(rows.map((row) => Boolean(row.props.trailing))).toEqual([false, true, true]);
+            expect(rows[1].findAllByType(List.Icon)[0].props.icon).toBe('check');
+            expect(rows.map((row) => row.props.accessibilityLabel)).toEqual([
+                undefined,
+                'Expiry date, selected',
+                'Name, selected',
+            ]);
+        });
+
+        it('offers nothing to press and greys nothing out, even an option the app disables', () => {
+            const tree = readOnly({ options: [...OPTIONS, { value: 'other', label: 'Other', disabled: true }] });
+            const rows = tree.root.findAllByType(ListRow);
+            expect(rows.every((row) => row.props.onPress === undefined)).toBe(true);
+            // Each title is drawn in the enabled `onSurface`, never in `onSurfaceDisabled`.
+            const titleColor = (label) =>
+                StyleSheet.flatten(
+                    tree.root.find((node) => node.type === 'Text' && node.props.children === label).props.style
+                ).color;
+            expect(['Photo', 'Expiry date', 'Name', 'Other'].map(titleColor)).toEqual(
+                Array(4).fill(MD3LightTheme.colors.onSurface)
+            );
+        });
+
+        it('keeps its error line', () => {
+            expect(textOf(readOnly({ error: 'Pick at least one' }))).toContain('Pick at least one');
+        });
+
+        it('is the disabled list when disabled as well', () => {
+            const tree = readOnly({ disabled: true });
+            expect(tree.root.findAllByType(ListRow)).toHaveLength(0);
+            expect(tree.root.findAllByType(Checkbox.Item).every((item) => item.props.disabled)).toBe(true);
+        });
     });
 });

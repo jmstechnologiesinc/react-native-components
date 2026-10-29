@@ -17,6 +17,11 @@ export const Choices = () => {
     return <CheckboxListField label="What is wrong" options={OPTIONS} values={values} onChange={setValues} />;
 };
 
+// The choice shown, not asked (the partner console): rows, the chosen ones with a check.
 export const ReadOnly = () => (
+    <CheckboxListField label="Cited items" options={OPTIONS} values={['photo', 'name']} readOnly />
+);
+
+export const Disabled = () => (
     <CheckboxListField label="Cited items" options={OPTIONS} values={['photo', 'name']} onChange={() => {}} disabled />
 );
