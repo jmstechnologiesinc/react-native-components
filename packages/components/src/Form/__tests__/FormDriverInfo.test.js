@@ -5,10 +5,11 @@ jest.mock('react-native-localize', () => ({
 import React from 'react';
 import renderer, { act } from 'react-test-renderer';
 
-import { MD3LightTheme, Paragraph, Provider } from '@jmstechnologiesinc/react-native-paper';
+import { MD3LightTheme, Paragraph, Provider, TextInput } from '@jmstechnologiesinc/react-native-paper';
 
 import { setI18nConfig } from '../../Localization/Localization';
 import DriverInfo from '../FormDriverInfo';
+import { drawnInput } from './__fixtures__/drawnInput';
 
 jest.useFakeTimers();
 
@@ -55,16 +56,21 @@ describe('Form.DriverInfo', () => {
         expect(tree.root.findAllByType(Paragraph)).toHaveLength(1);
         expect(inputWithValue(tree, 'D1234567').props.editable).toBe(true);
         expect(inputWithValue(tree, '123456789').props.editable).toBe(true);
+        // Each secret offers its «show» toggle while it can be typed.
+        expect(tree.root.findAllByType(TextInput.Icon)).toHaveLength(2);
     });
 
-    it('locks every field, shows the date it is given and drops the disclosure under readOnly', () => {
+    it('shows every field read-only, shows the date it is given and drops the disclosure under readOnly', () => {
         const tree = render(<DriverInfo {...DRIVER} dateOfBirth="01/02/90" readOnly />);
         expect(tree.root.findAllByType(Paragraph)).toHaveLength(0);
+        // Alta y consola plan 2.4 (audit F6): not editable, and not disabled — the enabled colours.
         for (const value of ['D1234567', '01/02/90', '123456789']) {
-            expect(`${value}:${inputWithValue(tree, value).props.editable}`).toBe(`${value}:false`);
+            const { editable, textColor } = drawnInput(tree, value);
+            expect(`${value}: ${editable}, ${textColor}`).toBe(`${value}: false, ${MD3LightTheme.colors.onSurface}`);
         }
-        // The secrets stay masked: a disabled input offers no «show» toggle.
+        // The secrets stay masked: a read-only input offers no «show» toggle.
         expect(inputWithValue(tree, '123456789').props.secureTextEntry).toBe(true);
+        expect(tree.root.findAllByType(TextInput.Icon)).toHaveLength(0);
         // The date's entry aids describe typing: a locked field is given none.
         const date = dateField(tree);
         expect(['placeholder', 'keyboardType', 'maxLength'].filter((prop) => prop in date)).toEqual([]);
@@ -85,6 +91,8 @@ describe('Form.DriverInfo', () => {
             />
         );
         expect((textOf(tree).match(/"Changed"/g) || []).length).toBe(1);
+        // A read-only field keeps the «changed» outline (Paper drops it on a disabled one).
+        expect(drawnInput(tree, '123456789').outlineColor).toBe(MD3LightTheme.colors.primary);
         expect(hostOf(tree, 'error.licenseNumer')).toBeDefined();
         expect(textOf(tree)).toContain('License expired');
     });
