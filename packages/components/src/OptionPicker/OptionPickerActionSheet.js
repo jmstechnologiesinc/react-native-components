@@ -23,11 +23,11 @@ const APPROX_STATUSBAR_HEIGHT = Platform.select({
 /**
  * `readOnly` (additive; the partner console) shows the picked options as chips read as text: nothing to pick,
  * remove or open — no «pick» button, no option sheet, and no help text, which tells whoever picks how to
- * pick — and nothing greyed out. With `isDisabled` as well, the chips are disabled.
+ * pick — and nothing greyed out. With `isDisabled` as well it is the disabled picker, exactly.
  */
 function OptionPickerActionSheet({
     isDisabled,
-    readOnly = false,
+    readOnly: readOnlyProp = false,
     isChipRemoveable = true,
     options = [],
     preSelectedOptions = [],
@@ -43,6 +43,8 @@ function OptionPickerActionSheet({
     onPress,
     onNavigation = false,
 }) {
+    // Disabled and read-only is disabled: exactly the disabled picker.
+    const readOnly = readOnlyProp && !isDisabled;
     const actionSheetRef = useRef();
     const insets = useSafeAreaInsets();
     // `useHeaderHeight()` throws outside a navigator with a header, which took

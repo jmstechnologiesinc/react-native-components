@@ -14,7 +14,8 @@ import FormField from './FormField';
  * longer lists), so a vehicle is never shown blank for it.
  *
  * `readOnly` shows the picked label as a read-only field (`FormField`'s `readOnly`): no menu to open, no dropdown
- * icon, not a button, in the enabled colours. `disabled` keeps the greyed field that opens nothing.
+ * icon, not a button, in the enabled colours. `disabled` keeps the greyed field that opens nothing, and wins
+ * when both are given.
  *
  * @param {{label: string, value?: string, displayValue?: string, options: Array<{value: string, label: string}>,
  *     onSelect: (option: {value: string, label: string}) => void, disabled?: boolean, readOnly?: boolean,
@@ -28,7 +29,7 @@ const FormSelectField = ({
     options,
     onSelect,
     disabled = false,
-    readOnly = false,
+    readOnly: readOnlyProp = false,
     highlighted = false,
     field,
     errors,
@@ -37,6 +38,8 @@ const FormSelectField = ({
     const [isOpen, setIsOpen] = useState(false);
     const selected = options.find((option) => option.value === value);
     const shown = selected?.label ?? displayValue ?? '';
+    // Disabled and read-only is disabled: exactly the disabled select.
+    const readOnly = readOnlyProp && !disabled;
 
     if (readOnly) {
         return (
@@ -45,7 +48,6 @@ const FormSelectField = ({
                 field={field}
                 errors={errors}
                 highlighted={highlighted}
-                disabled={disabled}
                 readOnly
                 label={label}
                 value={shown}

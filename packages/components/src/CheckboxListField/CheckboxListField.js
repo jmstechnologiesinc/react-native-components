@@ -13,7 +13,7 @@ import CheckedRow from '../ListRow/CheckedRow';
  *
  * `readOnly` shows the choice instead of asking it: every option as a `CheckedRow` in a `list` inside
  * the same `group` named `label`, the chosen ones with a check and announced «<label>, selected»,
- * nothing pressable and nothing greyed out. With `disabled` as well, the field is disabled (as a form field is).
+ * nothing pressable and nothing greyed out. With `disabled` as well it is the disabled list, exactly.
  *
  * On the web the items' checked state does not reach the DOM (see PROJECT.md, Paper fork web a11y items).
  *

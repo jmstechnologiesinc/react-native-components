@@ -238,7 +238,8 @@ drops a custom outline, the line is what remains).
 cases of `legacyRendering.test.js` (captured from `main` @ 556ccd4, `__fixtures__/appPathCases.js`).
 - `FormField({ readOnly })` gives its input `editable={false}`: Paper keeps the enabled colours, never enters the
   focused state and honours the «changed» outline; react-native-web renders the DOM `readonly` attribute.
-  `disabled` keeps its meaning and wins when both are given. Every form hands `readOnly` to its fields and takes
+  `disabled` keeps its meaning and wins when both are given: every read-only component then renders exactly
+  its disabled tree (`__tests__/readOnlyDisabledRule.test.js`). Every form hands `readOnly` to its fields and takes
   `disabled` from `isDisabled` only (PersonInfo's email still ignores `isDisabled`; only `readOnly` locks it).
 - `FormSelectField({ readOnly })`: the picked label as a read-only field — no menu, no dropdown icon, no button;
   `testID` lands on the input. `SecretInputText` offers its «show» toggle only while editable (not disabled, not
