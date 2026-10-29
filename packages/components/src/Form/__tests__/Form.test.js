@@ -9,7 +9,8 @@ import { MD3LightTheme, Provider, TextInput } from '@jmstechnologiesinc/react-na
 
 import ButtonWrapper from '../../ButtonWrapper/ButtonWrapper';
 import ChipList from '../../ChipList/ChipList';
-import { setI18nConfig } from '../../Localization/Localization';
+import { localized, setI18nConfig } from '../../Localization/Localization';
+import OptionSheet from '../../OptionPicker/OptionSheet';
 // Each form by its own module, as the portable entry exposes them: `Form.js`
 // also carries `PhoneNumber`, whose phone-input library imports this package's
 // whole barrel back.
@@ -191,6 +192,12 @@ describe('Form.BusinessInfo', () => {
         expect(buttons.map((node) => node.props.accessibilityLabel ?? node.props.testID)).toEqual([]);
         const label = tree.root.find((node) => node.type === 'Text' && node.props.children === 'Restaurant');
         expect(StyleSheet.flatten(label.props.style).color).not.toBe(colors.onSurfaceDisabled);
+        // No help on how to pick, and no sheet to pick from (review LO-4).
+        expect(JSON.stringify(tree.toJSON())).not.toContain(localized('helpTextIndustries'));
+        expect(tree.root.findAllByType(OptionSheet)).toHaveLength(0);
+        const editable = render(<Form.BusinessInfo {...BUSINESS} industries={industries} />);
+        expect(JSON.stringify(editable.toJSON())).toContain(localized('helpTextIndustries'));
+        expect(editable.root.findAllByType(OptionSheet)).toHaveLength(1);
     });
 
     it('keeps the industries picker as it was under isDisabled and while editable', () => {
