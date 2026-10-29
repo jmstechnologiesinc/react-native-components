@@ -13,6 +13,7 @@ import { setI18nConfig } from '../../Localization/Localization';
 import BusinessInfo from '../FormBusinessInfo';
 import PersonInfo from '../FormPersonInfo';
 import VehicleInfo from '../FormVehicleInfo';
+import { drawnInput } from './__fixtures__/drawnInput';
 
 const Form = { BusinessInfo, PersonInfo, VehicleInfo };
 
@@ -50,6 +51,19 @@ const outlinedInPrimary = (tree, value) =>
         .length > 0;
 
 const changedCount = (tree) => (JSON.stringify(tree.toJSON()).match(/"Changed"/g) || []).length;
+
+// Alta y consola plan 2.1-2.4 (audit F6): under `readOnly` each field is shown, not disabled — it takes no input
+// and keeps the enabled colours, as Paper draws them. One line per value, so a failure names the field.
+const { colors } = MD3LightTheme;
+const drawnAs = (tree, values) =>
+    values.map((value) => {
+        const { editable, textColor } = drawnInput(tree, value);
+        return `${value}: ${editable ? 'editable' : 'not editable'}, ${
+            textColor === colors.onSurfaceDisabled ? 'disabled' : 'enabled'
+        }`;
+    });
+const readOnlyLines = (values) => values.map((value) => `${value}: not editable, enabled`);
+const disabledLines = (values) => values.map((value) => `${value}: not editable, disabled`);
 
 const PERSON = {
     firstName: 'Jose',
@@ -89,11 +103,16 @@ describe('Form.PersonInfo', () => {
         expect(inputWithValue(tree, 'jose@example.com').props.editable).toBe(true);
     });
 
-    it('locks every field, the email included, under readOnly', () => {
-        const tree = render(<Form.PersonInfo {...PERSON} readOnly />);
-        for (const value of ['Jose', 'Santos', 'jose@example.com', '8297872134']) {
-            expect(`${value}:${inputWithValue(tree, value).props.editable}`).toBe(`${value}:false`);
-        }
+    it('shows every field read-only, the email included, under readOnly: not editable, not disabled', () => {
+        const values = ['Jose', 'Santos', 'jose@example.com', '8297872134'];
+        expect(drawnAs(render(<Form.PersonInfo {...PERSON} readOnly />), values)).toEqual(readOnlyLines(values));
+    });
+
+    it('greys out every field but the email under isDisabled, as before', () => {
+        const tree = render(<Form.PersonInfo {...PERSON} isDisabled />);
+        const locked = ['Jose', 'Santos', '8297872134'];
+        expect(drawnAs(tree, locked)).toEqual(disabledLines(locked));
+        expect(drawnAs(tree, ['jose@example.com'])).toEqual(['jose@example.com: editable, enabled']);
     });
 
     it('marks exactly the highlighted fields', () => {
@@ -103,9 +122,12 @@ describe('Form.PersonInfo', () => {
         expect(outlinedInPrimary(tree, 'Jose')).toBe(false);
     });
 
-    it('keeps the marker on a read-only form, where Paper drops the outline', () => {
-        const tree = render(<Form.PersonInfo {...PERSON} readOnly highlightFields={['firstName']} />);
-        expect(changedCount(tree)).toBe(1);
+    it('keeps the «changed» outline and its line on a read-only form', () => {
+        const tree = render(<Form.PersonInfo {...PERSON} readOnly highlightFields={['firstName', 'email']} />);
+        expect(changedCount(tree)).toBe(2);
+        expect(drawnInput(tree, 'Jose').outlineColor).toBe(colors.primary);
+        expect(drawnInput(tree, 'jose@example.com').outlineColor).toBe(colors.primary);
+        expect(drawnInput(tree, 'Santos').outlineColor).toBe(colors.outline);
     });
 
     it('renders as before without the new props', () => {

@@ -21,7 +21,9 @@ const FormPersonInfo = ({
     showEmailInput = true,
     inputActionHandler,
 }) => {
-    const disabled = Boolean(isDisabled || readOnly);
+    // `readOnly` (the console) shows the values without letting them change; it is
+    // not `isDisabled` (the app), which greys the fields out.
+    const disabled = Boolean(isDisabled);
 
     return (
         <>
@@ -32,6 +34,7 @@ const FormPersonInfo = ({
                     errors={errors}
                     highlighted={isHighlighted(highlightFields, 'firstName')}
                     disabled={disabled}
+                    readOnly={readOnly}
                     error={showFirstNameValidationError && !firstName}
                     label={localized('firstName')}
                     value={firstName}
@@ -51,6 +54,7 @@ const FormPersonInfo = ({
                     errors={errors}
                     highlighted={isHighlighted(highlightFields, 'lastName')}
                     disabled={disabled}
+                    readOnly={readOnly}
                     error={showLastNameValidationError && !lastName}
                     label={localized('lastName')}
                     value={lastName}
@@ -72,8 +76,8 @@ const FormPersonInfo = ({
                         errors={errors}
                         highlighted={isHighlighted(highlightFields, 'email')}
                         // The email has never followed `isDisabled`, and the app relies on
-                        // that; only the new `readOnly` locks it.
-                        disabled={readOnly}
+                        // that; only `readOnly` locks it.
+                        readOnly={readOnly}
                         label={localized('email')}
                         value={email}
                         autoCapitalize="none"
@@ -93,6 +97,7 @@ const FormPersonInfo = ({
                         errors={errors}
                         highlighted={isHighlighted(highlightFields, 'phoneNumber')}
                         disabled={disabled}
+                        readOnly={readOnly}
                         label={localized('phoneNumber')}
                         value={phoneNumber}
                         keyboardType="numeric"
