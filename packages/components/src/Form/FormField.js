@@ -86,11 +86,10 @@ export const FieldErrorList = ({ errors, exclude, fieldLabel, testID = 'field-er
  *  `readonly` input: focusable and selectable, announced as read-only) and a
  *  custom `input` such as `SecretInputText` reads. It is not `disabled`,
  *  which says the control is unavailable and greys it out; a field can be
- *  both, and then it is disabled — the same tree as without `readOnly` (the
- *  rule of every read-only component here). */
+ *  both, and then it is disabled. */
 const FormField = ({
     highlighted = false,
-    readOnly: readOnlyProp = false,
+    readOnly = false,
     field,
     errors,
     error,
@@ -98,8 +97,6 @@ const FormField = ({
     ...props
 }) => {
     const theme = useTheme();
-    // A field both disabled and read-only is disabled: exactly the disabled field.
-    const readOnly = readOnlyProp && !props.disabled;
     const hasServerError = errorsOf(errors, field).length > 0;
     return (
         <>

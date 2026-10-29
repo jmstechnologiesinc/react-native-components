@@ -6,10 +6,8 @@ import { TextInput } from '@jmstechnologiesinc/react-native-paper';
 // `FormField`) shows the secret read-only — `editable={false}` and `readOnly` on
 // the input — and masked, with no toggle. `editable={false}` alone keeps the
 // toggle, as it always had.
-const SecretInputText = ({ label, value, onChangeText, disabled, readOnly: readOnlyProp = false, mode, ...rest }) => {
+const SecretInputText = ({ label, value, onChangeText, disabled, readOnly = false, mode, ...rest }) => {
     const [isTextSecureEntry, setIsTextSecureEntry] = useState(true);
-    // Disabled and read-only is disabled: exactly the disabled input.
-    const readOnly = readOnlyProp && !disabled;
     const canReveal = !disabled && !readOnly;
 
     return (
