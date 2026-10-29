@@ -1,12 +1,9 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { Checkbox, HelperText, List, Text, useTheme } from '@jmstechnologiesinc/react-native-paper';
+import { Checkbox, HelperText, Text, useTheme } from '@jmstechnologiesinc/react-native-paper';
 
-import ListRow from '../ListRow/ListRow';
-import { localized } from '../Localization/Localization';
-
-const checkIcon = <List.Icon icon="check" />;
+import CheckedRow from '../ListRow/CheckedRow';
 
 /**
  * A labelled multiple choice: one Paper `Checkbox.Item` per option (the Android checkbox leading its
@@ -14,7 +11,7 @@ const checkIcon = <List.Icon icon="check" />;
  * gets the next list (in the order ticked). `disabled` greys the checkboxes out; `error` is shown under
  * them.
  *
- * `readOnly` shows the choice instead of asking it: every option as a `ListRow` in a `list` named
+ * `readOnly` shows the choice instead of asking it: every option as a `CheckedRow` in a `list` named
  * `label`, the chosen ones with a check and announced «<label>, selected», nothing pressable and
  * nothing greyed out. With `disabled` as well, the field is disabled (as a form field is).
  *
@@ -50,14 +47,10 @@ const CheckboxListField = ({
             {readOnly && !disabled ? (
                 <View role="list" aria-label={label}>
                     {options.map((option) => (
-                        <ListRow
+                        <CheckedRow
                             key={option.value}
                             title={option.label}
-                            trailing={selected.has(option.value) ? checkIcon : null}
-                            accessibilityLabel={
-                                selected.has(option.value) ? `${option.label}, ${localized('selected')}` : undefined
-                            }
-                            inset={false}
+                            checked={selected.has(option.value)}
                             testID={`${testID}-${option.value}`}
                         />
                     ))}

@@ -522,8 +522,9 @@ describe('Form.VehicleInfo with the catalogue', () => {
                 inputActionHandler={() => {}}
             />
         );
-        const flagRow = (value) => tree.root.findAll((node) => node.props.testID === `vehicle.flags-${value}`)[0].props;
-        expect(flagRow('salvage_title')).toMatchObject({ title: 'Salvage title', trailing: null });
+        // What a screen reader meets: each flag's host row, the declared one announced as selected.
+        const flagRow = (value) => hostOf(tree, `vehicle.flags-${value}`)[0].props;
+        expect(flagRow('salvage_title').accessibilityLabel ?? '').not.toContain('selected');
         expect(flagRow('commercial_branding').accessibilityLabel).toBe('Commercial branding, selected');
         expect(changedCount(tree)).toBe(2);
         expect(drawnInput(tree, 'Silver').outlineColor).toBe(colors.primary);
