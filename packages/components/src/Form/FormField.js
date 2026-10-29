@@ -16,9 +16,11 @@ export const isHighlighted = (highlightFields, field) =>
 export const errorsOf = (errors, field) =>
     Array.isArray(errors) && field ? errors.filter((error) => error && error.field === field) : [];
 
-/** «Changed», under a highlighted field. Paper ignores a custom outline on a
- *  disabled input, so on a read-only form this line is the marker that
- *  remains; it is never greyed out. */
+/** «Changed», under a highlighted field. A read-only field is not disabled
+ *  (`FormField`'s `readOnly`), so it keeps the `primary` outline; this line
+ *  still goes with it because colour alone is not a marker (WCAG 1.4.1), and it
+ *  is what remains on a disabled input, where Paper ignores a custom outline.
+ *  It is never greyed out. */
 export const ChangedHelperText = ({ visible }) => {
     const theme = useTheme();
     return visible ? (
@@ -75,14 +77,30 @@ export const FieldErrorList = ({ errors, exclude, fieldLabel, testID = 'field-er
 /** An input of a form that can be highlighted or carry server errors: the
  *  outline in `primary` and the «Changed» line under it; the input's `error`
  *  state and one error line per error of `field`. `input` is the component to
- *  render (a Paper `TextInput` unless told otherwise). */
-const FormField = ({ highlighted = false, field, errors, error, input: Input = TextInput, ...props }) => {
+ *  render (a Paper `TextInput` unless told otherwise).
+ *
+ *  `readOnly` shows the value without letting it change: the input gets
+ *  `editable={false}`, which Paper draws in its enabled colours, never focuses
+ *  and outlines as asked, and react-native-web renders as a `readonly` input
+ *  (focusable and selectable, announced as read-only). It is not `disabled`,
+ *  which says the control is unavailable and greys it out; a field can be
+ *  both, and then it is disabled. */
+const FormField = ({
+    highlighted = false,
+    readOnly = false,
+    field,
+    errors,
+    error,
+    input: Input = TextInput,
+    ...props
+}) => {
     const theme = useTheme();
     const hasServerError = errorsOf(errors, field).length > 0;
     return (
         <>
             <Input
                 {...props}
+                {...(readOnly && { editable: false })}
                 {...((error || hasServerError) && { error: true })}
                 {...(highlighted && {
                     outlineColor: theme.colors.primary,
