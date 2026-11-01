@@ -14,7 +14,9 @@ module.exports = {
   // repository guessed. It must run before `jest.setup.js`.
   setupFiles: ['@rnmapbox/maps/setup-jest', '<rootDir>/jest.setup.js'],
 
-  testPathIgnorePatterns: ['/node_modules/', '/packages/components/lib/'],
+  // `__tests__/__fixtures__/` holds the data and case modules the suites
+  // share (`appPathCases.js`); they are not suites themselves.
+  testPathIgnorePatterns: ['/node_modules/', '/packages/components/lib/', '/__fixtures__/'],
 
   // The sibling `@jmstechnologiesinc/*` packages publish untranspiled ESM
   // (`material-tokens` exports at the top level; this library itself ships raw

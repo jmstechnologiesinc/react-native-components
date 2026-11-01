@@ -45,14 +45,14 @@ module.exports = {
     '../packages/components/src/ListRow/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/MutedText/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/States/*.stories.?(ts|tsx|js|jsx)',
-    '../packages/components/src/Snackbar/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/DataTableView/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/CodeBlock/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/NoteField/*.stories.?(ts|tsx|js|jsx)',
-    '../packages/components/src/RadioGroupField/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/CheckboxListField/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/FilterChips/*.stories.?(ts|tsx|js|jsx)',
     '../packages/components/src/StatusBanner/*.stories.?(ts|tsx|js|jsx)',
+    // The partner directory's filter chip (2026-10-09); the composed pages are under Partner/.
+    '../packages/components/src/MenuFilterChip/*.stories.?(ts|tsx|js|jsx)',
     // Only the display avatar: the picker's own stories need native modules.
     '../packages/components/src/ImagePicker/AvatarDisplay.stories.?(ts|tsx|js|jsx)',
   ],

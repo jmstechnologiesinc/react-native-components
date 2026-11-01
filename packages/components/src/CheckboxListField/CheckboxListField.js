@@ -3,17 +3,24 @@ import { StyleSheet, View } from 'react-native';
 
 import { Checkbox, HelperText, Text, useTheme } from '@jmstechnologiesinc/react-native-paper';
 
+import CheckedRow from '../ListRow/CheckedRow';
+
 /**
  * A labelled multiple choice: one Paper `Checkbox.Item` per option (the Android checkbox leading its
  * label), in a `group` named `label`. It keeps nothing: `values` are the ticked options and `onChange`
- * gets the next list (in the order ticked). `disabled` shows them as a read-only list; `error` is shown
- * under them.
+ * gets the next list (in the order ticked). `disabled` greys the checkboxes out; `error` is shown under
+ * them.
+ *
+ * `readOnly` shows the choice instead of asking it: every option as a `CheckedRow` in a `list` inside
+ * the same `group` named `label`, the chosen ones with a check and announced «<label>, selected»,
+ * nothing pressable and nothing greyed out. With `disabled` as well, the field is disabled (as a form field is).
  *
  * On the web the items' checked state does not reach the DOM (see PROJECT.md, Paper fork web a11y items).
  *
  * @param {{label?: string, options: Array<{value: string, label: string, disabled?: boolean}>,
- *     values: string[], onChange: (values: string[]) => void, disabled?: boolean, error?: string,
- *     testID?: string}} props item testIDs `<testID>-<value>`; default `checkbox-list`
+ *     values: string[], onChange: (values: string[]) => void, disabled?: boolean, readOnly?: boolean,
+ *     error?: string, testID?: string}} props item (or row) testIDs `<testID>-<value>`; default
+ *     `checkbox-list`
  */
 const CheckboxListField = ({
     label,
@@ -21,6 +28,7 @@ const CheckboxListField = ({
     values = [],
     onChange,
     disabled = false,
+    readOnly = false,
     error,
     testID = 'checkbox-list',
 }) => {
@@ -36,20 +44,36 @@ const CheckboxListField = ({
                     {label}
                 </Text>
             ) : null}
-            {options.map((option) => (
-                <Checkbox.Item
-                    key={option.value}
-                    mode="android"
-                    position="leading"
-                    label={option.label}
-                    status={selected.has(option.value) ? 'checked' : 'unchecked'}
-                    disabled={disabled || Boolean(option.disabled)}
-                    onPress={() => toggle(option.value)}
-                    labelStyle={styles.label}
-                    style={styles.item}
-                    testID={`${testID}-${option.value}`}
-                />
-            ))}
+            {readOnly && !disabled ? (
+                // The group already carries `label`; naming the list too would announce it twice.
+                <View role="list">
+                    {options.map((option) => (
+                        <CheckedRow
+                            key={option.value}
+                            title={option.label}
+                            checked={selected.has(option.value)}
+                            // An option's label is read whole, as its checkbox showed it.
+                            titleNumberOfLines={0}
+                            testID={`${testID}-${option.value}`}
+                        />
+                    ))}
+                </View>
+            ) : (
+                options.map((option) => (
+                    <Checkbox.Item
+                        key={option.value}
+                        mode="android"
+                        position="leading"
+                        label={option.label}
+                        status={selected.has(option.value) ? 'checked' : 'unchecked'}
+                        disabled={disabled || Boolean(option.disabled)}
+                        onPress={() => toggle(option.value)}
+                        labelStyle={styles.label}
+                        style={styles.item}
+                        testID={`${testID}-${option.value}`}
+                    />
+                ))
+            )}
             {error ? (
                 <HelperText type="error" visible padding="none" testID={`${testID}-error`}>
                     {error}

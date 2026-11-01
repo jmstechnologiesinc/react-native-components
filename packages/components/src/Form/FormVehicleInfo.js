@@ -53,8 +53,16 @@ const FormVehicleInfo = ({
     vin,
     flags,
 }) => {
-    const disabled = Boolean(isDisabled || readOnly);
-    const marked = (field) => ({ field, errors, highlighted: isHighlighted(highlightFields, field), disabled });
+    // `readOnly` (the console) shows the values without letting them change; it is
+    // not `isDisabled` (the app), which greys the fields out.
+    const disabled = Boolean(isDisabled);
+    const marked = (field) => ({
+        field,
+        errors,
+        highlighted: isHighlighted(highlightFields, field),
+        disabled,
+        readOnly,
+    });
     const textField = (field, label, value, hints) => (
         <FormField
             mode="outlined"
@@ -116,6 +124,7 @@ const FormVehicleInfo = ({
                                 values={flags ?? []}
                                 onChange={(next) => inputActionHandler('flags', next)}
                                 disabled={disabled}
+                                readOnly={readOnly}
                                 testID="vehicle.flags"
                             />
                             <FieldErrorText field="flags" errors={errors} />

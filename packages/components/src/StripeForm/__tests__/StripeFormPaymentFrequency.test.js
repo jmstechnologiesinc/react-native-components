@@ -5,9 +5,10 @@ jest.mock('react-native-localize', () => ({
 import React from 'react';
 import renderer, { act } from 'react-test-renderer';
 
-import { MD3LightTheme, Provider, RadioButton } from '@jmstechnologiesinc/react-native-paper';
+import { List, MD3LightTheme, Provider, RadioButton } from '@jmstechnologiesinc/react-native-paper';
 
 import CheckRadio from '../../List/CheckRadio';
+import { setI18nConfig } from '../../Localization/Localization';
 import PaymentFrequency from '../StripeFormPaymentFrequency';
 
 jest.useFakeTimers();
@@ -27,6 +28,11 @@ afterEach(() => {
         jest.runOnlyPendingTimers();
     });
 });
+
+beforeAll(() => setI18nConfig());
+
+const listItems = (tree) =>
+    tree.root.findAll((node) => typeof node.type === 'string' && node.props.role === 'listitem');
 
 const OPTIONS = [
     { interval: 'daily', title: 'Daily' },
@@ -50,24 +56,58 @@ describe('StripeForm.PaymentFrequency', () => {
         expect(inputActionHandler).toHaveBeenCalledWith('interval', 'daily');
     });
 
-    it('readOnly: every option disabled and nothing reported', () => {
+    it('without readOnly: the radios, the selected one checked', () => {
+        const tree = render(
+            <PaymentFrequency options={OPTIONS} selectedInterval="weekly" inputActionHandler={() => {}} />
+        );
+        expect(tree.root.findAllByType(RadioButton.Android).map((radio) => radio.props.status)).toEqual([
+            'unchecked',
+            'checked',
+            'unchecked',
+        ]);
+        expect(listItems(tree)).toHaveLength(0);
+    });
+
+    // Alta y consola plan 2.9: the payout interval shown, not chosen — rows with a check, no greyed radios.
+    it('readOnly: every option a row in a named list, a check on the selected one, nothing to press or report', () => {
         const inputActionHandler = jest.fn();
         const tree = render(
             <PaymentFrequency
                 options={OPTIONS}
                 selectedInterval="weekly"
                 readOnly
+                accessibilityLabel="Payout frequency"
                 inputActionHandler={inputActionHandler}
             />
         );
-        const rows = tree.root.findAllByType(CheckRadio);
-        expect(rows.every((row) => row.props.isDisabled === true)).toBe(true);
-        expect(tree.root.findAllByType(RadioButton.Android).map((radio) => radio.props.status)).toEqual([
-            'unchecked',
-            'checked',
-            'unchecked',
+        expect(tree.root.findAllByType(CheckRadio)).toHaveLength(0);
+        expect(tree.root.findAllByType(RadioButton.Android)).toHaveLength(0);
+        const list = tree.root.find((node) => typeof node.type === 'string' && node.props.role === 'list');
+        expect(list.props['aria-label']).toBe('Payout frequency');
+        // The host rows, as a screen reader meets them (review MD-1): one element each, the selected one so named.
+        const rows = listItems(tree);
+        expect(rows.map((row) => [row.props.accessible, row.props.accessibilityLabel])).toEqual([
+            [true, 'Daily'],
+            [true, 'Weekly, Every Monday, selected'],
+            [true, 'Instant'],
         ]);
-        act(() => rows[0].props.onPress());
+        expect(rows.map((row) => row.findAllByType(List.Icon).map((icon) => icon.props.icon))).toEqual([
+            [],
+            ['check'],
+            [],
+        ]);
+        // No control, and nothing announced disabled — the unavailable `instant` included.
+        const controls = tree.root.findAll(
+            (node) =>
+                typeof node.type === 'string' &&
+                (node.props.onClick ||
+                    node.props.onResponderRelease ||
+                    node.props.accessibilityRole === 'button' ||
+                    node.props.role === 'button' ||
+                    node.props.accessibilityState?.disabled ||
+                    node.props['aria-disabled'])
+        );
+        expect(controls.map((node) => node.type)).toEqual([]);
         expect(inputActionHandler).not.toHaveBeenCalled();
     });
 });

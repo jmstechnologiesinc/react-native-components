@@ -11,7 +11,8 @@ import { TableHeader, TableRow } from './tableParts';
 /**
  * Paper `DataTable` on a `FlatList`, for a long directory: the rows are virtualized and the next page loads
  * as the person scrolls near the end (React Native's `onEndReached` over the host's cursor), never with a
- * page number and never with a button while more can load. The header stays put while the rows scroll.
+ * page number and never with a button while more can load. The header stays put while the rows scroll, opaque
+ * (`colors.surface`, the pane's) so they never show through it.
  * Same column model and sorting as `DataTableView` (`DataColumn`, `sortRows`).
  *
  * - `hasMore`/`loadingMore`/`onLoadMore` are the host's cursor. While a page loads the footer shows a
@@ -130,6 +131,9 @@ const DataTableList = ({
                         sort={activeSort}
                         onSort={onSort}
                         sortLabel={sortLabel}
+                        // Sticky, the header lies over the rows that scroll under it: Paper's header paints nothing,
+                        // so it takes the surface of the pane it sits on, or the rows would show through.
+                        style={{ backgroundColor: colors.surface }}
                         testID={testID}
                     />
                 }

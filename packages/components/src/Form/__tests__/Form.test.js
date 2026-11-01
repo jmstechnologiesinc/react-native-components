@@ -4,15 +4,19 @@
 import React from 'react';
 import renderer, { act } from 'react-test-renderer';
 
-import { MD3LightTheme, Provider } from '@jmstechnologiesinc/react-native-paper';
+import { Chip, MD3LightTheme, Provider, TextInput } from '@jmstechnologiesinc/react-native-paper';
 
-import { setI18nConfig } from '../../Localization/Localization';
+import ButtonWrapper from '../../ButtonWrapper/ButtonWrapper';
+import ChipList from '../../ChipList/ChipList';
+import { localized, setI18nConfig } from '../../Localization/Localization';
+import OptionSheet from '../../OptionPicker/OptionSheet';
 // Each form by its own module, as the portable entry exposes them: `Form.js`
 // also carries `PhoneNumber`, whose phone-input library imports this package's
 // whole barrel back.
 import BusinessInfo from '../FormBusinessInfo';
 import PersonInfo from '../FormPersonInfo';
 import VehicleInfo from '../FormVehicleInfo';
+import { drawnInput } from './__fixtures__/drawnInput';
 
 const Form = { BusinessInfo, PersonInfo, VehicleInfo };
 
@@ -50,6 +54,19 @@ const outlinedInPrimary = (tree, value) =>
         .length > 0;
 
 const changedCount = (tree) => (JSON.stringify(tree.toJSON()).match(/"Changed"/g) || []).length;
+
+// Alta y consola plan 2.1-2.4 (audit F6): under `readOnly` each field is shown, not disabled — it takes no input
+// and keeps the enabled colours, as Paper draws them. One line per value, so a failure names the field.
+const { colors } = MD3LightTheme;
+const drawnAs = (tree, values) =>
+    values.map((value) => {
+        const { editable, textColor } = drawnInput(tree, value);
+        return `${value}: ${editable ? 'editable' : 'not editable'}, ${
+            textColor === colors.onSurfaceDisabled ? 'disabled' : 'enabled'
+        }`;
+    });
+const readOnlyLines = (values) => values.map((value) => `${value}: not editable, enabled`);
+const disabledLines = (values) => values.map((value) => `${value}: not editable, disabled`);
 
 const PERSON = {
     firstName: 'Jose',
@@ -89,11 +106,16 @@ describe('Form.PersonInfo', () => {
         expect(inputWithValue(tree, 'jose@example.com').props.editable).toBe(true);
     });
 
-    it('locks every field, the email included, under readOnly', () => {
-        const tree = render(<Form.PersonInfo {...PERSON} readOnly />);
-        for (const value of ['Jose', 'Santos', 'jose@example.com', '8297872134']) {
-            expect(`${value}:${inputWithValue(tree, value).props.editable}`).toBe(`${value}:false`);
-        }
+    it('shows every field read-only, the email included, under readOnly: not editable, not disabled', () => {
+        const values = ['Jose', 'Santos', 'jose@example.com', '8297872134'];
+        expect(drawnAs(render(<Form.PersonInfo {...PERSON} readOnly />), values)).toEqual(readOnlyLines(values));
+    });
+
+    it('greys out every field but the email under isDisabled, as before', () => {
+        const tree = render(<Form.PersonInfo {...PERSON} isDisabled />);
+        const locked = ['Jose', 'Santos', '8297872134'];
+        expect(drawnAs(tree, locked)).toEqual(disabledLines(locked));
+        expect(drawnAs(tree, ['jose@example.com'])).toEqual(['jose@example.com: editable, enabled']);
     });
 
     it('marks exactly the highlighted fields', () => {
@@ -103,9 +125,12 @@ describe('Form.PersonInfo', () => {
         expect(outlinedInPrimary(tree, 'Jose')).toBe(false);
     });
 
-    it('keeps the marker on a read-only form, where Paper drops the outline', () => {
-        const tree = render(<Form.PersonInfo {...PERSON} readOnly highlightFields={['firstName']} />);
-        expect(changedCount(tree)).toBe(1);
+    it('keeps the «changed» outline and its line on a read-only form', () => {
+        const tree = render(<Form.PersonInfo {...PERSON} readOnly highlightFields={['firstName', 'email']} />);
+        expect(changedCount(tree)).toBe(2);
+        expect(drawnInput(tree, 'Jose').outlineColor).toBe(colors.primary);
+        expect(drawnInput(tree, 'jose@example.com').outlineColor).toBe(colors.primary);
+        expect(drawnInput(tree, 'Santos').outlineColor).toBe(colors.outline);
     });
 
     it('renders as before without the new props', () => {
@@ -116,19 +141,23 @@ describe('Form.PersonInfo', () => {
 });
 
 describe('Form.VehicleInfo', () => {
-    it('locks every field under readOnly, as under isDisabled', () => {
-        for (const props of [{ readOnly: true }, { isDisabled: true }]) {
-            const tree = render(<Form.VehicleInfo {...VEHICLE} {...props} />);
-            for (const value of ['Toyota', 'Camry', 'White', '2019', 'ABC123']) {
-                expect(inputWithValue(tree, value).props.editable).toBe(false);
-            }
-        }
+    const values = ['Toyota', 'Camry', 'White', '2019', 'ABC123'];
+
+    it('shows every field read-only under readOnly, and greys them out under isDisabled, as before', () => {
+        expect(drawnAs(render(<Form.VehicleInfo {...VEHICLE} readOnly />), values)).toEqual(readOnlyLines(values));
+        expect(drawnAs(render(<Form.VehicleInfo {...VEHICLE} isDisabled />), values)).toEqual(disabledLines(values));
     });
 
     it('marks the highlighted fields', () => {
         const tree = render(<Form.VehicleInfo {...VEHICLE} highlightFields={['licensePlateNumber']} />);
         expect(changedCount(tree)).toBe(1);
         expect(outlinedInPrimary(tree, 'ABC123')).toBe(true);
+    });
+
+    it('keeps the «changed» outline and its line on a read-only form', () => {
+        const tree = render(<Form.VehicleInfo {...VEHICLE} readOnly highlightFields={['licensePlateNumber']} />);
+        expect(changedCount(tree)).toBe(1);
+        expect(drawnInput(tree, 'ABC123').outlineColor).toBe(colors.primary);
     });
 });
 
@@ -137,11 +166,50 @@ describe('Form.BusinessInfo', () => {
         expect(() => render(<Form.BusinessInfo {...BUSINESS} />)).not.toThrow();
     });
 
-    it('locks every field under readOnly, the secret one included', () => {
+    const values = ['Casa Nostra', 'Pasta', '1 Main St', 'Suite 2', '6175550100', '12-3456789'];
+    const industries = [{ id: 'Restaurant', title: 'Restaurant' }];
+
+    it('shows every field read-only under readOnly, the secret one masked with no «show» toggle', () => {
         const tree = render(<Form.BusinessInfo {...BUSINESS} readOnly />);
-        for (const value of ['Casa Nostra', 'Pasta', '1 Main St', 'Suite 2', '6175550100', '12-3456789']) {
-            expect(`${value}:${inputWithValue(tree, value).props.editable}`).toBe(`${value}:false`);
-        }
+        expect(drawnAs(tree, values)).toEqual(readOnlyLines(values));
+        expect(inputWithValue(tree, '12-3456789').props.secureTextEntry).toBe(true);
+        expect(tree.root.findAllByType(TextInput.Icon)).toHaveLength(0);
+    });
+
+    it('greys out every field under isDisabled, as before', () => {
+        expect(drawnAs(render(<Form.BusinessInfo {...BUSINESS} isDisabled />), values)).toEqual(disabledLines(values));
+    });
+
+    it('shows the industries as plain chips under readOnly: nothing to pick, remove or open, nothing greyed out', () => {
+        const tree = render(<Form.BusinessInfo {...BUSINESS} industries={industries} readOnly />);
+        expect(tree.root.findAllByType(ButtonWrapper)).toHaveLength(0);
+        expect(tree.root.findByType(ChipList).props).toMatchObject({ onPress: null, onClose: null, isDisabled: false });
+        expect(tree.root.findAllByType(Chip).map((chip) => chip.props.disabled)).toEqual([false]);
+        // No help on how to pick, and no sheet to pick from (review LO-4).
+        expect(JSON.stringify(tree.toJSON())).not.toContain(localized('helpTextIndustries'));
+        expect(tree.root.findAllByType(OptionSheet)).toHaveLength(0);
+        const editable = render(<Form.BusinessInfo {...BUSINESS} industries={industries} />);
+        expect(JSON.stringify(editable.toJSON())).toContain(localized('helpTextIndustries'));
+        expect(editable.root.findAllByType(OptionSheet)).toHaveLength(1);
+    });
+
+    it('keeps the industries picker as it was under isDisabled and while editable', () => {
+        const disabled = render(<Form.BusinessInfo {...BUSINESS} industries={industries} isDisabled />);
+        expect(disabled.root.findByType(ButtonWrapper).props.isDisabled).toBe(true);
+        expect(disabled.root.findByType(ChipList).props.isDisabled).toBe(true);
+        const editable = render(<Form.BusinessInfo {...BUSINESS} industries={industries} />);
+        expect(editable.root.findByType(ButtonWrapper).props.isDisabled).toBe(false);
+        expect(typeof editable.root.findByType(ChipList).props.onClose).toBe('function');
+    });
+
+    it('keeps the «changed» outline and its line on a read-only form, the industries’ line too', () => {
+        const tree = render(
+            <Form.BusinessInfo {...BUSINESS} readOnly highlightFields={['title', 'tin', 'industries']} />
+        );
+        expect(changedCount(tree)).toBe(3);
+        expect(drawnInput(tree, 'Casa Nostra').outlineColor).toBe(colors.primary);
+        expect(drawnInput(tree, '12-3456789').outlineColor).toBe(colors.primary);
+        expect(drawnInput(tree, 'Pasta').outlineColor).toBe(colors.outline);
     });
 
     it('marks highlighted fields, industries included', () => {
@@ -170,13 +238,13 @@ describe('Form.BusinessInfo', () => {
         expect(JSON.stringify(tree.toJSON())).toContain('•••••6789');
     });
 
-    it('locks the legal entity under readOnly and highlights it', () => {
+    it('shows the legal entity read-only under readOnly and highlights it', () => {
         const tree = render(
             <Form.BusinessInfo {...BUSINESS} {...LEGAL} readOnly highlightFields={['legalName', 'taxAddress']} />
         );
-        for (const value of ['Casa Nostra LLC', '9 Elm St, Boston']) {
-            expect(`${value}:${inputWithValue(tree, value).props.editable}`).toBe(`${value}:false`);
-        }
+        const legal = ['Casa Nostra LLC', '9 Elm St, Boston'];
+        expect(drawnAs(tree, legal)).toEqual(readOnlyLines(legal));
+        expect(legal.map((value) => drawnInput(tree, value).outlineColor)).toEqual([colors.primary, colors.primary]);
         expect(changedCount(tree)).toBe(2);
     });
 });
@@ -425,15 +493,49 @@ describe('Form.VehicleInfo with the catalogue', () => {
         expect(inputWithValue(tree, 'Retired Make')).toBeDefined();
     });
 
-    it('locks every field and opens no menu under readOnly', () => {
+    const CATALOG_VALUES = ['Car', '2021', 'Toyota', 'Camry', 'Silver', 'SMPL001', 'US-MA', '0SAMPLE0VIN000001'];
+
+    it('shows every field read-only and offers no menu under readOnly', () => {
         const tree = render(
             <Form.VehicleInfo {...CATALOG_VEHICLE} catalog={CATALOG} readOnly inputActionHandler={() => {}} />
         );
-        for (const value of ['Car', '2021', 'Toyota', 'Camry', 'Silver', 'SMPL001', 'US-MA', '0SAMPLE0VIN000001']) {
-            expect(`${value}:${inputWithValue(tree, value).props.editable}`).toBe(`${value}:false`);
-        }
+        expect(drawnAs(tree, CATALOG_VALUES)).toEqual(readOnlyLines(CATALOG_VALUES));
+        // No select is a button to open: nothing in the form answers a press.
+        expect(tree.root.findAll((node) => node.props.accessibilityRole === 'button')).toHaveLength(0);
+        expect(tree.root.findAll((node) => node.props.testID === 'vehicle.make.vpic:474')).toHaveLength(0);
+    });
+
+    it('greys out every field and opens no menu under isDisabled, as before', () => {
+        const tree = render(
+            <Form.VehicleInfo {...CATALOG_VEHICLE} catalog={CATALOG} isDisabled inputActionHandler={() => {}} />
+        );
+        expect(drawnAs(tree, CATALOG_VALUES)).toEqual(disabledLines(CATALOG_VALUES));
         pressable(tree, 'vehicle.make');
         expect(tree.root.findAll((node) => node.props.testID === 'vehicle.make.vpic:474')).toHaveLength(0);
+    });
+
+    it('under readOnly shows the flags as rows, the declared ones checked, and keeps the «changed» outlines', () => {
+        const flags = [
+            { value: 'salvage_title', label: 'Salvage title' },
+            { value: 'commercial_branding', label: 'Commercial branding' },
+        ];
+        const tree = render(
+            <Form.VehicleInfo
+                {...CATALOG_VEHICLE}
+                flags={['commercial_branding']}
+                catalog={{ ...CATALOG, flags }}
+                readOnly
+                highlightFields={['color', 'make']}
+                inputActionHandler={() => {}}
+            />
+        );
+        // What a screen reader meets: each flag's host row, the declared one announced as selected.
+        const flagRow = (value) => hostOf(tree, `vehicle.flags-${value}`)[0].props;
+        expect(flagRow('salvage_title').accessibilityLabel ?? '').not.toContain('selected');
+        expect(flagRow('commercial_branding').accessibilityLabel).toBe('Commercial branding, selected');
+        expect(changedCount(tree)).toBe(2);
+        expect(drawnInput(tree, 'Silver').outlineColor).toBe(colors.primary);
+        expect(drawnInput(tree, 'Toyota').outlineColor).toBe(colors.primary);
     });
 
     it('marks the highlighted fields and puts a server error under its field', () => {

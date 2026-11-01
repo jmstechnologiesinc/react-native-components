@@ -3,9 +3,10 @@ jest.mock('react-native-localize', () => ({
 }));
 
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import renderer, { act } from 'react-test-renderer';
 
-import { Checkbox, MD3LightTheme, Provider } from '@jmstechnologiesinc/react-native-paper';
+import { Checkbox, List, MD3LightTheme, Provider } from '@jmstechnologiesinc/react-native-paper';
 
 import { setI18nConfig } from '../../Localization/Localization';
 import CheckboxListField from '../CheckboxListField';
@@ -72,11 +73,85 @@ describe('CheckboxListField', () => {
         expect(onChange).toHaveBeenLastCalledWith([]);
     });
 
-    it('shows a read-only list and its error', () => {
+    it('shows a disabled list and its error', () => {
         const tree = render(
             <CheckboxListField options={OPTIONS} values={[]} onChange={() => {}} disabled error="Pick at least one" />
         );
         expect(tree.root.findAllByType(Checkbox.Item).every((item) => item.props.disabled)).toBe(true);
         expect(textOf(tree)).toContain('Pick at least one');
+    });
+
+    // Alta y consola plan 2.8: the choice shown, not asked — rows with a check, nothing greyed out. Read from the
+    // host nodes, as a screen reader meets them (review MD-1).
+    describe('readOnly', () => {
+        const readOnly = (props) =>
+            render(<CheckboxListField label="Items" options={OPTIONS} values={['expiry']} readOnly {...props} />);
+        const hostRows = (tree) =>
+            tree.root.findAll((node) => typeof node.type === 'string' && node.props.role === 'listitem');
+        const hosts = (tree) => tree.root.findAll((node) => typeof node.type === 'string');
+
+        it('shows every option as a listitem, read as one element, in a list inside the named group; no checkbox', () => {
+            const tree = readOnly();
+            expect(tree.root.findAllByType(Checkbox.Item)).toHaveLength(0);
+            expect(hostRows(tree).map((row) => [row.props.testID, row.props.accessible])).toEqual([
+                ['checkbox-list-photo', true],
+                ['checkbox-list-expiry', true],
+                ['checkbox-list-name', true],
+            ]);
+            const list = tree.root.find((node) => typeof node.type === 'string' && node.props.role === 'list');
+            // Named once, by the group (review LO-2).
+            expect(list.props['aria-label']).toBeUndefined();
+            expect(hostOf(tree, 'checkbox-list').props).toMatchObject({ role: 'group', 'aria-label': 'Items' });
+        });
+
+        it('checks the chosen options and announces them as selected', () => {
+            const tree = readOnly({ values: ['expiry', 'name'] });
+            expect(hostRows(tree).map((row) => row.props.accessibilityLabel)).toEqual([
+                'Photo',
+                'Expiry date, selected',
+                'Name, selected',
+            ]);
+            const checks = hostRows(tree).map((row) => row.findAllByType(List.Icon).map((icon) => icon.props.icon));
+            expect(checks).toEqual([[], ['check'], ['check']]);
+        });
+
+        it('is no control: nothing pressable, no button, nothing announced disabled, even an option the app disables', () => {
+            const tree = readOnly({ options: [...OPTIONS, { value: 'other', label: 'Other', disabled: true }] });
+            const controls = hosts(tree).filter(
+                (node) =>
+                    node.props.onClick ||
+                    node.props.onResponderRelease ||
+                    node.props.accessibilityRole === 'button' ||
+                    node.props.role === 'button' ||
+                    node.props.accessibilityState?.disabled ||
+                    node.props['aria-disabled']
+            );
+            expect(controls.map((node) => `${node.type} ${node.props.testID ?? ''}`)).toEqual([]);
+            // Each title is drawn in the enabled `onSurface`, never in `onSurfaceDisabled`.
+            const titleColor = (label) =>
+                StyleSheet.flatten(
+                    tree.root.find((node) => node.type === 'Text' && node.props.children === label).props.style
+                ).color;
+            expect(['Photo', 'Expiry date', 'Name', 'Other'].map(titleColor)).toEqual(
+                Array(4).fill(MD3LightTheme.colors.onSurface)
+            );
+        });
+
+        it('shows each label whole, never truncated (review MD-2)', () => {
+            const long = 'The expiry date printed on the document has passed and no renewal was uploaded';
+            const tree = readOnly({ options: [{ value: 'expiry', label: long }] });
+            const title = tree.root.find((node) => node.type === 'Text' && node.props.children === long);
+            expect(title.props.numberOfLines).toBe(0);
+        });
+
+        it('keeps its error line', () => {
+            expect(textOf(readOnly({ error: 'Pick at least one' }))).toContain('Pick at least one');
+        });
+
+        it('is the disabled list when disabled as well', () => {
+            const tree = readOnly({ disabled: true });
+            expect(hostRows(tree)).toHaveLength(0);
+            expect(tree.root.findAllByType(Checkbox.Item).every((item) => item.props.disabled)).toBe(true);
+        });
     });
 });

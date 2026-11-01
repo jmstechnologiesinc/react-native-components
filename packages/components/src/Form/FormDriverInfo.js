@@ -15,11 +15,13 @@ import { Config } from '../Config';
 // `licenseNumer`, `dateofBirth`, `ssn`. Without them it renders exactly as
 // before (pinned by `__tests__/legacyRendering.test.js`).
 //
-// `readOnly` locks every field and drops the background-check disclosure,
-// which is addressed to the applicant, not to whoever reviews the answers, and
-// the date field's entry aids (placeholder, keypad, length), which describe
-// typing. The secrets stay masked: a disabled input offers no «show» toggle. `dateOfBirth`
-// seeds the date field (it keeps its own state while typed into, as before).
+// `readOnly` shows every field read-only (`FormField`'s `readOnly`: not
+// editable, not greyed out, the «changed» outline kept) and drops the
+// background-check disclosure, which is addressed to the applicant, not to
+// whoever reviews the answers, and the date field's entry aids (placeholder,
+// keypad, length), which describe typing. The secrets stay masked: a read-only
+// input offers no «show» toggle. `dateOfBirth` seeds the date field (it keeps
+// its own state while typed into, as before).
 //
 // Additive, for a reader that must never see more than it is given (canon
 // §9.14): `showSsn={false}` drops the SSN field altogether (the console never
@@ -38,7 +40,7 @@ const FormDriverInfo = ({
     secureLicenseNumber = true,
 }) => {
     const [dateOfBirth, setDateOfBirth] = useState(initialDateOfBirth ?? '');
-    const locked = readOnly ? { disabled: true } : null;
+    const locked = readOnly ? { readOnly: true } : null;
 
     return (
         <>

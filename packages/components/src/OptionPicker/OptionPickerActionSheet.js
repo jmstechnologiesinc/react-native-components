@@ -20,8 +20,14 @@ const APPROX_STATUSBAR_HEIGHT = Platform.select({
     ios: 0,
 });
 
+/**
+ * `readOnly` (additive; the partner console) shows the picked options as plain chips: nothing to pick,
+ * remove or open — no «pick» button, no option sheet, and no help text, which tells whoever picks how to
+ * pick. With `isDisabled` as well, the chips are disabled.
+ */
 function OptionPickerActionSheet({
     isDisabled,
+    readOnly = false,
     isChipRemoveable = true,
     options = [],
     preSelectedOptions = [],
@@ -91,67 +97,71 @@ function OptionPickerActionSheet({
                     options={preSelectedOptions.map((option) =>
                         chipListOptionTitle ? chipListOptionTitle(option) : option.title
                     )}
-                    onPress={showActionSheet}
-                    onClose={isChipRemoveable ? handleRemoveChip : null}
+                    onPress={readOnly ? null : showActionSheet}
+                    onClose={isChipRemoveable && !readOnly ? handleRemoveChip : null}
                     chipStyle={{ marginBottom: MD3LightTheme.spacing.x2 }}
                 />
-                <ButtonWrapper
-                    title={addButtonTitle}
-                    isDisabled={isDisabled}
-                    onPress={showActionSheet}
-                    style={[{ marginLeft: 0 }, buttonWrapperStyle]}
-                />
-                {helpText ? (
+                {readOnly ? null : (
+                    <ButtonWrapper
+                        title={addButtonTitle}
+                        isDisabled={isDisabled}
+                        onPress={showActionSheet}
+                        style={[{ marginLeft: 0 }, buttonWrapperStyle]}
+                    />
+                )}
+                {helpText && !readOnly ? (
                     <HelperText style={helperTextStyle} padding="none">
                         {helpText}
                     </HelperText>
                 ) : null}
             </ScreenWrapper.Section>
 
-            <OptionSheet
-                ref={actionSheetRef}
-                statusBarTranslucent={false}
-                drawUnderStatusBar={false}
-                springOffset={50}
-                defaultOverlayOpacity={0.3}
-                gestureEnabled
-                containerStyle={{
-                    paddingBottom: insets.bottom,
-                    height: actionSheetHeight,
-                }}
-            >
-                {options?.length ? (
-                    <FlatList
-                        data={options}
-                        renderItem={({ item }) => (
-                            <NestedOptionPicker
-                                isDisabled={isDisabled}
-                                option={item}
-                                selectedOptions={selectedOptions}
-                                multiple={multiple}
-                                onOptionPress={handleOptionPress}
-                            />
-                        )}
-                        keyExtractor={(item) => item.id}
-                    />
-                ) : (
-                    <TNActivityIndicator />
-                )}
-
-                <Button
-                    mode="outlined"
-                    uppercase
-                    style={[
-                        JMSStyles.button,
-                        JMSStyles.buttonWithInset,
-                        { marginBottom: moderateScale(APPROX_STATUSBAR_HEIGHT) },
-                    ]}
-                    disabled={isDisabled}
-                    onPress={handlePickButtonPress}
+            {readOnly ? null : (
+                <OptionSheet
+                    ref={actionSheetRef}
+                    statusBarTranslucent={false}
+                    drawUnderStatusBar={false}
+                    springOffset={50}
+                    defaultOverlayOpacity={0.3}
+                    gestureEnabled
+                    containerStyle={{
+                        paddingBottom: insets.bottom,
+                        height: actionSheetHeight,
+                    }}
                 >
-                    {localized('pick')}
-                </Button>
-            </OptionSheet>
+                    {options?.length ? (
+                        <FlatList
+                            data={options}
+                            renderItem={({ item }) => (
+                                <NestedOptionPicker
+                                    isDisabled={isDisabled}
+                                    option={item}
+                                    selectedOptions={selectedOptions}
+                                    multiple={multiple}
+                                    onOptionPress={handleOptionPress}
+                                />
+                            )}
+                            keyExtractor={(item) => item.id}
+                        />
+                    ) : (
+                        <TNActivityIndicator />
+                    )}
+
+                    <Button
+                        mode="outlined"
+                        uppercase
+                        style={[
+                            JMSStyles.button,
+                            JMSStyles.buttonWithInset,
+                            { marginBottom: moderateScale(APPROX_STATUSBAR_HEIGHT) },
+                        ]}
+                        disabled={isDisabled}
+                        onPress={handlePickButtonPress}
+                    >
+                        {localized('pick')}
+                    </Button>
+                </OptionSheet>
+            )}
         </>
     );
 }

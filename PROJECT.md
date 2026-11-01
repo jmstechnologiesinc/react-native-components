@@ -228,10 +228,30 @@ themed through `useTheme()` so a host's theme applies:
   platform words there. A new partner component joins its `SCOPE`.
 - Stories register the package catalogue (`registerFlatCatalog({ en: EN, es: ES })`), as a host does.
 
-Forms (C-25): `Form.PersonInfo`, `Form.VehicleInfo` and `Form.BusinessInfo` take `readOnly` (alias of
-`isDisabled`, but it also locks PersonInfo's email, which `isDisabled` never did) and
+Forms (C-25): `Form.PersonInfo`, `Form.VehicleInfo` and `Form.BusinessInfo` take `readOnly` and
 `highlightFields: string[]` (the names the form reports to `inputActionHandler`), which outlines the field
-in `primary` and adds a «Changed» helper line (the line is what survives on a disabled input).
+in `primary` and adds a «Changed» helper line (colour alone is not a marker; on a disabled input, where Paper
+drops a custom outline, the line is what remains).
+
+**Read-only is not disabled (0.5.2, alta y consola plan phase 2, audit F6).** Only the console passes
+`readOnly`; the apps pass `isDisabled` or nothing, and those paths are pinned byte for byte by the `app path: …`
+cases of `legacyRendering.test.js` (captured from `main` @ 556ccd4, `__fixtures__/appPathCases.js`).
+- `FormField({ readOnly })` gives its input `editable={false}`: Paper keeps the enabled colours, never enters the
+  focused state and honours the «changed» outline; react-native-web renders the DOM `readonly` attribute.
+  `disabled` keeps its meaning and wins when both are given. Every form hands `readOnly` to its fields and takes
+  `disabled` from `isDisabled` only (PersonInfo's email still ignores `isDisabled`; only `readOnly` locks it).
+- `FormSelectField({ readOnly })`: the picked label as a read-only field — no menu, no dropdown icon, no button;
+  `testID` lands on the input. `SecretInputText` offers its «show» toggle only while editable (not disabled, not
+  `editable={false}`), so a read-only secret stays masked.
+- `CheckboxListField({ readOnly })`, `StripeForm.PaymentFrequency({ readOnly, accessibilityLabel })`: every
+  option a `ListRow/CheckedRow` in a `list` (the checkbox list's `group` carries `label`; the frequencies' list
+  is named by `accessibilityLabel`, which a host showing them read-only passes), the chosen ones with a
+  trailing check and announced «…, selected» (catalogue `selected`); nothing pressable or greyed out. Row
+  testIDs: `<testID>-<value>` for the checkbox list, none for the frequencies. `CheckedRow` is not a Paper
+  `List.Item` on purpose: it is a `listitem` read as one element (as `StateFlow` reads its states), laid out
+  as an MD3 list item from the theme's tokens, so no disabled press wrapper reaches the host.
+- `OptionPickerActionSheet({ readOnly })` (BusinessInfo's industries): the picked options as plain chips, no
+  «pick» button, nothing to remove or open.
 They also take `errors: Array<{ field, code, message? }>` — server field errors (K-32), keyed by the same
 names. Each error of a rendered field puts its input in Paper's `error` state and adds one
 `HelperText type="error"` under it (`testID="error.<field>"`) showing `message`, or the raw `code` when the
@@ -356,8 +376,8 @@ Data display and feedback:
   tone's container (`tones.js`), text/icon/actions in its `onContainer` (a `ThemeProvider` around the Banner).
 
 Fields: `NoteField({ label, value, onChangeText, helper, error, required, multiline=true, numberOfLines,
-disabled, testID })`; `CheckboxListField({ label, options, values, onChange, disabled,
-error, testID })` (Paper `Checkbox.Item`, leading, Android style); `FilterChips({ options:[{value, label}], value,
+disabled, testID })`; `CheckboxListField({ label, options, values, onChange, disabled, readOnly,
+error, testID })` (Paper `Checkbox.Item`, leading, Android style; `CheckedRow`s under `readOnly`); `FilterChips({ options:[{value, label}], value,
 onChange, compact=true, disabled, accessibilityLabel, testID })` on `ChipList` (replaces the admin prototype's
 `PartnerStatusFilterChips`; labels arrive localized). Tabs: `Tabs.Bar({ tabs:[{value, label, disabled,
 accessibilityLabel}], value, onChange, accessibilityLabel, style, testID='tabs' })` — `Tabs.Scrollable` +
@@ -365,7 +385,7 @@ accessibilityLabel}], value, onChange, accessibilityLabel, style, testID='tabs' 
 
 Form pieces: `ChangedHelperText`, `FieldErrorText` and the new `FieldErrorList({ errors, exclude, fieldLabel,
 testID='field-errors' })` (every error one line; `<testID>.<field>`, `form` when field-less) are exported from
-`Form/FormField.js`. `Form.DriverInfo` takes `readOnly` (locks every field and drops the applicant-facing
+`Form/FormField.js`. `Form.DriverInfo` takes `readOnly` (shows every field read-only and drops the applicant-facing
 background-check disclosure; the secrets stay masked), `highlightFields`, `errors` (names `licenseNumer`,
 `dateofBirth`, `ssn`) and `dateOfBirth` (seeds the date field); under `readOnly` the date field gets no entry aids
 (placeholder, keypad, length). `legacyTrees.capture.test.js` re-captures `__fixtures__/legacyTrees.json` cases from

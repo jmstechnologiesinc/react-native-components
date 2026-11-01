@@ -269,6 +269,8 @@
         "backTo": "Volver a %{name}",
         "breadcrumb": "Ruta de navegación",
         "close": "Cerrar",
+        "filterValue": "%{label}: %{value}",
+        "chooseFilter": "Elegir %{label}",
         "showSidePanel": "Mostrar panel lateral",
         "navigation": "Navegación",
         "loading": "Cargando",

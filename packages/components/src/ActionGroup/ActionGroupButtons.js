@@ -7,13 +7,22 @@ import { itemSeparator } from '../utils';
 
 const isPrimaryButton = (buttonLength, index) => index === buttonLength - 1;
 
-const ActionGroupButtons = ({ buttons, isLoading, isStretched = false, style, onPress, variant = 'button' }) => {
+// `containerStyle` overrides the row's own (a host that stacks the group under its text gives it no flex).
+const ActionGroupButtons = ({
+    buttons,
+    isLoading,
+    isStretched = false,
+    style,
+    containerStyle,
+    onPress,
+    variant = 'button',
+}) => {
     if (!buttons.length) {
         return null;
     }
 
     return (
-        <View style={[{ flexDirection: 'row', justifyContent: 'flex-end', flex: 1.2 }]}>
+        <View style={[{ flexDirection: 'row', justifyContent: 'flex-end', flex: 1.2 }, containerStyle]}>
             {buttons.map((button, index) => {
                 return (
                     <View

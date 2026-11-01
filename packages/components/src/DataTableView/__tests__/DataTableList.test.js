@@ -65,6 +65,23 @@ describe('DataTableList', () => {
         expect(listOf(tree).props.stickyHeaderIndices).toEqual([0]);
     });
 
+    it('sets the titles in titleSmall and the text cells in bodyMedium (the M3 table type)', () => {
+        const tree = render(table());
+        tree.root
+            .findAllByType(DataTable.Title)
+            .forEach((title) => expect(title.props.textStyle).toEqual(MD3LightTheme.fonts.titleSmall));
+        const cells = tree.root.findAllByType(DataTable.Cell);
+        expect(cells.length).toBeGreaterThan(0);
+        cells.forEach((cell) => expect(cell.props.textStyle).toEqual(MD3LightTheme.fonts.bodyMedium));
+    });
+
+    it('paints the sticky header with the surface, so the rows scrolling under it never show through', () => {
+        const tree = render(table());
+        expect(tree.root.findByType(DataTable.Header).props.style).toEqual({
+            backgroundColor: MD3LightTheme.colors.surface,
+        });
+    });
+
     it('places rows at a fixed height without measuring them (the MD3 48dp row)', () => {
         const tree = render(table());
         expect(listOf(tree).props.getItemLayout(ROWS, 3)).toEqual({

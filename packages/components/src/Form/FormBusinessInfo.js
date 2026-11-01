@@ -104,7 +104,9 @@ const FormBusinessInfo = ({
     inputActionHandler,
     industries,
 }) => {
-    const disabled = Boolean(isDisabled || readOnly);
+    // `readOnly` (the console) shows the values without letting them change; it is
+    // not `isDisabled` (the app), which greys the fields out.
+    const disabled = Boolean(isDisabled);
 
     return (
         <>
@@ -116,6 +118,7 @@ const FormBusinessInfo = ({
                         errors={errors}
                         highlighted={isHighlighted(highlightFields, 'title')}
                         disabled={disabled}
+                        readOnly={readOnly}
                         label={localized('storeName')}
                         value={storeTitle}
                         autoCapitalize="words"
@@ -129,6 +132,7 @@ const FormBusinessInfo = ({
                         errors={errors}
                         highlighted={isHighlighted(highlightFields, 'description')}
                         disabled={disabled}
+                        readOnly={readOnly}
                         label={localized('storeHighlightsDescription')}
                         value={description}
                         onChangeText={(text) => inputActionHandler('description', text)}
@@ -141,6 +145,7 @@ const FormBusinessInfo = ({
                         errors={errors}
                         highlighted={isHighlighted(highlightFields, 'location')}
                         disabled={disabled}
+                        readOnly={readOnly}
                         label={localized('storeAddress')}
                         value={location}
                         autoCapitalize="words"
@@ -154,6 +159,7 @@ const FormBusinessInfo = ({
                         errors={errors}
                         highlighted={isHighlighted(highlightFields, 'line2')}
                         disabled={disabled}
+                        readOnly={readOnly}
                         label={localized('floorSuite')}
                         value={line2}
                         autoCapitalize="characters"
@@ -170,6 +176,7 @@ const FormBusinessInfo = ({
                             errors={errors}
                             highlighted={isHighlighted(highlightFields, 'phoneNumber')}
                             disabled={disabled}
+                            readOnly={readOnly}
                             label={localized('phoneNumber')}
                             value={phoneNumber}
                             keyboardType="numeric"
@@ -186,6 +193,7 @@ const FormBusinessInfo = ({
                             errors={errors}
                             highlighted={isHighlighted(highlightFields, 'email')}
                             disabled={disabled}
+                            readOnly={readOnly}
                             label={localized('email')}
                             value={email}
                             autoCapitalize="none"
@@ -205,6 +213,7 @@ const FormBusinessInfo = ({
                             errors={errors}
                             highlighted={isHighlighted(highlightFields, 'website')}
                             disabled={disabled}
+                            readOnly={readOnly}
                             label={localized('website')}
                             value={website}
                             autoCapitalize="none"
@@ -224,6 +233,7 @@ const FormBusinessInfo = ({
                                 errors={errors}
                                 highlighted={isHighlighted(highlightFields, 'legalName')}
                                 disabled={disabled}
+                                readOnly={readOnly}
                                 label={localized('legalBusinessName')}
                                 value={legalName}
                                 autoCapitalize="words"
@@ -239,6 +249,7 @@ const FormBusinessInfo = ({
                                 errors={errors}
                                 highlighted={isHighlighted(highlightFields, 'tin')}
                                 disabled={disabled}
+                                readOnly={readOnly}
                                 label={
                                     taxIdTypeLabel
                                         ? `${localized('taxIdentificationNumber')} (${taxIdTypeLabel})`
@@ -260,6 +271,7 @@ const FormBusinessInfo = ({
                                 errors={errors}
                                 highlighted={isHighlighted(highlightFields, 'taxAddress')}
                                 disabled={disabled}
+                                readOnly={readOnly}
                                 label={localized('taxAddress')}
                                 value={taxAddress}
                                 autoCapitalize="words"
@@ -275,6 +287,7 @@ const FormBusinessInfo = ({
             <ScreenWrapper.Container>
                 <OptionPickerActionSheet
                     isDisabled={disabled}
+                    readOnly={readOnly}
                     chipListTitle={localized('Industries')}
                     addButtonTitle={localized('pick')}
                     helpText={localized('helpTextIndustries')}
