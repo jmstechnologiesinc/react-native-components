@@ -213,6 +213,24 @@ themed through `useTheme()` so a host's theme applies:
   `onError({source, error})` reports an image the default renderer could not load (a lapsed signed URL).
 - `DecisionDialog` — Paper `Dialog` in a `Portal` (the host needs Paper's `Provider`).
 - `Timeline` — `history` and `steps`.
+- Document requirements (contract request #117, 0.5.4), fed by a `getMyStatus` checklist item, so no host keeps a
+  document type of its own:
+  - `Partner/DocumentRequirementCard` (portable) — a Paper `Card` composed as Paper composes one: the title is
+    `requirementTitle(item)` (the rule's name for the market, else the catalogue's), `subtitle` is the host's,
+    then `cover` (a photo taken and not sent), `note` and the rule's explanation, and `actions`
+    (`{ label, onPress, isDisabled?, testID? }`) as Paper `Button`s straight inside `Card.Actions`, which gives
+    them their modes. Without `actions` it only reads (the console).
+  - `Partner/DocumentVersionList` (portable) — `item.versions` as `ListRow`s from `documentVersionRows`; they open
+    nothing, so no chevron.
+  - `Partner/DocumentCaptureCard` (barrel only: the picker is native) — the card with the way to send it, as
+    `item.capture` says (`pages` 1, or 2 = the front then the back; `pdf`): the front waits as the cover until the
+    back is taken, `onCapture(photos)` gets the pages in order, and «Subir un PDF» shows only with `capture.pdf`
+    and an `onUploadPdf` (none while the console acts as the partner).
+  - `ImagePicker.Avatar` `variant="sheet"` renders no control of its own; the caller opens the sheet with the
+    ref's `show()`, so its own Paper `Button` can sit inside a `Card.Actions`. `avatar` and `button` are as before.
+  - Their fixed words (`documentAddFront`, `documentAddBack`, `documentAddBackPrompt`, `documentUploadPdf`,
+    `documentSuperseded`) live in `Translations/*.json`; the stories (`Partner/DocumentRequirement.stories.js`)
+    use the local circuit's real items.
 - `Partner/viewModel.js` (barrel/portable: `PartnerViewModel`, because `statusLabel` is the Order one):
   the key is the package's `statusLabelKey(group, value)` resolved with `localized`; a value outside the
   vocabulary, or a key the registered catalogue lacks, renders the raw value. Each kind's group is read

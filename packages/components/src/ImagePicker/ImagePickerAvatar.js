@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 import { Avatar as PaperAvatar, MD3LightTheme, TouchableRipple, List } from '@jmstechnologiesinc/react-native-paper';
 
@@ -19,17 +19,25 @@ export const IMAGE_PICKER_ACTIONS = {
     cancel: 'cancel',
 };
 
-const Avatar = ({
-    photo,
-    onChange,
-    onRemove,
-    title,
-    variant = 'avatar',
-    icon = 'account',
-    size = moderateScale(150),
-    options = [],
-    isDisabled,
-}) => {
+/**
+ * The photo picker: a camera / library / cancel sheet, opened by an avatar (`variant="avatar"`), by a text button
+ * (`variant="button"`), or, with `variant="sheet"`, by the caller's own control through the ref's `show()` — so a
+ * caller can put a Paper `Button` straight inside its own container (a `Card.Actions` styles only its direct children).
+ */
+const Avatar = forwardRef(function Avatar(
+    {
+        photo,
+        onChange,
+        onRemove,
+        title,
+        variant = 'avatar',
+        icon = 'account',
+        size = moderateScale(150),
+        options = [],
+        isDisabled,
+    },
+    ref
+) {
     const imagePickerRef = useRef();
     const actionSheetRef = useRef();
 
@@ -49,6 +57,8 @@ const Avatar = ({
     const showActionSheet = () => {
         actionSheetRef.current.show();
     };
+
+    useImperativeHandle(ref, () => ({ show: showActionSheet }), []);
 
     const onActionDone = async (value) => {
         if (value === IMAGE_PICKER_ACTIONS.launchCamera) {
@@ -88,29 +98,37 @@ const Avatar = ({
         { title: localized('cancel'), value: IMAGE_PICKER_ACTIONS.cancel, icon: 'cancel' },
     ];
 
+    // What opens the sheet: the avatar, the text button, or nothing of its own (`sheet`: the caller's control, `show()`).
+    let trigger = null;
+    if (variant === 'avatar') {
+        trigger = (
+            <ScreenWrapper.Section style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                <TouchableRipple
+                    rippleColor={MD3LightTheme.colors.background}
+                    onPress={isDisabled ? null : showActionSheet}
+                >
+                    {photo ? (
+                        <PaperAvatar.Image source={{ uri: photo }} size={size} />
+                    ) : (
+                        <PaperAvatar.Icon icon={icon} size={size} />
+                    )}
+                </TouchableRipple>
+            </ScreenWrapper.Section>
+        );
+    } else if (variant !== 'sheet') {
+        trigger = (
+            <ButtonWrapper
+                title={title}
+                isDisabled={isDisabled}
+                onPress={isDisabled ? null : showActionSheet}
+                style={{ marginLeft: 0 }}
+            />
+        );
+    }
+
     return (
         <>
-            {variant === 'avatar' ? (
-                <ScreenWrapper.Section style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                    <TouchableRipple
-                        rippleColor={MD3LightTheme.colors.background}
-                        onPress={isDisabled ? null : showActionSheet}
-                    >
-                        {photo ? (
-                            <PaperAvatar.Image source={{ uri: photo }} size={size} />
-                        ) : (
-                            <PaperAvatar.Icon icon={icon} size={size} />
-                        )}
-                    </TouchableRipple>
-                </ScreenWrapper.Section>
-            ) : (
-                <ButtonWrapper
-                    title={title}
-                    isDisabled={isDisabled}
-                    onPress={isDisabled ? null : showActionSheet}
-                    style={{ marginLeft: 0 }}
-                />
-            )}
+            {trigger}
 
             <ActionSheet
                 ref={actionSheetRef}
@@ -140,6 +158,6 @@ const Avatar = ({
             </ActionSheet>
         </>
     );
-};
+});
 
 export default Avatar;

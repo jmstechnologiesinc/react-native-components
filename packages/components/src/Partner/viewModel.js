@@ -1,4 +1,4 @@
-import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
+import { interpunct, MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 import {
     CHECKR_REPORT_ADJUDICATION,
     CHECKR_REPORT_RESULT,
@@ -24,12 +24,14 @@ import {
     RULE_CLAUSE,
     RULE_ERROR_CODE,
     RULE_REFERENCE_SUBJECT,
+    SCAN_STATUS,
     SCREENING_PACKAGE,
     STAFF_INTENT,
     VERIFICATION_STATUS,
     statusLabelKey,
 } from '@jmstechnologiesinc/partner';
 
+import { formatDateTime } from '../Localization/format';
 import { currentLocale, localized } from '../Localization/Localization';
 import { STATUS_TONES } from '../tones';
 
@@ -92,6 +94,7 @@ const GROUP = Object.freeze({
     disabledReason: groupOf(DISABLED_REASON),
     intent: groupOf(STAFF_INTENT),
     refusal: groupOf(REFUSAL_REASON),
+    scan: groupOf(SCAN_STATUS),
 });
 
 const { success, warning, danger, neutral, info } = STATUS_TONES;
@@ -383,6 +386,32 @@ const COUNT_WORD = Object.freeze({
 
 /** A rule's own text (`{en, es}`, written in the rules editor) in the reader's language, else the package's first. */
 export const ruleText = (text) => (text ? text[currentLocale().split('-')[0]] ?? text[LOCALES[0]] : null);
+
+/**
+ * Contract request #117: a requirement's name — the composed rule's own for the partner's market (`label`, #97) when
+ * it has one, else the catalogue's — so the hub, the lists and the document screen name one requirement one way.
+ */
+export const requirementTitle = (item) => ruleText(item?.label) ?? requirementLabel(item?.requirementKey);
+
+/**
+ * Contract request #117: a document requirement's versions (`checklistItem.versions`, newest first, as the server
+ * sends them) as list rows `{ key, title, description }`. The title is the version's state: «Superseded» once a newer
+ * one replaced it, else its verification's label. The description is when it was sent (in the app's locale), that it
+ * is still being scanned, why it was not accepted and until when it counts — each only when the version says it.
+ */
+export const documentVersionRows = (versions) =>
+    (Array.isArray(versions) ? versions : []).map((version) => ({
+        key: version.versionId,
+        title: version.supersededBy
+            ? localized('documentSuperseded')
+            : statusLabel('verification', version.verification?.status),
+        description: interpunct([
+            formatDateTime(version.submittedTime),
+            version.scan?.status === SCAN_STATUS.PENDING ? labelOf(GROUP.scan, version.scan.status) : null,
+            detailsCodeLabel(version.verification?.details_code),
+            version.expires_at ? `${localized('documentExpires')} ${version.expires_at}` : null,
+        ]),
+    }));
 
 /** «24 h», «30 días»: the catalogue's word for the count, or the bare count while no catalogue carries it. */
 const countText = (kind, count) => {
