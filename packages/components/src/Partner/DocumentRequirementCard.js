@@ -16,12 +16,14 @@ import { requirementTitle, ruleText } from './viewModel';
  *   `note` (what to do now) and the rule's plain explanation for the market. The photos sit in the Card.Content, not
  *   beside it: Card.Content takes its top padding from a Card.Cover or Card.Title just above it, so one carousel
  *   between them would leave the text against the photos;
- * - `actions` are `{ label, onPress, isDisabled?, testID? }`, Paper `Button`s straight inside `Card.Actions`, which
- *   gives them their modes (the first outlined, the next contained).
+ * - `actions` are `{ label, onPress, isDisabled?, mode?, testID? }`, Paper `Button`s straight inside `Card.Actions`,
+ *   which keeps a `mode` given (a Paper Button mode) and gives the rest its own (the first outlined, the next
+ *   contained).
  * Without `actions` (the console showing what the partner sees) the card only reads.
  *
  * @param {{item: object, subtitle?: ?string, covers?: Array<{uri: string, label: string}>, note?: ?string,
- *     actions?: Array<{label: string, onPress: () => void, isDisabled?: boolean, testID?: string}>, testID?: string}} props
+ *     actions?: Array<{label: string, onPress: () => void, isDisabled?: boolean, mode?: string, testID?: string}>,
+ *     testID?: string}} props
  */
 const DocumentRequirementCard = ({
     item,
@@ -68,8 +70,8 @@ const DocumentRequirementCard = ({
             ) : null}
             {actions.length > 0 ? (
                 <Card.Actions>
-                    {actions.map(({ label, onPress, isDisabled, testID: actionTestID }) => (
-                        <Button key={label} onPress={onPress} disabled={isDisabled} testID={actionTestID}>
+                    {actions.map(({ label, onPress, isDisabled, mode, testID: actionTestID }) => (
+                        <Button key={label} mode={mode} onPress={onPress} disabled={isDisabled} testID={actionTestID}>
                             {label}
                         </Button>
                     ))}

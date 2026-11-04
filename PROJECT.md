@@ -219,8 +219,8 @@ themed through `useTheme()` so a host's theme applies:
     `requirementTitle(item)` (the rule's name for the market, else the catalogue's), `subtitle` is the host's,
     then, in its `Card.Content`, `covers` (the photos taken and not sent, in order, each `{ uri, label }` with the
     name a screen reader says), `note` and the rule's explanation, and `actions`
-    (`{ label, onPress, isDisabled?, testID? }`) as Paper `Button`s straight inside `Card.Actions`, which gives
-    them their modes. Without `actions` it only reads (the console).
+    (`{ label, onPress, isDisabled?, mode?, testID? }`) as Paper `Button`s straight inside `Card.Actions`, which
+    keeps a `mode` given and gives the rest theirs. Without `actions` it only reads (the console).
   - `Partner/DocumentCovers` (portable, not exported) — the card's photos: one is a `Card.Cover`; more are a
     Material 3 hero carousel (a horizontal `ScrollView`: `snapToInterval` on the phone, `pagingEnabled`'s CSS scroll
     snap on the web; items `spacing.x2` apart, the next peeking `spacing.x14`, Material's 8 dp and 56 dp).
@@ -228,9 +228,9 @@ themed through `useTheme()` so a host's theme applies:
     nothing, so no chevron.
   - `Partner/DocumentCaptureCard` (barrel only: the picker is native) — the card with the way to send it, as
     `item.capture` says (`pages` 1, or 2 = the front then the back). Taking a photo sends nothing: the pages show
-    as covers; its first action takes a photo (one taken once every page is there starts again), and the last,
-    «Send to review», contained and disabled until every page is taken, hands them to `onCapture(photos)` in
-    order. Photos only: it offers no PDF (owner, 2026-11-04).
+    as covers; its first action, a text button, takes a photo (one taken once every page is there starts again),
+    and the last, «Send to review», the only one with a border (outlined) and disabled until every page is taken,
+    hands them to `onCapture(photos)` in order. Photos only: it offers no PDF (owner, 2026-11-04).
   - `ImagePicker.Avatar` `variant="sheet"` renders no control of its own; the caller opens the sheet with the
     ref's `show()`, so its own Paper `Button` can sit inside a `Card.Actions`. `avatar` and `button` are as before.
   - Their fixed words (`documentAddFront`, `documentAddBack`, `documentAddBackPrompt`, `documentFront`,

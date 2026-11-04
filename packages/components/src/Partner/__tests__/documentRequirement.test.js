@@ -232,6 +232,9 @@ describe('DocumentCaptureCard', () => {
         // Photos only (owner, 2026-11-04): no PDF, even where the server takes one.
         expect(textsOf(tree)).not.toContain('Upload a PDF');
         expect(buttonOf(tree, 'document-requirement-send').props.disabled).toBe(true);
+        // A text button takes the photo; sending is the only one with a border (owner, 2026-11-04).
+        expect(buttonOf(tree, 'document-requirement-add').props.mode).toBe('text');
+        expect(buttonOf(tree, 'document-requirement-send').props.mode).toBe('outlined');
         press(tree, 'document-requirement-add');
         expect(mockPicker.shown).toBe(1);
 

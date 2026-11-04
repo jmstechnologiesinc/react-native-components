@@ -40,13 +40,20 @@ const DocumentCaptureCard = ({ item, subtitle, onCapture, isDisabled = false, te
     let addLabel = localized('add');
     if (twoSided) addLabel = localized(pages.length === 1 ? 'documentAddBack' : 'documentAddFront');
 
-    // MD3: the way to take a photo stays, and the main action, sending, is last (Card.Actions makes the first button
-    // outlined and the next contained); it waits, disabled, until every page is taken.
+    // The way to take a photo stays, a text button; the main action, sending, is last and the only one with a border
+    // (owner, 2026-11-04); it waits, disabled, until every page is taken.
     const actions = [
-        { label: addLabel, onPress: () => pickerRef.current?.show(), isDisabled, testID: `${testID}-add` },
+        {
+            label: addLabel,
+            onPress: () => pickerRef.current?.show(),
+            isDisabled,
+            mode: 'text',
+            testID: `${testID}-add`,
+        },
         {
             label: localized('sendToReview'),
             onPress: send,
+            mode: 'outlined',
             isDisabled: isDisabled || !complete,
             testID: `${testID}-send`,
         },

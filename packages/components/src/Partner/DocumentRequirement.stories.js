@@ -201,8 +201,8 @@ export const LicenceFrontTaken = () => (
             covers={[{ uri: 'data:,', label: localized('documentFront') }]}
             note={localized('documentAddBackPrompt')}
             actions={[
-                { label: localized('documentAddBack'), onPress: () => {} },
-                { label: localized('sendToReview'), onPress: () => {}, isDisabled: true },
+                { label: localized('documentAddBack'), onPress: () => {}, mode: 'text' },
+                { label: localized('sendToReview'), onPress: () => {}, isDisabled: true, mode: 'outlined' },
             ]}
         />
     </View>
@@ -217,8 +217,8 @@ export const LicenceReadyToSend = () => (
                 { uri: 'data:,', label: localized('documentBack') },
             ]}
             actions={[
-                { label: localized('documentAddFront'), onPress: () => {} },
-                { label: localized('sendToReview'), onPress: () => {} },
+                { label: localized('documentAddFront'), onPress: () => {}, mode: 'text' },
+                { label: localized('sendToReview'), onPress: () => {}, mode: 'outlined' },
             ]}
         />
     </View>
