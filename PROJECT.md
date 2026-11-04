@@ -227,7 +227,15 @@ themed through `useTheme()` so a host's theme applies:
     its buttons are keyed by position, as `Card.Actions` itself tells them apart (a label changes as photos are taken).
   - `Partner/DocumentCovers` (portable, not exported) — the card's photos: one is a `Card.Cover`; more are a
     Material 3 hero carousel (a horizontal `ScrollView`: `snapToInterval` on the phone, `pagingEnabled`'s CSS scroll
-    snap on the web; items `spacing.x2` apart, the next peeking `spacing.x14`, Material's 8 dp and 56 dp).
+    snap on the web; items `spacing.x2` apart, the next peeking `spacing.x14`, Material's 8 dp and 56 dp), or all whole
+    side by side where the measured width fits them at Material's largest large item (twice the cover's height, which
+    the first cover reports, plus the gap). On the web the carousel's scrollbar shows (a mouse has no swipe). The item
+    it rests on is followed from `onScroll`, and a new width (rotation, resize) scrolls back to it. Each photo is an
+    image button (`imagebutton`; `button` + `aria-label` on the web, where react-native-web maps no role for it) named
+    by its `label`; it opens `DocumentViewer` full screen (Paper `Portal` + `Modal`, its height the window's between
+    the safe-area insets; the internal `SheetHeader` with its `global.close`) on that page, with the document's sides
+    (the covers' labels) when there are two. testIDs: `<testID>-covers`, `-carousel`, `-cover-<i>`, `-viewer`,
+    `-viewer-header-close`, `-viewer-document`.
   - `Partner/DocumentVersionList` (portable) — `item.versions` as `ListRow`s from `documentVersionRows`; they open
     nothing, so no chevron. A row's description: when it was sent, the scan's catalogue label while the scan is not
     `SCAN_STATUS.CLEAN` (pending, and partner 0.2.54's infected, never spelled here), the details code's label, and

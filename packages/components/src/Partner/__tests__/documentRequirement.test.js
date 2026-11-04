@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Platform, ScrollView } from 'react-native';
 import renderer, { act } from 'react-test-renderer';
 
 import { EN, ES } from '@jmstechnologiesinc/partner';
@@ -59,6 +60,7 @@ afterEach(() => {
         mounted.splice(0).forEach((tree) => tree.unmount());
         jest.runOnlyPendingTimers();
     });
+    jest.restoreAllMocks();
 });
 
 // Every string a host Text renders, in order.
@@ -97,6 +99,17 @@ const LICENCE = {
     versions: [],
 };
 const AT = 1793249082020;
+const BOTH_SIDES = [
+    { uri: 'file:///front.jpg', label: 'Front' },
+    { uri: 'file:///back.jpg', label: 'Back' },
+];
+// The cover's height, as the first cover reports it (Card.Cover's own), and the width the covers are laid out in.
+const COVER_HEIGHT = 195;
+const layOut = (tree, width) =>
+    act(() => {
+        propsOf(tree, 'document-requirement-cover-0').onLayout({ nativeEvent: { layout: { height: COVER_HEIGHT } } });
+        propsOf(tree, 'document-requirement-covers').onLayout({ nativeEvent: { layout: { width } } });
+    });
 
 describe('requirementTitle', () => {
     it("is the rule's own name for the market, in the reader's language", () => {
@@ -197,7 +210,7 @@ describe('DocumentRequirementCard', () => {
             />
         );
         expect(propsOf(tree, 'document-requirement-cover-0')).toEqual(
-            expect.objectContaining({ accessible: true, accessibilityRole: 'image', accessibilityLabel: 'Front' })
+            expect.objectContaining({ accessibilityRole: 'imagebutton', accessibilityLabel: 'Front' })
         );
         // One photo is the cover, not a carousel.
         expect(hasTestID(tree, 'document-requirement-covers')).toBe(false);
@@ -237,28 +250,89 @@ describe('DocumentRequirementCard', () => {
 
     it('shows both sides as a carousel that snaps item by item, the next one peeking (Material 3 hero)', () => {
         const { spacing } = MD3LightTheme;
-        const tree = render(
-            <DocumentRequirementCard
-                item={LICENCE}
-                covers={[
-                    { uri: 'file:///front.jpg', label: 'Front' },
-                    { uri: 'file:///back.jpg', label: 'Back' },
-                ]}
-            />
-        );
-        const carousel = propsOf(tree, 'document-requirement-covers');
-        expect(carousel).toEqual(
-            expect.objectContaining({ horizontal: true, pagingEnabled: true, decelerationRate: 'fast' })
+        const tree = render(<DocumentRequirementCard item={LICENCE} covers={BOTH_SIDES} />);
+        expect(propsOf(tree, 'document-requirement-carousel')).toEqual(
+            expect.objectContaining({
+                horizontal: true,
+                pagingEnabled: true,
+                decelerationRate: 'fast',
+                showsHorizontalScrollIndicator: false,
+            })
         );
         expect(propsOf(tree, 'document-requirement-cover-0').accessibilityLabel).toBe('Front');
         expect(propsOf(tree, 'document-requirement-cover-1').accessibilityLabel).toBe('Back');
 
-        act(() => carousel.onLayout({ nativeEvent: { layout: { width: 400 } } }));
+        layOut(tree, 400);
         // The large item is what the width leaves after the small item that peeks (56 dp) and the gap (8 dp).
         const itemWidth = 400 - spacing.x14 - spacing.x2;
         expect(propsOf(tree, 'document-requirement-cover-0').style).toEqual({ width: itemWidth });
-        expect(propsOf(tree, 'document-requirement-covers').snapToInterval).toBe(itemWidth + spacing.x2);
-        expect(propsOf(tree, 'document-requirement-covers').contentContainerStyle).toEqual({ gap: spacing.x2 });
+        expect(propsOf(tree, 'document-requirement-carousel').snapToInterval).toBe(itemWidth + spacing.x2);
+        expect(propsOf(tree, 'document-requirement-carousel').contentContainerStyle).toEqual({ gap: spacing.x2 });
+    });
+
+    it('scrolls back to the item it rested on when its width changes', () => {
+        const { spacing } = MD3LightTheme;
+        const tree = render(<DocumentRequirementCard item={LICENCE} covers={BOTH_SIDES} />);
+        layOut(tree, 400);
+        // At its end the carousel rests with the back whole and the front peeking.
+        const interval = 400 - spacing.x14;
+        act(() =>
+            propsOf(tree, 'document-requirement-carousel').onScroll({
+                nativeEvent: { contentOffset: { x: 2 * interval - spacing.x2 - 400 } },
+            })
+        );
+        const { scrollTo } = tree.root.findAllByType(ScrollView)[0].instance;
+        scrollTo.mockClear();
+
+        layOut(tree, 600);
+        const wider = 600 - spacing.x14;
+        expect(scrollTo).toHaveBeenCalledWith({ x: 2 * wider - spacing.x2 - 600, animated: false });
+    });
+
+    it('shows both sides whole, without a carousel, where they fit at the largest large item', () => {
+        const { spacing } = MD3LightTheme;
+        const tree = render(<DocumentRequirementCard item={LICENCE} covers={BOTH_SIDES} />);
+        // Twice as wide as the cover is tall, each, and the gap between them.
+        layOut(tree, 2 * (2 * COVER_HEIGHT) + spacing.x2);
+        expect(hasTestID(tree, 'document-requirement-carousel')).toBe(false);
+        expect(propsOf(tree, 'document-requirement-cover-0').style).toEqual({ width: 2 * COVER_HEIGHT });
+        expect(propsOf(tree, 'document-requirement-cover-1').style).toEqual({ width: 2 * COVER_HEIGHT });
+    });
+
+    it('on the web, shows the scrollbar and makes each photo a button named by its label', () => {
+        jest.replaceProperty(Platform, 'OS', 'web');
+        const tree = render(<DocumentRequirementCard item={LICENCE} covers={BOTH_SIDES} />);
+        expect(propsOf(tree, 'document-requirement-carousel').showsHorizontalScrollIndicator).toBe(true);
+        expect(propsOf(tree, 'document-requirement-cover-1')).toEqual(
+            expect.objectContaining({ role: 'button', 'aria-label': 'Back' })
+        );
+    });
+
+    it('opens a photo full screen in the document viewer, on its side, before anything is sent', () => {
+        const tree = render(<DocumentRequirementCard item={LICENCE} covers={BOTH_SIDES} />);
+        expect(propsOf(tree, 'document-requirement-viewer').visible).toBe(false);
+
+        press(tree, 'document-requirement-cover-1');
+        expect(propsOf(tree, 'document-requirement-viewer').visible).toBe(true);
+        const viewer = propsOf(tree, 'document-requirement-viewer-document');
+        expect(viewer.source).toEqual({ uri: 'file:///back.jpg' });
+        expect(viewer.sides.map(({ label }) => label)).toEqual(['Front', 'Back']);
+
+        act(() => viewer.onSideChange(viewer.sides[0].value));
+        expect(propsOf(tree, 'document-requirement-viewer-document').source).toEqual({ uri: 'file:///front.jpg' });
+
+        press(tree, 'document-requirement-viewer-header-close');
+        expect(propsOf(tree, 'document-requirement-viewer').visible).toBe(false);
+    });
+
+    it('opens a one-page document with no sides to choose', () => {
+        const tree = render(
+            <DocumentRequirementCard item={INSPECTION} covers={[{ uri: 'file:///page.jpg', label: 'Document' }]} />
+        );
+        press(tree, 'document-requirement-cover-0');
+        const viewer = propsOf(tree, 'document-requirement-viewer-document');
+        expect(viewer.source).toEqual({ uri: 'file:///page.jpg' });
+        expect(viewer.sides).toBeUndefined();
     });
 });
 
