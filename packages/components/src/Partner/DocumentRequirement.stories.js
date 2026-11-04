@@ -191,17 +191,31 @@ export const ReadOnlyInTheConsole = () => (
     </View>
 );
 
-// The front of a licence taken and waiting for the back. The cover is the partner's own photo, which a story does
-// not have: an empty one shows where it goes.
+// What the partner has taken shows on the card before anything is sent (owner, 2026-11-04): the front waiting for the
+// back, «Send to review» still disabled, then both sides ready to send. The covers are the partner's own photos, which a story does not have:
+// empty ones show where they go.
 export const LicenceFrontTaken = () => (
     <View style={pane}>
         <DocumentRequirementCard
             item={LICENCE_NOTHING_SENT}
-            cover="data:,"
+            covers={['data:,']}
             note={localized('documentAddBackPrompt')}
             actions={[
-                { label: localized('cancel'), onPress: () => {} },
                 { label: localized('documentAddBack'), onPress: () => {} },
+                { label: localized('sendToReview'), onPress: () => {}, isDisabled: true },
+            ]}
+        />
+    </View>
+);
+
+export const LicenceReadyToSend = () => (
+    <View style={pane}>
+        <DocumentRequirementCard
+            item={LICENCE_NOTHING_SENT}
+            covers={['data:,', 'data:,']}
+            actions={[
+                { label: localized('documentAddFront'), onPress: () => {} },
+                { label: localized('sendToReview'), onPress: () => {} },
             ]}
         />
     </View>

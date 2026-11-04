@@ -7,45 +7,51 @@ import DocumentRequirementCard from './DocumentRequirementCard';
 /**
  * Contract request #117: a document requirement's card with the way to send it, as the server says one version of it
  * is taken (`item.capture`, K-32): one photo, or the front and then the back (§9.8.1 step 1). Photos only (owner,
- * 2026-11-04): the card offers no PDF. The front waits here, shown as the card's cover with what to do next, until
- * the back is taken; then `onCapture(photos)` gets the pages in order (the picker's assets) and the host sends them.
- * The photo sheet is the library's picker, opened by the card's own button (`variant="sheet"`). Not portable: the
- * picker is native.
+ * 2026-11-04): the card offers no PDF. Taking a photo sends nothing (owner, 2026-11-04): the pages taken show as the
+ * card's covers, and «Send to review» sends them once every page is there; then `onCapture(photos)` gets them in
+ * order (the picker's assets) and the host sends them. The photo sheet is the library's picker, opened by the card's
+ * own button (`variant="sheet"`). Not portable: the picker is native.
  *
  * @param {{item: object, subtitle?: ?string, onCapture: (photos: Array<object>) => void, isDisabled?: boolean,
  *     testID?: string}} props
  */
 const DocumentCaptureCard = ({ item, subtitle, onCapture, isDisabled = false, testID = 'document-requirement' }) => {
     const pickerRef = useRef();
-    const [front, setFront] = useState(null);
-    const twoSided = item.capture?.pages === 2;
+    const [pages, setPages] = useState([]);
+    const pageCount = item.capture?.pages === 2 ? 2 : 1;
+    const twoSided = pageCount === 2;
+    const complete = pages.length === pageCount;
 
-    const take = (photo) => {
-        if (twoSided && !front) {
-            setFront(photo);
-            return;
-        }
-        setFront(null);
-        onCapture(front ? [front, photo] : [photo]);
+    // A photo taken once every page is there starts the document again: that is how a wrong one is replaced.
+    const take = (photo) => setPages((taken) => (taken.length < pageCount ? [...taken, photo] : [photo]));
+    const send = () => {
+        const photos = pages;
+        setPages([]);
+        onCapture(photos);
     };
 
     let addLabel = localized('add');
-    if (twoSided) addLabel = localized(front ? 'documentAddBack' : 'documentAddFront');
-    const add = { label: addLabel, onPress: () => pickerRef.current?.show(), isDisabled, testID: `${testID}-add` };
+    if (twoSided) addLabel = localized(pages.length === 1 ? 'documentAddBack' : 'documentAddFront');
 
-    // Card.Actions makes the first button outlined and the next contained: the way to send is the last.
-    let actions = [add];
-    if (front) {
-        actions = [{ label: localized('cancel'), onPress: () => setFront(null), testID: `${testID}-cancel` }, add];
-    }
+    // MD3: the way to take a photo stays, and the main action, sending, is last (Card.Actions makes the first button
+    // outlined and the next contained); it waits, disabled, until every page is taken.
+    const actions = [
+        { label: addLabel, onPress: () => pickerRef.current?.show(), isDisabled, testID: `${testID}-add` },
+        {
+            label: localized('sendToReview'),
+            onPress: send,
+            isDisabled: isDisabled || !complete,
+            testID: `${testID}-send`,
+        },
+    ];
 
     return (
         <>
             <DocumentRequirementCard
                 item={item}
                 subtitle={subtitle}
-                cover={front?.uri ?? null}
-                note={front ? localized('documentAddBackPrompt') : null}
+                covers={pages.map((page) => page.uri)}
+                note={twoSided && pages.length === 1 ? localized('documentAddBackPrompt') : null}
                 actions={actions}
                 testID={testID}
             />
