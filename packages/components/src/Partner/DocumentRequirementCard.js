@@ -3,6 +3,7 @@ import React from 'react';
 import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 import { Avatar, Button, Card, Text, useTheme } from '@jmstechnologiesinc/react-native-paper';
 
+import DocumentCovers from './DocumentCovers';
 import { requirementTitle, ruleText } from './viewModel';
 
 /**
@@ -10,13 +11,16 @@ import { requirementTitle, ruleText } from './viewModel';
  * a Paper `Card` composed the way Paper composes one, with no style of its own:
  * - the title is the composed rule's name for the partner's market, else the catalogue's (`requirementTitle`);
  * - `subtitle` is what the host says of it (its vehicle and where it stands, in the host's words);
- * - `covers` are the URIs of the photos the partner has taken and not sent yet, in order (the front, then the back);
- * - the content is `note` (what to do now) and the rule's plain explanation for the market;
+ * - the content is `covers`, the photos the partner has taken and not sent yet, in order (the front, then the back),
+ *   each with the `label` a screen reader names it by (one is the cover, more a carousel: DocumentCovers), then
+ *   `note` (what to do now) and the rule's plain explanation for the market. The photos sit in the Card.Content, not
+ *   beside it: Card.Content takes its top padding from a Card.Cover or Card.Title just above it, so one carousel
+ *   between them would leave the text against the photos;
  * - `actions` are `{ label, onPress, isDisabled?, testID? }`, Paper `Button`s straight inside `Card.Actions`, which
  *   gives them their modes (the first outlined, the next contained).
  * Without `actions` (the console showing what the partner sees) the card only reads.
  *
- * @param {{item: object, subtitle?: ?string, covers?: Array<string>, note?: ?string,
+ * @param {{item: object, subtitle?: ?string, covers?: Array<{uri: string, label: string}>, note?: ?string,
  *     actions?: Array<{label: string, onPress: () => void, isDisabled?: boolean, testID?: string}>, testID?: string}} props
  */
 const DocumentRequirementCard = ({
@@ -29,6 +33,10 @@ const DocumentRequirementCard = ({
 }) => {
     const { spacing } = useTheme();
     const explanation = ruleText(item.explanation);
+    const hasCovers = covers.length > 0;
+    let explanationSpacing;
+    if (note) explanationSpacing = { marginTop: spacing.x2 };
+    else if (hasCovers) explanationSpacing = { marginTop: spacing.x4 };
     return (
         <Card testID={testID}>
             <Card.Title
@@ -38,22 +46,21 @@ const DocumentRequirementCard = ({
                 subtitleNumberOfLines={2}
                 left={(props) => <Avatar.Icon {...props} icon={MATERIAL_ICONS.document} />}
             />
-            {covers.map((uri, index) => (
-                <Card.Cover key={String(index)} source={{ uri }} testID={`${testID}-cover-${index}`} />
-            ))}
-            {note || explanation ? (
+            {hasCovers || note || explanation ? (
                 <Card.Content>
+                    {hasCovers ? <DocumentCovers covers={covers} testID={testID} /> : null}
+                    {/* After the photos, the space Card.Content puts after a cover; between texts, the note's. */}
                     {note ? (
-                        <Text variant="bodyMedium" testID={`${testID}-note`}>
+                        <Text
+                            variant="bodyMedium"
+                            style={hasCovers ? { marginTop: spacing.x4 } : undefined}
+                            testID={`${testID}-note`}
+                        >
                             {note}
                         </Text>
                     ) : null}
                     {explanation ? (
-                        <Text
-                            variant="bodyMedium"
-                            style={note ? { marginTop: spacing.x2 } : undefined}
-                            testID={`${testID}-explanation`}
-                        >
+                        <Text variant="bodyMedium" style={explanationSpacing} testID={`${testID}-explanation`}>
                             {explanation}
                         </Text>
                     ) : null}

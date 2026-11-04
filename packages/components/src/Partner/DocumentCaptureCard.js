@@ -8,9 +8,9 @@ import DocumentRequirementCard from './DocumentRequirementCard';
  * Contract request #117: a document requirement's card with the way to send it, as the server says one version of it
  * is taken (`item.capture`, K-32): one photo, or the front and then the back (§9.8.1 step 1). Photos only (owner,
  * 2026-11-04): the card offers no PDF. Taking a photo sends nothing (owner, 2026-11-04): the pages taken show as the
- * card's covers, and «Send to review» sends them once every page is there; then `onCapture(photos)` gets them in
- * order (the picker's assets) and the host sends them. The photo sheet is the library's picker, opened by the card's
- * own button (`variant="sheet"`). Not portable: the picker is native.
+ * card's covers (both sides in a carousel, owner 2026-11-04), and «Send to review» sends them once every page is
+ * there; then `onCapture(photos)` gets them in order (the picker's assets) and the host sends them. The photo sheet is
+ * the library's picker, opened by the card's own button (`variant="sheet"`). Not portable: the picker is native.
  *
  * @param {{item: object, subtitle?: ?string, onCapture: (photos: Array<object>) => void, isDisabled?: boolean,
  *     testID?: string}} props
@@ -29,6 +29,13 @@ const DocumentCaptureCard = ({ item, subtitle, onCapture, isDisabled = false, te
         setPages([]);
         onCapture(photos);
     };
+
+    // What a screen reader names each photo: the front and the back of a two-sided document, else the document.
+    const covers = pages.map((page, index) => {
+        let label = localized('global.document');
+        if (twoSided) label = localized(index === 0 ? 'documentFront' : 'documentBack');
+        return { uri: page.uri, label };
+    });
 
     let addLabel = localized('add');
     if (twoSided) addLabel = localized(pages.length === 1 ? 'documentAddBack' : 'documentAddFront');
@@ -50,7 +57,7 @@ const DocumentCaptureCard = ({ item, subtitle, onCapture, isDisabled = false, te
             <DocumentRequirementCard
                 item={item}
                 subtitle={subtitle}
-                covers={pages.map((page) => page.uri)}
+                covers={covers}
                 note={twoSided && pages.length === 1 ? localized('documentAddBackPrompt') : null}
                 actions={actions}
                 testID={testID}

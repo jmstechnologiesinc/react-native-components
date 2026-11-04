@@ -67,6 +67,7 @@ const textsOf = (tree) =>
 const buttonOf = (tree, testID) =>
     tree.root.findAll((node) => node.props.testID === testID && typeof node.props.onPress === 'function')[0];
 const hasTestID = (tree, testID) => tree.root.findAll((node) => node.props.testID === testID).length > 0;
+const propsOf = (tree, testID) => tree.root.findAll((node) => node.props.testID === testID)[0].props;
 const press = (tree, testID) => act(() => buttonOf(tree, testID).props.onPress());
 const take = (photo) => act(() => mockPicker.take(photo));
 
@@ -165,20 +166,50 @@ describe('DocumentRequirementCard', () => {
         expect(tree.root.findAll((node) => typeof node.props.onPress === 'function')).toHaveLength(0);
     });
 
-    it('shows a photo taken, what to do next, and the actions the host gives it', () => {
+    it('shows a photo taken, named for a screen reader, what to do next, and the actions the host gives it', () => {
         const onPress = jest.fn();
         const tree = render(
             <DocumentRequirementCard
                 item={LICENCE}
-                covers={['file:///front.jpg']}
+                covers={[{ uri: 'file:///front.jpg', label: 'Front' }]}
                 note="Now take a photo of the back of your licence."
                 actions={[{ label: 'Cancel', onPress, testID: 'cancel' }]}
             />
         );
-        expect(hasTestID(tree, 'document-requirement-cover-0')).toBe(true);
+        expect(propsOf(tree, 'document-requirement-cover-0')).toEqual(
+            expect.objectContaining({ accessible: true, accessibilityRole: 'image', accessibilityLabel: 'Front' })
+        );
+        // One photo is the cover, not a carousel.
+        expect(hasTestID(tree, 'document-requirement-covers')).toBe(false);
         expect(textsOf(tree)).toContain('Now take a photo of the back of your licence.');
         press(tree, 'cancel');
         expect(onPress).toHaveBeenCalledTimes(1);
+    });
+
+    it('shows both sides as a carousel that snaps item by item, the next one peeking (Material 3 hero)', () => {
+        const { spacing } = MD3LightTheme;
+        const tree = render(
+            <DocumentRequirementCard
+                item={LICENCE}
+                covers={[
+                    { uri: 'file:///front.jpg', label: 'Front' },
+                    { uri: 'file:///back.jpg', label: 'Back' },
+                ]}
+            />
+        );
+        const carousel = propsOf(tree, 'document-requirement-covers');
+        expect(carousel).toEqual(
+            expect.objectContaining({ horizontal: true, pagingEnabled: true, decelerationRate: 'fast' })
+        );
+        expect(propsOf(tree, 'document-requirement-cover-0').accessibilityLabel).toBe('Front');
+        expect(propsOf(tree, 'document-requirement-cover-1').accessibilityLabel).toBe('Back');
+
+        act(() => carousel.onLayout({ nativeEvent: { layout: { width: 400 } } }));
+        // The large item is what the width leaves after the small item that peeks (56 dp) and the gap (8 dp).
+        const itemWidth = 400 - spacing.x14 - spacing.x2;
+        expect(propsOf(tree, 'document-requirement-cover-0').style).toEqual({ width: itemWidth });
+        expect(propsOf(tree, 'document-requirement-covers').snapToInterval).toBe(itemWidth + spacing.x2);
+        expect(propsOf(tree, 'document-requirement-covers').contentContainerStyle).toEqual({ gap: spacing.x2 });
     });
 });
 
@@ -206,7 +237,7 @@ describe('DocumentCaptureCard', () => {
 
         take({ uri: 'file:///page.jpg' });
         expect(onCapture).not.toHaveBeenCalled();
-        expect(hasTestID(tree, 'document-requirement-cover-0')).toBe(true);
+        expect(propsOf(tree, 'document-requirement-cover-0').accessibilityLabel).toBe('Document');
         // The way to take a photo stays.
         expect(textsOf(tree)).toEqual(expect.arrayContaining(['Add', 'Send to review']));
         expect(buttonOf(tree, 'document-requirement-send').props.disabled).toBe(false);
@@ -231,7 +262,8 @@ describe('DocumentCaptureCard', () => {
 
         take({ uri: 'file:///back.jpg' });
         expect(onCapture).not.toHaveBeenCalled();
-        expect(hasTestID(tree, 'document-requirement-cover-1')).toBe(true);
+        expect(propsOf(tree, 'document-requirement-cover-0').accessibilityLabel).toBe('Front');
+        expect(propsOf(tree, 'document-requirement-cover-1').accessibilityLabel).toBe('Back');
         expect(textsOf(tree)).not.toContain('Now take a photo of the back of your licence.');
         expect(buttonOf(tree, 'document-requirement-send').props.disabled).toBe(false);
 

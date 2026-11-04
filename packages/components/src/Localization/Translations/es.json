@@ -807,6 +807,8 @@
     "documentAddFront": "Añadir el anverso",
     "documentAddBack": "Añadir el reverso",
     "documentAddBackPrompt": "Ahora haz una foto del reverso de tu licencia.",
+    "documentFront": "Anverso",
+    "documentBack": "Reverso",
     "documentSuperseded": "Sustituido",
     "documentExpiryDate": "Fecha de vencimiento",
     "documentExpiryInvalid": "Ingresa una fecha válida y futura (MM/DD/YYYY).",
