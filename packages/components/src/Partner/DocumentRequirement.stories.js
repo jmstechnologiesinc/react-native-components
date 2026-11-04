@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { ScrollView, View } from 'react-native';
 
-import { interpunct } from '@jmstechnologiesinc/commons';
-import { EN, ES, REQUIREMENT_CAUSE, formatVehicleValue, vehicleValueParts } from '@jmstechnologiesinc/partner';
+import { EN, ES, formatVehicleValue, vehicleValueParts } from '@jmstechnologiesinc/partner';
 import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
 import { localized, registerFlatCatalog, setI18nConfig } from '../Localization/Localization';
 import DocumentCaptureCard from './DocumentCaptureCard';
 import DocumentRequirementCard from './DocumentRequirementCard';
 import DocumentVersionList from './DocumentVersionList';
-import { requirementTitle, statusLabel } from './viewModel';
+import { requirementTitle } from './viewModel';
 
 // The library's own words, then the `partner.*` catalogue, which belongs to `@jmstechnologiesinc/partner` (R2): a
 // host sets both up once, as here.
@@ -156,13 +155,9 @@ const DPU_CERTIFICATE = {
     ],
 };
 
-// The subtitle is the host's: the app names the vehicle and where the requirement stands, but not `missing` (its add
-// control says it; owner, 2026-11-03). The stories say it the same way.
-const subtitleOf = (item) =>
-    interpunct([
-        item.vehicle ? formatVehicleValue(vehicleValueParts(item.vehicle), localized) : null,
-        item.cause === REQUIREMENT_CAUSE.MISSING ? null : statusLabel('requirement_cause', item.cause),
-    ]);
+// The subtitle is the host's: the app names the vehicle, and not where the requirement stands (the card only sends;
+// owner, 2026-11-04). The stories say it the same way.
+const subtitleOf = (item) => (item.vehicle ? formatVehicleValue(vehicleValueParts(item.vehicle), localized) : null);
 
 const pane = { padding: MD3LightTheme.spacing.x4, gap: MD3LightTheme.spacing.x2 };
 

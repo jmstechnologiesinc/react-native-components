@@ -11,7 +11,7 @@ import { requirementTitle, ruleText } from './viewModel';
  * Contract request #117: one requirement of the partner as the server states it (a `getMyStatus` checklist item), in
  * a Paper `Card` composed the way Paper composes one, with no style of its own:
  * - the title is the composed rule's name for the partner's market, else the catalogue's (`requirementTitle`);
- * - `subtitle` is what the host says of it (its vehicle and where it stands, in the host's words);
+ * - `subtitle` is what the host names it by besides its title (its vehicle, in the host's words);
  * - the content is `covers`, the photos the partner has taken and not sent yet, in order (the front, then the back),
  *   each with the `label` a screen reader names it by (one is the cover, more a carousel: DocumentCovers), then
  *   `note` (what to do now, announced by a screen reader when it changes) and the rule's plain explanation for the
