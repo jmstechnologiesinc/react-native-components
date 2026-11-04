@@ -217,16 +217,15 @@ themed through `useTheme()` so a host's theme applies:
   document type of its own:
   - `Partner/DocumentRequirementCard` (portable) — a Paper `Card` composed as Paper composes one: the title is
     `requirementTitle(item)` (the rule's name for the market, else the catalogue's), `subtitle` is the host's,
-    then `covers` (the photos taken and not sent, in order), `note` and the rule's explanation, and `actions`
+    then `cover` (a photo taken and not sent), `note` and the rule's explanation, and `actions`
     (`{ label, onPress, isDisabled?, testID? }`) as Paper `Button`s straight inside `Card.Actions`, which gives
     them their modes. Without `actions` it only reads (the console).
   - `Partner/DocumentVersionList` (portable) — `item.versions` as `ListRow`s from `documentVersionRows`; they open
     nothing, so no chevron.
   - `Partner/DocumentCaptureCard` (barrel only: the picker is native) — the card with the way to send it, as
-    `item.capture` says (`pages` 1, or 2 = the front then the back; `pdf`). Taking a photo sends nothing: the pages
-    show as covers, and «Send to review» (the card's last, contained action) hands them to `onCapture(photos)` in
-    order, «Cancel» drops them. «Subir un PDF» shows only with `capture.pdf` and an `onUploadPdf` (none while the
-    console acts as the partner).
+    `item.capture` says (`pages` 1, or 2 = the front then the back; `pdf`): the front waits as the cover until the
+    back is taken, `onCapture(photos)` gets the pages in order, and «Subir un PDF» shows only with `capture.pdf`
+    and an `onUploadPdf` (none while the console acts as the partner).
   - `ImagePicker.Avatar` `variant="sheet"` renders no control of its own; the caller opens the sheet with the
     ref's `show()`, so its own Paper `Button` can sit inside a `Card.Actions`. `avatar` and `button` are as before.
   - Their fixed words (`documentAddFront`, `documentAddBack`, `documentAddBackPrompt`, `documentUploadPdf`,

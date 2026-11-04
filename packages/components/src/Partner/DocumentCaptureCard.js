@@ -8,8 +8,7 @@ import DocumentRequirementCard from './DocumentRequirementCard';
  * Contract request #117: a document requirement's card with the way to send it, as the server says one version of it
  * is taken (`item.capture`, K-32): one photo, or the front and then the back (§9.8.1 step 1), and one PDF from the
  * phone's browser when `capture.pdf` and the host can open the link (#66; never while the console acts as the
- * partner). Taking a photo sends nothing (owner, 2026-11-03): the pages taken show as the card's covers, and the
- * partner sends them with the card's last action, «Send to review», or drops them with «Cancel»; then
+ * partner). The front waits here, shown as the card's cover with what to do next, until the back is taken; then
  * `onCapture(photos)` gets the pages in order (the picker's assets) and the host sends them. The photo sheet is the
  * library's picker, opened by the card's own button (`variant="sheet"`). Not portable: the picker is native.
  *
@@ -25,34 +24,26 @@ const DocumentCaptureCard = ({
     testID = 'document-requirement',
 }) => {
     const pickerRef = useRef();
-    const [pages, setPages] = useState([]);
-    const pageCount = item.capture?.pages === 2 ? 2 : 1;
-    const twoSided = pageCount === 2;
-    const complete = pages.length === pageCount;
+    const [front, setFront] = useState(null);
+    const twoSided = item.capture?.pages === 2;
 
-    const take = (photo) => setPages((taken) => (taken.length < pageCount ? [...taken, photo] : taken));
-    const cancel = () => setPages([]);
-    const send = () => {
-        const photos = pages;
-        setPages([]);
-        onCapture(photos);
+    const take = (photo) => {
+        if (twoSided && !front) {
+            setFront(photo);
+            return;
+        }
+        setFront(null);
+        onCapture(front ? [front, photo] : [photo]);
     };
 
     let addLabel = localized('add');
-    if (twoSided) addLabel = localized(pages.length === 0 ? 'documentAddFront' : 'documentAddBack');
+    if (twoSided) addLabel = localized(front ? 'documentAddBack' : 'documentAddFront');
     const add = { label: addLabel, onPress: () => pickerRef.current?.show(), isDisabled, testID: `${testID}-add` };
-    const cancelAction = { label: localized('cancel'), onPress: cancel, testID: `${testID}-cancel` };
 
-    // MD3: a card's actions close it, the main one last. Card.Actions makes the first button outlined and the next
-    // contained, so what moves the partner forward (add the next side, or send) is the last.
+    // Card.Actions makes the first button outlined and the next contained: the way to send is the last.
     let actions = [add];
-    if (complete) {
-        actions = [
-            cancelAction,
-            { label: localized('sendToReview'), onPress: send, isDisabled, testID: `${testID}-send` },
-        ];
-    } else if (pages.length > 0) {
-        actions = [cancelAction, add];
+    if (front) {
+        actions = [{ label: localized('cancel'), onPress: () => setFront(null), testID: `${testID}-cancel` }, add];
     } else if (item.capture?.pdf && onUploadPdf) {
         actions = [
             { label: localized('documentUploadPdf'), onPress: onUploadPdf, isDisabled, testID: `${testID}-pdf` },
@@ -65,8 +56,8 @@ const DocumentCaptureCard = ({
             <DocumentRequirementCard
                 item={item}
                 subtitle={subtitle}
-                covers={pages.map((page) => page.uri)}
-                note={twoSided && pages.length === 1 ? localized('documentAddBackPrompt') : null}
+                cover={front?.uri ?? null}
+                note={front ? localized('documentAddBackPrompt') : null}
                 actions={actions}
                 testID={testID}
             />

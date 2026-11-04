@@ -161,7 +161,7 @@ describe('DocumentRequirementCard', () => {
             'Black Honda Accord · 123456',
             'The current Massachusetts safety inspection.',
         ]);
-        expect(hasTestID(tree, 'document-requirement-cover-0')).toBe(false);
+        expect(hasTestID(tree, 'document-requirement-cover')).toBe(false);
         expect(tree.root.findAll((node) => typeof node.props.onPress === 'function')).toHaveLength(0);
     });
 
@@ -170,12 +170,12 @@ describe('DocumentRequirementCard', () => {
         const tree = render(
             <DocumentRequirementCard
                 item={LICENCE}
-                covers={['file:///front.jpg']}
+                cover="file:///front.jpg"
                 note="Now take a photo of the back of your licence."
                 actions={[{ label: 'Cancel', onPress, testID: 'cancel' }]}
             />
         );
-        expect(hasTestID(tree, 'document-requirement-cover-0')).toBe(true);
+        expect(hasTestID(tree, 'document-requirement-cover')).toBe(true);
         expect(textsOf(tree)).toContain('Now take a photo of the back of your licence.');
         press(tree, 'cancel');
         expect(onPress).toHaveBeenCalledTimes(1);
@@ -194,57 +194,41 @@ describe('DocumentVersionList', () => {
 });
 
 describe('DocumentCaptureCard', () => {
-    it('takes one photo of a one-page document, shows it, and sends it only on «Send to review»', () => {
+    it('takes one photo of a one-page document and hands it over at once', () => {
         const onCapture = jest.fn();
         const tree = render(<DocumentCaptureCard item={INSPECTION} onCapture={onCapture} onUploadPdf={jest.fn()} />);
         expect(textsOf(tree)).toEqual(expect.arrayContaining(['Upload a PDF', 'Add']));
         press(tree, 'document-requirement-add');
         expect(mockPicker.shown).toBe(1);
-
         take({ uri: 'file:///page.jpg' });
-        expect(onCapture).not.toHaveBeenCalled();
-        expect(hasTestID(tree, 'document-requirement-cover-0')).toBe(true);
-        expect(textsOf(tree)).toEqual(expect.arrayContaining(['Cancel', 'Send to review']));
-        expect(textsOf(tree)).not.toContain('Upload a PDF');
-
-        press(tree, 'document-requirement-send');
         expect(onCapture).toHaveBeenCalledWith([{ uri: 'file:///page.jpg' }]);
-        expect(hasTestID(tree, 'document-requirement-cover-0')).toBe(false);
     });
 
-    it('keeps the front of a two-sided document, then the back, and sends both only on «Send to review»', () => {
+    it('keeps the front of a two-sided document, shows it, then hands over the front and the back', () => {
         const onCapture = jest.fn();
         const tree = render(<DocumentCaptureCard item={LICENCE} onCapture={onCapture} onUploadPdf={jest.fn()} />);
         expect(textsOf(tree)).toContain('Add the front');
 
         take({ uri: 'file:///front.jpg' });
-        expect(hasTestID(tree, 'document-requirement-cover-0')).toBe(true);
+        expect(onCapture).not.toHaveBeenCalled();
+        expect(hasTestID(tree, 'document-requirement-cover')).toBe(true);
         expect(textsOf(tree)).toEqual(
             expect.arrayContaining(['Now take a photo of the back of your licence.', 'Cancel', 'Add the back'])
         );
         expect(textsOf(tree)).not.toContain('Upload a PDF');
 
         take({ uri: 'file:///back.jpg' });
-        expect(onCapture).not.toHaveBeenCalled();
-        expect(hasTestID(tree, 'document-requirement-cover-1')).toBe(true);
-        expect(textsOf(tree)).toEqual(expect.arrayContaining(['Cancel', 'Send to review']));
-        expect(textsOf(tree)).not.toContain('Now take a photo of the back of your licence.');
-
-        press(tree, 'document-requirement-send');
         expect(onCapture).toHaveBeenCalledWith([{ uri: 'file:///front.jpg' }, { uri: 'file:///back.jpg' }]);
+        expect(hasTestID(tree, 'document-requirement-cover')).toBe(false);
         expect(textsOf(tree)).toContain('Add the front');
     });
 
-    it('drops what was taken on «Cancel», before the back or with both sides', () => {
+    it('drops the front on «Cancel»', () => {
         const onCapture = jest.fn();
         const tree = render(<DocumentCaptureCard item={LICENCE} onCapture={onCapture} />);
         take({ uri: 'file:///front.jpg' });
         press(tree, 'document-requirement-cancel');
-        expect(hasTestID(tree, 'document-requirement-cover-0')).toBe(false);
-        take({ uri: 'file:///front.jpg' });
-        take({ uri: 'file:///back.jpg' });
-        press(tree, 'document-requirement-cancel');
-        expect(hasTestID(tree, 'document-requirement-cover-0')).toBe(false);
+        expect(hasTestID(tree, 'document-requirement-cover')).toBe(false);
         expect(textsOf(tree)).toContain('Add the front');
         expect(onCapture).not.toHaveBeenCalled();
     });
@@ -265,13 +249,11 @@ describe('DocumentCaptureCard', () => {
         expect(hasTestID(noPdf, 'document-requirement-pdf')).toBe(false);
     });
 
-    it('disables adding, the PDF and sending while the host sends', () => {
+    it('disables sending while the host sends', () => {
         const tree = render(
             <DocumentCaptureCard item={INSPECTION} onCapture={jest.fn()} onUploadPdf={jest.fn()} isDisabled />
         );
         expect(buttonOf(tree, 'document-requirement-add').props.disabled).toBe(true);
         expect(buttonOf(tree, 'document-requirement-pdf').props.disabled).toBe(true);
-        take({ uri: 'file:///page.jpg' });
-        expect(buttonOf(tree, 'document-requirement-send').props.disabled).toBe(true);
     });
 });
