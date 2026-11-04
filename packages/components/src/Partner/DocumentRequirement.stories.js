@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollView, View } from 'react-native';
 
 import { interpunct } from '@jmstechnologiesinc/commons';
@@ -162,13 +162,23 @@ const subtitleOf = (item) =>
 
 const pane = { padding: MD3LightTheme.spacing.x4, gap: MD3LightTheme.spacing.x2 };
 
-// The app's document screen: the card with its capture, then the versions.
-const Screen = ({ item }) => (
-    <ScrollView contentContainerStyle={pane}>
-        <DocumentCaptureCard item={item} subtitle={subtitleOf(item)} onCapture={() => {}} />
-        <DocumentVersionList versions={item.versions} accessibilityLabel={requirementTitle(item)} />
-    </ScrollView>
-);
+// The app's document screen: the card with its capture, then the versions. The screen owns the pages taken; a story
+// sends nothing, so «Send to review» clears them as the app does once its send succeeds.
+const Screen = ({ item }) => {
+    const [pages, setPages] = useState([]);
+    return (
+        <ScrollView contentContainerStyle={pane}>
+            <DocumentCaptureCard
+                item={item}
+                subtitle={subtitleOf(item)}
+                pages={pages}
+                onPagesChange={setPages}
+                onSend={() => setPages([])}
+            />
+            <DocumentVersionList versions={item.versions} accessibilityLabel={requirementTitle(item)} />
+        </ScrollView>
+    );
+};
 
 export const LicenceNothingSent = () => <Screen item={LICENCE_NOTHING_SENT} />;
 
@@ -192,34 +202,25 @@ export const ReadOnlyInTheConsole = () => (
 );
 
 // What the partner has taken shows on the card before anything is sent (owner, 2026-11-04): the front waiting for the
-// back, «Send to review» still disabled, then both sides ready to send, in a carousel. The covers are the partner's own photos, which a story does not have:
-// empty ones show where they go.
-export const LicenceFrontTaken = () => (
+// back, «Send to review» still disabled; both sides ready to send, in a carousel, with the note that they are not sent
+// yet; and both sides on their way. The pages are the partner's own photos, which a story does not have: empty ones
+// show where they go.
+const PHOTO = { uri: 'data:,' };
+
+const Taken = ({ pages, isSending = false }) => (
     <View style={pane}>
-        <DocumentRequirementCard
+        <DocumentCaptureCard
             item={LICENCE_NOTHING_SENT}
-            covers={[{ uri: 'data:,', label: localized('documentFront') }]}
-            note={localized('documentAddBackPrompt')}
-            actions={[
-                { label: localized('documentAddBack'), onPress: () => {}, mode: 'text' },
-                { label: localized('sendToReview'), onPress: () => {}, isDisabled: true, mode: 'outlined' },
-            ]}
+            pages={pages}
+            onPagesChange={() => {}}
+            onSend={() => {}}
+            isSending={isSending}
         />
     </View>
 );
 
-export const LicenceReadyToSend = () => (
-    <View style={pane}>
-        <DocumentRequirementCard
-            item={LICENCE_NOTHING_SENT}
-            covers={[
-                { uri: 'data:,', label: localized('documentFront') },
-                { uri: 'data:,', label: localized('documentBack') },
-            ]}
-            actions={[
-                { label: localized('documentAddFront'), onPress: () => {}, mode: 'text' },
-                { label: localized('sendToReview'), onPress: () => {}, mode: 'outlined' },
-            ]}
-        />
-    </View>
-);
+export const LicenceFrontTaken = () => <Taken pages={[PHOTO]} />;
+
+export const LicenceReadyToSend = () => <Taken pages={[PHOTO, PHOTO]} />;
+
+export const LicenceSending = () => <Taken pages={[PHOTO, PHOTO]} isSending />;

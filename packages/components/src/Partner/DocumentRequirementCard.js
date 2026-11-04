@@ -1,4 +1,5 @@
 import React from 'react';
+import { View } from 'react-native';
 
 import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 import { Avatar, Button, Card, Text, useTheme } from '@jmstechnologiesinc/react-native-paper';
@@ -13,17 +14,17 @@ import { requirementTitle, ruleText } from './viewModel';
  * - `subtitle` is what the host says of it (its vehicle and where it stands, in the host's words);
  * - the content is `covers`, the photos the partner has taken and not sent yet, in order (the front, then the back),
  *   each with the `label` a screen reader names it by (one is the cover, more a carousel: DocumentCovers), then
- *   `note` (what to do now) and the rule's plain explanation for the market. The photos sit in the Card.Content, not
- *   beside it: Card.Content takes its top padding from a Card.Cover or Card.Title just above it, so one carousel
- *   between them would leave the text against the photos;
- * - `actions` are `{ label, onPress, isDisabled?, mode?, testID? }`, Paper `Button`s straight inside `Card.Actions`,
- *   which keeps a `mode` given (a Paper Button mode) and gives the rest its own (the first outlined, the next
- *   contained).
+ *   `note` (what to do now, announced by a screen reader when it changes) and the rule's plain explanation for the
+ *   market. The photos sit in the Card.Content, not beside it: Card.Content takes its top padding from a Card.Cover or
+ *   Card.Title just above it, so one carousel between them would leave the text against the photos;
+ * - `actions` are `{ label, onPress, isDisabled?, mode?, loading?, testID? }`, Paper `Button`s straight inside
+ *   `Card.Actions`, which keeps a `mode` given (a Paper Button mode) and gives the rest its own (the first outlined,
+ *   the next contained); `loading` is the Button's progress indicator. Actions that do not fit on one line wrap.
  * Without `actions` (the console showing what the partner sees) the card only reads.
  *
  * @param {{item: object, subtitle?: ?string, covers?: Array<{uri: string, label: string}>, note?: ?string,
- *     actions?: Array<{label: string, onPress: () => void, isDisabled?: boolean, mode?: string, testID?: string}>,
- *     testID?: string}} props
+ *     actions?: Array<{label: string, onPress: () => void, isDisabled?: boolean, mode?: string, loading?: boolean,
+ *     testID?: string}>, testID?: string}} props
  */
 const DocumentRequirementCard = ({
     item,
@@ -51,16 +52,21 @@ const DocumentRequirementCard = ({
             {hasCovers || note || explanation ? (
                 <Card.Content>
                     {hasCovers ? <DocumentCovers covers={covers} testID={testID} /> : null}
-                    {/* After the photos, the space Card.Content puts after a cover; between texts, the note's. */}
-                    {note ? (
-                        <Text
-                            variant="bodyMedium"
-                            style={hasCovers ? { marginTop: spacing.x4 } : undefined}
-                            testID={`${testID}-note`}
-                        >
-                            {note}
-                        </Text>
-                    ) : null}
+                    {/* A polite live region (Android's, and `aria-live` on the web) announces the next step. It stays
+                        mounted, empty without a note: a region that appears together with its text is not announced
+                        on the web. */}
+                    <View aria-live="polite">
+                        {/* After the photos, the space Card.Content puts after a cover; between texts, the note's. */}
+                        {note ? (
+                            <Text
+                                variant="bodyMedium"
+                                style={hasCovers ? { marginTop: spacing.x4 } : undefined}
+                                testID={`${testID}-note`}
+                            >
+                                {note}
+                            </Text>
+                        ) : null}
+                    </View>
                     {explanation ? (
                         <Text variant="bodyMedium" style={explanationSpacing} testID={`${testID}-explanation`}>
                             {explanation}
@@ -69,9 +75,20 @@ const DocumentRequirementCard = ({
                 </Card.Content>
             ) : null}
             {actions.length > 0 ? (
-                <Card.Actions>
-                    {actions.map(({ label, onPress, isDisabled, mode, testID: actionTestID }) => (
-                        <Button key={label} mode={mode} onPress={onPress} disabled={isDisabled} testID={actionTestID}>
+                // Card.Actions lays its buttons in one row that does not wrap, so a long label pushed the others out
+                // of the card; its own alignment and padding stay. Card.Actions tells its buttons apart by position (the
+                // first is outlined), and so does the key: a label changes as photos are taken, and keyed by it the
+                // button would remount.
+                <Card.Actions style={{ flexWrap: 'wrap', rowGap: spacing.x2 }}>
+                    {actions.map(({ label, onPress, isDisabled, mode, loading, testID: actionTestID }, index) => (
+                        <Button
+                            key={String(index)}
+                            mode={mode}
+                            onPress={onPress}
+                            disabled={isDisabled}
+                            loading={loading}
+                            testID={actionTestID}
+                        >
                             {label}
                         </Button>
                     ))}

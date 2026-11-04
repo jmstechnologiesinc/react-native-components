@@ -219,8 +219,12 @@ themed through `useTheme()` so a host's theme applies:
     `requirementTitle(item)` (the rule's name for the market, else the catalogue's), `subtitle` is the host's,
     then, in its `Card.Content`, `covers` (the photos taken and not sent, in order, each `{ uri, label }` with the
     name a screen reader says), `note` and the rule's explanation, and `actions`
-    (`{ label, onPress, isDisabled?, mode?, testID? }`) as Paper `Button`s straight inside `Card.Actions`, which
-    keeps a `mode` given and gives the rest theirs. Without `actions` it only reads (the console).
+    (`{ label, onPress, isDisabled?, mode?, loading?, testID? }`) as Paper `Button`s straight inside `Card.Actions`,
+    which keeps a `mode` given and gives the rest theirs; `loading` is the Button's own. Without `actions` it only
+    reads (the console). The note sits in a polite live region (`aria-live`: Android's live region, the web's
+    `aria-live`) that stays mounted, so a screen reader announces each next step. `Card.Actions` gets, through its
+    `style`, `flexWrap` and a `spacing.x2` row gap (it does not wrap by itself; its alignment and padding stay), and
+    its buttons are keyed by position, as `Card.Actions` itself tells them apart (a label changes as photos are taken).
   - `Partner/DocumentCovers` (portable, not exported) — the card's photos: one is a `Card.Cover`; more are a
     Material 3 hero carousel (a horizontal `ScrollView`: `snapToInterval` on the phone, `pagingEnabled`'s CSS scroll
     snap on the web; items `spacing.x2` apart, the next peeking `spacing.x14`, Material's 8 dp and 56 dp).
@@ -230,10 +234,19 @@ themed through `useTheme()` so a host's theme applies:
     `documentExpiresOn` («Expires Nov 23, 2026»): `expires_at` is a calendar day, formatted by `formatDateTime` in UTC
     so no reader's zone moves it. `documentExpires` stays for the app's older list.
   - `Partner/DocumentCaptureCard` (barrel only: the picker is native) — the card with the way to send it, as
-    `item.capture` says (`pages` 1, or 2 = the front then the back). Taking a photo sends nothing: the pages show
-    as covers; its first action, a text button, takes a photo (one taken once every page is there starts again),
-    and the last, «Send to review», the only one with a border (outlined) and disabled until every page is taken,
-    hands them to `onCapture(photos)` in order. Photos only: it offers no PDF (owner, 2026-11-04).
+    `item.capture` says (`pages` 1, or 2 = the front then the back). Controlled: `{ item, subtitle?, pages = [],
+    onPagesChange(pages), onSend(), isSending = false, testID = 'document-requirement' }` — the host owns the pages
+    (the picker's assets, in order) and clears them only once its send succeeded, so a failed send keeps them; the
+    card never clears them. Taking a photo sends nothing: the pages show as covers; its first action, a text button,
+    takes a photo («Add», or «Add the front»/«Add the back»; «Retake» once every page is there, when a photo starts
+    the document again), and the last, «Send to review», the only one with a border (outlined) and disabled until
+    every page is taken, calls `onSend()`. While `isSending` every action is disabled and «Send to review» shows the
+    Button's `loading`. The note asks for the back (`documentAddBackPrompt`) or, every page there and nothing sending,
+    says the photos are not sent yet (`documentNotSent`). Every photo is taken with `DOCUMENT_CAPTURE_OPTIONS`:
+    `maxWidth`/`maxHeight` 5,120 (an ID-1 card's PDF417 at ISO/IEC 15415's 5 px per module over AAMVA's 0.170 mm X
+    needs 3,597 px at 70% of the frame; an A4/Letter page at 300 ppi, 5,011 px; both bounds or the picker does not
+    resize), `quality` 1, `assetRepresentationMode: 'compatible'` (iOS JPEG, not HEIC) and `conversionQuality` 1
+    (Android's HEIC → JPEG). Photos only: it offers no PDF (owner, 2026-11-04).
   - `ImagePicker.Avatar` `variant="sheet"` renders no control of its own; the caller opens the sheet with the
     ref's `show()`, so its own Paper `Button` can sit inside a `Card.Actions`. `avatar` and `button` are as before.
     Every variant: `captureOptions` (react-native-image-picker's options) are laid over the defaults (a photo, quality
@@ -244,9 +257,11 @@ themed through `useTheme()` so a host's theme applies:
     with Settings) or any other picker error, read from its `errorCode` (`global.somethingWentWrong` /
     `global.tryAgainLater`). The library asks for no permission: image-picker 8 opens Android's Photo Picker and iOS's
     PHPicker, which need none (asking blocked Android 13+ and iOS limited access); the camera keeps its permission.
-  - Their fixed words (`documentAddFront`, `documentAddBack`, `documentAddBackPrompt`, `documentFront`,
-    `documentBack`, `documentSuperseded`) live in `Translations/*.json`; the stories
-    (`Partner/DocumentRequirement.stories.js`) use the local circuit's real items.
+  - Their fixed words (`documentAddFront`, `documentAddBack`, `documentAddBackPrompt`, `documentRetake` — moved here
+    from the app with its values —, `documentNotSent`, `documentFront`, `documentBack`, `documentSuperseded`,
+    `documentExpiresOn`) live in `Translations/*.json`, in the catalogue's «Agregar»; the stories
+    (`Partner/DocumentRequirement.stories.js`) use the local circuit's real items, and render the capture card itself
+    with `pages` for the photo states.
 - `Partner/viewModel.js` (barrel/portable: `PartnerViewModel`, because `statusLabel` is the Order one):
   the key is the package's `statusLabelKey(group, value)` resolved with `localized`; a value outside the
   vocabulary, or a key the registered catalogue lacks, renders the raw value. Each kind's group is read

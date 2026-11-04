@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import renderer, { act } from 'react-test-renderer';
 
 import { EN, ES } from '@jmstechnologiesinc/partner';
-import { MD3LightTheme, Provider } from '@jmstechnologiesinc/react-native-paper';
+import { Card, MD3LightTheme, Provider } from '@jmstechnologiesinc/react-native-paper';
 
 import { formatDateTime } from '../../Localization/format';
 import { registerFlatCatalog, setI18nConfig } from '../../Localization/Localization';
@@ -11,18 +11,19 @@ import DocumentRequirementCard from '../DocumentRequirementCard';
 import DocumentVersionList from '../DocumentVersionList';
 import { documentVersionRow, documentVersionRows, requirementTitle } from '../viewModel';
 
-// The photo sheet is the native picker; here it is a stand-in that records being opened and hands back the photo a
-// test gives it, through the same ref and `onChange` the card uses.
-const mockPicker = { shown: 0, take: null };
+// The photo sheet is the native picker; here it is a stand-in that records being opened and the capture options it was
+// given, and hands back the photo a test gives it, through the same ref and `onChange` the card uses.
+const mockPicker = { shown: 0, take: null, captureOptions: null };
 jest.mock('../../ImagePicker/ImagePickerAvatar', () => {
     const React = require('react');
-    const Sheet = React.forwardRef(({ onChange }, ref) => {
+    const Sheet = React.forwardRef(({ onChange, captureOptions }, ref) => {
         React.useImperativeHandle(ref, () => ({
             show: () => {
                 mockPicker.shown += 1;
             },
         }));
         mockPicker.take = onChange;
+        mockPicker.captureOptions = captureOptions;
         return null;
     });
     return { __esModule: true, default: Sheet };
@@ -50,6 +51,7 @@ beforeAll(() => {
 beforeEach(() => {
     mockPicker.shown = 0;
     mockPicker.take = null;
+    mockPicker.captureOptions = null;
 });
 
 afterEach(() => {
@@ -204,6 +206,35 @@ describe('DocumentRequirementCard', () => {
         expect(onPress).toHaveBeenCalledTimes(1);
     });
 
+    it('keeps a polite live region for the note, so a screen reader announces each next step', () => {
+        const liveRegionOf = (tree) => tree.root.findAll((node) => node.props['aria-live'] === 'polite')[0];
+        // Mounted before there is anything to say: a region that appears together with its text is not announced.
+        const empty = render(<DocumentRequirementCard item={INSPECTION} />);
+        expect(liveRegionOf(empty)).toBeDefined();
+        expect(hasTestID(empty, 'document-requirement-note')).toBe(false);
+
+        const tree = render(<DocumentRequirementCard item={INSPECTION} note="Now take a photo of the back." />);
+        const note = liveRegionOf(tree).findAll((node) => node.props.testID === 'document-requirement-note');
+        expect(note.length).toBeGreaterThan(0);
+    });
+
+    it("lets its actions wrap, keeping Card.Actions' own alignment, and shows an action in progress", () => {
+        const tree = render(
+            <DocumentRequirementCard
+                item={INSPECTION}
+                actions={[
+                    { label: 'Retake', onPress: jest.fn(), mode: 'text', isDisabled: true, testID: 'retake' },
+                    { label: 'Send to review', onPress: jest.fn(), isDisabled: true, loading: true, testID: 'send' },
+                ]}
+            />
+        );
+        expect(tree.root.findByType(Card.Actions).props.style).toEqual({
+            flexWrap: 'wrap',
+            rowGap: MD3LightTheme.spacing.x2,
+        });
+        expect(buttonOf(tree, 'send').props).toEqual(expect.objectContaining({ loading: true, disabled: true }));
+    });
+
     it('shows both sides as a carousel that snaps item by item, the next one peeking (Material 3 hero)', () => {
         const { spacing } = MD3LightTheme;
         const tree = render(
@@ -242,10 +273,29 @@ describe('DocumentVersionList', () => {
     });
 });
 
+// A host as the app is one: it owns the pages, hands them to its send, and clears them only once the send succeeded.
+const host = { clear: null };
+const Host = ({ item, onSend = jest.fn(), isSending = false }) => {
+    const [pages, setPages] = useState([]);
+    host.clear = () => setPages([]);
+    return (
+        <DocumentCaptureCard
+            item={item}
+            pages={pages}
+            onPagesChange={setPages}
+            onSend={() => onSend(pages)}
+            isSending={isSending}
+        />
+    );
+};
+const NOT_SENT = 'These photos are not sent yet. Tap «Send to review».';
+const BACK_PROMPT = 'Now take a photo of the back of the document.';
+const actionKeysOf = (tree) => tree.root.findByType(Card.Actions).props.children.map((button) => button.key);
+
 describe('DocumentCaptureCard', () => {
-    it('takes one photo of a one-page document, shows it, and sends it only on «Send to review»', () => {
-        const onCapture = jest.fn();
-        const tree = render(<DocumentCaptureCard item={INSPECTION} onCapture={onCapture} />);
+    it('takes one photo of a one-page document, shows it, and hands it to the host only on «Send to review»', () => {
+        const onSend = jest.fn();
+        const tree = render(<Host item={INSPECTION} onSend={onSend} />);
         expect(textsOf(tree)).toEqual(expect.arrayContaining(['Add', 'Send to review']));
         // Photos only (owner, 2026-11-04): no PDF, even where the server takes one.
         expect(textsOf(tree)).not.toContain('Upload a PDF');
@@ -257,65 +307,97 @@ describe('DocumentCaptureCard', () => {
         expect(mockPicker.shown).toBe(1);
 
         take({ uri: 'file:///page.jpg' });
-        expect(onCapture).not.toHaveBeenCalled();
+        expect(onSend).not.toHaveBeenCalled();
         expect(propsOf(tree, 'document-requirement-cover-0').accessibilityLabel).toBe('Document');
-        // The way to take a photo stays.
-        expect(textsOf(tree)).toEqual(expect.arrayContaining(['Add', 'Send to review']));
+        // The way to take a photo stays, and now says it starts again; the note says nothing is sent yet.
+        expect(textsOf(tree)).toEqual(expect.arrayContaining(['Retake', 'Send to review', NOT_SENT]));
         expect(buttonOf(tree, 'document-requirement-send').props.disabled).toBe(false);
 
         press(tree, 'document-requirement-send');
-        expect(onCapture).toHaveBeenCalledWith([{ uri: 'file:///page.jpg' }]);
+        expect(onSend).toHaveBeenCalledWith([{ uri: 'file:///page.jpg' }]);
+        // The card never clears the pages itself: a send that fails keeps them.
+        expect(hasTestID(tree, 'document-requirement-cover-0')).toBe(true);
+        act(() => host.clear());
         expect(hasTestID(tree, 'document-requirement-cover-0')).toBe(false);
         expect(buttonOf(tree, 'document-requirement-send').props.disabled).toBe(true);
     });
 
-    it('keeps the front of a two-sided document, then the back, and sends both only on «Send to review»', () => {
-        const onCapture = jest.fn();
-        const tree = render(<DocumentCaptureCard item={LICENCE} onCapture={onCapture} />);
+    it('keeps the front of a two-sided document, then the back, and hands over both on «Send to review»', () => {
+        const onSend = jest.fn();
+        const tree = render(<Host item={LICENCE} onSend={onSend} />);
         expect(textsOf(tree)).toContain('Add the front');
 
         take({ uri: 'file:///front.jpg' });
         expect(hasTestID(tree, 'document-requirement-cover-0')).toBe(true);
-        expect(textsOf(tree)).toEqual(
-            expect.arrayContaining(['Now take a photo of the back of your licence.', 'Add the back'])
-        );
+        expect(textsOf(tree)).toEqual(expect.arrayContaining([BACK_PROMPT, 'Add the back']));
         expect(buttonOf(tree, 'document-requirement-send').props.disabled).toBe(true);
 
         take({ uri: 'file:///back.jpg' });
-        expect(onCapture).not.toHaveBeenCalled();
+        expect(onSend).not.toHaveBeenCalled();
         expect(propsOf(tree, 'document-requirement-cover-0').accessibilityLabel).toBe('Front');
         expect(propsOf(tree, 'document-requirement-cover-1').accessibilityLabel).toBe('Back');
-        expect(textsOf(tree)).not.toContain('Now take a photo of the back of your licence.');
+        expect(textsOf(tree)).not.toContain(BACK_PROMPT);
+        expect(textsOf(tree)).toEqual(expect.arrayContaining([NOT_SENT, 'Retake']));
         expect(buttonOf(tree, 'document-requirement-send').props.disabled).toBe(false);
 
         press(tree, 'document-requirement-send');
-        expect(onCapture).toHaveBeenCalledWith([{ uri: 'file:///front.jpg' }, { uri: 'file:///back.jpg' }]);
+        expect(onSend).toHaveBeenCalledWith([{ uri: 'file:///front.jpg' }, { uri: 'file:///back.jpg' }]);
+        act(() => host.clear());
         expect(textsOf(tree)).toContain('Add the front');
     });
 
     it('replaces what was taken with a photo taken once every page is there', () => {
-        const onCapture = jest.fn();
-        const single = render(<DocumentCaptureCard item={INSPECTION} onCapture={onCapture} />);
+        const onSend = jest.fn();
+        const single = render(<Host item={INSPECTION} onSend={onSend} />);
         take({ uri: 'file:///wrong.jpg' });
         take({ uri: 'file:///right.jpg' });
         press(single, 'document-requirement-send');
-        expect(onCapture).toHaveBeenCalledWith([{ uri: 'file:///right.jpg' }]);
+        expect(onSend).toHaveBeenCalledWith([{ uri: 'file:///right.jpg' }]);
 
         // The sheet stand-in now hands photos to this card, the last one rendered.
-        const licence = render(<DocumentCaptureCard item={LICENCE} onCapture={onCapture} />);
+        const licence = render(<Host item={LICENCE} />);
         take({ uri: 'file:///front.jpg' });
         take({ uri: 'file:///back.jpg' });
-        expect(textsOf(licence)).toContain('Add the front');
+        expect(textsOf(licence)).toContain('Retake');
         take({ uri: 'file:///front-again.jpg' });
         expect(hasTestID(licence, 'document-requirement-cover-1')).toBe(false);
         expect(textsOf(licence)).toContain('Add the back');
         expect(buttonOf(licence, 'document-requirement-send').props.disabled).toBe(true);
     });
 
-    it('disables adding and sending while the host sends', () => {
-        const tree = render(<DocumentCaptureCard item={INSPECTION} onCapture={jest.fn()} isDisabled />);
+    it('while the host sends, shows the progress on «Send to review», disables every action and keeps the photos', () => {
+        const tree = render(
+            <DocumentCaptureCard
+                item={INSPECTION}
+                pages={[{ uri: 'file:///page.jpg' }]}
+                onPagesChange={jest.fn()}
+                onSend={jest.fn()}
+                isSending
+            />
+        );
         expect(buttonOf(tree, 'document-requirement-add').props.disabled).toBe(true);
-        take({ uri: 'file:///page.jpg' });
-        expect(buttonOf(tree, 'document-requirement-send').props.disabled).toBe(true);
+        expect(buttonOf(tree, 'document-requirement-send').props).toEqual(
+            expect.objectContaining({ disabled: true, loading: true })
+        );
+        expect(hasTestID(tree, 'document-requirement-cover-0')).toBe(true);
+        expect(textsOf(tree)).not.toContain(NOT_SENT);
+    });
+
+    it('keys its buttons by position, so a label that changes does not remount the button', () => {
+        const tree = render(<Host item={LICENCE} />);
+        const keys = actionKeysOf(tree);
+        take({ uri: 'file:///front.jpg' });
+        expect(actionKeysOf(tree)).toEqual(keys);
+    });
+
+    it('takes every document at the resolution its standards need, at full quality, as JPEG', () => {
+        render(<Host item={INSPECTION} />);
+        expect(mockPicker.captureOptions).toEqual({
+            maxWidth: 5120,
+            maxHeight: 5120,
+            quality: 1,
+            assetRepresentationMode: 'compatible',
+            conversionQuality: 1,
+        });
     });
 });
