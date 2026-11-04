@@ -1,4 +1,4 @@
-import { MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
+import { interpunct, MATERIAL_ICONS } from '@jmstechnologiesinc/commons';
 import {
     CHECKR_REPORT_ADJUDICATION,
     CHECKR_REPORT_RESULT,
@@ -24,12 +24,14 @@ import {
     RULE_CLAUSE,
     RULE_ERROR_CODE,
     RULE_REFERENCE_SUBJECT,
+    SCAN_STATUS,
     SCREENING_PACKAGE,
     STAFF_INTENT,
     VERIFICATION_STATUS,
     statusLabelKey,
 } from '@jmstechnologiesinc/partner';
 
+import { formatDateTime } from '../Localization/format';
 import { currentLocale, localized } from '../Localization/Localization';
 import { STATUS_TONES } from '../tones';
 
@@ -92,6 +94,13 @@ const GROUP = Object.freeze({
     disabledReason: groupOf(DISABLED_REASON),
     intent: groupOf(STAFF_INTENT),
     refusal: groupOf(REFUSAL_REASON),
+    scan: groupOf(SCAN_STATUS),
+});
+
+// A vocabulary labelled twice, once per audience: the partner's group is the one `groupOf` finds, these the staff's.
+const STAFF_GROUP = Object.freeze({
+    detailsCode: 'details_code_staff',
+    scan: 'scan_status_staff',
 });
 
 const { success, warning, danger, neutral, info } = STATUS_TONES;
@@ -228,8 +237,14 @@ export const requirementLabel = (key) => {
     return labelOf(GROUP.requirement, key, member);
 };
 
-/** The label of a Stripe `details_code` (canon §7.4). */
+/** The label of a Stripe `details_code` (canon §7.4), in the words the partner reads. */
 export const detailsCodeLabel = (code) => labelOf(GROUP.detailsCode, code);
+
+/** The same code in the words a reviewer reads (owner, 2026-11-04: each audience its own text). */
+export const staffDetailsCodeLabel = (code) => labelOf(STAFF_GROUP.detailsCode, code);
+
+/** A version's scan in the words a reviewer reads. */
+export const staffScanLabel = (scan) => labelOf(STAFF_GROUP.scan, scan);
 
 /** The label of a `disabled_reason` (canon §7.2); the values are dotted, and
  *  the flat catalogue resolves them by exact match. */
@@ -296,6 +311,11 @@ export const CLAUSE_VALUE_KIND = Object.freeze({
 export const RULE_CLAUSE_PRESENTATION = Object.freeze([
     { clause: RULE_CLAUSE.LABEL, kind: CLAUSE_VALUE_KIND.RULE_TEXT, valueOf: (rule) => rule.label },
     { clause: RULE_CLAUSE.EXPLANATION, kind: CLAUSE_VALUE_KIND.RULE_TEXT, valueOf: (rule) => rule.explanation },
+    {
+        clause: RULE_CLAUSE.PARTNER_EXPLANATION,
+        kind: CLAUSE_VALUE_KIND.RULE_TEXT,
+        valueOf: (rule) => rule.partnerExplanation,
+    },
     {
         clause: RULE_CLAUSE.EVIDENCE,
         kind: CLAUSE_VALUE_KIND.LABEL,
@@ -383,6 +403,42 @@ const COUNT_WORD = Object.freeze({
 
 /** A rule's own text (`{en, es}`, written in the rules editor) in the reader's language, else the package's first. */
 export const ruleText = (text) => (text ? text[currentLocale().split('-')[0]] ?? text[LOCALES[0]] : null);
+
+/**
+ * Contract request #117: a requirement's name — the composed rule's own for the partner's market (`label`, #97) when
+ * it has one, else the catalogue's — so the hub, the lists and the document screen name one requirement one way.
+ */
+export const requirementTitle = (item) => ruleText(item?.label) ?? requirementLabel(item?.requirementKey);
+
+// `expires_at` is a calendar day (`YYYY-MM-DD`), which `Date` reads as that day at 00:00 UTC: formatted in UTC it is
+// the same day for every reader, where the reader's zone would move it to the day before west of Greenwich.
+const CALENDAR_DAY = Object.freeze({ dateStyle: 'medium', timeZone: 'UTC' });
+
+/**
+ * One document version as the server sends it, as a list row `{ key, title, description }`, in the shape of a
+ * requirement's row (owner, 2026-11-04): the title names it, by when it was sent (in the app's locale), and the
+ * description opens with its state, in the words of a requirement's cause — «Superseded» once a newer one replaced it,
+ * else the `cause` the server sends with it. Then its scan while it is not clean (being scanned, or quarantined), why it
+ * was not accepted and until when it counts (that day, in the app's locale) — each only when the version says it.
+ */
+export const documentVersionRow = (version) => {
+    const scan = version.scan?.status;
+    return {
+        key: version.versionId,
+        title: formatDateTime(version.submittedTime),
+        description: interpunct([
+            version.supersededBy ? localized('documentSuperseded') : statusLabel('requirement_cause', version.cause),
+            scan && scan !== SCAN_STATUS.CLEAN ? labelOf(GROUP.scan, scan) : null,
+            detailsCodeLabel(version.verification?.details_code),
+            version.expires_at
+                ? localized('documentExpiresOn', { date: formatDateTime(version.expires_at, CALENDAR_DAY) })
+                : null,
+        ]),
+    };
+};
+
+/** Contract request #117: a document requirement's versions (`checklistItem.versions`, newest first) as those rows. */
+export const documentVersionRows = (versions) => (Array.isArray(versions) ? versions : []).map(documentVersionRow);
 
 /** «24 h», «30 días»: the catalogue's word for the count, or the bare count while no catalogue carries it. */
 const countText = (kind, count) => {

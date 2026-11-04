@@ -80,6 +80,10 @@ export { localizedAuthError } from './Localization/authErrors';
 // K-22 — also served by `portable.js`, the entry a web host imports.
 export { default as StatusChip, SlaChip, LabelChip } from './Partner/StatusChip';
 export { default as RuleClauseList } from './Partner/RuleClauseList';
+export { default as DocumentRequirementCard } from './Partner/DocumentRequirementCard';
+export { default as DocumentVersionList } from './Partner/DocumentVersionList';
+// Contract request #117: the card with its capture; native (the photo picker), so not in portable.js.
+export { default as DocumentCaptureCard } from './Partner/DocumentCaptureCard';
 export { default as DocumentViewer } from './DocumentViewer/DocumentViewer';
 export { default as DecisionDialog } from './DecisionDialog/DecisionDialog';
 export { default as Timeline } from './Timeline/Timeline';

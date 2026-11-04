@@ -73,6 +73,9 @@ export { orderViewModel, fromDescriptor, statusLabel } from './Order/viewModel';
 // K-22
 export { default as StatusChip, SlaChip, LabelChip } from './Partner/StatusChip';
 export { default as RuleClauseList } from './Partner/RuleClauseList';
+// Contract request #117: a document requirement and its versions, read-only (the capture card is native).
+export { default as DocumentRequirementCard } from './Partner/DocumentRequirementCard';
+export { default as DocumentVersionList } from './Partner/DocumentVersionList';
 export { default as DocumentViewer, ZOOM } from './DocumentViewer/DocumentViewer';
 export { default as DecisionDialog } from './DecisionDialog/DecisionDialog';
 // The web keyboard contract of a modal surface (focus in, Tab trap, Esc,
