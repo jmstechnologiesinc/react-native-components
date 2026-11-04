@@ -9,7 +9,7 @@ import { registerFlatCatalog, setI18nConfig } from '../../Localization/Localizat
 import DocumentCaptureCard from '../DocumentCaptureCard';
 import DocumentRequirementCard from '../DocumentRequirementCard';
 import DocumentVersionList from '../DocumentVersionList';
-import { documentVersionRows, requirementTitle } from '../viewModel';
+import { documentVersionRow, documentVersionRows, requirementTitle } from '../viewModel';
 
 // The photo sheet is the native picker; here it is a stand-in that records being opened and hands back the photo a
 // test gives it, through the same ref and `onChange` the card uses.
@@ -151,6 +151,11 @@ describe('documentVersionRows', () => {
     it('has no rows without versions', () => {
         expect(documentVersionRows(undefined)).toEqual([]);
         expect(documentVersionRows([])).toEqual([]);
+    });
+
+    it('is one version row for every page that lists versions', () => {
+        const version = { versionId: 'v2', verification: { status: 'verified' }, expires_at: '2026-11-23' };
+        expect(documentVersionRow(version)).toEqual(documentVersionRows([version])[0]);
     });
 });
 

@@ -394,24 +394,27 @@ export const ruleText = (text) => (text ? text[currentLocale().split('-')[0]] ??
 export const requirementTitle = (item) => ruleText(item?.label) ?? requirementLabel(item?.requirementKey);
 
 /**
- * Contract request #117: a document requirement's versions (`checklistItem.versions`, newest first, as the server
- * sends them) as list rows `{ key, title, description }`. The title is the version's state: «Superseded» once a newer
- * one replaced it, else its verification's label. The description is when it was sent (in the app's locale), that it
- * is still being scanned, why it was not accepted and until when it counts — each only when the version says it.
+ * One document version as the server sends it, as a list row `{ key, title, description }`, the same on every page that
+ * lists versions (a requirement's history, the documents list). The title is the version's state: «Superseded» once a
+ * newer one replaced it, else its verification's label. The description is when it was sent (in the app's locale),
+ * that it is still being scanned, why it was not accepted and until when it counts — each only when the version says
+ * it.
  */
-export const documentVersionRows = (versions) =>
-    (Array.isArray(versions) ? versions : []).map((version) => ({
-        key: version.versionId,
-        title: version.supersededBy
-            ? localized('documentSuperseded')
-            : statusLabel('verification', version.verification?.status),
-        description: interpunct([
-            formatDateTime(version.submittedTime),
-            version.scan?.status === SCAN_STATUS.PENDING ? labelOf(GROUP.scan, version.scan.status) : null,
-            detailsCodeLabel(version.verification?.details_code),
-            version.expires_at ? `${localized('documentExpires')} ${version.expires_at}` : null,
-        ]),
-    }));
+export const documentVersionRow = (version) => ({
+    key: version.versionId,
+    title: version.supersededBy
+        ? localized('documentSuperseded')
+        : statusLabel('verification', version.verification?.status),
+    description: interpunct([
+        formatDateTime(version.submittedTime),
+        version.scan?.status === SCAN_STATUS.PENDING ? labelOf(GROUP.scan, version.scan.status) : null,
+        detailsCodeLabel(version.verification?.details_code),
+        version.expires_at ? `${localized('documentExpires')} ${version.expires_at}` : null,
+    ]),
+});
+
+/** Contract request #117: a document requirement's versions (`checklistItem.versions`, newest first) as those rows. */
+export const documentVersionRows = (versions) => (Array.isArray(versions) ? versions : []).map(documentVersionRow);
 
 /** «24 h», «30 días»: the catalogue's word for the count, or the bare count while no catalogue carries it. */
 const countText = (kind, count) => {
