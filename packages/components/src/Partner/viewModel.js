@@ -97,6 +97,12 @@ const GROUP = Object.freeze({
     scan: groupOf(SCAN_STATUS),
 });
 
+// A vocabulary labelled twice, once per audience: the partner's group is the one `groupOf` finds, these the staff's.
+const STAFF_GROUP = Object.freeze({
+    detailsCode: 'details_code_staff',
+    scan: 'scan_status_staff',
+});
+
 const { success, warning, danger, neutral, info } = STATUS_TONES;
 
 /**
@@ -231,8 +237,14 @@ export const requirementLabel = (key) => {
     return labelOf(GROUP.requirement, key, member);
 };
 
-/** The label of a Stripe `details_code` (canon §7.4). */
+/** The label of a Stripe `details_code` (canon §7.4), in the words the partner reads. */
 export const detailsCodeLabel = (code) => labelOf(GROUP.detailsCode, code);
+
+/** The same code in the words a reviewer reads (owner, 2026-11-04: each audience its own text). */
+export const staffDetailsCodeLabel = (code) => labelOf(STAFF_GROUP.detailsCode, code);
+
+/** A version's scan in the words a reviewer reads. */
+export const staffScanLabel = (scan) => labelOf(STAFF_GROUP.scan, scan);
 
 /** The label of a `disabled_reason` (canon §7.2); the values are dotted, and
  *  the flat catalogue resolves them by exact match. */
@@ -299,6 +311,11 @@ export const CLAUSE_VALUE_KIND = Object.freeze({
 export const RULE_CLAUSE_PRESENTATION = Object.freeze([
     { clause: RULE_CLAUSE.LABEL, kind: CLAUSE_VALUE_KIND.RULE_TEXT, valueOf: (rule) => rule.label },
     { clause: RULE_CLAUSE.EXPLANATION, kind: CLAUSE_VALUE_KIND.RULE_TEXT, valueOf: (rule) => rule.explanation },
+    {
+        clause: RULE_CLAUSE.PARTNER_EXPLANATION,
+        kind: CLAUSE_VALUE_KIND.RULE_TEXT,
+        valueOf: (rule) => rule.partnerExplanation,
+    },
     {
         clause: RULE_CLAUSE.EVIDENCE,
         kind: CLAUSE_VALUE_KIND.LABEL,
@@ -398,21 +415,19 @@ export const requirementTitle = (item) => ruleText(item?.label) ?? requirementLa
 const CALENDAR_DAY = Object.freeze({ dateStyle: 'medium', timeZone: 'UTC' });
 
 /**
- * One document version as the server sends it, as a list row `{ key, title, description }`, the same on every page that
- * lists versions (a requirement's history, the documents list). The title is the version's state: «Superseded» once a
- * newer one replaced it, else its verification's label. The description is when it was sent (in the app's locale),
- * its scan while it is not clean (being scanned, or quarantined), why it was not accepted and until when it counts
- * (that day, in the app's locale) — each only when the version says it.
+ * One document version as the server sends it, as a list row `{ key, title, description }`, in the shape of a
+ * requirement's row (owner, 2026-11-04): the title names it, by when it was sent (in the app's locale), and the
+ * description opens with its state, in the words of a requirement's cause — «Superseded» once a newer one replaced it,
+ * else the `cause` the server sends with it. Then its scan while it is not clean (being scanned, or quarantined), why it
+ * was not accepted and until when it counts (that day, in the app's locale) — each only when the version says it.
  */
 export const documentVersionRow = (version) => {
     const scan = version.scan?.status;
     return {
         key: version.versionId,
-        title: version.supersededBy
-            ? localized('documentSuperseded')
-            : statusLabel('verification', version.verification?.status),
+        title: formatDateTime(version.submittedTime),
         description: interpunct([
-            formatDateTime(version.submittedTime),
+            version.supersededBy ? localized('documentSuperseded') : statusLabel('requirement_cause', version.cause),
             scan && scan !== SCAN_STATUS.CLEAN ? labelOf(GROUP.scan, scan) : null,
             detailsCodeLabel(version.verification?.details_code),
             version.expires_at

@@ -68,6 +68,7 @@ const INSPECTION_DUE_SOON = {
     versions: [
         {
             versionId: '6WoqFfmibiFIgv6Ko6nh',
+            cause: 'satisfied',
             verification: { status: 'verified' },
             expires_at: '2026-11-23',
             scan: { status: 'clean' },
@@ -91,6 +92,7 @@ const INSURANCE_WITH_HISTORY = {
     versions: [
         {
             versionId: '3p9wgxM49qaibuOFC9KT',
+            cause: 'satisfied',
             verification: { status: 'verified' },
             expires_at: '2029-12-31',
             scan: { status: 'clean' },
@@ -120,6 +122,7 @@ const INSURANCE_JUST_SENT = {
     versions: [
         {
             versionId: 'kOFizggUFsNliTITk3fW',
+            cause: 'pending_review',
             verification: { status: 'pending' },
             scan: { status: 'pending' },
             submittedTime: 1793675729952,
@@ -144,6 +147,7 @@ const DPU_CERTIFICATE = {
     versions: [
         {
             versionId: 'yzu7Y8MIxmmwb7jHFseI',
+            cause: 'satisfied',
             verification: { status: 'verified' },
             expires_at: '2029-12-31',
             scan: { status: 'clean' },

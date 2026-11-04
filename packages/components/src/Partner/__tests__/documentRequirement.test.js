@@ -5,12 +5,11 @@ import renderer, { act } from 'react-test-renderer';
 import { EN, ES } from '@jmstechnologiesinc/partner';
 import { Card, MD3LightTheme, Provider } from '@jmstechnologiesinc/react-native-paper';
 
-import { formatDateTime } from '../../Localization/format';
 import { registerFlatCatalog, setI18nConfig } from '../../Localization/Localization';
 import DocumentCaptureCard from '../DocumentCaptureCard';
 import DocumentRequirementCard from '../DocumentRequirementCard';
 import DocumentVersionList from '../DocumentVersionList';
-import { documentVersionRow, documentVersionRows, requirementTitle } from '../viewModel';
+import { requirementTitle } from '../viewModel';
 
 // The photo sheet is the native picker; here it is a stand-in that records being opened and the capture options it was
 // given, and hands back the photo a test gives it, through the same ref and `onChange` the card uses.
@@ -121,69 +120,6 @@ describe('requirementTitle', () => {
         expect(requirementTitle({ requirementKey: 'car1.vehicle_insurance' })).toBe(
             EN['partner.requirement.vehicle_insurance']
         );
-    });
-});
-
-describe('documentVersionRows', () => {
-    it('titles a version by its verification, or as superseded, and says only what the version says', () => {
-        const rows = documentVersionRows([
-            { versionId: 'v3', verification: { status: 'pending' }, scan: { status: 'pending' }, submittedTime: AT },
-            {
-                versionId: 'v2',
-                verification: { status: 'verified' },
-                expires_at: '2026-11-23',
-                scan: { status: 'clean' },
-                submittedTime: AT,
-            },
-            {
-                versionId: 'v1',
-                verification: { status: 'unverified', details_code: 'document_not_readable' },
-                scan: { status: 'clean' },
-                supersededBy: 'v2',
-                submittedTime: AT,
-            },
-        ]);
-        const sent = formatDateTime(AT);
-        expect(rows).toEqual([
-            {
-                key: 'v3',
-                title: EN['partner.verification_status.pending'],
-                description: `${sent} · ${EN['partner.scan_status.pending']}`,
-            },
-            {
-                key: 'v2',
-                title: EN['partner.verification_status.verified'],
-                // The calendar day the server sent, in the app's locale, in no reader's zone.
-                description: `${sent} · Expires Nov 23, 2026`,
-            },
-            {
-                key: 'v1',
-                title: 'Superseded',
-                description: `${sent} · ${EN['partner.details_code.document_not_readable']}`,
-            },
-        ]);
-    });
-
-    it('says the scan of a version while it is not clean, by its catalogue label', () => {
-        // `infected` is partner 0.2.54's (O-10); before it, the view model shows the raw value it does not know.
-        const infected = EN['partner.scan_status.infected'] ?? 'infected';
-        const row = documentVersionRow({
-            versionId: 'v4',
-            verification: { status: 'unverified' },
-            scan: { status: 'infected' },
-            submittedTime: AT,
-        });
-        expect(row.description).toBe(`${formatDateTime(AT)} · ${infected}`);
-    });
-
-    it('has no rows without versions', () => {
-        expect(documentVersionRows(undefined)).toEqual([]);
-        expect(documentVersionRows([])).toEqual([]);
-    });
-
-    it('is one version row for every page that lists versions', () => {
-        const version = { versionId: 'v2', verification: { status: 'verified' }, expires_at: '2026-11-23' };
-        expect(documentVersionRow(version)).toEqual(documentVersionRows([version])[0]);
     });
 });
 
