@@ -62,14 +62,15 @@ const Avatar = forwardRef(function Avatar(
         });
     }, []);
 
-    // The sheet stays open after a pick cancelled or refused, so another source can be chosen.
+    // The sheet stays open after a pick cancelled or refused, so another source can be chosen. The pick ends after the
+    // picker's own screen closes, by when the caller may have taken this sheet away.
     const launch = async (pick) => {
         launching.current = true;
         try {
             const asset = await pick();
             if (asset) {
                 onChange(asset);
-                actionSheetRef.current.hide();
+                actionSheetRef.current?.hide();
             }
         } finally {
             launching.current = false;
