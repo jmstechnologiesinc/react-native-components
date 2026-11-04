@@ -23,6 +23,9 @@ export const IMAGE_PICKER_ACTIONS = {
  * The photo picker: a camera / library / cancel sheet, opened by an avatar (`variant="avatar"`), by a text button
  * (`variant="button"`), or, with `variant="sheet"`, by the caller's own control through the ref's `show()` — so a
  * caller can put a Paper `Button` straight inside its own container (a `Card.Actions` styles only its direct children).
+ * Where the sheet would offer a single choice (the web, which has no camera option, without extra `options`), opening
+ * it takes that choice instead. `onChange(asset)` gets each photo picked; a pick cancelled or refused calls nothing.
+ * `captureOptions` (react-native-image-picker's options, e.g. a maximum size) are laid over the picker's defaults.
  */
 const Avatar = forwardRef(function Avatar(
     {
@@ -35,11 +38,13 @@ const Avatar = forwardRef(function Avatar(
         size = moderateScale(150),
         options = [],
         isDisabled,
+        captureOptions,
     },
     ref
 ) {
     const imagePickerRef = useRef();
     const actionSheetRef = useRef();
+    const launching = useRef(false);
 
     const insets = useSafeAreaInsets();
 
@@ -51,26 +56,33 @@ const Avatar = forwardRef(function Avatar(
             descriptionPermissionPhotos: localized('enablePhotosPermission'),
             cancelPermission: localized('global.cancel'),
             settingPermission: localized('goToSettings'),
+            titleFailure: localized('global.somethingWentWrong'),
+            descriptionFailure: localized('global.tryAgainLater'),
+            closeFailure: localized('global.close'),
         });
     }, []);
 
-    const showActionSheet = () => {
-        actionSheetRef.current.show();
+    // The sheet stays open after a pick cancelled or refused, so another source can be chosen.
+    const launch = async (pick) => {
+        launching.current = true;
+        try {
+            const asset = await pick();
+            if (asset) {
+                onChange(asset);
+                actionSheetRef.current.hide();
+            }
+        } finally {
+            launching.current = false;
+        }
     };
 
-    useImperativeHandle(ref, () => ({ show: showActionSheet }), []);
-
-    const onActionDone = async (value) => {
+    const onActionDone = (value) => {
+        // A tap while the picker is still opening would launch it a second time.
+        if (launching.current) return;
         if (value === IMAGE_PICKER_ACTIONS.launchCamera) {
-            imagePickerRef.current.takePhoto().then((rep) => {
-                onChange(rep);
-                actionSheetRef.current.hide();
-            });
+            launch(() => imagePickerRef.current.takePhoto(captureOptions));
         } else if (value === IMAGE_PICKER_ACTIONS.launchImageLibrary) {
-            imagePickerRef.current.chooseFromLibrary().then((rep) => {
-                onChange(rep);
-                actionSheetRef.current.hide();
-            });
+            launch(() => imagePickerRef.current.chooseFromLibrary(captureOptions));
         } else if (value === IMAGE_PICKER_ACTIONS.removeImage) {
             onRemove();
             actionSheetRef.current.hide();
@@ -97,6 +109,16 @@ const Avatar = forwardRef(function Avatar(
         ...options,
         { title: localized('cancel'), value: IMAGE_PICKER_ACTIONS.cancel, icon: 'cancel' },
     ];
+    const choices = OPTIONS.filter(({ value }) => value !== IMAGE_PICKER_ACTIONS.cancel);
+
+    const showActionSheet = () => {
+        if (choices.length === 1) onActionDone(choices[0].value);
+        else actionSheetRef.current.show();
+    };
+
+    // Recreated on every render: `show()` may launch the picker itself, and must hand the photo to the current
+    // `onChange`, not the first render's.
+    useImperativeHandle(ref, () => ({ show: showActionSheet }));
 
     // What opens the sheet: the avatar, the text button, or nothing of its own (`sheet`: the caller's control, `show()`).
     let trigger = null;

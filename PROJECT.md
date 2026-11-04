@@ -233,6 +233,14 @@ themed through `useTheme()` so a host's theme applies:
     hands them to `onCapture(photos)` in order. Photos only: it offers no PDF (owner, 2026-11-04).
   - `ImagePicker.Avatar` `variant="sheet"` renders no control of its own; the caller opens the sheet with the
     ref's `show()`, so its own Paper `Button` can sit inside a `Card.Actions`. `avatar` and `button` are as before.
+    Every variant: `captureOptions` (react-native-image-picker's options) are laid over the defaults (a photo, quality
+    1, base64), so callers that pass none behave as before; `onChange(asset)` is called only with a photo; the sheet
+    ignores taps while a pick is in progress; where it would offer a single choice (the web, which has no camera
+    option) `show()` takes that choice. `ImagePickerAPI`'s `takePhoto(options)` / `chooseFromLibrary(options)` always
+    resolve, never reject: the asset, or `null` — cancelled (silently), a permission refused (the permission alert,
+    with Settings) or any other picker error, read from its `errorCode` (`global.somethingWentWrong` /
+    `global.tryAgainLater`). The library asks for no permission: image-picker 8 opens Android's Photo Picker and iOS's
+    PHPicker, which need none (asking blocked Android 13+ and iOS limited access); the camera keeps its permission.
   - Their fixed words (`documentAddFront`, `documentAddBack`, `documentAddBackPrompt`, `documentFront`,
     `documentBack`, `documentSuperseded`) live in `Translations/*.json`; the stories
     (`Partner/DocumentRequirement.stories.js`) use the local circuit's real items.
