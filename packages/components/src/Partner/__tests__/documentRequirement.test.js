@@ -138,7 +138,8 @@ describe('documentVersionRows', () => {
             {
                 key: 'v2',
                 title: EN['partner.verification_status.verified'],
-                description: `${sent} · Expires 2026-11-23`,
+                // The calendar day the server sent, in the app's locale, in no reader's zone.
+                description: `${sent} · Expires Nov 23, 2026`,
             },
             {
                 key: 'v1',
@@ -146,6 +147,18 @@ describe('documentVersionRows', () => {
                 description: `${sent} · ${EN['partner.details_code.document_not_readable']}`,
             },
         ]);
+    });
+
+    it('says the scan of a version while it is not clean, by its catalogue label', () => {
+        // `infected` is partner 0.2.54's (O-10); before it, the view model shows the raw value it does not know.
+        const infected = EN['partner.scan_status.infected'] ?? 'infected';
+        const row = documentVersionRow({
+            versionId: 'v4',
+            verification: { status: 'unverified' },
+            scan: { status: 'infected' },
+            submittedTime: AT,
+        });
+        expect(row.description).toBe(`${formatDateTime(AT)} · ${infected}`);
     });
 
     it('has no rows without versions', () => {

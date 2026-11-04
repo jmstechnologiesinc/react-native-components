@@ -225,7 +225,10 @@ themed through `useTheme()` so a host's theme applies:
     Material 3 hero carousel (a horizontal `ScrollView`: `snapToInterval` on the phone, `pagingEnabled`'s CSS scroll
     snap on the web; items `spacing.x2` apart, the next peeking `spacing.x14`, Material's 8 dp and 56 dp).
   - `Partner/DocumentVersionList` (portable) — `item.versions` as `ListRow`s from `documentVersionRows`; they open
-    nothing, so no chevron.
+    nothing, so no chevron. A row's description: when it was sent, the scan's catalogue label while the scan is not
+    `SCAN_STATUS.CLEAN` (pending, and partner 0.2.54's infected, never spelled here), the details code's label, and
+    `documentExpiresOn` («Expires Nov 23, 2026»): `expires_at` is a calendar day, formatted by `formatDateTime` in UTC
+    so no reader's zone moves it. `documentExpires` stays for the app's older list.
   - `Partner/DocumentCaptureCard` (barrel only: the picker is native) — the card with the way to send it, as
     `item.capture` says (`pages` 1, or 2 = the front then the back). Taking a photo sends nothing: the pages show
     as covers; its first action, a text button, takes a photo (one taken once every page is there starts again),

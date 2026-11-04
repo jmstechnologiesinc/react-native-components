@@ -803,6 +803,7 @@
     "accountDeactivatedWithDate": "Tu cuenta se eliminará el",
     "contactSupportForHelp": "Contacta a soporte para más información.",
     "documentExpires": "Vence",
+    "documentExpiresOn": "Vence el %{date}",
     "documentExpired": "Vencido",
     "documentAddFront": "Añadir el anverso",
     "documentAddBack": "Añadir el reverso",

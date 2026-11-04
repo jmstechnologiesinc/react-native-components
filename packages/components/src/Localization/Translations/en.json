@@ -803,6 +803,7 @@
     "accountDeactivatedWithDate": "Your account will be deleted on",
     "contactSupportForHelp": "Contact support for help.",
     "documentExpires": "Expires",
+    "documentExpiresOn": "Expires %{date}",
     "documentExpired": "Expired",
     "documentAddFront": "Add the front",
     "documentAddBack": "Add the back",
