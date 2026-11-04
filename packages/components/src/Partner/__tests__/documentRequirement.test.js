@@ -196,8 +196,10 @@ describe('DocumentVersionList', () => {
 describe('DocumentCaptureCard', () => {
     it('takes one photo of a one-page document and hands it over at once', () => {
         const onCapture = jest.fn();
-        const tree = render(<DocumentCaptureCard item={INSPECTION} onCapture={onCapture} onUploadPdf={jest.fn()} />);
-        expect(textsOf(tree)).toEqual(expect.arrayContaining(['Upload a PDF', 'Add']));
+        const tree = render(<DocumentCaptureCard item={INSPECTION} onCapture={onCapture} />);
+        expect(textsOf(tree)).toContain('Add');
+        // Photos only (owner, 2026-11-04): no PDF, even where the server takes one.
+        expect(textsOf(tree)).not.toContain('Upload a PDF');
         press(tree, 'document-requirement-add');
         expect(mockPicker.shown).toBe(1);
         take({ uri: 'file:///page.jpg' });
@@ -206,7 +208,7 @@ describe('DocumentCaptureCard', () => {
 
     it('keeps the front of a two-sided document, shows it, then hands over the front and the back', () => {
         const onCapture = jest.fn();
-        const tree = render(<DocumentCaptureCard item={LICENCE} onCapture={onCapture} onUploadPdf={jest.fn()} />);
+        const tree = render(<DocumentCaptureCard item={LICENCE} onCapture={onCapture} />);
         expect(textsOf(tree)).toContain('Add the front');
 
         take({ uri: 'file:///front.jpg' });
@@ -215,7 +217,6 @@ describe('DocumentCaptureCard', () => {
         expect(textsOf(tree)).toEqual(
             expect.arrayContaining(['Now take a photo of the back of your licence.', 'Cancel', 'Add the back'])
         );
-        expect(textsOf(tree)).not.toContain('Upload a PDF');
 
         take({ uri: 'file:///back.jpg' });
         expect(onCapture).toHaveBeenCalledWith([{ uri: 'file:///front.jpg' }, { uri: 'file:///back.jpg' }]);
@@ -233,27 +234,8 @@ describe('DocumentCaptureCard', () => {
         expect(onCapture).not.toHaveBeenCalled();
     });
 
-    it('offers the PDF only where the server takes one and the host can open the link', () => {
-        const withPdf = render(<DocumentCaptureCard item={INSPECTION} onCapture={jest.fn()} onUploadPdf={jest.fn()} />);
-        expect(hasTestID(withPdf, 'document-requirement-pdf')).toBe(true);
-        // Acting as the partner, the host gives no link.
-        const actingAs = render(<DocumentCaptureCard item={INSPECTION} onCapture={jest.fn()} onUploadPdf={null} />);
-        expect(hasTestID(actingAs, 'document-requirement-pdf')).toBe(false);
-        const noPdf = render(
-            <DocumentCaptureCard
-                item={{ ...INSPECTION, capture: { pages: 1, pdf: false } }}
-                onCapture={jest.fn()}
-                onUploadPdf={jest.fn()}
-            />
-        );
-        expect(hasTestID(noPdf, 'document-requirement-pdf')).toBe(false);
-    });
-
     it('disables sending while the host sends', () => {
-        const tree = render(
-            <DocumentCaptureCard item={INSPECTION} onCapture={jest.fn()} onUploadPdf={jest.fn()} isDisabled />
-        );
+        const tree = render(<DocumentCaptureCard item={INSPECTION} onCapture={jest.fn()} isDisabled />);
         expect(buttonOf(tree, 'document-requirement-add').props.disabled).toBe(true);
-        expect(buttonOf(tree, 'document-requirement-pdf').props.disabled).toBe(true);
     });
 });

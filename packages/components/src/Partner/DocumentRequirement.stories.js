@@ -163,14 +163,9 @@ const subtitleOf = (item) =>
 const pane = { padding: MD3LightTheme.spacing.x4, gap: MD3LightTheme.spacing.x2 };
 
 // The app's document screen: the card with its capture, then the versions.
-const Screen = ({ item, canUploadPdf = true }) => (
+const Screen = ({ item }) => (
     <ScrollView contentContainerStyle={pane}>
-        <DocumentCaptureCard
-            item={item}
-            subtitle={subtitleOf(item)}
-            onCapture={() => {}}
-            onUploadPdf={canUploadPdf ? () => {} : null}
-        />
+        <DocumentCaptureCard item={item} subtitle={subtitleOf(item)} onCapture={() => {}} />
         <DocumentVersionList versions={item.versions} accessibilityLabel={requirementTitle(item)} />
     </ScrollView>
 );
@@ -184,9 +179,6 @@ export const InsuranceWithHistory = () => <Screen item={INSURANCE_WITH_HISTORY} 
 export const InsuranceJustSent = () => <Screen item={INSURANCE_JUST_SENT} />;
 
 export const MassachusettsOnlyCertificate = () => <Screen item={DPU_CERTIFICATE} />;
-
-// While the console acts as the partner: no PDF link (the hook gives none).
-export const ActingAsNoPdf = () => <Screen item={INSPECTION_DUE_SOON} canUploadPdf={false} />;
 
 // What the console shows of it («Así lo ve el socio»): the card reads, nothing is sent.
 export const ReadOnlyInTheConsole = () => (
