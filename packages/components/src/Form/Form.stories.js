@@ -210,6 +210,18 @@ export const BusinessInfoHighlighted = () => (
     />
 );
 
+// A store as the console shows it (read-only): the address is a field. While the form can be edited, as above, the
+// address is picked from Google's suggestions.
+export const BusinessInfoReadOnly = () => (
+    <AuthForm.BusinessInfo
+        storeTitle={state.storeTitle}
+        location={state.storeAddress}
+        industries={[]}
+        readOnly
+        inputActionHandler={() => {}}
+    />
+);
+
 // The driver's answers as a reviewer sees them: read-only (no disclosure, the
 // secrets masked), a changed field marked and a server error under its field.
 export const DriverInfoReadOnly = () => (

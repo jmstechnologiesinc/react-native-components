@@ -1,3 +1,8 @@
+// @deprecated since 0.5.5, removed in 0.6.0: import the package itself. The web hosts mount the whole app, and with
+// it the barrel and their web stubs (CustomerApp B-52), so a second entry only splits the forms in two.
+// `Form.BusinessInfo` now asks the store address with `AutoCompleteInput`, whose library imports the barrel back:
+// this entry no longer keeps the barrel out (its guard's static walk does not follow into that library).
+//
 // C-35 — THE PORTABLE ENTRY: what loads on the web with no stubs.
 //
 // The barrel (`index.js`) reaches maps, geolocation, permissions, the image

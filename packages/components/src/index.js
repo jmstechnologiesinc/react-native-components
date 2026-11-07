@@ -84,8 +84,11 @@ export { default as DocumentRequirementCard } from './Partner/DocumentRequiremen
 export { default as DocumentVersionList } from './Partner/DocumentVersionList';
 // Contract request #117: the card with its capture; native (the photo picker), so not in portable.js.
 export { default as DocumentCaptureCard } from './Partner/DocumentCaptureCard';
-export { default as DocumentViewer } from './DocumentViewer/DocumentViewer';
+export { default as DocumentViewer, ZOOM } from './DocumentViewer/DocumentViewer';
 export { default as DecisionDialog } from './DecisionDialog/DecisionDialog';
+// The web keyboard contract of a modal surface (focus in, Tab trap, Esc, focus back to the opener); a no-op off the
+// web. Until 0.5.5 only `portable.js` served it and `ZOOM`.
+export { useModalFocus } from './useModalFocus';
 export { default as Timeline } from './Timeline/Timeline';
 export { default as StateFlow } from './StateFlow/StateFlow';
 export { STATUS_TONES, toneColors } from './tones';

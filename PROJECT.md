@@ -65,9 +65,8 @@ Bigger features are folders with an `index.js` and internal sub-components + hoo
 
 1. `packages/components/src/<Name>/<Name>.js`
 2. `packages/components/src/<Name>/<Name>.stories.js`
-3. Export it from `packages/components/src/index.js` — otherwise it does not exist for consumers. If it
-   loads on the web without native modules, export it from `portable.js` too (the guard test will tell you
-   if it does not).
+3. Export it from `packages/components/src/index.js` — otherwise it does not exist for consumers. Nothing new
+   goes into `portable.js`: it is deprecated since 0.5.5 and removed in 0.6.0 (see "Portable entry").
 4. Add the folder's glob to `.storybook/main.ts` (see "Storybook" below — the web config is a
    hand-maintained list, not a glob over `src/**`).
 5. Any user-facing string goes into **both** `Translations/en.json` and `es.json` via `localized()`.
@@ -182,6 +181,12 @@ the components take the result and paint it.
 
 ## Portable entry (C-35) and partner components (K-22) — 0.4.0-dev
 
+**Deprecated since 0.5.5, removed in 0.6.0** (owner, 2026-11-07). The web host it was made for (`admin-web`) is
+gone, and since B-52 the console mounts the whole app and, with it, the barrel and its web stubs. One entry is the
+standard: web differences live in `.web.js` twins, native modules in the host's web stubs. The barrel serves
+everything this entry served (`ZOOM` and `useModalFocus` joined it in 0.5.5). `Form.BusinessInfo` asks the store
+address with `AutoCompleteInput`, whose library imports the barrel back, so this entry no longer keeps it out.
+
 `src/portable.js` (published as `lib/portable`) is what a **web host** imports: the partner console
 (`CustomerApp/admin-web`) and the presentational views it borrows from the app. It re-exports only
 modules that load on react-native-web **without stubs**: List, ScreenWrapper, ChipList, Tabs,
@@ -284,6 +289,11 @@ themed through `useTheme()` so a host's theme applies:
   excluded). It does not scan the rest of `src/`: `active`, `pending`, `car`, `web` are also Order and
   platform words there. A new partner component joins its `SCOPE`.
 - Stories register the package catalogue (`registerFlatCatalog({ en: EN, es: ES })`), as a host does.
+
+`Form.BusinessInfo`'s store address (0.5.5, owner 2026-11-07): while the form can be edited it is `AutoCompleteInput`
+(Google's suggestions, as the driver's operating address: no GPS button, no «use my location» row), the picked
+suggestion's `description` reported as `location` and its server errors listed under it (`FieldErrorText`). The
+suggestions have no read-only state, so under `readOnly` or `isDisabled` the address stays the field it was.
 
 Forms (C-25): `Form.PersonInfo`, `Form.VehicleInfo` and `Form.BusinessInfo` take `readOnly` and
 `highlightFields: string[]` (the names the form reports to `inputActionHandler`), which outlines the field

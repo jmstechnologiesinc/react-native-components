@@ -5,6 +5,7 @@ import { HelperText, Divider, MD3LightTheme } from '@jmstechnologiesinc/react-na
 import { VENDOR_INDUSTRIES_MAPPING, VENDOR_INDUSTRIES } from '@jmstechnologiesinc/vendor';
 
 import ScreenWrapper from '../ScreenWrapper';
+import AutoCompleteInput from '../AutoCompleteInput';
 import { localized } from '../Localization/Localization';
 import OptionPickerActionSheet from '../OptionPicker/OptionPickerActionSheet';
 
@@ -138,20 +139,39 @@ const FormBusinessInfo = ({
                         onChangeText={(text) => inputActionHandler('description', text)}
                     />
                 </ScreenWrapper.Section>
-                <ScreenWrapper.Section>
-                    <FormField
-                        mode="outlined"
-                        field="location"
-                        errors={errors}
-                        highlighted={isHighlighted(highlightFields, 'location')}
-                        disabled={disabled}
-                        readOnly={readOnly}
-                        label={localized('storeAddress')}
-                        value={location}
-                        autoCapitalize="words"
-                        onChangeText={(text) => inputActionHandler('location', text)}
-                    />
-                </ScreenWrapper.Section>
+                {readOnly || disabled ? (
+                    <ScreenWrapper.Section>
+                        <FormField
+                            mode="outlined"
+                            field="location"
+                            errors={errors}
+                            highlighted={isHighlighted(highlightFields, 'location')}
+                            disabled={disabled}
+                            readOnly={readOnly}
+                            label={localized('storeAddress')}
+                            value={location}
+                            autoCapitalize="words"
+                            onChangeText={(text) => inputActionHandler('location', text)}
+                        />
+                    </ScreenWrapper.Section>
+                ) : (
+                    <>
+                        {/* Picked from Google's suggestions, as the driver's operating address is: the server places
+                            it with the same geocoding and refuses one it cannot (owner, 2026-11-07). The suggestions
+                            have no read-only state, so the console (readOnly) and a locked store (isDisabled) keep
+                            the field. */}
+                        <AutoCompleteInput
+                            title="storeAddress"
+                            icon="magnify"
+                            value={location ?? ''}
+                            predefinedPlaces={false}
+                            showGps={false}
+                            onPress={(place) => inputActionHandler('location', place.description ?? '')}
+                            onClear={() => inputActionHandler('location', '')}
+                        />
+                        <FieldErrorText field="location" errors={errors} />
+                    </>
+                )}
                 <ScreenWrapper.Section>
                     <FormField
                         mode="outlined"
