@@ -30,7 +30,7 @@ const DOCUMENT_CAPTURE_OPTIONS = Object.freeze({
  * card's covers (both sides in a carousel, owner 2026-11-04), and «Send to review» sends them once every page is
  * there. The card only sends (owner, 2026-11-04): it says nothing of where the requirement stands, which its versions
  * and its row in the lists say. The photo sheet is the library's picker, opened by the card's own button
- * (`variant="sheet"`). Not portable: the picker is native.
+ * (`variant="sheet"`). Native: the picker.
  *
  * Controlled: the host owns `pages` (the picker's assets, in order) and gets each change through
  * `onPagesChange(pages)`. «Send to review» calls `onSend()`; the card never clears the pages itself, so a send that

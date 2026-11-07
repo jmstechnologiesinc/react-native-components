@@ -43,7 +43,6 @@ change would break a consumer, stop and ask (§9).
 ```
 packages/components/src/
   index.js          THE public API — the single barrel. Nothing is public unless exported here.
-  portable.js       the web-safe subset of the barrel (C-35), for web hosts — see "Portable entry"
   styles.js         shared style objects built from MD3LightTheme tokens
   tones.js          status tones (success/warning/danger/neutral/info) -> theme roles + icons
   consts.js         shared constants (LAYOUT_MODE, …)
@@ -65,8 +64,8 @@ Bigger features are folders with an `index.js` and internal sub-components + hoo
 
 1. `packages/components/src/<Name>/<Name>.js`
 2. `packages/components/src/<Name>/<Name>.stories.js`
-3. Export it from `packages/components/src/index.js` — otherwise it does not exist for consumers. Nothing new
-   goes into `portable.js`: it is deprecated since 0.5.5 and removed in 0.6.0 (see "Portable entry").
+3. Export it from `packages/components/src/index.js` — otherwise it does not exist for consumers. It is the
+   package's only entry (see "One entry").
 4. Add the folder's glob to `.storybook/main.ts` (see "Storybook" below — the web config is a
    hand-maintained list, not a glob over `src/**`).
 5. Any user-facing string goes into **both** `Translations/en.json` and `es.json` via `localized()`.
@@ -146,7 +145,7 @@ Since **0.4.0** (C-25):
   i18next as a resource bundle, so `react-i18next` readers see it. `%{}` interpolates as everywhere.
 - **`currentLocale()`** is exported by both twins; `format.js` reads it. It used to read `i18n-js`
   directly, so on the web every date was formatted in `en`.
-- `merge` (deep merge of nested catalogues) is exported from the barrel and the portable entry.
+- `merge` (deep merge of nested catalogues) is exported from the barrel.
 
 `Localization.web.js` is the web twin, and as of 0.2.0 it really is one: same loader, same `%{}`
 placeholder syntax (i18next's default `{{}}` would have shown narration placeholders raw), same
@@ -179,35 +178,27 @@ the components take the result and paint it.
   `file:` until 0.2.0 is published, then `^0.2.0`. `Order/__tests__/d50.test.js` keeps every legacy reference contained inside it and fails
   if one appears anywhere else — or if that file stops being the legacy table.
 
-## Portable entry (C-35) and partner components (K-22) — 0.4.0-dev
+## One entry (0.6.0) and partner components (K-22)
 
-**Deprecated since 0.5.5, removed in 0.6.0** (owner, 2026-11-07). The web host it was made for (`admin-web`) is
-gone, and since B-52 the console mounts the whole app and, with it, the barrel and its web stubs. One entry is the
-standard: web differences live in `.web.js` twins, native modules in the host's web stubs. The barrel serves
-everything this entry served (`ZOOM` and `useModalFocus` joined it in 0.5.5). `Form.BusinessInfo` asks the store
-address with `AutoCompleteInput`, whose library imports the barrel back, so this entry no longer keeps it out.
+The package has **one entry**, `index.js` (the barrel), as React Native and its web toolchains expect (owner,
+2026-11-07). `lib/portable`, the web-safe subset served from C-35 (0.4.0) to 0.5.5, was removed in 0.6.0: the web
+host it was made for (`admin-web`) is gone, and since B-52 the console mounts the whole app and, with it, the barrel.
+How the barrel runs on the web:
 
-`src/portable.js` (published as `lib/portable`) is what a **web host** imports: the partner console
-(`CustomerApp/admin-web`) and the presentational views it borrows from the app. It re-exports only
-modules that load on react-native-web **without stubs**: List, ScreenWrapper, ChipList, Tabs,
-SegmentedButtonGroup, ActionGroup, SideNav, TouchableRippleWrapper, TN*, `ButtonWrapper`,
-`PhotoGalleryDisplay`, `styles`, `LAYOUT_MODE`, a `Form` subset (PersonInfo, VehicleInfo,
-BusinessInfo, DriverInfo, EmailPassword, SecretInputText), `StripeForm.AccountBank`, Localization (`localized`,
-`setI18nConfig`, `registerFlatCatalog`, `currentLocale`, `merge`), the formatters, the Order and Partner view
-models, the K-22 components and the generic web-host UI (next section). `ImagePicker` is **not** portable (picker, permissions, draggable list): a web host shows
-photos with `PhotoGalleryDisplay` and the app injects the picker.
-
-- `packages/components/__tests__/portableEntry.test.js` walks its static import graph the way a web
-  bundler does (`.web.js` first) and fails if a native-only module becomes reachable (react-native-config,
-  dotenv, localize, image picker, action sheet, permissions, geolocation, gesture handler, reanimated,
-  draggable list, mapbox, bottom sheets, centrifuge) — or the package's own name, which drags the barrel in.
+- **Web differences live in `.web.js` twins** inside this package (`Config`, `Localization`, `MapboxGLWrapper`,
+  `OptionPicker/OptionSheet`); a web bundler resolves them first.
+- **Native modules a web bundle cannot load are the host's web stubs** (CustomerApp `web-stubs/`:
+  `react-native-config`, the map wrapper's override, `navigator.geolocation`), applied only on the web.
 - **`Config.web.js`**: on the web the host calls `configureComponents({ IMAGEKIT_URL, … })` once before
   rendering. Native `Config.js` exports the same function (merge, no behaviour change).
 - **Never import this package by its published name from inside it**, and import `../ScreenWrapper`
   (the index that attaches `.Section`/`.Container`), not `../ScreenWrapper/ScreenWrapper`.
 - `OptionPicker/OptionSheet.js` is the native action sheet; `OptionSheet.web.js` is a Paper modal with the
   same `show()`/`hide()` ref, which is what lets `Form.BusinessInfo` load on the web.
-- `lib/*` deep imports keep working; there is deliberately no `exports` map yet.
+- `lib/*` deep imports keep working; there is deliberately no `exports` map yet. Hosts import the package itself.
+- Two of its libraries, the phone input and the places autocomplete, import the package back by name. A host's jest
+  mock that spreads the real barrel runs again while the barrel loads (CustomerApp `src/testUtils/actualModuleWith.js`
+  shows the way around it).
 
 K-22 components (APIs frozen in `CustomerApp/admin-web/docs/ARCHITECTURE.md` §5), RN primitives + Paper,
 themed through `useTheme()` so a host's theme applies:
@@ -220,7 +211,7 @@ themed through `useTheme()` so a host's theme applies:
 - `Timeline` — `history` and `steps`.
 - Document requirements (contract request #117, 0.5.4), fed by a `getMyStatus` checklist item, so no host keeps a
   document type of its own:
-  - `Partner/DocumentRequirementCard` (portable) — a Paper `Card` composed as Paper composes one: the title is
+  - `Partner/DocumentRequirementCard` — a Paper `Card` composed as Paper composes one: the title is
     `requirementTitle(item)` (the rule's name for the market, else the catalogue's), `subtitle` is the host's,
     then, in its `Card.Content`, `covers` (the photos taken and not sent, in order, each `{ uri, label }` with the
     name a screen reader says), `note` and the rule's explanation, and `actions`
@@ -230,7 +221,7 @@ themed through `useTheme()` so a host's theme applies:
     `aria-live`) that stays mounted, so a screen reader announces each next step. `Card.Actions` gets, through its
     `style`, `flexWrap` and a `spacing.x2` row gap (it does not wrap by itself; its alignment and padding stay), and
     its buttons are keyed by position, as `Card.Actions` itself tells them apart (a label changes as photos are taken).
-  - `Partner/DocumentCovers` (portable, not exported) — the card's photos: one is a `Card.Cover`; more are a
+  - `Partner/DocumentCovers` (not exported) — the card's photos: one is a `Card.Cover`; more are a
     Material 3 hero carousel (a horizontal `ScrollView`: `snapToInterval` on the phone, `pagingEnabled`'s CSS scroll
     snap on the web; items `spacing.x2` apart, the next peeking `spacing.x14`, Material's 8 dp and 56 dp), or all whole
     side by side where the measured width fits them at Material's largest large item (twice the cover's height, which
@@ -241,12 +232,12 @@ themed through `useTheme()` so a host's theme applies:
     the safe-area insets; the internal `SheetHeader` with its `global.close`) on that page, with the document's sides
     (the covers' labels) when there are two. testIDs: `<testID>-covers`, `-carousel`, `-cover-<i>`, `-viewer`,
     `-viewer-header-close`, `-viewer-document`.
-  - `Partner/DocumentVersionList` (portable) — `item.versions` as `ListRow`s from `documentVersionRows`; they open
+  - `Partner/DocumentVersionList` — `item.versions` as `ListRow`s from `documentVersionRows`; they open
     nothing, so no chevron. A row's description: when it was sent, the scan's catalogue label while the scan is not
     `SCAN_STATUS.CLEAN` (pending, and partner 0.2.54's infected, never spelled here), the details code's label, and
     `documentExpiresOn` («Expires Nov 23, 2026»): `expires_at` is a calendar day, formatted by `formatDateTime` in UTC
     so no reader's zone moves it. `documentExpires` stays for the app's older list.
-  - `Partner/DocumentCaptureCard` (barrel only: the picker is native) — the card with the way to send it, as
+  - `Partner/DocumentCaptureCard` (native: the picker) — the card with the way to send it, as
     `item.capture` says (`pages` 1, or 2 = the front then the back). Controlled: `{ item, subtitle?, pages = [],
     onPagesChange(pages), onSend(), isSending = false, testID = 'document-requirement' }` — the host owns the pages
     (the picker's assets, in order) and clears them only once its send succeeded, so a failed send keeps them; the
@@ -275,7 +266,7 @@ themed through `useTheme()` so a host's theme applies:
     `documentExpiresOn`) live in `Translations/*.json`, in the catalogue's «Agregar»; the stories
     (`Partner/DocumentRequirement.stories.js`) use the local circuit's real items, and render the capture card itself
     with `pages` for the photo states.
-- `Partner/viewModel.js` (barrel/portable: `PartnerViewModel`, because `statusLabel` is the Order one):
+- `Partner/viewModel.js` (barrel: `PartnerViewModel`, because `statusLabel` is the Order one):
   the key is the package's `statusLabelKey(group, value)` resolved with `localized`; a value outside the
   vocabulary, or a key the registered catalogue lacks, renders the raw value. Each kind's group is read
   from the package's `LABEL_GROUPS` (never spelled here). `TONE_BY_KIND` and `INTENT_PRESENTATION` stay
@@ -330,13 +321,13 @@ does not render are ignored, and the forms' own required messages are unchanged.
 makes, models }` (each `Array<{ value, label }>`, labelled by the host) plus `vehicleType`, `makeId`,
 `modelId`, `licensePlateRegion` and `vin`, it renders the market schema in canon §9.15's order (type → year →
 make → model, color, plate, plate region, optional VIN) with `Form/FormSelectField.js` (an outlined input that
-opens a Paper `Menu`, portable). A make or model pick reports its id and its name (`makeId` + `make`); with no
+opens a Paper `Menu`, web-safe). A make or model pick reports its id and its name (`makeId` + `make`); with no
 `makes`/`models` (no catalogue slice for that type and year) they stay typed text. Without `catalog` the form is
 the tree it always was, pinned by `legacyRendering.test.js` (`Form.VehicleInfo (vehicle form)`, captured from
 `admin-app` @ 516446e).
 
 `PhotoGalleryDisplay({ photoUrls, title?, emptyLabel?, highlighted?, size?, testID? })`
-(`ImagePicker/PhotoGalleryDisplay.js`, barrel and portable): **resolved** URIs, never rewritten; a horizontal
+(`ImagePicker/PhotoGalleryDisplay.js`): **resolved** URIs, never rewritten; a horizontal
 strip of RN `Image`s, each labelled «Photo i of n» (`global.photoOf`); `global.noPhotos` when empty or all
 blank; `title` defaults to `photos` (`null` hides it); `highlighted` adds the «Changed» line. testIDs:
 `<testID>` (the strip), `<testID>.photo.<i>`, `<testID>.empty`; `testID` defaults to `photo-gallery`.
@@ -377,7 +368,7 @@ re-renders the existing consumers' props (CustomerApp's `drawerSideNav` and `Inv
 ## Generic UI for web hosts — 0.4.0-dev
 
 The partner console's generic UI (`CustomerApp/admin-web/src/ui`) lives here now, for the console and the
-AdminApp port alike. Every piece is in the barrel **and** `portable.js`, one folder per component, JS, themed
+AdminApp port alike. Every piece is in the barrel, one folder per component, JS, themed
 through `useTheme()` (a host theme's roles apply) and built on Paper components **as they are**: no hand-made
 copy of a Paper component, even to work around a web accessibility quirk — those are recorded below as Paper
 fork items. Labels come by props, with `global.*` defaults of this library's catalogue (never `partner.*`).
@@ -523,14 +514,13 @@ consumers must have this package inside their Metro/Babel transform path. Conseq
   `@jmstechnologiesinc/react-native-paper`, `@react-navigation/elements`, `@jmstechnologiesinc/order`,
   `@jmstechnologiesinc/order-narration` and `@jmstechnologiesinc/partner` — the last pinned **exactly**
   (canon R4; also a devDependency), because the view model and its tests read its vocabulary, and
-  both the barrel and the portable entry import `Partner/viewModel`. The harness links the main checkout's
+  the barrel imports `Partner/viewModel`. The harness links the main checkout's
   root `node_modules`, which does not carry it; in a worktree it is unpacked into
   `packages/components/node_modules` (`npm pack @jmstechnologiesinc/partner@<the pin>` + extract), where Jest
   resolves it with no `moduleNameMapper`. The barrel additionally expects the host to provide what the app
   already has (`centrifuge`, `react-native-gesture-handler`, `react-native-reanimated`,
-  `react-native-vector-icons`, …); the portable entry needs only `react-native-safe-area-context`,
-  `react-native-vector-icons`, `color`, `@jmstechnologiesinc/commons`/`vendor`/`react-native-size-matters` and, on
-  the web, `i18next`, `i18next-browser-languagedetector` and `react-i18next`. All of them are now declared
+  `react-native-vector-icons`, …) and, on the web, `i18next`, `i18next-browser-languagedetector` and
+  `react-i18next`. All of them are now declared
   as peers (C-35, 2026-10-03): every package `lib/` imports, at the range CustomerApp declares (so the main
   host never conflicts). The commented-out `expo-blur` and `showcase-template` are not. `partner` is a peer
   at **^0.2.33** (0.4.3, owner 2026-10-04: an exact pin refused every contract patch the app installs, B-8) and a

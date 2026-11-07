@@ -46,7 +46,7 @@ export { default as SwipeToDelete } from './SwipeToDelete/SwipeToDelete';
 export { default as SideNav } from './SideNav/SideNav';
 export { default as Swipeable } from './SwipeToDelete/SwipeToDelete';
 export { default as ButtonWrapper } from './ButtonWrapper/ButtonWrapper';
-// C-35 — the display-only gallery (resolved URIs, no picker); also in `portable.js`.
+// C-35 — the display-only gallery (resolved URIs, no picker).
 export { default as PhotoGalleryDisplay } from './ImagePicker/PhotoGalleryDisplay';
 export {
     makeLinkingCall,
@@ -77,17 +77,17 @@ export { merge } from './Localization/catalog';
 export { formatDateTime, formatTime, formatRelativeTime } from './Localization/format';
 export { localizedAuthError } from './Localization/authErrors';
 
-// K-22 — also served by `portable.js`, the entry a web host imports.
+// K-22 — the partner components.
 export { default as StatusChip, SlaChip, LabelChip } from './Partner/StatusChip';
 export { default as RuleClauseList } from './Partner/RuleClauseList';
 export { default as DocumentRequirementCard } from './Partner/DocumentRequirementCard';
 export { default as DocumentVersionList } from './Partner/DocumentVersionList';
-// Contract request #117: the card with its capture; native (the photo picker), so not in portable.js.
+// Contract request #117: the card with its capture (native: the photo picker).
 export { default as DocumentCaptureCard } from './Partner/DocumentCaptureCard';
 export { default as DocumentViewer, ZOOM } from './DocumentViewer/DocumentViewer';
 export { default as DecisionDialog } from './DecisionDialog/DecisionDialog';
 // The web keyboard contract of a modal surface (focus in, Tab trap, Esc, focus back to the opener); a no-op off the
-// web. Until 0.5.5 only `portable.js` served it and `ZOOM`.
+// web.
 export { useModalFocus } from './useModalFocus';
 export { default as Timeline } from './Timeline/Timeline';
 export { default as StateFlow } from './StateFlow/StateFlow';
@@ -95,8 +95,8 @@ export { STATUS_TONES, toneColors } from './tones';
 
 // The generic UI of a web host (the partner console, the admin app), moved
 // here from the console: the MD3 pane system, data display and feedback,
-// fields and utilities. Portable, themed through `useTheme()`, labels by props
-// with `global.*` defaults. Also served by `portable.js`.
+// fields and utilities. Themed through `useTheme()`, labels by props with
+// `global.*` defaults.
 export {
     BOTTOM_SHEET_MAX_HEIGHT,
     LAYOUT,

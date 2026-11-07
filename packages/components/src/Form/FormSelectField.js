@@ -7,7 +7,7 @@ import FormField from './FormField';
 
 /**
  * A form field whose value is picked from the host's options (C-22): the outlined input the other fields use,
- * opening a Paper `Menu` (portable, so the console renders it on the web too). The options are the host's — the
+ * opening a Paper `Menu` (web-safe, so the console renders it on the web too). The options are the host's — the
  * catalogue, the package's vocabulary — and choosing one only reports it; nothing is validated here (K-32).
  *
  * `displayValue` is shown when `value` is not among the options (a stored make the current catalogue slice no

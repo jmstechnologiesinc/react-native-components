@@ -1,11 +1,10 @@
-// C-35 — `ButtonWrapper` is Paper only, so the portable entry serves it.
+// C-35 — `ButtonWrapper` is Paper only.
 import React from 'react';
 import renderer, { act } from 'react-test-renderer';
 
 import { MD3LightTheme, Provider } from '@jmstechnologiesinc/react-native-paper';
 
 import ButtonWrapper from '../ButtonWrapper';
-import { ButtonWrapper as PortableButtonWrapper } from '../../portable';
 
 jest.useFakeTimers();
 
@@ -30,10 +29,6 @@ afterEach(() => {
 const buttonOf = (tree) => tree.root.findAll((node) => node.props.accessibilityRole === 'button')[0];
 
 describe('ButtonWrapper', () => {
-    it('is the same component in the portable entry', () => {
-        expect(PortableButtonWrapper).toBe(ButtonWrapper);
-    });
-
     it('renders its title and calls onPress', () => {
         const onPress = jest.fn();
         const tree = render(<ButtonWrapper title="Add vehicle" onPress={onPress} />);
