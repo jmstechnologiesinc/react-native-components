@@ -210,20 +210,6 @@ export const BusinessInfoHighlighted = () => (
     />
 );
 
-// The store sign-up's form: the app asks the address with Google's suggestions, so the form leaves its field out, as
-// it leaves out the phone and the email.
-export const BusinessInfoWithoutLocation = () => (
-    <AuthForm.BusinessInfo
-        storeTitle={state.storeTitle}
-        location={state.storeAddress}
-        industries={[]}
-        showLocation={false}
-        showPhoneNumber={false}
-        showEmail={false}
-        inputActionHandler={() => {}}
-    />
-);
-
 // The driver's answers as a reviewer sees them: read-only (no disclosure, the
 // secrets masked), a changed field marked and a server error under its field.
 export const DriverInfoReadOnly = () => (

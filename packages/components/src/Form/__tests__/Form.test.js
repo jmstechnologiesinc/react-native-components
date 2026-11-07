@@ -233,22 +233,6 @@ describe('Form.BusinessInfo', () => {
         expect(hidden.root.findAll((node) => node.props.value === 'Casa Nostra LLC')).toHaveLength(0);
     });
 
-    // The app asks the store address with Google's suggestions (barrel only) and hides this field, as it hides the
-    // phone and the email; the field's own errors are then the host's to show.
-    it('hides the store address under showLocation={false}, and keeps the other fields', () => {
-        const hidden = render(
-            <Form.BusinessInfo
-                {...BUSINESS}
-                showLocation={false}
-                errors={[{ field: 'location', code: 'operating_address_not_located' }]}
-            />
-        );
-        expect(inputWithValue(hidden, '1 Main St')).toBeUndefined();
-        expect(hostOf(hidden, 'error.location')).toHaveLength(0);
-        expect(inputWithValue(hidden, 'Suite 2')).toBeDefined();
-        expect(inputWithValue(render(<Form.BusinessInfo {...BUSINESS} />), '1 Main St')).toBeDefined();
-    });
-
     it('names the tax id on file (masked) instead of showing it', () => {
         const tree = render(<Form.BusinessInfo {...BUSINESS} tin="" tinOnFile="•••••6789" />);
         expect(JSON.stringify(tree.toJSON())).toContain('•••••6789');

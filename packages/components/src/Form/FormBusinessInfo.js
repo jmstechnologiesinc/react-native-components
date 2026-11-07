@@ -87,9 +87,6 @@ const FormBusinessInfo = ({
     storeTitle,
     location,
     line2,
-    // A host that asks the store address with its own input (the app's Google suggestions, barrel only) hides this
-    // field, as the sign-up hides the phone and the email.
-    showLocation = true,
     showWebsite = true,
     showPhoneNumber = true,
     showEmail = true,
@@ -141,22 +138,20 @@ const FormBusinessInfo = ({
                         onChangeText={(text) => inputActionHandler('description', text)}
                     />
                 </ScreenWrapper.Section>
-                {showLocation ? (
-                    <ScreenWrapper.Section>
-                        <FormField
-                            mode="outlined"
-                            field="location"
-                            errors={errors}
-                            highlighted={isHighlighted(highlightFields, 'location')}
-                            disabled={disabled}
-                            readOnly={readOnly}
-                            label={localized('storeAddress')}
-                            value={location}
-                            autoCapitalize="words"
-                            onChangeText={(text) => inputActionHandler('location', text)}
-                        />
-                    </ScreenWrapper.Section>
-                ) : null}
+                <ScreenWrapper.Section>
+                    <FormField
+                        mode="outlined"
+                        field="location"
+                        errors={errors}
+                        highlighted={isHighlighted(highlightFields, 'location')}
+                        disabled={disabled}
+                        readOnly={readOnly}
+                        label={localized('storeAddress')}
+                        value={location}
+                        autoCapitalize="words"
+                        onChangeText={(text) => inputActionHandler('location', text)}
+                    />
+                </ScreenWrapper.Section>
                 <ScreenWrapper.Section>
                     <FormField
                         mode="outlined"
