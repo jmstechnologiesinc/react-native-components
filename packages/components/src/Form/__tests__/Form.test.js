@@ -6,13 +6,14 @@ import renderer, { act } from 'react-test-renderer';
 
 import { Chip, MD3LightTheme, Provider, TextInput } from '@jmstechnologiesinc/react-native-paper';
 
+import AutoCompleteInput from '../../AutoCompleteInput';
 import ButtonWrapper from '../../ButtonWrapper/ButtonWrapper';
 import ChipList from '../../ChipList/ChipList';
 import { localized, setI18nConfig } from '../../Localization/Localization';
 import OptionSheet from '../../OptionPicker/OptionSheet';
-// Each form by its own module, as the portable entry exposes them: `Form.js`
-// also carries `PhoneNumber`, whose phone-input library imports this package's
-// whole barrel back.
+// Each form by its own module: `Form.js` also carries `PhoneNumber`, whose
+// phone-input library imports this package's whole barrel back. (BusinessInfo
+// reaches it too since 0.5.5, through the address suggestions' library.)
 import BusinessInfo from '../FormBusinessInfo';
 import PersonInfo from '../FormPersonInfo';
 import VehicleInfo from '../FormVehicleInfo';
@@ -180,6 +181,29 @@ describe('Form.BusinessInfo', () => {
         expect(drawnAs(render(<Form.BusinessInfo {...BUSINESS} isDisabled />), values)).toEqual(disabledLines(values));
     });
 
+    // Owner, 2026-11-07: the store address is picked from Google's suggestions, as the driver's is.
+    it('asks the address with the suggestions while editable and reports the picked one as `location`', () => {
+        const changes = [];
+        const tree = render(
+            <Form.BusinessInfo {...BUSINESS} inputActionHandler={(field, value) => changes.push([field, value])} />
+        );
+        const search = tree.root.findByType(AutoCompleteInput);
+        expect(search.props.value).toBe('1 Main St');
+        act(() => search.props.onPress({ description: '2 Elm St, Boston, MA, USA' }));
+        act(() => search.props.onClear());
+        expect(changes).toEqual([
+            ['location', '2 Elm St, Boston, MA, USA'],
+            ['location', ''],
+        ]);
+    });
+
+    it('keeps the address as its field, with no suggestions, under readOnly and under isDisabled', () => {
+        const readOnly = render(<Form.BusinessInfo {...BUSINESS} readOnly />);
+        const locked = render(<Form.BusinessInfo {...BUSINESS} isDisabled />);
+        expect(readOnly.root.findAllByType(AutoCompleteInput)).toHaveLength(0);
+        expect(locked.root.findAllByType(AutoCompleteInput)).toHaveLength(0);
+    });
+
     it('shows the industries as plain chips under readOnly: nothing to pick, remove or open, nothing greyed out', () => {
         const tree = render(<Form.BusinessInfo {...BUSINESS} industries={industries} readOnly />);
         expect(tree.root.findAllByType(ButtonWrapper)).toHaveLength(0);
@@ -231,22 +255,6 @@ describe('Form.BusinessInfo', () => {
         expect(JSON.stringify(tree.toJSON())).toContain('(EIN)');
         const hidden = render(<Form.BusinessInfo {...BUSINESS} {...LEGAL} showTIN={false} />);
         expect(hidden.root.findAll((node) => node.props.value === 'Casa Nostra LLC')).toHaveLength(0);
-    });
-
-    // The app asks the store address with Google's suggestions (barrel only) and hides this field, as it hides the
-    // phone and the email; the field's own errors are then the host's to show.
-    it('hides the store address under showLocation={false}, and keeps the other fields', () => {
-        const hidden = render(
-            <Form.BusinessInfo
-                {...BUSINESS}
-                showLocation={false}
-                errors={[{ field: 'location', code: 'operating_address_not_located' }]}
-            />
-        );
-        expect(inputWithValue(hidden, '1 Main St')).toBeUndefined();
-        expect(hostOf(hidden, 'error.location')).toHaveLength(0);
-        expect(inputWithValue(hidden, 'Suite 2')).toBeDefined();
-        expect(inputWithValue(render(<Form.BusinessInfo {...BUSINESS} />), '1 Main St')).toBeDefined();
     });
 
     it('names the tax id on file (masked) instead of showing it', () => {
@@ -319,6 +327,18 @@ describe('server errors on the forms', () => {
         expect(inError(tree, 'Casa Nostra')).toBe(true);
         expect(inError(tree, '12-3456789')).toBe(true);
         expect(inError(tree, 'Pasta')).toBe(false);
+    });
+
+    it('shows an error of the store address under its suggestions', () => {
+        const tree = render(
+            <Form.BusinessInfo
+                {...BUSINESS}
+                errors={[{ field: 'location', code: 'operating_address_not_located', message: 'Address not found' }]}
+            />
+        );
+        const lines = hostOf(tree, 'error.location');
+        expect(lines).toHaveLength(1);
+        expect(textOf(lines[0])).toContain('Address not found');
     });
 
     it('ignores errors of fields the form does not render', () => {

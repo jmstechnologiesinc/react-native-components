@@ -31,7 +31,8 @@ describe('el barril de componentes', () => {
     });
 
     it('sirve los nombres que sus consumidores importan', () => {
-        for (const name of ['List', 'Form', 'VendorList', 'CartList', 'styles']) {
+        // `ZOOM` and `useModalFocus`: the console's, which only `portable.js` served until 0.5.5.
+        for (const name of ['List', 'Form', 'VendorList', 'CartList', 'styles', 'ZOOM', 'useModalFocus']) {
             expect(`${name}:${name in components}`).toBe(`${name}:true`);
         }
     });

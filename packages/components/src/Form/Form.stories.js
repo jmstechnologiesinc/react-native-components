@@ -210,16 +210,14 @@ export const BusinessInfoHighlighted = () => (
     />
 );
 
-// The store sign-up's form: the app asks the address with Google's suggestions, so the form leaves its field out, as
-// it leaves out the phone and the email.
-export const BusinessInfoWithoutLocation = () => (
+// A store as the console shows it (read-only): the address is a field. While the form can be edited, as above, the
+// address is picked from Google's suggestions.
+export const BusinessInfoReadOnly = () => (
     <AuthForm.BusinessInfo
         storeTitle={state.storeTitle}
         location={state.storeAddress}
         industries={[]}
-        showLocation={false}
-        showPhoneNumber={false}
-        showEmail={false}
+        readOnly
         inputActionHandler={() => {}}
     />
 );
