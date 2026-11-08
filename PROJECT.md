@@ -7,8 +7,8 @@ it goes here.
 
 ## Where to work
 
-`feature/temporal-migration`, in this repository's main checkout (`~/daxir/react-native-components`), is the one
-source of truth (owner, 2026-10-07). Branch from it and merge back into it; keep no long-lived
+`main`, in this repository's main checkout (`~/daxir/react-native-components`), is the one
+source of truth (owner, 2026-10-15: trunk-based development). Branch from it and merge back into it; keep no long-lived
 worktree.
 The authority is fleet-management `docs/canonical-trunk.md`.
 
