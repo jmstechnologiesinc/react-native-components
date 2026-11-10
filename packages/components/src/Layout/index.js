@@ -1,5 +1,6 @@
 // The MD3 pane system: window size classes, the collapse table, the pane
-// scaffold and its pieces, and the bottom sheet a host opens itself. The side
+// scaffold and its pieces, the feed of cards, and the bottom sheet a host
+// opens itself. The side
 // sheet and the sheets' header are the scaffold's own (PaneLayout, BottomSheet);
 // the rail is `SideNav variant="rail"`. Web-safe
 // (react-native-web without stubs) and themed through `useTheme()`; every size
@@ -21,6 +22,7 @@ export { paneArrangement } from './paneArrangement';
 export { usePaneContext } from './PaneContext';
 export { default as PaneLayout } from './PaneLayout';
 export { default as ListDetail, fitsListDetail } from './ListDetail';
+export { default as Feed, feedColumns, useFeedColumns } from './Feed';
 export { default as Breadcrumbs } from './Breadcrumbs';
 export { default as Pane } from './Pane';
 export { default as PaneHeader } from './PaneHeader';

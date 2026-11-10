@@ -6,13 +6,14 @@ import { Card, Modal, Portal, TouchableRipple, useTheme } from '@jmstechnologies
 
 import { accessibilityProps, isWeb } from '../accessibility';
 import DocumentViewer from '../DocumentViewer/DocumentViewer';
+import { paneMetrics } from '../Layout/metrics';
 import SheetHeader from '../Layout/SheetHeader';
 import { localized } from '../Localization/Localization';
 
 /**
  * Two covers or more: a Material 3 hero carousel, one large item with the next one peeking, or all of them whole, side
- * by side, where the width fits them at Material's largest large item (twice as wide as the cover is tall, the
- * cover's height measured from the first one).
+ * by side and sharing the width, where each one is at least as wide as a column of MD3's feed (`paneMetrics.fixedPane`,
+ * 360 dp: Layout `feedColumns`). A cover is Card.Cover's 16:9, so its height follows the width it is given.
  *
  * The carousel's measures are Material's (material-components-android carousel): it snaps to an item, items stand
  * 8 dp apart, and the item that peeks is a small item of at most 56 dp (`m3_carousel_small_item_size_max`), here the
@@ -23,14 +24,14 @@ import { localized } from '../Localization/Localization';
  * on is followed from the scroll position, so a new width (a rotation, a resized window) scrolls back to it.
  */
 const CoverCarousel = ({ covers, renderCover, testID }) => {
-    const { spacing } = useTheme();
+    const theme = useTheme();
+    const { spacing } = theme;
     const [width, setWidth] = useState(0);
-    const [coverHeight, setCoverHeight] = useState(0);
     const carouselRef = useRef(null);
     const restingItem = useRef(0);
 
     const gap = spacing.x2;
-    // Until the carousel is measured its items are 0 wide; their height is the cover's, so nothing below moves.
+    // Until the carousel is measured its items are 0 wide, and so 0 tall: it takes its height on its first layout.
     const itemWidth = Math.max(0, width - spacing.x14 - gap);
     const interval = itemWidth + gap;
     // An item rests where it starts, but the scroll view stops at its end, where the last item shows whole and the
@@ -44,27 +45,21 @@ const CoverCarousel = ({ covers, renderCover, testID }) => {
             0
         );
 
-    const largeItemMax = 2 * coverHeight;
-    const fitWhole = coverHeight > 0 && width >= covers.length * largeItemMax + (covers.length - 1) * gap;
+    const share = (width - (covers.length - 1) * gap) / covers.length;
+    const fitWhole = share >= paneMetrics(theme).fixedPane;
 
     // `restOf` changes only with these two.
     useEffect(() => {
         carouselRef.current?.scrollTo({ x: restOf(restingItem.current), animated: false });
     }, [interval, lastOffset]);
 
-    const measureCover = (event) => setCoverHeight(event.nativeEvent.layout.height);
     const coversAt = (coverWidth) =>
-        covers.map((cover, index) =>
-            renderCover(cover, index, {
-                style: { width: coverWidth },
-                onLayout: index === 0 ? measureCover : undefined,
-            })
-        );
+        covers.map((cover, index) => renderCover(cover, index, { style: { width: coverWidth } }));
 
     return (
         <View onLayout={(event) => setWidth(event.nativeEvent.layout.width)} testID={`${testID}-covers`}>
             {fitWhole ? (
-                <View style={{ flexDirection: 'row', gap }}>{coversAt(largeItemMax)}</View>
+                <View style={{ flexDirection: 'row', gap }}>{coversAt(Math.floor(share))}</View>
             ) : (
                 <ScrollView
                     ref={carouselRef}

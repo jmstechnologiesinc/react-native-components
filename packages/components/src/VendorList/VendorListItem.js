@@ -4,26 +4,23 @@ import { Card, Text, MD3LightTheme } from '@jmstechnologiesinc/react-native-pape
 
 import { VENDOR_INDUSTRIES_MAPPING } from '@jmstechnologiesinc/vendor';
 import { interpunct, getMainPhoto } from '@jmstechnologiesinc/commons';
-import { sectionPaddings } from '../ScreenWrapper/ScreenWrapperSection';
 import { imageKitCard, imageKitCardLqip, isPublicUrl } from '../utils';
 import { localized } from '../Localization/Localization';
 
-const VendorListItem = ({ item, withPaddingHorizontal, onPress }) => {
+/**
+ * One vendor's card in the feed (VendorList): `width` is its column's, which ImageKit sizes the photo to; `style` is
+ * the list's layout for it (its side margins in a single column).
+ */
+const VendorListItem = ({ item, width, style, onPress }) => {
     const mainPhoto = getMainPhoto(item.photos);
     const isPublic = isPublicUrl(mainPhoto);
 
     return (
-        <Card
-            style={{
-                marginVertical: MD3LightTheme.spacing.x1,
-                ...(withPaddingHorizontal ? { marginHorizontal: sectionPaddings.left } : null),
-            }}
-            onPress={() => onPress(item)}
-        >
+        <Card style={[{ marginVertical: MD3LightTheme.spacing.x1, width }, style]} onPress={() => onPress(item)}>
             <Card.Cover
                 source={{
-                    lqipUri: isPublic ? mainPhoto : imageKitCardLqip(item.photos),
-                    uri: isPublic ? mainPhoto : imageKitCard(item.photos),
+                    lqipUri: isPublic ? mainPhoto : imageKitCardLqip(item.photos, width),
+                    uri: isPublic ? mainPhoto : imageKitCard(item.photos, width),
                 }}
             />
 

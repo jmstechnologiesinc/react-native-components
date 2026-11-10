@@ -1,7 +1,6 @@
 import { Dimensions, Linking, PixelRatio, Platform } from 'react-native';
 
 import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
-import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 
 import { Config } from './Config';
 
@@ -95,19 +94,28 @@ function imageKitPhotoGalleryMainImageLqip(photo, cropMode = 'cm-pad_resize') {
     );
 }
 
-const HORIZONTAL_CARD_PADDING = MD3LightTheme.spacing.x4 * 2;
-const NET_CARD_WIDTH = Dimensions.get('window').width - HORIZONTAL_CARD_PADDING;
+// Card.Cover's frame (Material's 16:9 card media). ImageKit crops the photo to it at the card's own width, so the
+// photo is fetched at the size the card shows it, whatever the window.
+const CARD_ASPECT_RATIO = 'ar-16-9';
 
-function imageKitCard(photo) {
+/**
+ * @param {string|string[]} photo
+ * @param {number} width the card's width, in dp
+ */
+function imageKitCard(photo, width) {
     return imagekitUrl(
-        `tr:w-${NET_CARD_WIDTH},h-${moderateScale(
-            195
-        )},q-100,pr-true,fo-auto,lo-true,${format},dpr-${PixelRatio.get()}/${photo}`
+        `tr:w-${Math.round(
+            width
+        )},${CARD_ASPECT_RATIO},q-100,pr-true,fo-auto,lo-true,${format},dpr-${PixelRatio.get()}/${photo}`
     );
 }
 
-function imageKitCardLqip(photo) {
-    return imagekitUrl(`tr:w-${NET_CARD_WIDTH},h-${moderateScale(195)},q-1,bl-10,f-webp/${photo}`);
+/**
+ * @param {string|string[]} photo
+ * @param {number} width the card's width, in dp
+ */
+function imageKitCardLqip(photo, width) {
+    return imagekitUrl(`tr:w-${Math.round(width)},${CARD_ASPECT_RATIO},q-1,bl-10,f-webp/${photo}`);
 }
 
 export {
