@@ -5,6 +5,7 @@ import renderer, { act } from 'react-test-renderer';
 import { EN, ES } from '@jmstechnologiesinc/partner';
 import { Card, MD3LightTheme, Provider } from '@jmstechnologiesinc/react-native-paper';
 
+import { paneMetrics } from '../../Layout/metrics';
 import { registerFlatCatalog, setI18nConfig } from '../../Localization/Localization';
 import DocumentCaptureCard from '../DocumentCaptureCard';
 import DocumentRequirementCard from '../DocumentRequirementCard';
@@ -102,13 +103,13 @@ const BOTH_SIDES = [
     { uri: 'file:///front.jpg', label: 'Front' },
     { uri: 'file:///back.jpg', label: 'Back' },
 ];
-// The cover's height, as the first cover reports it (Card.Cover's own), and the width the covers are laid out in.
-const COVER_HEIGHT = 195;
+// The width the covers are laid out in.
 const layOut = (tree, width) =>
     act(() => {
-        propsOf(tree, 'document-requirement-cover-0').onLayout({ nativeEvent: { layout: { height: COVER_HEIGHT } } });
         propsOf(tree, 'document-requirement-covers').onLayout({ nativeEvent: { layout: { width } } });
     });
+// A column of MD3's feed: the narrowest a cover is shown whole, side by side (the theme's tokens are scaled under jest).
+const { fixedPane: FEED_COLUMN } = paneMetrics(MD3LightTheme);
 
 describe('requirementTitle', () => {
     it("is the rule's own name for the market, in the reader's language", () => {
@@ -225,14 +226,24 @@ describe('DocumentRequirementCard', () => {
         expect(scrollTo).toHaveBeenCalledWith({ x: 2 * wider - spacing.x2 - 600, animated: false });
     });
 
-    it('shows both sides whole, without a carousel, where they fit at the largest large item', () => {
+    it('shows both sides whole, side by side and sharing the width, where each one fits a feed column', () => {
         const { spacing } = MD3LightTheme;
         const tree = render(<DocumentRequirementCard item={LICENCE} covers={BOTH_SIDES} />);
-        // Twice as wide as the cover is tall, each, and the gap between them.
-        layOut(tree, 2 * (2 * COVER_HEIGHT) + spacing.x2);
+        const width = 2 * FEED_COLUMN + spacing.x2 + 100;
+        layOut(tree, width);
         expect(hasTestID(tree, 'document-requirement-carousel')).toBe(false);
-        expect(propsOf(tree, 'document-requirement-cover-0').style).toEqual({ width: 2 * COVER_HEIGHT });
-        expect(propsOf(tree, 'document-requirement-cover-1').style).toEqual({ width: 2 * COVER_HEIGHT });
+        const share = Math.floor((width - spacing.x2) / 2);
+        expect(propsOf(tree, 'document-requirement-cover-0').style).toEqual({ width: share });
+        expect(propsOf(tree, 'document-requirement-cover-1').style).toEqual({ width: share });
+    });
+
+    it('keeps the carousel where a side by side cover would be narrower than a feed column', () => {
+        const { spacing } = MD3LightTheme;
+        const tree = render(<DocumentRequirementCard item={LICENCE} covers={BOTH_SIDES} />);
+        layOut(tree, 2 * FEED_COLUMN + spacing.x2 - 1);
+        expect(hasTestID(tree, 'document-requirement-carousel')).toBe(true);
+        layOut(tree, 2 * FEED_COLUMN + spacing.x2);
+        expect(hasTestID(tree, 'document-requirement-carousel')).toBe(false);
     });
 
     it('on the web, shows the scrollbar and makes each photo a button named by its label', () => {
