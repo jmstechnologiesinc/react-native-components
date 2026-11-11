@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
-import { List, Text } from '@jmstechnologiesinc/react-native-paper';
+import { List } from '@jmstechnologiesinc/react-native-paper';
 
+import MutedText from '../MutedText/MutedText';
 import ScreenWrapperContainer, { containerPaddings } from './ScreenWrapperContainer';
-import { moderateScale } from '@jmstechnologiesinc/react-native-size-matters';
 
 const sectionPaddings = {
     ...containerPaddings,
@@ -33,16 +33,8 @@ export const ScreenWrapperSection = ({
                         {title}
                     </List.Subheader>
                 ) : null}
-                <Text
-                    selectable={false}
-                    style={{
-                        fontSize: moderateScale(14),
-                        color: MD3LightTheme.colors.onSurfaceVariant,
-                        paddingBottom: moderateScale(13),
-                    }}
-                >
-                    {description}
-                </Text>
+                {/* MD3 supporting text, on the 4 dp spacing grid. */}
+                <MutedText style={{ paddingBottom: MD3LightTheme.spacing.x3 }}>{description}</MutedText>
             </>
         ) : title ? (
             <List.Subheader style={[{ paddingHorizontal: 0 }, titleStyle]}>{title}</List.Subheader>
