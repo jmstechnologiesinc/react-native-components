@@ -19,6 +19,9 @@ const FormPhoneNumber = ({
     showSubmitButton = true,
     showPhoneNumberValidationError = true,
     showPhoneVerificationCodeAgreement = true,
+    // The number is shown, not asked: a code sent to the number the account already has (the app's step-up). The
+    // field takes no typing and its flag opens no country list.
+    readOnly = false,
     isLoading,
     vereficationCodeError,
     onPhoneNumberLoginPress,
@@ -75,8 +78,9 @@ const FormPhoneNumber = ({
                             error={showPhoneNumberValidationError && !value}
                             initialCountry="us"
                             initialValue={value}
+                            disabled={readOnly}
                             onChangePhoneNumber={onChangeText}
-                            onPressFlag={onFlagPress}
+                            onPressFlag={readOnly ? undefined : onFlagPress}
                         />
                         {showPhoneNumberValidationError && !value ? (
                             <HelperText type="error" padding="none" visible={true}>
