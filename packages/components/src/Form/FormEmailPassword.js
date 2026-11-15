@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { TextInput, Button, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
+import { TextInput, Button, HelperText, MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
 import ScreenWrapper from '../ScreenWrapper';
 import { localized } from '../Localization/Localization';
 
@@ -15,6 +15,8 @@ const FormEmailPassword = ({
     passwordConfirm,
     isLoading = false,
     isEmailDisabled = false,
+    // A line under the email, already localized: the host's reason for it (why it cannot be changed, say).
+    emailHelperText,
     isPasswordDisabled = false,
     isPasswordButtonLoading = false,
     showConfirmPasswordInput = true,
@@ -43,6 +45,7 @@ const FormEmailPassword = ({
                     onChangeText={(email) => inputActionHandler('email', email)}
                     disabled={isEmailDisabled}
                 />
+                {emailHelperText ? <HelperText>{emailHelperText}</HelperText> : null}
             </ScreenWrapper.Section>
 
             {showPasswordInput ? (
