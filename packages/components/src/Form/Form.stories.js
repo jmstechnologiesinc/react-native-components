@@ -66,6 +66,17 @@ export const AuthFormEmailPasswordDisabled = () => (
     />
 );
 
+export const AuthFormEmailHelperText = () => (
+    <AuthForm.EmailPassword
+        email={state.email}
+        inputActionHandler={() => {}}
+        showPasswordInput={false}
+        showConfirmPasswordInput={false}
+        isEmailDisabled={true}
+        emailHelperText="This email comes from your Google account and can't be changed here."
+    />
+);
+
 export const AuthFormPersonInfo = () => (
     <AuthForm.PersonInfo
         firstName={state.firstName}
