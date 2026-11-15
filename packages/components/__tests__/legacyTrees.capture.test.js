@@ -26,6 +26,9 @@ import renderer, { act } from 'react-test-renderer';
 import { MD3LightTheme, Provider } from '@jmstechnologiesinc/react-native-paper';
 
 import { appPathCases } from './__fixtures__/appPathCases';
+import { installSilentNetwork } from './__fixtures__/silentNetwork';
+
+installSilentNetwork();
 
 const FROM = process.env.CAPTURE_LEGACY_FROM;
 const FIXTURE = path.join(__dirname, '__fixtures__', 'legacyTrees.json');

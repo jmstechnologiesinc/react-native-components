@@ -12,6 +12,9 @@ import SideNav from '../src/SideNav/SideNav';
 import * as Tabs from '../src/Tabs/Tabs';
 
 import { appPathCases } from './__fixtures__/appPathCases';
+import { installSilentNetwork } from './__fixtures__/silentNetwork';
+
+installSilentNetwork();
 
 // The props the existing (mobile) consumers pass today — CustomerApp's `drawerSideNav` and
 // `InventoryManagerScreen`, and this library's `StickySectionList` and `ChipList`. Their rendered trees were

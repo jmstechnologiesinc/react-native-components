@@ -50,9 +50,9 @@ describe('StatusChip', () => {
     });
 
     it.each([
-        ['verification', 'verified', MD3LightTheme.colors.tertiaryContainer],
+        ['verification', 'verified', MD3LightTheme.colors.successContainer],
         ['verification', 'unverified', MD3LightTheme.colors.errorContainer],
-        ['verification', 'pending', MD3LightTheme.colors.secondaryContainer],
+        ['verification', 'pending', MD3LightTheme.colors.warningContainer],
         ['partnership', 'onboarding', MD3LightTheme.colors.primaryContainer],
         ['task_status', 'closed', MD3LightTheme.colors.surfaceVariant],
     ])('%s / %s paints the tone container from the theme', (kind, value, color) => {
@@ -82,8 +82,8 @@ describe('StatusChip', () => {
 
 describe('SlaChip', () => {
     it.each([
-        ['on_time', MD3LightTheme.colors.tertiaryContainer],
-        ['due_soon', MD3LightTheme.colors.secondaryContainer],
+        ['on_time', MD3LightTheme.colors.successContainer],
+        ['due_soon', MD3LightTheme.colors.warningContainer],
         ['overdue', MD3LightTheme.colors.errorContainer],
         ['unheard_of', MD3LightTheme.colors.surfaceVariant],
     ])('%s is painted with its tone', (state, color) => {
@@ -112,7 +112,7 @@ describe('LabelChip', () => {
     it('carries the tone icon when toned, so the meaning never rests on colour alone', () => {
         const tree = render(<LabelChip label="In force" tone="success" testID="label" />);
         expect(JSON.stringify(hostOf(tree, 'label-container').props.style)).toContain(
-            MD3LightTheme.colors.tertiaryContainer
+            MD3LightTheme.colors.successContainer
         );
         expect(iconOf(tree)).toBe('check-circle-outline');
     });
