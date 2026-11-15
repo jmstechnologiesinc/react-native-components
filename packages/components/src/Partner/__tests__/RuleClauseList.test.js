@@ -132,7 +132,9 @@ describe('RuleClauseList', () => {
         expect(itemOf('rule-clauses-met_by').props.onPress).toBeUndefined();
         const norm = itemOf('rule-clauses-legal_basis.0');
         expect(norm.props['aria-label']).toBe('Base legal: Seguro obligatorio · G.L. c. 90 §34A');
-        act(() => norm.props.onPress());
+        act(() => {
+            norm.props.onPress();
+        });
         expect(open).toHaveBeenCalledWith('https://malegislature.gov/');
         open.mockRestore();
     });

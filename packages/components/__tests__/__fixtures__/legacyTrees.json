@@ -16191,7 +16191,7 @@
         "props": {
          "style": [
           {
-           "paddingTop": 12.571428571428571,
+           "paddingTop": 0,
            "paddingBottom": 12.571428571428571
           },
           [
@@ -16204,68 +16204,71 @@
         },
         "children": [
          {
+          "type": "Text",
+          "props": {
+           "style": [
+            {
+             "fontFamily": "System",
+             "fontSize": 22,
+             "fontWeight": "400",
+             "lineHeight": 31.428571428571427,
+             "letterSpacing": 0.39285714285714285,
+             "color": "rgb(31, 27, 22)"
+            },
+            {
+             "textAlign": "left"
+            },
+            {
+             "writingDirection": "ltr"
+            },
+            [
+             {
+              "paddingHorizontal": 25.142857142857142,
+              "paddingVertical": 20.42857142857143
+             },
+             {
+              "color": "rgb(80, 69, 57)",
+              "fontFamily": "System",
+              "letterSpacing": 0.39285714285714285,
+              "fontWeight": "400",
+              "lineHeight": 31.428571428571427,
+              "fontSize": 22
+             },
+             [
+              {
+               "paddingHorizontal": 0
+              },
+              null
+             ]
+            ]
+           ],
+           "numberOfLines": 1
+          },
+          "children": [
+           "Store address"
+          ]
+         },
+         {
           "type": "View",
           "props": {
-           "style": {}
+           "pointerEvents": "box-none"
           },
           "children": [
            {
             "type": "View",
-            "props": {
-             "testID": "text-input-outline",
-             "pointerEvents": "none",
-             "style": [
-              {
-               "position": "absolute",
-               "left": 0,
-               "right": 0,
-               "top": 9.428571428571429,
-               "bottom": 0
-              },
-              false,
-              {
-               "backgroundColor": "rgb(255, 251, 255)",
-               "borderRadius": 6.285714285714286,
-               "borderWidth": 1,
-               "borderColor": "rgb(130, 117, 104)"
-              },
-              null
-             ]
-            },
-            "children": null
-           },
-           {
-            "type": "View",
-            "props": {
-             "style": [
-              {
-               "paddingBottom": 0
-              },
-              {
-               "paddingTop": 12.571428571428571,
-               "minHeight": 88
-              }
-             ]
-            },
+            "props": {},
             "children": [
              {
               "type": "View",
               "props": {
-               "pointerEvents": "none",
                "style": {
-                "position": "absolute",
-                "left": 0,
-                "right": 0,
-                "top": 0,
-                "bottom": 0,
-                "zIndex": 3,
-                "width": 750,
-                "opacity": 0,
-                "transform": [
-                 {
-                  "translateX": 4.7142857142857135
-                 }
-                ]
+                "shadowColor": "#000",
+                "shadowOpacity": 0.15,
+                "shadowOffset": {
+                 "width": 0,
+                 "height": 1
+                },
+                "shadowRadius": 3
                },
                "collapsable": false
               },
@@ -16273,185 +16276,332 @@
                {
                 "type": "View",
                 "props": {
-                 "pointerEvents": "none",
                  "style": {
-                  "position": "absolute",
-                  "left": 15.714285714285714,
-                  "right": 0,
-                  "top": 9.428571428571429,
-                  "bottom": 6.285714285714286,
-                  "width": 18.857142857142858,
-                  "backgroundColor": "rgb(255, 251, 255)",
-                  "maxHeight": 2.0952380952380953,
-                  "transform": [
-                   {
-                    "translateX": -4.7142857142857135
-                   }
-                  ],
-                  "opacity": 1
-                 },
-                 "collapsable": false
-                },
-                "children": null
-               },
-               {
-                "type": "Text",
-                "props": {
-                 "testID": "text-input-outlined-label-background",
-                 "numberOfLines": 1,
-                 "maxFontSizeMultiplier": 1.5,
-                 "style": {
-                  "textAlign": "left",
-                  "fontFamily": "System",
-                  "letterSpacing": 0.2357142857142857,
-                  "fontSize": 25.142857142857142,
-                  "color": "transparent",
-                  "writingDirection": "ltr",
-                  "position": "absolute",
-                  "left": 12.571428571428571,
-                  "paddingHorizontal": 0,
-                  "opacity": 1,
-                  "transform": [
-                   {
-                    "translateX": 0
-                   },
-                   {
-                    "translateY": -40.57142857142857
-                   },
-                   {
-                    "scale": 0.75
-                   },
-                   {
-                    "scaleY": 0.2
-                   }
-                  ],
-                  "top": 51,
-                  "width": -25.142857142857142,
-                  "backgroundColor": "rgb(255, 251, 255)"
-                 },
-                 "collapsable": false
-                },
-                "children": null
-               },
-               {
-                "type": "Text",
-                "props": {
-                 "numberOfLines": 1,
-                 "maxFontSizeMultiplier": 1.5,
-                 "testID": "text-input-outlined-label-active",
-                 "style": {
-                  "fontFamily": "System",
-                  "fontSize": 25.142857142857142,
-                  "letterSpacing": 0.2357142857142857,
-                  "color": "rgb(133, 84, 0)",
-                  "textAlign": "left",
-                  "writingDirection": "ltr",
-                  "position": "absolute",
-                  "left": 0,
-                  "paddingHorizontal": 25.142857142857142,
-                  "top": 50,
-                  "maxWidth": 114.71428571428571,
-                  "opacity": 0,
-                  "transform": [
-                   {
-                    "translateX": 0
-                   },
-                   {
-                    "translateY": -40.57142857142857
-                   },
-                   {
-                    "scale": 0.75
-                   }
-                  ]
+                  "shadowColor": "#000",
+                  "shadowOpacity": 0.3,
+                  "shadowOffset": {
+                   "width": 0,
+                   "height": 1
+                  },
+                  "shadowRadius": 1
                  },
                  "collapsable": false
                 },
                 "children": [
-                 "Store address"
-                ]
-               },
-               {
-                "type": "Text",
-                "props": {
-                 "numberOfLines": 1,
-                 "maxFontSizeMultiplier": 1.5,
-                 "testID": "text-input-outlined-label-inactive",
-                 "style": {
-                  "fontFamily": "System",
-                  "fontSize": 25.142857142857142,
-                  "letterSpacing": 0.2357142857142857,
-                  "color": "rgb(80, 69, 57)",
-                  "textAlign": "left",
-                  "writingDirection": "ltr",
-                  "position": "absolute",
-                  "left": 0,
-                  "paddingHorizontal": 25.142857142857142,
-                  "top": 50,
-                  "maxWidth": 114.71428571428571,
-                  "opacity": 0,
-                  "transform": [
+                 {
+                  "type": "View",
+                  "props": {
+                   "style": {
+                    "backgroundColor": "rgb(249, 243, 242)",
+                    "borderRadius": 6.285714285714286,
+                    "flexDirection": "row",
+                    "alignItems": "center",
+                    "marginBottom": 12.571428571428571
+                   },
+                   "collapsable": false
+                  },
+                  "children": [
                    {
-                    "translateX": 0
+                    "type": "View",
+                    "props": {
+                     "style": {
+                      "shadowColor": "#000",
+                      "shadowOpacity": 0,
+                      "shadowOffset": {
+                       "width": 0,
+                       "height": 0
+                      },
+                      "shadowRadius": 0
+                     },
+                     "collapsable": false
+                    },
+                    "children": [
+                     {
+                      "type": "View",
+                      "props": {
+                       "style": {
+                        "shadowColor": "#000",
+                        "shadowOpacity": 0,
+                        "shadowOffset": {
+                         "width": 0,
+                         "height": 0
+                        },
+                        "shadowRadius": 0
+                       },
+                       "collapsable": false
+                      },
+                      "children": [
+                       {
+                        "type": "View",
+                        "props": {
+                         "style": {
+                          "width": 62.85714285714286,
+                          "height": 62.85714285714286,
+                          "overflow": "hidden",
+                          "margin": 9.428571428571429,
+                          "elevation": 0,
+                          "borderWidth": 0,
+                          "borderRadius": 31.42857142857143,
+                          "borderColor": "rgb(130, 117, 104)"
+                         },
+                         "collapsable": false
+                        },
+                        "children": [
+                         {
+                          "type": "View",
+                          "props": {
+                           "centered": true,
+                           "accessibilityLabel": "search",
+                           "accessibilityTraits": "button",
+                           "accessibilityComponentType": "button",
+                           "accessibilityRole": "button",
+                           "accessible": true,
+                           "accessibilityState": {
+                            "disabled": true
+                           },
+                           "focusable": true,
+                           "accessibilityValue": {},
+                           "hitSlop": {
+                            "top": 6,
+                            "left": 6,
+                            "bottom": 6,
+                            "right": 6
+                           },
+                           "style": [
+                            {
+                             "overflow": "hidden"
+                            },
+                            false,
+                            {
+                             "flexGrow": 1,
+                             "justifyContent": "center",
+                             "alignItems": "center"
+                            }
+                           ],
+                           "collapsable": false
+                          },
+                          "children": [
+                           {
+                            "type": "Text",
+                            "props": {
+                             "selectable": false,
+                             "allowFontScaling": false,
+                             "pointerEvents": "none",
+                             "accessibilityElementsHidden": true,
+                             "importantForAccessibility": "no-hide-descendants",
+                             "style": [
+                              {
+                               "fontSize": 37.714285714285715,
+                               "color": "rgba(31, 27, 22, 0.54)"
+                              },
+                              [
+                               {
+                                "transform": [
+                                 {
+                                  "scaleX": 1
+                                 }
+                                ],
+                                "lineHeight": 37.714285714285715
+                               },
+                               {
+                                "backgroundColor": "transparent"
+                               }
+                              ],
+                              {
+                               "fontFamily": "Material Design Icons",
+                               "fontWeight": "normal",
+                               "fontStyle": "normal"
+                              },
+                              {}
+                             ]
+                            },
+                            "children": [
+                             "󰍉"
+                            ]
+                           }
+                          ]
+                         }
+                        ]
+                       }
+                      ]
+                     }
+                    ]
                    },
                    {
-                    "translateY": -40.57142857142857
+                    "type": "TextInput",
+                    "props": {
+                     "style": [
+                      {
+                       "flex": 1,
+                       "fontSize": 28.285714285714285,
+                       "paddingLeft": 12.571428571428571,
+                       "textAlign": "left",
+                       "minWidth": 0
+                      },
+                      {
+                       "color": "rgb(31, 27, 22)",
+                       "fontFamily": "System",
+                       "letterSpacing": 0,
+                       "fontWeight": "400"
+                      },
+                      {
+                       "textAlign": "auto"
+                      }
+                     ],
+                     "placeholder": "",
+                     "placeholderTextColor": "rgb(31, 27, 22)",
+                     "selectionColor": "rgb(133, 84, 0)",
+                     "underlineColorAndroid": "transparent",
+                     "returnKeyType": "search",
+                     "keyboardAppearance": "light",
+                     "accessibilityRole": "search",
+                     "value": "1 Main St",
+                     "testID": "search-bar",
+                     "autoCapitalize": "none",
+                     "autoCorrect": false
+                    },
+                    "children": null
                    },
                    {
-                    "scale": 0.75
+                    "type": "View",
+                    "props": {
+                     "pointerEvents": "auto",
+                     "testID": "search-bar-icon-wrapper"
+                    },
+                    "children": [
+                     {
+                      "type": "View",
+                      "props": {
+                       "style": {
+                        "shadowColor": "#000",
+                        "shadowOpacity": 0,
+                        "shadowOffset": {
+                         "width": 0,
+                         "height": 0
+                        },
+                        "shadowRadius": 0
+                       },
+                       "collapsable": false
+                      },
+                      "children": [
+                       {
+                        "type": "View",
+                        "props": {
+                         "style": {
+                          "shadowColor": "#000",
+                          "shadowOpacity": 0,
+                          "shadowOffset": {
+                           "width": 0,
+                           "height": 0
+                          },
+                          "shadowRadius": 0
+                         },
+                         "collapsable": false
+                        },
+                        "children": [
+                         {
+                          "type": "View",
+                          "props": {
+                           "style": {
+                            "width": 62.85714285714286,
+                            "height": 62.85714285714286,
+                            "overflow": "hidden",
+                            "margin": 9.428571428571429,
+                            "elevation": 0,
+                            "borderWidth": 0,
+                            "borderRadius": 31.42857142857143,
+                            "borderColor": "rgb(130, 117, 104)"
+                           },
+                           "collapsable": false
+                          },
+                          "children": [
+                           {
+                            "type": "View",
+                            "props": {
+                             "centered": true,
+                             "accessibilityLabel": "clear",
+                             "accessibilityTraits": "button",
+                             "accessibilityComponentType": "button",
+                             "accessibilityRole": "button",
+                             "accessible": true,
+                             "accessibilityState": {
+                              "disabled": false
+                             },
+                             "focusable": true,
+                             "accessibilityValue": {},
+                             "hitSlop": {
+                              "top": 6,
+                              "left": 6,
+                              "bottom": 6,
+                              "right": 6
+                             },
+                             "style": [
+                              {
+                               "overflow": "hidden"
+                              },
+                              false,
+                              {
+                               "flexGrow": 1,
+                               "justifyContent": "center",
+                               "alignItems": "center"
+                              }
+                             ],
+                             "collapsable": false
+                            },
+                            "children": [
+                             {
+                              "type": "Text",
+                              "props": {
+                               "selectable": false,
+                               "allowFontScaling": false,
+                               "pointerEvents": "none",
+                               "accessibilityElementsHidden": true,
+                               "importantForAccessibility": "no-hide-descendants",
+                               "style": [
+                                {
+                                 "fontSize": 37.714285714285715,
+                                 "color": "rgba(31, 27, 22, 0.54)"
+                                },
+                                [
+                                 {
+                                  "transform": [
+                                   {
+                                    "scaleX": 1
+                                   }
+                                  ],
+                                  "lineHeight": 37.714285714285715
+                                 },
+                                 {
+                                  "backgroundColor": "transparent"
+                                 }
+                                ],
+                                {
+                                 "fontFamily": "Material Design Icons",
+                                 "fontWeight": "normal",
+                                 "fontStyle": "normal"
+                                },
+                                {}
+                               ]
+                              },
+                              "children": [
+                               "󰅖"
+                              ]
+                             }
+                            ]
+                           }
+                          ]
+                         }
+                        ]
+                       }
+                      ]
+                     }
+                    ]
                    }
                   ]
-                 },
-                 "collapsable": false
-                },
-                "children": [
-                 "Store address"
+                 }
                 ]
                }
               ]
-             },
-             {
-              "type": "TextInput",
-              "props": {
-               "value": "1 Main St",
-               "autoCapitalize": "words",
-               "maxFontSizeMultiplier": 1.5,
-               "placeholder": " ",
-               "editable": true,
-               "selectionColor": "rgb(133, 84, 0)",
-               "cursorColor": "rgb(133, 84, 0)",
-               "placeholderTextColor": "rgb(80, 69, 57)",
-               "underlineColorAndroid": "transparent",
-               "multiline": false,
-               "style": [
-                {
-                 "margin": 0
-                },
-                {
-                 "height": 75.42857142857143
-                },
-                {
-                 "paddingTop": 0,
-                 "paddingBottom": 0
-                },
-                {
-                 "fontFamily": "System",
-                 "letterSpacing": 0.2357142857142857,
-                 "fontSize": 25.142857142857142,
-                 "color": "rgb(31, 27, 22)",
-                 "textAlignVertical": "center",
-                 "textAlign": "left",
-                 "paddingHorizontal": 25.142857142857142,
-                 "minWidth": 102.14285714285714
-                },
-                false,
-                [
-                 {}
-                ],
-                null
-               ],
-               "testID": "text-input-outlined"
-              },
-              "children": null
              }
             ]
            }
@@ -19306,50 +19456,6 @@
           "children": [
            "By clearly industrializing business types - whether it's food, groceries, alcohol, or other goods - adhering to local laws and state regulations is not just a legal necessity but also a cornerstone of our operational integrity. For instance, delivering alcohol or pharmaceuticals requires stringent age verification, whereas restaurant food delivery demands speed and temperature control."
           ]
-         }
-        ]
-       },
-       {
-        "type": "RCTSafeAreaView",
-        "props": {
-         "pointerEvents": "none",
-         "collapsable": false,
-         "style": {
-          "position": "absolute",
-          "width": 1,
-          "height": 0,
-          "top": 0,
-          "left": 0,
-          "backgroundColor": "transparent"
-         }
-        },
-        "children": [
-         {
-          "type": "View",
-          "props": {},
-          "children": null
-         }
-        ]
-       },
-       {
-        "type": "RCTSafeAreaView",
-        "props": {
-         "pointerEvents": "none",
-         "collapsable": false,
-         "style": {
-          "position": "absolute",
-          "width": 1,
-          "height": 1,
-          "bottom": 0,
-          "left": 0,
-          "backgroundColor": "transparent"
-         }
-        },
-        "children": [
-         {
-          "type": "View",
-          "props": {},
-          "children": null
          }
         ]
        }
@@ -22931,50 +23037,6 @@
           ]
          }
         ]
-       },
-       {
-        "type": "RCTSafeAreaView",
-        "props": {
-         "pointerEvents": "none",
-         "collapsable": false,
-         "style": {
-          "position": "absolute",
-          "width": 1,
-          "height": 0,
-          "top": 0,
-          "left": 0,
-          "backgroundColor": "transparent"
-         }
-        },
-        "children": [
-         {
-          "type": "View",
-          "props": {},
-          "children": null
-         }
-        ]
-       },
-       {
-        "type": "RCTSafeAreaView",
-        "props": {
-         "pointerEvents": "none",
-         "collapsable": false,
-         "style": {
-          "position": "absolute",
-          "width": 1,
-          "height": 1,
-          "bottom": 0,
-          "left": 0,
-          "backgroundColor": "transparent"
-         }
-        },
-        "children": [
-         {
-          "type": "View",
-          "props": {},
-          "children": null
-         }
-        ]
        }
       ]
      }
@@ -24789,6 +24851,14 @@
            "onError": "rgb(255, 255, 255)",
            "errorContainer": "rgb(255, 218, 214)",
            "onErrorContainer": "rgb(65, 0, 2)",
+           "success": "rgb(56, 106, 32)",
+           "onSuccess": "rgb(255, 255, 255)",
+           "successContainer": "rgb(183, 243, 151)",
+           "onSuccessContainer": "rgb(4, 33, 0)",
+           "warning": "rgb(150, 73, 0)",
+           "onWarning": "rgb(255, 255, 255)",
+           "warningContainer": "rgb(255, 220, 198)",
+           "onWarningContainer": "rgb(49, 19, 0)",
            "background": "rgb(255, 251, 255)",
            "onBackground": "rgb(31, 27, 22)",
            "surface": "rgb(255, 251, 255)",

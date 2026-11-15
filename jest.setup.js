@@ -37,23 +37,22 @@ jest.mock('react-native-localize', () => ({
 // responsibility instead of a hand-written stub that drifts from it.
 require('react-native-gesture-handler/jestSetup');
 
-// Same story once more, and this one is a NATIVE module with no published
-// mock: `react-native-permissions` resolves `RNPermissions` through
-// `TurboModuleRegistry.getEnforcing` at import time. `ImagePickerAPI.js`
-// imports it, `ImagePicker.js` imports that, and the barrel imports THAT — so
-// this was the last thing standing between the barrel and its own test.
+// Reanimated 4 runs on `react-native-worklets`, a native runtime no test
+// environment has. Worklets' Jest guide recommends the mock the library
+// publishes for exactly this; Reanimated itself then runs as it is (its guide
+// asks for no mock of its own).
+jest.mock('react-native-worklets', () => require('react-native-worklets/src/mock'));
+
+// Same story once more: `react-native-permissions` resolves `RNPermissions`
+// through `TurboModuleRegistry.getEnforcing` at import time. `ImagePickerAPI.js`
+// imports it, `ImagePicker.js` imports that, and the barrel imports THAT.
 //
-// The surface the library uses is exactly `{ PERMISSIONS, request }`, so that
-// is all this stands in for. `request` answering `granted` is NOT a claim that
-// the user granted anything: it is the only answer that does not turn a
-// permission dialog — which no test environment can show — into a failure, and
-// no suite asserts on it. A test that needs to exercise a DENIED path should
+// The library publishes its own jest mock (`react-native-permissions/mock`, the
+// one the app's jest setup uses). It carries the whole surface, `RESULTS`
+// included, which `ImagePickerAPI.js` reads at import time. Its `request`
+// answers `granted`: that is NOT a claim that the user granted anything, only
+// the answer that does not turn a permission dialog, which no test environment
+// can show, into a failure. A test that needs to exercise a DENIED path should
 // mock `request` itself, where the denial is the point.
-jest.mock('react-native-permissions', () => ({
-    PERMISSIONS: {
-        IOS: { CAMERA: 'ios.permission.CAMERA', PHOTO_LIBRARY: 'ios.permission.PHOTO_LIBRARY' },
-        ANDROID: { CAMERA: 'android.permission.CAMERA', READ_MEDIA_IMAGES: 'android.permission.READ_MEDIA_IMAGES' },
-    },
-    request: () => Promise.resolve('granted'),
-}));
+jest.mock('react-native-permissions', () => require('react-native-permissions/mock'));
 

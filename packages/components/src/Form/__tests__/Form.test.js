@@ -18,10 +18,12 @@ import BusinessInfo from '../FormBusinessInfo';
 import PersonInfo from '../FormPersonInfo';
 import VehicleInfo from '../FormVehicleInfo';
 import { drawnInput } from './__fixtures__/drawnInput';
+import { installSilentNetwork } from '../../../__tests__/__fixtures__/silentNetwork';
 
 const Form = { BusinessInfo, PersonInfo, VehicleInfo };
 
 jest.useFakeTimers();
+installSilentNetwork();
 
 const mounted = [];
 
