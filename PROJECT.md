@@ -186,9 +186,11 @@ host it was made for (`admin-web`) is gone, and since B-52 the console mounts th
 How the barrel runs on the web:
 
 - **Web differences live in `.web.js` twins** inside this package (`Config`, `Localization`, `MapboxGLWrapper`,
-  `OptionPicker/OptionSheet`); a web bundler resolves them first.
+  `OptionPicker/OptionSheet`); a web bundler resolves them first. `MapboxGLWrapper/index.web.js` (0.8.0) is the
+  native surface on react-map-gl and loads the map (`MapboxGLWrapperMap.web.js`, with mapbox-gl and its stylesheet)
+  through `import()`, so the barrel does not put the map engine in a host's first page.
 - **Native modules a web bundle cannot load are the host's web stubs** (CustomerApp `web-stubs/`:
-  `react-native-config`, the map wrapper's override, `navigator.geolocation`), applied only on the web.
+  `react-native-config`, `navigator.geolocation`), applied only on the web.
 - **`Config.web.js`**: on the web the host calls `configureComponents({ IMAGEKIT_URL, … })` once before
   rendering. Native `Config.js` exports the same function (merge, no behaviour change).
 - **Never import this package by its published name from inside it**, and import `../ScreenWrapper`
