@@ -1,131 +1,62 @@
-import 'mapbox-gl/dist/mapbox-gl.css';
-import React, { useEffect, useState } from 'react';
-import Map, { Source, Layer, Marker } from 'react-map-gl';
-import { MD3LightTheme } from '@jmstechnologiesinc/react-native-paper';
+// The web twin of `index.js`: the same composable surface, <MapboxGLWrapper>{children}</MapboxGLWrapper> with its
+// statics. The map itself (MapboxGLWrapperMap.web.js: react-map-gl, mapbox-gl and its stylesheet) is loaded with
+// import() the first time a map renders. The package's barrel exports this wrapper, so a static import would put the
+// map engine in every page of the host; Expo splits the web bundle at import() (docs.expo.dev, customizing Metro), as
+// the host's lazy() screens do.
+//
+// Each map part is lazy() inside a Suspense of its own: the map shows its empty box while its code arrives, and a
+// part never pulls the whole map back to that box (all parts come from the same chunk, loaded once).
 
-import { ActivityIndicator, Dimensions, StyleSheet, View } from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Config } from '../Config';
+import React, { Suspense, forwardRef, lazy } from 'react';
 
-const GeoPositionTracker = ({ customerPosition, currentDriverPosition, vendorPosition }) => {
-    const [routeDirections, setRouteDirections] = useState(null);
-    const [destinationCoords, setDestinationCoords] = useState([customerPosition.longitude, customerPosition.latitude]);
-    const [loading, setLoading] = useState(true);
+import MapboxGLWrapperContainer from './MapboxGLWrapperContainer';
+import MapboxGLWrapperLocationSelectorPin from './MapboxGLWrapperLocationSelectorPin';
+import MapboxGLWrapperResetToInitialPositionIcon from './MapboxGLWrapperResetToInitialPositionIcon';
 
-    useEffect(() => {
-        createRouteLine(vendorPosition, customerPosition);
-    }, []);
+const loadMap = () => import('./MapboxGLWrapperMap');
 
-    useEffect(() => {
-        if (currentDriverPosition) {
-            createRouteLine(currentDriverPosition, customerPosition);
-        }
-    }, [currentDriverPosition]);
+const lazyMapPart = (exportName) => lazy(() => loadMap().then((module) => ({ default: module[exportName] })));
 
-    const makeRouterFeature = (coordinates) => ({
-        type: 'FeatureCollection',
-        features: [
-            {
-                type: 'Feature',
-                geometry: {
-                    type: 'LineString',
-                    coordinates: coordinates,
-                },
-            },
-        ],
-    });
+/** A map part, rendered once the map's code has arrived; nothing in its place until then. */
+const mapPart = (exportName, displayName) => {
+    const Part = lazyMapPart(exportName);
+    const MapPart = forwardRef((props, ref) => (
+        <Suspense fallback={null}>
+            <Part ref={ref} {...props} />
+        </Suspense>
+    ));
+    MapPart.displayName = displayName;
 
-    const createRouteLine = async (startPosition, endPosition) => {
-        setLoading(true);
-
-        const startCoords = `${startPosition.longitude},${startPosition.latitude}`;
-        const endCoords = `${endPosition.longitude},${endPosition.latitude}`;
-        const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${startCoords};${endCoords}?alternatives=false&geometries=geojson&steps=true&overview=full&access_token=${Config.MAPBOX_ACCESS_TOKEN}`;
-
-        try {
-            const response = await fetch(url);
-            const json = await response.json();
-
-            if (json.routes && json.routes.length) {
-                const coordinates = json.routes[0].geometry.coordinates;
-                setRouteDirections(makeRouterFeature(coordinates));
-                setDestinationCoords(coordinates[coordinates.length - 1]);
-            }
-            setLoading(false);
-        } catch (error) {
-            console.error('Error fetching directions:', error);
-            setLoading(false);
-        }
-    };
-
-    const centerCoordinate = currentDriverPosition
-        ? [currentDriverPosition.longitude, currentDriverPosition.latitude]
-        : [vendorPosition.longitude, vendorPosition.latitude];
-
-    console.log(centerCoordinate);
-    return (
-        <View style={styles.container}>
-            <Map
-                initialViewState={{
-                    longitude: centerCoordinate[0],
-                    latitude: centerCoordinate[1],
-                    zoom: 16,
-                }}
-                style={{ height: 300 }}
-                mapStyle="mapbox://styles/mapbox/streets-v9"
-                // mapStyle="mapbox://styles/mapbox/navigation-night-v1"
-                mapboxAccessToken={Config.MAPBOX_ACCESS_TOKEN}
-                attributionControl={true}
-            >
-                {centerCoordinate && (
-                    <Marker longitude={centerCoordinate[0]} latitude={centerCoordinate[1]}>
-                        <MaterialCommunityIcons
-                            name="checkbox-blank-circle"
-                            size={16}
-                            color={MD3LightTheme.colors.primary}
-                        />
-                    </Marker>
-                )}
-                {routeDirections && (
-                    <Source id="routeSource" type="geojson" data={routeDirections}>
-                        <Layer
-                            id="routeLine"
-                            type="line"
-                            layout={{ 'line-cap': 'round', 'line-join': 'round' }}
-                            paint={{ 'line-color': MD3LightTheme.colors.primary, 'line-width': 4 }}
-                        />
-                    </Source>
-                )}
-
-                {destinationCoords && (
-                    <Marker longitude={destinationCoords[0]} latitude={destinationCoords[1]}>
-                        <MaterialCommunityIcons
-                            name="map-marker-radius"
-                            size={24}
-                            color={MD3LightTheme.colors.primary}
-                        />
-                    </Marker>
-                )}
-            </Map>
-            {loading && (
-                <ActivityIndicator
-                    size="large"
-                    color={MD3LightTheme.colors.primary}
-                    style={{ position: 'absolute', top: '50%', left: '50%' }}
-                />
-            )}
-        </View>
-    );
+    return MapPart;
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        height: 300,
-    },
-    map: {
-        flex: 1,
-    },
-});
+const LazyMap = lazyMapPart('MapboxGLWrapperMap');
 
-export default GeoPositionTracker;
+const MapboxGLWrapper = forwardRef(({ style, ...props }, ref) => (
+    <Suspense fallback={<MapboxGLWrapperContainer style={style} />}>
+        <LazyMap ref={ref} style={style} {...props} />
+    </Suspense>
+));
+
+MapboxGLWrapper.displayName = 'MapboxGLWrapper';
+
+const NoopMapComponent = () => null;
+
+export default Object.assign(MapboxGLWrapper, {
+    Camera: mapPart('MapboxGLWrapperCamera', 'MapboxGLWrapperCamera'),
+    BoundingBoxCamera: mapPart('MapboxGLWrapperBoundingBoxCamera', 'MapboxGLWrapperBoundingBoxCamera'),
+    FolowUserLocation: mapPart('MapboxGLWrapperUserLocation', 'MapboxGLWrapperUserLocation'),
+    VehicleIconMarker: mapPart('MapboxGLWrapperVehicleIconMarker', 'MapboxGLWrapperVehicleIconMarker'),
+    PointAnnotationMaterialIcon: mapPart(
+        'MapboxGLWrapperPointAnnotationMaterialIcon',
+        'MapboxGLWrapperPointAnnotationMaterialIcon'
+    ),
+    LocationTooltip: mapPart('MapboxGLWrapperLocationTooltip', 'MapboxGLWrapperLocationTooltip'),
+    DriverRouteMonitoring: mapPart('MapboxGLWrapperDriverRouteMonitoring', 'MapboxGLWrapperDriverRouteMonitoring'),
+    ResetToInitialPositionIcon: MapboxGLWrapperResetToInitialPositionIcon,
+    LocationSelectorPin: MapboxGLWrapperLocationSelectorPin,
+    // DriverApp only, which the web stubs out entirely.
+    DrawTurnByTurnRoute: NoopMapComponent,
+    BusinessIconMarker: NoopMapComponent,
+    HeatMap: NoopMapComponent,
+});
