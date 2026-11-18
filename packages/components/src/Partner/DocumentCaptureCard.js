@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 
 import ImagePickerAvatar from '../ImagePicker/ImagePickerAvatar';
+import { isPdfAsset } from '../ImagePicker/utils';
 import { localized } from '../Localization/Localization';
 import DocumentRequirementCard from './DocumentRequirementCard';
 
@@ -25,8 +26,10 @@ const DOCUMENT_CAPTURE_OPTIONS = Object.freeze({
 
 /**
  * Contract request #117: a document requirement's card with the way to send it, as the server says one version of it
- * is taken (`item.capture`, K-32): one photo, or the front and then the back (§9.8.1 step 1). Photos only (owner,
- * 2026-11-04): the card offers no PDF. Taking a photo sends nothing (owner, 2026-11-04): the pages taken show as the
+ * is taken (`item.capture`, K-32): one photo, or the front and then the back (§9.8.1 step 1). Where the server says
+ * the document takes one (`capture.pdf`; owner, 2026-11-18, replacing the photos-only card of 2026-11-04), the photo
+ * sheet also offers «Upload PDF»: a PDF is the whole document on its own, and is sent like the photos. Taking a photo
+ * sends nothing (owner, 2026-11-04): the pages taken show as the
  * card's covers (both sides in a carousel, owner 2026-11-04), and «Send to review» sends them once every page is
  * there. The card only sends (owner, 2026-11-04): it says nothing of where the requirement stands, which its versions
  * and its row in the lists say. The photo sheet is the library's picker, opened by the card's own button
@@ -51,17 +54,24 @@ const DocumentCaptureCard = ({
 }) => {
     const pickerRef = useRef();
     const pageCount = item.capture?.pages === 2 ? 2 : 1;
-    const twoSided = pageCount === 2;
-    const complete = pages.length === pageCount;
+    const pdf = item.capture?.pdf === true;
+    // A PDF is one page on its own (the server's intake): it is the document, whatever its page count.
+    const isPdf = pages.length === 1 && isPdfAsset(pages[0]);
+    const twoSided = pageCount === 2 && !isPdf;
+    const complete = pages.length === pageCount || isPdf;
 
-    // A photo taken once every page is there starts the document again: that is how a wrong one is replaced.
-    const take = (photo) => onPagesChange(pages.length < pageCount ? [...pages, photo] : [photo]);
+    // A photo taken once every page is there starts the document again: that is how a wrong one is replaced. A PDF
+    // starts it again too, and is all of it.
+    const take = (asset) => {
+        if (isPdfAsset(asset) || isPdf) onPagesChange([asset]);
+        else onPagesChange(pages.length < pageCount ? [...pages, asset] : [asset]);
+    };
 
     // What a screen reader names each photo: the front and the back of a two-sided document, else the document.
     const covers = pages.map((page, index) => {
         let label = localized('global.document');
         if (twoSided) label = localized(index === 0 ? 'documentFront' : 'documentBack');
-        return { uri: page.uri, label };
+        return { uri: page.uri, label, mimeType: page.type, name: page.fileName };
     });
 
     // Once every page is there the photo button starts the document again, so it says so.
@@ -109,6 +119,7 @@ const DocumentCaptureCard = ({
                 variant="sheet"
                 onChange={take}
                 captureOptions={DOCUMENT_CAPTURE_OPTIONS}
+                pdf={pdf}
             />
         </>
     );

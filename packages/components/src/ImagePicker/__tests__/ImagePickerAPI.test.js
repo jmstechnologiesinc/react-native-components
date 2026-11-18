@@ -1,3 +1,4 @@
+import { Buffer } from 'buffer';
 import { Alert, Linking } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { PERMISSIONS, RESULTS, request } from 'react-native-permissions';
@@ -122,5 +123,64 @@ describe('ImagePickerAPI.takePhoto', () => {
         launchCamera.mockResolvedValue({ didCancel: true });
         await expect(picker().takePhoto()).resolves.toBeNull();
         expect(Alert.alert).not.toHaveBeenCalled();
+    });
+});
+
+// The document picker's native module is the library's own jest setup (jest.config.js); its answers are steered here
+// per case. The local copy is read with the platform's fetch and FileReader, which the phone has and Node lacks: they
+// are stand-ins that read the given bytes.
+describe('ImagePickerAPI.choosePdf', () => {
+    // The module the library's setup mocks; its package `exports` name only the entry and package.json.
+    const { NativeDocumentPicker } = require(require('path').join(
+        require('path').dirname(require.resolve('@react-native-documents/picker/package.json')),
+        'lib/module/spec/NativeDocumentPicker'
+    ));
+    const PDF_BYTES = '%PDF-1.4 test';
+    let fetchSpy;
+    beforeEach(() => {
+        fetchSpy = jest.spyOn(global, 'fetch').mockResolvedValue({ blob: async () => PDF_BYTES });
+        global.FileReader = class {
+            readAsDataURL(blob) {
+                this.result = `data:application/pdf;base64,${Buffer.from(blob).toString('base64')}`;
+                this.onload();
+            }
+        };
+    });
+    afterEach(() => {
+        fetchSpy.mockRestore();
+        delete global.FileReader;
+    });
+
+    it('picks one PDF, copies it into the caches and resolves it shaped like a photo, with its base64', async () => {
+        await expect(picker().choosePdf()).resolves.toEqual({
+            uri: 'file:///mock/uri/mockName.pdf',
+            base64: Buffer.from(PDF_BYTES).toString('base64'),
+            type: 'application/pdf',
+            fileName: 'mockName.pdf',
+            fileSize: 1234,
+        });
+        expect(NativeDocumentPicker.pick).toHaveBeenCalledWith(expect.objectContaining({ allowMultiSelection: false }));
+        expect(NativeDocumentPicker.keepLocalCopy).toHaveBeenCalledWith(
+            expect.objectContaining({ destination: 'cachesDirectory' })
+        );
+        expect(fetchSpy).toHaveBeenCalledWith('file:///mock/uri/mockName.pdf');
+        expect(request).not.toHaveBeenCalled();
+        expect(Alert.alert).not.toHaveBeenCalled();
+    });
+
+    it('resolves nothing, and says nothing, when the user closes the picker', async () => {
+        NativeDocumentPicker.pick.mockRejectedValueOnce(
+            Object.assign(new Error('cancelled'), { code: 'OPERATION_CANCELED' })
+        );
+        await expect(picker().choosePdf()).resolves.toBeNull();
+        expect(Alert.alert).not.toHaveBeenCalled();
+    });
+
+    it('shows the generic failure when the file cannot be copied', async () => {
+        NativeDocumentPicker.keepLocalCopy.mockResolvedValueOnce([
+            { status: 'error', sourceUri: 'content://x', copyError: 'no space' },
+        ]);
+        await expect(picker().choosePdf()).resolves.toBeNull();
+        expect(Alert.alert).toHaveBeenCalledWith(LABELS.titleFailure, LABELS.descriptionFailure, expect.any(Array));
     });
 });

@@ -15,6 +15,7 @@ import { Platform } from 'react-native';
 export const IMAGE_PICKER_ACTIONS = {
     launchCamera: 'launchCamera',
     launchImageLibrary: 'launchImageLibrary',
+    pickPdf: 'pickPdf',
     removeImage: 'removeImage',
     cancel: 'cancel',
 };
@@ -26,6 +27,9 @@ export const IMAGE_PICKER_ACTIONS = {
  * Where the sheet would offer a single choice (the web, which has no camera option, without extra `options`), opening
  * it takes that choice instead. `onChange(asset)` gets each photo picked; a pick cancelled or refused calls nothing.
  * `captureOptions` (react-native-image-picker's options, e.g. a maximum size) are laid over the picker's defaults.
+ * With `pdf`, the same sheet offers «Upload PDF» (canon §9.8.1 step 1, owner 2026-11-18: where the server says the
+ * document takes one, `capture.pdf`): the PDF, chosen inside the app on the phone and on the web, reaches the same
+ * `onChange(asset)` (./pickPdf.js; `type` is `application/pdf`).
  */
 const Avatar = forwardRef(function Avatar(
     {
@@ -39,6 +43,7 @@ const Avatar = forwardRef(function Avatar(
         options = [],
         isDisabled,
         captureOptions,
+        pdf = false,
     },
     ref
 ) {
@@ -84,6 +89,8 @@ const Avatar = forwardRef(function Avatar(
             launch(() => imagePickerRef.current.takePhoto(captureOptions));
         } else if (value === IMAGE_PICKER_ACTIONS.launchImageLibrary) {
             launch(() => imagePickerRef.current.chooseFromLibrary(captureOptions));
+        } else if (value === IMAGE_PICKER_ACTIONS.pickPdf) {
+            launch(() => imagePickerRef.current.choosePdf());
         } else if (value === IMAGE_PICKER_ACTIONS.removeImage) {
             onRemove();
             actionSheetRef.current.hide();
@@ -107,6 +114,15 @@ const Avatar = forwardRef(function Avatar(
             value: IMAGE_PICKER_ACTIONS.launchImageLibrary,
             icon: 'folder-image',
         },
+        ...(pdf
+            ? [
+                  {
+                      title: localized('uploadPdf'),
+                      value: IMAGE_PICKER_ACTIONS.pickPdf,
+                      icon: 'file-pdf-box',
+                  },
+              ]
+            : []),
         ...options,
         { title: localized('cancel'), value: IMAGE_PICKER_ACTIONS.cancel, icon: 'cancel' },
     ];

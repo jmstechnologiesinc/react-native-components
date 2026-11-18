@@ -41,7 +41,7 @@ jest.mock('react-native-safe-area-context', () => {
     };
 });
 // The camera and the library are ImagePickerAPI's (its own suite); here each pick answers what a test gives it.
-const mockPicks = { takePhoto: jest.fn(), chooseFromLibrary: jest.fn() };
+const mockPicks = { takePhoto: jest.fn(), chooseFromLibrary: jest.fn(), choosePdf: jest.fn() };
 jest.mock('../ImagePickerAPI', () => jest.fn().mockImplementation(() => mockPicks));
 
 jest.useFakeTimers();
@@ -61,6 +61,7 @@ beforeEach(() => {
     mockSheet.hidden = 0;
     mockPicks.takePhoto.mockReset();
     mockPicks.chooseFromLibrary.mockReset();
+    mockPicks.choosePdf.mockReset();
 });
 
 afterEach(() => {
@@ -99,6 +100,21 @@ describe('ImagePicker.Avatar', () => {
         await act(async () => optionOf(tree, localized('chooseFromLibrary')).props.onPress());
         expect(mockPicks.chooseFromLibrary).toHaveBeenCalledWith(captureOptions);
         expect(onChange).toHaveBeenCalledWith(ASSET);
+        expect(mockSheet.hidden).toBe(1);
+    });
+
+    it('offers «Upload PDF» only with `pdf`, in the same sheet, and hands the PDF to the same onChange', async () => {
+        const plain = render(<ImagePickerAvatar variant="sheet" onChange={jest.fn()} />);
+        expect(optionOf(plain, localized('uploadPdf'))).toBeUndefined();
+
+        const onChange = jest.fn();
+        const PDF = { uri: 'file:///caches/insurance.pdf', base64: 'JVBERi0=', type: 'application/pdf' };
+        mockPicks.choosePdf.mockResolvedValue(PDF);
+        const tree = render(<ImagePickerAvatar variant="sheet" onChange={onChange} pdf />);
+        expect(optionOf(tree, localized('chooseFromLibrary'))).toBeDefined();
+        await act(async () => optionOf(tree, localized('uploadPdf')).props.onPress());
+        expect(mockPicks.choosePdf).toHaveBeenCalledTimes(1);
+        expect(onChange).toHaveBeenCalledWith(PDF);
         expect(mockSheet.hidden).toBe(1);
     });
 

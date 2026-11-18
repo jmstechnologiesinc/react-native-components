@@ -2,13 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ScrollView, View, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Card, Modal, Portal, TouchableRipple, useTheme } from '@jmstechnologiesinc/react-native-paper';
+import { Card, List, Modal, Portal, TouchableRipple, useTheme } from '@jmstechnologiesinc/react-native-paper';
 
 import { accessibilityProps, isWeb } from '../accessibility';
 import DocumentViewer from '../DocumentViewer/DocumentViewer';
 import { paneMetrics } from '../Layout/metrics';
 import SheetHeader from '../Layout/SheetHeader';
 import { localized } from '../Localization/Localization';
+import { PDF_MIME_TYPE } from '../ImagePicker/utils';
 
 /**
  * Two covers or more: a Material 3 hero carousel, one large item with the next one peeking, or all of them whole, side
@@ -90,9 +91,11 @@ const CoverCarousel = ({ covers, renderCover, testID }) => {
  * The photos of a document the partner has taken and not sent yet (DocumentRequirementCard `covers`), in order: one is
  * the card's cover; more are a carousel, or side by side where they fit (CoverCarousel). Each photo is an image button
  * a screen reader names by its `label`: it opens the library's DocumentViewer full screen, on that page, to check it
- * before sending (zoom, rotation, and the sides of a two-page document, named by their labels).
+ * before sending (zoom, rotation, and the sides of a two-page document, named by their labels). A PDF (`mimeType`
+ * `application/pdf`, owner 2026-11-18) is no image: its cover is the file, its icon and its `name`, and the viewer is
+ * told its type.
  *
- * @param {{covers: Array<{uri: string, label: string}>, testID: string}} props
+ * @param {{covers: Array<{uri: string, label: string, mimeType?: string, name?: string}>, testID: string}} props
  */
 const DocumentCovers = ({ covers, testID }) => {
     const { colors } = useTheme();
@@ -110,17 +113,28 @@ const DocumentCovers = ({ covers, testID }) => {
     const sides = covers.length > 1 ? covers.map(({ label }, index) => ({ value: String(index), label })) : undefined;
 
     // react-native-web gives `imagebutton` no web role; there an image that opens is a button named by its label.
-    const renderCover = ({ uri, label }, index, props) => (
-        <TouchableRipple
-            key={String(index)}
-            onPress={() => open(index)}
-            {...accessibilityProps({ role: isWeb() ? 'button' : 'imagebutton', label })}
-            {...props}
-            testID={`${testID}-cover-${index}`}
-        >
-            <Card.Cover source={{ uri }} />
-        </TouchableRipple>
-    );
+    const renderCover = ({ uri, label, mimeType, name }, index, props) => {
+        const pdf = mimeType === PDF_MIME_TYPE;
+        return (
+            <TouchableRipple
+                key={String(index)}
+                onPress={() => open(index)}
+                {...accessibilityProps({ role: isWeb() || pdf ? 'button' : 'imagebutton', label })}
+                {...props}
+                testID={`${testID}-cover-${index}`}
+            >
+                {pdf ? (
+                    <List.Item
+                        title={label}
+                        description={name}
+                        left={(iconProps) => <List.Icon {...iconProps} icon="file-pdf-box" />}
+                    />
+                ) : (
+                    <Card.Cover source={{ uri }} />
+                )}
+            </TouchableRipple>
+        );
+    };
 
     return (
         <>
@@ -144,7 +158,9 @@ const DocumentCovers = ({ covers, testID }) => {
                 >
                     <SheetHeader title={shown?.label} onClose={close} testID={`${testID}-viewer-header`} />
                     <DocumentViewer
-                        source={shown ? { uri: shown.uri } : null}
+                        source={
+                            shown ? { uri: shown.uri, ...(shown.mimeType ? { mimeType: shown.mimeType } : {}) } : null
+                        }
                         sides={sides}
                         side={String(page)}
                         onSideChange={(value) => setPage(Number(value))}

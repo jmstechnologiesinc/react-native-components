@@ -10,6 +10,7 @@
     "lastNameIsRequired": "Last name is required.",
     "phoneNumberIsRequired": "Phone number is required.",
     "chooseFromLibrary": "Choose from library",
+    "uploadPdf": "Upload PDF",
     "removeProfilePhoto": "Remove profile photo",
     "pleaseContactSupport": "Please Contact Support",
     "paymentProcessingError": "There was an error processing your payment method.",
