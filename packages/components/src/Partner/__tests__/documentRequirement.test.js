@@ -390,7 +390,11 @@ describe('DocumentCaptureCard', () => {
         take(PDF);
         // No back is asked for: the PDF completes the document.
         expect(textsOf(tree)).not.toContain(BACK_PROMPT);
-        expect(textsOf(tree)).toEqual(expect.arrayContaining(['inspection.pdf', NOT_SENT]));
+        // A file, not photos: «not sent yet» and «Replace» say so.
+        expect(textsOf(tree)).toEqual(
+            expect.arrayContaining(['inspection.pdf', 'This file is not sent yet. Tap «Send to review».', 'Replace'])
+        );
+        expect(textsOf(tree)).not.toContain(NOT_SENT);
         expect(tree.root.findAllByType(Card.Cover)).toHaveLength(0);
         expect(buttonOf(tree, 'document-requirement-send').props.disabled).toBe(false);
         press(tree, 'document-requirement-send');

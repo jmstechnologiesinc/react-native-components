@@ -811,6 +811,8 @@
     "documentAddBackPrompt": "Now take a photo of the back of the document.",
     "documentRetake": "Retake",
     "documentNotSent": "These photos are not sent yet. Tap «Send to review».",
+    "documentFileNotSent": "This file is not sent yet. Tap «Send to review».",
+    "documentReplace": "Replace",
     "documentFront": "Front",
     "documentBack": "Back",
     "documentSuperseded": "Superseded",
