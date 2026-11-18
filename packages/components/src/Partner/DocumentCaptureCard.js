@@ -74,14 +74,16 @@ const DocumentCaptureCard = ({
         return { uri: page.uri, label, mimeType: page.type, name: page.fileName };
     });
 
-    // Once every page is there the photo button starts the document again, so it says so.
+    // Once every page is there the photo button starts the document again, so it says so: a photo is retaken, a PDF
+    // replaced.
     let takeLabel = localized('add');
-    if (complete) takeLabel = localized('documentRetake');
+    if (complete) takeLabel = localized(isPdf ? 'documentReplace' : 'documentRetake');
     else if (twoSided) takeLabel = localized(pages.length === 1 ? 'documentAddBack' : 'documentAddFront');
 
-    // What to do now: the back, or — every page there and nothing sending — that the photos are not sent yet.
+    // What to do now: the back, or — every page there and nothing sending — that the photos (or the file) are not
+    // sent yet.
     let note = null;
-    if (complete && !isSending) note = localized('documentNotSent');
+    if (complete && !isSending) note = localized(isPdf ? 'documentFileNotSent' : 'documentNotSent');
     else if (twoSided && pages.length === 1) note = localized('documentAddBackPrompt');
 
     // The way to take a photo stays, a text button; the main action, sending, is last and the only one with a border

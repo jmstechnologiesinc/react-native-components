@@ -811,6 +811,8 @@
     "documentAddBackPrompt": "Ahora toma una foto del reverso del documento.",
     "documentRetake": "Repetir",
     "documentNotSent": "Estas fotos aún no se han enviado. Toca «Enviar a revisión».",
+    "documentFileNotSent": "Este archivo aún no se ha enviado. Toca «Enviar a revisión».",
+    "documentReplace": "Reemplazar",
     "documentFront": "Anverso",
     "documentBack": "Reverso",
     "documentSuperseded": "Sustituido",
