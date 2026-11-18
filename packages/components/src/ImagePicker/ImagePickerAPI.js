@@ -2,6 +2,7 @@ import { Linking, Alert } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { RESULTS } from 'react-native-permissions';
 import { checkAndAskForPermissionCamara } from './utils';
+import pickPdf from './pickPdf';
 
 // What every pick asked for before a caller could pass options of its own (`takePhoto(options)`): a photo at full
 // quality, with its base64. A caller's options are laid over these.
@@ -16,12 +17,12 @@ const PERMISSION_ERROR = 'permission';
 const PERMISSION_REFUSED = Object.freeze([RESULTS.DENIED, RESULTS.BLOCKED]);
 
 /**
- * Takes one photo with the camera or picks one from the library.
+ * Takes one photo with the camera, picks one from the library, or picks one PDF.
  *
- * `takePhoto(options)` and `chooseFromLibrary(options)` always resolve, and never reject, so a caller never waits on
- * a pick that ended: with the picked asset, or with `null` when nothing was picked — cancelled (silently), refused a
- * permission (the permission alert, with a way to Settings) or failed (the generic failure alert). `options` are
- * react-native-image-picker's, laid over `DEFAULT_OPTIONS`.
+ * `takePhoto(options)`, `chooseFromLibrary(options)` and `choosePdf()` always resolve, and never reject, so a caller
+ * never waits on a pick that ended: with the picked asset, or with `null` when nothing was picked — cancelled
+ * (silently), refused a permission (the permission alert, with a way to Settings) or failed (the generic failure
+ * alert). `options` are react-native-image-picker's, laid over `DEFAULT_OPTIONS`.
  */
 class ImagePickerAPI {
     constructor({
@@ -113,6 +114,15 @@ class ImagePickerAPI {
     // still reports `permission` where its platform checks one (iOS with `includeExtra`).
     chooseFromLibrary(options) {
         return this.launch(launchImageLibrary, options, () => this.catchPermissionStatusPhotos());
+    }
+
+    // No permission either: the system's document picker (native) and the browser's file chooser (web) run outside
+    // the app and hand back only the file the user picks (./pickPdf.js).
+    choosePdf() {
+        return pickPdf().catch(() => {
+            this.alertFailure();
+            return null;
+        });
     }
 }
 

@@ -12,7 +12,14 @@ module.exports = {
   // our own invention -- the library PUBLISHES this setup file and maintains
   // it, so what the tests see is the surface its author declares, not one this
   // repository guessed. It must run before `jest.setup.js`.
-  setupFiles: ['@rnmapbox/maps/setup-jest', '<rootDir>/jest.setup.js'],
+  // `@react-native-documents/picker` (ImagePicker/pickPdf.js) likewise
+  // publishes the setup that stands in for its native module; its package
+  // `exports` do not name it, so it is named by its path, as its docs do.
+  setupFiles: [
+    '@rnmapbox/maps/setup-jest',
+    '<rootDir>/node_modules/@react-native-documents/picker/jest/build/jest/setup.js',
+    '<rootDir>/jest.setup.js',
+  ],
 
   // `__tests__/__fixtures__/` holds the data and case modules the suites
   // share (`appPathCases.js`); they are not suites themselves.
@@ -26,9 +33,10 @@ module.exports = {
   // own barrel test («needs tests») had never actually loaded the barrel.
   // `react-native-gesture-handler` 3 ships ESM too (`lib/module`), and
   // `react-native-actions-sheet` 10 imports it; `react-native-worklets`
-  // (Reanimated 4) ships ESM and its jest mock is TypeScript.
+  // (Reanimated 4) ships ESM and its jest mock is TypeScript;
+  // `@react-native-documents/picker` ships ESM (`lib/module`).
   transformIgnorePatterns: [
-    'node_modules/(?!(?:.pnpm/)?((jest-)?react-native|@react-native(-community)?|@jmstechnologiesinc|react-native-config|react-native-actions-sheet|react-native-gesture-handler|react-native-image-picker|react-native-draggable-flatlist|react-native-reanimated|react-native-worklets|@react-navigation|dinero\\.js|@dinero\\.js|@rnmapbox|react-native-vector-icons|react-native-permissions|react-native-geolocation-service|react-native-applifecycle)/)',
+    'node_modules/(?!(?:.pnpm/)?((jest-)?react-native|@react-native(-community|-documents)?|@jmstechnologiesinc|react-native-config|react-native-actions-sheet|react-native-gesture-handler|react-native-image-picker|react-native-draggable-flatlist|react-native-reanimated|react-native-worklets|@react-navigation|dinero\\.js|@dinero\\.js|@rnmapbox|react-native-vector-icons|react-native-permissions|react-native-geolocation-service|react-native-applifecycle)/)',
   ],
 
   // Several modules in the library import the library BY ITS PUBLISHED NAME

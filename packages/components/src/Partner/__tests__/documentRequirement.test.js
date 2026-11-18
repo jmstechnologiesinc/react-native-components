@@ -14,10 +14,10 @@ import { requirementTitle } from '../viewModel';
 
 // The photo sheet is the native picker; here it is a stand-in that records being opened and the capture options it was
 // given, and hands back the photo a test gives it, through the same ref and `onChange` the card uses.
-const mockPicker = { shown: 0, take: null, captureOptions: null };
+const mockPicker = { shown: 0, take: null, captureOptions: null, pdf: null };
 jest.mock('../../ImagePicker/ImagePickerAvatar', () => {
     const React = require('react');
-    const Sheet = React.forwardRef(({ onChange, captureOptions }, ref) => {
+    const Sheet = React.forwardRef(({ onChange, captureOptions, pdf }, ref) => {
         React.useImperativeHandle(ref, () => ({
             show: () => {
                 mockPicker.shown += 1;
@@ -25,6 +25,7 @@ jest.mock('../../ImagePicker/ImagePickerAvatar', () => {
         }));
         mockPicker.take = onChange;
         mockPicker.captureOptions = captureOptions;
+        mockPicker.pdf = pdf;
         return null;
     });
     return { __esModule: true, default: Sheet };
@@ -53,6 +54,7 @@ beforeEach(() => {
     mockPicker.shown = 0;
     mockPicker.take = null;
     mockPicker.captureOptions = null;
+    mockPicker.pdf = null;
 });
 
 afterEach(() => {
@@ -95,7 +97,8 @@ const LICENCE = {
     cause: 'missing',
     evidence: 'document',
     documentType: 'driver_licence',
-    capture: { pages: 2, pdf: true },
+    // As the server says it (documentTypes.js DOCUMENT_CAPTURE): the licence is a photo only.
+    capture: { pages: 2, pdf: false },
     versions: [],
 };
 const AT = 1793249082020;
@@ -318,7 +321,7 @@ describe('DocumentCaptureCard', () => {
         const onSend = jest.fn();
         const tree = render(<Host item={INSPECTION} onSend={onSend} />);
         expect(textsOf(tree)).toEqual(expect.arrayContaining(['Add', 'Send to review']));
-        // Photos only (owner, 2026-11-04): no PDF, even where the server takes one.
+        // No button of its own for a PDF (owner, 2026-11-18): «Upload PDF» is in the photo sheet.
         expect(textsOf(tree)).not.toContain('Upload a PDF');
         expect(buttonOf(tree, 'document-requirement-send').props.disabled).toBe(true);
         // A text button takes the photo; sending is the only one with a border (owner, 2026-11-04).
@@ -365,6 +368,37 @@ describe('DocumentCaptureCard', () => {
         expect(onSend).toHaveBeenCalledWith([{ uri: 'file:///front.jpg' }, { uri: 'file:///back.jpg' }]);
         act(() => host.clear());
         expect(textsOf(tree)).toContain('Add the front');
+    });
+
+    it('offers «Upload PDF» in the photo sheet only where the server says the document takes one (capture.pdf)', () => {
+        render(<Host item={INSPECTION} />);
+        expect(mockPicker.pdf).toBe(true);
+        render(<Host item={LICENCE} />);
+        expect(mockPicker.pdf).toBe(false);
+    });
+
+    it('a PDF is the whole document: shown as the file, sent alone, and it replaces any photo taken', () => {
+        const onSend = jest.fn();
+        const PDF = {
+            uri: 'file:///caches/inspection.pdf',
+            base64: 'JVBERi0=',
+            type: 'application/pdf',
+            fileName: 'inspection.pdf',
+        };
+        const tree = render(<Host item={{ ...INSPECTION, capture: { pages: 2, pdf: true } }} onSend={onSend} />);
+        take({ uri: 'file:///front.jpg' });
+        take(PDF);
+        // No back is asked for: the PDF completes the document.
+        expect(textsOf(tree)).not.toContain(BACK_PROMPT);
+        expect(textsOf(tree)).toEqual(expect.arrayContaining(['inspection.pdf', NOT_SENT]));
+        expect(tree.root.findAllByType(Card.Cover)).toHaveLength(0);
+        expect(buttonOf(tree, 'document-requirement-send').props.disabled).toBe(false);
+        press(tree, 'document-requirement-send');
+        expect(onSend).toHaveBeenCalledWith([PDF]);
+
+        // A photo after the PDF starts the document again.
+        take({ uri: 'file:///front.jpg' });
+        expect(textsOf(tree)).toContain(BACK_PROMPT);
     });
 
     it('replaces what was taken with a photo taken once every page is there', () => {

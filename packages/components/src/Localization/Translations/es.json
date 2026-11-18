@@ -10,6 +10,7 @@
     "lastNameIsRequired": "El apellido es obligatorio.",
     "phoneNumberIsRequired": "El número de teléfono es obligatorio.",
     "chooseFromLibrary": "Elegir de la galería",
+    "uploadPdf": "Subir PDF",
     "removeProfilePhoto": "Eliminar foto de perfil",
     "pleaseContactSupport": "Por favor contacte a soporte",
     "paymentProcessingError": "Hubo un error al procesar su método de pago.",
