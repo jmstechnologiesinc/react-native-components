@@ -4,7 +4,22 @@ import { initReactI18next } from 'react-i18next';
 
 import enTranslation from './Translations/en.json';
 import esTranslation from './Translations/es.json';
-import { addFlatCatalog, catalogText, FALLBACK_LOCALE } from './catalog';
+import { addFlatCatalog, catalogText, FALLBACK_LOCALE, SUPPORTED_LOCALES } from './catalog';
+
+// The browser's language is only the default (W3C, «Language negotiation»): a page whose address names its language
+// (`/us/es/terms`, the second segment) is shown in it, and only a choice the person makes is remembered. The detector
+// reads the path, then a remembered choice, then the browser; it remembers nothing by itself (`caches: []`), so a
+// visit to a Spanish page never turns the rest of the site Spanish. `supportedLngs` keeps a path segment that is not
+// a language (`/rides/history`) from being taken for one. Not frozen: the detector writes its own defaults into the
+// options it is given.
+const DETECTION = {
+    order: ['path', 'localStorage', 'navigator'],
+    lookupFromPathIndex: 1,
+    caches: [],
+};
+
+// Where a person's own choice of language is kept: the detector's localStorage key, read second in DETECTION.order.
+const CHOSEN_LANGUAGE_CACHES = Object.freeze(['localStorage']);
 
 // ADR-0017 §5.4 — the web twin, made a twin.
 //
@@ -30,6 +45,8 @@ i18n.use(LanguageDetector)
         },
         debug: false,
         fallbackLng: FALLBACK_LOCALE,
+        supportedLngs: SUPPORTED_LOCALES,
+        detection: DETECTION,
 
         interpolation: {
             escapeValue: false,
@@ -87,3 +104,16 @@ export const registerFlatCatalog = (catalog) => {
 // too (webpack picks `.web.js` first, and a missing export is `undefined`
 // there — `setI18nConfig is not a function` took down every Order story).
 export const setI18nConfig = () => {};
+
+/**
+ * A language the person chose (a language selector), applied and remembered: the detector reads it back on the next
+ * visit, after the address's own language and before the browser's. A visit is never remembered (DETECTION.caches);
+ * only this call is.
+ *
+ * @param {string} language one of SUPPORTED_LOCALES
+ * @returns {Promise} i18next's changeLanguage
+ */
+export const chooseLanguage = (language) => {
+    i18n.services.languageDetector.cacheUserLanguage(language, CHOSEN_LANGUAGE_CACHES);
+    return i18n.changeLanguage(language);
+};

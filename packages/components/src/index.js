@@ -72,7 +72,13 @@ export { default as TNEmptyStateView } from './truly-native/TNEmptyStateView';
 
 export { LAYOUT_MODE } from './consts';
 export { configureComponents } from './Config';
-export { localized, setI18nConfig, registerFlatCatalog, currentLocale } from './Localization/Localization';
+export {
+    localized,
+    setI18nConfig,
+    registerFlatCatalog,
+    currentLocale,
+    chooseLanguage,
+} from './Localization/Localization';
 export { merge } from './Localization/catalog';
 export { formatDateTime, formatTime, formatRelativeTime } from './Localization/format';
 export { localizedAuthError } from './Localization/authErrors';
