@@ -79,6 +79,13 @@ export const setI18nConfig = () => {
 export const currentLocale = () => i18n.locale || FALLBACK_LOCALE;
 
 /**
+ * The web twin's language selector (Localization.web.js). On the phone the language is the device's, chosen in the
+ * system's settings (an app's own language, iOS 13 and Android 13), and `setI18nConfig` reads it there; the twin
+ * exists so both expose the same surface, as `setI18nConfig` does on the web.
+ */
+export const chooseLanguage = () => Promise.resolve();
+
+/**
  * Registers a flat `{ en: { key: text }, es: { … } }` catalogue (the partner
  * catalogue, canon R2). `%{}` placeholders interpolate like any translation.
  * The memo is cleared because a key looked up before the registration is
