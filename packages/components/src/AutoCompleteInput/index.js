@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import { GooglePlacesAutocomplete } from '@jmstechnologiesinc/react-native-google-places-autocomplete';
 import ScreenWrapper from '../ScreenWrapper';
 import { localized } from '../Localization/Localization';
@@ -25,20 +25,21 @@ const AutoCompleteInput = ({
         ref.current.setAddressText(value);
     }, [value]);
 
+    // The places library clears its suggestions whenever `predefinedPlaces` changes identity, so the list keeps its
+    // identity across renders: a new array on every render erased the suggestions when a screen re-rendered on the
+    // input's blur, before a click on the web reached the row (daxir-qa #336).
+    const isGpsPlaceShown = !locationPermissionStatus && Boolean(predefinedPlaces);
+    const gpsPlaceDescription = localized('useGPSLocation');
+    const gpsPlaces = useMemo(
+        () => (isGpsPlaceShown ? [{ description: gpsPlaceDescription, isPredefinedPlace: true }] : []),
+        [isGpsPlaceShown, gpsPlaceDescription]
+    );
+
     return (
         <ScreenWrapper.Section title={localized(title)}>
             <GooglePlacesAutocomplete
                 ref={ref}
-                predefinedPlaces={
-                    locationPermissionStatus || !predefinedPlaces
-                        ? []
-                        : [
-                              {
-                                  description: localized('useGPSLocation'),
-                                  isPredefinedPlace: true,
-                              },
-                          ]
-                }
+                predefinedPlaces={gpsPlaces}
                 predefinedPlacesAlwaysVisible
                 icon={icon}
                 placeholder={placeholder}
