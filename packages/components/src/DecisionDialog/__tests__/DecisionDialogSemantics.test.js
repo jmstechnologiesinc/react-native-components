@@ -3,7 +3,7 @@ jest.mock('react-native-localize', () => ({
 }));
 
 import React from 'react';
-import { Platform } from 'react-native';
+import { Dimensions, Platform, StyleSheet } from 'react-native';
 import renderer, { act } from 'react-test-renderer';
 
 import { MD3LightTheme, Provider } from '@jmstechnologiesinc/react-native-paper';
@@ -52,6 +52,8 @@ const base = {
 const hostsWith = (tree, predicate) =>
     tree.root.findAll((node) => typeof node.type === 'string' && predicate(node.props));
 
+const maxHeightOf = (props) => StyleSheet.flatten(props.style)?.maxHeight;
+
 /** A stand-in for the few DOM APIs the hook uses. */
 const fakeDom = () => {
     const listeners = new Set();
@@ -93,6 +95,12 @@ describe('DecisionDialog on native', () => {
         const [title] = hostsWith(tree, (props) => props.testID === 'decision-title');
         expect(title.props.nativeID).toBeUndefined();
     });
+
+    it('bounds no height: Paper lays it out as before', () => {
+        const tree = render(<DecisionDialog {...base} />);
+
+        expect(hostsWith(tree, (props) => maxHeightOf(props) !== undefined)).toHaveLength(0);
+    });
 });
 
 describe('DecisionDialog on the web', () => {
@@ -125,6 +133,13 @@ describe('DecisionDialog on the web', () => {
         expect(frame.props['aria-modal']).toBe(true);
         expect(title.props.nativeID).toBeTruthy();
         expect(frame.props['aria-labelledby']).toBe(title.props.nativeID);
+    });
+
+    it('fits the window, so a long one scrolls in its ScrollArea (daxir-qa #316)', () => {
+        const tree = renderWeb(<DecisionDialog {...base} />);
+
+        const [bounded] = hostsWith(tree, (props) => maxHeightOf(props) !== undefined);
+        expect(maxHeightOf(bounded.props)).toBe(Dimensions.get('window').height - 2 * MD3LightTheme.spacing.x12);
     });
 
     it('closes on Esc', () => {

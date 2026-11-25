@@ -65,8 +65,11 @@ const DecisionDialog = ({
     testID,
 }) => {
     const theme = useTheme();
-    const { width: windowWidth } = useWindowDimensions();
+    const { width: windowWidth, height: windowHeight } = useWindowDimensions();
     const isWide = windowWidth > MAX_DIALOG_WIDTH + 2 * theme.spacing.x12;
+    // On the web nothing above the frame bounds its height: without this a long dialog is cut by the window, and its
+    // ScrollArea, with room for all, never scrolls (daxir-qa #316).
+    const maxHeight = windowHeight - 2 * theme.spacing.x12;
     // Uncontrolled when the host passes no `onSelectOption`: Paper's
     // RadioButton.Group throws on press without a handler.
     const [ownOption, setOwnOption] = useState(selectedOption);
@@ -180,7 +183,12 @@ const DecisionDialog = ({
 
     return (
         <Portal>
-            <Dialog visible={visible} dismissable={!busy} onDismiss={dismiss} style={isWide ? styles.wideDialog : null}>
+            <Dialog
+                visible={visible}
+                dismissable={!busy}
+                onDismiss={dismiss}
+                style={[isWide ? styles.wideDialog : null, web ? { maxHeight } : null]}
+            >
                 {web ? (
                     <View
                         ref={frameRef}
